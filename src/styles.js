@@ -28,10 +28,12 @@ export const GlobalStyle = createGlobalStyle`
     background-position: center;
     font-family: 'Nanum Gothic', sans-serif;
     color: ${props => props.theme.fontColor};
+    transition: color 1s ease;
   }
   * {
     box-sizing: border-box;
     color: ${props => props.theme.fontColor};
+    transition: color 1s ease;
   }
   a {
     text-decoration: none;
