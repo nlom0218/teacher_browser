@@ -27,9 +27,11 @@ export const GlobalStyle = createGlobalStyle`
     background-size: cover;
     background-position: center;
     font-family: 'Nanum Gothic', sans-serif;
+    color: ${props => props.theme.fontColor};
   }
   * {
     box-sizing: border-box;
+    color: ${props => props.theme.fontColor};
   }
   a {
     text-decoration: none;
