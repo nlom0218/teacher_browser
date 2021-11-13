@@ -8,6 +8,7 @@ const color = {
 
 export const ligthTheme = {
   fontColor: color.black,
+  bgColor: color.white,
   blurColor: "rgba(232, 232, 232, 0.6)"
 }
 
@@ -32,8 +33,6 @@ export const GlobalStyle = createGlobalStyle`
   }
   * {
     box-sizing: border-box;
-    color: ${props => props.theme.fontColor};
-    transition: color 1s ease;
   }
   a {
     text-decoration: none;

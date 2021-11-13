@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Theme from '../Components/Theme';
 
 const Container = styled.div`
   display: grid;
@@ -10,7 +11,8 @@ const Container = styled.div`
 
 const Home = () => {
   return (<Container>
-
+    <Theme />
+    sdfsdf
   </Container>);
 }
 
