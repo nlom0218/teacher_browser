@@ -24,14 +24,14 @@ const Wrapper = styled.div`
   transition: none;
   font-size: 0.75em;
   font-size: 0.75rem;
+  cursor: pointer;
   :hover {
     background: ${props => props.theme.fontColor};
     color: ${props => props.theme.bgColor};
   }
 `
 
-const LightNav = styled.div`
-  cursor: pointer;
+const LightModeBtn = styled.div`
   svg {
     color: tomato;
     margin-right: 5px;
@@ -39,8 +39,7 @@ const LightNav = styled.div`
   }
 `
 
-const DarkNav = styled.div`
-  cursor: pointer;
+const DarkModeBtn = styled.div`
   svg {
     color: yellow;
     margin-right: 5px;
@@ -50,27 +49,23 @@ const DarkNav = styled.div`
 
 const Theme = () => {
   const darkMode = useReactiveVar(darkModeVar)
-  const onCLickDarkMode = () => {
-    disableDarkMode()
+  const onClickBtn = () => {
+    if (darkMode) {
+      disableDarkMode()
+    } else {
+      enableDarkMode()
+    }
   }
-  const onClickLightMode = () => {
-    enableDarkMode()
-  }
-
   return (
-    <Wrapper>
-      {darkMode ? <LightNav
-        onClick={onCLickDarkMode}>
-        <FontAwesomeIcon
-          icon={faSun}
-        /> 라이트 모드로 보기
-      </LightNav> :
-        <DarkNav
-          onClick={onClickLightMode}>
-          <FontAwesomeIcon
-            icon={faMoon}
-          /> 다크 모드로 보기
-        </DarkNav>
+    <Wrapper onClick={onClickBtn}>
+      {darkMode ?
+        <LightModeBtn>
+          <FontAwesomeIcon icon={faSun} /> 라이트 모드로 보기
+        </LightModeBtn>
+        :
+        <DarkModeBtn>
+          <FontAwesomeIcon icon={faMoon} /> 다크 모드로 보기
+        </DarkModeBtn>
       }
     </Wrapper>
   )
