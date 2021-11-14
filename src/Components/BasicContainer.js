@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Header from '../Components/Header';
 import Theme from '../Components/Theme';
+import { customMedia } from '../styles';
 
 const Container = styled.div`
   display: grid;
@@ -10,11 +11,32 @@ const Container = styled.div`
   height: 100vh;
 `
 
+const ContentLayout = styled.div`
+  margin: 0 auto;
+  max-width: 75rem;
+  width: 90%;
+  display: grid;
+  overflow: scroll;
+  background: ${props => props.theme.blurColor};
+  -ms-overflow-style: none; // IE and Edge
+  scrollbar-width: none; // Firefox
+  border-radius: 10px;
+  border-radius: 0.625rem;
+  ::-webkit-scrollbar {
+    display: none; // Chrome, Safari, Opera
+  }
+  ${customMedia.greaterThan("desktop")`
+    width: 100%;
+  `}
+`
+
 const BasicContainer = ({ children }) => {
   return (<Container>
     <Theme />
     <Header />
-    {children}
+    <ContentLayout>
+      {children}
+    </ContentLayout>
   </Container>);
 }
 
