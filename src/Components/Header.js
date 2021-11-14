@@ -4,6 +4,8 @@ import useMedia from '../Hooks/useMedia';
 import { color, customMedia } from '../styles';
 import { FcNews, FcCalendar, FcTodoList, FcGrid, FcBookmark, FcDown, FcUp } from "react-icons/fc";
 import { weatherBtnDown, weatherBtnUp, weatherDown, weatherUp } from '../Animations/WeatherAni';
+import { Link } from 'react-router-dom';
+import routes from '../routes';
 
 const Container = styled.div`
   width: 100%;
@@ -51,6 +53,8 @@ const WeatherContent = styled.div`
   animation: ${props => props.firstEnter ? "none" : props.seeWeather ? weatherDown : weatherUp} 1s ease forwards;
 `
 
+const PageBtn = styled.div``
+
 const Header = () => {
   const [seeWeather, setSeeWeather] = useState(false)
   const [firstEnter, setFirstEnter] = useState(true)
@@ -70,6 +74,13 @@ const Header = () => {
         </WeatherContent>
       </Weather>
     }
+    <PageBtn>
+      <Link to={routes.home}><FcNews /></Link>
+      <Link to={routes.todo}><FcTodoList /></Link>
+      <Link to={routes.calendar}><FcCalendar /></Link>
+      <Link to={routes.pageLink}><FcBookmark /></Link>
+      <Link to={routes.menu}><FcGrid /></Link>
+    </PageBtn>
   </Container>);
 }
 
