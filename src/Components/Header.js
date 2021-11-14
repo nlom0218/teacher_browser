@@ -72,12 +72,9 @@ const PageBtn = styled.div`
   column-gap: 20px;
   column-gap: 1.25rem;
   padding: 5px 20px;
-  background: ${props => props.theme.blurColor};
+  background: ${props => props.theme.bgColor};
   border-radius: 5px;
   transition: background 1s ease;
-  :hover {
-    background: ${props => props.theme.bgColor}
-  }
 `
 
 const SideBtn = styled.div`
@@ -87,16 +84,13 @@ const SideBtn = styled.div`
   justify-self: flex-end;
   padding: 5px;
   padding: 0.3125rem;
-  background: ${props => props.theme.blurColor};
+  background: ${props => props.theme.bgColor};
   border-radius: 5px;
   border-radius: 0.3125rem;
   transition: background 1s ease;
   display: flex;
   justify-content: center;
   align-items: center;
-  :hover {
-    background: ${props => props.theme.bgColor}
-  }
 `
 
 const Header = () => {
