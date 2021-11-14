@@ -68,6 +68,9 @@ const PageBtn = styled.div`
   background: ${props => props.theme.blurColor};
   border-radius: 5px;
   transition: background 1s ease;
+  :hover {
+    background: ${props => props.theme.bgColor}
+  }
 `
 
 const Header = () => {
