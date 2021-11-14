@@ -17,13 +17,13 @@ export const color = {
 export const ligthTheme = {
   fontColor: color.black,
   bgColor: color.white,
-  blurColor: "rgba(232, 232, 232, 0.7)"
+  blurColor: "rgba(230, 230, 230, 0.6)"
 }
 
 export const darkTheme = {
   fontColor: color.white,
   bgColor: color.black,
-  blurColor: "rgba(63, 63, 63, 0.7)"
+  blurColor: "rgba(60, 60, 60, 0.6)"
 }
 
 export const GlobalStyle = createGlobalStyle`

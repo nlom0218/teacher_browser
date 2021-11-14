@@ -18,6 +18,7 @@ const ContentLayout = styled.div`
   display: grid;
   overflow: scroll;
   background: ${props => props.theme.blurColor};
+  transition: background 1s ease;
   -ms-overflow-style: none; // IE and Edge
   scrollbar-width: none; // Firefox
   border-radius: 10px;
