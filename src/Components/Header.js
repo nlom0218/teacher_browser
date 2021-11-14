@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import useMedia from '../Hooks/useMedia';
-import { customMedia } from '../styles';
+import { color, customMedia } from '../styles';
 import { FcNews, FcCalendar, FcTodoList, FcGrid, FcBookmark, FcDown, FcUp } from "react-icons/fc";
+import { weatherBtnDown, weatherBtnUp, weatherDown, weatherUp } from '../Animations/WeatherAni';
 
 const Container = styled.div`
   width: 100%;
@@ -18,7 +19,7 @@ const Container = styled.div`
 `
 
 const Weather = styled.div`
-
+  
 `
 
 const WeatherBtn = styled.div`
@@ -30,21 +31,24 @@ const WeatherBtn = styled.div`
   cursor: pointer;
   font-size: 1.5em;
   font-size: 1.5rem;
-  background: #e8e8e8;
-  border-radius: 50%;
-  transition: background 1s ease;
+  animation: ${props => props.firstEnter ? "none" : props.seeWeather ? weatherBtnDown : weatherBtnUp} 1s ease forwards;
+  svg {
+    background: ${color.white};
+    border-radius: 50%;
+  }
 `
 
 const WeatherContent = styled.div`
   position: absolute;
-  top: -36px;
-  top: -2.25rem;
-  background: ${props => props.theme.bgColor};
+  top: -30px;
+  top: -1.875rem;
+  background: ${props => props.theme.blurColor};
   transition: background 1s ease;
   padding: 10px 20px;
   padding: 0.625rem 1.25rem;
   border-radius: 10px;
   border-radius: 0.625rem;
+  animation: ${props => props.firstEnter ? "none" : props.seeWeather ? weatherDown : weatherUp} 1s ease forwards;
 `
 
 const Header = () => {
