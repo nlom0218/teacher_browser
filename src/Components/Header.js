@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import useMedia from '../Hooks/useMedia';
 import { color, customMedia } from '../styles';
 import { FcNews, FcCalendar, FcTodoList, FcGrid, FcBookmark, FcDown, FcUp } from "react-icons/fc";
+import { FaBars } from "react-icons/fa";
 import { weatherBtnDown, weatherBtnUp, weatherDown, weatherUp } from '../Animations/WeatherAni';
 import { Link } from 'react-router-dom';
 import routes from '../routes';
@@ -34,10 +35,11 @@ const WeatherBtn = styled.div`
   font-size: 1.5em;
   font-size: 1.5rem;
   animation: ${props => props.firstEnter ? "none" : props.seeWeather ? weatherBtnDown : weatherBtnUp} 1s ease forwards;
-  svg {
-    background: ${color.white};
-    border-radius: 50%;
-  }
+  background: ${color.white};
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const WeatherContent = styled.div`
@@ -55,6 +57,11 @@ const WeatherContent = styled.div`
 
 const PageBtn = styled.div`
   justify-self: center;
+  a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   svg {
     font-size: 2.75em;
     font-size: 2.75rem;
@@ -68,6 +75,25 @@ const PageBtn = styled.div`
   background: ${props => props.theme.blurColor};
   border-radius: 5px;
   transition: background 1s ease;
+  :hover {
+    background: ${props => props.theme.bgColor}
+  }
+`
+
+const SideBtn = styled.div`
+  font-size: 20px;
+  font-size: 1.25rem;
+  cursor: pointer;
+  justify-self: flex-end;
+  padding: 5px;
+  padding: 0.3125rem;
+  background: ${props => props.theme.blurColor};
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  transition: background 1s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   :hover {
     background: ${props => props.theme.bgColor}
   }
@@ -99,6 +125,7 @@ const Header = () => {
       <Link to={routes.pageLink}><FcBookmark /></Link>
       <Link to={routes.menu}><FcGrid /></Link>
     </PageBtn>
+    <SideBtn><FaBars /></SideBtn>
   </Container>);
 }
 
