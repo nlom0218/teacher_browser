@@ -53,7 +53,22 @@ const WeatherContent = styled.div`
   animation: ${props => props.firstEnter ? "none" : props.seeWeather ? weatherDown : weatherUp} 1s ease forwards;
 `
 
-const PageBtn = styled.div``
+const PageBtn = styled.div`
+  justify-self: center;
+  svg {
+    font-size: 2.75em;
+    font-size: 2.75rem;
+    cursor: pointer;
+  }
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  padding: 5px 20px;
+  background: ${props => props.theme.blurColor};
+  border-radius: 5px;
+  transition: background 1s ease;
+`
 
 const Header = () => {
   const [seeWeather, setSeeWeather] = useState(false)
