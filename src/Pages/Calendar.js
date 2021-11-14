@@ -4,7 +4,7 @@ import BasicContainer from '../Components/BasicContainer';
 
 const Calendar = () => {
   return (<BasicContainer>
-
+    달력
   </BasicContainer>);
 }
 
