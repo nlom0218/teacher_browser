@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Header from '../Components/Header';
 import Theme from '../Components/Theme';
 
 const Container = styled.div`
@@ -12,7 +13,7 @@ const Container = styled.div`
 const Home = () => {
   return (<Container>
     <Theme />
-
+    <Header />
   </Container>);
 }
 

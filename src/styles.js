@@ -1,7 +1,15 @@
 import { createGlobalStyle } from "styled-components"
+import { generateMedia } from "styled-media-query"
 import reset from "styled-reset"
 
-const color = {
+export const customMedia = generateMedia({
+  mobile: "320px",
+  tablet: "768px",
+  desktop: "1024px"
+})
+
+
+export const color = {
   black: "#3f3f3f",
   white: "#e8e8e8"
 }

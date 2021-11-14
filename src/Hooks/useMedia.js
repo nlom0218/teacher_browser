@@ -17,9 +17,11 @@ const useMedia = () => {
       return "Tablet"
     } else if (isMobile) {
       return "Mobile"
+    } else {
+      return "Mobile"
     }
   }
-  return media
+  return media()
 }
 
 export default useMedia;
