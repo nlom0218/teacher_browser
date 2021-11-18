@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import useMedia from '../Hooks/useMedia';
-import { color, customMedia } from '../styles';
+import useMedia from '../../Hooks/useMedia';
+import { color, customMedia } from '../../styles';
 import { FcNews, FcCalendar, FcTodoList, FcGrid, FcBookmark, FcDown, FcUp } from "react-icons/fc";
 import { FaBars } from "react-icons/fa";
-import { weatherBtnDown, weatherBtnUp, weatherDown, weatherUp } from '../Animations/WeatherAni';
+import { weatherBtnDown, weatherBtnUp, weatherDown, weatherUp } from '../../Animations/WeatherAni';
 import { Link } from 'react-router-dom';
-import routes from '../routes';
+import routes from '../../routes';
 
 const Container = styled.div`
   width: 100%;

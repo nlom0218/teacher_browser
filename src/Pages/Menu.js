@@ -1,12 +1,12 @@
 import React from 'react';
-import BasicContainer from '../../Components/BasicContainer';
+import BasicContainer from '../Components/Shared/BasicContainer';
 import styled from 'styled-components';
 import { FcAlarmClock, FcDonate, FcRefresh, FcNumericalSorting12 } from "react-icons/fc";
 import { GiForkKnifeSpoon, GiNotebook } from "react-icons/gi";
 import { BsTable } from "react-icons/bs";
-import { customMedia } from '../../styles';
+import { customMedia } from '../styles';
 import { Link } from 'react-router-dom';
-import routes from '../../routes';
+import routes from '../routes';
 
 const Container = styled.div`
  width: 100%;

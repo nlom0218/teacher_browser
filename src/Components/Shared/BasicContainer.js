@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import Header from '../Components/Header';
-import Theme from '../Components/Theme';
-import { customMedia } from '../styles';
+import Header from './Header';
+import Theme from './Theme';
+import { customMedia } from '../../styles';
 
 const Container = styled.div`
   display: grid;

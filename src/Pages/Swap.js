@@ -1,5 +1,5 @@
 import React from 'react';
-import BasicContainer from '../../Components/BasicContainer';
+import BasicContainer from '../Components/Shared/BasicContainer';
 
 const Swap = () => {
   return (<BasicContainer>

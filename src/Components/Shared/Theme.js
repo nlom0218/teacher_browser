@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { useReactiveVar } from '@apollo/client';
-import { darkModeVar, disableDarkMode, enableDarkMode } from '../apollo';
+import { darkModeVar, disableDarkMode, enableDarkMode } from '../../apollo';
 
 const Wrapper = styled.div`
   position: fixed;
