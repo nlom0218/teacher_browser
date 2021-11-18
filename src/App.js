@@ -3,11 +3,11 @@ import React from 'react';
 import { Route, Routes } from "react-router-dom"
 import { ThemeProvider } from 'styled-components';
 import { darkModeVar } from './apollo';
-import Calendar from './Pages/Calendar';
-import Home from './Pages/Home';
-import Menu from './Pages/Menu';
-import PageLink from './Pages/PageLink';
-import TodoList from './Pages/TodoList';
+import Home from './Pages/Home/Home'
+import Calendar from './Pages/Calendar/Calendar';
+import PageLink from './Pages/PageLink/PageLink';
+import TodoList from './Pages/TodoList/TodoList';
+import Menu from './Pages/Menu/Menu'
 import routes from './routes';
 import { darkTheme, GlobalStyle, ligthTheme } from './styles';
 
