@@ -1,8 +1,8 @@
 import React from 'react';
 import BasicContainer from '../Components/BasicContainer';
 import styled from 'styled-components';
-import { FcAlarmClock, FcDonate, FcRefresh } from "react-icons/fc";
-import { GiForkKnifeSpoon, GiNotebook, GiBowlOfRice } from "react-icons/gi";
+import { FcAlarmClock, FcDonate, FcRefresh, FcNumericalSorting12 } from "react-icons/fc";
+import { GiForkKnifeSpoon, GiNotebook } from "react-icons/gi";
 import { BsTable } from "react-icons/bs";
 import { customMedia } from '../styles';
 import { Link } from 'react-router-dom';
@@ -70,7 +70,7 @@ const Menu = () => {
       </Link>
       <Link to={routes.order}>
         <SMenu>
-          <GiBowlOfRice />
+          <FcNumericalSorting12 />
           <Title>순서정하기</Title>
           {/* 급식순서 -> 순서정하기 */}
         </SMenu>
