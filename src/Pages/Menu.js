@@ -6,6 +6,7 @@ import { GiForkKnifeSpoon, GiNotebook, GiBowlOfRice } from "react-icons/gi";
 import { BsTable } from "react-icons/bs";
 import { customMedia } from '../styles';
 import { Link } from 'react-router-dom';
+import routes from '../routes';
 
 const Container = styled.div`
  width: 100%;
@@ -49,43 +50,44 @@ const Title = styled.div`
 const Menu = () => {
   return (<BasicContainer>
     <Container>
-      <Link to="/timer">
+      <Link to={routes.timer}>
         <SMenu>
           <FcAlarmClock />
           <Title>타이머</Title>
         </SMenu>
       </Link>
-      <Link to="/timer">
+      <Link to={routes.draw}>
         <SMenu>
           <FcDonate />
           <Title>랜덤뽑기</Title>
         </SMenu>
       </Link>
-      <Link to="/timer">
+      <Link to={routes.swap}>
         <SMenu>
           <FcRefresh />
           <Title>자리바꾸기</Title>
         </SMenu>
       </Link>
-      <Link to="/timer">
+      <Link to={routes.order}>
         <SMenu>
           <GiBowlOfRice />
-          <Title>급식순서</Title>
+          <Title>순서정하기</Title>
+          {/* 급식순서 -> 순서정하기 */}
         </SMenu>
       </Link>
-      <Link to="/timer">
+      <Link to={routes.lunchmenu}>
         <SMenu>
           <GiForkKnifeSpoon />
           <Title>식단표</Title>
         </SMenu>
       </Link>
-      <Link to="/timer">
+      <Link to={routes.schedule}>
         <SMenu>
           <BsTable />
           <Title>시간표</Title>
         </SMenu>
       </Link>
-      <Link to="/timer">
+      <Link to={routes.journal}>
         <SMenu>
           <GiNotebook />
           <Title>학급일지</Title>
