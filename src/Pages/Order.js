@@ -1,10 +1,8 @@
 import React from 'react';
-import BackMenuBtn from '../Components/Shared/BackMenuBtn';
 import BasicContainer from '../Components/Shared/BasicContainer';
 
 const Order = () => {
-  return (<BasicContainer>
-    <BackMenuBtn />
+  return (<BasicContainer menuItem={true}>
     순서정하기
   </BasicContainer>);
 }

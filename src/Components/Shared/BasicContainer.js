@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Header from './Header';
 import Theme from './Theme';
 import { customMedia } from '../../styles';
+import BackMenuBtn from './BackMenuBtn';
 
 const Container = styled.div`
   display: grid;
@@ -32,11 +33,12 @@ const ContentLayout = styled.div`
   `}
 `
 
-const BasicContainer = ({ children }) => {
+const BasicContainer = ({ children, menuItem }) => {
   return (<Container>
     <Theme />
     <Header />
     <ContentLayout>
+      {menuItem && <BackMenuBtn />}
       {children}
     </ContentLayout>
   </Container>);

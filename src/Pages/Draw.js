@@ -1,10 +1,8 @@
 import React from 'react';
-import BackMenuBtn from '../Components/Shared/BackMenuBtn';
 import BasicContainer from '../Components/Shared/BasicContainer';
 
 const Draw = () => {
-  return (<BasicContainer>
-    <BackMenuBtn />
+  return (<BasicContainer menuItem={true}>
     랜덤뽑기
   </BasicContainer>);
 }

@@ -1,10 +1,8 @@
 import React from 'react';
 import BasicContainer from '../Components/Shared/BasicContainer';
-import BackMenuBtn from '../Components/Shared/BackMenuBtn';
 
 const Timer = () => {
-  return (<BasicContainer>
-    <BackMenuBtn />
+  return (<BasicContainer menuItem={true}>
     타이머
   </BasicContainer>);
 }
