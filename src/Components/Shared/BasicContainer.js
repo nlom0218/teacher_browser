@@ -23,6 +23,7 @@ const ContentLayout = styled.div`
   scrollbar-width: none; // Firefox
   border-radius: 10px;
   border-radius: 0.625rem;
+  position: relative;
   ::-webkit-scrollbar {
     display: none; // Chrome, Safari, Opera
   }
