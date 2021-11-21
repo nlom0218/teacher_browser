@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FaBars } from "react-icons/fa";
 import { Link } from 'react-router-dom';
@@ -42,6 +42,7 @@ const Content = styled.div`
   font-size: 0.875rem;
   background-color: ${props => props.theme.blurColor};
   transition: 1s ease background-color;
+  cursor: pointer;
   :hover {
     background-color: ${props => props.theme.bgColor};
     transition: 0.6s ease background-color;
@@ -61,13 +62,17 @@ const Content = styled.div`
 `
 
 const HeaderSideBtn = () => {
+  const [seeSideMenu, setSeeSideMenu] = useState(false)
+  const onClickSideBtn = () => {
+    setSeeSideMenu(prev => !prev)
+  }
   return (
     <SideMenu>
-      <SideBtn><FaBars /></SideBtn>
-      <SideContents>
+      <SideBtn onClick={onClickSideBtn}><FaBars /></SideBtn>
+      {seeSideMenu && <SideContents>
         <Content><Link to="/login">로그인</Link></Content>
         <Content><Link to="/create-account">회원가입</Link></Content>
-      </SideContents>
+      </SideContents>}
     </SideMenu>);
 }
 
