@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { FaBars } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const SideMenu = styled.div`
   display: grid;
@@ -64,8 +65,8 @@ const HeaderSideBtn = () => {
     <SideMenu>
       <SideBtn><FaBars /></SideBtn>
       <SideContents>
-        <Content>로그인</Content>
-        <Content>회원가입</Content>
+        <Content><Link to="/login">로그인</Link></Content>
+        <Content><Link to="/create-account">회원가입</Link></Content>
       </SideContents>
     </SideMenu>);
 }

@@ -44,6 +44,8 @@ export const GlobalStyle = createGlobalStyle`
   }
   a {
     text-decoration: none;
+    color: ${props => props.theme.fontColor};
+    transition: color 1s ease;
   }
   input {
     all: unset;
