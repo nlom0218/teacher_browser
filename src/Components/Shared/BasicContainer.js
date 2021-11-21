@@ -8,6 +8,7 @@ import BackMenuBtn from './BackMenuBtn';
 const Container = styled.div`
   display: grid;
   grid-template-rows: auto 1fr 100px;
+  grid-template-rows: auto 1fr 6.25rem;
   min-height: 100vh;
   height: 100vh;
   z-index: 0;
@@ -15,9 +16,9 @@ const Container = styled.div`
 
 const ContentLayout = styled.div`
   margin: 0 auto;
+  max-width: 1200px;
   max-width: 75rem;
   width: 90%;
-  display: grid;
   overflow: scroll;
   background: ${props => props.theme.blurColor};
   transition: background 1s ease;

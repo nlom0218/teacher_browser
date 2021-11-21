@@ -1,7 +1,10 @@
 import React from 'react';
+import AccountContainer from '../Components/Shared/AccountContainer';
 
-const CreateAccount = () => {
-  return (<div>회원가입</div>);
+const CreateAccount = ({ children }) => {
+  return (<AccountContainer>
+    회원가입
+  </AccountContainer>);
 }
 
 export default CreateAccount;
