@@ -10,8 +10,8 @@ const SBackMenuBtn = styled.div`
   right: 1.25rem;
   top: 20px;
   top: 1.25rem;
-  font-size: 1.5em;
-  font-size: 1.5rem;
+  font-size: 1.25em;
+  font-size: 1.25rem;
   cursor: pointer;
   color: tomato;
 `

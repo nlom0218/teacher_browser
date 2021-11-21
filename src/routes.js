@@ -18,7 +18,7 @@ const LOGIN = "/login"
 const CREATEACCOUNT = "/create-account"
 const EDITACCOUNT = "/edit-account"
 
-export default {
+const routes = {
   home: HOME,
   todo: TODO,
   calendar: CALENDAR,
@@ -39,3 +39,5 @@ export default {
   createAccount: CREATEACCOUNT,
   editAccount: EDITACCOUNT
 }
+
+export default routes

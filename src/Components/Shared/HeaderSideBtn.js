@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { FaBars } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
@@ -63,7 +63,7 @@ const Content = styled.div`
 `
 
 const HeaderSideBtn = ({ seeSideMenu, setSeeSideMenu }) => {
-  const [login, setLogin] = useState(true)
+  const login = false
   const navigate = useNavigate()
   const onClickSideBtn = () => {
     setSeeSideMenu(prev => !prev)

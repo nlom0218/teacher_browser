@@ -17,6 +17,9 @@ import Order from './Pages/Order';
 import Lunchmenu from './Pages/Lunchmenu';
 import Schedule from './Pages/Schedule';
 import Journal from './Pages/Journal';
+import EditAccount from './Pages/EditAccount';
+import Login from './Pages/Login';
+import CreateAccount from './Pages/CreateAccount';
 
 function App() {
   const darkMode = useReactiveVar(darkModeVar)
@@ -25,6 +28,9 @@ function App() {
       <GlobalStyle />
       <Routes>
         <Route path={routes.home} element={<Home />} />
+        <Route path={routes.login} element={<Login />} />
+        <Route path={routes.createAccount} element={<CreateAccount />} />
+        <Route path={routes.editAccount} element={<EditAccount />} />
         <Route path={routes.todo} element={<TodoList />} />
         <Route path={routes.calendar} element={<Calendar />} />
         <Route path={routes.pageLink} element={<PageLink />} />
