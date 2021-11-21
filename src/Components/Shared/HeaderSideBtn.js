@@ -62,26 +62,30 @@ const Content = styled.div`
   }
 `
 
-const HeaderSideBtn = () => {
+const HeaderSideBtn = ({ seeSideMenu, setSeeSideMenu }) => {
+  const [login, setLogin] = useState(true)
   const navigate = useNavigate()
-  const [seeSideMenu, setSeeSideMenu] = useState(false)
   const onClickSideBtn = () => {
     setSeeSideMenu(prev => !prev)
-  }
-  const onClickContent = (route) => {
-    if (route = "login") {
-      navigate(routes.login)
-    } else if (route = "createAccount") {
-      navigate(routes.createAccount)
-    }
   }
   return (
     <SideMenu>
       <SideBtn onClick={onClickSideBtn}><FaBars /></SideBtn>
-      {seeSideMenu && <SideContents>
-        <Content onClick={() => onClickContent("login")}><Link to={routes.login}>로그인</Link></Content>
-        <Content onClick={() => onClickContent("createAccount")}><Link to={routes.createAccount}>회원가입</Link></Content>
-      </SideContents>}
+      {seeSideMenu &&
+        <SideContents>
+          {login ?
+            <React.Fragment>
+              <Content onClick={() => navigate(routes.editAccount)}><Link to={routes.editAccount}>회원정보 변경</Link></Content>
+              <Content>로그아웃</Content>
+            </React.Fragment>
+            :
+            <React.Fragment>
+              <Content onClick={() => navigate(routes.login)}><Link to={routes.login}>로그인</Link></Content>
+              <Content onClick={() => navigate(routes.createAccount)}><Link to={routes.createAccount}>회원가입</Link></Content>
+            </React.Fragment>
+          }
+        </SideContents>
+      }
     </SideMenu>);
 }
 

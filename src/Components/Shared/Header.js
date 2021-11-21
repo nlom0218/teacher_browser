@@ -77,7 +77,7 @@ const PageBtn = styled.div`
   transition: background 1s ease;
 `
 
-const Header = () => {
+const Header = ({ seeSideMenu, setSeeSideMenu }) => {
   const [seeWeather, setSeeWeather] = useState(false)
   const [firstEnter, setFirstEnter] = useState(true)
   const onClickWeatherBtn = () => {
@@ -103,7 +103,7 @@ const Header = () => {
       <Link to={routes.pageLink}><FcBookmark /></Link>
       <Link to={routes.menu}><FcGrid /></Link>
     </PageBtn>
-    <HeaderSideBtn />
+    <HeaderSideBtn seeSideMenu={seeSideMenu} setSeeSideMenu={setSeeSideMenu} />
   </Container>);
 }
 

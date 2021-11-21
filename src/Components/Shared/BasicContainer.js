@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Header from './Header';
 import Theme from './Theme';
@@ -10,6 +10,7 @@ const Container = styled.div`
   grid-template-rows: auto 1fr 100px;
   min-height: 100vh;
   height: 100vh;
+  z-index: 0;
 `
 
 const ContentLayout = styled.div`
@@ -34,9 +35,15 @@ const ContentLayout = styled.div`
 `
 
 const BasicContainer = ({ children, menuItem }) => {
-  return (<Container>
+  const [seeSideMenu, setSeeSideMenu] = useState(false)
+  const onClickBackground = () => {
+    if (seeSideMenu) {
+      setSeeSideMenu(false)
+    }
+  }
+  return (<Container onClick={onClickBackground}>
     <Theme />
-    <Header />
+    <Header seeSideMenu={seeSideMenu} setSeeSideMenu={setSeeSideMenu} />
     <ContentLayout>
       {menuItem && <BackMenuBtn />}
       {children}

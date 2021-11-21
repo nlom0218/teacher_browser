@@ -16,6 +16,7 @@ const JOURNAL = "/journal"
 // account link
 const LOGIN = "/login"
 const CREATEACCOUNT = "/create-account"
+const EDITACCOUNT = "/edit-account"
 
 export default {
   home: HOME,
@@ -35,5 +36,6 @@ export default {
 
   // account link
   login: LOGIN,
-  createAccount: CREATEACCOUNT
+  createAccount: CREATEACCOUNT,
+  editAccount: EDITACCOUNT
 }
