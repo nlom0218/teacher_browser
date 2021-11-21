@@ -26,6 +26,8 @@ https://teacher-browser.netlify.app
 > Pages/Journal    
 > Components/Journal
 
+---
+
 ### 이진승 선생님
 * [ ] 타이머
 > Pages/Timer   
@@ -34,6 +36,8 @@ https://teacher-browser.netlify.app
 * [ ] 자리 바꾸기(이름 또는 숫자 복붙 기능, 인쇄)
 > Pages/Swap    
 > Components/Swap
+
+---
 
 ### 이조은 선생님
 * [ ] 순서 정하기(이름 또는 숫자 복붙 기능, 인쇄)
@@ -49,13 +53,15 @@ https://teacher-browser.netlify.app
 > Components/Schedule
 
 * [ ] 바로가기(추천 사이트 목록 넣기)
-> Pages/PageLink
+> Pages/PageLink   
 > Components/PageLink
+
+---
 
 ### 김우일 선생님
 * [ ] 오늘의 날씨 & 미세먼지
 > Components/Shared/HeaderWeather
 
 * [ ] 식단표(학교 정부 입력 후 사용)
-> Pages/Lunchmenu
+> Pages/Lunchmenu   
 > Components/Lunchmenu
