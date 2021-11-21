@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FaBars } from "react-icons/fa";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import routes from '../../routes';
 
 const SideMenu = styled.div`
   display: grid;
@@ -62,16 +63,24 @@ const Content = styled.div`
 `
 
 const HeaderSideBtn = () => {
+  const navigate = useNavigate()
   const [seeSideMenu, setSeeSideMenu] = useState(false)
   const onClickSideBtn = () => {
     setSeeSideMenu(prev => !prev)
+  }
+  const onClickContent = (route) => {
+    if (route = "login") {
+      navigate(routes.login)
+    } else if (route = "createAccount") {
+      navigate(routes.createAccount)
+    }
   }
   return (
     <SideMenu>
       <SideBtn onClick={onClickSideBtn}><FaBars /></SideBtn>
       {seeSideMenu && <SideContents>
-        <Content><Link to="/login">로그인</Link></Content>
-        <Content><Link to="/create-account">회원가입</Link></Content>
+        <Content onClick={() => onClickContent("login")}><Link to={routes.login}>로그인</Link></Content>
+        <Content onClick={() => onClickContent("createAccount")}><Link to={routes.createAccount}>회원가입</Link></Content>
       </SideContents>}
     </SideMenu>);
 }

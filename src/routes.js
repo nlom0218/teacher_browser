@@ -13,6 +13,10 @@ const LUNCHMENU = "/lunchmenu"
 const SCHEDULE = "/schedule"
 const JOURNAL = "/journal"
 
+// account link
+const LOGIN = "/login"
+const CREATEACCOUNT = "/create-account"
+
 export default {
   home: HOME,
   todo: TODO,
@@ -27,5 +31,9 @@ export default {
   order: ORDER,
   lunchmenu: LUNCHMENU,
   schedule: SCHEDULE,
-  journal: JOURNAL
+  journal: JOURNAL,
+
+  // account link
+  login: LOGIN,
+  createAccount: CREATEACCOUNT
 }
