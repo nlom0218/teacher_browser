@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import useMedia from '../../Hooks/useMedia';
 import { color, customMedia } from '../../styles';
 import { FcNews, FcCalendar, FcTodoList, FcGrid, FcBookmark, FcDown, FcUp } from "react-icons/fc";
-import { FaBars } from "react-icons/fa";
 import { weatherBtnDown, weatherBtnUp, weatherDown, weatherUp } from '../../Animations/WeatherAni';
 import { Link } from 'react-router-dom';
 import routes from '../../routes';
+import HeaderSideBtn from './HeaderSideBtn';
 
 const Container = styled.div`
   width: 100%;
@@ -77,22 +77,6 @@ const PageBtn = styled.div`
   transition: background 1s ease;
 `
 
-const SideBtn = styled.div`
-  font-size: 20px;
-  font-size: 1.25rem;
-  cursor: pointer;
-  justify-self: flex-end;
-  padding: 5px;
-  padding: 0.3125rem;
-  background: ${props => props.theme.bgColor};
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  transition: background 1s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
 const Header = () => {
   const [seeWeather, setSeeWeather] = useState(false)
   const [firstEnter, setFirstEnter] = useState(true)
@@ -119,7 +103,7 @@ const Header = () => {
       <Link to={routes.pageLink}><FcBookmark /></Link>
       <Link to={routes.menu}><FcGrid /></Link>
     </PageBtn>
-    <SideBtn><FaBars /></SideBtn>
+    <HeaderSideBtn />
   </Container>);
 }
 
