@@ -28,22 +28,34 @@ const SideContents = styled.div`
   position: absolute;
   top: 35px;
   top: 2.1875rem;
-  background-color: ${props => props.theme.fontColor};
+  /* background-color: ${props => props.theme.fontColor}; */
   display: grid;
   row-gap: 1px;
   border-radius: 5px;
 `
 
 const Content = styled.div`
-  padding: 15px 20px;
-  background-color: ${props => props.theme.bgColor};
+  padding: 15px 60px 15px 20px;
+  padding: 0.9375rem 3.75rem 0.9375rem 1.25rem;
+  font-size: 0.875em;
+  font-size: 0.875rem;
+  background-color: ${props => props.theme.blurColor};
+  transition: 1s ease background-color;
+  :hover {
+    background-color: ${props => props.theme.bgColor};
+    transition: 0.6s ease background-color;
+  }
   :first-child {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    border-top-left-radius: 0.3125rem;
+    border-top-right-radius: 0.3125rem;
   }
   :last-child{
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 0.3125rem;
+    border-bottom-right-radius: 0.3125rem;
   }
 `
 
