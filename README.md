@@ -1,5 +1,9 @@
 # Teacher Browser
 
+## 코드 작성하기 전 주의사항 필독!!
+1. 현재 branch 확인하기 main branch가 아닌 각자 생성한 branch에서 작성 -> $ git branch로 확인하기
+2. 새로운 모듈을 추가할 때 다른 선생님들께 모듈 이름과 버전 알리기
+
 ## netlify 주소
 https://teacher-browser.netlify.app
 
