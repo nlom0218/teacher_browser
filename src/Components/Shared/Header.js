@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import useMedia from '../../Hooks/useMedia';
-import { color, customMedia } from '../../styles';
-import { FcNews, FcCalendar, FcTodoList, FcGrid, FcBookmark, FcDown, FcUp } from "react-icons/fc";
-import { weatherBtnDown, weatherBtnUp, weatherDown, weatherUp } from '../../Animations/WeatherAni';
+import { customMedia } from '../../styles';
+import { FcNews, FcCalendar, FcTodoList, FcGrid, FcBookmark } from "react-icons/fc";
 import { Link } from 'react-router-dom';
 import routes from '../../routes';
 import HeaderSideBtn from './HeaderSideBtn';
