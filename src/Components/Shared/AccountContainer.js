@@ -10,6 +10,7 @@ const SAccountContainer = styled.div`
   min-height: 100vh;
   height: 100vh;
   z-index: 0;
+  
 `
 
 const Layout = styled.div`
@@ -19,6 +20,7 @@ const Layout = styled.div`
   max-width: 28.125rem;
   width: 90%;
   overflow: scroll;
+  box-shadow: rgb(0 0 0 / 20%) 0px 17px 6px -14px;
   background: ${props => props.theme.blurColor};
   transition: background 1s ease;
   -ms-overflow-style: none; // IE and Edge

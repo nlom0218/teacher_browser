@@ -11,19 +11,27 @@ export const customMedia = generateMedia({
 
 export const color = {
   black: "#3f3f3f",
-  white: "#e8e8e8"
+  white: "#e8e8e8",
+  gray: "#e8e8e8",
+  maroon: "#555555",
+  blue: "#1c5b8e",
+  lightBlue: "#7CC6FF"
 }
 
 export const ligthTheme = {
   fontColor: color.black,
   bgColor: color.white,
-  blurColor: "rgba(230, 230, 230, 0.6)"
+  blurColor: "rgba(230, 230, 230, 0.6)",
+  contentBgColor: color.gray,
+  btnBgColor: color.blue,
 }
 
 export const darkTheme = {
   fontColor: color.white,
   bgColor: color.black,
-  blurColor: "rgba(60, 60, 60, 0.6)"
+  blurColor: "rgba(60, 60, 60, 0.6)",
+  contentBgColor: color.maroon,
+  btnBgColor: color.lightBlue
 }
 
 export const GlobalStyle = createGlobalStyle`
@@ -50,6 +58,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   input {
     all: unset;
+    box-sizing: border-box;
   }
   input, textarea {
     -moz-user-select: auto;
