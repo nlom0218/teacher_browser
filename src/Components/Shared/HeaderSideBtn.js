@@ -30,7 +30,6 @@ const SideContents = styled.div`
   position: absolute;
   top: 35px;
   top: 2.1875rem;
-  /* background-color: ${props => props.theme.fontColor}; */
   display: grid;
   row-gap: 1px;
   border-radius: 5px;
@@ -63,7 +62,7 @@ const Content = styled.div`
 `
 
 const HeaderSideBtn = ({ seeSideMenu, setSeeSideMenu }) => {
-  const login = false
+  const login = true
   const navigate = useNavigate()
   const onClickSideBtn = () => {
     setSeeSideMenu(prev => !prev)
