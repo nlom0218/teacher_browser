@@ -10,10 +10,9 @@ const SAccountContainer = styled.div`
   min-height: 100vh;
   height: 100vh;
   z-index: 0;
-  
 `
 
-const Layout = styled.div`
+const BasicLayout = styled.div`
   grid-row: 2 / 3;
   margin: 0 auto;
   max-width: 450px;
@@ -36,12 +35,23 @@ const Layout = styled.div`
   `}
 `
 
+const Layout = styled.div`
+  display: grid;
+  row-gap: 60px;
+  row-gap: 3.75rem;
+  justify-items: center;
+  padding: 40px;
+  padding: 2.5rem;
+`
+
 const AccountContainer = ({ children }) => {
   return (<SAccountContainer>
     <Theme />
-    <Layout>
-      {children}
-    </Layout>
+    <BasicLayout>
+      <Layout>
+        {children}
+      </Layout>
+    </BasicLayout>
   </SAccountContainer>);
 }
 
