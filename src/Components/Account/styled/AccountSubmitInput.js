@@ -13,6 +13,7 @@ const AccountSubmitInput = styled.input`
   font-weight: 600;
   letter-spacing: 10px;
   letter-spacing: 0.625rem;
+  cursor: pointer;
 `
 
 export default AccountSubmitInput

@@ -2,11 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import AccountTitle from '../Components/Account/AccountTitle';
 import AccountContainer from '../Components/Shared/AccountContainer';
-import { FaUser, FaLock } from "react-icons/fa";
 import AccountForm from '../Components/Account/styled/AccountForm';
 import AccountInput from '../Components/Account/styled/AccountInput';
 import AccountSubmitInput from '../Components/Account/styled/AccountSubmitInput';
 import SocialLogin from '../Components/Account/SocialLogin';
+import { FaUser, FaLock } from "react-icons/fa";
+import LoginNavigation from '../Components/Account/styled/LoginNavigation';
 
 const InputLayout = styled.div`
   display: grid;
@@ -60,9 +61,13 @@ const Login = () => {
         type="submit"
         value="로그인"
       />
+      <DivideLine><div></div>또는<div></div></DivideLine>
+      <SocialLogin />
     </AccountForm>
-    <DivideLine><div></div>또는<div></div></DivideLine>
-    <SocialLogin />
+    <LoginNavigation>
+      <div>계정이 없으신가요? <span>계정 만들기</span></div>
+      <div className="findNavigation">아이디/비밀번호를 잊으셨나요?</div>
+    </LoginNavigation>
   </AccountContainer>);
 }
 
