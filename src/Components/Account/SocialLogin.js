@@ -4,10 +4,13 @@ import styled from 'styled-components';
 
 const SSoicalLogin = styled.div`
   width: 100%;
+  display: grid;
+  row-gap: 20px;
+  row-gap: 1.25rem;
 `
 
 const LoginLayout = styled.div`
-  background: #FEE500;
+  background: ${props => props.bgColor};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,20 +24,24 @@ const LoginLayout = styled.div`
     margin-right: 0.625rem;
     font-size: 24px;
     font-size: 1.5rem;
-    color: #000000;
+    color: ${props => props.iconColor};
   }
 `
 
 const LoginText = styled.div`
-  color: #000000;
+  color: ${props => props.textColor};
   opacity: 0.85;
 `
 
+
 const SocialLogin = () => {
   return (<SSoicalLogin>
-    <LoginLayout>
+    <LoginLayout
+      bgColor="#FEE500"
+      iconColor="#000000"
+    >
       <RiKakaoTalkFill />
-      <LoginText>카카오 로그인</LoginText>
+      <LoginText textColor="#000000">카카오 로그인</LoginText>
     </LoginLayout>
   </SSoicalLogin>);
 }
