@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import AccountTitle from '../Components/Account/AccountTitle';
-import AccountContainer from '../Components/Shared/AccountContainer';
 import AccountForm from '../Components/Account/styled/AccountForm';
 import AccountInput from '../Components/Account/styled/AccountInput';
 import AccountSubmitInput from '../Components/Account/styled/AccountSubmitInput';
 import SocialLogin from '../Components/Account/SocialLogin';
 import { FaUser, FaLock } from "react-icons/fa";
 import LoginNavigation from '../Components/Account/styled/LoginNavigation';
+import AccountContainer from '../Components/Shared/AccountContainer';
 
 const InputLayout = styled.div`
   display: grid;

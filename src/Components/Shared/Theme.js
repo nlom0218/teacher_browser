@@ -24,6 +24,7 @@ const Wrapper = styled.div`
   transition: none;
   font-size: 0.75em;
   font-size: 0.75rem;
+  z-index: 1;
   cursor: pointer;
   :hover {
     background: ${props => props.theme.fontColor};
