@@ -4,6 +4,7 @@ const LoginNavigation = styled.div`
   width: 100%;
   display: grid;
   row-gap: 10px;
+  row-gap: 0.625rem;
   justify-items: center;
   div {
     font-weight: 600;
@@ -16,6 +17,7 @@ const LoginNavigation = styled.div`
   }
   .findNavigation {
     font-size: 14px;
+    font-size: 0.875rem;
     text-decoration: underline;
     font-weight: 500;
     cursor: pointer;

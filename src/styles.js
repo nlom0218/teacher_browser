@@ -15,7 +15,8 @@ export const color = {
   gray: "#e8e8e8",
   maroon: "#555555",
   blue: "#1c5b8e",
-  lightBlue: "#7CC6FF"
+  lightBlue: "#7CC6FF",
+  red: "#db3a1e"
 }
 
 export const ligthTheme = {

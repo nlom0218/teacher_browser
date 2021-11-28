@@ -4,7 +4,8 @@ const AccountSubmitInput = styled.input`
   width: 100%;
   background-color: ${props => props.theme.btnBgColor};
   color: ${props => props.theme.bgColor};
-  transition: background-color 1s ease, color 1s ease;
+  opacity: ${props => props.disabled ? 0.6 : 1};
+  transition: background-color 1s ease, color 1s ease, opacity 0.6s ease;
   padding: 15px 20px;
   padding: 0.9375rem 1.25rem;
   border-radius: 10px;
