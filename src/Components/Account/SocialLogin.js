@@ -34,14 +34,14 @@ const LoginText = styled.div`
 `
 
 
-const SocialLogin = () => {
+const SocialLogin = ({ text }) => {
   return (<SSoicalLogin>
     <LoginLayout
       bgColor="#FEE500"
       iconColor="#000000"
     >
       <RiKakaoTalkFill />
-      <LoginText textColor="#000000">카카오 로그인</LoginText>
+      <LoginText textColor="#000000">카카오 {text}</LoginText>
     </LoginLayout>
   </SSoicalLogin>);
 }
