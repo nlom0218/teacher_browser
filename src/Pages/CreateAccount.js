@@ -1,7 +1,9 @@
+import { useMutation } from '@apollo/client';
+import gql from 'graphql-tag';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaLock, FaUser } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import AccountTitle from '../Components/Account/AccountTitle';
 import DivideLine from '../Components/Account/DivideLine';
@@ -15,6 +17,15 @@ import AccountContainer from '../Components/Shared/AccountContainer';
 import routes from '../routes';
 import { color } from '../styles';
 
+const CREATE_USER_MUTATION = gql`
+  mutation CreateUser($email: String!, $password: String!) {
+    createUser(email: $email, password: $password) {
+      ok
+      error
+    }
+  }
+`
+
 const ErrMsg = styled.div`
   text-align: center;
   color: ${color.red};
@@ -22,19 +33,44 @@ const ErrMsg = styled.div`
 `
 
 const CreateAccount = () => {
+  const navigate = useNavigate()
   const [errMsg, setErrMsg] = useState(undefined)
-  const { register, formState: { isValid, error }, handleSubmit } = useForm({
+  const { register, formState: { isValid }, handleSubmit, getValues } = useForm({
     mode: "onChange"
   })
   const onSubmit = (data) => {
     const { email, password, passwordConfirm } = data
+    if (loading) {
+      return
+    }
     if (password !== passwordConfirm) {
       setErrMsg("비밀번호가 서로 일치하지 않습니다.")
       return
     }
-    console.log(email, password, passwordConfirm);
+    createUser({
+      variables: {
+        email,
+        password
+      }
+    })
   }
   const onChangeInput = () => setErrMsg(undefined)
+  const onCompleted = (result) => {
+    const { createUser: { ok, error } } = result
+    if (ok) {
+      navigate(routes.login, {
+        state: {
+          email: getValues("email"),
+          password: getValues("password")
+        }
+      })
+    } else {
+      setErrMsg(error)
+    }
+  }
+  const [createUser, { loading }] = useMutation(CREATE_USER_MUTATION, {
+    onCompleted
+  })
   return (<AccountContainer>
     <AccountTitle title="회원가입" />
     <AccountForm onSubmit={handleSubmit(onSubmit)}>

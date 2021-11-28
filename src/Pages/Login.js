@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 import routes from '../routes';
 import { useForm } from 'react-hook-form';
 
-const Login = () => {
+const Login = (state) => {
   const { register, formState: { isValid }, handleSubmit } = useForm({
     mode: "onChange"
   })
