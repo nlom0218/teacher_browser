@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaLock, FaUser } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import AccountTitle from '../Components/Account/AccountTitle';
 import DivideLine from '../Components/Account/DivideLine';
 import SocialLogin from '../Components/Account/SocialLogin';
@@ -9,6 +10,7 @@ import AccountSubmitInput from '../Components/Account/styled/AccountSubmitInput'
 import InputLayout from '../Components/Account/styled/InputLayout';
 import LoginNavigation from '../Components/Account/styled/LoginNavigation';
 import AccountContainer from '../Components/Shared/AccountContainer';
+import routes from '../routes';
 
 const CreateAccount = () => {
   return (<AccountContainer>
@@ -43,7 +45,7 @@ const CreateAccount = () => {
       <SocialLogin text="회원가입" />
     </AccountForm>
     <LoginNavigation>
-      <div>계정이 있으신가요? <span>로그인</span></div>
+      <div>계정이 있으신가요? <Link to={routes.login}>로그인</Link></div>
     </LoginNavigation>
   </AccountContainer>);
 }

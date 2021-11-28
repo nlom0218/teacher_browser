@@ -10,6 +10,8 @@ import LoginNavigation from '../Components/Account/styled/LoginNavigation';
 import AccountContainer from '../Components/Shared/AccountContainer';
 import InputLayout from '../Components/Account/styled/InputLayout';
 import DivideLine from '../Components/Account/DivideLine';
+import { Link } from 'react-router-dom';
+import routes from '../routes';
 
 const Login = () => {
   return (<AccountContainer>
@@ -37,7 +39,7 @@ const Login = () => {
     </AccountForm>
     <DivideLine />
     <LoginNavigation>
-      <div>계정이 없으신가요? <span>계정 만들기</span></div>
+      <div>계정이 없으신가요? <Link to={routes.createAccount}>계정 만들기</Link></div>
       <div className="findNavigation">아이디/비밀번호를 잊으셨나요?</div>
     </LoginNavigation>
   </AccountContainer>);

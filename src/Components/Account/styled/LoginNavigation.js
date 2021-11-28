@@ -8,7 +8,7 @@ const LoginNavigation = styled.div`
   div {
     font-weight: 600;
   }
-  span {
+  a {
     color: ${props => props.theme.btnBgColor};
     transition: color 1s ease;
     font-weight: 900;
