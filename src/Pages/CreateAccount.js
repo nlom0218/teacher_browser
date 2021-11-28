@@ -41,7 +41,6 @@ const CreateAccount = () => {
   })
   const onSubmit = (data) => {
     const { email, password, passwordConfirm } = data
-    console.log(password !== passwordConfirm);
     if (loading) {
       return
     }

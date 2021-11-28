@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AccountTitle from '../Components/Account/AccountTitle';
 import AccountForm from '../Components/Account/styled/AccountForm';
 import AccountInput from '../Components/Account/styled/AccountInput';
@@ -13,8 +13,21 @@ import { Link, useLocation } from 'react-router-dom';
 import routes from '../routes';
 import { useForm } from 'react-hook-form';
 import BackBtn from '../Components/Account/BackBtn';
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/client';
+
+const LOGIN_USER_MUTATION = gql`
+  mutation LoginUser($email: String!, $password: String!) {
+    loginUser(email: $email, password: $password) {
+      ok
+      token
+      error
+    }
+}
+`
 
 const Login = () => {
+  const [errMsg, setErrMsg] = useState(undefined)
   const { state } = useLocation()
   const { register, formState: { isValid }, handleSubmit } = useForm({
     mode: "onChange",
@@ -25,8 +38,26 @@ const Login = () => {
       }),
     }
   })
+  const onCompleted = (result) => {
+    const { loginUser: { ok, error, token } } = result
+    if (error) {
+      setErrMsg(error)
+    }
+  }
+  const [loginUser, { loading }] = useMutation(LOGIN_USER_MUTATION, {
+    onCompleted
+  })
   const onSubmit = (data) => {
-    // 로그인
+    const { email, password } = data
+    if (loading) {
+      return
+    }
+    loginUser({
+      variables: {
+        email,
+        password
+      }
+    })
   }
   return (<AccountContainer>
     <BackBtn />
@@ -54,6 +85,7 @@ const Login = () => {
           autoComplete="off"
         />
       </InputLayout>
+      {errMsg && <div>{errMsg}</div>}
       <AccountSubmitInput
         type="submit"
         value="로그인"
