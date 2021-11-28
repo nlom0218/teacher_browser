@@ -16,14 +16,14 @@ const SBackMenuBtn = styled.div`
   color: tomato;
 `
 
-const BackMenuBtn = () => {
+const PreviousPageBtn = () => {
   const navigate = useNavigate()
   const onClickBackBtn = () => {
-    navigate(routes.menu)
+    navigate(-1)
   }
   return (
     <SBackMenuBtn onClick={onClickBackBtn}><FaTimes /></SBackMenuBtn>
   );
 }
 
-export default BackMenuBtn;
+export default PreviousPageBtn;

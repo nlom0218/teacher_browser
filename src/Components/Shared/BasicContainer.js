@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Header from './Header';
 import Theme from './Theme';
 import { customMedia } from '../../styles';
-import BackMenuBtn from './BackMenuBtn';
+import PreviousPageBtn from './PreviousPageBtn';
 
 const Container = styled.div`
   display: grid;
@@ -46,7 +46,7 @@ const BasicContainer = ({ children, menuItem }) => {
     <Theme />
     <Header seeSideMenu={seeSideMenu} setSeeSideMenu={setSeeSideMenu} />
     <ContentLayout>
-      {menuItem && <BackMenuBtn />}
+      {menuItem && <PreviousPageBtn />}
       {children}
     </ContentLayout>
   </Container>);
