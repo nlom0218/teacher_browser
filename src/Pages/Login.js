@@ -12,6 +12,7 @@ import DivideLine from '../Components/Account/DivideLine';
 import { Link, useLocation } from 'react-router-dom';
 import routes from '../routes';
 import { useForm } from 'react-hook-form';
+import BackBtn from '../Components/Account/BackBtn';
 
 const Login = () => {
   const { state } = useLocation()
@@ -28,6 +29,7 @@ const Login = () => {
     // 로그인
   }
   return (<AccountContainer>
+    <BackBtn />
     <AccountTitle title="로그인" />
     <AccountForm onSubmit={handleSubmit(onSubmit)}>
       <InputLayout>

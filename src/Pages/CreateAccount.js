@@ -6,6 +6,7 @@ import { FaLock, FaUser } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import AccountTitle from '../Components/Account/AccountTitle';
+import BackBtn from '../Components/Account/BackBtn';
 import DivideLine from '../Components/Account/DivideLine';
 import SocialLogin from '../Components/Account/SocialLogin';
 import AccountForm from '../Components/Account/styled/AccountForm';
@@ -72,6 +73,7 @@ const CreateAccount = () => {
     onCompleted
   })
   return (<AccountContainer>
+    <BackBtn />
     <AccountTitle title="회원가입" />
     <AccountForm onSubmit={handleSubmit(onSubmit)}>
       <InputLayout>
