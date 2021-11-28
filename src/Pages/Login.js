@@ -13,8 +13,7 @@ import { Link, useLocation } from 'react-router-dom';
 import routes from '../routes';
 import { useForm } from 'react-hook-form';
 import BackBtn from '../Components/Account/BackBtn';
-import gql from 'graphql-tag';
-import { useMutation } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 
 const LOGIN_USER_MUTATION = gql`
   mutation LoginUser($email: String!, $password: String!) {

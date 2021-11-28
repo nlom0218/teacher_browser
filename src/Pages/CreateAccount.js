@@ -1,5 +1,4 @@
-import { useMutation } from '@apollo/client';
-import gql from 'graphql-tag';
+import { gql, useMutation } from '@apollo/client';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaLock, FaUser } from 'react-icons/fa';
