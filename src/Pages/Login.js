@@ -9,13 +9,20 @@ import LoginNavigation from '../Components/Account/styled/LoginNavigation';
 import AccountContainer from '../Components/Shared/AccountContainer';
 import InputLayout from '../Components/Account/styled/InputLayout';
 import DivideLine from '../Components/Account/DivideLine';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import routes from '../routes';
 import { useForm } from 'react-hook-form';
 
-const Login = (state) => {
+const Login = () => {
+  const { state } = useLocation()
   const { register, formState: { isValid }, handleSubmit } = useForm({
-    mode: "onChange"
+    mode: "onChange",
+    defaultValues: {
+      ...(state && {
+        email: state.email,
+        password: state.password
+      }),
+    }
   })
   const onSubmit = (data) => {
     // 로그인
