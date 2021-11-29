@@ -9,11 +9,13 @@ import LoginNavigation from '../Components/Account/styled/LoginNavigation';
 import AccountContainer from '../Components/Shared/AccountContainer';
 import InputLayout from '../Components/Account/styled/InputLayout';
 import DivideLine from '../Components/Account/DivideLine';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import routes from '../routes';
 import { useForm } from 'react-hook-form';
 import BackBtn from '../Components/Account/BackBtn';
 import { gql, useMutation } from '@apollo/client';
+import { logInUser } from '../apollo';
+import ErrMsg from '../Components/Account/styled/ErrMsg';
 
 const LOGIN_USER_MUTATION = gql`
   mutation LoginUser($email: String!, $password: String!) {
@@ -28,6 +30,7 @@ const LOGIN_USER_MUTATION = gql`
 const Login = () => {
   const [errMsg, setErrMsg] = useState(undefined)
   const { state } = useLocation()
+  const navigate = useNavigate()
   const { register, formState: { isValid }, handleSubmit } = useForm({
     mode: "onChange",
     defaultValues: {
@@ -41,6 +44,10 @@ const Login = () => {
     const { loginUser: { ok, error, token } } = result
     if (error) {
       setErrMsg(error)
+    }
+    if (ok) {
+      logInUser(token)
+      navigate(routes.home)
     }
   }
   const [loginUser, { loading }] = useMutation(LOGIN_USER_MUTATION, {
@@ -58,6 +65,7 @@ const Login = () => {
       }
     })
   }
+  const onChangeInput = () => setErrMsg(undefined)
   return (<AccountContainer>
     <BackBtn />
     <AccountTitle title="로그인" />
@@ -66,7 +74,8 @@ const Login = () => {
         <FaUser />
         <AccountInput
           {...register("email", {
-            required: true
+            required: true,
+            onChange: onChangeInput
           })}
           type="email"
           placeholder="이메일을 입력해주세요."
@@ -77,14 +86,15 @@ const Login = () => {
         <FaLock />
         <AccountInput
           {...register("password", {
-            required: true
+            required: true,
+            onChange: onChangeInput
           })}
           type="password"
           placeholder="비밀번호를 입력해주세요."
           autoComplete="off"
         />
       </InputLayout>
-      {errMsg && <div>{errMsg}</div>}
+      {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
       <AccountSubmitInput
         type="submit"
         value="로그인"
