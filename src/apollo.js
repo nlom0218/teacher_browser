@@ -20,7 +20,7 @@ export const logInUser = (token) => {
   localStorage.setItem(TOKEN, token)
   isLoggedInVar(true)
 }
-export const logOutUser = (token) => {
+export const logOutUser = () => {
   localStorage.removeItem(TOKEN)
   isLoggedInVar(false)
 }
