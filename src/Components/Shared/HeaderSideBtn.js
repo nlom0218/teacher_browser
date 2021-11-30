@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { FaBars } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import routes from '../../routes';
+import { useReactiveVar } from '@apollo/client';
+import { isLoggedInVar, logOutUser } from '../../apollo';
 
 const SideMenu = styled.div`
   display: grid;
@@ -62,10 +64,14 @@ const Content = styled.div`
 `
 
 const HeaderSideBtn = ({ seeSideMenu, setSeeSideMenu }) => {
-  const login = false
+  const login = useReactiveVar(isLoggedInVar)
   const navigate = useNavigate()
   const onClickSideBtn = () => {
     setSeeSideMenu(prev => !prev)
+  }
+  const onClickLogOut = () => {
+    logOutUser()
+    navigate(routes.home)
   }
   return (
     <SideMenu>
@@ -75,7 +81,7 @@ const HeaderSideBtn = ({ seeSideMenu, setSeeSideMenu }) => {
           {login ?
             <React.Fragment>
               <Content onClick={() => navigate(routes.editAccount)}><Link to={routes.editAccount}>회원정보 변경</Link></Content>
-              <Content>로그아웃</Content>
+              <Content onClick={onClickLogOut}>로그아웃</Content>
             </React.Fragment>
             :
             <React.Fragment>

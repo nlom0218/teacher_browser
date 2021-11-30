@@ -11,6 +11,7 @@ import SocialLogin from '../Components/Account/SocialLogin';
 import AccountForm from '../Components/Account/styled/AccountForm';
 import AccountInput from '../Components/Account/styled/AccountInput';
 import AccountSubmitInput from '../Components/Account/styled/AccountSubmitInput';
+import ErrMsg from '../Components/Account/styled/ErrMsg';
 import InputLayout from '../Components/Account/styled/InputLayout';
 import LoginNavigation from '../Components/Account/styled/LoginNavigation';
 import AccountContainer from '../Components/Shared/AccountContainer';
@@ -24,12 +25,6 @@ const CREATE_USER_MUTATION = gql`
       error
     }
   }
-`
-
-const ErrMsg = styled.div`
-  text-align: center;
-  color: ${color.red};
-  font-weight: 600;
 `
 
 const CreateAccount = () => {
@@ -119,7 +114,7 @@ const CreateAccount = () => {
         disabled={!isValid}
       />
       <DivideLine />
-      <SocialLogin text="회원가입" />
+      <SocialLogin />
     </AccountForm>
     <LoginNavigation>
       <div>계정이 있으신가요? <Link to={routes.login}>로그인</Link></div>
