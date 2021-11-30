@@ -101,7 +101,7 @@ const Login = () => {
         disabled={!isValid}
       />
       <DivideLine />
-      <SocialLogin text="로그인" />
+      <SocialLogin />
     </AccountForm>
     <LoginNavigation>
       <div>계정이 없으신가요? <Link to={routes.createAccount}>계정 만들기</Link></div>

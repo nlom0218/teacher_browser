@@ -114,7 +114,7 @@ const CreateAccount = () => {
         disabled={!isValid}
       />
       <DivideLine />
-      <SocialLogin text="회원가입" />
+      <SocialLogin />
     </AccountForm>
     <LoginNavigation>
       <div>계정이 있으신가요? <Link to={routes.login}>로그인</Link></div>

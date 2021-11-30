@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { FaBars } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import routes from '../../routes';
-import useMe from '../../Hooks/useMe';
 import { useReactiveVar } from '@apollo/client';
 import { isLoggedInVar, logOutUser } from '../../apollo';
 
