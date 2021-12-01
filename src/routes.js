@@ -17,6 +17,7 @@ const JOURNAL = "/journal"
 const LOGIN = "/login"
 const CREATEACCOUNT = "/create-account"
 const EDITACCOUNT = "/edit-account"
+const NAVERLOGINCALLBACK = "/naverLogin"
 
 const routes = {
   home: HOME,
@@ -37,7 +38,8 @@ const routes = {
   // account link
   login: LOGIN,
   createAccount: CREATEACCOUNT,
-  editAccount: EDITACCOUNT
+  editAccount: EDITACCOUNT,
+  naverLoginCallBack: NAVERLOGINCALLBACK
 }
 
 export default routes

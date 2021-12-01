@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RiKakaoTalkFill } from "react-icons/ri";
 import styled from 'styled-components';
 
@@ -33,35 +33,30 @@ const LoginText = styled.div`
   opacity: 0.85;
 `
 
+const NaverLogin = styled.div`
+  width: 100%;
+  text-align: center;
+`
 
 const SocialLogin = () => {
-  const onClickSocialLoagin = () => {
-    window.Kakao.Auth.login({
-      scope: "profile_nickname, account_email",
-      success: (authObj) => {
-        console.log(authObj);
-        if (!authObj.email) {
-          window.alert("")
-        }
-        window.Kakao.API.request({
-          url: '/v2/user/me',
-          success: (res) => {
-            const kakao_account = res.kakao_account
-            console.log(kakao_account);
-          }
-        })
-      }
+  const inItNaverLogin = () => {
+    const naverLogin = new window.naver.LoginWithNaverId({
+      clientId: "Gf04qU_FzIfDWz4a9_6Z",
+      callbackUrl: "http://localhost:3000/naverLogin",
+      isPopup: false,
+      loginButton: { color: 'green', type: 1, height: '50' },
+      callbackHandle: true
     })
+    naverLogin.init()
   }
-  return (<SSocialLogin onClick={onClickSocialLoagin}>
-    <LoginLayout
-      bgColor="#FEE500"
-      iconColor="#000000"
-    >
-      <RiKakaoTalkFill />
-      <LoginText textColor="#000000">카카오 로그인</LoginText>
-    </LoginLayout>
-  </SSocialLogin>);
+
+  useEffect(() => {
+    inItNaverLogin()
+  }, [])
+
+  return (<SSocialLogin>
+    <NaverLogin id="naverIdLogin"></NaverLogin>
+  </SSocialLogin >);
 }
 
 export default SocialLogin;
