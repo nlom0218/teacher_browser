@@ -18,7 +18,6 @@ const NaverLoginCallBack = () => {
   const navigate = useNavigate()
   const [email, setEmail] = useState(undefined)
   const onCompleted = (result) => {
-    console.log(result)
     const { naverLogin: { ok, error, token } } = result
     if (error) {
       // setErrMsg(error)
@@ -61,7 +60,7 @@ const NaverLoginCallBack = () => {
     inItNaverLogin()
   }, [email])
   return <div>
-    <div id="naverIdLogin"></div>
+    <div id="naverIdLogin" style={{ position: "absolute", top: "-10000000000px" }}></div>
   </div>
 }
 

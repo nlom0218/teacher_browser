@@ -4,8 +4,8 @@ import useMe from "../Hooks/useMe"
 
 
 const TodoList = () => {
-  const { email } = useMe()
-  console.log(email);
+  const me = useMe()
+  console.log(me?.email);
   return (<BasicContainer>
     할일
   </BasicContainer>);

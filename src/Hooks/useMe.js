@@ -12,15 +12,14 @@ const ME_QUERY = gql`
 
 const useMe = () => {
   const hasToken = useReactiveVar(isLoggedInVar)
-  const [me, setMe] = useState(null)
   const { data, loading } = useQuery(ME_QUERY, {
-    skip: !hasToken
+    skip: !hasToken,
   })
-  useEffect(() => {
-    if (!loading) {
-      // localStorage에 있는 토큰 변경시 자동 로그아웃 구현하기......
-    }
-  }, [data])
+  // useEffect(() => {
+  //   if (!loading) {
+  //     // localStorage에 있는 토큰 변경시 자동 로그아웃 구현하기......
+  //   }
+  // }, [data])
   return data?.me
 }
 
