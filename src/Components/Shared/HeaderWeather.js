@@ -8,6 +8,8 @@ import {
   weatherUp,
 } from "../../Animations/WeatherAni";
 import { color } from "../../styles";
+import dotenv from "dotenv";
+dotenv.config();
 
 const Weather = styled.div``;
 
@@ -64,12 +66,11 @@ const HeaderWeather = () => {
     setFirstEnter(false);
   };
 
-  const API_KEY = "284ec2b148a72a61795ba16c7a6f7fbb";
   const [weatherData, setWeatherData] = useState(false);
 
   function getWeatherData() {
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=seoul&units=metric&appid=${API_KEY}`
+      `https://api.openweathermap.org/data/2.5/weather?q=seoul&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
     )
       .then((res) => res.json())
       .then((json) => setWeatherData(json));
