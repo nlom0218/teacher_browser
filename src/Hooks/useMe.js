@@ -6,6 +6,7 @@ const ME_QUERY = gql`
   query Me {
     me  {  
       email
+      school
     }
   }
 `
