@@ -1,20 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FaTimes } from "react-icons/fa";
+import { IoArrowBackSharp } from "react-icons/io5";
 import { useNavigate } from 'react-router';
-import routes from '../../routes';
-import { color } from '../../styles';
 
 const SBackMenuBtn = styled.div`
   position: absolute;
-  right: 20px;
-  right: 1.25rem;
-  top: 20px;
-  top: 1.25rem;
-  font-size: 1.25em;
-  font-size: 1.25rem;
+  left: 10px;
+  left: 0.625rem;
+  top: 10px;
+  top: 0.625rem;
+  font-size: 1.5em;
+  font-size: 1.5rem;
   cursor: pointer;
-  color: ${color.red};
+  color: ${props => props.theme.fontColor};
+  transition: color 1s ease;
 `
 
 const PreviousPageBtn = () => {
@@ -23,7 +22,7 @@ const PreviousPageBtn = () => {
     navigate(-1)
   }
   return (
-    <SBackMenuBtn onClick={onClickBackBtn}><FaTimes /></SBackMenuBtn>
+    <SBackMenuBtn onClick={onClickBackBtn}><IoArrowBackSharp /></SBackMenuBtn>
   );
 }
 

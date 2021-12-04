@@ -1,232 +1,82 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { FcSearch } from 'react-icons/fc';
-import styled from 'styled-components';
-import { color, customMedia } from '../../styles';
 import { gql, useMutation } from '@apollo/client';
-import useMe, { ME_QUERY } from '../../Hooks/useMe';
-import { FaTimes } from 'react-icons/fa';
+import React from 'react';
+import styled from 'styled-components';
+import { ME_QUERY } from '../../Hooks/useMe';
+import { customMedia } from '../../styles';
 
-const UPDATE_USER_MUTATION = gql`
-  mutation UpdateUser($userEmail: String!, $schoolName: String, $schoolCode: String, $areaCode: String) {
-    updateUser(userEmail: $userEmail, schoolName: $schoolName, schoolCode: $schoolCode, areaCode: $areaCode) {
+const DELETE_SCHOOL_INFO_MUTATION = gql`
+  mutation DeleteSchoolInfo($userEmail: String!) {
+    deleteSchoolInfo(userEmail: $userEmail) {
       ok
       error
     }
   }
 `
 
-const Container = styled.div``
-
-const SchoolName = styled.div``
-
-const RegisterBtn = styled.div``
-
-const DelBtn = styled.div``
-
-const RegisterContainer = styled.div`
-  position: absolute;
-  top: 20px;
-  top: 1.25rem;
-  left: 50%;
-  transform: translate(-50%, 0%);
-  width: 90%;
-  box-shadow: ${color.boxShadow};
-  ${customMedia.greaterThan("tablet")`
-    width: 80%
-  `}
-  ${customMedia.greaterThan("desktop")`
-    width: 60%
-  `}
-`
-
-const CloseBtn = styled.div`
-  color: ${color.red};
-  text-align: end;
-  margin-right: 10px;
-  margin-right: 0.625rem;
-  cursor: pointer;
-  svg {
-    font-size: 1.25em;
-    font-size: 1.25rem;
-  }
-`
-
-const RegisterPage = styled.div`
-  background-color: ${props => props.theme.bgColor};
-  transition: background-color 1s ease;
-  padding: 10px 30px;
-  padding: 0.625rem 1.875rem;
-  border-radius: 10px;
+const Container = styled.div`
   display: grid;
   row-gap: 10px;
-  row-gap: 1.25rem;
+  row-gap: 0.625rem;
 `
 
-const SearchForm = styled.form`
-  width: 100%;
+const SchoolName = styled.div`
+`
+
+const SchoolAdress = styled.div`
+`
+
+const BtnContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  svg {
-    font-size: 1.875em;
-    font-size: 1.875rem;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  row-gap: 10px;
+  row-gap: 0.625rem;
+  div {
+    text-align: center;
+    padding: 10px;
+    padding: 0.625rem;
+    border-radius: 5px;
+    border-radius: 0.3125rem;
     cursor: pointer;
+    color: ${props => props.theme.bgColor};
+    transition: background-color 1s ease, color 1s ease;
   }
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: 1fr 1fr;
+  `}
 `
 
-const SearchInput = styled.input`
-  width: 100%;
-  ::placeholder {
-    color: ${props => props.theme.fontColor};
-    opacity: 0.8;
-    transition: color 1s ease, opacity 1s ease;
-  }
+const RegisterBtn = styled.div`
+  background-color: ${props => props.theme.btnBgColor};
 `
 
-const ErrMsg = styled.div`
-  text-align: center;
-  color: ${color.red};
-  padding-bottom: 20px;
-  padding-bottom: 1.25rem;
+const DelBtn = styled.div`
+  background-color: ${props => props.theme.redColor};
 `
 
-const SchoolList = styled.div`
-  display: grid;
-  row-gap: 20px;
-  row-gap: 1.25rem;
-  padding-bottom: 10px;
-  padding-bottom: 0.625rem;
-  /* padding-top: 20px;
-  padding-top: 1.25rem;
-  border-top: 1px solid ${props => props.theme.fontColor};
-  transition: border-top 1s ease; */
-`
-
-const SchoolItem = styled.div`
-  cursor: pointer;
-  line-height: 120%;
-  :hover {
-    text-decoration: underline;
-  }
-`
-
-const PageBtn = styled.div`
-  text-align: end;
-  cursor: pointer;
-`
-
-const RegisterSchool = ({ schoolName }) => {
-  const me = useMe()
-  const [page, setPage] = useState(1)
-  const [registerPage, setRegisterPage] = useState(false)
-  const [schoolInfo, setSchoolInfo] = useState(undefined)
-  const [errMsg, setErrMsg] = useState(undefined)
-  const [preventSubmit, setPreventSubmit] = useState(false)
+const RegisterSchool = ({ userEmail, schoolName, setRegisterPage, schoolAdress }) => {
   const onClickRegisterBtn = () => setRegisterPage(true)
-  const findSchool = (school) => {
-    fetch(`https://open.neis.go.kr/hub/schoolInfo?KEY=8bd04fadaf4d480792216f84d92fb1f9&Type=json&pIndex=${page}&pSize=5&SCHUL_NM=${school}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.RESULT) {
-          setErrMsg("검색 결과가 없습니다.")
-          setSchoolInfo(undefined)
-          return
-        }
-        const schoolInfo = data.schoolInfo[1].row.map((item) => {
-          const areaCode = item.ATPT_OFCDC_SC_CODE
-          const areaName = item.ATPT_OFCDC_SC_NM
-          const schoolCode = item.SD_SCHUL_CODE
-          const schoolName = item.SCHUL_NM
-          const schoolAdress = item.ORG_RDNMA
-          return { areaCode, areaName, schoolCode, schoolName, schoolAdress }
-        })
-        setSchoolInfo(schoolInfo);
-        setPage(prev => prev + 1)
-      })
-  }
-  const { register, handleSubmit, setValue, getValues } = useForm()
-  const onSubmit = (data) => {
-    const { school } = data
-    if (preventSubmit) {
-      return
-    }
-    if (school.length < 2) {
-      setErrMsg("두 글자 이상 입력해주세요.")
-      return
-    }
-    setPreventSubmit(true)
-    findSchool(school)
-  }
-  const onCompleted = () => {
-    onClickCloseBtn()
-  }
-  const [updateUser, { loading }] = useMutation(UPDATE_USER_MUTATION, {
-    onCompleted,
+  const [deleteSchoolInfo] = useMutation(DELETE_SCHOOL_INFO_MUTATION, {
     refetchQueries: [{ query: ME_QUERY }]
   })
-  const onClickSchool = (areaCode, schoolCode, schoolName) => {
-    if (!me) {
-      return
-    }
-    updateUser({
-      variables: {
-        userEmail: me?.email,
-        areaCode,
-        schoolCode,
-        schoolName
+  const onClickDelBtn = () => {
+    if (schoolName) {
+      if (window.confirm("등록된 학교정보를 삭제하시겠습니까?")) {
+        deleteSchoolInfo({
+          variables: { userEmail }
+        })
+      } else {
+        return
       }
-    })
-  }
-  const onChangeInput = () => {
-    setPreventSubmit(false)
-    setErrMsg(undefined)
-    setSchoolInfo(undefined)
-    setPage(1)
-  }
-  const onClickCloseBtn = () => {
-    onChangeInput()
-    setRegisterPage(false)
-    setValue("school", "")
-  }
-  const onClickPageBtn = () => {
-    findSchool(getValues("school"))
+    }
   }
   return (<Container>
     <SchoolName>{schoolName ? schoolName : "등록된 학교가 없습니다."}</SchoolName>
-    <RegisterBtn onClick={onClickRegisterBtn}>{schoolName ? "변경하기" : "등록하기"}</RegisterBtn>
-    <DelBtn>학교정보 삭제하기</DelBtn>
-    {registerPage &&
-      <RegisterContainer>
-        <CloseBtn onClick={onClickCloseBtn}><FaTimes /></CloseBtn>
-        <RegisterPage>
-          <SearchForm onSubmit={handleSubmit(onSubmit)}>
-            <SearchInput
-              {...register("school", {
-                required: true,
-                onChange: onChangeInput,
-              })}
-              type="text"
-              autoComplete="off"
-              placeholder="학교이름을 입력해주세요. ex) 다목초 또는 다목초등학교"
-            />
-            <FcSearch onClick={handleSubmit(onSubmit)} />
-          </SearchForm>
-          {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
-          {schoolInfo && <SchoolList>
-            {schoolInfo.map((item, index) => {
-              return <SchoolItem key={index} onClick={() => onClickSchool(item.areaCode, item.schoolCode, item.schoolName)}>
-                {item.areaName} {item.schoolName} {item.schoolAdress}
-              </SchoolItem>
-            })}
-            {schoolInfo.length === 5 &&
-              <PageBtn onClick={onClickPageBtn}>
-                다음 페이지
-              </PageBtn>}
-          </SchoolList>}
-        </RegisterPage>
-      </RegisterContainer>
-    }
+    <SchoolAdress>{schoolAdress}</SchoolAdress>
+    <BtnContainer>
+      <RegisterBtn onClick={onClickRegisterBtn}>{schoolName ? "변경하기" : "등록하기"}</RegisterBtn>
+      <DelBtn onClick={onClickDelBtn}>학교정보 삭제하기</DelBtn>
+    </BtnContainer>
   </Container>);
 }
 

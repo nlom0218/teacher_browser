@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaLock, FaUser } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import AccountTitle from '../Components/Account/AccountTitle';
 import BackBtn from '../Components/Account/BackBtn';
 import DivideLine from '../Components/Account/DivideLine';
@@ -16,7 +15,6 @@ import InputLayout from '../Components/Account/styled/InputLayout';
 import LoginNavigation from '../Components/Account/styled/LoginNavigation';
 import AccountContainer from '../Components/Shared/AccountContainer';
 import routes from '../routes';
-import { color } from '../styles';
 
 const CREATE_USER_MUTATION = gql`
   mutation CreateUser($email: String!, $password: String!) {

@@ -1,6 +1,6 @@
 import { gql, useQuery, useReactiveVar } from "@apollo/client"
-import { useEffect, useState } from "react"
-import { isLoggedInVar, logOutUser } from "../apollo"
+import { useEffect } from "react"
+import { isLoggedInVar } from "../apollo"
 
 export const ME_QUERY = gql`
   query Me {
@@ -10,6 +10,7 @@ export const ME_QUERY = gql`
       schoolName
       schoolCode
       areaCode
+      schoolAdress
     }
   }
 `
