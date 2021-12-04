@@ -12,7 +12,7 @@ const Item = styled.div``
 
 const EditAccount = () => {
   const me = useMe()
-  return (<BasicContainer>
+  return (<BasicContainer menuItem={true}>
     <Changes>
       <List>학교정보 수정</List>
       <Item>

@@ -7,6 +7,7 @@ import { BsTable } from "react-icons/bs";
 import { customMedia } from '../styles';
 import { Link } from 'react-router-dom';
 import routes from '../routes';
+import { FaUserEdit } from 'react-icons/fa';
 
 const Container = styled.div`
  width: 100%;
@@ -91,6 +92,12 @@ const Menu = () => {
         <SMenu>
           <GiNotebook />
           <Title>학급일지</Title>
+        </SMenu>
+      </Link>
+      <Link to={routes.editAccount}>
+        <SMenu>
+          <FaUserEdit />
+          <Title>회원정보 변경</Title>
         </SMenu>
       </Link>
     </Container>
