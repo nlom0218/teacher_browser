@@ -31,6 +31,7 @@ const RegisterContainer = styled.div`
   left: 50%;
   transform: translate(-50%, 0%);
   width: 90%;
+  box-shadow: ${color.boxShadow};
   ${customMedia.greaterThan("tablet")`
     width: 80%
   `}
@@ -94,8 +95,12 @@ const SchoolList = styled.div`
   display: grid;
   row-gap: 20px;
   row-gap: 1.25rem;
-  padding-bottom: 20px;
-  padding-bottom: 1.25rem;
+  padding-bottom: 10px;
+  padding-bottom: 0.625rem;
+  /* padding-top: 20px;
+  padding-top: 1.25rem;
+  border-top: 1px solid ${props => props.theme.fontColor};
+  transition: border-top 1s ease; */
 `
 
 const SchoolItem = styled.div`
@@ -106,18 +111,26 @@ const SchoolItem = styled.div`
   }
 `
 
+const PageBtn = styled.div`
+  text-align: end;
+  cursor: pointer;
+`
+
 const RegisterSchool = ({ schoolName }) => {
   const me = useMe()
+  const [page, setPage] = useState(1)
   const [registerPage, setRegisterPage] = useState(false)
   const [schoolInfo, setSchoolInfo] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
+  const [preventSubmit, setPreventSubmit] = useState(false)
   const onClickRegisterBtn = () => setRegisterPage(true)
   const findSchool = (school) => {
-    fetch(`https://open.neis.go.kr/hub/schoolInfo?KEY=8bd04fadaf4d480792216f84d92fb1f9&Type=json&pIndex=1&pSize=5&SCHUL_NM=${school}`)
+    fetch(`https://open.neis.go.kr/hub/schoolInfo?KEY=8bd04fadaf4d480792216f84d92fb1f9&Type=json&pIndex=${page}&pSize=5&SCHUL_NM=${school}`)
       .then(res => res.json())
       .then(data => {
         if (data.RESULT) {
           setErrMsg("검색 결과가 없습니다.")
+          setSchoolInfo(undefined)
           return
         }
         const schoolInfo = data.schoolInfo[1].row.map((item) => {
@@ -129,20 +142,21 @@ const RegisterSchool = ({ schoolName }) => {
           return { areaCode, areaName, schoolCode, schoolName, schoolAdress }
         })
         setSchoolInfo(schoolInfo);
+        setPage(prev => prev + 1)
       })
   }
-  const { register, handleSubmit, setValue } = useForm()
+  const { register, handleSubmit, setValue, getValues } = useForm()
   const onSubmit = (data) => {
     const { school } = data
+    if (preventSubmit) {
+      return
+    }
     if (school.length < 2) {
       setErrMsg("두 글자 이상 입력해주세요.")
       return
     }
+    setPreventSubmit(true)
     findSchool(school)
-  }
-  const onChangeInput = () => {
-    setErrMsg(undefined)
-    setSchoolInfo(undefined)
   }
   const onCompleted = () => {
     onClickCloseBtn()
@@ -152,9 +166,6 @@ const RegisterSchool = ({ schoolName }) => {
     refetchQueries: [{ query: ME_QUERY }]
   })
   const onClickSchool = (areaCode, schoolCode, schoolName) => {
-    if (loading) {
-      return
-    }
     if (!me) {
       return
     }
@@ -167,10 +178,19 @@ const RegisterSchool = ({ schoolName }) => {
       }
     })
   }
-  const onClickCloseBtn = () => {
-    setRegisterPage(false)
+  const onChangeInput = () => {
+    setPreventSubmit(false)
+    setErrMsg(undefined)
     setSchoolInfo(undefined)
+    setPage(1)
+  }
+  const onClickCloseBtn = () => {
+    onChangeInput()
+    setRegisterPage(false)
     setValue("school", "")
+  }
+  const onClickPageBtn = () => {
+    findSchool(getValues("school"))
   }
   return (<Container>
     <SchoolName>{schoolName ? schoolName : "등록된 학교가 없습니다."}</SchoolName>
@@ -199,6 +219,10 @@ const RegisterSchool = ({ schoolName }) => {
                 {item.areaName} {item.schoolName} {item.schoolAdress}
               </SchoolItem>
             })}
+            {schoolInfo.length === 5 &&
+              <PageBtn onClick={onClickPageBtn}>
+                다음 페이지
+              </PageBtn>}
           </SchoolList>}
         </RegisterPage>
       </RegisterContainer>

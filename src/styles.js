@@ -16,7 +16,8 @@ export const color = {
   maroon: "#555555",
   blue: "#1c5b8e",
   lightBlue: "#7CC6FF",
-  red: "#db3a1e"
+  red: "#db3a1e",
+  boxShadow: "0px 17px 6px -14px rgba(0,0,0,0.6)",
 }
 
 export const ligthTheme = {

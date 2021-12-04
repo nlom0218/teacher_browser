@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { FaTimes } from "react-icons/fa";
 import { useNavigate } from 'react-router';
 import routes from '../../routes';
+import { color } from '../../styles';
 
 const SBackMenuBtn = styled.div`
   position: absolute;
@@ -13,7 +14,7 @@ const SBackMenuBtn = styled.div`
   font-size: 1.25em;
   font-size: 1.25rem;
   cursor: pointer;
-  color: tomato;
+  color: ${color.red};
 `
 
 const PreviousPageBtn = () => {
