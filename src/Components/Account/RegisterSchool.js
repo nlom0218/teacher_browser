@@ -54,13 +54,16 @@ const DelBtn = styled.div`
   background-color: ${props => props.theme.redColor};
 `
 
-const RegisterSchool = ({ userEmail, schoolName, setRegisterPage, schoolAdress }) => {
+const RegisterSchool = ({ userEmail, schoolName, setRegisterPage, schoolAdress, registerPage }) => {
   const onClickRegisterBtn = () => setRegisterPage(true)
   const [deleteSchoolInfo] = useMutation(DELETE_SCHOOL_INFO_MUTATION, {
     refetchQueries: [{ query: ME_QUERY }]
   })
   const onClickDelBtn = () => {
     if (schoolName) {
+      if (registerPage) {
+        return
+      }
       if (window.confirm("등록된 학교정보를 삭제하시겠습니까?")) {
         deleteSchoolInfo({
           variables: { userEmail }

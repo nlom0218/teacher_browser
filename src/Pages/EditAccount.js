@@ -68,6 +68,7 @@ const EditAccount = () => {
             userEmail={me?.email}
             schoolName={me?.schoolName}
             schoolAdress={me?.schoolAdress}
+            registerPage={registerPage}
             setRegisterPage={setRegisterPage}
           />
         </Item>
