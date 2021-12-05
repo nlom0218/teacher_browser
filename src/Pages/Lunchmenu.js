@@ -16,6 +16,68 @@ const Title = styled.h1`
   margin: 1em;
 `;
 
+const DateContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const Date = styled(DatePicker)`
+  font-size: 2em;
+  text-align: center;
+  border-radius: 10px;
+  margin: 15px;
+  padding: 5px;
+  background-color: white;
+  cursor: pointer;
+  box-shadow: 5px 5px 5px;
+  transition: 0.1s;
+  &:active {
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    box-shadow: none;
+  }
+`;
+
+const Form = styled.form`
+  display: flex;
+  height: 50px;
+  vertical-align: top;
+  align-items: flex-start;
+  margin-bottom: 20px;
+`;
+
+const SchoolNameInput = styled.input`
+  background-color: white;
+  padding: 10px;
+  margin: 10px;
+  width: 250px;
+  height: 30px;
+`;
+
+const Button = styled.button`
+  font-size: 1em;
+  margin: 10px;
+  height: 30px;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 5px 5px 5px;
+  transition: 0.1s;
+  &:active {
+    margin-left: 15px;
+    margin-right: 5px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    box-shadow: none;
+  }
+`;
+
+const Text = styled.li`
+  font-size: 1.5em;
+  margin: 5px;
+`;
+
 const GET_SCHOOL = gql`
   query SearchSchool($name: String!) {
     searchSchool(name: $name) {
@@ -31,19 +93,20 @@ const Lunchmenu = () => {
   const [schoolName, setSchoolName] = useState("");
   const [officeCode, setOfficeCode] = useState("");
   const [schoolCode, setSchoolCode] = useState("");
-  const [menu, setMenu] = useState("");
+  const [menu, setMenu] = useState([]);
 
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => setSchoolName(data);
 
   const School = (variables) => {
-    const { loading, data } = useQuery(GET_SCHOOL, variables);
-    if (loading) {
-      return "로딩중";
-    }
+    const { data } = useQuery(GET_SCHOOL, variables);
     if (data) {
-      setOfficeCode(data.searchSchool[0].ATPT_OFCDC_SC_CODE);
-      setSchoolCode(data.searchSchool[0].SD_SCHUL_CODE);
+      if (data.searchSchool[0]) {
+        setOfficeCode(data.searchSchool[0].ATPT_OFCDC_SC_CODE);
+        setSchoolCode(data.searchSchool[0].SD_SCHUL_CODE);
+      } else {
+        setMenu("없는 학교 이름입니다.");
+      }
     }
     return "";
   };
@@ -68,7 +131,11 @@ const Lunchmenu = () => {
           ? json.RESULT.CODE === "ERROR-300"
             ? setMenu("학교 이름을 입력해주세요.")
             : setMenu("해당 일에 급식 정보가 없습니다.")
-          : setMenu(json.mealServiceDietInfo[1].row[0].DDISH_NM);
+          : setMenu(
+              JSON.stringify(json.mealServiceDietInfo[1].row[0].DDISH_NM)
+                .replace(/(\d{1,2}\.|\")/g, "")
+                .split("<br/>")
+            );
       });
   }
 
@@ -77,24 +144,30 @@ const Lunchmenu = () => {
   return (
     <BasicContainer menuItem={true}>
       <Title>식단표</Title>
-      <DatePicker
-        dateFormat="yyyy년 MM월 dd일"
-        selected={date}
-        onChange={(date) => setDate(date)}
-        todayButton="오늘"
-        locale={ko}
-        withPortal
-      />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          placeholder="학교 이름을 입력해주세요."
-          {...register("name", { required: true })}
+      <DateContainer>
+        <Date
+          dateFormat="yyyy년 MM월 dd일"
+          selected={date}
+          onChange={(date) => setDate(date)}
+          todayButton="오늘"
+          locale={ko}
+          withPortal
         />
-        <button>확인</button>
-      </form>
-      {menu}
-      <br />
-      <School variables={schoolName} />
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <SchoolNameInput
+            placeholder="학교 이름을 입력해주세요."
+            {...register("name", { required: true })}
+          />
+          <Button>확인</Button>
+        </Form>
+        {menu.length < 10 ? (
+          menu.map((element) => <Text>{element}</Text>)
+        ) : (
+          <Text>{menu}</Text>
+        )}
+        <br />
+        <School variables={schoolName} />
+      </DateContainer>
     </BasicContainer>
   );
 };
