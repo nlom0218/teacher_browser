@@ -96,8 +96,11 @@ const Lunchmenu = () => {
   const [menu, setMenu] = useState([]);
 
   const { register, handleSubmit } = useForm();
+  // {name} = data
   const onSubmit = (data) => setSchoolName(data);
 
+  //함수로 수정하기
+  //variables 수정하기
   const School = (variables) => {
     const { data } = useQuery(GET_SCHOOL, variables);
     if (data) {
@@ -139,7 +142,8 @@ const Lunchmenu = () => {
       });
   }
 
-  useEffect(getMenu);
+  // useEffect 제거하기
+  useEffect(getMenu, [date, schoolName]);
 
   return (
     <BasicContainer menuItem={true}>
