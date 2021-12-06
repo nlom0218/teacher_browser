@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { gql, useQuery } from "@apollo/client";
 import { ko } from "date-fns/esm/locale";
 
 import dotenv from "dotenv";
@@ -78,43 +77,52 @@ const Text = styled.li`
   margin: 5px;
 `;
 
-const GET_SCHOOL = gql`
-  query SearchSchool($name: String!) {
-    searchSchool(name: $name) {
-      SCHUL_NM
-      ATPT_OFCDC_SC_CODE
-      SD_SCHUL_CODE
-    }
-  }
-`;
-
 const Lunchmenu = () => {
   const [date, setDate] = useState(new window.Date());
-  const [schoolName, setSchoolName] = useState("");
-  const [officeCode, setOfficeCode] = useState("");
-  const [schoolCode, setSchoolCode] = useState("");
+  const [schoolCode, setSchoolCode] = useState([]);
   const [menu, setMenu] = useState([]);
 
-  const { register, handleSubmit } = useForm();
-  // {name} = data
-  const onSubmit = (data) => setSchoolName(data);
+  const { register, handleSubmit, setValue } = useForm();
 
-  //함수로 수정하기
-  //variables 수정하기
-  const School = (variables) => {
-    const { data } = useQuery(GET_SCHOOL, variables);
-    if (data) {
-      if (data.searchSchool[0]) {
-        setOfficeCode(data.searchSchool[0].ATPT_OFCDC_SC_CODE);
-        setSchoolCode(data.searchSchool[0].SD_SCHUL_CODE);
-      } else {
-        setMenu("없는 학교 이름입니다.");
-      }
-    }
-    return "";
+  //날짜 설정하기
+  const getDate = (date) => {
+    setDate(date);
   };
 
-  function getMenu() {
+  //학교 설정하기
+  const searchSchool = ({ schoolName }) => {
+    fetch(
+      `https://open.neis.go.kr/hub/schoolInfo` +
+        `?KEY=${process.env.REACT_APP_MENU_API_KEY}` +
+        `&Type=json` +
+        `&pIndex=1` +
+        `&pSize=100` +
+        `&SCHUL_NM=${schoolName}`
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json);
+        if (json.RESULT) {
+          setValue("schoolName", json.RESULT.MESSAGE);
+          setMenu(["검색 결과가 없습니다."]);
+        } else if (json.schoolInfo[1].row.length === 1) {
+          setValue(
+            "schoolName",
+            `${json.schoolInfo[1].row[0].SCHUL_NM}(${json.schoolInfo[1].row[0].ATPT_OFCDC_SC_NM})`
+          );
+          setSchoolCode([
+            json.schoolInfo[1].row[0].ATPT_OFCDC_SC_CODE,
+            json.schoolInfo[1].row[0].SD_SCHUL_CODE,
+          ]);
+        } else if (json.schoolInfo) {
+          setValue("schoolName", "검색 결과가 너무 많습니다.");
+        }
+      });
+  };
+
+  //메뉴 받아오기
+  const getMenu = () => {
+    console.log(date, schoolCode);
     const changedDate = `${date.getFullYear()}${(date.getMonth() + 1)
       .toString()
       .padStart(2, 0)}${date.getDate().toString().padStart(2, 0)}`;
@@ -124,27 +132,32 @@ const Lunchmenu = () => {
         `&Type=json` +
         `&pIndex=1` +
         `&pSize=100` +
-        `&ATPT_OFCDC_SC_CODE=${officeCode}` +
-        `&SD_SCHUL_CODE=${schoolCode}` +
+        `&ATPT_OFCDC_SC_CODE=${schoolCode[0]}` +
+        `&SD_SCHUL_CODE=${schoolCode[1]}` +
         `&MLSV_YMD=${changedDate}`
     )
       .then((response) => response.json())
       .then((json) => {
         json.RESULT
-          ? json.RESULT.CODE === "ERROR-300"
-            ? setMenu("학교 이름을 입력해주세요.")
-            : setMenu("해당 일에 급식 정보가 없습니다.")
+          ? setMenu([json.RESULT.MESSAGE])
           : setMenu(
               JSON.stringify(json.mealServiceDietInfo[1].row[0].DDISH_NM)
                 .replace(/(\d{1,2}\.|\")/g, "")
                 .split("<br/>")
             );
       });
-  }
+  };
 
-  // useEffect 제거하기
-  useEffect(getMenu, [date, schoolName]);
+  //첫 렌더링에 getMenu 막기
+  const useDidMountEffect = (func, deps) => {
+    const didMount = useRef(false);
+    useEffect(() => {
+      didMount.current ? func() : (didMount.current = true);
+    }, deps);
+  };
+  useDidMountEffect(getMenu, [date, schoolCode]);
 
+  //리턴
   return (
     <BasicContainer menuItem={true}>
       <Title>식단표</Title>
@@ -152,25 +165,25 @@ const Lunchmenu = () => {
         <Date
           dateFormat="yyyy년 MM월 dd일"
           selected={date}
-          onChange={(date) => setDate(date)}
+          onChange={(date) => getDate(date)}
           todayButton="오늘"
           locale={ko}
           withPortal
         />
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(searchSchool)}>
           <SchoolNameInput
+            {...register("schoolName")}
             placeholder="학교 이름을 입력해주세요."
-            {...register("name", { required: true })}
+            autoComplete="off"
+            required
+            minLength="3"
+            onClick={(obj) => (obj.target.value = "")}
           />
           <Button>확인</Button>
         </Form>
-        {menu.length < 10 ? (
-          menu.map((element) => <Text>{element}</Text>)
-        ) : (
-          <Text>{menu}</Text>
-        )}
-        <br />
-        <School variables={schoolName} />
+        {menu.map((e) => (
+          <Text key={e}>{e}</Text>
+        ))}
       </DateContainer>
     </BasicContainer>
   );
