@@ -5,6 +5,7 @@ import Theme from './Theme';
 import { customMedia } from '../../styles';
 import PreviousPageBtn from './PreviousPageBtn';
 
+
 const Container = styled.div`
   display: grid;
   grid-template-rows: auto 1fr 100px;
@@ -53,3 +54,4 @@ const BasicContainer = ({ children, menuItem }) => {
 }
 
 export default BasicContainer;
+
