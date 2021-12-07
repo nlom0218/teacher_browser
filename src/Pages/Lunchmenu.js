@@ -181,8 +181,8 @@ const Lunchmenu = () => {
           />
           <Button>확인</Button>
         </Form>
-        {menu.map((e) => (
-          <Text key={e}>{e}</Text>
+        {menu.map((e, index) => (
+          <Text key={index}>{e}</Text>
         ))}
       </DateContainer>
     </BasicContainer>
