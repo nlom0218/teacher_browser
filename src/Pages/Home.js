@@ -1,10 +1,10 @@
 import React from 'react';
 import BasicContainer from '../Components/Shared/BasicContainer';
-
+import NewsList from '../Components/News/NewsList';
 
 const Home = () => {
   return (<BasicContainer>
-    홈, 뉴스
+       <NewsList />;
   </BasicContainer>);
 }
 
