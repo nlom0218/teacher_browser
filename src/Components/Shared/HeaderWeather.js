@@ -8,6 +8,8 @@ import {
   weatherUp,
 } from "../../Animations/WeatherAni";
 import { color } from "../../styles";
+import dotenv from "dotenv";
+dotenv.config();
 
 const Weather = styled.div``;
 
@@ -50,32 +52,73 @@ const WeatherContent = styled.div`
 `;
 
 const WeatherIcon = styled.img`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  vertical-align: middle;
+  margin-top: -20px;
+  margin-bottom: -20px;
+  transform: translate(0%, -5%);
 `;
 
+//
 const HeaderWeather = () => {
   const [seeWeather, setSeeWeather] = useState(false);
   const [firstEnter, setFirstEnter] = useState(true);
+  const [weather, setWeather] = useState(false);
+  const [adress, setAdress] = useState();
+
   const onClickWeatherBtn = () => {
     setSeeWeather((prev) => !prev);
     setFirstEnter(false);
   };
 
-  const API_KEY = "284ec2b148a72a61795ba16c7a6f7fbb";
-  const [weatherData, setWeatherData] = useState(false);
-
-  function getWeatherData() {
+  function getWeather(lat, lng) {
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=seoul&units=metric&appid=${API_KEY}`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
     )
       .then((res) => res.json())
-      .then((json) => setWeatherData(json));
+      .then((json) => {
+        setWeather([json.main.temp, json.weather[0].icon]);
+      });
   }
 
-  useEffect(getWeatherData, []);
+  function getAdress(lat, lng) {
+    fetch(
+      `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `KakaoAK ${process.env.REACT_APP_ADRESS_API_KEY}`,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((json) =>
+        setAdress([
+          json.documents[0].address.region_2depth_name,
+          json.documents[0].address.region_3depth_name,
+        ])
+      );
+  }
+
+  function handleGeoSuccess(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    const coordsObj = {
+      latitude,
+      longitude,
+    };
+    getAdress(coordsObj.latitude, coordsObj.longitude);
+    getWeather(coordsObj.latitude, coordsObj.longitude);
+  }
+
+  function handleGeoError() {
+    console.log("위치 정보 없음");
+  }
+
+  function askForCoords() {
+    navigator.geolocation.getCurrentPosition(handleGeoSuccess, handleGeoError);
+  }
+
+  useEffect(askForCoords, []);
 
   return (
     <Weather>
@@ -87,16 +130,16 @@ const HeaderWeather = () => {
         {seeWeather ? <FcUp /> : <FcDown />}
       </WeatherBtn>
       <WeatherContent seeWeather={seeWeather} firstEnter={firstEnter}>
-        {weatherData ? (
+        {weather && adress ? (
           <React.Fragment>
-            서울시 {Math.round(weatherData.main.temp)}℃{" "}
+            {Math.round(weather[0])}℃
             <WeatherIcon
-              src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`}
+              src={`https://openweathermap.org/img/wn/${weather[1]}.png`}
             />
-            미세먼지 정보없음
+            @ {adress[0] + " " + adress[1]}
           </React.Fragment>
         ) : (
-          "Loading"
+          "위치 정보 없음"
         )}
       </WeatherContent>
     </Weather>
