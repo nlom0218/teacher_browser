@@ -21,6 +21,7 @@ import EditAccount from './Pages/EditAccount';
 import Login from './Pages/Login';
 import CreateAccount from './Pages/CreateAccount';
 import NaverLoginCallBack from './Pages/NaverLoginCallBack';
+import useMe from './Hooks/useMe';
 
 function App() {
   const darkMode = useReactiveVar(darkModeVar)
