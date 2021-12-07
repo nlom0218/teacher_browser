@@ -72,6 +72,7 @@ const HeaderSideBtn = ({ seeSideMenu, setSeeSideMenu }) => {
   const onClickLogOut = () => {
     logOutUser()
     navigate(routes.home)
+    window.location.reload()
   }
   return (
     <SideMenu>

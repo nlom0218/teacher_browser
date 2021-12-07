@@ -1,20 +1,24 @@
 import { gql, useQuery, useReactiveVar } from "@apollo/client"
-import { useEffect, useState } from "react"
-import { isLoggedInVar, logOutUser } from "../apollo"
+import { useEffect } from "react"
+import { isLoggedInVar } from "../apollo"
 
-const ME_QUERY = gql`
+export const ME_QUERY = gql`
   query Me {
     me  {  
+      _id
       email
+      schoolName
+      schoolCode
+      areaCode
+      schoolAdress
     }
   }
 `
 
 const useMe = () => {
   const hasToken = useReactiveVar(isLoggedInVar)
-  const [me, setMe] = useState(null)
   const { data, loading } = useQuery(ME_QUERY, {
-    skip: !hasToken
+    skip: !hasToken,
   })
   useEffect(() => {
     if (!loading) {

@@ -7,6 +7,8 @@ import { BsTable } from "react-icons/bs";
 import { customMedia } from '../styles';
 import { Link } from 'react-router-dom';
 import routes from '../routes';
+import { FaUserEdit } from 'react-icons/fa';
+import useMe from '../Hooks/useMe';
 
 const Container = styled.div`
  width: 100%;
@@ -48,6 +50,7 @@ const Title = styled.div`
 `
 
 const Menu = () => {
+  const me = useMe()
   return (<BasicContainer>
     <Container>
       <Link to={routes.timer}>
@@ -93,6 +96,12 @@ const Menu = () => {
           <Title>학급일지</Title>
         </SMenu>
       </Link>
+      {me && <Link to={routes.editAccount}>
+        <SMenu>
+          <FaUserEdit />
+          <Title>회원정보 변경</Title>
+        </SMenu>
+      </Link>}
     </Container>
   </BasicContainer>);
 }

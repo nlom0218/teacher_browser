@@ -1,9 +1,9 @@
 import styled from "styled-components"
-import { color } from "../../../styles"
 
 const ErrMsg = styled.div`
 text-align: center;
-color: ${color.red};
+color: ${props => props.theme.redColor};
+transition: color 1s ease;
 font-weight: 600;
 `
 
