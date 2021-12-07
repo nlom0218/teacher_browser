@@ -119,6 +119,7 @@ const RegisterContainer = ({ registerPage, setRegisterPage }) => {
   const [schoolInfo, setSchoolInfo] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
   const [preventSubmit, setPreventSubmit] = useState(false)
+  // 다음페이지로 넘기기 위해서는 '다음 페이지'버튼 이용, 엔터로 다음페이지 넘기기 하지 않기
   const findSchool = (school) => {
     fetch(`https://open.neis.go.kr/hub/schoolInfo?KEY=8bd04fadaf4d480792216f84d92fb1f9&Type=json&pIndex=${page}&pSize=5&SCHUL_NM=${school}`)
       .then(res => res.json())
@@ -200,6 +201,7 @@ const RegisterContainer = ({ registerPage, setRegisterPage }) => {
           type="text"
           autoComplete="off"
           placeholder="학교이름을 입력해주세요. ex) 다목초 또는 다목초등학교"
+          autoFocus
         />
         <FcSearch onClick={handleSubmit(onSubmit)} />
       </SearchForm>
