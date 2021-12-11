@@ -48,7 +48,7 @@ const RegisterSchool = ({ userEmail, schoolName, setRegisterPage, schoolAdress, 
   }
   return (<Container>
     <SchoolName>{schoolName ? schoolName : "등록된 학교가 없습니다."}</SchoolName>
-    <SchoolAdress>{schoolAdress}</SchoolAdress>
+    {schoolAdress && <SchoolAdress>{schoolAdress}</SchoolAdress>}
     <BtnContainer>
       <RegisterBtn onClick={onClickRegisterBtn}>{schoolName ? "변경하기" : "등록하기"}</RegisterBtn>
       <DelBtn onClick={onClickDelBtn}>학교정보 삭제하기</DelBtn>
