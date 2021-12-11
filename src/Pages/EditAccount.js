@@ -55,6 +55,7 @@ const Item = styled.div`
 const EditAccount = () => {
   const [registerPage, setRegisterPage] = useState(false)
   const me = useMe()
+  console.log(me?.studentsNum);
   return (<BasicContainer menuItem={true}>
     <Container registerPage={registerPage}>
       <Changes>
@@ -75,7 +76,9 @@ const EditAccount = () => {
       </Changes>
       <Changes>
         <List>학생</List>
-        <Item></Item>
+        <Item>
+          
+        </Item>
       </Changes>
     </Container>
     {registerPage &&
