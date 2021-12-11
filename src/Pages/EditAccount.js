@@ -79,7 +79,7 @@ const EditAccount = () => {
         <List>학생</List>
         <Item>
           <EditStudent
-            studentsNum={me?.studentsNum}
+            studentNum={me?.studentNum}
             registerPage={registerPage}
             setRegisterPage={setRegisterPage}
           />

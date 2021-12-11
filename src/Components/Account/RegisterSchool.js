@@ -5,6 +5,8 @@ import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import useMe, { ME_QUERY } from '../../Hooks/useMe';
 import RegisterContainer from './RegisterContainer';
+import RegisterForm from './styled/RegisterForm';
+import RegisterErrMsg from './styled/RegisterErrMsg';
 
 const UPDATE_USER_MUTATION = gql`
   mutation UpdateUser($userEmail: String!, $schoolName: String, $schoolCode: String, $areaCode: String, $schoolAdress: String) {
@@ -15,20 +17,6 @@ const UPDATE_USER_MUTATION = gql`
   }
 `
 
-const SearchForm = styled.form`
-  width: 100%;
-  display: grid;
-  column-gap: 20px;
-  column-gap: 1.25rem;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  svg {
-    font-size: 1.875em;
-    font-size: 1.875rem;
-    cursor: pointer;
-  }
-`
-
 const SearchInput = styled.input`
   width: 100%;
   ::placeholder {
@@ -36,14 +24,6 @@ const SearchInput = styled.input`
     opacity: 0.8;
     transition: color 1s ease, opacity 1s ease;
   }
-`
-
-const ErrMsg = styled.div`
-  text-align: center;
-  color: ${props => props.theme.redColor};
-  transition: color 1s ease;
-  padding-bottom: 20px;
-  padding-bottom: 1.25rem;
 `
 
 const SchoolList = styled.div`
@@ -146,7 +126,7 @@ const RegisterSchool = ({ setRegisterPage }) => {
     findSchool(getValues("school"))
   }
   return (<RegisterContainer setRegisterPage={setRegisterPage}>
-    <SearchForm onSubmit={handleSubmit(onSubmit)}>
+    <RegisterForm onSubmit={handleSubmit(onSubmit)}>
       <SearchInput
         {...register("school", {
           required: true,
@@ -158,8 +138,8 @@ const RegisterSchool = ({ setRegisterPage }) => {
         autoFocus
       />
       <FcSearch onClick={handleSubmit(onSubmit)} />
-    </SearchForm>
-    {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
+    </RegisterForm>
+    {errMsg && <RegisterErrMsg>{errMsg}</RegisterErrMsg>}
     {schoolInfo && <SchoolList>
       {schoolInfo.map((item, index) => {
         return <SchoolItem key={index} onClick={() => onClickSchool(item.areaCode, item.schoolCode, item.schoolName, item.schoolAdress)}>

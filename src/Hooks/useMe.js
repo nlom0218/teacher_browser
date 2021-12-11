@@ -11,7 +11,7 @@ export const ME_QUERY = gql`
       schoolCode
       areaCode
       schoolAdress
-      studentsNum
+      studentNum
     }
   }
 `
