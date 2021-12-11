@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import RegisterContainer from '../Components/Account/RegisterContainer';
 import RegisterSchool from '../Components/Account/RegisterSchool';
+import RegisterStudent from '../Components/Account/RegisterStudent';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import useMe from '../Hooks/useMe';
 import { color, customMedia } from '../styles';
@@ -55,7 +56,6 @@ const Item = styled.div`
 const EditAccount = () => {
   const [registerPage, setRegisterPage] = useState(false)
   const me = useMe()
-  console.log(me?.studentsNum);
   return (<BasicContainer menuItem={true}>
     <Container registerPage={registerPage}>
       <Changes>
@@ -77,7 +77,9 @@ const EditAccount = () => {
       <Changes>
         <List>학생</List>
         <Item>
-          
+          <RegisterStudent
+            studentsNum={me?.studentsNum}
+          />
         </Item>
       </Changes>
     </Container>
