@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import RegisterContainer from '../Components/Account/RegisterContainer';
+import EditSchool from '../Components/Account/EditSchool';
+import EditStudent from '../Components/Account/EditStudent';
 import RegisterSchool from '../Components/Account/RegisterSchool';
-import RegisterStudent from '../Components/Account/RegisterStudent';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import useMe from '../Hooks/useMe';
 import { color, customMedia } from '../styles';
@@ -65,7 +65,7 @@ const EditAccount = () => {
       <Changes>
         <List>학교정보</List>
         <Item>
-          <RegisterSchool
+          <EditSchool
             userEmail={me?.email}
             schoolName={me?.schoolName}
             schoolAdress={me?.schoolAdress}
@@ -77,14 +77,14 @@ const EditAccount = () => {
       <Changes>
         <List>학생</List>
         <Item>
-          <RegisterStudent
+          <EditStudent
             studentsNum={me?.studentsNum}
           />
         </Item>
       </Changes>
     </Container>
     {registerPage &&
-      <RegisterContainer
+      <RegisterSchool
         registerPage={registerPage}
         setRegisterPage={setRegisterPage}
       />}
