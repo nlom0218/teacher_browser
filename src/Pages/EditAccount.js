@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import EditSchool from '../Components/Account/EditSchool';
 import EditStudent from '../Components/Account/EditStudent';
 import RegisterSchool from '../Components/Account/RegisterSchool';
+import RegisterStudent from '../Components/Account/RegisterStudent';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import useMe from '../Hooks/useMe';
 import { color, customMedia } from '../styles';
@@ -54,7 +55,7 @@ const Item = styled.div`
 `
 
 const EditAccount = () => {
-  const [registerPage, setRegisterPage] = useState(false)
+  const [registerPage, setRegisterPage] = useState(undefined)
   const me = useMe()
   return (<BasicContainer menuItem={true}>
     <Container registerPage={registerPage}>
@@ -79,15 +80,21 @@ const EditAccount = () => {
         <Item>
           <EditStudent
             studentsNum={me?.studentsNum}
+            registerPage={registerPage}
+            setRegisterPage={setRegisterPage}
           />
         </Item>
       </Changes>
     </Container>
-    {registerPage &&
+    {registerPage === "school" &&
       <RegisterSchool
-        registerPage={registerPage}
         setRegisterPage={setRegisterPage}
       />}
+    {registerPage === "student" &&
+      <RegisterStudent
+        setRegisterPage={setRegisterPage}
+      />
+    }
   </BasicContainer>);
 }
 

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { FcSearch } from 'react-icons/fc';
-import { FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
-import { color, customMedia } from '../../styles';
 import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import useMe, { ME_QUERY } from '../../Hooks/useMe';
+import RegisterContainer from './RegisterContainer';
 
 const UPDATE_USER_MUTATION = gql`
   mutation UpdateUser($userEmail: String!, $schoolName: String, $schoolCode: String, $areaCode: String, $schoolAdress: String) {
@@ -14,46 +13,6 @@ const UPDATE_USER_MUTATION = gql`
       error
     }
   }
-`
-
-const SRegisterContainer = styled.div`
-  position: absolute;
-  top: 20px;
-  top: 1.25rem;
-  left: 50%;
-  transform: translate(-50%, 0%);
-  width: 90%;
-  box-shadow: ${color.boxShadow};
-  ${customMedia.greaterThan("tablet")`
-    width: 80%
-  `}
-  ${customMedia.greaterThan("desktop")`
-    width: 60%
-  `}
-`
-
-const CloseBtn = styled.div`
-  color: ${props => props.theme.redColor};
-  transition: color 1s ease;
-  text-align: end;
-  margin-right: 10px;
-  margin-right: 0.625rem;
-  cursor: pointer;
-  svg {
-    font-size: 1.25em;
-    font-size: 1.25rem;
-  }
-`
-
-const RegisterPage = styled.div`
-  background-color: ${props => props.theme.bgColor};
-  transition: background-color 1s ease;
-  padding: 10px 30px;
-  padding: 0.625rem 1.875rem;
-  border-radius: 10px;
-  display: grid;
-  row-gap: 10px;
-  row-gap: 1.25rem;
 `
 
 const SearchForm = styled.form`
@@ -113,7 +72,7 @@ const PageBtn = styled.div`
 `
 
 
-const RegisterSchool = ({ registerPage, setRegisterPage }) => {
+const RegisterSchool = ({ setRegisterPage }) => {
   const me = useMe()
   const [page, setPage] = useState(1)
   const [schoolInfo, setSchoolInfo] = useState(undefined)
@@ -155,7 +114,9 @@ const RegisterSchool = ({ registerPage, setRegisterPage }) => {
     findSchool(school)
   }
   const onCompleted = () => {
-    onClickCloseBtn()
+    onChangeInput()
+    setRegisterPage(false)
+    setValue("school", "")
   }
   const [updateUser] = useMutation(UPDATE_USER_MUTATION, {
     onCompleted,
@@ -181,44 +142,36 @@ const RegisterSchool = ({ registerPage, setRegisterPage }) => {
     setSchoolInfo(undefined)
     setPage(1)
   }
-  const onClickCloseBtn = () => {
-    onChangeInput()
-    setRegisterPage(false)
-    setValue("school", "")
-  }
   const onClickPageBtn = () => {
     findSchool(getValues("school"))
   }
-  return (<SRegisterContainer registerPage={registerPage}>
-    <CloseBtn onClick={onClickCloseBtn}><FaTimes /></CloseBtn>
-    <RegisterPage>
-      <SearchForm onSubmit={handleSubmit(onSubmit)}>
-        <SearchInput
-          {...register("school", {
-            required: true,
-            onChange: onChangeInput,
-          })}
-          type="text"
-          autoComplete="off"
-          placeholder="학교이름을 입력해주세요. ex) 다목초 또는 다목초등학교"
-          autoFocus
-        />
-        <FcSearch onClick={handleSubmit(onSubmit)} />
-      </SearchForm>
-      {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
-      {schoolInfo && <SchoolList>
-        {schoolInfo.map((item, index) => {
-          return <SchoolItem key={index} onClick={() => onClickSchool(item.areaCode, item.schoolCode, item.schoolName, item.schoolAdress)}>
-            {item.areaName} {item.schoolName} {item.schoolAdress}
-          </SchoolItem>
+  return (<RegisterContainer setRegisterPage={setRegisterPage}>
+    <SearchForm onSubmit={handleSubmit(onSubmit)}>
+      <SearchInput
+        {...register("school", {
+          required: true,
+          onChange: onChangeInput,
         })}
-        {schoolInfo.length === 5 &&
-          <PageBtn onClick={onClickPageBtn}>
-            다음 페이지
+        type="text"
+        autoComplete="off"
+        placeholder="학교이름을 입력해주세요. ex) 다목초 또는 다목초등학교"
+        autoFocus
+      />
+      <FcSearch onClick={handleSubmit(onSubmit)} />
+    </SearchForm>
+    {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
+    {schoolInfo && <SchoolList>
+      {schoolInfo.map((item, index) => {
+        return <SchoolItem key={index} onClick={() => onClickSchool(item.areaCode, item.schoolCode, item.schoolName, item.schoolAdress)}>
+          {item.areaName} {item.schoolName} {item.schoolAdress}
+        </SchoolItem>
+      })}
+      {schoolInfo.length === 5 &&
+        <PageBtn onClick={onClickPageBtn}>
+          다음 페이지
           </PageBtn>}
-      </SchoolList>}
-    </RegisterPage>
-  </SRegisterContainer>);
+    </SchoolList>}
+  </RegisterContainer>);
 }
 
 export default RegisterSchool;

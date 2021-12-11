@@ -1,7 +1,11 @@
 import React from 'react';
+import styled from 'styled-components';
+import RegisterContainer from './RegisterContainer';
 
-const RegisterStudent = () => {
-  return (<div>ddd</div>);
+const RegisterStudent = ({ setRegisterPage }) => {
+  return (<RegisterContainer setRegisterPage={setRegisterPage}>
+    sdfsdfs
+  </RegisterContainer>);
 }
 
 export default RegisterStudent;

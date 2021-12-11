@@ -28,7 +28,12 @@ const SchoolAdress = styled.div`
 `
 
 const EditSchool = ({ userEmail, schoolName, setRegisterPage, schoolAdress, registerPage }) => {
-  const onClickRegisterBtn = () => setRegisterPage(true)
+  const onClickRegisterBtn = () => {
+    if (registerPage) {
+      return
+    }
+    setRegisterPage("school")
+  }
   const [deleteSchoolInfo] = useMutation(DELETE_SCHOOL_INFO_MUTATION, {
     refetchQueries: [{ query: ME_QUERY }]
   })
