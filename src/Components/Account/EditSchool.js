@@ -34,10 +34,13 @@ const EditSchool = ({ userEmail, schoolName, setRegisterPage, schoolAdress, regi
     }
     setRegisterPage("school")
   }
-  const [deleteSchoolInfo] = useMutation(DELETE_SCHOOL_INFO_MUTATION, {
+  const [deleteSchoolInfo, { loading }] = useMutation(DELETE_SCHOOL_INFO_MUTATION, {
     refetchQueries: [{ query: ME_QUERY }]
   })
   const onClickDelBtn = () => {
+    if (loading) {
+      return
+    }
     if (schoolName) {
       if (registerPage) {
         return

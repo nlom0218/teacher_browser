@@ -57,6 +57,7 @@ const Item = styled.div`
 
 const EditAccount = () => {
   const [registerPage, setRegisterPage] = useState(undefined)
+  console.log(registerPage);
   const me = useMe()
   return (<BasicContainer menuItem={true}>
     <Container registerPage={registerPage}>
@@ -80,6 +81,7 @@ const EditAccount = () => {
         <List>학생</List>
         <Item>
           <EditStudent
+            userEmail={me?.email}
             studentNum={me?.studentNum}
             registerPage={registerPage}
             setRegisterPage={setRegisterPage}
@@ -95,8 +97,12 @@ const EditAccount = () => {
       <RegisterStudent
         userEmail={me?.email}
         setRegisterPage={setRegisterPage}
-      />
-    }
+      />}
+    {registerPage === "studentInfo" &&
+      <RegisterStudent
+        userEmail={me?.email}
+        setRegisterPage={setRegisterPage}
+      />}
   </BasicContainer>);
 }
 
