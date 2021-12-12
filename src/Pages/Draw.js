@@ -1,12 +1,11 @@
 import BasicContainer from '../Components/Shared/BasicContainer';
-import "./styles.css";
 import React, { useState } from "react";
 import styled from 'styled-components';
 
 const Container = styled.div`
-width: 100%;
-min-height: 100vh;
-display: flex;
+high: 100%
+display: grid;
+align-items: center;
 color: ${props=>props.theme.bgColor};
 `
 
@@ -17,7 +16,8 @@ margin: auto;
 padding: 30px;
 display: flex;
 flex-direction: column;
-background : #04042b;
+background: #04042b;
+high: 100%
 `
 
 const RandomNum = styled.div`
@@ -68,6 +68,10 @@ export default function Draw() {
   const [randomNum, setRandomNum] = useState(5);
 
   const handleRandomNum = () => {
+    if (minVal > maxVal) {
+      window.alert("시작값이 끝값보다 큽니다.")
+    return
+    }
     setRandomNum(Math.floor(Math.random() * (maxVal - minVal + 1) + minVal));
   };
 
