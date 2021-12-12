@@ -1,10 +1,10 @@
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { customMedia } from '../../styles';
 import RegisterContainer from './RegisterContainer';
 import StudentInfoItem from './StudentInfoItem';
+import AddStudent from "./AddStudent"
 
 export const SEE_ALL_STUDENT_QUERY = gql`
     query SeeAllStudent {
@@ -34,6 +34,7 @@ const StudentInfo = ({ setRegisterPage, userEmail }) => {
         return <StudentInfoItem key={index} name={item.name} id={item._id} order={item.order} userEmail={userEmail} />
       })}
     </StudentList>}
+    <AddStudent userEmail={userEmail} />
   </RegisterContainer>);
 }
 

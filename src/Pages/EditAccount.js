@@ -58,7 +58,6 @@ const Item = styled.div`
 
 const EditAccount = () => {
   const [registerPage, setRegisterPage] = useState(undefined)
-  console.log(registerPage);
   const me = useMe()
   return (<BasicContainer menuItem={true}>
     <Container registerPage={registerPage}>
