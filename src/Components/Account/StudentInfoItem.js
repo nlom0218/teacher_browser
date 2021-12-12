@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { ME_QUERY } from '../../Hooks/useMe';
@@ -84,7 +84,7 @@ const StudentInfoItem = ({ name, userEmail, id }) => {
   const { register, setValue, handleSubmit } = useForm({
     mode: "onChange",
   })
-  const [deleteStudent, { loading }] = useMutation(DELETE_STUDENT_MUTATION, {
+  const [deleteStudent, { delLoading }] = useMutation(DELETE_STUDENT_MUTATION, {
     refetchQueries: [{ query: SEE_ALL_STUDENT_QUERY }, { query: ME_QUERY }]
   })
   const onCompleted = (result) => {
@@ -98,7 +98,7 @@ const StudentInfoItem = ({ name, userEmail, id }) => {
     onCompleted
   })
   const onClickDelBtn = () => {
-    if (loading) {
+    if (delLoading) {
       return
     }
     deleteStudent({

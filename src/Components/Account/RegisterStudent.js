@@ -15,6 +15,7 @@ const Input = styled.input`
 
 const RegisterStudent = ({ setRegisterPage, userEmail }) => {
   const [studentArr, setStudentArr] = useState([])
+  console.log(studentArr);
   const { register, handleSubmit } = useForm({
     mode: "onChange"
   })
