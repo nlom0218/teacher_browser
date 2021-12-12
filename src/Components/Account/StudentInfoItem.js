@@ -16,6 +16,15 @@ const DELETE_STUDENT_MUTATION = gql`
   }
 `
 
+const EDIT_STUDENT_MUTATION = gql`
+    mutation DeleteStudent($id: String!, $name: String!, $teacherEmail: String!) {
+    editStudent(id: $id, name: $name, teacherEmail: $teacherEmail) {
+      ok
+      error
+    }
+  }
+`
+
 const Container = styled.form`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -71,12 +80,22 @@ const DelBtn = styled.div`
   cursor: pointer;
 `
 
-const StudentInfoItem = ({ name, userEmail }) => {
-  const { register, setValue } = useForm({
+const StudentInfoItem = ({ name, userEmail, id }) => {
+  const { register, setValue, handleSubmit } = useForm({
     mode: "onChange",
   })
   const [deleteStudent, { loading }] = useMutation(DELETE_STUDENT_MUTATION, {
     refetchQueries: [{ query: SEE_ALL_STUDENT_QUERY }, { query: ME_QUERY }]
+  })
+  const onCompleted = (result) => {
+    const { editStudent: { ok } } = result
+    if (ok) {
+      window.alert("학생 이름이 수정되었습니다.")
+    }
+  }
+  const [editStudent, { editLoading }] = useMutation(EDIT_STUDENT_MUTATION, {
+    refetchQueries: [{ query: SEE_ALL_STUDENT_QUERY }],
+    onCompleted
   })
   const onClickDelBtn = () => {
     if (loading) {
@@ -89,10 +108,26 @@ const StudentInfoItem = ({ name, userEmail }) => {
       }
     })
   }
+  const onSubmit = (data) => {
+    if (editLoading) {
+      return
+    }
+    const { name: NewName } = data
+    if (name === NewName) {
+      return
+    }
+    editStudent({
+      variables: {
+        id,
+        teacherEmail: userEmail,
+        name: NewName
+      }
+    })
+  }
   useEffect(() => {
     setValue("name", name)
   }, [name])
-  return (<Container>
+  return (<Container onSubmit={handleSubmit(onSubmit)}>
     <Input
       {...register("name", {
         required: true

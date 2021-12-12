@@ -9,6 +9,7 @@ import StudentInfoItem from './StudentInfoItem';
 export const SEE_ALL_STUDENT_QUERY = gql`
     query SeeAllStudent {
     seeAllStudent {
+      _id
       teacherEmail
       name
     }
@@ -29,7 +30,7 @@ const StudentInfo = ({ setRegisterPage, userEmail }) => {
   return (<RegisterContainer setRegisterPage={setRegisterPage}>
     {!loading && <StudentList>
       {data?.seeAllStudent.map((item, index) => {
-        return <StudentInfoItem key={index} name={item.name} userEmail={userEmail} />
+        return <StudentInfoItem key={index} name={item.name} id={item._id} userEmail={userEmail} />
       })}
     </StudentList>}
   </RegisterContainer>);
