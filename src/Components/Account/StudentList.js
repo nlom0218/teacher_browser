@@ -86,6 +86,7 @@ const StudentList = ({ studentArr, userEmail, setRegisterPage }) => {
       newStudentArr.push(data[i + 1])
     }
     const studentString = newStudentArr.join(",")
+    console.log(studentString);
     createStudent({
       variables: {
         teacherEmail: userEmail,

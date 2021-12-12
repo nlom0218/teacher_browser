@@ -44,7 +44,14 @@ const Container = styled.form`
     border-radius: 0.3125rem;
   }
   ${customMedia.greaterThan("tablet")`
-    grid-template-columns: 1fr auto auto;
+    grid-template-columns: 1fr 7fr auto auto;
+  `}
+`
+
+const StudentOrder = styled.div`
+  grid-column: 1 / -1;
+  ${customMedia.greaterThan("tablet")`
+    grid-column: 1 / 2
   `}
 `
 
@@ -56,7 +63,7 @@ const Input = styled.input`
     box-shadow: 0 0 1px 0.5px ${props => props.theme.fontColor};
   }
   ${customMedia.greaterThan("tablet")`
-    grid-column: 1 / 2;
+   grid-column: 2 / 3
   `}
 `
 
@@ -80,7 +87,7 @@ const DelBtn = styled.div`
   cursor: pointer;
 `
 
-const StudentInfoItem = ({ name, userEmail, id }) => {
+const StudentInfoItem = ({ name, userEmail, id, order }) => {
   const { register, setValue, handleSubmit } = useForm({
     mode: "onChange",
   })
@@ -128,6 +135,7 @@ const StudentInfoItem = ({ name, userEmail, id }) => {
     setValue("name", name)
   }, [name])
   return (<Container onSubmit={handleSubmit(onSubmit)}>
+    <StudentOrder>{order}번</StudentOrder>
     <Input
       {...register("name", {
         required: true
