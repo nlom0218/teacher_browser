@@ -7,8 +7,15 @@ const SRegisterContainer = styled.div`
   top: 20px;
   top: 1.25rem;
   left: 50%;
-  transform: translate(-50%, 0%);
   width: 90%;
+  max-height: 90%;
+  overflow: auto;
+  -ms-overflow-style: none; // IE and Edge
+  scrollbar-width: none; // Firefox
+  ::-webkit-scrollbar {
+    display: none; // Chrome, Safari, Opera
+  };
+  transform: translate(-50%, 0%);
   box-shadow: ${color.boxShadow};
   ${customMedia.greaterThan("tablet")`
     width: 80%
@@ -38,6 +45,7 @@ const RegisterPage = styled.div`
   padding: 0.625rem 1.875rem;
   border-radius: 10px;
   display: grid;
+  align-items: flex-start;
   row-gap: 10px;
   row-gap: 1.25rem;
 `

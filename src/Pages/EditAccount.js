@@ -14,6 +14,7 @@ const Container = styled.div`
   width: 90%;
   margin: 0 auto;
   display: grid;
+  align-items: flex-start;
   row-gap: 40px;
   row-gap: 2.5rem;
   opacity: ${props => props.registerPage ? 0.2 : 1};
