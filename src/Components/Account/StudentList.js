@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { ME_QUERY } from '../../Hooks/useMe';
 import { customMedia } from '../../styles';
+import { SEE_ALL_STUDENT_QUERY } from "./StudentInfo"
 
 const CREATE_STUDENT_MUTATION = gql`
   mutation CreateStudent($teacherEmail: String!, $studentString: String!) {
@@ -39,7 +40,6 @@ const StudentItem = styled.div`
 const StudentNum = styled.div``
 
 const StudentNameInput = styled.input`
-  background-color: red;
   padding: 10px 20px;
   padding: 0.625rem 1.25rem;
   border-radius: 5px;
@@ -75,7 +75,7 @@ const StudentList = ({ studentArr, userEmail, setRegisterPage }) => {
   }
   const [createStudent, { loading }] = useMutation(CREATE_STUDENT_MUTATION, {
     onCompleted,
-    refetchQueries: [{ query: ME_QUERY }]
+    refetchQueries: [{ query: ME_QUERY }, { query: SEE_ALL_STUDENT_QUERY }]
   })
   const onSubmit = (data) => {
     if (loading) {

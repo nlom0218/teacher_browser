@@ -40,6 +40,9 @@ const EditStudent = ({ studentNum, setRegisterPage, registerPage, userEmail }) =
     if (loading) {
       return
     }
+    if (registerPage) {
+      return
+    }
     if (studentNum === 0) {
       return
     }
@@ -56,7 +59,7 @@ const EditStudent = ({ studentNum, setRegisterPage, registerPage, userEmail }) =
   return (<Container>
     {studentNum ? `${studentNum}명의 학생이 등록되어 있습니다.` : "등록된 학생이 없습니다."}
     <BtnContainer>
-      <RegisterBtn onClick={onClickRegisterBtn}>{studentNum === 0 ? "등록하기" : "상세정보"}</RegisterBtn>
+      <RegisterBtn onClick={onClickRegisterBtn}>{studentNum === 0 ? "등록하기" : "학생정보"}</RegisterBtn>
       <DelBtn onClick={onClickDelBtn}>학생정보 삭제하기</DelBtn>
     </BtnContainer>
   </Container>);

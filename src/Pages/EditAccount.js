@@ -4,6 +4,7 @@ import EditSchool from '../Components/Account/EditSchool';
 import EditStudent from '../Components/Account/EditStudent';
 import RegisterSchool from '../Components/Account/RegisterSchool';
 import RegisterStudent from '../Components/Account/RegisterStudent';
+import StudentInfo from '../Components/Account/StudentInfo';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import useMe from '../Hooks/useMe';
 import { color, customMedia } from '../styles';
@@ -57,7 +58,6 @@ const Item = styled.div`
 
 const EditAccount = () => {
   const [registerPage, setRegisterPage] = useState(undefined)
-  console.log(registerPage);
   const me = useMe()
   return (<BasicContainer menuItem={true}>
     <Container registerPage={registerPage}>
@@ -99,7 +99,7 @@ const EditAccount = () => {
         setRegisterPage={setRegisterPage}
       />}
     {registerPage === "studentInfo" &&
-      <RegisterStudent
+      <StudentInfo
         userEmail={me?.email}
         setRegisterPage={setRegisterPage}
       />}
