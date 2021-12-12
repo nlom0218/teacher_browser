@@ -95,7 +95,7 @@ const RegisterSchool = ({ setRegisterPage }) => {
   }
   const onCompleted = () => {
     onChangeInput()
-    setRegisterPage(false)
+    setRegisterPage(undefined)
     setValue("school", "")
   }
   const [updateUser] = useMutation(UPDATE_USER_MUTATION, {

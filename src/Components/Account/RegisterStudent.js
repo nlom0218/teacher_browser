@@ -13,18 +13,18 @@ const Input = styled.input`
   }
 `
 
-const Div = styled.div`
-  padding: 50px;
-`
-
-const RegisterStudent = ({ setRegisterPage }) => {
-  const [studentNum, setStudentNum] = useState(0)
+const RegisterStudent = ({ setRegisterPage, userEmail }) => {
+  const [studentArr, setStudentArr] = useState([])
   const { register, handleSubmit } = useForm({
     mode: "onChange"
   })
   const onSubmit = (data) => {
     const studentNum = parseInt(data.studentNum);
-    setStudentNum(studentNum);
+    const newStudentArr = []
+    for (let i = 0; i < studentNum; i++) {
+      newStudentArr.push(i + 1)
+    }
+    setStudentArr(newStudentArr)
   }
   return (<RegisterContainer setRegisterPage={setRegisterPage}>
     <RegisterForm onSubmit={handleSubmit(onSubmit)}>
@@ -40,7 +40,12 @@ const RegisterStudent = ({ setRegisterPage }) => {
       />
       <FcDataRecovery onClick={handleSubmit(onSubmit)} />
     </RegisterForm>
-    {studentNum !== 0 && <StudentList />}
+    {studentArr.length !== 0 &&
+      <StudentList
+        studentArr={studentArr}
+        userEmail={userEmail}
+        setRegisterPage={setRegisterPage}
+      />}
   </RegisterContainer>);
 }
 

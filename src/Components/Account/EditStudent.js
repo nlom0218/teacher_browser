@@ -18,7 +18,7 @@ const EditStudent = ({ studentNum, setRegisterPage, registerPage }) => {
     setRegisterPage("student")
   }
   return (<Container>
-    {studentNum ? `${studentNum}의 학생이 등록되어 있습니다.` : "등록된 학생이 없습니다."}
+    {studentNum ? `${studentNum}명의 학생이 등록되어 있습니다.` : "등록된 학생이 없습니다."}
     <BtnContainer>
       <RegisterBtn onClick={onClickRegisterBtn}>{studentNum ? "상세정보" : "등록하기"}</RegisterBtn>
       <DelBtn>학생정보 삭제하기</DelBtn>

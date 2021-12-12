@@ -93,6 +93,7 @@ const EditAccount = () => {
       />}
     {registerPage === "student" &&
       <RegisterStudent
+        userEmail={me?.email}
         setRegisterPage={setRegisterPage}
       />
     }
