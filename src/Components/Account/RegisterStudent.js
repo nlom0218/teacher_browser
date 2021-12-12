@@ -11,11 +11,15 @@ const Input = styled.input`
   ::-webkit-inner-spin-button {
   -webkit-appearance: none;
   }
+  ::placeholder {
+    color: ${props => props.theme.fontColor};
+    opacity: 0.6;
+    transition: color 1s ease, opacity 1s ease;
+  }
 `
 
 const RegisterStudent = ({ setRegisterPage, userEmail }) => {
   const [studentArr, setStudentArr] = useState([])
-  console.log(studentArr);
   const { register, handleSubmit } = useForm({
     mode: "onChange"
   })

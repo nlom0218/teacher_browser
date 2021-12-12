@@ -49,6 +49,11 @@ const StudentNameInput = styled.input`
   :focus {
     box-shadow: 0 0 1px 0.5px ${props => props.theme.fontColor};
   }
+  ::placeholder {
+    color: ${props => props.theme.fontColor};
+    opacity: 0.6;
+    transition: color 1s ease, opacity 1s ease;
+  }
 `
 
 const RegisterInput = styled.input`

@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { ME_QUERY } from '../../Hooks/useMe';
@@ -50,6 +50,7 @@ const Container = styled.form`
 
 const StudentOrder = styled.div`
   grid-column: 1 / -1;
+  font-weight: 600;
   ${customMedia.greaterThan("tablet")`
     grid-column: 1 / 2
   `}
@@ -61,6 +62,11 @@ const Input = styled.input`
   transition: background-color 1s ease;
   :focus {
     box-shadow: 0 0 1px 0.5px ${props => props.theme.fontColor};
+  }
+  ::placeholder {
+    color: ${props => props.theme.fontColor};
+    opacity: 0.6;
+    transition: color 1s ease, opacity 1s ease;
   }
   ${customMedia.greaterThan("tablet")`
    grid-column: 2 / 3
@@ -87,19 +93,33 @@ const DelBtn = styled.div`
   cursor: pointer;
 `
 
+
+const ErrMsg = styled.div`
+  text-align: center;
+  color: ${props => props.theme.redColor};
+  transition: color 1s ease;
+  font-weight: 600;
+  grid-column: 1 / -1;
+`
+
 const StudentInfoItem = ({ name, userEmail, id, order }) => {
+  const [errMsg, setErrMsg] = useState(undefined)
   const { register, setValue, handleSubmit } = useForm({
     mode: "onChange",
   })
+
   const [deleteStudent, { delLoading }] = useMutation(DELETE_STUDENT_MUTATION, {
     refetchQueries: [{ query: SEE_ALL_STUDENT_QUERY }, { query: ME_QUERY }]
   })
   const onCompleted = (result) => {
-    const { editStudent: { ok } } = result
+    const { editStudent: { ok, error } } = result
     if (ok) {
       window.alert("학생 이름이 수정되었습니다.")
+    } else {
+      setErrMsg(error)
     }
   }
+
   const [editStudent, { editLoading }] = useMutation(EDIT_STUDENT_MUTATION, {
     refetchQueries: [{ query: SEE_ALL_STUDENT_QUERY }],
     onCompleted
@@ -108,12 +128,16 @@ const StudentInfoItem = ({ name, userEmail, id, order }) => {
     if (delLoading) {
       return
     }
-    deleteStudent({
-      variables: {
-        teacherEmail: userEmail,
-        name
-      }
-    })
+    if (window.confirm("해당 학생을 삭제하시겠습니까?")) {
+      deleteStudent({
+        variables: {
+          teacherEmail: userEmail,
+          name
+        }
+      })
+    } else {
+      return
+    }
   }
   const onSubmit = (data) => {
     if (editLoading) {
@@ -131,6 +155,8 @@ const StudentInfoItem = ({ name, userEmail, id, order }) => {
       }
     })
   }
+  const onChangeInput = () => setErrMsg(undefined)
+
   useEffect(() => {
     setValue("name", name)
   }, [name])
@@ -138,7 +164,8 @@ const StudentInfoItem = ({ name, userEmail, id, order }) => {
     <StudentOrder>{order}번</StudentOrder>
     <Input
       {...register("name", {
-        required: true
+        required: true,
+        onChange: onChangeInput
       })}
       type="text"
       autoComplete="off"
@@ -149,6 +176,7 @@ const StudentInfoItem = ({ name, userEmail, id, order }) => {
       value="수정"
     />
     <DelBtn onClick={onClickDelBtn}>삭제</DelBtn>
+    {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
   </Container>);
 }
 

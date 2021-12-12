@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { ME_QUERY } from '../../Hooks/useMe';
@@ -18,8 +18,8 @@ const ADD_STUDENT_MUTATION = gql`
 
 const Container = styled.form`
   display: grid;
-  row-gap: 20px;
-  row-gap: 1.25rem;
+  row-gap: 10px;
+  row-gap: 0.625rem;
   padding: 10px 20px;
   padding: 0.625rem 1.25rem;
   input {
@@ -30,17 +30,23 @@ const Container = styled.form`
   }
   ${customMedia.greaterThan("tablet")`
     grid-template-columns: 1fr auto;
-    column-gap: 40px;
-    column-gap: 2.5rem;
+    column-gap: 20px;
+    column-gap: 1.25rem;
   `}
   div {
     grid-column: 1 / -1;
+    font-weight: 600;
   }
 `
 
 const Input = styled.input`
   background-color: ${props => props.theme.contentBgColor};
   transition: background-color 1s ease;
+  ::placeholder {
+    color: ${props => props.theme.fontColor};
+    opacity: 0.6;
+    transition: color 1s ease, opacity 1s ease;
+  }
 `
 
 const SubmitInput = styled.input`
@@ -51,14 +57,25 @@ const SubmitInput = styled.input`
   cursor: pointer;
 `
 
+const ErrMsg = styled.div`
+  text-align: center;
+  color: ${props => props.theme.redColor};
+  transition: color 1s ease;
+  font-weight: 600;
+  grid-column: 1 / -1;
+`
+
 const AddStudent = ({ userEmail }) => {
+  const [errMsg, setErrMsg] = useState(undefined)
   const { register, handleSubmit, setValue } = useForm({
     mode: "onChange"
   })
   const onCompleted = (result) => {
-    const { addStudent: { ok } } = result
+    const { addStudent: { ok, error } } = result
     if (ok) {
       setValue("name", "")
+    } else {
+      setErrMsg(error)
     }
   }
   const [addStudent, { loading }] = useMutation(ADD_STUDENT_MUTATION, {
@@ -66,6 +83,7 @@ const AddStudent = ({ userEmail }) => {
     refetchQueries: [{ query: SEE_ALL_STUDENT_QUERY }, { query: ME_QUERY }]
   })
   const onSubmit = (data) => {
+    console.log(loading);
     const { name: NewName } = data
     if (loading) {
       return
@@ -77,11 +95,13 @@ const AddStudent = ({ userEmail }) => {
       }
     })
   }
+  const onChangeInput = () => setErrMsg(undefined)
   return (<Container onSubmit={handleSubmit(onSubmit)}>
     <div>학생 추가하기</div>
     <Input
       {...register("name", {
-        required: true
+        required: true,
+        onChange: onChangeInput
       })}
       placeholder="학생 이름을 입력해주세요."
       type="text"
@@ -91,6 +111,7 @@ const AddStudent = ({ userEmail }) => {
       type="submit"
       value="추가하기"
     />
+    {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
   </Container>);
 }
 
