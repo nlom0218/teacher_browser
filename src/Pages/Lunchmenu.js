@@ -42,7 +42,7 @@ const Lunchmenu = () => {
       .padStart(2, 0)}${date.getDate().toString().padStart(2, 0)}`;
     fetch(
       `https://open.neis.go.kr/hub/mealServiceDietInfo` +
-        `?KEY=${process.env.REACT_APP_MENU_API_KEY}` +
+        `?KEY=954dac30b088454d9a95700f044ce620` +
         `&Type=json` +
         `&pIndex=1` +
         `&pSize=100` +

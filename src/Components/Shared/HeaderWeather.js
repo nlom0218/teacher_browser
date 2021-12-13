@@ -72,7 +72,7 @@ const HeaderWeather = () => {
 
   function getWeather(lat, lng) {
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=metric&appid=284ec2b148a72a61795ba16c7a6f7fbb`
     )
       .then((res) => res.json())
       .then((json) => {
@@ -86,7 +86,7 @@ const HeaderWeather = () => {
       {
         method: "GET",
         headers: {
-          Authorization: `KakaoAK ${process.env.REACT_APP_ADRESS_API_KEY}`,
+          Authorization: `KakaoAK 4ef1257f7d0ad8948de3bb5fec5617a5`,
         },
       }
     )
