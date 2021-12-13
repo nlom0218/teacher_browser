@@ -8,8 +8,8 @@ import { customMedia } from '../../styles';
 import { SEE_ALL_STUDENT_QUERY } from "./StudentInfo"
 
 const ADD_STUDENT_MUTATION = gql`
-  mutation DeleteStudent($teacherEmail: String!, $name: String!) {
-    addStudent(teacherEmail: $teacherEmail, name: $name) {
+  mutation DeleteStudent($teacherEmail: String!, $name: String!, $order: Int!) {
+    addStudent(teacherEmail: $teacherEmail, name: $name, order: $order) {
       ok
       error
     }
@@ -28,8 +28,8 @@ const Container = styled.form`
     border-radius: 5px;
     border-radius: 0.3125rem;
   }
-  ${customMedia.greaterThan("tablet")`
-    grid-template-columns: 1fr auto;
+  ${customMedia.greaterThan("desktop")`
+    grid-template-columns: 1fr 3fr auto;
     column-gap: 20px;
     column-gap: 1.25rem;
   `}
@@ -37,16 +37,25 @@ const Container = styled.form`
     grid-column: 1 / -1;
     font-weight: 600;
   }
-`
-
-const Input = styled.input`
-  background-color: ${props => props.theme.contentBgColor};
-  transition: background-color 1s ease;
-  ::placeholder {
+  .addInput {
+    background-color: ${props => props.theme.contentBgColor};
+    transition: background-color 1s ease;
+    ::placeholder {
     color: ${props => props.theme.fontColor};
     opacity: 0.6;
     transition: color 1s ease, opacity 1s ease;
+    }
   }
+`
+
+const OrderInput = styled.input`
+  ::-webkit-outer-spin-button,
+  ::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  }
+`
+
+const NameInput = styled.input`
 `
 
 const SubmitInput = styled.input`
@@ -74,42 +83,51 @@ const AddStudent = ({ userEmail }) => {
     const { addStudent: { ok, error } } = result
     if (ok) {
       setValue("name", "")
+      setValue("order", "")
     } else {
       setErrMsg(error)
     }
   }
-  const [addStudent, { loading }] = useMutation(ADD_STUDENT_MUTATION, {
+  const [addStudent] = useMutation(ADD_STUDENT_MUTATION, {
     onCompleted,
     refetchQueries: [{ query: SEE_ALL_STUDENT_QUERY }, { query: ME_QUERY }]
   })
   const onSubmit = (data) => {
-    console.log(loading);
-    const { name: NewName } = data
-    if (loading) {
-      return
-    }
+    const { name: NewName, order } = data
     addStudent({
       variables: {
         teacherEmail: userEmail,
-        name: NewName
+        name: NewName,
+        order: parseInt(order)
       }
     })
   }
   const onChangeInput = () => setErrMsg(undefined)
   return (<Container onSubmit={handleSubmit(onSubmit)}>
     <div>학생 추가하기</div>
-    <Input
+    <OrderInput
+      className="addInput"
+      {...register("order", {
+        required: true,
+        onChange: onChangeInput
+      })}
+      placeholder="학생 번호를 입력"
+      type="number"
+      autoComplete="off"
+    />
+    <NameInput
+      className="addInput"
       {...register("name", {
         required: true,
         onChange: onChangeInput
       })}
-      placeholder="학생 이름을 입력해주세요."
+      placeholder="학생 이름을 입력"
       type="text"
       autoComplete="off"
     />
     <SubmitInput
       type="submit"
-      value="추가하기"
+      value="추가"
     />
     {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
   </Container>);

@@ -37,7 +37,9 @@ const StudentItem = styled.div`
   `}
 `
 
-const StudentNum = styled.div``
+const StudentNum = styled.div`
+  font-weight: 600;
+`
 
 const StudentNameInput = styled.input`
   padding: 10px 20px;
@@ -91,7 +93,6 @@ const StudentList = ({ studentArr, userEmail, setRegisterPage }) => {
       newStudentArr.push(data[i + 1])
     }
     const studentString = newStudentArr.join(",")
-    console.log(studentString);
     createStudent({
       variables: {
         teacherEmail: userEmail,
