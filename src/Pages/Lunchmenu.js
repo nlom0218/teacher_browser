@@ -1,13 +1,11 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import BasicContainer from "../Components/Shared/BasicContainer";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { ko } from "date-fns/esm/locale";
 import { useDidMountEffect } from "../Hooks/useDidMountEffect";
 import useMe from "../Hooks/useMe";
 import { SchoolNameForm } from "../Components/Lunchmenu/SchoolNameForm";
+import { Date } from "../Components/Lunchmenu/Date";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -24,24 +22,6 @@ const DateContainer = styled.div`
   flex-direction: column;
 `;
 
-const Date = styled(DatePicker)`
-  font-size: 2em;
-  text-align: center;
-  border-radius: 10px;
-  margin: 15px;
-  padding: 5px;
-  background-color: white;
-  cursor: pointer;
-  box-shadow: 5px 5px 5px;
-  transition: 0.1s;
-  &:active {
-    margin-left: 20px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    box-shadow: none;
-  }
-`;
-
 const Text = styled.li`
   font-size: 1.5em;
   margin: 5px;
@@ -52,16 +32,8 @@ const Lunchmenu = () => {
   const [schoolCode, setSchoolCode] = useState([]);
   const [menu, setMenu] = useState([]);
 
-  const { register, handleSubmit, setValue } = useForm();
-
-  //날짜 설정하기
-  const getDate = (date) => {
-    setDate(date);
-  };
-
   //회원정보 불러오기
-  const userInfo = useMe();
-  console.log(userInfo);
+  const me = useMe();
 
   //메뉴 받아오기
   const getMenu = () => {
@@ -90,7 +62,11 @@ const Lunchmenu = () => {
       });
   };
 
-  //첫 렌더링에 getMenu 막기
+  //로그인 정보 있으면 반영
+  useEffect(() => {
+    if (me) setSchoolCode([me?.areaCode, me?.schoolCode]);
+  }, [me]);
+  //맨처음 제외하고 state값 변경 시 rerender
   useDidMountEffect(getMenu, [date, schoolCode]);
 
   //리턴
@@ -98,15 +74,12 @@ const Lunchmenu = () => {
     <BasicContainer menuItem={true}>
       <Title>식단표</Title>
       <DateContainer>
-        <Date
-          dateFormat="yyyy년 MM월 dd일"
-          selected={date}
-          onChange={(date) => getDate(date)}
-          todayButton="오늘"
-          locale={ko}
-          withPortal
+        <Date date={date} setDate={setDate} />
+        <SchoolNameForm
+          schoolName={me?.schoolName}
+          setSchoolCode={setSchoolCode}
+          setMenu={setMenu}
         />
-        <SchoolNameForm setSchoolCode={setSchoolCode} setMenu={setMenu} />
         {menu.map((e, index) => (
           <Text key={index}>{e}</Text>
         ))}
