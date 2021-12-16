@@ -8,8 +8,6 @@ import {
   weatherUp,
 } from "../../Animations/WeatherAni";
 import { color } from "../../styles";
-import dotenv from "dotenv";
-dotenv.config();
 
 const Weather = styled.div``;
 
@@ -62,64 +60,52 @@ const WeatherIcon = styled.img`
 
 //
 const HeaderWeather = () => {
+  //--날씨 위젯 컨트롤 부분--//
   const [seeWeather, setSeeWeather] = useState(false);
   const [firstEnter, setFirstEnter] = useState(true);
-  const [weather, setWeather] = useState(false);
-  const [adress, setAdress] = useState();
 
   const onClickWeatherBtn = () => {
     setSeeWeather((prev) => !prev);
     setFirstEnter(false);
   };
+  //--날씨 위젯 컨트롤 부분--//
 
-  function getWeather(lat, lng) {
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
-    )
-      .then((res) => res.json())
-      .then((json) => {
-        setWeather([json.main.temp, json.weather[0].icon]);
-      });
-  }
+  const [weather, setWeather] = useState(false);
 
-  function getAdress(lat, lng) {
-    fetch(
-      `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${lng}&y=${lat}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `KakaoAK ${process.env.REACT_APP_ADRESS_API_KEY}`,
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((json) =>
-        setAdress([
-          json.documents[0].address.region_2depth_name,
-          json.documents[0].address.region_3depth_name,
-        ])
-      );
-  }
-
+  //위치 정보 수신 성공 시
   function handleGeoSuccess(position) {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
-    const coordsObj = {
-      latitude,
-      longitude,
-    };
-    getAdress(coordsObj.latitude, coordsObj.longitude);
-    getWeather(coordsObj.latitude, coordsObj.longitude);
+
+    const query = `{
+      weather(lat: ${latitude}, lng: ${longitude}) {
+        address1, address2, temp, icon, pm10grade
+      }
+    }`;
+
+    fetch(`http://localhost:4000/graphql`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query }),
+    })
+      .then((res) => res.json())
+      .then(({ data: { weather: weather } }) => setWeather(weather));
   }
 
+  //위치 정보 수신 거부 시
   function handleGeoError() {
     console.log("위치 정보 없음");
+    window.alert(
+      "위치 정보 제공을 거부하였습니다.\n날씨 정보 수신을 원한다면 위치 정보 제공에 동의해주십시오.\n(설정 - 개인정보 및 보안 - 사이트 설정 - 위치 정보 제공 동의)"
+    );
   }
 
+  //좌표 수집 함수
   function askForCoords() {
     navigator.geolocation.getCurrentPosition(handleGeoSuccess, handleGeoError);
   }
 
+  //첫 렌더링 시 좌표 수집
   useEffect(askForCoords, []);
 
   return (
@@ -132,14 +118,24 @@ const HeaderWeather = () => {
         {seeWeather ? <FcUp /> : <FcDown />}
       </WeatherBtn>
       <WeatherContent seeWeather={seeWeather} firstEnter={firstEnter}>
-        {weather && adress ? (
-          <React.Fragment>
-            {Math.round(weather[0])}℃
+        {weather ? (
+          <>
+            {Math.round(weather.temp)}℃
             <WeatherIcon
-              src={`https://openweathermap.org/img/wn/${weather[1]}.png`}
+              src={`https://openweathermap.org/img/wn/${weather.icon}.png`}
             />
-            @ {adress[0] + " " + adress[1]}
-          </React.Fragment>
+            미세먼지{" "}
+            {weather.pm10grade === "1"
+              ? "좋음"
+              : weather.pm10grade === "2"
+              ? "보통"
+              : weather.pm10grade === "3"
+              ? "나쁨"
+              : weather.pm10grade === "4"
+              ? "매우나쁨"
+              : ""}{" "}
+            @ {weather.address1 + " " + weather.address2}
+          </>
         ) : (
           "위치 정보 없음"
         )}
