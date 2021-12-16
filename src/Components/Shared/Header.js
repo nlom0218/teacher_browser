@@ -6,7 +6,6 @@ import { FcNews, FcCalendar, FcTodoList, FcGrid, FcBookmark } from "react-icons/
 import { Link } from 'react-router-dom';
 import routes from '../../routes';
 import HeaderSideBtn from './HeaderSideBtn';
-import HeaderWeather from './HeaderWeather';
 
 const Container = styled.div`
   width: 100%;
@@ -44,9 +43,8 @@ const PageBtn = styled.div`
 `
 
 const Header = ({ seeSideMenu, setSeeSideMenu }) => {
-  const media = useMedia()
   return (<Container>
-    {media !== "Mobile" && <HeaderWeather />}
+    <div></div>
     <PageBtn>
       <Link to={routes.home}><FcNews /></Link>
       <Link to={routes.todo}><FcTodoList /></Link>

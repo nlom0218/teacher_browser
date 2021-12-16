@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import RegisterContainer from '../Components/Account/RegisterContainer';
+import EditSchool from '../Components/Account/EditSchool';
+import EditStudent from '../Components/Account/EditStudent';
 import RegisterSchool from '../Components/Account/RegisterSchool';
+import RegisterStudent from '../Components/Account/RegisterStudent';
+import StudentInfo from '../Components/Account/StudentInfo';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import useMe from '../Hooks/useMe';
 import { color, customMedia } from '../styles';
@@ -12,6 +15,7 @@ const Container = styled.div`
   width: 90%;
   margin: 0 auto;
   display: grid;
+  align-items: flex-start;
   row-gap: 40px;
   row-gap: 2.5rem;
   opacity: ${props => props.registerPage ? 0.2 : 1};
@@ -53,7 +57,7 @@ const Item = styled.div`
 `
 
 const EditAccount = () => {
-  const [registerPage, setRegisterPage] = useState(false)
+  const [registerPage, setRegisterPage] = useState(undefined)
   const me = useMe()
   return (<BasicContainer menuItem={true}>
     <Container registerPage={registerPage}>
@@ -64,7 +68,7 @@ const EditAccount = () => {
       <Changes>
         <List>학교정보</List>
         <Item>
-          <RegisterSchool
+          <EditSchool
             userEmail={me?.email}
             schoolName={me?.schoolName}
             schoolAdress={me?.schoolAdress}
@@ -75,12 +79,28 @@ const EditAccount = () => {
       </Changes>
       <Changes>
         <List>학생</List>
-        <Item></Item>
+        <Item>
+          <EditStudent
+            userEmail={me?.email}
+            studentNum={me?.studentNum}
+            registerPage={registerPage}
+            setRegisterPage={setRegisterPage}
+          />
+        </Item>
       </Changes>
     </Container>
-    {registerPage &&
-      <RegisterContainer
-        registerPage={registerPage}
+    {registerPage === "school" &&
+      <RegisterSchool
+        setRegisterPage={setRegisterPage}
+      />}
+    {registerPage === "student" &&
+      <RegisterStudent
+        userEmail={me?.email}
+        setRegisterPage={setRegisterPage}
+      />}
+    {registerPage === "studentInfo" &&
+      <StudentInfo
+        userEmail={me?.email}
         setRegisterPage={setRegisterPage}
       />}
   </BasicContainer>);

@@ -21,9 +21,9 @@ const WeatherBtn = styled.div`
   font-size: 1.5em;
   font-size: 1.5rem;
   animation: ${(props) =>
-      props.firstEnter
-        ? "none"
-        : props.seeWeather
+    props.firstEnter
+      ? "none"
+      : props.seeWeather
         ? weatherBtnDown
         : weatherBtnUp}
     1s ease forwards;
@@ -38,6 +38,8 @@ const WeatherContent = styled.div`
   position: absolute;
   top: -30px;
   top: -1.875rem;
+  left: 20px;
+  left: 1.25rem;
   background: ${(props) => props.theme.blurColor};
   transition: background 1s ease;
   padding: 10px 20px;
@@ -45,7 +47,7 @@ const WeatherContent = styled.div`
   border-radius: 10px;
   border-radius: 0.625rem;
   animation: ${(props) =>
-      props.firstEnter ? "none" : props.seeWeather ? weatherDown : weatherUp}
+    props.firstEnter ? "none" : props.seeWeather ? weatherDown : weatherUp}
     1s ease forwards;
 `;
 
