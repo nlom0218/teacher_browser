@@ -8,8 +8,6 @@ import {
   weatherUp,
 } from "../../Animations/WeatherAni";
 import { color } from "../../styles";
-import dotenv from "dotenv";
-dotenv.config();
 
 const Weather = styled.div``;
 
