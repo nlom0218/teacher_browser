@@ -3,7 +3,7 @@ import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
 import PopupList from "../Components/Order/Popuplist";
 
-const Container = styled.form`
+const Container = styled.div`
   padding: 60px;
   padding: 3.75rem;
 `;
