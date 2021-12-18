@@ -6,11 +6,10 @@ import styled from "styled-components";
 const Title = styled.div`
   width: 100%;
   display: grid;
-  //row-gap: 100px;
-  row-gap: 2rem;  
+  row-gap: 2rem;
   font-size: 2em;
   text-align: center;
-  font-style : normal:
+  font-style: normal;
 `;
 
 const Button = styled.button`
@@ -32,17 +31,18 @@ const Button = styled.button`
     box-shadow: none;
   }
 `;
-const TextA = styled.textarea`
-  font-size: 1em;
-  margin: 0; auto;
-  text-align: center;
-  width:30%;
-  height:30% 
-  align-self: stretch;
-`;
 
-//const result = StuList.map((name,index)=>(<li key={index}>{name}</li>));
-//한 번에 나오게 하는 걸 하려는데 map()으로 바로 바꾸는 것이 가능한가?
+const Container = styled.form`
+  display: grid;
+  row-gap: 10px;
+  row-gap: 0.625rem;
+  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
+  div {
+    grid-column: 1 / -1;
+    font-weight: 600;
+  }
+`;
 
 const Order = () => {
   const StuList = [
@@ -64,23 +64,30 @@ const Order = () => {
   };
   return (
     <BasicContainer menuItem={true}>
-      <Title>
-        순서 정하기<p></p>
-      </Title>
-      {StuList.map((item) => (
-        <li>{item.name}</li>
-      ))}
-      <div className="OrderName">
-        <Button onClick={NewOrderBtn} className="OrderName">
-          한 명씩{" "}
-        </Button>
-        <Button onClick={NewOrderBtn} className="OrderName">
-          한 번에{" "}
-        </Button>
-        {pick && pick}
-      </div>
+      <Container>
+        <Title>
+          순서 정하기<p></p>
+        </Title>
+
+        {StuList.map((item) => (
+          <li>{item.name}</li>
+        ))}
+
+        <div className="OrderName">
+          <Button onClick={NewOrderBtn} className="OrderName">
+            한 명씩{" "}
+          </Button>
+          <Button onClick={NewOrderBtn} className="OrderName">
+            한 번에{" "}
+          </Button>
+          {pick && pick}
+        </div>
+      </Container>
     </BasicContainer>
   );
 };
 
 export default Order;
+
+// <input onChange={ (e)=>{ 입력값변경(e.target.value) } />
+//
