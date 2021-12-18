@@ -12,9 +12,15 @@ const PopupList = () => {
     return (a, b) => (a[key] > b[key] ? 1 : a[key] < b[key] ? -1 : 0);
   };
 
-  const modifyListArray = (name, changedItem) => {
+  const modifyListArray = (name, changedItemList) => {
+    const newItemObj = {
+      order: itemObj.order,
+      listName: itemObj.listName,
+      list: changedItemList,
+    };
     const existItem = listArray.filter((item) => item.listName !== name);
-    const newListArray = [...existItem, changedItem].sort(compare("order"));
+    const newListArray = [...existItem, newItemObj].sort(compare("order"));
+    setItemObj(newItemObj);
     setListArray(newListArray);
     localStorage.setItem("orderList", JSON.stringify(newListArray));
   };
@@ -64,11 +70,7 @@ const PopupList = () => {
           </div>
         );
       })}
-      <PopupListItem
-        itemObj={itemObj}
-        setItemObj={setItemObj}
-        modifyListArray={modifyListArray}
-      />
+      <PopupListItem itemObj={itemObj} modifyListArray={modifyListArray} />
     </div>
   );
 };
