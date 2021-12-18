@@ -4,7 +4,6 @@ import BasicContainer from "../Components/Shared/BasicContainer";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDidMountEffect } from "../Hooks/useDidMountEffect";
 import useMe from "../Hooks/useMe";
-import { SchoolNameForm } from "../Components/Lunchmenu/SchoolNameForm";
 import { Date } from "../Components/Lunchmenu/Date";
 
 import dotenv from "dotenv";
@@ -16,6 +15,7 @@ const LunchmenuContainer = styled.div`
   padding: 3.75rem;
   display: grid;
   grid-template-columns: 1fr auto;
+  align-items: flex-start;
 `
 
 const Title = styled.h1`
@@ -40,15 +40,18 @@ const SearchedDay = styled.div`
 
 const SearchIcons = styled.div`
   display: grid;
+  align-items: flex-end;
+  row-gap: 10px;
+  row-gap: 0.625rem;
 `
 
 const ShoolDate = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;
-  align-items: center;
+  align-items: flex-end;
   justify-items: end;
-  column-gap: 5px;
-  column-gap: 0.3125rem;
+  column-gap: 10px;
+  column-gap: 0.625rem;
 `
 
 const ShoolIcon = styled.div`

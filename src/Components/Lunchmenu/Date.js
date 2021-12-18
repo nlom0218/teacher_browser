@@ -27,10 +27,10 @@ const DatePickers = styled(DatePicker)`
 const DateContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;
-  align-items: center;
+  align-items: flex-end;
   justify-items: end;
-  column-gap: 5px;
-  column-gap: 0.3125rem;
+  column-gap: 10px;
+  column-gap: 0.625rem;
 `
 
 
