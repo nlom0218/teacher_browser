@@ -10,6 +10,8 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: flex-start;
+  opacity: ${(props) => (props.popup ? 0.2 : 1)};
+  transition: opacity 0.6s ease;
 `;
 
 const Main = styled.div`
@@ -59,7 +61,7 @@ const Order = () => {
 
   return (
     <BasicContainer menuItem={true}>
-      <Container>
+      <Container popup={popup}>
         <Main>
           <Title>순서정하기</Title>
           <OptionBtn>한 명씩 보이기</OptionBtn>
@@ -73,8 +75,8 @@ const Order = () => {
             <BsFillCheckSquareFill />
           </ConditionIcon>
         </MenuBtn>
-        {popup === "list" && <PopupList />}
       </Container>
+      {popup === "list" && <PopupList setPopup={setPopup} />}
     </BasicContainer>
   );
 };

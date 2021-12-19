@@ -1,12 +1,50 @@
 import { useQuery } from "@apollo/client";
 import React, { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
+import PopupContainer from "./PopupContainer";
 import { SEE_ALL_STUDENT_QUERY } from "../Account/StudentInfo";
-
+import styled from "styled-components";
 import PopupListItem from "./Popuplistitem";
 import PopupListName from "./Popuplistname";
 
-const PopupList = () => {
+const Container = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  text-align: center;
+  .listName {
+    padding: 16px 0px;
+    padding: 1rem 0rem;
+
+    :first-child {
+      border-top-left-radius: 10px;
+      border-top-left-radius: 0.625rem;
+    }
+    :last-child {
+      border-top-right-radius: 10px;
+      border-top-right-radius: 0.625rem;
+    }
+  }
+  form {
+    width: 100%;
+  }
+  input {
+    max-width: 125px;
+    //균등 5분할
+  }
+`;
+const StudeuntListName = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: ${(props) =>
+    props.selectedList ? props.theme.bgColor : props.theme.btnBgColor};
+  color: ${(props) =>
+    props.selectedList ? props.theme.fontColor : props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
+`;
+
+const PopupList = ({ setPopup }) => {
   const [listArray, setListArray] = useState(
     JSON.parse(localStorage.getItem("orderList"))
   ); // 각각 리스트 보내기
@@ -14,6 +52,7 @@ const PopupList = () => {
   //compare => 재사용 가능한 함수로 만들기(export하기)
   const [studentList, setStudentList] = useState([]);
   const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY);
+  const [selectedList, setSelectedList] = useState("학생목록");
   const compare = (key) => {
     return (a, b) => (a[key] > b[key] ? 1 : a[key] < b[key] ? -1 : 0);
   };
@@ -35,6 +74,7 @@ const PopupList = () => {
   };
 
   const onClickListName = (name) => {
+    setSelectedList(name);
     if (name !== "studentList") {
       const selectedItem = listArray.filter((item) => item.listName === name);
       setItemObj(...selectedItem);
@@ -67,30 +107,36 @@ const PopupList = () => {
   }, [data]);
 
   return (
-    <div>
-      <div
-        onClick={() => {
-          onClickListName("studentList");
-        }}
-      >
-        학생명단
-      </div>
-      {listArray?.map((item, index) => {
-        return (
-          <PopupListName
-            key={index}
-            item={item}
-            onClickListName={onClickListName}
-            modifyListArray={modifyListArray}
-          />
-        );
-      })}
+    <PopupContainer setPopup={setPopup}>
+      <Container>
+        <StudeuntListName
+          selectedList={itemObj.listName === "학생목록"}
+          className="listName"
+          onClick={() => {
+            onClickListName("studentList");
+          }}
+        >
+          학생목록
+        </StudeuntListName>
+        {listArray?.map((item, index) => {
+          return (
+            <PopupListName
+              key={index}
+              item={item}
+              onClickListName={onClickListName}
+              modifyListArray={modifyListArray}
+              selectedList={selectedList}
+              setSelectedList={setSelectedList}
+            />
+          );
+        })}
+      </Container>
       <PopupListItem
         itemObj={itemObj}
         modifyListArray={modifyListArray}
         listArray={listArray}
       />
-    </div>
+    </PopupContainer>
   );
 };
 
