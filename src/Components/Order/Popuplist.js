@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import PopupListItem from "./Popuplistitem";
+import PopupListName from "./Popuplistname";
 
 const PopupList = () => {
   const [listArray, setListArray] = useState(
@@ -8,16 +9,20 @@ const PopupList = () => {
   ); // 각각 리스트 보내기
   const [itemObj, setItemObj] = useState({}); // 각각 리스트 안에 있는 배열 보내기
   //compare => 재사용 가능한 함수로 만들기(export하기)
+
   const compare = (key) => {
     return (a, b) => (a[key] > b[key] ? 1 : a[key] < b[key] ? -1 : 0);
   };
 
-  const modifyListArray = (name, changedItemList) => {
-    const newItemObj = {
-      order: itemObj.order,
-      listName: itemObj.listName,
-      list: changedItemList,
-    };
+  const modifyListArray = (name, changedItemList, type) => {
+    const newItemObj =
+      type === "changedListName"
+        ? changedItemList
+        : {
+            order: itemObj.order,
+            listName: itemObj.listName,
+            list: changedItemList,
+          };
     const existItem = listArray.filter((item) => item.listName !== name);
     const newListArray = [...existItem, newItemObj].sort(compare("order"));
     setItemObj(newItemObj);
@@ -34,7 +39,6 @@ const PopupList = () => {
     }
   };
 
-  // console.log(listArray);
   useEffect(() => {
     const orderList = localStorage.getItem("orderList");
     if (!orderList) {
@@ -60,17 +64,19 @@ const PopupList = () => {
       </div>
       {listArray?.map((item, index) => {
         return (
-          <div
+          <PopupListName
             key={index}
-            onClick={() => {
-              onClickListName(item.listName);
-            }}
-          >
-            {item.listName}
-          </div>
+            item={item}
+            onClickListName={onClickListName}
+            modifyListArray={modifyListArray}
+          />
         );
       })}
-      <PopupListItem itemObj={itemObj} modifyListArray={modifyListArray} />
+      <PopupListItem
+        itemObj={itemObj}
+        modifyListArray={modifyListArray}
+        listArray={listArray}
+      />
     </div>
   );
 };

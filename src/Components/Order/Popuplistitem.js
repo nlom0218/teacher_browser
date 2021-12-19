@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import { useForm } from "react-hook-form";
+import PopupListItemValue from "./PopupListItemValue";
 
 const PopupListItem = ({ itemObj, modifyListArray }) => {
   const [errMsg, setErrMsg] = useState(undefined);
@@ -10,24 +11,18 @@ const PopupListItem = ({ itemObj, modifyListArray }) => {
   const onSubmit = (data) => {
     const { name } = data;
     const existName = itemObj.list.filter((item) => item === name);
-    console.log(existName);
     if (existName.length !== 0) {
       setErrMsg("동일한 이름이 있습니다.");
       return;
     }
     const newItemObjList = [...itemObj.list, name];
-
-    modifyListArray(itemObj?.listName, newItemObjList);
+    modifyListArray(itemObj?.listName, newItemObjList, "changedListItem");
     setValue("name", "");
   };
-  const onClickDelBtn = (name) => {
-    const newItemObjList = itemObj.list.filter((item) => item !== name);
 
-    modifyListArray(itemObj?.listName, newItemObjList);
-  };
   const onClickResetBtn = () => {
     const newItemObjList = [];
-    modifyListArray(itemObj?.listName, newItemObjList);
+    modifyListArray(itemObj?.listName, newItemObjList, "changedListItem");
   };
 
   const onChangeInput = () => {
@@ -39,23 +34,20 @@ const PopupListItem = ({ itemObj, modifyListArray }) => {
       {itemObj.list?.length === 0 ? (
         <div>{itemObj?.listName}에 저장된 목록이 없습니다.</div>
       ) : (
-        <ul>
+        <div>
           {itemObj.list?.map((item, index) => {
             return (
-              <li key={index} style={{ display: "flex" }}>
-                {item}
-                <div
-                  style={{ marginLeft: "10px" }}
-                  onClick={() => onClickDelBtn(item)}
-                >
-                  제거
-                </div>
-              </li>
+              <PopupListItemValue
+                item={item}
+                key={index}
+                modifyListArray={modifyListArray}
+                itemObj={itemObj}
+              />
             );
           })}
-        </ul>
+        </div>
       )}
-      <div onClick={onClickResetBtn}>초기화</div>
+      <div onClick={onClickResetBtn}>초기화🗑</div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           {...register("name", { required: true, onChange: onChangeInput })}
