@@ -1,13 +1,12 @@
-import { createGlobalStyle } from "styled-components"
-import { generateMedia } from "styled-media-query"
-import reset from "styled-reset"
+import { createGlobalStyle } from "styled-components";
+import { generateMedia } from "styled-media-query";
+import reset from "styled-reset";
 
 export const customMedia = generateMedia({
   mobile: "320px",
   tablet: "768px",
-  desktop: "1024px"
-})
-
+  desktop: "1024px",
+});
 
 export const color = {
   black: "#282828",
@@ -19,7 +18,7 @@ export const color = {
   red: "#db3a1e",
   ligthRed: "#ef624c",
   boxShadow: "0px 17px 6px -14px rgba(0,0,0,0.6)",
-}
+};
 
 export const ligthTheme = {
   fontColor: color.black,
@@ -28,7 +27,7 @@ export const ligthTheme = {
   redColor: color.red,
   contentBgColor: color.gray,
   btnBgColor: color.blue,
-}
+};
 
 export const darkTheme = {
   fontColor: color.white,
@@ -36,8 +35,8 @@ export const darkTheme = {
   blurColor: "rgba(60, 60, 60, 0.6)",
   redColor: color.ligthRed,
   contentBgColor: color.maroon,
-  btnBgColor: color.lightBlue
-}
+  btnBgColor: color.lightBlue,
+};
 
 export const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -45,11 +44,14 @@ export const GlobalStyle = createGlobalStyle`
     height: 100vh;
     font-size: 1em;
     font-size: 1rem;
-    background: url("https://source.unsplash.com/random/1920*1080?nature");
+    background: ${({ bgTheme }) =>
+      bgTheme
+        ? `url("https://source.unsplash.com/random/1920*1080?${bgTheme}")`
+        : `url("https://source.unsplash.com/random/1920*1080?nature")`};
     background-size: cover;
     background-position: center;
     font-family: 'Nanum Gothic', sans-serif;
-    color: ${props => props.theme.fontColor};
+    color: ${(props) => props.theme.fontColor};
     transition: color 1s ease;
   }
   * {
@@ -58,7 +60,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   a {
     text-decoration: none;
-    color: ${props => props.theme.fontColor};
+    color: ${(props) => props.theme.fontColor};
     transition: color 1s ease;
   }
   input {
@@ -71,4 +73,4 @@ export const GlobalStyle = createGlobalStyle`
     -ms-user-select: auto; 
     user-select: auto; */
   }
-`
+`;
