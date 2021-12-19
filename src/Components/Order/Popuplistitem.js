@@ -28,6 +28,7 @@ const PopupListItem = ({ itemObj, modifyListArray }) => {
   const onChangeInput = () => {
     setErrMsg(undefined);
   };
+
   return (
     <div>
       <div>{itemObj.listName}</div>
@@ -47,17 +48,21 @@ const PopupListItem = ({ itemObj, modifyListArray }) => {
           })}
         </div>
       )}
-      <div onClick={onClickResetBtn}>초기화🗑</div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          {...register("name", { required: true, onChange: onChangeInput })}
-          placeholder="이름을 입력해 주세요."
-          type="text"
-          autoComplete="off"
-        />
-        <input type="submit" />
-      </form>
-      {errMsg && <div>{errMsg}</div>}
+      {itemObj.listName !== "학생목록" && (
+        <React.Fragment>
+          <div onClick={onClickResetBtn}>초기화🗑</div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <input
+              {...register("name", { required: true, onChange: onChangeInput })}
+              placeholder="이름을 입력해 주세요."
+              type="text"
+              autoComplete="off"
+            />
+            <input type="submit" />
+          </form>
+          {errMsg && <div>{errMsg}</div>}
+        </React.Fragment>
+      )}
     </div>
   );
 };

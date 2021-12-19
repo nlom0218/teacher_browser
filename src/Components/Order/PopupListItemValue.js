@@ -2,11 +2,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 const PopupListItemValue = ({ item, modifyListArray, itemObj }) => {
-  console.log(item);
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, setValue } = useForm({
     mode: "onChange",
-    defaultValues: { newItemName: item },
   });
+  setValue("newItemName", item);
 
   const onClickDelBtn = (name) => {
     const newItemObjList = itemObj.list.filter((item) => item !== name);
@@ -34,10 +33,15 @@ const PopupListItemValue = ({ item, modifyListArray, itemObj }) => {
         {...register("newItemName", {
           required: true,
         })}
+        type="text"
+        autoComplete="off"
+        readOnly={itemObj.listName === "학생목록"}
       />
-      <div style={{ marginLeft: "10px" }} onClick={() => onClickDelBtn(item)}>
-        제거
-      </div>
+      {itemObj.listName !== "학생목록" && (
+        <div style={{ marginLeft: "10px" }} onClick={() => onClickDelBtn(item)}>
+          제거
+        </div>
+      )}
     </form>
   );
 };

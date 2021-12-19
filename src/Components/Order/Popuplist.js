@@ -1,5 +1,8 @@
+import { useQuery } from "@apollo/client";
 import React, { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
+import { SEE_ALL_STUDENT_QUERY } from "../Account/StudentInfo";
+
 import PopupListItem from "./Popuplistitem";
 import PopupListName from "./Popuplistname";
 
@@ -9,7 +12,8 @@ const PopupList = () => {
   ); // 각각 리스트 보내기
   const [itemObj, setItemObj] = useState({}); // 각각 리스트 안에 있는 배열 보내기
   //compare => 재사용 가능한 함수로 만들기(export하기)
-
+  const [studentList, setStudentList] = useState([]);
+  const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY);
   const compare = (key) => {
     return (a, b) => (a[key] > b[key] ? 1 : a[key] < b[key] ? -1 : 0);
   };
@@ -35,7 +39,8 @@ const PopupList = () => {
       const selectedItem = listArray.filter((item) => item.listName === name);
       setItemObj(...selectedItem);
     } else {
-      console.log("조만간 업데이트 예정");
+      const newItemObj = { listName: "학생목록", list: studentList };
+      setItemObj(newItemObj);
     }
   };
 
@@ -52,6 +57,14 @@ const PopupList = () => {
       setListArray(initList);
     }
   }, []);
+  useEffect(() => {
+    if (loading) {
+      return;
+    }
+    const myStuentList = data.seeAllStudent.map((item) => item.name);
+    setStudentList(myStuentList);
+    setItemObj({ listName: "학생목록", list: myStuentList });
+  }, [data]);
 
   return (
     <div>
