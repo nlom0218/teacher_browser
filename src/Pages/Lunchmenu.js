@@ -69,7 +69,8 @@ const LunchmenuInfo = styled.div`
   height: 100%;
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 30px;
 `
 
 const SLunchmenus = styled.div`
@@ -98,11 +99,29 @@ const Allergy = styled.div`
   opacity: 0.6;
 `
 
+const LunchmenuDetail = styled.div`
+  align-self: flex-end;
+  display: grid;
+  row-gap: 30px;
+  line-height: 120%;
+  letter-spacing: 1px;
+  opacity: 0.8;
+  .detail_title {
+    font-size: 1.25em;
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    margin-bottom: 0.625rem;
+    font-weight: 600;
+  }
+`
+
+const LunchmenuOrigin = styled.div``
+
 const Lunchmenu = () => {
   const [date, setDate] = useState(new window.Date());
   const [schoolCode, setSchoolCode] = useState([]);
   const [menu, setMenu] = useState([]);
-  console.log(menu);
+  const [origin, setOrigin] = useState([])
   const [schoolName, setSchoolName] = useState(undefined)
 
   //회원정보 불러오기
@@ -148,9 +167,10 @@ const Lunchmenu = () => {
     )
       .then((response) => response.json())
       .then((json) => {
-        json.RESULT
-          ? setMenu([json.RESULT.MESSAGE])
-          : setMenu(
+        if (json.RESULT) {
+          setMenu([json.RESULT.MESSAGE])
+        } else {
+          setMenu(
             (json.mealServiceDietInfo[1]).row[0].DDISH_NM.split("<br/>").map(item => {
               return {
                 food: item.replace(/[0-9]/g, "").replace(/\./g, ""),
@@ -158,7 +178,14 @@ const Lunchmenu = () => {
               }
             })
           );
-        console.log(json.mealServiceDietInfo[1].row[0]);
+          setOrigin(json.mealServiceDietInfo[1]
+            .row[0]
+            .ORPLC_INFO
+            .replace(/\:/g, "(")
+            .replace(/\s/gi, "")
+            .split("<br/>")
+            .map(item => item + ")"))
+        }
       });
   };
 
@@ -202,6 +229,16 @@ const Lunchmenu = () => {
               </SLunchmenu>
             ))}
           </SLunchmenus>
+          <LunchmenuDetail>
+            <LunchmenuOrigin>
+              <div className="detail_title">✲ 원산지</div>
+              <div>{origin.join(",")}</div>
+            </LunchmenuOrigin>
+            <div>
+              <div className="detail_title">✲ 알레르기정보</div>
+              <div>요리명에 표시된 번호는 알레르기를 유발할수 있는 식재료입니다 (1.난류, 2.우유, 3.메밀, 4.땅콩, 5.대두, 6.밀, 7.고등어, 8.게, 9.새우, 10.돼지고기, 11.복숭아, 12.토마토, 13.아황산염, 14.호두, 15.닭고기, 16.쇠고기, 17.오징어, 18.조개류(굴,전복,홍합 등)</div>
+            </div>
+          </LunchmenuDetail>
         </LunchmenuInfo>
       </LunchmenuContainer>
     </BasicContainer>
