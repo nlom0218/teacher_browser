@@ -77,7 +77,7 @@ const EditAccount = () => {
           />
         </Item>
       </Changes>
-      <Changes>
+      {/* <Changes>
         <List>학생</List>
         <Item>
           <EditStudent
@@ -87,7 +87,7 @@ const EditAccount = () => {
             setRegisterPage={setRegisterPage}
           />
         </Item>
-      </Changes>
+      </Changes> */}
     </Container>
     {registerPage === "school" &&
       <RegisterSchool

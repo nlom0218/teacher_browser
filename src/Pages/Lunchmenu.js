@@ -5,17 +5,20 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useDidMountEffect } from "../Hooks/useDidMountEffect";
 import useMe from "../Hooks/useMe";
 import { Date } from "../Components/Lunchmenu/Date";
-
 import dotenv from "dotenv";
 import { FaSchool } from "react-icons/fa";
 dotenv.config();
 
 const LunchmenuContainer = styled.div`
+  height: 100%;
   padding: 60px;
   padding: 3.75rem;
   display: grid;
   grid-template-columns: 1fr auto;
+  grid-template-rows: auto 1fr;
   align-items: flex-start;
+  row-gap: 40px;
+  row-gap: 2.5rem;
 `
 
 const Title = styled.h1`
@@ -62,15 +65,44 @@ const ShoolIcon = styled.div`
   cursor: pointer;
 `
 
-const Text = styled.li`
-  font-size: 1.5em;
-  margin: 5px;
+const LunchmenuInfo = styled.div`
+  height: 100%;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+`
+
+const SLunchmenus = styled.div`
+  background-color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  padding: 20px;
+  padding: 1.25rem;
+  display: grid;
+  align-items: center;
+`
+
+const SLunchmenu = styled.div`
+  display: grid;
+  row-gap: 10px;
+  row-gap: 0.625rem;
 `;
+
+const Food = styled.div`
+  font-size: 1.25em;
+  font-size: 1.25rem;
+`
+
+const Allergy = styled.div`
+  opacity: 0.6;
+`
 
 const Lunchmenu = () => {
   const [date, setDate] = useState(new window.Date());
   const [schoolCode, setSchoolCode] = useState([]);
   const [menu, setMenu] = useState([]);
+  console.log(menu);
   const [schoolName, setSchoolName] = useState(undefined)
 
   //회원정보 불러오기
@@ -119,10 +151,14 @@ const Lunchmenu = () => {
         json.RESULT
           ? setMenu([json.RESULT.MESSAGE])
           : setMenu(
-            JSON.stringify(json.mealServiceDietInfo[1].row[0].DDISH_NM)
-              .replace(/\"/g, "")
-              .split("<br/>")
+            (json.mealServiceDietInfo[1]).row[0].DDISH_NM.split("<br/>").map(item => {
+              return {
+                food: item.replace(/[0-9]/g, "").replace(/\./g, ""),
+                allergy: item.split(/[^0-9]/g).filter(item => item !== "").join()
+              }
+            })
           );
+        console.log(json.mealServiceDietInfo[1].row[0]);
       });
   };
 
@@ -156,10 +192,17 @@ const Lunchmenu = () => {
           schoolName={me?.schoolName}
           setSchoolCode={setSchoolCode}
           setMenu={setMenu}
-        />
-        {menu.map((e, index) => (
-          <Text key={index}>{e}</Text>
-        ))} */}
+        /> */}
+        <LunchmenuInfo>
+          <SLunchmenus>
+            {menu.map((item, index) => (
+              <SLunchmenu key={index}>
+                <Food>{item.food}</Food>
+                <Allergy>{item.allergy}</Allergy>
+              </SLunchmenu>
+            ))}
+          </SLunchmenus>
+        </LunchmenuInfo>
       </LunchmenuContainer>
     </BasicContainer>
   );
