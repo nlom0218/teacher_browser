@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 const PopupListItemValue = ({ item, modifyListArray, itemObj }) => {
   const { register, handleSubmit, setValue } = useForm({
     mode: "onChange",
+    
   });
   setValue("newItemName", item);
 

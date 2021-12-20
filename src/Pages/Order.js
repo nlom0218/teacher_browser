@@ -17,16 +17,21 @@ const Container = styled.div`
 const Main = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
+  //grid-template-columns: 1.5fr 0.55fr 2fr;
   row-gap: 20px;
   row-gap: 1.25rem;
   column-gap: 20px;
   column-gap: 1.25rem;
+  grid-row: 1/-1;
+  align-items: center;
 `;
 
 const Title = styled.div`
   grid-column: 1/-1;
-  font-size: 1.25em;
-  font-size: 1.25rem;
+  //grid-column: 1/2;
+  font-size: 2.5em;
+  font-size: 2.5rem;
+  text-align: center;
 `;
 
 const OptionBtn = styled.div`
@@ -36,8 +41,9 @@ const OptionBtn = styled.div`
   justify-self: flex-start;
   padding: 10px 20px;
   padding: 0.625rem 1.25rem;
-  border-radius: 5px;
-  border-radius: 0.3125rem;
+  border-radius: 20px;
+  //border-radius: 0.3125rem;
+  border-radius: 1.25rem;
   cursor: pointer;
 `;
 
@@ -53,19 +59,70 @@ const ListIcon = styled.div``;
 
 const ConditionIcon = styled.div``;
 
+const List = styled.div`
+  font-size: 1.5em;
+  font-size: 1.5rem;
+  text-align: center;
+  list-style-type: decimal;
+  display: grid;
+  row-gap: 10px;
+  row-gap: 0.625rem;
+  align-items: center;
+`;
+
 const Order = () => {
   const [popup, setPopup] = useState(undefined);
   const onClickIcon = (newPopup) => {
     setPopup(newPopup);
   };
 
+  const unshuffled = [
+    "하나",
+    "둘",
+    "셋",
+    "넷",
+    "다섯",
+    "여섯",
+    "일곱",
+    "여덟",
+    "아홉",
+    "열",
+  ];
+
+  const shuffled = unshuffled
+    .map((value) => ({ value, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ value }) => value);
+  const [changeShuffled, setShuffled] = useState(shuffled);
+  const onClickShuffled = (changeShuffled) => {
+    const newShuffled = { ...changeShuffled };
+    setShuffled(newShuffled);
+  };
+  const shuffledList = shuffled.map((value) => <li>{value}</li>);
+
   return (
     <BasicContainer menuItem={true}>
       <Container popup={popup}>
         <Main>
-          <Title>순서정하기</Title>
-          <OptionBtn>한 명씩 보이기</OptionBtn>
-          <OptionBtn>모두 한번에 보이기 </OptionBtn>
+          <Title>
+            <input type="text" placeholder="순서정하기 제목"></input>
+          </Title>
+          <OptionBtn>
+            <acronym
+              title="순서대로 한 명씩만 보이게 나옵니다."
+              text-decoration-line="none"
+            >
+              한 명씩 보기
+            </acronym>
+          </OptionBtn>
+          <OptionBtn onClick={onClickShuffled}>
+            <acronym
+              title="순서가 바뀐 명단을 한꺼번에 볼 수 있습니다."
+              text-decoration-line="none"
+            >
+              바뀐 순서 전체 보기
+            </acronym>{" "}
+          </OptionBtn>
         </Main>
         <MenuBtn>
           <ListIcon onClick={() => onClickIcon("list")}>
@@ -75,6 +132,9 @@ const Order = () => {
             <BsFillCheckSquareFill />
           </ConditionIcon>
         </MenuBtn>
+        <br />
+        <hr />
+        <List>{shuffledList}</List>
       </Container>
       {popup === "list" && <PopupList setPopup={setPopup} />}
     </BasicContainer>
