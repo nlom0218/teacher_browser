@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { FcSearch } from 'react-icons/fc';
 import styled from 'styled-components';
 import { outPopup } from '../../apollo';
-import useMe from '../../Hooks/useMe';
 import PopupContainer from '../Shared/PopupContainer';
 import RegisterErrMsg from '../Account/styled/RegisterErrMsg';
 import RegisterForm from '../Account/styled/RegisterForm';

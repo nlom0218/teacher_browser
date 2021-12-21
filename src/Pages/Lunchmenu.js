@@ -119,14 +119,22 @@ const LunchmenuDetail = styled.div`
 const LunchmenuOrigin = styled.div``
 
 const Lunchmenu = () => {
-  const lmSetting = JSON.parse(localStorage.getItem("lmSetting"))
+  // localStorage에서 값 불러오기
+  const {
+    schoolCode: lmSchoolCode,
+    areaCode: lmAreaCode,
+    schoolName: lmSchoolName,
+    date: lmDate }
+    = JSON.parse(localStorage.getItem("lmSetting"))
+
   // popup reactiveVar => 파업창을 띄우기 위한 전역적으로 사용할 수 있는 변수
   const isPopup = useReactiveVar(isPopupVar)
-  const [date, setDate] = useState(new window.Date());
+
   // localStorage에 저장된 값으로 state 지정
-  const [schoolCode, setSchoolCode] = useState(lmSetting ? lmSetting.schoolCode : undefined)
-  const [areaCode, setAreaCode] = useState(lmSetting ? lmSetting.areaCode : undefined)
-  const [schoolName, setSchoolName] = useState(lmSetting ? lmSetting.schoolName : undefined)
+  const [date, setDate] = useState(lmDate ? new window.Date(lmDate) : new window.Date());
+  const [schoolCode, setSchoolCode] = useState(lmSchoolCode ? lmSchoolCode : undefined)
+  const [areaCode, setAreaCode] = useState(lmAreaCode ? lmAreaCode : undefined)
+  const [schoolName, setSchoolName] = useState(lmSchoolName ? lmSchoolName : undefined)
   const [menu, setMenu] = useState([]);
   const [origin, setOrigin] = useState([])
 

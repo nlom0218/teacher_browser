@@ -3,7 +3,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
 import { forwardRef } from "react";
-import { FcCalendar } from "react-icons/fc";
 import { BsCalendarDate } from "react-icons/bs";
 
 const DatePickers = styled(DatePicker)`
@@ -43,7 +42,12 @@ const DateIcon = styled.div`
 
 export const Date = ({ date, setDate, processSetDate }) => {
   //날짜 설정하기
-  const getDate = (date) => setDate(date);
+  const getDate = (date) => {
+    const lmSetting = JSON.parse(localStorage.getItem("lmSetting"))
+    const newLmSetting = { ...lmSetting, date }
+    localStorage.setItem("lmSetting", JSON.stringify(newLmSetting))
+    setDate(date)
+  };
   const CustomInput = forwardRef(({ value, onClick }, ref) => (
     <DateContainer ref={ref}>
       <div>{processSetDate()}</div>
