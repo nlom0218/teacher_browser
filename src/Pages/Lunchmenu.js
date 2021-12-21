@@ -8,6 +8,7 @@ import { FaSchool } from "react-icons/fa";
 import SearchSchool from "../Components/Lunchmenu/SearchSchool";
 import { useReactiveVar } from "@apollo/client";
 import { inPopup, isPopupVar } from "../apollo";
+import useMe from "../Hooks/useMe";
 dotenv.config();
 
 const LunchmenuContainer = styled.div`
@@ -86,6 +87,17 @@ const SLunchmenus = styled.div`
   padding: 1.25rem;
   display: grid;
   align-items: center;
+  .lunch_errMsg {
+    text-align: center;
+    font-size: 1.25em;
+    font-size: 1.25rem;
+    color: ${props => props.theme.redColor};
+  }
+  .lunch_loading {
+    text-align: center;
+    font-size: 1.25em;
+    font-size: 1.25rem;
+  }
 `
 
 const SLunchmenu = styled.div`
@@ -156,8 +168,10 @@ const Lunchmenu = () => {
   const [schoolCode, setSchoolCode] = useState(lmSchoolCode ? lmSchoolCode : undefined)
   const [areaCode, setAreaCode] = useState(lmAreaCode ? lmAreaCode : undefined)
   const [schoolName, setSchoolName] = useState(lmSchoolName ? lmSchoolName : undefined)
-  const [menu, setMenu] = useState([]);
+  const [menu, setMenu] = useState("loading");
   const [origin, setOrigin] = useState([])
+
+  const me = useMe()
 
   const processSetDay = () => {
     const day = date.getDay()
@@ -200,7 +214,8 @@ const Lunchmenu = () => {
       .then((response) => response.json())
       .then((json) => {
         if (json.RESULT) {
-          setMenu([json.RESULT.MESSAGE])
+          // setMenu([json.RESULT.MESSAGE])
+          setMenu(undefined)
         } else {
           setMenu(
             (json.mealServiceDietInfo[1]).row[0].DDISH_NM.split("<br/>").map(item => {
@@ -228,14 +243,27 @@ const Lunchmenu = () => {
       const newLmSetting = { ...lmSetting, date: tomorrowDate }
       localStorage.setItem("lmSetting", JSON.stringify(newLmSetting))
       setDate(new window.Date(tomorrowDate))
+      return
     }
     if (mode === "today") {
       const newLmSetting = { ...lmSetting, date: new window.Date() }
       localStorage.setItem("lmSetting", JSON.stringify(newLmSetting))
       setDate(new window.Date())
+      return
     }
-    if (mode === "school") {
-
+    if (mode === "school" && me?.schoolName) {
+      const newLmSetting = {
+        ...lmSetting,
+        areaCode: me?.areaCode,
+        schoolName: me?.schoolName,
+        schoolCode: me?.schoolCode
+      }
+      setAreaCode(me?.areaCode)
+      setSchoolCode(me?.schoolCode)
+      setSchoolName(me?.schoolName)
+      localStorage.setItem("lmSetting", JSON.stringify(newLmSetting))
+    } else {
+      window.alert("학교정보가 없습니다.")
     }
   }
 
@@ -267,17 +295,25 @@ const Lunchmenu = () => {
         </SearchIcons>
         <LunchmenuInfo>
           <SLunchmenus>
-            {menu.map((item, index) => (
-              <SLunchmenu key={index}>
-                <Food>{item.food}</Food>
-                <Allergy>{item.allergy}</Allergy>
-              </SLunchmenu>
-            ))}
+            {menu === "loading" ?
+              <div className="lunch_loading">급식 정보 불러오는 중... 😁</div>
+              :
+              (menu ?
+                menu.map((item, index) => (
+                  <SLunchmenu key={index}>
+                    <Food>{item.food}</Food>
+                    <Allergy>{item.allergy}</Allergy>
+                  </SLunchmenu>
+                ))
+                :
+                <div className="lunch_errMsg">급식 정보가 없습니다 😢</div>
+              )
+            }
           </SLunchmenus>
           <LunchmenuBtn>
             <div onClick={() => onClickBtn("tomorrow")}>다음날 식단표</div>
             <div onClick={() => onClickBtn("today")}>오늘 식단표</div>
-            <div onClick={() => onClickBtn("school")}>우리학교 식단표</div>
+            {me && <div onClick={() => onClickBtn("school")}>우리학교 식단표</div>}
           </LunchmenuBtn>
           <LunchmenuDetail>
             <LunchmenuOrigin>

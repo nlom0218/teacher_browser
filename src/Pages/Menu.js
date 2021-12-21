@@ -61,7 +61,12 @@ const Menu = () => {
         date: new window.Date()
       }))
     } else {
-      localStorage.removeItem("lmSetting")
+      localStorage.setItem("lmSetting", JSON.stringify({
+        areaCode: undefined,
+        schoolCode: undefined,
+        schoolName: undefined,
+        date: new window.Date()
+      }))
     }
   }
   return (<BasicContainer>
