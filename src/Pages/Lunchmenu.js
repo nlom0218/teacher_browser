@@ -203,7 +203,6 @@ const LunchmenuOrigin = styled.div``
 const Lunchmenu = () => {
   // 반응형
   const media = useMedia()
-  console.log(media);
 
   // localStorage에서 값 불러오기
   const {
