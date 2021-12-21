@@ -7,6 +7,7 @@ import useMe from "../Hooks/useMe";
 import { Date } from "../Components/Lunchmenu/Date";
 import dotenv from "dotenv";
 import { FaSchool } from "react-icons/fa";
+import SearchSchool from "../Components/Lunchmenu/SearchSchool";
 dotenv.config();
 
 const LunchmenuContainer = styled.div`
@@ -120,9 +121,10 @@ const LunchmenuOrigin = styled.div``
 const Lunchmenu = () => {
   const [date, setDate] = useState(new window.Date());
   const [schoolCode, setSchoolCode] = useState([]);
+  const [schoolName, setSchoolName] = useState(undefined)
   const [menu, setMenu] = useState([]);
   const [origin, setOrigin] = useState([])
-  const [schoolName, setSchoolName] = useState(undefined)
+  const [register, setRegister] = useState(false)
 
   //회원정보 불러오기
   const me = useMe();
@@ -199,6 +201,7 @@ const Lunchmenu = () => {
   //맨처음 제외하고 state값 변경 시 rerender
   useDidMountEffect(getMenu, [date, schoolCode]);
 
+  const onClickSchoolIcon = () => setRegister(true)
   //리턴
   return (
     <BasicContainer menuItem={true}>
@@ -211,15 +214,10 @@ const Lunchmenu = () => {
         <SearchIcons>
           <ShoolDate>
             <div>{schoolName ? schoolName : "학교검색"}</div>
-            <ShoolIcon><FaSchool /></ShoolIcon>
+            <ShoolIcon onClick={onClickSchoolIcon}><FaSchool /></ShoolIcon>
           </ShoolDate>
           <Date date={date} setDate={setDate} processSetDate={processSetDate} />
         </SearchIcons>
-        {/* <SchoolNameForm
-          schoolName={me?.schoolName}
-          setSchoolCode={setSchoolCode}
-          setMenu={setMenu}
-        /> */}
         <LunchmenuInfo>
           <SLunchmenus>
             {menu.map((item, index) => (
@@ -241,6 +239,7 @@ const Lunchmenu = () => {
           </LunchmenuDetail>
         </LunchmenuInfo>
       </LunchmenuContainer>
+      {register && <SearchSchool setRegisterPage={setRegister} setSchoolCode={setSchoolCode} setSchoolName={setSchoolName} />}
     </BasicContainer>
   );
 };

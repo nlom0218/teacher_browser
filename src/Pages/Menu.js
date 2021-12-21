@@ -50,6 +50,9 @@ const Title = styled.div`
 `
 
 const Menu = () => {
+  const changedDate = () => `${new window.Date().getFullYear()}${(new window.Date().getMonth() + 1)
+    .toString()
+    .padStart(2, 0)}${new window.Date().getDate().toString().padStart(2, 0)}`;
   const me = useMe()
   return (<BasicContainer>
     <Container>
@@ -78,7 +81,10 @@ const Menu = () => {
           {/* 급식순서 -> 순서정하기 */}
         </SMenu>
       </Link>
-      <Link to={routes.lunchmenu}>
+      <Link to={me ?
+        `${routes.lunchmenu}`
+        :
+        `${routes.lunchmenu}`} >
         <SMenu>
           <GiForkKnifeSpoon />
           <Title>식단표</Title>
