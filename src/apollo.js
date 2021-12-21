@@ -4,6 +4,7 @@ import { makeVar } from "@apollo/client"
 
 const DARK = "dark"
 const TOKEN = "token"
+const POPUP = "popup"
 
 export const darkModeVar = makeVar(Boolean(localStorage.getItem(DARK)))
 export const enableDarkMode = () => {
@@ -23,6 +24,16 @@ export const logInUser = (token) => {
 export const logOutUser = () => {
   localStorage.removeItem(TOKEN)
   isLoggedInVar(false)
+}
+
+export const isPopupVar = makeVar(Boolean(localStorage.getItem(POPUP)))
+export const inPopup = () => {
+  localStorage.setItem(POPUP, "true")
+  isPopupVar(true)
+}
+export const outPopup = () => {
+  localStorage.removeItem(POPUP)
+  isPopupVar(false)
 }
 
 const httpLink = createHttpLink({

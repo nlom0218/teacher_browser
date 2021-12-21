@@ -4,6 +4,8 @@ import Header from './Header';
 import Theme from './Theme';
 import { customMedia } from '../../styles';
 import PreviousPageBtn from './PreviousPageBtn';
+import { useReactiveVar } from '@apollo/client';
+import { isPopupVar, outPopup } from '../../apollo';
 
 
 const Container = styled.div`

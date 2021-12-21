@@ -1,41 +1,37 @@
-import { FaTimes } from "react-icons/fa";
 import styled from "styled-components";
-import { color, customMedia } from "../../styles";
+import { outPopup } from "../../apollo";
+import { customMedia } from "../../styles";
+
+const Background = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0,0,0,0.75);
+  z-index: 0;
+`;
 
 const SRegisterContainer = styled.div`
-  position: absolute;
-  top: 20px;
-  top: 1.25rem;
-  left: 50%;
-  width: 90%;
-  max-height: 90%;
+  width: 80%;
   overflow: auto;
   -ms-overflow-style: none; // IE and Edge
   scrollbar-width: none; // Firefox
   ::-webkit-scrollbar {
     display: none; // Chrome, Safari, Opera
   };
-  transform: translate(-50%, 0%);
-  box-shadow: ${color.boxShadow};
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-height: 70%;
+  height: 70%;
   ${customMedia.greaterThan("tablet")`
-    width: 80%
-  `}
-  ${customMedia.greaterThan("desktop")`
     width: 60%
   `}
-`
-
-const CloseBtn = styled.div`
-  color: ${props => props.theme.redColor};
-  transition: color 1s ease;
-  text-align: end;
-  margin-right: 10px;
-  margin-right: 0.625rem;
-  cursor: pointer;
-  svg {
-    font-size: 1.25em;
-    font-size: 1.25rem;
-  }
+  ${customMedia.greaterThan("desktop")`
+    width: 30%
+  `}
 `
 
 const RegisterPage = styled.div`
@@ -50,16 +46,18 @@ const RegisterPage = styled.div`
   row-gap: 1.25rem;
 `
 
-const RegisterContainer = ({ children, setRegisterPage }) => {
-  const onClickCloseBtn = () => {
-    setRegisterPage(undefined)
+const RegisterContainer = ({ children }) => {
+  const onClickBackground = () => {
+    outPopup()
   }
-  return (<SRegisterContainer>
-    <CloseBtn onClick={onClickCloseBtn}><FaTimes /></CloseBtn>
-    <RegisterPage>
-      {children}
-    </RegisterPage>
-  </SRegisterContainer>);
+  return (<Background onClick={onClickBackground}>
+    <SRegisterContainer onClick={e => e.stopPropagation()}>
+      <RegisterPage>
+        {children}
+      </RegisterPage>
+    </SRegisterContainer>
+  </Background>
+  );
 }
 
 export default RegisterContainer;

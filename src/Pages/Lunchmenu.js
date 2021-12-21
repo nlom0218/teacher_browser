@@ -8,6 +8,8 @@ import { Date } from "../Components/Lunchmenu/Date";
 import dotenv from "dotenv";
 import { FaSchool } from "react-icons/fa";
 import SearchSchool from "../Components/Lunchmenu/SearchSchool";
+import { useReactiveVar } from "@apollo/client";
+import { inPopup, isPopupVar } from "../apollo";
 dotenv.config();
 
 const LunchmenuContainer = styled.div`
@@ -119,12 +121,13 @@ const LunchmenuDetail = styled.div`
 const LunchmenuOrigin = styled.div``
 
 const Lunchmenu = () => {
+  const isPopup = useReactiveVar(isPopupVar)
+  console.log(isPopup);
   const [date, setDate] = useState(new window.Date());
   const [schoolCode, setSchoolCode] = useState([]);
   const [schoolName, setSchoolName] = useState(undefined)
   const [menu, setMenu] = useState([]);
   const [origin, setOrigin] = useState([])
-  const [register, setRegister] = useState(false)
 
   //회원정보 불러오기
   const me = useMe();
@@ -201,11 +204,11 @@ const Lunchmenu = () => {
   //맨처음 제외하고 state값 변경 시 rerender
   useDidMountEffect(getMenu, [date, schoolCode]);
 
-  const onClickSchoolIcon = () => setRegister(true)
+  const onClickSchoolIcon = () => inPopup()
   //리턴
   return (
     <BasicContainer menuItem={true}>
-      <LunchmenuContainer>
+      <LunchmenuContainer isPopup={isPopup}>
         <Title>
           <SchoolName>{schoolName ? `${schoolName} 식단표` : "학교를 검색해주세요."}</SchoolName>
           <SearchedDate>{processSetDate()}</SearchedDate>
@@ -239,7 +242,10 @@ const Lunchmenu = () => {
           </LunchmenuDetail>
         </LunchmenuInfo>
       </LunchmenuContainer>
-      {register && <SearchSchool setRegisterPage={setRegister} setSchoolCode={setSchoolCode} setSchoolName={setSchoolName} />}
+      {isPopup && <SearchSchool
+        setSchoolCode={setSchoolCode}
+        setSchoolName={setSchoolName}
+      />}
     </BasicContainer>
   );
 };

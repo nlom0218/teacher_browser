@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FcSearch } from 'react-icons/fc';
 import styled from 'styled-components';
+import { outPopup } from '../../apollo';
 import useMe from '../../Hooks/useMe';
 import RegisterContainer from '../Account/RegisterContainer';
 import RegisterErrMsg from '../Account/styled/RegisterErrMsg';
@@ -42,8 +43,7 @@ const PageBtn = styled.div`
   cursor: pointer;
 `
 
-const SearchSchool = ({ setRegisterPage, setSchoolCode, setSchoolName }) => {
-  const me = useMe()
+const SearchSchool = ({ setSchoolCode, setSchoolName }) => {
   const [page, setPage] = useState(1)
   const [schoolInfo, setSchoolInfo] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
@@ -86,7 +86,7 @@ const SearchSchool = ({ setRegisterPage, setSchoolCode, setSchoolName }) => {
   const onClickSchool = (areaCode, schoolCode, schoolName) => {
     setSchoolCode([areaCode, schoolCode])
     setSchoolName(schoolName)
-    setRegisterPage(false)
+    outPopup()
   }
   const onChangeInput = () => {
     setPreventSubmit(false)
@@ -97,7 +97,7 @@ const SearchSchool = ({ setRegisterPage, setSchoolCode, setSchoolName }) => {
   const onClickPageBtn = () => {
     findSchool(getValues("school"))
   }
-  return (<RegisterContainer setRegisterPage={setRegisterPage}>
+  return (<RegisterContainer>
     <RegisterForm onSubmit={handleSubmit(onSubmit)}>
       <SearchInput
         {...register("school", {
