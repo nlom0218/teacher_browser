@@ -70,11 +70,14 @@ const LunchmenuInfo = styled.div`
   height: 100%;
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.5fr;
+  grid-template-rows: auto 1fr;
   column-gap: 30px;
 `
 
 const SLunchmenus = styled.div`
+  grid-column: 1 / 2;
+  grid-row: 1 / -1;
   background-color: ${props => props.theme.bgColor};
   transition: background-color 1s ease;
   border-radius: 5px;
@@ -98,6 +101,24 @@ const Food = styled.div`
 
 const Allergy = styled.div`
   opacity: 0.6;
+`
+
+const LunchmenuBtn = styled.div`
+  justify-self: flex-start;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  column-gap: 10px;
+  column-gap: 0.625rem;
+  div {
+    padding: 10px 20px;
+    padding: 0.625rem 1.25rem;
+    background-color: ${props => props.theme.btnBgColor};
+    color: ${props => props.theme.bgColor};
+    transition: background-color 1s ease, color 1s ease;
+    border-radius: 5px;
+    border-radius: 0.3125rem;
+    cursor: pointer;
+  }
 `
 
 const LunchmenuDetail = styled.div`
@@ -152,7 +173,7 @@ const Lunchmenu = () => {
       return "금요일"
     } else if (day === 6) {
       return "토요일"
-    } else if (day === 7) {
+    } else if (day === 0) {
       return "일요일"
     }
   }
@@ -200,6 +221,24 @@ const Lunchmenu = () => {
       });
   };
 
+  const onClickBtn = (mode) => {
+    const lmSetting = JSON.parse(localStorage.getItem("lmSetting"))
+    if (mode === "tomorrow") {
+      const tomorrowDate = new window.Date(date.setDate(date.getDate() + 1))
+      const newLmSetting = { ...lmSetting, date: tomorrowDate }
+      localStorage.setItem("lmSetting", JSON.stringify(newLmSetting))
+      setDate(new window.Date(tomorrowDate))
+    }
+    if (mode === "today") {
+      const newLmSetting = { ...lmSetting, date: new window.Date() }
+      localStorage.setItem("lmSetting", JSON.stringify(newLmSetting))
+      setDate(new window.Date())
+    }
+    if (mode === "school") {
+
+    }
+  }
+
   //로그인 정보 있으면 반영
   useEffect(() => {
     getMenu()
@@ -235,6 +274,11 @@ const Lunchmenu = () => {
               </SLunchmenu>
             ))}
           </SLunchmenus>
+          <LunchmenuBtn>
+            <div onClick={() => onClickBtn("tomorrow")}>다음날 식단표</div>
+            <div onClick={() => onClickBtn("today")}>오늘 식단표</div>
+            <div onClick={() => onClickBtn("school")}>우리학교 식단표</div>
+          </LunchmenuBtn>
           <LunchmenuDetail>
             <LunchmenuOrigin>
               <div className="detail_title">✲ 원산지</div>
