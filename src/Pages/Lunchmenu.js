@@ -9,34 +9,50 @@ import SearchSchool from "../Components/Lunchmenu/SearchSchool";
 import { useReactiveVar } from "@apollo/client";
 import { inPopup, isPopupVar } from "../apollo";
 import useMe from "../Hooks/useMe";
+import useMedia from "../Hooks/useMedia";
+import { customMedia } from "../styles";
 dotenv.config();
 
 const LunchmenuContainer = styled.div`
   height: 100%;
-  padding: 60px;
-  padding: 3.75rem;
+  padding: 40px;
+  padding: 2.5rem;
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-rows: auto 1fr;
   align-items: flex-start;
-  row-gap: 40px;
-  row-gap: 2.5rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  ${customMedia.greaterThan("tablet")`
+    padding: 60px;
+    padding: 3.75rem;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr;
+    row-gap: 40px;
+    row-gap: 2.5rem;
+  `}
 `
 
 const Title = styled.h1`
-  font-size: 1.25em;
-  font-size: 1.25rem;
   display: grid;
   row-gap: 10px;
   row-gap: 0.625rem;
+  font-size: 1.25em;
+  font-size: 1.25rem;
+  ${customMedia.greaterThan("tablet")`
+  `}
 `;
 
 
 const SchoolName = styled.div``
 
 const SearchedDate = styled.div`
-  font-size: 2em;
-  font-size: 2rem;
+  font-size: 1.5em;
+  font-size: 1.5rem;
+  ${customMedia.greaterThan("tablet")`
+    font-size: 2em;
+    font-size: 2rem; 
+  `}
 `
 
 const SearchedDay = styled.div`
@@ -55,30 +71,38 @@ const ShoolDate = styled.div`
   grid-template-columns: 1fr auto;
   align-items: flex-end;
   justify-items: end;
-  column-gap: 10px;
-  column-gap: 0.625rem;
+  ${customMedia.greaterThan("tablet")`
+    column-gap: 10px;
+    column-gap: 0.625rem;
+  `}
 `
 
 const ShoolIcon = styled.div`
   align-self: flex-start;
+  font-size: 1.5em;
+  font-size: 1.5rem;
   display: flex;
-  font-size: 2em;
-  font-size: 2rem;
   cursor: pointer;
+  ${customMedia.greaterThan("tablet")`
+    font-size: 2em;
+    font-size: 2rem;
+  `}
 `
 
 const LunchmenuInfo = styled.div`
   height: 100%;
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  grid-template-rows: auto 1fr;
-  column-gap: 30px;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: 1fr 1.5fr;
+    grid-template-rows: auto 1fr;
+    column-gap: 30px;
+  `}
 `
 
 const SLunchmenus = styled.div`
-  grid-column: 1 / 2;
-  grid-row: 1 / -1;
   background-color: ${props => props.theme.bgColor};
   transition: background-color 1s ease;
   border-radius: 5px;
@@ -87,23 +111,34 @@ const SLunchmenus = styled.div`
   padding: 1.25rem;
   display: grid;
   align-items: center;
-  .lunch_errMsg {
+  row-gap: 10px;
+  row-gap: 0.625rem;
+  ${customMedia.greaterThan("tablet")`
+    grid-column: 1 / 2;
+    grid-row: 1 / -1;
+  `}
+  .lunch_subMsg {
     text-align: center;
-    font-size: 1.25em;
-    font-size: 1.25rem;
+    padding: 40px 0px;
+    padding: 2.5rem 0rem;
+    ${customMedia.greaterThan("tablet")`
+      font-size: 1.25em;
+      font-size: 1.25rem;
+    `}
+  }
+  .lunch_errMsg {
     color: ${props => props.theme.redColor};
   }
   .lunch_loading {
-    text-align: center;
-    font-size: 1.25em;
-    font-size: 1.25rem;
   }
 `
 
 const SLunchmenu = styled.div`
   display: grid;
-  row-gap: 10px;
-  row-gap: 0.625rem;
+  ${customMedia.greaterThan("tablet")`
+    row-gap: 10px;
+    row-gap: 0.625rem;
+  `}
 `;
 
 const Food = styled.div`
@@ -116,11 +151,20 @@ const Allergy = styled.div`
 `
 
 const LunchmenuBtn = styled.div`
-  justify-self: flex-start;
   display: grid;
-  grid-template-columns: auto auto auto;
-  column-gap: 10px;
-  column-gap: 0.625rem;
+  row-gap: 10px;
+  row-gap: 0.625rem;
+  text-align: center;
+  grid-row: 1 / 2;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: 1fr 1fr;
+    column-gap: 10px;
+    column-gap: 0.625rem;
+    `}
+  ${customMedia.greaterThan("desktop")`
+    justify-self: flex-start;
+    grid-template-columns: auto auto auto;
+  `}
   div {
     padding: 10px 20px;
     padding: 0.625rem 1.25rem;
@@ -140,6 +184,11 @@ const LunchmenuDetail = styled.div`
   line-height: 120%;
   letter-spacing: 1px;
   opacity: 0.8;
+  margin-bottom: 40px;
+  margin-bottom: 2.5rem;
+  ${customMedia.greaterThan("tablet")`
+    margin-bottom: 0;
+  `}
   .detail_title {
     font-size: 1.25em;
     font-size: 1.25rem;
@@ -152,6 +201,10 @@ const LunchmenuDetail = styled.div`
 const LunchmenuOrigin = styled.div``
 
 const Lunchmenu = () => {
+  // 반응형
+  const media = useMedia()
+  console.log(media);
+
   // localStorage에서 값 불러오기
   const {
     schoolCode: lmSchoolCode,
@@ -288,7 +341,7 @@ const Lunchmenu = () => {
         </Title>
         <SearchIcons>
           <ShoolDate>
-            <div>{schoolName ? schoolName : "학교검색"}</div>
+            {media !== "Mobile" && <div>{schoolName ? schoolName : "학교검색"}</div>}
             <ShoolIcon onClick={onClickSchoolIcon}><FaSchool /></ShoolIcon>
           </ShoolDate>
           <Date date={date} setDate={setDate} processSetDate={processSetDate} />
@@ -296,7 +349,7 @@ const Lunchmenu = () => {
         <LunchmenuInfo>
           <SLunchmenus>
             {menu === "loading" ?
-              <div className="lunch_loading">급식 정보 불러오는 중... 😁</div>
+              <div className="lunch_loading lunch_subMsg">급식 정보 불러오는 중... 😁</div>
               :
               (menu ?
                 menu.map((item, index) => (
@@ -306,7 +359,7 @@ const Lunchmenu = () => {
                   </SLunchmenu>
                 ))
                 :
-                <div className="lunch_errMsg">급식 정보가 없습니다 😢</div>
+                <div className="lunch_errMsg lunch_subMsg">급식 정보가 없습니다 😢</div>
               )
             }
           </SLunchmenus>

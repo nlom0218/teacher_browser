@@ -4,6 +4,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
 import { forwardRef } from "react";
 import { BsCalendarDate } from "react-icons/bs";
+import useMedia from "../../Hooks/useMedia";
+import { customMedia } from "../../styles";
 
 const DatePickers = styled(DatePicker)`
   font-size: 2em;
@@ -28,19 +30,28 @@ const DateContainer = styled.div`
   grid-template-columns: 1fr auto;
   align-items: flex-end;
   justify-items: end;
-  column-gap: 10px;
-  column-gap: 0.625rem;
+  ${customMedia.greaterThan("tablet")`
+    column-gap: 10px;
+    column-gap: 0.625rem;
+  `}
 `
 
 
 const DateIcon = styled.div`
   cursor: pointer;  
   display: flex;
-  font-size: 2em;
-  font-size: 2rem;
+  font-size: 1.5em;
+  font-size: 1.5rem;
+  ${customMedia.greaterThan("tablet")`
+    font-size: 2em;
+    font-size: 2rem;
+  `}
 `
 
 export const Date = ({ date, setDate, processSetDate }) => {
+  // 반응형
+  const media = useMedia()
+
   //날짜 설정하기
   const getDate = (date) => {
     const lmSetting = JSON.parse(localStorage.getItem("lmSetting"))
@@ -50,7 +61,7 @@ export const Date = ({ date, setDate, processSetDate }) => {
   };
   const CustomInput = forwardRef(({ value, onClick }, ref) => (
     <DateContainer ref={ref}>
-      <div>{processSetDate()}</div>
+      {media !== "Mobile" && <div>{processSetDate()}</div>}
       <DateIcon onClick={onClick}><BsCalendarDate /></DateIcon>
     </DateContainer>
   ))
