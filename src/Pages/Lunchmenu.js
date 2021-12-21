@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import "react-datepicker/dist/react-datepicker.css";
-import { useDidMountEffect } from "../Hooks/useDidMountEffect";
-import useMe from "../Hooks/useMe";
 import { Date } from "../Components/Lunchmenu/Date";
 import dotenv from "dotenv";
 import { FaSchool } from "react-icons/fa";
@@ -121,16 +119,16 @@ const LunchmenuDetail = styled.div`
 const LunchmenuOrigin = styled.div``
 
 const Lunchmenu = () => {
+  const lmSetting = JSON.parse(localStorage.getItem("lmSetting"))
   // popup reactiveVar => 파업창을 띄우기 위한 전역적으로 사용할 수 있는 변수
   const isPopup = useReactiveVar(isPopupVar)
   const [date, setDate] = useState(new window.Date());
-  const [schoolCode, setSchoolCode] = useState([]);
-  const [schoolName, setSchoolName] = useState(undefined)
+  // localStorage에 저장된 값으로 state 지정
+  const [schoolCode, setSchoolCode] = useState(lmSetting ? lmSetting.schoolCode : undefined)
+  const [areaCode, setAreaCode] = useState(lmSetting ? lmSetting.areaCode : undefined)
+  const [schoolName, setSchoolName] = useState(lmSetting ? lmSetting.schoolName : undefined)
   const [menu, setMenu] = useState([]);
   const [origin, setOrigin] = useState([])
-
-  //회원정보 불러오기
-  const me = useMe();
 
   const processSetDay = () => {
     const day = date.getDay()
@@ -166,8 +164,8 @@ const Lunchmenu = () => {
       `&Type=json` +
       `&pIndex=1` +
       `&pSize=100` +
-      `&ATPT_OFCDC_SC_CODE=${schoolCode[0]}` +
-      `&SD_SCHUL_CODE=${schoolCode[1]}` +
+      `&ATPT_OFCDC_SC_CODE=${areaCode}` +
+      `&SD_SCHUL_CODE=${schoolCode}` +
       `&MLSV_YMD=${changedDate}`
     )
       .then((response) => response.json())
@@ -196,16 +194,14 @@ const Lunchmenu = () => {
 
   //로그인 정보 있으면 반영
   useEffect(() => {
-    if (me) {
-      setSchoolCode([me?.areaCode, me?.schoolCode])
-      setSchoolName(me?.schoolName)
-    };
-  }, [me]);
+    getMenu()
+  }, [date, schoolCode]);
   //맨처음 제외하고 state값 변경 시 rerender
-  useDidMountEffect(getMenu, [date, schoolCode]);
+  // useDidMountEffect(getMenu, [date, schoolCode]);
 
   // 팝업창으로 이동하기
   const onClickSchoolIcon = () => inPopup()
+
   //리턴
   return (
     <BasicContainer menuItem={true}>
@@ -244,6 +240,7 @@ const Lunchmenu = () => {
         </LunchmenuInfo>
       </LunchmenuContainer>
       {isPopup && <SearchSchool
+        setAreaCode={setAreaCode}
         setSchoolCode={setSchoolCode}
         setSchoolName={setSchoolName}
       />}

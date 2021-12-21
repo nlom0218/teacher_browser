@@ -50,10 +50,20 @@ const Title = styled.div`
 `
 
 const Menu = () => {
-  const changedDate = () => `${new window.Date().getFullYear()}${(new window.Date().getMonth() + 1)
-    .toString()
-    .padStart(2, 0)}${new window.Date().getDate().toString().padStart(2, 0)}`;
   const me = useMe()
+  // 런치메뉴를 눌렀을 때 me가 있으면 lmSetting 생성, 없으면 삭제
+  const onClickLunchmenu = () => {
+    if (me) {
+      localStorage.setItem("lmSetting", JSON.stringify({
+        areaCode: me?.areaCode,
+        schoolCode: me?.schoolCode,
+        schoolName: me?.schoolName,
+        date: new window.Date()
+      }))
+    } else {
+      localStorage.removeItem("lmSetting")
+    }
+  }
   return (<BasicContainer>
     <Container>
       <Link to={routes.timer}>
@@ -81,10 +91,7 @@ const Menu = () => {
           {/* 급식순서 -> 순서정하기 */}
         </SMenu>
       </Link>
-      <Link to={me ?
-        `${routes.lunchmenu}`
-        :
-        `${routes.lunchmenu}`} >
+      <Link to={routes.lunchmenu} onClick={onClickLunchmenu}>
         <SMenu>
           <GiForkKnifeSpoon />
           <Title>식단표</Title>
