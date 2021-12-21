@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import { useReactiveVar } from '@apollo/client';
+import React from 'react';
 import styled from 'styled-components';
+import { isPopupVar } from '../apollo';
 import EditSchool from '../Components/Account/EditSchool';
-import EditStudent from '../Components/Account/EditStudent';
 import RegisterSchool from '../Components/Account/RegisterSchool';
-import RegisterStudent from '../Components/Account/RegisterStudent';
-import StudentInfo from '../Components/Account/StudentInfo';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import useMe from '../Hooks/useMe';
 import { color, customMedia } from '../styles';
@@ -57,10 +56,10 @@ const Item = styled.div`
 `
 
 const EditAccount = () => {
-  const [registerPage, setRegisterPage] = useState(undefined)
+  const isPopup = useReactiveVar(isPopupVar)
   const me = useMe()
   return (<BasicContainer menuItem={true}>
-    <Container registerPage={registerPage}>
+    <Container>
       <Changes>
         <List>이메일</List>
         <Item>{me?.email}</Item>
@@ -72,36 +71,12 @@ const EditAccount = () => {
             userEmail={me?.email}
             schoolName={me?.schoolName}
             schoolAdress={me?.schoolAdress}
-            registerPage={registerPage}
-            setRegisterPage={setRegisterPage}
           />
         </Item>
       </Changes>
-      {/* <Changes>
-        <List>학생</List>
-        <Item>
-          <EditStudent
-            userEmail={me?.email}
-            studentNum={me?.studentNum}
-            registerPage={registerPage}
-            setRegisterPage={setRegisterPage}
-          />
-        </Item>
-      </Changes> */}
     </Container>
-    {registerPage === "school" &&
+    {isPopup &&
       <RegisterSchool
-        setRegisterPage={setRegisterPage}
-      />}
-    {registerPage === "student" &&
-      <RegisterStudent
-        userEmail={me?.email}
-        setRegisterPage={setRegisterPage}
-      />}
-    {registerPage === "studentInfo" &&
-      <StudentInfo
-        userEmail={me?.email}
-        setRegisterPage={setRegisterPage}
       />}
   </BasicContainer>);
 }

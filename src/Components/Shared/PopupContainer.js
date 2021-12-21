@@ -22,31 +22,32 @@ const SRegisterContainer = styled.div`
   };
   position: fixed;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  top: 15%;
+  transform: translate(-50%, 0%);
+  /* height: 70%; */
   max-height: 70%;
-  height: 70%;
   ${customMedia.greaterThan("tablet")`
     width: 60%
   `}
   ${customMedia.greaterThan("desktop")`
     width: 30%
   `}
+  background-color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease;
+  border-radius: 10px;
+  border-radius: 0.625rem;
 `
 
 const RegisterPage = styled.div`
-  background-color: ${props => props.theme.bgColor};
-  transition: background-color 1s ease;
   padding: 10px 30px;
   padding: 0.625rem 1.875rem;
-  border-radius: 10px;
   display: grid;
   align-items: flex-start;
   row-gap: 10px;
   row-gap: 1.25rem;
 `
 
-const RegisterContainer = ({ children }) => {
+const PopupContainer = ({ children }) => {
   const onClickBackground = () => {
     outPopup()
   }
@@ -60,4 +61,4 @@ const RegisterContainer = ({ children }) => {
   );
 }
 
-export default RegisterContainer;
+export default PopupContainer;

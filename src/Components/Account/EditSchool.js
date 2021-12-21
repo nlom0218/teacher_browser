@@ -1,6 +1,7 @@
 import { gql, useMutation } from '@apollo/client';
 import React from 'react';
 import styled from 'styled-components';
+import { inPopup } from '../../apollo';
 import { ME_QUERY } from '../../Hooks/useMe';
 import BtnContainer from './styled/BtnContainer';
 import DelBtn from './styled/DelBtn';
@@ -27,12 +28,9 @@ const SchoolName = styled.div`
 const SchoolAdress = styled.div`
 `
 
-const EditSchool = ({ userEmail, schoolName, setRegisterPage, schoolAdress, registerPage }) => {
+const EditSchool = ({ userEmail, schoolName, schoolAdress }) => {
   const onClickRegisterBtn = () => {
-    if (registerPage) {
-      return
-    }
-    setRegisterPage("school")
+    inPopup()
   }
   const [deleteSchoolInfo, { loading }] = useMutation(DELETE_SCHOOL_INFO_MUTATION, {
     refetchQueries: [{ query: ME_QUERY }]
@@ -42,9 +40,6 @@ const EditSchool = ({ userEmail, schoolName, setRegisterPage, schoolAdress, regi
       return
     }
     if (schoolName) {
-      if (registerPage) {
-        return
-      }
       if (window.confirm("등록된 학교정보를 삭제하시겠습니까?")) {
         deleteSchoolInfo({
           variables: { userEmail }

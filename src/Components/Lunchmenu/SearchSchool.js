@@ -4,7 +4,7 @@ import { FcSearch } from 'react-icons/fc';
 import styled from 'styled-components';
 import { outPopup } from '../../apollo';
 import useMe from '../../Hooks/useMe';
-import RegisterContainer from '../Account/RegisterContainer';
+import PopupContainer from '../Shared/PopupContainer';
 import RegisterErrMsg from '../Account/styled/RegisterErrMsg';
 import RegisterForm from '../Account/styled/RegisterForm';
 
@@ -97,7 +97,7 @@ const SearchSchool = ({ setSchoolCode, setSchoolName }) => {
   const onClickPageBtn = () => {
     findSchool(getValues("school"))
   }
-  return (<RegisterContainer>
+  return (<PopupContainer>
     <RegisterForm onSubmit={handleSubmit(onSubmit)}>
       <SearchInput
         {...register("school", {
@@ -123,7 +123,7 @@ const SearchSchool = ({ setSchoolCode, setSchoolName }) => {
           다음 페이지
           </PageBtn>}
     </SchoolList>}
-  </RegisterContainer>);
+  </PopupContainer>);
 }
 
 export default SearchSchool;

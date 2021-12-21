@@ -4,9 +4,10 @@ import styled from 'styled-components';
 import { gql, useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import useMe, { ME_QUERY } from '../../Hooks/useMe';
-import RegisterContainer from './RegisterContainer';
+import PopupContainer from '../Shared/PopupContainer';
 import RegisterForm from './styled/RegisterForm';
 import RegisterErrMsg from './styled/RegisterErrMsg';
+import { outPopup } from '../../apollo';
 
 const UPDATE_USER_MUTATION = gql`
   mutation UpdateUser($userEmail: String!, $schoolName: String, $schoolCode: String, $areaCode: String, $schoolAdress: String) {
@@ -52,7 +53,7 @@ const PageBtn = styled.div`
 `
 
 
-const RegisterSchool = ({ setRegisterPage }) => {
+const RegisterSchool = () => {
   const me = useMe()
   const [page, setPage] = useState(1)
   const [schoolInfo, setSchoolInfo] = useState(undefined)
@@ -95,7 +96,7 @@ const RegisterSchool = ({ setRegisterPage }) => {
   }
   const onCompleted = () => {
     onChangeInput()
-    setRegisterPage(undefined)
+    outPopup()
     setValue("school", "")
   }
   const [updateUser] = useMutation(UPDATE_USER_MUTATION, {
@@ -125,7 +126,7 @@ const RegisterSchool = ({ setRegisterPage }) => {
   const onClickPageBtn = () => {
     findSchool(getValues("school"))
   }
-  return (<RegisterContainer setRegisterPage={setRegisterPage}>
+  return (<PopupContainer>
     <RegisterForm onSubmit={handleSubmit(onSubmit)}>
       <SearchInput
         {...register("school", {
@@ -151,7 +152,7 @@ const RegisterSchool = ({ setRegisterPage }) => {
           다음 페이지
           </PageBtn>}
     </SchoolList>}
-  </RegisterContainer>);
+  </PopupContainer>);
 }
 
 export default RegisterSchool;
