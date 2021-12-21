@@ -8,8 +8,8 @@ const Background = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0,0,0,0.75);
-  z-index: 0;
+  background-color: ${props => props.theme.popupBgColor};
+  z-index: 2;
 `;
 
 const SRegisterContainer = styled.div`
