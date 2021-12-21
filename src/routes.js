@@ -12,6 +12,7 @@ const ORDER = "/order"
 const LUNCHMENU = "/lunchmenu"
 const SCHEDULE = "/schedule"
 const JOURNAL = "/journal"
+const LIST = "/list"
 
 // account link
 const LOGIN = "/login"
@@ -34,6 +35,7 @@ const routes = {
   lunchmenu: LUNCHMENU,
   schedule: SCHEDULE,
   journal: JOURNAL,
+  list: LIST,
 
   // account link
   login: LOGIN,

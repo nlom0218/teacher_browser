@@ -114,12 +114,12 @@ const Menu = () => {
           <Title>학급일지</Title>
         </SMenu>
       </Link>
-      {me && <Link to={routes.editAccount}>
+      <Link to={routes.list}>
         <SMenu>
           <FaUserEdit />
-          <Title>회원정보 변경</Title>
+          <Title>명렬표</Title>
         </SMenu>
-      </Link>}
+      </Link>
     </Container>
   </BasicContainer>);
 }
