@@ -26,6 +26,7 @@ export const logOutUser = () => {
   isLoggedInVar(false)
 }
 
+// 현재 상태가 파업인지 아닌지 설정하는 변수와 팝업창으로 이동하기와 벗어나기 함수
 export const isPopupVar = makeVar(Boolean(localStorage.getItem(POPUP)))
 export const inPopup = () => {
   localStorage.setItem(POPUP, "true")

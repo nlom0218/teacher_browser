@@ -97,33 +97,35 @@ const SearchSchool = ({ setSchoolCode, setSchoolName }) => {
   const onClickPageBtn = () => {
     findSchool(getValues("school"))
   }
-  return (<PopupContainer>
-    <RegisterForm onSubmit={handleSubmit(onSubmit)}>
-      <SearchInput
-        {...register("school", {
-          required: true,
-          onChange: onChangeInput,
+  return (
+    // 현재 이곳이 파업창이라면 꼭 PopupContainer를 최상위 부모로 가져야 한다. Components => shared 에 있음
+    <PopupContainer>
+      <RegisterForm onSubmit={handleSubmit(onSubmit)}>
+        <SearchInput
+          {...register("school", {
+            required: true,
+            onChange: onChangeInput,
+          })}
+          type="text"
+          autoComplete="off"
+          placeholder="학교이름을 입력해주세요. ex) 다목초 또는 다목초등학교"
+          autoFocus
+        />
+        <FcSearch onClick={handleSubmit(onSubmit)} />
+      </RegisterForm>
+      {errMsg && <RegisterErrMsg>{errMsg}</RegisterErrMsg>}
+      {schoolInfo && <SchoolList>
+        {schoolInfo.map((item, index) => {
+          return <SchoolItem key={index} onClick={() => onClickSchool(item.areaCode, item.schoolCode, item.schoolName)}>
+            {item.areaName} {item.schoolName} {item.schoolAdress}
+          </SchoolItem>
         })}
-        type="text"
-        autoComplete="off"
-        placeholder="학교이름을 입력해주세요. ex) 다목초 또는 다목초등학교"
-        autoFocus
-      />
-      <FcSearch onClick={handleSubmit(onSubmit)} />
-    </RegisterForm>
-    {errMsg && <RegisterErrMsg>{errMsg}</RegisterErrMsg>}
-    {schoolInfo && <SchoolList>
-      {schoolInfo.map((item, index) => {
-        return <SchoolItem key={index} onClick={() => onClickSchool(item.areaCode, item.schoolCode, item.schoolName)}>
-          {item.areaName} {item.schoolName} {item.schoolAdress}
-        </SchoolItem>
-      })}
-      {schoolInfo.length === 5 &&
-        <PageBtn onClick={onClickPageBtn}>
-          다음 페이지
+        {schoolInfo.length === 5 &&
+          <PageBtn onClick={onClickPageBtn}>
+            다음 페이지
           </PageBtn>}
-    </SchoolList>}
-  </PopupContainer>);
+      </SchoolList>}
+    </PopupContainer>);
 }
 
 export default SearchSchool;

@@ -121,8 +121,8 @@ const LunchmenuDetail = styled.div`
 const LunchmenuOrigin = styled.div``
 
 const Lunchmenu = () => {
+  // popup reactiveVar => 파업창을 띄우기 위한 전역적으로 사용할 수 있는 변수
   const isPopup = useReactiveVar(isPopupVar)
-  console.log(isPopup);
   const [date, setDate] = useState(new window.Date());
   const [schoolCode, setSchoolCode] = useState([]);
   const [schoolName, setSchoolName] = useState(undefined)
@@ -204,6 +204,7 @@ const Lunchmenu = () => {
   //맨처음 제외하고 state값 변경 시 rerender
   useDidMountEffect(getMenu, [date, schoolCode]);
 
+  // 팝업창으로 이동하기
   const onClickSchoolIcon = () => inPopup()
   //리턴
   return (
