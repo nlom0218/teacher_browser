@@ -1,7 +1,7 @@
 import React from 'react';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import styled from 'styled-components';
-import { FcAlarmClock, FcDonate, FcRefresh, FcNumericalSorting12 } from "react-icons/fc";
+import { FcAlarmClock, FcDonate, FcRefresh, FcNumericalSorting12, FcContacts, FcDataSheet, FcDocument, FcList } from "react-icons/fc";
 import { GiForkKnifeSpoon, GiNotebook } from "react-icons/gi";
 import { BsTable } from "react-icons/bs";
 import { customMedia } from '../styles';
@@ -98,25 +98,25 @@ const Menu = () => {
       </Link>
       <Link to={routes.lunchmenu} onClick={onClickLunchmenu}>
         <SMenu>
-          <GiForkKnifeSpoon />
+          <FcList />
           <Title>식단표</Title>
         </SMenu>
       </Link>
       <Link to={routes.schedule}>
         <SMenu>
-          <BsTable />
+          <FcDataSheet />
           <Title>시간표</Title>
         </SMenu>
       </Link>
       <Link to={routes.journal}>
         <SMenu>
-          <GiNotebook />
+          <FcDocument />
           <Title>학급일지</Title>
         </SMenu>
       </Link>
       <Link to={routes.list}>
         <SMenu>
-          <FaUserEdit />
+          <FcContacts />
           <Title>명렬표</Title>
         </SMenu>
       </Link>
