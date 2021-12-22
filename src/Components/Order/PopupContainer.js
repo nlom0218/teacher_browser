@@ -24,7 +24,7 @@ const SRegisterContainer = styled.div`
     width: 60%
   `}
 `;
-
+//닫기 버튼
 const CloseBtn = styled.div`
   color: ${(props) => props.theme.redColor};
   transition: color 1s ease;
@@ -37,7 +37,7 @@ const CloseBtn = styled.div`
     font-size: 1.25rem;
   }
 `;
-
+// 화면 등장
 const RegisterPage = styled.div`
   background-color: ${(props) => props.theme.bgColor};
   transition: background-color 1s ease;

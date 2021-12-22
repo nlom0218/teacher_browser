@@ -28,7 +28,9 @@ const PopupListItem = ({ itemObj, modifyListArray }) => {
   const onChangeInput = () => {
     setErrMsg(undefined);
   };
-
+  //리스트를 불러올 때 저장된 목록이 없으면 목록 없다고 뜸.
+  //리스트값이 0이 아니면 몇명인지, 리스트 명단 불러옴.
+  //학생 이름을 수정, 삭제, 초기화가 가능함. 수정할 때 같은 이름은 에러 메세지 뜸.
   return (
     <div>
       <div>{itemObj.listName}</div>

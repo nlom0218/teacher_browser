@@ -14,7 +14,6 @@ const Container = styled.div`
   .listName {
     padding: 16px 0px;
     padding: 1rem 0rem;
-
     :first-child {
       border-top-left-radius: 10px;
       border-top-left-radius: 0.625rem;
@@ -49,14 +48,14 @@ const PopupList = ({ setPopup }) => {
     JSON.parse(localStorage.getItem("orderList"))
   ); // 각각 리스트 보내기
   const [itemObj, setItemObj] = useState({}); // 각각 리스트 안에 있는 배열 보내기
-  //compare => 재사용 가능한 함수로 만들기(export하기)
   const [studentList, setStudentList] = useState([]);
   const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY);
   const [selectedList, setSelectedList] = useState("학생목록");
+  //compare 리스트 순서 유지 => 재사용 가능한 함수로 만들기(export하기)
   const compare = (key) => {
     return (a, b) => (a[key] > b[key] ? 1 : a[key] < b[key] ? -1 : 0);
   };
-
+  //바뀐 리스트가 있으면 교체
   const modifyListArray = (name, changedItemList, type) => {
     const newItemObj =
       type === "changedListName"
@@ -72,7 +71,7 @@ const PopupList = ({ setPopup }) => {
     setListArray(newListArray);
     localStorage.setItem("orderList", JSON.stringify(newListArray));
   };
-
+  //리스트 이름 변경하기
   const onClickListName = (name) => {
     setSelectedList(name);
     if (name !== "studentList") {
@@ -105,7 +104,8 @@ const PopupList = ({ setPopup }) => {
     setStudentList(myStuentList);
     setItemObj({ listName: "학생목록", list: myStuentList });
   }, [data]);
-
+  //리스트가 나오고 리스트명을 클릭하면 해당 리스트를 불러옴.
+  //리스트명과 리스트 내 명단 이름 변경/삭제가 가능하도록 불러옴.
   return (
     <PopupContainer setPopup={setPopup}>
       <Container>

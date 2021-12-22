@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 const PopupListItemValue = ({ item, modifyListArray, itemObj }) => {
   const { register, handleSubmit, setValue } = useForm({
     mode: "onChange",
-    
   });
   setValue("newItemName", item);
 
@@ -15,7 +14,8 @@ const PopupListItemValue = ({ item, modifyListArray, itemObj }) => {
   };
   const onSubmit = (data) => {
     const { newItemName } = data;
-    const existName = itemObj.list.filter((item) => item === newItemName); // 같은 이름이 없으면 => [] /같은 이름이 있으면 => [하나]
+    const existName = itemObj.list.filter((item) => item === newItemName);
+    // 같은 이름이 없으면 => [] /같은 이름이 있으면 => [하나] : 동일 이름 발생되지 않도록 함.
     if (existName.length !== 0) {
       return;
     }
@@ -28,6 +28,8 @@ const PopupListItemValue = ({ item, modifyListArray, itemObj }) => {
     });
     modifyListArray(itemObj?.listName, newItemObjList, "changedListItem");
   };
+  //리스트 불러오는데 기존 학생목록에 있는 것은 읽기만 가능함.
+  //로컬 저장소에서 불러온 학생목록은 추가, 수정, 삭제, 초기화가 가능함.
   return (
     <form style={{ display: "flex" }} onSubmit={handleSubmit(onSubmit)}>
       <input
