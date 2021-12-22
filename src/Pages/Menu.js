@@ -2,12 +2,9 @@ import React from 'react';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import styled from 'styled-components';
 import { FcAlarmClock, FcDonate, FcRefresh, FcNumericalSorting12, FcContacts, FcDataSheet, FcDocument, FcList } from "react-icons/fc";
-import { GiForkKnifeSpoon, GiNotebook } from "react-icons/gi";
-import { BsTable } from "react-icons/bs";
 import { customMedia } from '../styles';
 import { Link } from 'react-router-dom';
 import routes from '../routes';
-import { FaUserEdit } from 'react-icons/fa';
 import useMe from '../Hooks/useMe';
 
 const Container = styled.div`

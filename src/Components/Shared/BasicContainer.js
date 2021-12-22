@@ -4,14 +4,11 @@ import Header from './Header';
 import Theme from './Theme';
 import { customMedia } from '../../styles';
 import PreviousPageBtn from './PreviousPageBtn';
-import { useReactiveVar } from '@apollo/client';
-import { isPopupVar, outPopup } from '../../apollo';
-
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: auto 1fr 100px;
-  grid-template-rows: auto 1fr 6.25rem;
+  grid-template-rows: auto 1fr 60px;
+  grid-template-rows: auto 1fr 3.75rem;
   min-height: 100vh;
   height: 100vh;
   z-index: 0;
