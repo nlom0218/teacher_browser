@@ -36,6 +36,7 @@ const PopupListItem = ({ itemObj, modifyListArray }) => {
         <div>{itemObj?.listName}에 저장된 목록이 없습니다.</div>
       ) : (
         <div>
+          (총 {itemObj.list?.length} 명)
           {itemObj.list?.map((item, index) => {
             return (
               <PopupListItemValue

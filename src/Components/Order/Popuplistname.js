@@ -32,7 +32,7 @@ const PopupListName = ({
     modifyListArray(item.listName, newItemObjList, "changedListName");
     setSelectedList(newListName);
   };
-
+  //리스트이름 클릭하면 색깔 변하고 리스트 이름 수정한 뒤 저장.
   return (
     <Form
       onClick={() => {
