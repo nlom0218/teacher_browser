@@ -8,6 +8,7 @@ import {
   weatherUp,
 } from "../../Animations/WeatherAni";
 import { color } from "../../styles";
+import { BsEmojiDizzy, BsEmojiFrown, BsEmojiHeartEyes, BsEmojiLaughing } from "react-icons/bs";
 
 const Weather = styled.div``;
 
@@ -49,7 +50,19 @@ const WeatherContent = styled.div`
   animation: ${(props) =>
     props.firstEnter ? "none" : props.seeWeather ? weatherDown : weatherUp}
     1s ease forwards;
+  svg {
+    
+  }
 `;
+
+
+const WeatherItems = styled.div`
+  display: grid;
+  grid-template-columns: repeat(7, auto);
+  align-items: center;
+`
+
+const Temp = styled.div``
 
 const WeatherIcon = styled.img`
   vertical-align: middle;
@@ -57,6 +70,19 @@ const WeatherIcon = styled.img`
   margin-bottom: -20px;
   transform: translate(0%, -5%);
 `;
+
+const Dust = styled.div``
+
+const DustIcon = styled.div`
+  display: flex;
+  margin: 0px 5px;
+  margin: 0px 0.3125rem;
+`
+
+const Address = styled.div`
+  margin-left: 5px;
+  margin: 0px 0.3125rem;
+`
 
 //
 const HeaderWeather = () => {
@@ -119,23 +145,26 @@ const HeaderWeather = () => {
       </WeatherBtn>
       <WeatherContent seeWeather={seeWeather} firstEnter={firstEnter}>
         {weather ? (
-          <>
-            {Math.round(weather.temp)}℃
+          <WeatherItems>
+            <Temp>{Math.round(weather.temp)}℃</Temp>
             <WeatherIcon
               src={`https://openweathermap.org/img/wn/${weather.icon}.png`}
             />
-            미세먼지{" "}
-            {weather.pm10grade === "1"
-              ? "좋음"
-              : weather.pm10grade === "2"
-              ? "보통"
-              : weather.pm10grade === "3"
-              ? "나쁨"
-              : weather.pm10grade === "4"
-              ? "매우나쁨"
-              : ""}{" "}
-            @ {weather.address1 + " " + weather.address2}
-          </>
+            <Dust>미세먼지</Dust>
+            <DustIcon>
+              {weather.pm10grade === "1"
+                ? <BsEmojiHeartEyes style={{ color: "#1d35e5" }} />
+                : weather.pm10grade === "2"
+                  ? <BsEmojiLaughing style={{ color: "#1fc90c" }} />
+                  : weather.pm10grade === "3"
+                    ? <BsEmojiFrown style={{ color: "#ddab16" }} />
+                    : weather.pm10grade === "4"
+                      ? <BsEmojiDizzy style={{ color: "#dd2a16" }} />
+                      : ""}
+            </DustIcon>
+            <div>@</div>
+            <Address>{weather.address1 + " " + weather.address2}</Address>
+          </WeatherItems>
         ) : (
           "위치 정보 없음"
         )}

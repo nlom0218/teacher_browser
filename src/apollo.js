@@ -4,6 +4,7 @@ import { makeVar } from "@apollo/client"
 
 const DARK = "dark"
 const TOKEN = "token"
+const POPUP = "popup"
 
 export const darkModeVar = makeVar(Boolean(localStorage.getItem(DARK)))
 export const enableDarkMode = () => {
@@ -23,6 +24,17 @@ export const logInUser = (token) => {
 export const logOutUser = () => {
   localStorage.removeItem(TOKEN)
   isLoggedInVar(false)
+}
+
+// 현재 상태가 파업인지 아닌지 설정하는 변수와 팝업창으로 이동하기와 벗어나기 함수
+export const isPopupVar = makeVar(Boolean(localStorage.getItem(POPUP)))
+export const inPopup = () => {
+  localStorage.setItem(POPUP, "true")
+  isPopupVar(true)
+}
+export const outPopup = () => {
+  localStorage.removeItem(POPUP)
+  isPopupVar(false)
 }
 
 const httpLink = createHttpLink({
