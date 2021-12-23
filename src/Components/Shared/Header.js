@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import useMedia from '../../Hooks/useMedia';
 import { customMedia } from '../../styles';
 import { FcNews, FcCalendar, FcTodoList, FcGrid, FcBookmark } from "react-icons/fc";
 import { Link } from 'react-router-dom';

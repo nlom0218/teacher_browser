@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FaBars } from "react-icons/fa";
 import { Link, useNavigate } from 'react-router-dom';
 import routes from '../../routes';
 import { useReactiveVar } from '@apollo/client';
 import { isLoggedInVar, logOutUser } from '../../apollo';
+import { FcMenu } from 'react-icons/fc';
 
 const SideMenu = styled.div`
   display: grid;
@@ -76,7 +76,7 @@ const HeaderSideBtn = ({ seeSideMenu, setSeeSideMenu }) => {
   }
   return (
     <SideMenu>
-      <SideBtn onClick={onClickSideBtn}><FaBars /></SideBtn>
+      <SideBtn onClick={onClickSideBtn}><FcMenu /></SideBtn>
       {seeSideMenu &&
         <SideContents>
           {login ?
