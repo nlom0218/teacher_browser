@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import EditSchool from "../Components/Account/EditSchool";
-import EditStudent from "../Components/Account/EditStudent";
+import { useReactiveVar } from '@apollo/client';
+import React from 'react';
+import styled from 'styled-components';
+import { isPopupVar } from '../apollo';
+import EditSchool from '../Components/Account/EditSchool';
 import EditBgTheme from "../Components/Account/EditBgTheme";
-import RegisterSchool from "../Components/Account/RegisterSchool";
-import RegisterStudent from "../Components/Account/RegisterStudent";
-import StudentInfo from "../Components/Account/StudentInfo";
-import BasicContainer from "../Components/Shared/BasicContainer";
-import useMe from "../Hooks/useMe";
-import { color, customMedia } from "../styles";
+import RegisterSchool from '../Components/Account/RegisterSchool';
+import BasicContainer from '../Components/Shared/BasicContainer';
+import useMe from '../Hooks/useMe';
+import { color, customMedia } from '../styles';
 
 const Container = styled.div`
   padding: 60px 0px;
@@ -80,17 +79,6 @@ const EditAccount = () => {
           </Item>
         </Changes>
         <Changes>
-          <List>학생</List>
-          <Item>
-            <EditStudent
-              userEmail={me?.email}
-              studentNum={me?.studentNum}
-              registerPage={registerPage}
-              setRegisterPage={setRegisterPage}
-            />
-          </Item>
-        </Changes>
-        <Changes>
           <List>배경화면 테마</List>
           <Item>
             <EditBgTheme userEmail={me?.email} bgTheme={me?.bgTheme} />
@@ -99,15 +87,6 @@ const EditAccount = () => {
       </Container>
       {registerPage === "school" && (
         <RegisterSchool setRegisterPage={setRegisterPage} />
-      )}
-      {registerPage === "student" && (
-        <RegisterStudent
-          userEmail={me?.email}
-          setRegisterPage={setRegisterPage}
-        />
-      )}
-      {registerPage === "studentInfo" && (
-        <StudentInfo userEmail={me?.email} setRegisterPage={setRegisterPage} />
       )}
     </BasicContainer>
   );

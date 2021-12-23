@@ -52,7 +52,9 @@ export const SchoolNameForm = ({ schoolName, setSchoolCode, setMenu }) => {
   const [schoolList, setSchoolList] = useState();
   const [check, setCheck] = useState(true);
 
-  const { register, handleSubmit, setValue } = useForm();
+  const { register, handleSubmit, setValue } = useForm({
+    mode: "onChange"
+  });
 
   //학교 정보가 넘어오면 처음에 한번만 학교 표시
   if (schoolName && check) {
@@ -64,11 +66,11 @@ export const SchoolNameForm = ({ schoolName, setSchoolCode, setMenu }) => {
   const searchSchool = ({ schoolName }) => {
     fetch(
       `https://open.neis.go.kr/hub/schoolInfo` +
-        `?KEY=954dac30b088454d9a95700f044ce620` +
-        `&Type=json` +
-        `&pIndex=1` +
-        `&pSize=100` +
-        `&SCHUL_NM=${schoolName}`
+      `?KEY=954dac30b088454d9a95700f044ce620` +
+      `&Type=json` +
+      `&pIndex=1` +
+      `&pSize=100` +
+      `&SCHUL_NM=${schoolName}`
     )
       .then((response) => response.json())
       .then((json) => {

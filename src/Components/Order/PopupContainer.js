@@ -14,7 +14,7 @@ const SRegisterContainer = styled.div`
   scrollbar-width: none; // Firefox
   ::-webkit-scrollbar {
     display: none; // Chrome, Safari, Opera
-  };
+  }
   transform: translate(-50%, 0%);
   box-shadow: ${color.boxShadow};
   ${customMedia.greaterThan("tablet")`
@@ -23,10 +23,10 @@ const SRegisterContainer = styled.div`
   ${customMedia.greaterThan("desktop")`
     width: 60%
   `}
-`
-
+`;
+//닫기 버튼
 const CloseBtn = styled.div`
-  color: ${props => props.theme.redColor};
+  color: ${(props) => props.theme.redColor};
   transition: color 1s ease;
   text-align: end;
   margin-right: 10px;
@@ -36,30 +36,31 @@ const CloseBtn = styled.div`
     font-size: 1.25em;
     font-size: 1.25rem;
   }
-`
-
+`;
+// 화면 등장
 const RegisterPage = styled.div`
-  background-color: ${props => props.theme.bgColor};
+  background-color: ${(props) => props.theme.bgColor};
   transition: background-color 1s ease;
-  padding: 10px 30px;
-  padding: 0.625rem 1.875rem;
   border-radius: 10px;
+  border-radius: 0.625rem;
   display: grid;
   align-items: flex-start;
   row-gap: 10px;
   row-gap: 1.25rem;
-`
+`;
 
-const RegisterContainer = ({ children, setRegisterPage }) => {
+const RegisterContainer = ({ children, setPopup }) => {
   const onClickCloseBtn = () => {
-    setRegisterPage(undefined)
-  }
-  return (<SRegisterContainer>
-    <CloseBtn onClick={onClickCloseBtn}><FaTimes /></CloseBtn>
-    <RegisterPage>
-      {children}
-    </RegisterPage>
-  </SRegisterContainer>);
-}
+    setPopup(undefined);
+  };
+  return (
+    <SRegisterContainer>
+      <CloseBtn onClick={onClickCloseBtn}>
+        <FaTimes />
+      </CloseBtn>
+      <RegisterPage>{children}</RegisterPage>
+    </SRegisterContainer>
+  );
+};
 
 export default RegisterContainer;

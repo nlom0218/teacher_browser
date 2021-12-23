@@ -1,22 +1,12 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { FcSearch } from 'react-icons/fc';
 import styled from 'styled-components';
-import { gql, useMutation } from '@apollo/client';
-import { useForm } from 'react-hook-form';
-import useMe, { ME_QUERY } from '../../Hooks/useMe';
-import PopupContainer from '../Shared/PopupContainer';
-import RegisterForm from './styled/RegisterForm';
-import RegisterErrMsg from './styled/RegisterErrMsg';
 import { outPopup } from '../../apollo';
+import PopupContainer from '../Shared/PopupContainer';
+import RegisterErrMsg from '../Account/styled/RegisterErrMsg';
+import RegisterForm from '../Account/styled/RegisterForm';
 
-const UPDATE_USER_MUTATION = gql`
-  mutation UpdateUser($userEmail: String!, $schoolName: String, $schoolCode: String, $areaCode: String, $schoolAdress: String) {
-    updateUser(userEmail: $userEmail, schoolName: $schoolName, schoolCode: $schoolCode, areaCode: $areaCode, schoolAdress: $schoolAdress) {
-      ok
-      error
-    }
-  }
-`
 
 const SearchInput = styled.input`
   width: 100%;
@@ -52,9 +42,7 @@ const PageBtn = styled.div`
   cursor: pointer;
 `
 
-
-const RegisterSchool = () => {
-  const me = useMe()
+const SearchSchool = ({ setSchoolCode, setSchoolName, setAreaCode }) => {
   const [page, setPage] = useState(1)
   const [schoolInfo, setSchoolInfo] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
@@ -81,7 +69,7 @@ const RegisterSchool = () => {
         setPage(prev => prev + 1)
       })
   }
-  const { register, handleSubmit, setValue, getValues } = useForm()
+  const { register, handleSubmit, getValues } = useForm()
   const onSubmit = (data) => {
     const { school } = data
     if (preventSubmit) {
@@ -94,28 +82,14 @@ const RegisterSchool = () => {
     setPreventSubmit(true)
     findSchool(school)
   }
-  const onCompleted = () => {
-    onChangeInput()
+  const onClickSchool = (areaCode, schoolCode, schoolName) => {
+    setAreaCode(areaCode)
+    setSchoolCode(schoolCode)
+    setSchoolName(schoolName)
+    const lmSetting = JSON.parse(localStorage.getItem("lmSetting"))
+    const newLmSetting = { ...lmSetting, areaCode, schoolName, schoolCode }
+    localStorage.setItem("lmSetting", JSON.stringify(newLmSetting))
     outPopup()
-    setValue("school", "")
-  }
-  const [updateUser] = useMutation(UPDATE_USER_MUTATION, {
-    onCompleted,
-    refetchQueries: [{ query: ME_QUERY }]
-  })
-  const onClickSchool = (areaCode, schoolCode, schoolName, schoolAdress) => {
-    if (!me) {
-      return
-    }
-    updateUser({
-      variables: {
-        userEmail: me?.email,
-        areaCode,
-        schoolCode,
-        schoolName,
-        schoolAdress
-      }
-    })
   }
   const onChangeInput = () => {
     setPreventSubmit(false)
@@ -126,33 +100,35 @@ const RegisterSchool = () => {
   const onClickPageBtn = () => {
     findSchool(getValues("school"))
   }
-  return (<PopupContainer>
-    <RegisterForm onSubmit={handleSubmit(onSubmit)}>
-      <SearchInput
-        {...register("school", {
-          required: true,
-          onChange: onChangeInput,
+  return (
+    // 현재 이곳이 파업창이라면 꼭 PopupContainer를 최상위 부모로 가져야 한다. Components => shared 에 있음
+    <PopupContainer>
+      <RegisterForm onSubmit={handleSubmit(onSubmit)}>
+        <SearchInput
+          {...register("school", {
+            required: true,
+            onChange: onChangeInput,
+          })}
+          type="text"
+          autoComplete="off"
+          placeholder="학교이름을 입력해주세요. ex) 다목초 또는 다목초등학교"
+          autoFocus
+        />
+        <FcSearch onClick={handleSubmit(onSubmit)} />
+      </RegisterForm>
+      {errMsg && <RegisterErrMsg>{errMsg}</RegisterErrMsg>}
+      {schoolInfo && <SchoolList>
+        {schoolInfo.map((item, index) => {
+          return <SchoolItem key={index} onClick={() => onClickSchool(item.areaCode, item.schoolCode, item.schoolName)}>
+            {item.areaName} {item.schoolName} {item.schoolAdress}
+          </SchoolItem>
         })}
-        type="text"
-        autoComplete="off"
-        placeholder="학교이름을 입력해주세요. ex) 다목초 또는 다목초등학교"
-        autoFocus
-      />
-      <FcSearch onClick={handleSubmit(onSubmit)} />
-    </RegisterForm>
-    {errMsg && <RegisterErrMsg>{errMsg}</RegisterErrMsg>}
-    {schoolInfo && <SchoolList>
-      {schoolInfo.map((item, index) => {
-        return <SchoolItem key={index} onClick={() => onClickSchool(item.areaCode, item.schoolCode, item.schoolName, item.schoolAdress)}>
-          {item.areaName} {item.schoolName} {item.schoolAdress}
-        </SchoolItem>
-      })}
-      {schoolInfo.length === 5 &&
-        <PageBtn onClick={onClickPageBtn}>
-          다음 페이지
+        {schoolInfo.length === 5 &&
+          <PageBtn onClick={onClickPageBtn}>
+            다음 페이지
           </PageBtn>}
-    </SchoolList>}
-  </PopupContainer>);
+      </SchoolList>}
+    </PopupContainer>);
 }
 
-export default RegisterSchool;
+export default SearchSchool;

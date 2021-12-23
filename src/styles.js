@@ -27,8 +27,8 @@ export const ligthTheme = {
   redColor: color.red,
   contentBgColor: color.gray,
   btnBgColor: color.blue,
-};
-
+  popupBgColor: "rgba(0,0,0,0.75)"
+}
 export const darkTheme = {
   fontColor: color.white,
   bgColor: color.black,
@@ -36,7 +36,8 @@ export const darkTheme = {
   redColor: color.ligthRed,
   contentBgColor: color.maroon,
   btnBgColor: color.lightBlue,
-};
+  popupBgColor: "rgba(200,200,200,0.75)"
+}
 
 export const GlobalStyle = createGlobalStyle`
   ${reset};
