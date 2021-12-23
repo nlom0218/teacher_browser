@@ -1,14 +1,15 @@
 import { useState } from "react";
 import styled from 'styled-components';
 
+const SCountUpDisplay = styled.div``
+
 export const CountUpDisplay = (props) => {
   return (
-    <div>
+    <SCountUpDisplay>
       <span>{(props.time.h >= 10) ? props.time.h : "0" + props.time.h}</span>&nbsp;:&nbsp;
       <span>{(props.time.m >= 10) ? props.time.m : "0" + props.time.m}</span>&nbsp;:&nbsp;
       <span>{(props.time.s >= 10) ? props.time.s : "0" + props.time.s}</span>
-    </div>
-  )
+    </SCountUpDisplay>)
 };
 
 export const CountDownDisplay = (props) => {
