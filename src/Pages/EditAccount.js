@@ -1,4 +1,3 @@
-import { useReactiveVar } from '@apollo/client';
 import React from 'react';
 import styled from 'styled-components';
 import { isPopupVar } from '../apollo';
@@ -8,6 +7,7 @@ import RegisterSchool from '../Components/Account/RegisterSchool';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import useMe from '../Hooks/useMe';
 import { color, customMedia } from '../styles';
+import { useReactiveVar } from '@apollo/client';
 
 const Container = styled.div`
   padding: 60px 0px;
@@ -18,8 +18,6 @@ const Container = styled.div`
   align-items: flex-start;
   row-gap: 40px;
   row-gap: 2.5rem;
-  opacity: ${(props) => (props.registerPage ? 0.2 : 1)};
-  transition: opacity 0.6s ease;
   ${customMedia.greaterThan("tablet")`
     width: 80%
   `}
@@ -57,11 +55,11 @@ const Item = styled.div`
 `;
 
 const EditAccount = () => {
-  const [registerPage, setRegisterPage] = useState(undefined);
+  const isPopup = useReactiveVar(isPopupVar)
   const me = useMe();
   return (
     <BasicContainer menuItem={true}>
-      <Container registerPage={registerPage}>
+      <Container>
         <Changes>
           <List>이메일</List>
           <Item>{me?.email}</Item>
@@ -73,8 +71,6 @@ const EditAccount = () => {
               userEmail={me?.email}
               schoolName={me?.schoolName}
               schoolAdress={me?.schoolAdress}
-              registerPage={registerPage}
-              setRegisterPage={setRegisterPage}
             />
           </Item>
         </Changes>
@@ -85,8 +81,8 @@ const EditAccount = () => {
           </Item>
         </Changes>
       </Container>
-      {registerPage === "school" && (
-        <RegisterSchool setRegisterPage={setRegisterPage} />
+      {isPopup && (
+        <RegisterSchool />
       )}
     </BasicContainer>
   );

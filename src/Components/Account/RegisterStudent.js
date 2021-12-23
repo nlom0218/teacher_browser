@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FcDataRecovery } from 'react-icons/fc';
 import styled from 'styled-components';
-import RegisterContainer from './RegisterContainer';
+import PopupContainer from '../Shared/PopupContainer';
 import StudentList from './StudentList';
 import RegisterForm from './styled/RegisterForm';
 
@@ -31,7 +31,7 @@ const RegisterStudent = ({ setRegisterPage, userEmail }) => {
     }
     setStudentArr(newStudentArr)
   }
-  return (<RegisterContainer setRegisterPage={setRegisterPage}>
+  return (<PopupContainer>
     <RegisterForm onSubmit={handleSubmit(onSubmit)}>
       <Input
         {...register("studentNum", {
@@ -51,7 +51,7 @@ const RegisterStudent = ({ setRegisterPage, userEmail }) => {
         userEmail={userEmail}
         setRegisterPage={setRegisterPage}
       />}
-  </RegisterContainer>);
+  </PopupContainer>);
 }
 
 export default RegisterStudent;

@@ -2,9 +2,9 @@ import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import RegisterContainer from './RegisterContainer';
 import StudentInfoItem from './StudentInfoItem';
 import AddStudent from "./AddStudent"
+import PopupContainer from '../Shared/PopupContainer';
 
 export const SEE_ALL_STUDENT_QUERY = gql`
     query SeeAllStudent {
@@ -28,14 +28,14 @@ const StudentInfo = ({ setRegisterPage, userEmail }) => {
       setRegisterPage(undefined)
     }
   }, [data])
-  return (<RegisterContainer setRegisterPage={setRegisterPage}>
+  return (<PopupContainer>
     {!loading && <StudentList>
       {data?.seeAllStudent.map((item, index) => {
         return <StudentInfoItem key={index} name={item.name} id={item._id} order={item.order} userEmail={userEmail} />
       })}
     </StudentList>}
     <AddStudent userEmail={userEmail} />
-  </RegisterContainer>);
+  </PopupContainer>);
 }
 
 export default StudentInfo;
