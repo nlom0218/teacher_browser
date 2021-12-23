@@ -12,7 +12,7 @@ export const customMedia = generateMedia({
 export const color = {
   black: "#282828",
   white: "#e8e8e8",
-  gray: "#e8e8e8",
+  gray: "#e2e2e2",
   maroon: "#555555",
   blue: "#1c5b8e",
   lightBlue: "#7CC6FF",

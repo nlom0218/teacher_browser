@@ -13,23 +13,39 @@ const Timer = () => {
     )
   };
 
-  const BtnComponent = (props) => {
+  // COUNT UP
+
+  const BtnStartCountUpComponent = (props) => {
     return (
       <div>
-        <button onClick={props.start} className='stopwatch-btn'>START</button>
+        <button onClick={props.start} className='stopwatch-btn'>Count Up</button>
       </div>
     )
   };
 
+  const BtnStartCountDownComponent = (props) => {
+    return (
+      <div>
+        <button onClick={props.start}>{props.text}</button>
+      </div>
+    )
+  }
+
   const [time, setTime] = useState({ ms: 0, s: 0, m: 0, h: 0 });
 
-  const start = () => {
-    run(); setInterval(run, 10);
+  const startCountUp = () => {
+    countUp();
+    setInterval(countUp, 10);
+  }
+
+  const startCountDown = () => {
+    countDown();
+    setInterval(countDown, 10);
   }
 
   let updatedMs = time.ms, updatedS = time.s, updatedM = time.m, updatedH = time.h;
 
-  const run = () => {
+  const countUp = () => {
     if (updatedM === 60) {
       updatedH++;
       updatedM = 0;
@@ -46,13 +62,44 @@ const Timer = () => {
     return setTime({ ms: updatedMs, s: updatedS, m: updatedM, h: updatedH });
   };
 
+  // COUNT DOWN
+
+  let [timeLeft, setTimeLeft] = useState({ ms: 0, s: 10, m: 0, h: 0 });
+
+  const countDown = () => {
+
+    console.log('COUNT DOWN');
+    if (updatedM === 0 && updatedS === 0 && updatedMs === 0) {
+      updatedH--;
+      updatedM = 60;
+    };
+    if (updatedS === 0 && updatedMs === 0) {
+      updatedM--;
+      updatedS = 60;
+    };
+    if (updatedMs === 0) {
+      updatedS--;
+      updatedMs = 100;
+    };
+    updatedMs++;
+    return setTime({ ms: updatedMs, s: updatedS, m: updatedM, h: updatedH });
+  };
+
   return (<BasicContainer menuItem={true}>
-    <div className="main-section">
+    <div className='main-section'>
       <div className='clock-holder'>
         <div className='stopwatch'>
           <DisplayComponent time={time} />
-          <BtnComponent start={start} />
+          <BtnStartCountUpComponent start={startCountUp} />
         </div>
+      </div>
+      <div className='count-downs'>
+        <BtnStartCountDownComponent time={time} text={'10초'} onClick={() => startCountDown} />
+        <BtnStartCountDownComponent time={time} text={'30초'} />
+        <BtnStartCountDownComponent time={time} text={'1분'} />
+        <BtnStartCountDownComponent time={time} text={'5분'} />
+        <BtnStartCountDownComponent time={time} text={'10분'} />
+        <BtnStartCountDownComponent time={time} text={'30분'} />
       </div>
     </div>
   </BasicContainer>);

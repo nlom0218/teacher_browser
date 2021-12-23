@@ -8,17 +8,6 @@ import TodoList from '../Components/Test/TodoList';
 import TodoCreate from '../Components/Test/TodoCreate';
 import { TodoProvider } from "../Components/Test/TodoContext";
 
-// const TodoList = () => {
-//   const me = useMe()
-//   console.log(me?.email);
-//   return (<BasicContainer>
-//     할일
-//   </BasicContainer>);
-// }
-
-// export default TodoList;
-
-
 const GlobalStyle = createGlobalStyle`
 
 `;

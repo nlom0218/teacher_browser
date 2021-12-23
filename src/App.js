@@ -22,12 +22,16 @@ import Login from './Pages/Login';
 import CreateAccount from './Pages/CreateAccount';
 import NaverLoginCallBack from './Pages/NaverLoginCallBack';
 import useMe from './Hooks/useMe';
+import HeaderWeather from './Components/Shared/HeaderWeather';
+import useMedia from './Hooks/useMedia';
 
 function App() {
   const darkMode = useReactiveVar(darkModeVar)
+  const media = useMedia()
   return (
     <ThemeProvider theme={darkMode ? darkTheme : ligthTheme}>
       <GlobalStyle />
+      {media !== "Mobile" && <HeaderWeather />}
       <Routes>
         <Route path={routes.home} element={<Home />} />
         <Route path={routes.login} element={<Login />} />
