@@ -7,10 +7,10 @@ import PreviousPageBtn from './PreviousPageBtn';
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: auto 1fr 60px;
-  grid-template-rows: auto 1fr 3.75rem;
-  min-height: 100vh;
-  height: 100vh;
+  grid-template-rows: auto 1fr 60px 10vh;
+  grid-template-rows: auto 1fr 3.75rem 10vh;
+  min-height: 110vh;
+  height: 110vh;
   z-index: 0;
 `
 
@@ -35,6 +35,25 @@ const ContentLayout = styled.div`
   `}
 `
 
+const Footer = styled.footer`
+  background-color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease;
+  ${customMedia.greaterThan("desktop")`
+    width: 100%;
+  `}
+`
+
+const WebFooter = styled.div`
+  height: 100%;
+  margin: 0 auto;
+  max-width: 1200px;
+  max-width: 75rem;
+  width: 90%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+`
+
 const BasicContainer = ({ children, menuItem }) => {
   const [seeSideMenu, setSeeSideMenu] = useState(false)
   const onClickBackground = () => {
@@ -49,6 +68,11 @@ const BasicContainer = ({ children, menuItem }) => {
       {menuItem && <PreviousPageBtn />}
       {children}
     </ContentLayout>
+    <div></div>
+    <Footer>
+      <WebFooter>
+      </WebFooter>
+    </Footer>
   </Container>);
 }
 

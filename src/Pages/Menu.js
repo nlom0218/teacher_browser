@@ -35,6 +35,9 @@ const SMenu = styled.div`
   color: ${props => props.theme.fontColor};
   transition: color 1s ease;
   cursor: pointer;
+  img {
+    margin: 0 auto;
+  }
   svg {
     margin: 0 auto;
     font-size: 2.5em;
@@ -44,6 +47,7 @@ const SMenu = styled.div`
 
 const Title = styled.div`
   font-weight: 600;
+  text-align: center;
 `
 
 const Menu = () => {
@@ -95,7 +99,8 @@ const Menu = () => {
       </Link>
       <Link to={routes.lunchmenu} onClick={onClickLunchmenu}>
         <SMenu>
-          <FcList />
+          {/* <FcList /> */}
+          <img src="https://img.icons8.com/color/40/000000/fry.png" />
           <Title>식단표</Title>
         </SMenu>
       </Link>
@@ -107,7 +112,8 @@ const Menu = () => {
       </Link>
       <Link to={routes.journal}>
         <SMenu>
-          <FcDocument />
+          {/* <FcDocument /> */}
+          <img src="https://img.icons8.com/color/40/000000/right-handed.png" />
           <Title>학급일지</Title>
         </SMenu>
       </Link>
