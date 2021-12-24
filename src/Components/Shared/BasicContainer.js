@@ -7,10 +7,10 @@ import PreviousPageBtn from './PreviousPageBtn';
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: auto 1fr 60px 10vh;
-  grid-template-rows: auto 1fr 3.75rem 10vh;
-  min-height: 110vh;
-  height: 110vh;
+  grid-template-rows: auto 1fr 60px;
+  grid-template-rows: auto 1fr 3.75rem;
+  min-height: 100vh;
+  height: 100vh;
   z-index: 0;
 `
 
@@ -68,11 +68,6 @@ const BasicContainer = ({ children, menuItem }) => {
       {menuItem && <PreviousPageBtn />}
       {children}
     </ContentLayout>
-    <div></div>
-    <Footer>
-      <WebFooter>
-      </WebFooter>
-    </Footer>
   </Container>);
 }
 
