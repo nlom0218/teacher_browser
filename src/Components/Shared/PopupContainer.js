@@ -30,7 +30,7 @@ const SRegisterContainer = styled.div`
     width: 60%
   `}
   ${customMedia.greaterThan("desktop")`
-    width: 30%
+    width: 40%
   `}
   background-color: ${props => props.theme.bgColor};
   transition: background-color 1s ease;
