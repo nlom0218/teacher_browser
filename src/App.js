@@ -25,6 +25,7 @@ import useMe from './Hooks/useMe';
 import HeaderWeather from './Components/Shared/HeaderWeather';
 import useMedia from './Hooks/useMedia';
 import List from './Pages/List';
+import ListItem from './Pages/ListItem';
 
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
@@ -59,6 +60,7 @@ function App() {
         <Route path={routes.schedule} element={<Schedule />} />
         <Route path={routes.journal} element={<Journal />} />
         <Route path={routes.list} element={<List />} />
+        <Route path={`${routes.list}/:order`} element={<ListItem />} />
       </Routes>
     </ThemeProvider>
   );
