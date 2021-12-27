@@ -51,6 +51,11 @@ const SStudentList = styled.div`
   display: grid;
   row-gap: 10px;
   row-gap: 0.625rem;
+  .noStudnet {
+    text-align: center;
+    color: ${props => props.theme.redColor};
+    transition: color 1s ease;
+  }
 `
 
 const AddStudentBtn = styled.div`
@@ -63,12 +68,16 @@ const AddStudentBtn = styled.div`
 const StudentList = () => {
   const isPopup = useReactiveVar(isPopupVar)
   const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY)
+  console.log(data);
   const onClickAddBtn = () => inPopup()
   return (<StudentContainer>
     <SStudentList>
-      {data?.seeAllStudent?.map((item, index) => {
-        return <StudentItem key={index} item={item} />
-      })}
+      {data?.seeAllStudent?.length === 0 ?
+        <div className="noStudnet">생성된 학생이 없습니다.</div>
+        :
+        data?.seeAllStudent?.map((item, index) => {
+          return <StudentItem key={index} item={item} />
+        })}
     </SStudentList>
     <AddStudentBtn onClick={onClickAddBtn}><FcPlus /></AddStudentBtn>
     {isPopup && <AddStudent />}
