@@ -1,5 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import routes from '../../routes';
 
 const Layout = styled.div`
   padding: 10px;
@@ -19,7 +21,9 @@ const StudentName = styled.div``
 
 const StudentItem = ({ item }) => {
   return (<Layout>
-    <StudentName>{item.studentName}</StudentName>
+    <Link to={`${routes.list}/student/${item._id}`}>
+      <StudentName>{item.studentName}</StudentName>
+    </Link>
   </Layout>);
 }
 

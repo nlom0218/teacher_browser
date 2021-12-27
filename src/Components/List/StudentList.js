@@ -68,7 +68,6 @@ const AddStudentBtn = styled.div`
 const StudentList = () => {
   const isPopup = useReactiveVar(isPopupVar)
   const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY)
-  console.log(data);
   const onClickAddBtn = () => inPopup()
   return (<StudentContainer>
     <SStudentList>

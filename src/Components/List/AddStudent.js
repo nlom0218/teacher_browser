@@ -20,7 +20,6 @@ const ADD_STUDENT_MUTATION = gql`
 
 const AddStudent = () => {
   const me = useMe()
-  console.log(me);
   const onCompleted = (result) => {
     outPopup()
   }

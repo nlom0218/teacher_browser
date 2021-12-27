@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { FcDocument, FcPlus } from 'react-icons/fc';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import AllList from '../Components/List/AllList';
 import StudentList from '../Components/List/StudentList';
 import BasicContainer from '../Components/Shared/BasicContainer';
-import useMe from '../Hooks/useMe';
-import routes from '../routes';
 import { customMedia } from '../styles';
 
+
+
 const Container = styled.div`
+  min-height: 100%;
   width: 100%;
   display: grid;
   grid-template-columns: 3fr 1fr;
@@ -55,31 +57,13 @@ const ItemName = styled.div`
 `
 
 const List = () => {
-  const [localList, setLocalList] = useState(JSON.parse(localStorage.getItem("localList")))
-  useEffect(() => {
-    const orderList = localStorage.getItem("localList");
-    if (!orderList) {
-      const initList = [
-        { order: "local1", listName: "리스트1", list: [] },
-        { order: "local2", listName: "리스트2", list: [] },
-        { order: "local3", listName: "리스트3", list: [] },
-      ];
-      localStorage.setItem("localList", JSON.stringify(initList));
-      setLocalList(initList);
-    }
-  }, []);
+  const { type, id } = useParams()
+
+
   return (<BasicContainer menuItem={true}>
     <Container>
-      <ListContainer>
-        {localList && localList.map((item, index) => {
-          return <Link to={`${routes.list}/${item.order}`} key={index}>
-            <ItemContainer>
-              <FcDocument />
-              <ItemName>{item.listName}</ItemName>
-            </ItemContainer>
-          </Link>
-        })}
-      </ListContainer>
+      {!type && <AllList />}
+      {type === "student" && "학생 상세 정보 보기 및 수정"}
       <StudentList />
     </Container>
   </BasicContainer>);
