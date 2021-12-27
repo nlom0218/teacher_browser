@@ -35,25 +35,6 @@ const ContentLayout = styled.div`
   `}
 `
 
-const Footer = styled.footer`
-  background-color: ${props => props.theme.bgColor};
-  transition: background-color 1s ease;
-  ${customMedia.greaterThan("desktop")`
-    width: 100%;
-  `}
-`
-
-const WebFooter = styled.div`
-  height: 100%;
-  margin: 0 auto;
-  max-width: 1200px;
-  max-width: 75rem;
-  width: 90%;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-`
-
 const BasicContainer = ({ children, menuItem }) => {
   const [seeSideMenu, setSeeSideMenu] = useState(false)
   const onClickBackground = () => {

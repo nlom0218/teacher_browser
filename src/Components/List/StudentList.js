@@ -5,7 +5,8 @@ import { FcPlus } from 'react-icons/fc';
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../../apollo';
 import { color } from '../../styles';
-import AddStudent from './AddStudnet';
+import AddStudent from './AddStudent';
+import StudentItem from './StudentItem';
 
 export const SEE_ALL_STUDENT_QUERY = gql`
   query Query {
@@ -26,8 +27,8 @@ const StudentContainer = styled.div`
   width: 24%;
   height: 96%;
   min-height: 96%;
-  padding: 30px;
-  padding: 1.875rem;
+  padding: 20px;
+  padding: 1.25rem;
   display: grid;
   grid-template-rows: 1fr auto;
   row-gap: 30px;
@@ -40,14 +41,16 @@ const StudentContainer = styled.div`
 `
 
 const SStudentList = styled.div`
-  height: 100%;
-  min-height: 100%;
+  align-self: flex-start;
   overflow: scroll;
   -ms-overflow-style: none; // IE and Edge
   scrollbar-width: none; // Firefox
   ::-webkit-scrollbar {
     display: none; // Chrome, Safari, Opera
   }
+  display: grid;
+  row-gap: 10px;
+  row-gap: 0.625rem;
 `
 
 const AddStudentBtn = styled.div`
@@ -64,7 +67,7 @@ const StudentList = () => {
   return (<StudentContainer>
     <SStudentList>
       {data?.seeAllStudent?.map((item, index) => {
-        return <div key={index}>{item.studentName}</div>
+        return <StudentItem key={index} item={item} />
       })}
     </SStudentList>
     <AddStudentBtn onClick={onClickAddBtn}><FcPlus /></AddStudentBtn>
