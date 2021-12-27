@@ -18,7 +18,7 @@ const ADD_STUDENT_MUTATION = gql`
   }
 `
 
-const AddStudent = () => {
+const CreateStudent = () => {
   const me = useMe()
   const onCompleted = (result) => {
     outPopup()
@@ -61,4 +61,4 @@ const AddStudent = () => {
   </PopupContainer>);
 }
 
-export default AddStudent;
+export default CreateStudent;

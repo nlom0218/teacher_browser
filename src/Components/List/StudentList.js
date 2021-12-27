@@ -5,7 +5,7 @@ import { FcPlus } from 'react-icons/fc';
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../../apollo';
 import { color } from '../../styles';
-import AddStudent from './AddStudent';
+import CreateStudent from './CreateStudent';
 import StudentItem from './StudentItem';
 
 export const SEE_ALL_STUDENT_QUERY = gql`
@@ -68,7 +68,7 @@ const AddStudentBtn = styled.div`
 const StudentList = () => {
   const isPopup = useReactiveVar(isPopupVar)
   const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY)
-  const onClickAddBtn = () => inPopup()
+  const onClickAddBtn = () => inPopup("createStudent")
   return (<StudentContainer>
     <SStudentList>
       {data?.seeAllStudent?.length === 0 ?
@@ -79,7 +79,7 @@ const StudentList = () => {
         })}
     </SStudentList>
     <AddStudentBtn onClick={onClickAddBtn}><FcPlus /></AddStudentBtn>
-    {isPopup && <AddStudent />}
+    {isPopup === "createStudent" && <CreateStudent />}
   </StudentContainer>);
 }
 

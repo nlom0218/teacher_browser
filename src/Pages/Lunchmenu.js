@@ -322,7 +322,7 @@ const Lunchmenu = () => {
   // useDidMountEffect(getMenu, [date, schoolCode]);
 
   // 팝업창으로 이동하기
-  const onClickSchoolIcon = () => inPopup()
+  const onClickSchoolIcon = () => inPopup("lmSearchSchool")
 
   //리턴
   return (
@@ -374,7 +374,7 @@ const Lunchmenu = () => {
           </LunchmenuDetail>
         </LunchmenuInfo>
       </LunchmenuContainer>
-      {isPopup && <SearchSchool
+      {isPopup === "lmSearchSchool" && <SearchSchool
         setAreaCode={setAreaCode}
         setSchoolCode={setSchoolCode}
         setSchoolName={setSchoolName}
