@@ -2,12 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { FcDocument, FcPlus } from 'react-icons/fc';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import StudentList from '../Components/List/StudentList';
 import BasicContainer from '../Components/Shared/BasicContainer';
+import useMe from '../Hooks/useMe';
 import routes from '../routes';
 import { customMedia } from '../styles';
 
+const Container = styled.div`
+  width: 100%;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  align-items: flex-start;
+`
+
 const ListContainer = styled.div`
-  min-height: 100%;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -15,7 +23,7 @@ const ListContainer = styled.div`
   row-gap: 3.75rem;
   column-gap: 30px;
   column-gap: 1.875rem;
-  align-content: flex-start;
+  align-items: flex-start;
   justify-items: center;
   padding: 40px;
   padding: 2.5rem;
@@ -23,8 +31,9 @@ const ListContainer = styled.div`
     grid-template-columns: 1fr 1fr 1fr;
   `}
   ${customMedia.greaterThan("desktop")`
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   `}
+
 `
 
 const ItemContainer = styled.div`
@@ -45,16 +54,6 @@ const ItemName = styled.div`
   text-align: center;
 `
 
-const AddItemBtn = styled.div`
-  align-self: center;
-  cursor: pointer;
-  svg {
-    margin: 0 auto;
-    font-size: 2.5em;
-    font-size: 2.5rem;
-  }
-`
-
 const List = () => {
   const [localList, setLocalList] = useState(JSON.parse(localStorage.getItem("localList")))
   useEffect(() => {
@@ -70,23 +69,19 @@ const List = () => {
     }
   }, []);
   return (<BasicContainer menuItem={true}>
-    <ListContainer>
-      {localList && localList.map((item, index) => {
-        return <Link to={`${routes.list}/${item.order}`} key={index}>
-          <ItemContainer>
-            <FcDocument />
-            <ItemName>{item.listName}</ItemName>
-          </ItemContainer>
-        </Link>
-      })}
-      <AddItemBtn><FcPlus /></AddItemBtn>
-      <AddItemBtn><FcPlus /></AddItemBtn>
-      <AddItemBtn><FcPlus /></AddItemBtn>
-      <AddItemBtn><FcPlus /></AddItemBtn>
-      <AddItemBtn><FcPlus /></AddItemBtn>
-      <AddItemBtn><FcPlus /></AddItemBtn>
-      <AddItemBtn><FcPlus /></AddItemBtn>
-    </ListContainer>
+    <Container>
+      <ListContainer>
+        {localList && localList.map((item, index) => {
+          return <Link to={`${routes.list}/${item.order}`} key={index}>
+            <ItemContainer>
+              <FcDocument />
+              <ItemName>{item.listName}</ItemName>
+            </ItemContainer>
+          </Link>
+        })}
+      </ListContainer>
+      <StudentList />
+    </Container>
   </BasicContainer>);
 }
 
