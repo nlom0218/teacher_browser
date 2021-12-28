@@ -14,7 +14,6 @@ export const SEE_ALL_STUDENT_QUERY = gql`
       _id
       teacherEmail
       studentName
-      studentOrder
       listId
     } 
   }
