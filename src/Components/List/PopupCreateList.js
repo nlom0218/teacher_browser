@@ -34,6 +34,9 @@ const PopupCreateList = () => {
     refetchQueries: [{ query: SEE_STUDENT_LIST_QUERY }]
   })
   const onSubmit = (data) => {
+    if (loading) {
+      return
+    }
     const { listName, listOrder } = data
     createStudentList({
       variables: {

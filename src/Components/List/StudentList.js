@@ -40,6 +40,7 @@ const StudentContainer = styled.div`
 `
 
 const SStudentList = styled.div`
+  max-height: 100%;
   align-self: flex-start;
   overflow: scroll;
   -ms-overflow-style: none; // IE and Edge

@@ -38,6 +38,9 @@ const PopupCreateStudent = () => {
     mode: "onChange"
   })
   const onSubmit = (data) => {
+    if (loading) {
+      return
+    }
     const { name } = data
     createStudent({
       variables: {
