@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FcFolder, FcOpenedFolder } from 'react-icons/fc';
 import styled from 'styled-components';
-import { useDrag, useDrop } from 'react-dnd';
+import { useDrag } from "react-dnd"
 
 const Container = styled.div`
   display: grid;
@@ -30,29 +30,21 @@ const ListItem = ({ listName, listOrder, index, moveStudentList }) => {
   const onMouseEnterList = () => setMouseEnter(true)
   const onMouseLeaveList = () => setMouseEnter(false)
 
-  const [dragRef, previewRef] = useDrag(
-    () => ({
-      type: "studentList",
-      item: { listOrder, index },
-      collect: (monitor) => {
-        isDragging: monitor.isDragging()
-      },
-      end: (item, monitor) => {
-        const { listOrder: originListOrder, index: originIndex } = item;
-        const didDrop = monitor.didDrop()
-        if (!didDrop) {
-          moveStudentList(originListOrder, originIndex)
-        }
-      }
-    }),
-    [listName, index, moveStudentList]
-  )
 
+  const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
+    type: "LIST",
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging()
+    })
+  }))
 
-  return (<Container onMouseEnter={onMouseEnterList} onMouseLeave={onMouseLeaveList} ref={dragRef}>
-    <ListIcon>{mouseEnter ? <FcOpenedFolder /> : <FcFolder />}</ListIcon>
-    <ListName>{listName}</ListName>
-  </Container>
+  return (
+    <div ref={dragPreview} style={{ opacity: isDragging ? 0.6 : 1 }}>
+      <Container onMouseEnter={onMouseEnterList} onMouseLeave={onMouseLeaveList} ref={drag}>
+        <ListIcon>{mouseEnter ? <FcOpenedFolder /> : <FcFolder />}</ListIcon>
+        <ListName>{listName}</ListName>
+      </Container>
+    </div>
   );
 }
 
