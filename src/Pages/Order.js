@@ -2,14 +2,20 @@ import React, { useState } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
 import PopupList from "../Components/Order/Popuplist";
-import { BsPeopleFill, BsFillCheckSquareFill, BsPrinter } from "react-icons/bs";
+import {
+  BsChevronLeft,
+  BsPeopleFill,
+  BsFillCheckSquareFill,
+  BsPrinter,
+  BsChevronRight,
+} from "react-icons/bs";
 
 // 전체 틀
 const Container = styled.div`
-  padding: 50px;
-  padding: 3.125rem;
   display: grid;
   grid-template-columns: 1fr auto;
+  padding: 50px;
+  padding: 3.125rem;
   align-items: flex-start;
   opacity: ${(props) => (props.popup ? 0.2 : 1)};
   transition: opacity 0.6s ease;
@@ -18,7 +24,6 @@ const Container = styled.div`
 const Main = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
-  //grid-template-columns: 1.5fr 0.55fr 2fr;
   row-gap: 20px;
   row-gap: 1.25rem;
   column-gap: 20px;
@@ -29,7 +34,6 @@ const Main = styled.div`
 //제목
 const Title = styled.div`
   grid-column: 1/-1;
-  //grid-column: 1/2;
   font-size: 2.5em;
   font-size: 2.5rem;
   text-align: center;
@@ -43,10 +47,11 @@ const OptionBtn = styled.div`
   padding: 10px 20px;
   padding: 0.625rem 1.25rem;
   border-radius: 20px;
-  //border-radius: 0.3125rem;
   border-radius: 1.25rem;
   cursor: pointer;
 `;
+// 옵션 선택
+
 //명단과 옵션 아이콘 버튼 설정
 const MenuBtn = styled.div`
   font-size: 2em;
@@ -59,21 +64,11 @@ const MenuBtn = styled.div`
 const ListIcon = styled.div``;
 //조건 아이콘
 const ConditionIcon = styled.div``;
-// 명단 리스트 화면
-const List = styled.div`
-  font-size: 1.5em;
-  font-size: 1.5rem;
-  text-align: center;
-  list-style-type: decimal;
-  display: grid;
-  row-gap: 10px;
-  row-gap: 0.625rem;
-  align-items: center;
-`;
+
 //순서 변경 메인 화면, 화면 어떻게 구성할 것인지, 한 줄에 몇명까지, 스크롤바, 15명? 10명? 다단 3으로?
 const Border = styled.div`
   width: 102%;
-  height: 100%;
+  height: 300px;
   text-align: center;
   border-style: solid;
   border-color: darkcyan;
@@ -84,13 +79,60 @@ const Border = styled.div`
   scrollbar-width: none;
   padding: 10px;
 `;
+
+// 명단 리스트 화면
+const List = styled.div`
+  display: grid;
+  row-gap: 10px;
+  row-gap: 0.625rem;
+  font-size: 1.5em;
+  font-size: 1.5rem;
+  text-align: center;
+  list-style-type: decimal;
+  align-items: center;
+`;
+
+// 아래 롤업 화면
+const RollList = styled.div`
+  display: grid;
+  width: 1000px;
+  height: 50px;
+  font-size: 1.5em;
+  font-size: 1.5rem;
+  list-style-type: none;
+  align-items: center;
+  overflow: hidden;
+  padding: 10px 30px 5px 50px;
+  grid-template-columns: 0.1fr auto 0.1fr;
+  column-gap: 25px;
+  margin: 15px auto 0 auto;
+  position: relative;
+`;
+// 화살표 스타일
+const LeftRight = styled.div`
+  width: 20px;
+  height: 100%;
+  cursor: pointer;
+`;
+//롤업리스트아이템
+const RollListItems = styled.div`
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  column-gap: 10px;
+  padding: 0.15rem;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+`;
+
+//추가 기능 (프린트, 순서보기)
 //프린트 버튼 위치를 상대적으로 변경할 것인지, 모양, 기능 추가
 const PrintBtn = styled.div`
-  width: 130px;
+  width: 50px;
   height: 35px;
   position: absolute;
   right: 5%;
-  bottom: -5%;
+  bottom: 1%;
   text-align: center;
   align-items: center;
   border-style: solid;
@@ -99,7 +141,9 @@ const PrintBtn = styled.div`
   border-radius: 2px;
   border-radius: 20px;
   align: right;
+  cursor: pointer;
 `;
+
 // 프린트 기능 추가하기
 // function info_print() {
 //   let initBody = document.body;
@@ -133,8 +177,8 @@ const Order = () => {
     "여덟",
     "아홉",
     "열",
-    // "열하나",
-    // "열둘",
+    //"열하나",
+    //"열둘",
     // "열셋",
     // "열넷",
     // "열다섯",
@@ -195,11 +239,21 @@ const Order = () => {
           <List>{shuffledList}</List>
           <PrintBtn>
             {" "}
-            인쇄하기 &nbsp;
+            &nbsp;
             <BsPrinter />
           </PrintBtn>
         </Border>
         <br />
+        <RollList>
+          <LeftRight>
+            <BsChevronLeft />
+          </LeftRight>
+          <RollListItems>{shuffledList}</RollListItems>
+
+          <LeftRight>
+            <BsChevronRight />
+          </LeftRight>
+        </RollList>
       </Container>
       {popup === "list" && <PopupList setPopup={setPopup} />}
     </BasicContainer>
