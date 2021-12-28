@@ -1,51 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import BasicContainer from '../Components/Shared/BasicContainer';
-import { CountUpDisplay, CountDownDisplay, BtnStartCountUp, BtnStartCountDown } from '../Components/Timer/TimeSet';
-import styled from 'styled-components';
-
-const ClockBackground = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-`;
-
-const ClockContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 600px;
-  height: 600px;
-  background-color: white;
-  border-radius: 300px;
-`;
-
-const CountUp = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid red;
-  width: 500px;
-  height: 500px;
-  border-radius: 500px;
-  background-color: black;
-  padding: 50px;
-  color: lime;
-  font-size: 4.5rem;
-`;
-
-const CountDownTitle = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 200px;
-  height: 50px;
-  background-color: 'white';
-  border: 1px solid red;
-`
+import CountUpDisplay from '../Components/Timer/CountUpStopwatch/CountUpDisplay';
+import CountDownDisplay from '../Components/Timer/CountDownTimer/CountDownDisplay';
+import BtnStartCountUp from '../Components/Timer/CountUpStopwatch/BtnStartCountUp';
+import BtnStartCountDown from '../Components/Timer/CountDownTimer/BtnStartCountDown';
+import ClockBackground from '../Components/Timer/ClockBackground';
+import ClockContainer from '../Components/Timer/ClockContainer';
+import CountUp from '../Components/Timer/CountUpStopwatch/CountUp';
+import CountDownTitle from '../Components/Timer/CountDownTimer/CountDownTitle';
 
 const Timer = () => {
 
