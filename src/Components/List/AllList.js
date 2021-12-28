@@ -1,10 +1,11 @@
 import { useQuery, useReactiveVar } from '@apollo/client';
 import gql from 'graphql-tag';
 import React from 'react';
-import { FcPlus } from 'react-icons/fc';
+import { FcList, FcPlus } from 'react-icons/fc';
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../../apollo';
-import CreateList from './CreateList';
+import ListItem from './ListItem';
+import PopupCreateList from './PopupCreateList';
 
 export const SEE_STUDENT_LIST_QUERY = gql`
   query SeeStudentList {
@@ -25,6 +26,10 @@ const Conatiner = styled.div`
   grid-template-rows: 1fr 1fr 1fr 1fr; 
   align-items: center;
   justify-items: center;
+  row-gap: 40px;
+  row-gap: 2.5rem;
+  column-gap: 40px;
+  column-gap: 2.5rem;
 `
 
 const AddIcon = styled.div`
@@ -37,16 +42,14 @@ const AddIcon = styled.div`
 
 const AllList = () => {
   const isPopup = useReactiveVar(isPopupVar)
-  console.log(isPopup);
   const { data, loading } = useQuery(SEE_STUDENT_LIST_QUERY)
   const onClickAddIcon = () => inPopup("createList")
-  console.log(data);
   return (<Conatiner>
     {data?.seeStudentList?.map((item, index) => {
-      return <div>{item.listName}</div>
+      return <ListItem key={index} listName={item?.listName} />
     })}
     <AddIcon onClick={onClickAddIcon}><FcPlus /></AddIcon>
-    {isPopup === "createList" && <CreateList />}
+    {isPopup === "createList" && <PopupCreateList />}
   </Conatiner>);
 }
 

@@ -16,7 +16,7 @@ const CREATE_STUDENT_LIST_MUTATION = gql`
   }
 `
 
-const CreateList = () => {
+const PopupCreateList = () => {
   const me = useMe()
   console.log(me);
   const { register, handleSubmit } = useForm({
@@ -60,4 +60,4 @@ const CreateList = () => {
   </PopupContainer>);
 }
 
-export default CreateList;
+export default PopupCreateList;
