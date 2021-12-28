@@ -8,6 +8,7 @@ import routes from '../routes';
 import useMe from '../Hooks/useMe';
 
 const Container = styled.div`
+  min-height: 100%;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -100,7 +101,7 @@ const Menu = () => {
       <Link to={routes.lunchmenu} onClick={onClickLunchmenu}>
         <SMenu>
           {/* <FcList /> */}
-          <img src="https://img.icons8.com/color/40/000000/fry.png" />
+          <img src="https://img.icons8.com/color/40/000000/white-sesame-seeds.png" />
           <Title>식단표</Title>
         </SMenu>
       </Link>

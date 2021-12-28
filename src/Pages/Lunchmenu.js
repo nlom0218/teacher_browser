@@ -14,7 +14,7 @@ import { customMedia } from "../styles";
 dotenv.config();
 
 const LunchmenuContainer = styled.div`
-  height: 100%;
+  min-height: 100%;
   padding: 40px;
   padding: 2.5rem;
   display: grid;
@@ -184,11 +184,6 @@ const LunchmenuDetail = styled.div`
   line-height: 120%;
   letter-spacing: 1px;
   opacity: 0.8;
-  margin-bottom: 40px;
-  margin-bottom: 2.5rem;
-  ${customMedia.greaterThan("tablet")`
-    margin-bottom: 0;
-  `}
   .detail_title {
     font-size: 1.25em;
     font-size: 1.25rem;
@@ -327,7 +322,7 @@ const Lunchmenu = () => {
   // useDidMountEffect(getMenu, [date, schoolCode]);
 
   // 팝업창으로 이동하기
-  const onClickSchoolIcon = () => inPopup()
+  const onClickSchoolIcon = () => inPopup("lmSearchSchool")
 
   //리턴
   return (
@@ -379,7 +374,7 @@ const Lunchmenu = () => {
           </LunchmenuDetail>
         </LunchmenuInfo>
       </LunchmenuContainer>
-      {isPopup && <SearchSchool
+      {isPopup === "lmSearchSchool" && <SearchSchool
         setAreaCode={setAreaCode}
         setSchoolCode={setSchoolCode}
         setSchoolName={setSchoolName}

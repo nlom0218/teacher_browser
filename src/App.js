@@ -59,6 +59,7 @@ function App() {
         <Route path={routes.schedule} element={<Schedule />} />
         <Route path={routes.journal} element={<Journal />} />
         <Route path={routes.list} element={<List />} />
+        <Route path={`${routes.list}/:type/:id`} element={<List />} />
       </Routes>
     </ThemeProvider>
   );

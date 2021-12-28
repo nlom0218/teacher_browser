@@ -27,7 +27,8 @@ export const ligthTheme = {
   redColor: color.red,
   contentBgColor: color.gray,
   btnBgColor: color.blue,
-  popupBgColor: "rgba(0,0,0,0.75)"
+  popupBgColor: "rgba(0,0,0,0.75)",
+  hoverColor: "#d6d6d6"
 }
 export const darkTheme = {
   fontColor: color.white,
@@ -36,7 +37,8 @@ export const darkTheme = {
   redColor: color.ligthRed,
   contentBgColor: color.maroon,
   btnBgColor: color.lightBlue,
-  popupBgColor: "rgba(200,200,200,0.75)"
+  popupBgColor: "rgba(200,200,200,0.75)",
+  hoverColor: color.maroon
 }
 
 export const GlobalStyle = createGlobalStyle`
@@ -46,9 +48,9 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 1em;
     font-size: 1rem;
     background: ${({ bgTheme }) =>
-      bgTheme
-        ? `url("https://source.unsplash.com/random/1920*1080?${bgTheme}")`
-        : `url("https://source.unsplash.com/random/1920*1080?nature")`};
+    bgTheme
+      ? `url("https://source.unsplash.com/random/1920*1080?${bgTheme}")`
+      : `url("https://source.unsplash.com/random/1920*1080?nature")`};
     background-size: cover;
     background-position: center;
     font-family: 'Nanum Gothic', sans-serif;

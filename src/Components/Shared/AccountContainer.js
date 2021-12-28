@@ -5,14 +5,15 @@ import Theme from './Theme';
 
 const SAccountContainer = styled.div`
   display: grid;
-  grid-template-rows: 150px 1fr 150px;
-  grid-template-rows: 9.375rem 1fr 9.375rem;
+  grid-template-rows: 50px 1fr 50px;
+  grid-template-rows: 3.125rem 1fr 3.125rem;
   min-height: 100vh;
   height: 100vh;
   z-index: 0;
 `
 
 const BasicLayout = styled.div`
+  align-self: center;
   grid-row: 2 / 3;
   margin: 0 auto;
   max-width: 450px;
