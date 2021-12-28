@@ -14,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
 
 function Todo() {
   return (
+    <BasicContainer>
     <TodoProvider>
       <GlobalStyle />
       <TodoTemplate>
@@ -22,6 +23,7 @@ function Todo() {
         <TodoCreate />
       </TodoTemplate>
     </TodoProvider>
+    </BasicContainer>
   );
 }
 
