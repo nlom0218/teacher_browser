@@ -95,7 +95,7 @@ const List = styled.div`
 // 아래 롤업 화면
 const RollList = styled.div`
   display: grid;
-  width: 100%;
+  width: 1000px;
   height: 50px;
   font-size: 1.5em;
   font-size: 1.5rem;
@@ -177,8 +177,8 @@ const Order = () => {
     "여덟",
     "아홉",
     "열",
-    // "열하나",
-    // "열둘",
+    //"열하나",
+    //"열둘",
     // "열셋",
     // "열넷",
     // "열다섯",
