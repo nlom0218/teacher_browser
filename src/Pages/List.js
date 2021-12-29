@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import AllList from '../Components/List/AllList';
 import StudentList from '../Components/List/StudentList';
 import BasicContainer from '../Components/Shared/BasicContainer';
-import { customMedia } from '../styles';
+import { color, customMedia } from '../styles';
 
 
 
@@ -56,17 +56,38 @@ const ItemName = styled.div`
   text-align: center;
 `
 
+const SuccessMsg = styled.div`
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: ${props => props.theme.btnBgColor};
+  color: ${props => props.theme.bgColor};
+  padding: 20px;
+  padding: 1.25rem;
+  border-radius: 10px;
+  border-radius: 0.625rem;
+  box-shadow: ${color.boxShadow};
+`
+
 const List = () => {
   const [someDragging, setSomeDragging] = useState(false)
+  const [successMsg, setSuccessMsg] = useState(undefined)
   const { type, id } = useParams()
-
-
+  useEffect(() => {
+    if (successMsg) {
+      setTimeout(() => {
+        setSuccessMsg(undefined)
+      }, 3000)
+    }
+  }, [successMsg])
   return (<BasicContainer menuItem={true}>
     <Container>
-      {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} />}
+      {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
       {type === "student" && "학생 상세 정보 보기 및 수정"}
       <StudentList setSomeDragging={setSomeDragging} />
     </Container>
+    {successMsg && <SuccessMsg>{successMsg}</SuccessMsg>}
   </BasicContainer>);
 }
 

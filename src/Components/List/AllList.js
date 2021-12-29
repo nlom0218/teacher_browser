@@ -51,7 +51,7 @@ const AddIcon = styled.div`
   }
 `
 
-const AllList = ({ someDragging }) => {
+const AllList = ({ someDragging, setSuccessMsg }) => {
   const [studentList, setSudentList] = useState(undefined)
   const isPopup = useReactiveVar(isPopupVar)
   const { data, loading } = useQuery(SEE_STUDENT_LIST_QUERY)
@@ -78,6 +78,7 @@ const AllList = ({ someDragging }) => {
         moveStudentList={moveStudentList}
         listId={item?.listId}
         someDragging={someDragging}
+        setSuccessMsg={setSuccessMsg}
       />
     })}
     <AddIcon onClick={onClickAddIcon}><FcPlus /></AddIcon>

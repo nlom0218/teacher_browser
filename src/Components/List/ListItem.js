@@ -69,13 +69,13 @@ const CenterDndContainer = styled.div`
   z-index: ${props => props.someDragging ? 30 : -1};
 `
 
-const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDragging }) => {
+const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDragging, setSuccessMsg }) => {
   const me = useMe()
   const [mouseEnter, setMouseEnter] = useState(false)
   const onCompleted = (result) => {
     const { addStudent: { ok, error } } = result
     if (ok) {
-      window.alert("성공!")
+      setSuccessMsg(`${listName}에 추가되었습니다 😀`)
     }
   }
   const [addStudent, { loading }] = useMutation(ADD_STUDENT_MUTATION, {
@@ -93,7 +93,7 @@ const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDra
   const [_, studentDrop] = useDrop({
     accept: "STUDENT",
     drop: (item) => {
-      const { studentId } = item
+      const { studentId, studentName } = item
       addStudent({
         variables: {
           teacherEmail: me?.email,
