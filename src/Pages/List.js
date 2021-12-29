@@ -7,8 +7,6 @@ import StudentList from '../Components/List/StudentList';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import { color, customMedia } from '../styles';
 
-
-
 const Container = styled.div`
   min-height: 100%;
   width: 100%;

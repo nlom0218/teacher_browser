@@ -14,6 +14,7 @@ const SBackMenuBtn = styled.div`
   cursor: pointer;
   color: ${props => props.theme.fontColor};
   transition: color 1s ease;
+  z-index: 1;
 `
 
 const PreviousPageBtn = () => {
