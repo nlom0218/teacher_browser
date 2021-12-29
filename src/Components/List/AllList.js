@@ -18,7 +18,18 @@ export const SEE_STUDENT_LIST_QUERY = gql`
 `
 
 const Conatiner = styled.div`
-  min-height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 75%;
+  overflow: scroll;
+  -ms-overflow-style: none; // IE and Edge
+  scrollbar-width: none; // Firefox
+  ::-webkit-scrollbar {
+    display: none; // Chrome, Safari, Opera
+  }
+  height: 100%;
+  max-height: 100%;
   padding: 40px;
   padding: 2.5rem;
   display: grid;

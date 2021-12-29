@@ -48,7 +48,10 @@ const PopupCreateList = () => {
   return (<PopupContainer>
     <form onSubmit={handleSubmit(onSubmit)}>
       <input
-        {...register("listName")}
+        {...register("listName", {
+          minLength: 3,
+          maxLength: 10
+        })}
         type="text"
         autoComplete="off"
         placeholder="리스트 이름"
