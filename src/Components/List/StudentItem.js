@@ -23,7 +23,7 @@ const StudentName = styled.div``
 const StudentItem = ({ item, setSomeDragging }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "STUDENT",
-    item: { sutdentId: item._id },
+    item: { studentId: item._id },
     collect: (monitor) => ({
       isDragging: monitor.isDragging()
     })

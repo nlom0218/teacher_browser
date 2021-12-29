@@ -2,6 +2,18 @@ import React, { useState } from 'react';
 import { FcFolder, FcOpenedFolder } from 'react-icons/fc';
 import styled from 'styled-components';
 import { useDrag, useDrop } from "react-dnd"
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/client';
+import useMe from '../../Hooks/useMe';
+
+const ADD_STUDENT_MUTATION = gql`
+  mutation AddStudent($teacherEmail: String!, $studentId: ID!, $listId: ID!) {
+    addStudent(teacherEmail: $teacherEmail, studentId: $studentId, listId: $listId) {
+      ok
+      error
+    }
+  }
+`
 
 const DndContainer = styled.div`
   display: grid;
@@ -58,11 +70,19 @@ const CenterDndContainer = styled.div`
 `
 
 const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDragging }) => {
+  const me = useMe()
   const [mouseEnter, setMouseEnter] = useState(false)
+  const onCompleted = (result) => {
+    const { addStudent: { ok, error } } = result
+    if (ok) {
+      window.alert("성공!")
+    }
+  }
+  const [addStudent, { loading }] = useMutation(ADD_STUDENT_MUTATION, {
+    onCompleted
+  })
   const onMouseEnterList = () => setMouseEnter(true)
   const onMouseLeaveList = () => setMouseEnter(false)
-
-
   const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
     type: "LIST",
     collect: (monitor) => ({
@@ -73,7 +93,14 @@ const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDra
   const [_, studentDrop] = useDrop({
     accept: "STUDENT",
     drop: (item) => {
-      console.log(item);
+      const { studentId } = item
+      addStudent({
+        variables: {
+          teacherEmail: me?.email,
+          studentId,
+          listId
+        }
+      })
     },
     hover: () => {
       setMouseEnter(true)
