@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import routes from '../../routes';
+import { useDrag } from "react-dnd"
 
 const Layout = styled.div`
   padding: 10px;
@@ -19,8 +20,18 @@ const StudentIcon = styled.div``
 
 const StudentName = styled.div``
 
-const StudentItem = ({ item }) => {
-  return (<Layout>
+const StudentItem = ({ item, setSomeDragging }) => {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: "STUDENT",
+    item: { sutdentId: item._id },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging()
+    })
+  }))
+  useEffect(() => {
+    isDragging ? setSomeDragging(true) : setSomeDragging(false)
+  }, [isDragging, setSomeDragging])
+  return (<Layout ref={drag}>
     <Link to={`${routes.list}/student/${item._id}`}>
       <StudentName>{item.studentName}</StudentName>
     </Link>

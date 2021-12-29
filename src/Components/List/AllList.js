@@ -17,7 +17,7 @@ export const SEE_STUDENT_LIST_QUERY = gql`
   }
 `
 
-const Conatiner = styled.div`
+const Container = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -35,8 +35,6 @@ const Conatiner = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr; 
-  align-items: center;
-  justify-items: center;
   row-gap: 40px;
   row-gap: 2.5rem;
   column-gap: 40px;
@@ -51,7 +49,7 @@ const AddIcon = styled.div`
   }
 `
 
-const AllList = () => {
+const AllList = ({ someDragging }) => {
   const [studentList, setSudentList] = useState(undefined)
   const isPopup = useReactiveVar(isPopupVar)
   const { data, loading } = useQuery(SEE_STUDENT_LIST_QUERY)
@@ -68,13 +66,21 @@ const AllList = () => {
       setSudentList(data.seeStudentList)
     }
   }, [data])
-  return (<Conatiner>
+  return (<Container>
     {studentList && studentList.map((item, index) => {
-      return <ListItem key={index} listName={item?.listName} index={index} listOrder={item?.listOrder} moveStudentList={moveStudentList} />
+      return <ListItem
+        key={index}
+        listName={item?.listName}
+        index={index}
+        listOrder={item?.listOrder}
+        moveStudentList={moveStudentList}
+        listId={item?.listId}
+        someDragging={someDragging}
+      />
     })}
     <AddIcon onClick={onClickAddIcon}><FcPlus /></AddIcon>
     {isPopup === "createList" && <PopupCreateList />}
-  </Conatiner>);
+  </Container>);
 }
 
 export default AllList;

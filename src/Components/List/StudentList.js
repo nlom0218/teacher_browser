@@ -65,7 +65,7 @@ const AddStudentBtn = styled.div`
   cursor: pointer;
 `
 
-const StudentList = () => {
+const StudentList = ({ setSomeDragging }) => {
   const isPopup = useReactiveVar(isPopupVar)
   const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY)
   const onClickAddBtn = () => inPopup("createStudent")
@@ -75,7 +75,7 @@ const StudentList = () => {
         <div className="noStudnet">생성된 학생이 없습니다.</div>
         :
         data?.seeAllStudent?.map((item, index) => {
-          return <StudentItem key={index} item={item} />
+          return <StudentItem key={index} item={item} setSomeDragging={setSomeDragging} />
         })}
     </SStudentList>
     <AddStudentBtn onClick={onClickAddBtn}><FcPlus /></AddStudentBtn>

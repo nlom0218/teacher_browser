@@ -57,14 +57,15 @@ const ItemName = styled.div`
 `
 
 const List = () => {
+  const [someDragging, setSomeDragging] = useState(false)
   const { type, id } = useParams()
 
 
   return (<BasicContainer menuItem={true}>
     <Container>
-      {!type && <AllList />}
+      {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} />}
       {type === "student" && "학생 상세 정보 보기 및 수정"}
-      <StudentList />
+      <StudentList setSomeDragging={setSomeDragging} />
     </Container>
   </BasicContainer>);
 }
