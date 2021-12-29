@@ -6,6 +6,9 @@ import { outPopup } from '../../apollo';
 import useMe from '../../Hooks/useMe';
 import { SEE_ALL_STUDENT_QUERY } from './StudentList';
 import PopupContainer from '../Shared/PopupContainer';
+import styled from 'styled-components';
+import PopupCreateOneStudent from './PopupCreateOneStudent';
+import PopupCreateManyStudent from './PopupCreateManyStudent';
 
 // createStudent로 복수, 단일 학생 생성하기로 mutation로 바꾸기, 이때 복수일때와 단일일때 전달하는 값을 다르게 한다.
 // ex) type = "복수" / type="단일"
@@ -18,14 +21,45 @@ const CREATE_STUDENT_MUTATION = gql`
   }
 `
 
+const CreationType = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  text-align: center;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  padding: 10px 0px;
+  padding: 0.625rem 0px;
+  .creationTypeBtn {
+    cursor: pointer;
+    padding: 16px 40px;
+    padding: 1rem 2.5rem;
+    border: 1px solid ${props => props.theme.fontColor};
+    :hover {
+      background-color: ${props => props.theme.fontColor};
+      color: ${props => props.theme.bgColor};
+      transition: background-color 0.6s ease, color 0.6s ease;
+    }
+  }
+`
+
+const OneTypeBtn = styled.div`
+  background-color: ${props => props.creationType === "one" && props.theme.fontColor};
+  color: ${props => props.creationType === "one" && props.theme.bgColor};
+`
+
+const ManyTypeBtn = styled.div`
+  background-color: ${props => props.creationType === "many" && props.theme.fontColor};
+  color: ${props => props.creationType === "many" && props.theme.bgColor};
+`
+
 const PopupCreateStudent = () => {
-  const [gender, setGender] = useState(undefined)
-  console.log(gender);
+  const [creationType, setCreationType] = useState(undefined)
+  const [errMsg, setErrMsg] = useState(undefined)
   const me = useMe()
   const onCompleted = (result) => {
     const { createStudent: { ok, error } } = result
     if (error) {
-      alert(error)
+      setErrMsg(error)
       return
     }
     outPopup()
@@ -34,37 +68,22 @@ const PopupCreateStudent = () => {
     onCompleted,
     refetchQueries: [{ query: SEE_ALL_STUDENT_QUERY }]
   })
-  const { register, handleSubmit } = useForm({
-    mode: "onChange"
-  })
-  const onSubmit = (data) => {
-    if (loading) {
-      return
-    }
-    const { name } = data
-    createStudent({
-      variables: {
-        teacherEmail: me?.email,
-        studentString: JSON.stringify([{ name, gender }])
-      }
-    })
-  }
-  const onClickGender = (type) => setGender(type)
+  const onClickCreationType = (type) => setCreationType(type)
   return (<PopupContainer>
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input
-        {...register("name")}
-        type="text"
-        autoComplete="off"
-        placeholder="학생 이름"
+    <CreationType>
+      <OneTypeBtn className="creationTypeBtn" onClick={() => onClickCreationType("one")} creationType={creationType}>단일 생성</OneTypeBtn>
+      <ManyTypeBtn className="creationTypeBtn" onClick={() => onClickCreationType("many")} creationType={creationType}>복수 생성</ManyTypeBtn>
+    </CreationType>
+    {creationType === "one" &&
+      <PopupCreateOneStudent
+        createStudent={createStudent}
+        loading={loading}
+        email={me?.email}
+        errMsg={errMsg}
+        setErrMsg={setErrMsg}
       />
-      <div onClick={() => onClickGender("male")} gender={gender}>남자</div>
-      <div onClick={() => onClickGender("female")} gender={gender}>여자</div>
-      <input
-        type="submit"
-        disabled={!gender}
-      />
-    </form>
+    }
+    {creationType === "many" && <PopupCreateManyStudent />}
   </PopupContainer>);
 }
 
