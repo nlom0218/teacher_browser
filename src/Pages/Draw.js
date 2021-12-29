@@ -13,10 +13,11 @@ const LayOut = styled.div`
 width: 100%;
 max-width: 400px;
 margin: auto;
+margin-top : 150px;
 padding: 30px;
 display: flex;
 flex-direction: column;
-background: #04042b;
+background: rgba(4, 4, 43, 0.7);
 high: 100%
 `
 
