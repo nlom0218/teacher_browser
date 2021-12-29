@@ -8,15 +8,18 @@ const DndContainer = styled.div`
   justify-items: center;
   align-items: center;
   position: relative;
+  .list-dndContainer {
+    width: 40%;
+  }
 `
 
 const Container = styled.div`
+  cursor: pointer;
   display: grid;
   grid-template-rows: 1fr 1fr;
   justify-items: center;
   row-gap: 10px;
   row-gap: 0.625rem;
-  cursor: pointer;
 `
 
 const ListIcon = styled.div`
@@ -27,6 +30,7 @@ const ListIcon = styled.div`
 `
 
 const ListName = styled.div`
+
   text-align: center;
 `
 
@@ -68,14 +72,17 @@ const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDra
 
   const [_, studentDrop] = useDrop({
     accept: "STUDENT",
-    hover: (item) => {
+    drop: (item) => {
       console.log(item);
+    },
+    hover: () => {
+      setMouseEnter(true)
     }
   })
 
   return (
     <DndContainer>
-      <div ref={dragPreview} style={{ opacity: isDragging ? 0.6 : 1 }}>
+      <div ref={dragPreview} style={{ opacity: isDragging ? 0.6 : 1 }} className="list-dndContainer">
         <Container onMouseEnter={onMouseEnterList} onMouseLeave={onMouseLeaveList} ref={drag}>
           <ListIcon>{mouseEnter ? <FcOpenedFolder /> : <FcFolder />}</ListIcon>
           <ListName>{listName}</ListName>
