@@ -42,6 +42,8 @@ const Container = styled.div`
 `
 
 const AddIcon = styled.div`
+  align-self: center;
+  justify-self: center;
   cursor: pointer;
   svg {
     font-size: 2.5rem;

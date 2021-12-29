@@ -1,7 +1,6 @@
 import { useQuery, useReactiveVar } from '@apollo/client';
 import gql from 'graphql-tag';
 import React from 'react';
-import { FcPlus } from 'react-icons/fc';
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../../apollo';
 import { color } from '../../styles';
@@ -60,9 +59,14 @@ const SStudentList = styled.div`
 
 const AddStudentBtn = styled.div`
   justify-self: center;
-  font-size: 2.5em;
-  font-size: 2.5rem;
   cursor: pointer;
+  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
+  background-color: ${props => props.theme.btnBgColor};
+  color: ${props => props.theme.bgColor};
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  transition: background-color 1s ease, color 1s ease;
 `
 
 const StudentList = ({ setSomeDragging }) => {
@@ -78,7 +82,7 @@ const StudentList = ({ setSomeDragging }) => {
           return <StudentItem key={index} item={item} setSomeDragging={setSomeDragging} />
         })}
     </SStudentList>
-    <AddStudentBtn onClick={onClickAddBtn}><FcPlus /></AddStudentBtn>
+    <AddStudentBtn onClick={onClickAddBtn}>학생 등록하기</AddStudentBtn>
     {isPopup === "createStudent" && <PopupCreateStudent />}
   </StudentContainer>);
 }
