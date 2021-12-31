@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import gql from 'graphql-tag';
-import { useDrag, useDrop } from "react-dnd"
+import { useDrop } from "react-dnd"
 import { useMutation } from '@apollo/client';
 import useMe from '../../../Hooks/useMe';
 

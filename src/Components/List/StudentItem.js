@@ -25,7 +25,7 @@ const StudentItem = ({ item, setSomeDragging }) => {
   // 학생 이름 drag를 위해 필요한 것
   // 아래의 두번째 인자를 드래그 할 곳에 참조로 넣는다.
   const [{ isDragging }, drag] = useDrag(() => ({
-    // type은 필수값으로 drop하는 곳과 같아야 한다.
+    // type은 필수값으로 drop하는 곳의 accept과 같아야 한다.
     type: "STUDENT",
 
     // drag를 통해 전달할 내용들

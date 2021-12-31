@@ -51,18 +51,22 @@ const AddIcon = styled.div`
   }
 `
 
-const AllList = ({ someDragging, setSuccessMsg }) => {
+const AllList = ({ someDragging, setSuccessMsg, setSomeDragging }) => {
+  // 학생 리스트가 아니라 명렬표임!!!
   const [studentList, setSudentList] = useState(undefined)
+
   const isPopup = useReactiveVar(isPopupVar)
   const { data, loading } = useQuery(SEE_STUDENT_LIST_QUERY)
   const onClickAddIcon = () => inPopup("createList")
-  const moveStudentList = (sutdentListOrder, toIndex) => {
-    const index = studentList.indexOf(sutdentListOrder)
+
+  const moveStudentList = (studentListId, toIndex) => {
+    const index = studentList.findIndex((item) => item.listId === studentListId)
     let newStudnetList = [...studentList]
     newStudnetList.splice(index, 1);
     newStudnetList.splice(toIndex, 0, studentList[index])
     setSudentList(newStudnetList)
   }
+
   useEffect(() => {
     if (data) {
       setSudentList(data.seeStudentList)
@@ -79,6 +83,7 @@ const AllList = ({ someDragging, setSuccessMsg }) => {
         listId={item?.listId}
         someDragging={someDragging}
         setSuccessMsg={setSuccessMsg}
+        setSomeDragging={setSomeDragging}
       />
     })}
     <AddIcon onClick={onClickAddIcon}><FcPlus /></AddIcon>

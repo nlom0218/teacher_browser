@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FcFolder, FcOpenedFolder } from 'react-icons/fc';
 import styled from 'styled-components';
-import { useDrag, useDrop } from "react-dnd"
-import { useMutation } from '@apollo/client';
-import useMe from '../../Hooks/useMe';
+import { useDrag } from "react-dnd"
 import CenterDndContainer from "./Dorp/CenterDndContainer"
+import LeftDndContainer from './Dorp/LeftDndContainer';
 
 const DndContainer = styled.div`
   display: grid;
@@ -37,14 +36,6 @@ const ListName = styled.div`
   text-align: center;
 `
 
-const LeftDndContainer = styled.div`
-  height: 100%;
-  width: 30%;
-  left: 0;
-  position: absolute;
-  z-index: ${props => props.someDragging ? 30 : -1};
-`
-
 const RightDndContainer = styled.div`
   height: 100%;
   width: 30%;
@@ -53,7 +44,7 @@ const RightDndContainer = styled.div`
   z-index: ${props => props.someDragging ? 30 : -1};
 `
 
-const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDragging, setSuccessMsg }) => {
+const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDragging, setSuccessMsg, setSomeDragging }) => {
   // 리스트 아이콘위에 마우스를 올려두면 아이콘을 바꾸기 위한 값
   const [mouseEnter, setMouseEnter] = useState(false)
 
@@ -65,11 +56,37 @@ const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDra
   // 아래의 두번째 인자를 드래그 할 곳에 참조로 넣는다.
   // dragPreview는 드래그를 하는 도중 보여지는 이미지
   const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
+    // type은 필수값으로 drop하는 곳의 accept과 같아야 한다.
     type: "LIST",
+
+    // drag를 통해 전달할 내용들
+    item: { listId, index },
+
+    // 현재 드래그를 하고 있는지 안하고 있는지 확인하기 위한 것....(블로그 참고)
+    // useDrag의 첫 번째 인자의 객체에 속해 있는 isDragging으로 알 수 있다.
     collect: (monitor) => ({
       isDragging: monitor.isDragging()
-    })
-  }))
+    }),
+
+    // 드래그가 끝났을때 작동하는 부분
+    end: (item, monitor) => {
+      const { listId: originId, index: originIndex } = item
+
+      // dropRef로 선언한 태그 위에 드랍이 되었는지 안되었는지
+      const didDrop = monitor.didDrop()
+
+      if (!didDrop) {
+        moveStudentList(originId, originIndex)
+      }
+    }
+  }),
+    [index, listId, moveStudentList]
+  )
+
+  // useDrag의 isDragging을 보며 someDragging값 바꾸기
+  useEffect(() => {
+    isDragging ? setSomeDragging(true) : setSomeDragging(false)
+  }, [isDragging, setSomeDragging])
   return (
     <DndContainer>
       <div ref={dragPreview} style={{ opacity: isDragging ? 0.6 : 1 }} className="list-dndContainer">
@@ -79,7 +96,12 @@ const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDra
         </Container>
       </div>
       {/* 리스트를 옮길 때 다른 리스트의 왼쪽으로 옮기면 앞으로 이동하기 */}
-      <LeftDndContainer someDragging={someDragging}></LeftDndContainer>
+      <LeftDndContainer
+        someDragging={someDragging}
+        listId={listId}
+        index={index}
+        moveStudentList={moveStudentList}
+      />
 
       {/* 가운데 부분은 학생들을 리스트에 추가하는 부분 */}
       <RightDndContainer someDragging={someDragging}></RightDndContainer>
