@@ -1,7 +1,7 @@
 import { useQuery, useReactiveVar } from '@apollo/client';
 import gql from 'graphql-tag';
 import React, { useEffect, useState } from 'react';
-import { FcPlus } from 'react-icons/fc';
+import { FcEmptyTrash, FcPlus } from 'react-icons/fc';
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../../apollo';
 import EmptyItem from './Dorp/EmptyItem';
@@ -52,22 +52,22 @@ const AddIcon = styled.div`
   }
 `
 
+const DelIcon = styled.div`
+  align-self: center;
+  justify-self: center;
+  svg {
+    font-size: 2.5rem;
+    font-size: 2.5em;
+  }
+`
+
 const AllList = ({ someDragging, setSuccessMsg, setSomeDragging }) => {
   // 학생 리스트가 아니라 명렬표임!!!
   const [studentList, setSudentList] = useState(undefined)
-  console.log(studentList);
 
   const isPopup = useReactiveVar(isPopupVar)
   const { data, loading } = useQuery(SEE_STUDENT_LIST_QUERY)
   const onClickAddIcon = () => inPopup("createList")
-
-  const moveStudentList = (studentListId, toIndex) => {
-    const index = studentList.findIndex((item) => item.listId === studentListId)
-    let newStudnetList = [...studentList]
-    newStudnetList.splice(index, 1);
-    newStudnetList.splice(toIndex, 0, studentList[index])
-    setSudentList(newStudnetList)
-  }
 
   useEffect(() => {
     if (data) {
@@ -91,7 +91,6 @@ const AllList = ({ someDragging, setSuccessMsg, setSomeDragging }) => {
           listName={item?.listName}
           index={index}
           listOrder={item?.listOrder}
-          moveStudentList={moveStudentList}
           listId={item?.listId}
           someDragging={someDragging}
           setSuccessMsg={setSuccessMsg}
@@ -101,7 +100,6 @@ const AllList = ({ someDragging, setSuccessMsg, setSomeDragging }) => {
         return <EmptyItem
           key={index}
           index={index}
-          moveStudentList={moveStudentList}
           listOrder={item?.listOrder}
           studentList={studentList}
           setSudentList={setSudentList}
@@ -109,6 +107,7 @@ const AllList = ({ someDragging, setSuccessMsg, setSomeDragging }) => {
       }
     })}
     <AddIcon onClick={onClickAddIcon}><FcPlus /></AddIcon>
+    <DelIcon><FcEmptyTrash /></DelIcon>
     {isPopup === "createList" && <PopupCreateList />}
   </Container>);
 }

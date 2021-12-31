@@ -10,7 +10,7 @@ const SRightDndContainer = styled.div`
   z-index: ${props => props.someDragging ? 30 : -1};
 `
 
-const RightDndContainer = ({ someDragging, index, listId, moveStudentList }) => {
+const RightDndContainer = ({ someDragging, index, listId }) => {
 
   // 리스트 순서를 변경하기 위한 drop
   const [_, rightDrop] = useDrop({
@@ -23,7 +23,6 @@ const RightDndContainer = ({ someDragging, index, listId, moveStudentList }) => 
     hover: (item) => {
       const { listId: draggedId, index: draggedIndex } = item
       if (draggedId !== listId) {
-        moveStudentList(draggedId, index)
       }
     }
   })

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import gql from 'graphql-tag';
 import { useDrop } from "react-dnd"
@@ -15,10 +15,11 @@ const ADD_STUDENT_MUTATION = gql`
 `
 
 const SCenterDndContainer = styled.div`
-  height: 100%;
+  height: 60%;
   width: 40%;
   position: absolute;
   z-index: ${props => props.someDragging ? 30 : -1};
+  /* background-color: blueviolet; */
 `
 
 const CenterDndContainer = ({ someDragging, setSuccessMsg, listName, listId, setMouseEnter }) => {
@@ -56,6 +57,12 @@ const CenterDndContainer = ({ someDragging, setSuccessMsg, listName, listId, set
       setMouseEnter(true)
     }
   })
+
+  useEffect(() => {
+    if (!someDragging) {
+      setMouseEnter(false)
+    }
+  }, [someDragging])
 
   return (<SCenterDndContainer someDragging={someDragging} ref={studentDrop}></SCenterDndContainer>);
 }

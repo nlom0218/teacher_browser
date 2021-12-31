@@ -33,11 +33,14 @@ const ListIcon = styled.div`
 `
 
 const ListName = styled.div`
-  font-weight: 600;
+  /* color: ${props => props.theme.fontColor}; */
+  /* font-weight: 600; */
+  /* text-shadow: 0.5px 0.5px 0.5px ${props => props.theme.bgColor}; */
+  transition: text-shadow 1s ease;
   text-align: center;
 `
 
-const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDragging, setSuccessMsg, setSomeDragging }) => {
+const ListItem = ({ listName, listOrder, index, listId, someDragging, setSuccessMsg, setSomeDragging }) => {
   // 리스트 아이콘위에 마우스를 올려두면 아이콘을 바꾸기 위한 값
   const [mouseEnter, setMouseEnter] = useState(false)
 
@@ -69,11 +72,10 @@ const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDra
       const didDrop = monitor.didDrop()
 
       if (!didDrop) {
-        // moveStudentList(originOrder, originIndex)
+
       }
     }
   }),
-    [index, listId, moveStudentList]
   )
 
   // useDrag의 isDragging을 보며 someDragging값 바꾸기
@@ -95,7 +97,6 @@ const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDra
         someDragging={someDragging}
         listId={listId}
         index={index}
-        moveStudentList={moveStudentList}
       /> */}
 
       {/* 가운데 부분은 학생들을 리스트에 추가하는 부분 */}
@@ -103,7 +104,6 @@ const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDra
         someDragging={someDragging}
         listId={listId}
         index={index}
-        moveStudentList={moveStudentList}
       /> */}
 
       {/* 리스트를 옮길 때 다른 리스트의 오른쪽으로 옮기면 뒤로 이동하기 */}
