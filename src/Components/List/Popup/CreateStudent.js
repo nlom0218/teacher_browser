@@ -64,6 +64,7 @@ const CreateStudent = ({ existStudentArray }) => {
   const onCompleted = (result) => {
     const { createStudent: { ok } } = result
     if (ok) {
+      // 성공적으로 생성을 하였으면 팝업창 닫기
       outPopup()
     }
   }

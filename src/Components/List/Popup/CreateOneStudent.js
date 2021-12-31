@@ -73,6 +73,8 @@ const CreateOneStudent = ({ createStudent, loading, email, existStudentArray }) 
       {...register("name", {
         required: true,
         onChange: () => setErrMsg(undefined),
+
+        // 기존 생성된 학생들의 이름과 중복되면 errMsg생성
         validate: (name) => {
           const isExistName = existStudentArray.includes(name)
           if (isExistName) {

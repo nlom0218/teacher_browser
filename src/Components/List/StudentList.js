@@ -48,8 +48,8 @@ const SStudentList = styled.div`
     display: none; // Chrome, Safari, Opera
   }
   display: grid;
-  row-gap: 10px;
-  row-gap: 0.625rem;
+  /* row-gap: 10px;
+  row-gap: 0.625rem; */
   .noStudnet {
     text-align: center;
     color: ${props => props.theme.redColor};

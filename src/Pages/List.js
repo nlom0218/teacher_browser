@@ -35,24 +35,6 @@ const ListContainer = styled.div`
 
 `
 
-const ItemContainer = styled.div`
-  display: grid;
-  grid-template-rows: auto auto;
-  row-gap: 10px;
-  row-gap: 0.625rem;
-  cursor: pointer;
-  svg {
-    margin: 0 auto;
-    font-size: 2.5em;
-    font-size: 2.5rem;
-  }
-`
-
-const ItemName = styled.div`
-  font-weight: 400;
-  text-align: center;
-`
-
 const SuccessMsg = styled.div`
   position: absolute;
   bottom: 30px;
@@ -69,14 +51,23 @@ const SuccessMsg = styled.div`
 `
 
 const List = () => {
+  // 드래그 중일 때와 아닐 때를 나타내기 위한 값
   const [someDragging, setSomeDragging] = useState(false)
+
+  // 드래그 성공 및 메시지를 띄우기 위한 값
   const [successMsg, setSuccessMsg] = useState(undefined)
+
+  // url 주소에서 가져오는 값들
   const { type, id } = useParams()
+
+  // 무언가를 드래그 중일 때 successMsg 초기화
   useEffect(() => {
     if (successMsg) {
       setSuccessMsg(undefined)
     }
   }, [someDragging])
+
+  // successMsg를 5초 후에 초기화
   useEffect(() => {
     if (successMsg) {
       setTimeout(() => {

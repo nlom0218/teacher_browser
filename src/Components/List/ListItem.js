@@ -2,18 +2,9 @@ import React, { useState } from 'react';
 import { FcFolder, FcOpenedFolder } from 'react-icons/fc';
 import styled from 'styled-components';
 import { useDrag, useDrop } from "react-dnd"
-import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
 import useMe from '../../Hooks/useMe';
-
-const ADD_STUDENT_MUTATION = gql`
-  mutation AddStudent($teacherEmail: String!, $studentId: ID!, $listId: ID!) {
-    addStudent(teacherEmail: $teacherEmail, studentId: $studentId, listId: $listId) {
-      ok
-      error
-    }
-  }
-`
+import CenterDndContainer from "./Dorp/CenterDndContainer"
 
 const DndContainer = styled.div`
   display: grid;
@@ -54,7 +45,7 @@ const LeftDndContainer = styled.div`
   z-index: ${props => props.someDragging ? 30 : -1};
 `
 
-const RigtDndContainer = styled.div`
+const RightDndContainer = styled.div`
   height: 100%;
   width: 30%;
   right: 0;
@@ -62,51 +53,23 @@ const RigtDndContainer = styled.div`
   z-index: ${props => props.someDragging ? 30 : -1};
 `
 
-const CenterDndContainer = styled.div`
-  height: 100%;
-  width: 40%;
-  position: absolute;
-  z-index: ${props => props.someDragging ? 30 : -1};
-`
-
 const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDragging, setSuccessMsg }) => {
-  const me = useMe()
+  // 리스트 아이콘위에 마우스를 올려두면 아이콘을 바꾸기 위한 값
   const [mouseEnter, setMouseEnter] = useState(false)
-  const onCompleted = (result) => {
-    const { addStudent: { ok, error } } = result
-    if (ok) {
-      setSuccessMsg(`${listName}에 추가되었습니다 😀`)
-    }
-  }
-  const [addStudent, { loading }] = useMutation(ADD_STUDENT_MUTATION, {
-    onCompleted
-  })
+
+  // 리스트 아이콘위에 마우스를 올려두면 아이콘을 바꾸기 위한 함수
   const onMouseEnterList = () => setMouseEnter(true)
   const onMouseLeaveList = () => setMouseEnter(false)
+
+  // 리스트 drag를 위해 필요한 것
+  // 아래의 두번째 인자를 드래그 할 곳에 참조로 넣는다.
+  // dragPreview는 드래그를 하는 도중 보여지는 이미지
   const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
     type: "LIST",
     collect: (monitor) => ({
       isDragging: monitor.isDragging()
     })
   }))
-
-  const [_, studentDrop] = useDrop({
-    accept: "STUDENT",
-    drop: (item) => {
-      const { studentId, studentName } = item
-      addStudent({
-        variables: {
-          teacherEmail: me?.email,
-          studentId,
-          listId
-        }
-      })
-    },
-    hover: () => {
-      setMouseEnter(true)
-    }
-  })
-
   return (
     <DndContainer>
       <div ref={dragPreview} style={{ opacity: isDragging ? 0.6 : 1 }} className="list-dndContainer">
@@ -115,9 +78,20 @@ const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDra
           <ListName>{listName}</ListName>
         </Container>
       </div>
+      {/* 리스트를 옮길 때 다른 리스트의 왼쪽으로 옮기면 앞으로 이동하기 */}
       <LeftDndContainer someDragging={someDragging}></LeftDndContainer>
-      <RigtDndContainer someDragging={someDragging}></RigtDndContainer>
-      <CenterDndContainer someDragging={someDragging} ref={studentDrop}></CenterDndContainer>
+
+      {/* 가운데 부분은 학생들을 리스트에 추가하는 부분 */}
+      <RightDndContainer someDragging={someDragging}></RightDndContainer>
+
+      {/* 리스트를 옮길 때 다른 리스트의 오른쪽으로 옮기면 뒤로 이동하기 */}
+      <CenterDndContainer
+        someDragging={someDragging}
+        setSuccessMsg={setSuccessMsg}
+        listName={listName}
+        listId={listId}
+        setMouseEnter={setMouseEnter}
+      />
     </DndContainer>
   );
 }
