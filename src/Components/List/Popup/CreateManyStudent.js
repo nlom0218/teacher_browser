@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import CreateManyStudentFrom from './CreateManyStudentFrom';
 
 const Container = styled.div`
   padding-bottom: 10px;
@@ -34,14 +35,23 @@ const NumForm = styled.form`
   }
 `
 
-const PopupCreateManyStudent = () => {
+const CreateManyStudent = ({ existStudentArray, createStudent, loading, email }) => {
+  // back-end로 전달되는 학생들의 이름, 성별 정보가 담겨진 배열 => back-end로는 문자열로 변환하여 전달
   const [studentString, setStudentString] = useState([])
+
   const { register, handleSubmit } = useForm({
     mode: "onChange"
   })
+
+  // 생성할 학생의 수 만큼 studentString값을 바꿈
   const onSubmit = (data) => {
     const num = parseInt(data.num)
-    console.log(num);
+    const newStudentString = []
+    for (let i = 0; i < num; i++) {
+      const student = { name: undefined, gender: undefined }
+      newStudentString.push(student)
+    }
+    setStudentString(newStudentString)
   }
   return (<Container>
     {studentString.length === 0 ?
@@ -63,9 +73,12 @@ const PopupCreateManyStudent = () => {
         />
       </NumForm>
       :
-      <div>복수생성폼</div>
+      <CreateManyStudentFrom
+        existStudentArray={existStudentArray}
+        studentString={studentString}
+      />
     }
   </Container>);
 }
 
-export default PopupCreateManyStudent;
+export default CreateManyStudent;

@@ -1,14 +1,13 @@
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { outPopup } from '../../apollo';
-import useMe from '../../Hooks/useMe';
-import { SEE_ALL_STUDENT_QUERY } from './StudentList';
-import PopupContainer from '../Shared/PopupContainer';
 import styled from 'styled-components';
-import PopupCreateOneStudent from './PopupCreateOneStudent';
-import PopupCreateManyStudent from './PopupCreateManyStudent';
+import CreateOneStudent from './CreateOneStudent';
+import CreateManyStudent from './CreateManyStudent';
+import useMe from '../../../Hooks/useMe';
+import { outPopup } from '../../../apollo';
+import { SEE_ALL_STUDENT_QUERY } from '../StudentList';
+import PopupContainer from '../../Shared/PopupContainer';
 
 // createStudent로 복수, 단일 학생 생성하기로 mutation로 바꾸기, 이때 복수일때와 단일일때 전달하는 값을 다르게 한다.
 // ex) type = "복수" / type="단일"
@@ -52,17 +51,16 @@ const ManyTypeBtn = styled.div`
   color: ${props => props.creationType === "many" && props.theme.bgColor};
 `
 
-const PopupCreateStudent = () => {
+const CreateStudent = ({ existStudentArray }) => {
+  // 단일 생성, 복수 생성을 위한 state값
   const [creationType, setCreationType] = useState(undefined)
-  const [errMsg, setErrMsg] = useState(undefined)
+
   const me = useMe()
   const onCompleted = (result) => {
-    const { createStudent: { ok, error } } = result
-    if (error) {
-      setErrMsg(error)
-      return
+    const { createStudent: { ok } } = result
+    if (ok) {
+      outPopup()
     }
-    outPopup()
   }
   const [createStudent, { loading }] = useMutation(CREATE_STUDENT_MUTATION, {
     onCompleted,
@@ -75,16 +73,20 @@ const PopupCreateStudent = () => {
       <ManyTypeBtn className="creationTypeBtn" onClick={() => onClickCreationType("many")} creationType={creationType}>복수 생성</ManyTypeBtn>
     </CreationType>
     {creationType === "one" &&
-      <PopupCreateOneStudent
+      <CreateOneStudent
         createStudent={createStudent}
         loading={loading}
         email={me?.email}
-        errMsg={errMsg}
-        setErrMsg={setErrMsg}
       />
     }
-    {creationType === "many" && <PopupCreateManyStudent />}
+    {creationType === "many" &&
+      <CreateManyStudent
+        existStudentArray={existStudentArray}
+        createStudent={createStudent}
+        loading={loading}
+        email={me?.email}
+      />}
   </PopupContainer>);
 }
 
-export default PopupCreateStudent;
+export default CreateStudent;

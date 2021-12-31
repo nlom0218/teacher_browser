@@ -1,10 +1,10 @@
 import { useQuery, useReactiveVar } from '@apollo/client';
 import gql from 'graphql-tag';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../../apollo';
 import { color } from '../../styles';
-import PopupCreateStudent from './PopupCreateStudent';
+import CreateStudent from './Popup/CreateStudent';
 import StudentItem from './StudentItem';
 
 export const SEE_ALL_STUDENT_QUERY = gql`
@@ -71,8 +71,23 @@ const AddStudentBtn = styled.div`
 
 const StudentList = ({ setSomeDragging }) => {
   const isPopup = useReactiveVar(isPopupVar)
+
+  // studentArray => 복수생성할 때 이미 존재하는 학생들의 이름과 새롭게 생성하는 학생들의 이름을 비교하기 위한 배열
+  // 중복생성을 막기 위함
+  const [existStudentArray, setExistStudentArray] = useState(undefined)
+
   const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY)
+
+  // 학생 생성을 위한 팝업창
   const onClickAddBtn = () => inPopup("createStudent")
+
+  // 학생 정보가 불러와지면 studentArray 값 생성
+  useEffect(() => {
+    if (data) {
+      const newExistStudentArray = data?.seeAllStudent.map((item) => item.studentName)
+      setExistStudentArray(newExistStudentArray)
+    }
+  }, [data])
   return (<StudentContainer>
     <SStudentList>
       {data?.seeAllStudent?.length === 0 ?
@@ -83,7 +98,7 @@ const StudentList = ({ setSomeDragging }) => {
         })}
     </SStudentList>
     <AddStudentBtn onClick={onClickAddBtn}>학생 등록하기</AddStudentBtn>
-    {isPopup === "createStudent" && <PopupCreateStudent />}
+    {isPopup === "createStudent" && <CreateStudent existStudentArray={existStudentArray} />}
   </StudentContainer>);
 }
 

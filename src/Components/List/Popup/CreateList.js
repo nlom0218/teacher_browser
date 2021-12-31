@@ -1,11 +1,11 @@
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { outPopup } from '../../apollo';
-import useMe from '../../Hooks/useMe';
-import PopupContainer from '../Shared/PopupContainer';
-import { SEE_STUDENT_LIST_QUERY } from './AllList';
+import { outPopup } from '../../../apollo';
+import useMe from '../../../Hooks/useMe';
+import PopupContainer from '../../Shared/PopupContainer';
+import { SEE_STUDENT_LIST_QUERY } from '../AllList';
 
 const CREATE_STUDENT_LIST_MUTATION = gql`
   mutation CreateStudentList($teacherEmail: String!, $listName: String!) {
@@ -16,7 +16,7 @@ const CREATE_STUDENT_LIST_MUTATION = gql`
   }
 `
 
-const PopupCreateList = () => {
+const CreateList = () => {
   const me = useMe()
   const { register, handleSubmit } = useForm({
     mode: "onChange"
@@ -63,4 +63,4 @@ const PopupCreateList = () => {
   </PopupContainer>);
 }
 
-export default PopupCreateList;
+export default CreateList;

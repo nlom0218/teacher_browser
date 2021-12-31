@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FcDocument, FcPlus } from 'react-icons/fc';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import AllList from '../Components/List/AllList';
 import StudentList from '../Components/List/StudentList';
@@ -61,6 +60,7 @@ const SuccessMsg = styled.div`
   transform: translate(-50%, -50%);
   background-color: ${props => props.theme.btnBgColor};
   color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
   padding: 20px;
   padding: 1.25rem;
   border-radius: 10px;
@@ -74,9 +74,14 @@ const List = () => {
   const { type, id } = useParams()
   useEffect(() => {
     if (successMsg) {
+      setSuccessMsg(undefined)
+    }
+  }, [someDragging])
+  useEffect(() => {
+    if (successMsg) {
       setTimeout(() => {
         setSuccessMsg(undefined)
-      }, 3000)
+      }, 5000)
     }
   }, [successMsg])
   return (<BasicContainer menuItem={true}>

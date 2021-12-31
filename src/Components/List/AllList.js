@@ -1,11 +1,11 @@
 import { useQuery, useReactiveVar } from '@apollo/client';
 import gql from 'graphql-tag';
 import React, { useEffect, useState } from 'react';
-import { FcList, FcPlus } from 'react-icons/fc';
+import { FcPlus } from 'react-icons/fc';
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../../apollo';
 import ListItem from './ListItem';
-import PopupCreateList from './PopupCreateList';
+import PopupCreateList from './Popup/CreateList';
 
 export const SEE_STUDENT_LIST_QUERY = gql`
   query SeeStudentList {

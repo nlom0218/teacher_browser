@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
 import styled from 'styled-components';
+import ErrMsg from './ErrMsg';
+import GenderBtnContainer from "./GenderBtnContainer"
 
 
 const Form = styled.form`
@@ -26,25 +27,6 @@ const NameInput = styled.input`
   }
 `
 
-const GengerBtnContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  column-gap: 20px;
-  column-gap: 1.25rem;
-  svg {
-    font-size: 1.25rem;
-    font-size: 1.25em;
-    cursor: pointer;
-  }
-`
-
-const GengerBtn = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-items: center;
-  align-items: center;
-`
-
 const SubmitInput = styled.input`
   justify-self: flex-end;
   padding: 10px 40px;
@@ -56,13 +38,10 @@ const SubmitInput = styled.input`
   cursor: pointer;
 `
 
-const ErrMsg = styled.div`
-  grid-column: 1 / -1;
-  text-align: center;
-  color: ${props => props.theme.redColor};
-`
+const CreateOneStudent = ({ createStudent, loading, email }) => {
+  // 이름의 중복 에러 메시지 state값
+  const [errMsg, setErrMsg] = useState(undefined)
 
-const PopupCreateOneStudent = ({ createStudent, loading, email, errMsg, setErrMsg }) => {
   const [gender, setGender] = useState(undefined)
   const { register, handleSubmit } = useForm({
     mode: "onChange"
@@ -83,10 +62,6 @@ const PopupCreateOneStudent = ({ createStudent, loading, email, errMsg, setErrMs
       }
     })
   }
-  const onClickGender = (type) => {
-    setGender(type)
-    setErrMsg(undefined)
-  }
   return (<Form onSubmit={handleSubmit(onSubmit)}>
     <NameInput
       {...register("name", {
@@ -97,26 +72,17 @@ const PopupCreateOneStudent = ({ createStudent, loading, email, errMsg, setErrMs
       autoComplete="off"
       placeholder="학생 이름을 입력해주세요."
     />
-    <GengerBtnContainer>
-      <GengerBtn gender={gender}>
-        <div className="gender_icon" onClick={() => onClickGender("male")}>
-          {gender === "male" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
-        </div>
-        <div>남자</div>
-      </GengerBtn>
-      <GengerBtn gender={gender}>
-        <div className="gender_icon" onClick={() => onClickGender("female")}>
-          {gender === "female" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
-        </div>
-        <div>여자</div>
-      </GengerBtn>
-    </GengerBtnContainer>
+    <GenderBtnContainer
+      gender={gender}
+      setGender={setGender}
+      setErrMsg={setErrMsg}
+    />
     <SubmitInput
       type="submit"
       value="생성"
     />
-    {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
+    {errMsg && <ErrMsg errMsg={errMsg} />}
   </Form>);
 }
 
-export default PopupCreateOneStudent;
+export default CreateOneStudent;
