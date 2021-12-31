@@ -97,7 +97,7 @@ const StudentList = ({ setSomeDragging }) => {
           return <StudentItem key={index} item={item} setSomeDragging={setSomeDragging} />
         })}
     </SStudentList>
-    <AddStudentBtn onClick={onClickAddBtn}>학생 등록하기</AddStudentBtn>
+    <AddStudentBtn onClick={onClickAddBtn}>학생 생성하기</AddStudentBtn>
     {isPopup === "createStudent" && <CreateStudent existStudentArray={existStudentArray} />}
   </StudentContainer>);
 }

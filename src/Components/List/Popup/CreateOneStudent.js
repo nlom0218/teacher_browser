@@ -85,7 +85,7 @@ const CreateOneStudent = ({ createStudent, loading, email, existStudentArray }) 
       })}
       type="text"
       autoComplete="off"
-      placeholder="학생 이름을 입력해 주세요."
+      placeholder="학생 이름을 입력하세요."
     />
     <GenderBtnContainer
       gender={gender}
