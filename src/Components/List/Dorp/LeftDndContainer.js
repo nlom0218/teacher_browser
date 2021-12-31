@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import { useDrop } from "react-dnd"
 
 const SLeftDndContainer = styled.div`
@@ -13,7 +12,7 @@ const SLeftDndContainer = styled.div`
 
 const LeftDndContainer = ({ someDragging, index, listId, moveStudentList }) => {
 
-  // 학생을 리스트에 추가하기 위한 drop
+  // 리스트 순서를 변경하기 위한 drop
   const [_, leftDrop] = useDrop({
     accept: "LIST",
 

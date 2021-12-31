@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useDrag } from "react-dnd"
 import CenterDndContainer from "./Dorp/CenterDndContainer"
 import LeftDndContainer from './Dorp/LeftDndContainer';
+import RightDndContainer from './Dorp/RightDndContainer';
 
 const DndContainer = styled.div`
   display: grid;
@@ -32,16 +33,8 @@ const ListIcon = styled.div`
 `
 
 const ListName = styled.div`
-
+  font-weight: 600;
   text-align: center;
-`
-
-const RightDndContainer = styled.div`
-  height: 100%;
-  width: 30%;
-  right: 0;
-  position: absolute;
-  z-index: ${props => props.someDragging ? 30 : -1};
 `
 
 const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDragging, setSuccessMsg, setSomeDragging }) => {
@@ -60,7 +53,7 @@ const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDra
     type: "LIST",
 
     // drag를 통해 전달할 내용들
-    item: { listId, index },
+    item: { listOrder, index },
 
     // 현재 드래그를 하고 있는지 안하고 있는지 확인하기 위한 것....(블로그 참고)
     // useDrag의 첫 번째 인자의 객체에 속해 있는 isDragging으로 알 수 있다.
@@ -70,13 +63,13 @@ const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDra
 
     // 드래그가 끝났을때 작동하는 부분
     end: (item, monitor) => {
-      const { listId: originId, index: originIndex } = item
+      const { listOrder: originOrder, index: originIndex } = item
 
       // dropRef로 선언한 태그 위에 드랍이 되었는지 안되었는지
       const didDrop = monitor.didDrop()
 
       if (!didDrop) {
-        moveStudentList(originId, originIndex)
+        // moveStudentList(originOrder, originIndex)
       }
     }
   }),
@@ -89,22 +82,29 @@ const ListItem = ({ listName, listOrder, index, moveStudentList, listId, someDra
   }, [isDragging, setSomeDragging])
   return (
     <DndContainer>
-      <div ref={dragPreview} style={{ opacity: isDragging ? 0.6 : 1 }} className="list-dndContainer">
+      <div ref={dragPreview}
+        // style={{ opacity: isDragging ? 0.6 : 1 }}
+        className="list-dndContainer">
         <Container onMouseEnter={onMouseEnterList} onMouseLeave={onMouseLeaveList} ref={drag}>
           <ListIcon>{mouseEnter ? <FcOpenedFolder /> : <FcFolder />}</ListIcon>
           <ListName>{listName}</ListName>
         </Container>
       </div>
       {/* 리스트를 옮길 때 다른 리스트의 왼쪽으로 옮기면 앞으로 이동하기 */}
-      <LeftDndContainer
+      {/* <LeftDndContainer
         someDragging={someDragging}
         listId={listId}
         index={index}
         moveStudentList={moveStudentList}
-      />
+      /> */}
 
       {/* 가운데 부분은 학생들을 리스트에 추가하는 부분 */}
-      <RightDndContainer someDragging={someDragging}></RightDndContainer>
+      {/* <RightDndContainer
+        someDragging={someDragging}
+        listId={listId}
+        index={index}
+        moveStudentList={moveStudentList}
+      /> */}
 
       {/* 리스트를 옮길 때 다른 리스트의 오른쪽으로 옮기면 뒤로 이동하기 */}
       <CenterDndContainer

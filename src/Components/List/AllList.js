@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { FcPlus } from 'react-icons/fc';
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../../apollo';
+import EmptyItem from './Dorp/EmptyItem';
 import ListItem from './ListItem';
 import PopupCreateList from './Popup/CreateList';
 
@@ -54,6 +55,7 @@ const AddIcon = styled.div`
 const AllList = ({ someDragging, setSuccessMsg, setSomeDragging }) => {
   // 학생 리스트가 아니라 명렬표임!!!
   const [studentList, setSudentList] = useState(undefined)
+  console.log(studentList);
 
   const isPopup = useReactiveVar(isPopupVar)
   const { data, loading } = useQuery(SEE_STUDENT_LIST_QUERY)
@@ -69,22 +71,42 @@ const AllList = ({ someDragging, setSuccessMsg, setSomeDragging }) => {
 
   useEffect(() => {
     if (data) {
-      setSudentList(data.seeStudentList)
+      const initStudentList = []
+      for (let order = 1; order < 15; order++) {
+        const existStudentList = data?.seeStudentList.filter(item => item.listOrder === order)[0]
+        if (existStudentList) {
+          initStudentList.push(existStudentList)
+        } else {
+          initStudentList.push({ listOrder: order })
+        }
+      }
+      setSudentList(initStudentList)
     }
   }, [data])
   return (<Container>
     {studentList && studentList.map((item, index) => {
-      return <ListItem
-        key={index}
-        listName={item?.listName}
-        index={index}
-        listOrder={item?.listOrder}
-        moveStudentList={moveStudentList}
-        listId={item?.listId}
-        someDragging={someDragging}
-        setSuccessMsg={setSuccessMsg}
-        setSomeDragging={setSomeDragging}
-      />
+      if (item?.listId) {
+        return <ListItem
+          key={index}
+          listName={item?.listName}
+          index={index}
+          listOrder={item?.listOrder}
+          moveStudentList={moveStudentList}
+          listId={item?.listId}
+          someDragging={someDragging}
+          setSuccessMsg={setSuccessMsg}
+          setSomeDragging={setSomeDragging}
+        />
+      } else {
+        return <EmptyItem
+          key={index}
+          index={index}
+          moveStudentList={moveStudentList}
+          listOrder={item?.listOrder}
+          studentList={studentList}
+          setSudentList={setSudentList}
+        />
+      }
     })}
     <AddIcon onClick={onClickAddIcon}><FcPlus /></AddIcon>
     {isPopup === "createList" && <PopupCreateList />}
