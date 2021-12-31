@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import ErrMsg from './ErrMsg';
@@ -25,20 +25,25 @@ const NameInput = styled.input`
   }
 `
 
-const CreateManyStudentInput = ({ index, existStudentArray }) => {
+const CreateManyStudentInput = ({ index, existStudentArray, register, setStudentString, studentString }) => {
   // 이름의 중복 에러 메시지 state값
   const [errMsg, setErrMsg] = useState(undefined)
 
   // 학생 성별 state값
   const [gender, setGender] = useState(undefined)
 
-  const { register, handleSubmit } = useForm({
-    mode: "onChange"
-  })
+  // gender값이 바뀔 때 마다 back-end로 전달되는 studentString값을 바꿈
+  useEffect(() => {
+    if (gender) {
+      let newStudentString = [...studentString]
+      newStudentString[index] = { name: undefined, gender }
+      setStudentString(newStudentString)
+    }
+  }, [gender])
 
   return (<Layout>
     <NameInput
-      {...register("name", {
+      {...register(`name${index}`, {
         required: true,
         onChange: () => setErrMsg(undefined),
 

@@ -36,14 +36,14 @@ const SubmitInput = styled.input`
   border-radius: 5px;
   border-radius: 0.3125rem;
   cursor: pointer;
+  opacity: ${props => props.disabled ? 0.6 : 1};
+  transition: opacity 0.6s ease;
 `
 
-const CreateOneStudent = ({ createStudent, loading, email }) => {
-  // 이름의 중복 에러 메시지 state값
+const CreateOneStudent = ({ createStudent, loading, email, existStudentArray }) => {
   const [errMsg, setErrMsg] = useState(undefined)
-
   const [gender, setGender] = useState(undefined)
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, formState: { isValid } } = useForm({
     mode: "onChange"
   })
   const onSubmit = (data) => {
@@ -66,7 +66,16 @@ const CreateOneStudent = ({ createStudent, loading, email }) => {
     <NameInput
       {...register("name", {
         required: true,
-        onChange: () => setErrMsg(undefined)
+        onChange: () => setErrMsg(undefined),
+        validate: (name) => {
+          const isExistName = existStudentArray.includes(name)
+          if (isExistName) {
+            setErrMsg(`${name}의 이름이 이미 존재합니다.`)
+            return false
+          } else {
+            return true
+          }
+        }
       })}
       type="text"
       autoComplete="off"
@@ -80,6 +89,7 @@ const CreateOneStudent = ({ createStudent, loading, email }) => {
     <SubmitInput
       type="submit"
       value="생성"
+      disabled={!isValid}
     />
     {errMsg && <ErrMsg errMsg={errMsg} />}
   </Form>);

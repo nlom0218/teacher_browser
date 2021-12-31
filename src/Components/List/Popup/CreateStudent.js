@@ -74,6 +74,7 @@ const CreateStudent = ({ existStudentArray }) => {
     </CreationType>
     {creationType === "one" &&
       <CreateOneStudent
+        existStudentArray={existStudentArray}
         createStudent={createStudent}
         loading={loading}
         email={me?.email}

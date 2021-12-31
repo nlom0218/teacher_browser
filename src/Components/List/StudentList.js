@@ -81,7 +81,7 @@ const StudentList = ({ setSomeDragging }) => {
   // 학생 생성을 위한 팝업창
   const onClickAddBtn = () => inPopup("createStudent")
 
-  // 학생 정보가 불러와지면 studentArray 값 생성
+  // 학생 정보가 불러와지면 existStudentArray 값 생성
   useEffect(() => {
     if (data) {
       const newExistStudentArray = data?.seeAllStudent.map((item) => item.studentName)

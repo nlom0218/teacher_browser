@@ -76,6 +76,10 @@ const CreateManyStudent = ({ existStudentArray, createStudent, loading, email })
       <CreateManyStudentFrom
         existStudentArray={existStudentArray}
         studentString={studentString}
+        setStudentString={setStudentString}
+        createStudent={createStudent}
+        loading={loading}
+        email={email}
       />
     }
   </Container>);
