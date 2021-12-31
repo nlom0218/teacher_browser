@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import { customMedia } from '../../../styles';
 import ErrMsg from './ErrMsg';
 import GenderBtnContainer from "./GenderBtnContainer"
 
 
 const Form = styled.form`
   display: grid;
-  grid-template-columns: auto 1fr;
   row-gap: 20px;
   row-gap: 1.25rem;
   padding-bottom: 10px;
   padding-bottom: 0.625rem;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: auto 1fr;
+  `}
 `
 
 const NameInput = styled.input`
@@ -28,7 +31,7 @@ const NameInput = styled.input`
 `
 
 const SubmitInput = styled.input`
-  justify-self: flex-end;
+  text-align: center;
   padding: 10px 40px;
   padding: 0.625rem 2.5rem;
   background-color: ${props => props.theme.btnBgColor};
@@ -38,6 +41,9 @@ const SubmitInput = styled.input`
   cursor: pointer;
   opacity: ${props => props.disabled ? 0.6 : 1};
   transition: opacity 0.6s ease;
+  ${customMedia.greaterThan("tablet")`
+    justify-self: flex-end;
+  `}
 `
 
 const CreateOneStudent = ({ createStudent, loading, email, existStudentArray }) => {
@@ -79,7 +85,7 @@ const CreateOneStudent = ({ createStudent, loading, email, existStudentArray }) 
       })}
       type="text"
       autoComplete="off"
-      placeholder="학생 이름을 입력해주세요."
+      placeholder="학생 이름을 입력해 주세요."
     />
     <GenderBtnContainer
       gender={gender}

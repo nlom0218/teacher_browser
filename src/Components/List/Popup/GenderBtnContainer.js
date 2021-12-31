@@ -1,6 +1,7 @@
 import React from 'react';
 import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
 import styled from 'styled-components';
+import { customMedia } from '../../../styles';
 
 const SGengerBtnContainer = styled.div`
   display: grid;
@@ -16,9 +17,19 @@ const SGengerBtnContainer = styled.div`
 
 const GengerBtn = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-items: center;
+  grid-template-columns: auto 1fr;
+  column-gap: 10px;
+  column-gap: 0.625rem;
   align-items: center;
+  justify-items: flex-start;
+  .gender_icon {
+    display: flex;
+  }
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    column-gap: 0;
+  `}
 `
 
 const GenderBtnContainer = ({ gender, setGender, setErrMsg }) => {

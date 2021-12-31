@@ -8,6 +8,7 @@ import useMe from '../../../Hooks/useMe';
 import { outPopup } from '../../../apollo';
 import { SEE_ALL_STUDENT_QUERY } from '../StudentList';
 import PopupContainer from '../../Shared/PopupContainer';
+import { customMedia } from '../../../styles';
 
 // createStudent로 복수, 단일 학생 생성하기로 mutation로 바꾸기, 이때 복수일때와 단일일때 전달하는 값을 다르게 한다.
 // ex) type = "복수" / type="단일"
@@ -22,10 +23,11 @@ const CREATE_STUDENT_MUTATION = gql`
 
 const CreationType = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
   text-align: center;
   column-gap: 20px;
   column-gap: 1.25rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
   padding: 10px 0px;
   padding: 0.625rem 0px;
   .creationTypeBtn {
@@ -39,6 +41,9 @@ const CreationType = styled.div`
       transition: background-color 0.6s ease, color 0.6s ease;
     }
   }
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: 1fr 1fr;
+  `}
 `
 
 const OneTypeBtn = styled.div`

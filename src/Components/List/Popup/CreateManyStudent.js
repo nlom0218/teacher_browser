@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import { customMedia } from '../../../styles';
 import CreateManyStudentFrom from './CreateManyStudentFrom';
 
 const Container = styled.div`
@@ -10,9 +11,10 @@ const Container = styled.div`
 
 const NumForm = styled.form`
   display: grid;
-  grid-template-columns: 1fr auto;
   column-gap: 40px;
   column-gap: 2.5rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
   .student_num_input {
     padding: 12px 20px;
     padding: 0.75rem 1.25rem;
@@ -25,6 +27,7 @@ const NumForm = styled.form`
     }
   }
   .student_submit_input {
+    text-align: center;
     padding: 12px 20px;
     padding: 0.75rem 1.25rem;
     background-color: ${props => props.theme.btnBgColor};
@@ -33,13 +36,16 @@ const NumForm = styled.form`
     border-radius: 0.3125rem;
     cursor: pointer;
   }
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: 1fr auto;
+  `}
 `
 
 const CreateManyStudent = ({ existStudentArray, createStudent, loading, email }) => {
   // back-end로 전달되는 학생들의 이름, 성별 정보가 담겨진 배열 => back-end로는 문자열로 변환하여 전달
   const [studentString, setStudentString] = useState([])
 
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, formState: { isValid } } = useForm({
     mode: "onChange"
   })
 
@@ -58,7 +64,7 @@ const CreateManyStudent = ({ existStudentArray, createStudent, loading, email })
       <NumForm onSubmit={handleSubmit(onSubmit)}>
         <input
           {...register("num", {
-            required: true
+            required: true,
           })}
           className="student_num_input"
           type="number"

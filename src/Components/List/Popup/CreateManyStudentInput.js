@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import { customMedia } from '../../../styles';
 import ErrMsg from './ErrMsg';
 import GenderBtnContainer from './GenderBtnContainer';
 
 const Layout = styled.div`
   display: grid;
-  grid-template-columns: 1fr auto;
   row-gap: 10px;
   row-gap: 0.625rem;
   column-gap: 40px;
   column-gap: 2.5rem;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: 1fr auto;
+  `}
 `
 
 const NameInput = styled.input`
