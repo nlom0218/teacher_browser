@@ -1,11 +1,12 @@
 import { useQuery, useReactiveVar } from '@apollo/client';
 import gql from 'graphql-tag';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FadeIn } from '../../Animations/Fade';
 import { inPopup, isPopupVar } from '../../apollo';
 import SetEmoji from './Popup/SetEmoji';
 import StudentInList from './StudentInList';
+
 
 export const SEE_ONE_STUDENT_LIST_QUERY = gql`
   query SeeStudentList($listId: ID) {
@@ -13,6 +14,8 @@ export const SEE_ONE_STUDENT_LIST_QUERY = gql`
       listId
       listOrder
       listName
+      listIcon
+      teacherEmail
       students {
         _id
         studentName
@@ -109,8 +112,14 @@ const DetailList = ({ listId }) => {
 
   const onMouseEnterName = () => setSeeEmojilBtn(true)
   const onMouseLeaveName = () => setSeeEmojilBtn(false)
+
+  useEffect(() => {
+    if (data) {
+      const listIcon = JSON.parse(data?.seeStudentList[0].listIcon)
+      setChosenEmoji(listIcon)
+    }
+  }, [data])
   return (<Container>
-    {isPopup === "emoji" && <SetEmoji setChosenEmoji={setChosenEmoji} />}
     <NameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName}>
       {chosenEmoji && <ListEomji onClick={onClickEmojiBtn}>{chosenEmoji.emoji}</ListEomji>}
       <ListName>{data?.seeStudentList[0].listName}</ListName>
@@ -121,6 +130,12 @@ const DetailList = ({ listId }) => {
       }
     </NameContainer>
     {data?.seeStudentList[0]?.students && <StudentInList students={data?.seeStudentList[0]?.students} />}
+    {isPopup === "emoji" &&
+      <SetEmoji
+        setChosenEmoji={setChosenEmoji}
+        teacherEmail={data?.seeStudentList[0].teacherEmail}
+        listId={data?.seeStudentList[0].listId}
+      />}
   </Container>);
 }
 

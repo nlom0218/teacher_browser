@@ -3,11 +3,41 @@ import PopupContainer from '../../Shared/PopupContainer';
 import Picker from 'emoji-picker-react';
 import styled from 'styled-components';
 import { outPopup } from '../../../apollo';
+import gql from 'graphql-tag';
+import { useMutation } from '@apollo/client';
+import { SEE_ONE_STUDENT_LIST_QUERY } from '../DetailList';
+import { SEE_ALL_STUDENT_LIST_QUERY } from '../AllList';
 
-const SetEmoji = ({ setChosenEmoji }) => {
+const EDIT_STUDENT_LIST_ICON = gql`
+  mutation Mutation($teacherEmail: String!, $listId: ID!, $listIcon: String) {
+    editStudentList(teacherEmail: $teacherEmail, listId: $listId, listIcon: $listIcon) {
+      ok
+    }
+  }
+`
+
+const SetEmoji = ({ setChosenEmoji, teacherEmail, listId }) => {
+  console.log(teacherEmail);
+  const [editStudentList, { loading }] = useMutation(EDIT_STUDENT_LIST_ICON, {
+    refetchQueries: [
+      { query: SEE_ONE_STUDENT_LIST_QUERY, variables: { listId } },
+      { query: SEE_ALL_STUDENT_LIST_QUERY }
+    ]
+  })
   const onEmojiClick = (e, emojiObject) => {
     setChosenEmoji(emojiObject)
     outPopup()
+    if (loading) {
+      return
+    } else {
+      editStudentList({
+        variables: {
+          teacherEmail,
+          listId,
+          listIcon: JSON.stringify(emojiObject)
+        }
+      })
+    }
   }
   return (<PopupContainer emojiPopup={true}>
     <Picker

@@ -30,10 +30,8 @@ const Container = styled.div`
 `
 
 const ListIcon = styled.div`
-  svg {
     font-size: 2.5em;
     font-size: 2.5rem;
-  }
 `
 
 const ListName = styled.div`
@@ -44,7 +42,7 @@ const ListName = styled.div`
   text-align: center;
 `
 
-const ListItem = ({ listName, listOrder, index, listId, someDragging, setSuccessMsg, setSomeDragging }) => {
+const ListItem = ({ listName, listOrder, index, listId, someDragging, setSuccessMsg, setSomeDragging, listIcon }) => {
   // 리스트 아이콘위에 마우스를 올려두면 아이콘을 바꾸기 위한 값
   const [mouseEnter, setMouseEnter] = useState(false)
 
@@ -93,7 +91,10 @@ const ListItem = ({ listName, listOrder, index, listId, someDragging, setSuccess
         className="list-dndContainer">
         <Container onMouseEnter={onMouseEnterList} onMouseLeave={onMouseLeaveList} ref={drag}>
           <Link to={`${routes.list}/detail/${listId}`}>
-            <ListIcon>{mouseEnter ? <FcOpenedFolder /> : <FcFolder />}</ListIcon>
+            {listIcon ?
+              <ListIcon>{listIcon.emoji}</ListIcon>
+              :
+              <ListIcon>{mouseEnter ? <FcOpenedFolder /> : <FcFolder />}</ListIcon>}
             <ListName>{listName}</ListName>
           </Link>
         </Container>

@@ -23,7 +23,6 @@ const EmptyItem = ({ moveStudentList, index, listOrder, studentList, setSudentLi
     // drop을 하게 되면 아래의 로직이 실행된다.
     drop: (item) => {
       const { listOrder: draggedOrder, index: draggedIndex, listId } = item
-      console.log(listId, listOrder);
 
       // 기존 studentList에서 변경되는 리스트의 인덱스
       const fromIndex = studentList.findIndex(item => item.listOrder === draggedOrder)

@@ -87,7 +87,7 @@ const FnBtn = styled.div`
 
 const StudentInItem = ({ item }) => {
   const media = useMedia();
-  console.log(media);
+
   const [hoverContainer, setHoverContainer] = useState(false)
 
   const onMouseEnter = () => {
