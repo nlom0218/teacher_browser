@@ -214,7 +214,7 @@ const DetailList = ({ listId }) => {
     ]
   })
 
-  const { register, setValue, handleSubmit, setFocus } = useForm({
+  const { register, setValue, handleSubmit, setFocus, getValues } = useForm({
     mode: "onChange",
   })
 
@@ -262,6 +262,14 @@ const DetailList = ({ listId }) => {
     })
   }
 
+  // form 영역 밖을 클릭 했을 때도 listName이 바뀌게 설정
+  const onBlurName = () => {
+    console.log("ddd");
+    const name = getValues("name")
+    onSubmit({ name })
+  }
+
+
   // 데이터 정보가 불러온 뒤 아이콘과 이름 값 세팅하기
   useEffect(() => {
     if (data) {
@@ -273,9 +281,9 @@ const DetailList = ({ listId }) => {
   }, [data])
 
   return (<Container>
-    <NameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName}>
+    <NameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName} >
       {chosenEmoji ? <ListEomji onClick={onClickEmojiBtn}>{chosenEmoji}</ListEomji> : <div></div>}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurName}>
         <InputLayOut>
           <ListName
             {...register("name", {
