@@ -1,9 +1,10 @@
-import { useQuery, useReactiveVar } from '@apollo/client';
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import gql from 'graphql-tag';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FadeIn } from '../../Animations/Fade';
 import { inPopup, isPopupVar } from '../../apollo';
+import { SEE_ALL_STUDENT_LIST_QUERY } from './AllList';
 import SetEmoji from './Popup/SetEmoji';
 import StudentInList from './StudentInList';
 
@@ -23,6 +24,14 @@ export const SEE_ONE_STUDENT_LIST_QUERY = gql`
         studentOrder
         listId
       }
+    }
+  }
+`
+
+const EDIT_STUDENT_LIST_ICON = gql`
+  mutation Mutation($teacherEmail: String!, $listId: ID!, $listIcon: String, $listName: String) {
+    editStudentList(teacherEmail: $teacherEmail, listId: $listId, listIcon: $listIcon, listName: $listName) {
+      ok
     }
   }
 `
@@ -101,27 +110,47 @@ const DetailList = ({ listId }) => {
 
   const [chosenEmoji, setChosenEmoji] = useState(null)
 
+  // 리스트으 정보를 불러오는 쿼리
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: {
       listId
     }
   })
 
+  // 리스트 아이콘 수정을 위한
+  const [editStudentList, { loading: editLoading }] = useMutation(EDIT_STUDENT_LIST_ICON, {
+    refetchQueries: [
+      { query: SEE_ONE_STUDENT_LIST_QUERY, variables: { listId } },
+      { query: SEE_ALL_STUDENT_LIST_QUERY }
+    ]
+  })
+
   const onClickEmojiBtn = () => inPopup("emoji")
-  const onClickEmojiDelBtn = () => setChosenEmoji(null)
+  const onClickEmojiDelBtn = () => {
+    setChosenEmoji(null)
+    if (editLoading) {
+      return
+    }
+    editStudentList({
+      variables: {
+        teacherEmail: data?.seeStudentList[0].teacherEmail,
+        listId: data?.seeStudentList[0].listId,
+        listIcon: "delete"
+      }
+    })
+  }
 
   const onMouseEnterName = () => setSeeEmojilBtn(true)
   const onMouseLeaveName = () => setSeeEmojilBtn(false)
 
   useEffect(() => {
     if (data) {
-      const listIcon = JSON.parse(data?.seeStudentList[0].listIcon)
-      setChosenEmoji(listIcon)
+      setChosenEmoji(data?.seeStudentList[0].listIcon)
     }
   }, [data])
   return (<Container>
     <NameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName}>
-      {chosenEmoji && <ListEomji onClick={onClickEmojiBtn}>{chosenEmoji.emoji}</ListEomji>}
+      {chosenEmoji && <ListEomji onClick={onClickEmojiBtn}>{chosenEmoji}</ListEomji>}
       <ListName>{data?.seeStudentList[0].listName}</ListName>
       {seeSetEmojiBtn && (chosenEmoji ?
         <SetEmojiBtn onClick={onClickEmojiDelBtn}>아이콘 삭제</SetEmojiBtn>
@@ -135,6 +164,8 @@ const DetailList = ({ listId }) => {
         setChosenEmoji={setChosenEmoji}
         teacherEmail={data?.seeStudentList[0].teacherEmail}
         listId={data?.seeStudentList[0].listId}
+        editStudentList={editStudentList}
+        loading={editLoading}
       />}
   </Container>);
 }

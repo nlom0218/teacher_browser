@@ -97,7 +97,7 @@ const AllList = ({ someDragging, setSuccessMsg, setSomeDragging }) => {
           index={index}
           listOrder={item?.listOrder}
           listId={item?.listId}
-          listIcon={JSON.parse(item?.listIcon)}
+          listIcon={item?.listIcon}
           someDragging={someDragging}
           setSuccessMsg={setSuccessMsg}
           setSomeDragging={setSomeDragging}

@@ -92,7 +92,7 @@ const ListItem = ({ listName, listOrder, index, listId, someDragging, setSuccess
         <Container onMouseEnter={onMouseEnterList} onMouseLeave={onMouseLeaveList} ref={drag}>
           <Link to={`${routes.list}/detail/${listId}`}>
             {listIcon ?
-              <ListIcon>{listIcon.emoji}</ListIcon>
+              <ListIcon>{listIcon}</ListIcon>
               :
               <ListIcon>{mouseEnter ? <FcOpenedFolder /> : <FcFolder />}</ListIcon>}
             <ListName>{listName}</ListName>

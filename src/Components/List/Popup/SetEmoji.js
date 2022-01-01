@@ -8,24 +8,9 @@ import { useMutation } from '@apollo/client';
 import { SEE_ONE_STUDENT_LIST_QUERY } from '../DetailList';
 import { SEE_ALL_STUDENT_LIST_QUERY } from '../AllList';
 
-const EDIT_STUDENT_LIST_ICON = gql`
-  mutation Mutation($teacherEmail: String!, $listId: ID!, $listIcon: String) {
-    editStudentList(teacherEmail: $teacherEmail, listId: $listId, listIcon: $listIcon) {
-      ok
-    }
-  }
-`
-
-const SetEmoji = ({ setChosenEmoji, teacherEmail, listId }) => {
-  console.log(teacherEmail);
-  const [editStudentList, { loading }] = useMutation(EDIT_STUDENT_LIST_ICON, {
-    refetchQueries: [
-      { query: SEE_ONE_STUDENT_LIST_QUERY, variables: { listId } },
-      { query: SEE_ALL_STUDENT_LIST_QUERY }
-    ]
-  })
+const SetEmoji = ({ setChosenEmoji, teacherEmail, listId, editStudentList, loading }) => {
   const onEmojiClick = (e, emojiObject) => {
-    setChosenEmoji(emojiObject)
+    setChosenEmoji(emojiObject.emoji)
     outPopup()
     if (loading) {
       return
@@ -34,7 +19,7 @@ const SetEmoji = ({ setChosenEmoji, teacherEmail, listId }) => {
         variables: {
           teacherEmail,
           listId,
-          listIcon: JSON.stringify(emojiObject)
+          listIcon: emojiObject.emoji
         }
       })
     }
