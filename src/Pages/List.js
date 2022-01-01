@@ -2,37 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import AllList from '../Components/List/AllList';
+import DetailList from '../Components/List/DetailList';
 import StudentList from '../Components/List/StudentList';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import { color, customMedia } from '../styles';
 
 const Container = styled.div`
   min-height: 100%;
+  max-height: 100%;
   width: 100%;
   display: grid;
   grid-template-columns: 3fr 1fr;
   align-items: flex-start;
-`
-
-const ListContainer = styled.div`
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  row-gap: 60px;
-  row-gap: 3.75rem;
-  column-gap: 30px;
-  column-gap: 1.875rem;
-  align-items: flex-start;
-  justify-items: center;
-  padding: 40px;
-  padding: 2.5rem;
- ${customMedia.greaterThan("tablet")`
-    grid-template-columns: 1fr 1fr 1fr;
-  `}
-  ${customMedia.greaterThan("desktop")`
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  `}
-
+  position: absolute;
 `
 
 const SuccessMsg = styled.div`
@@ -79,6 +61,7 @@ const List = () => {
     <Container>
       {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
       {type === "student" && "학생 상세 정보 보기 및 수정"}
+      {type === "detail" && <DetailList />}
       <StudentList setSomeDragging={setSomeDragging} />
     </Container>
     {successMsg && <SuccessMsg>{successMsg}</SuccessMsg>}

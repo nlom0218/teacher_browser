@@ -5,6 +5,8 @@ import { useDrag } from "react-dnd"
 import CenterDndContainer from "./Dorp/CenterDndContainer"
 import LeftDndContainer from './Dorp/LeftDndContainer';
 import RightDndContainer from './Dorp/RightDndContainer';
+import { Link } from 'react-router-dom';
+import routes from '../../routes';
 
 const DndContainer = styled.div`
   display: grid;
@@ -17,12 +19,14 @@ const DndContainer = styled.div`
 `
 
 const Container = styled.div`
-  cursor: pointer;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  justify-items: center;
-  row-gap: 10px;
-  row-gap: 0.625rem;
+  a {
+    cursor: pointer;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    justify-items: center;
+    row-gap: 10px;
+    row-gap: 0.625rem;
+  }
 `
 
 const ListIcon = styled.div`
@@ -88,8 +92,10 @@ const ListItem = ({ listName, listOrder, index, listId, someDragging, setSuccess
         // style={{ opacity: isDragging ? 0.6 : 1 }}
         className="list-dndContainer">
         <Container onMouseEnter={onMouseEnterList} onMouseLeave={onMouseLeaveList} ref={drag}>
-          <ListIcon>{mouseEnter ? <FcOpenedFolder /> : <FcFolder />}</ListIcon>
-          <ListName>{listName}</ListName>
+          <Link to={`${routes.list}/detail/${listId}`}>
+            <ListIcon>{mouseEnter ? <FcOpenedFolder /> : <FcFolder />}</ListIcon>
+            <ListName>{listName}</ListName>
+          </Link>
         </Container>
       </div>
       {/* 리스트를 옮길 때 다른 리스트의 왼쪽으로 옮기면 앞으로 이동하기 */}

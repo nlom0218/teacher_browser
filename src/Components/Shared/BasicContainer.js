@@ -19,14 +19,14 @@ const ContentLayout = styled.div`
   max-width: 1200px;
   max-width: 75rem;
   width: 90%;
-  overflow: scroll;
-  background: ${props => props.theme.blurColor};
-  transition: background 1s ease;
-  -ms-overflow-style: none; // IE and Edge
-  scrollbar-width: none; // Firefox
   border-radius: 10px;
   border-radius: 0.625rem;
+  background: ${props => props.theme.blurColor};
+  transition: background 1s ease;
   position: relative;
+  overflow: scroll;
+  -ms-overflow-style: none; // IE and Edge
+  scrollbar-width: none; // Firefox
   ::-webkit-scrollbar {
     display: none; // Chrome, Safari, Opera
   }

@@ -95,6 +95,7 @@ const StudentList = ({ setSomeDragging }) => {
         :
         data?.seeAllStudent?.map((item, index) => {
           return <StudentItem key={index} item={item} setSomeDragging={setSomeDragging} />
+
         })}
     </SStudentList>
     <AddStudentBtn onClick={onClickAddBtn}>학생 생성하기</AddStudentBtn>

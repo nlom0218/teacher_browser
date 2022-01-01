@@ -19,23 +19,28 @@ export const SEE_STUDENT_LIST_QUERY = gql`
 `
 
 const Container = styled.div`
+  height: 100%;
+  min-height: 100%;
   position: absolute;
   top: 0;
   left: 0;
   width: 75%;
+  padding: 40px;
+  padding: 2.5rem;
+`
+
+const Layout = styled.div`
+  max-height: 100%;
+  min-height: 100%;
   overflow: scroll;
   -ms-overflow-style: none; // IE and Edge
   scrollbar-width: none; // Firefox
   ::-webkit-scrollbar {
     display: none; // Chrome, Safari, Opera
   }
-  height: 100%;
-  max-height: 100%;
-  padding: 40px;
-  padding: 2.5rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr; 
+  grid-template-rows: repeat(4, minmax(120px, 1fr)); 
   row-gap: 40px;
   row-gap: 2.5rem;
   column-gap: 40px;
@@ -84,31 +89,33 @@ const AllList = ({ someDragging, setSuccessMsg, setSomeDragging }) => {
     }
   }, [data])
   return (<Container>
-    {studentList && studentList.map((item, index) => {
-      if (item?.listId) {
-        return <ListItem
-          key={index}
-          listName={item?.listName}
-          index={index}
-          listOrder={item?.listOrder}
-          listId={item?.listId}
-          someDragging={someDragging}
-          setSuccessMsg={setSuccessMsg}
-          setSomeDragging={setSomeDragging}
-        />
-      } else {
-        return <EmptyItem
-          key={index}
-          index={index}
-          listOrder={item?.listOrder}
-          studentList={studentList}
-          setSudentList={setSudentList}
-        />
-      }
-    })}
-    <AddIcon onClick={onClickAddIcon}><FcPlus /></AddIcon>
-    <DelIcon><FcEmptyTrash /></DelIcon>
-    {isPopup === "createList" && <PopupCreateList />}
+    <Layout>
+      {studentList && studentList.map((item, index) => {
+        if (item?.listId) {
+          return <ListItem
+            key={index}
+            listName={item?.listName}
+            index={index}
+            listOrder={item?.listOrder}
+            listId={item?.listId}
+            someDragging={someDragging}
+            setSuccessMsg={setSuccessMsg}
+            setSomeDragging={setSomeDragging}
+          />
+        } else {
+          return <EmptyItem
+            key={index}
+            index={index}
+            listOrder={item?.listOrder}
+            studentList={studentList}
+            setSudentList={setSudentList}
+          />
+        }
+      })}
+      <AddIcon onClick={onClickAddIcon}><FcPlus /></AddIcon>
+      <DelIcon><FcEmptyTrash /></DelIcon>
+      {isPopup === "createList" && <PopupCreateList />}
+    </Layout>
   </Container>);
 }
 
