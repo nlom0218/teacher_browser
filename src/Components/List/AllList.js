@@ -1,14 +1,14 @@
 import { useQuery, useReactiveVar } from '@apollo/client';
 import gql from 'graphql-tag';
 import React, { useEffect, useState } from 'react';
-import { FcEmptyTrash, FcPlus } from 'react-icons/fc';
+import { FcEmptyTrash, FcFullTrash, FcPlus } from 'react-icons/fc';
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../../apollo';
 import EmptyItem from './Dorp/EmptyItem';
 import ListItem from './ListItem';
 import PopupCreateList from './Popup/CreateList';
 
-export const SEE_STUDENT_LIST_QUERY = gql`
+export const SEE_ALL_STUDENT_LIST_QUERY = gql`
   query SeeStudentList {
     seeStudentList {
       listId
@@ -19,17 +19,6 @@ export const SEE_STUDENT_LIST_QUERY = gql`
 `
 
 const Container = styled.div`
-  height: 100%;
-  min-height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 75%;
-  padding: 40px;
-  padding: 2.5rem;
-`
-
-const Layout = styled.div`
   max-height: 100%;
   min-height: 100%;
   overflow: scroll;
@@ -71,7 +60,7 @@ const AllList = ({ someDragging, setSuccessMsg, setSomeDragging }) => {
   const [studentList, setSudentList] = useState(undefined)
 
   const isPopup = useReactiveVar(isPopupVar)
-  const { data, loading } = useQuery(SEE_STUDENT_LIST_QUERY)
+  const { data, loading } = useQuery(SEE_ALL_STUDENT_LIST_QUERY)
   const onClickAddIcon = () => inPopup("createList")
 
   useEffect(() => {
@@ -89,33 +78,32 @@ const AllList = ({ someDragging, setSuccessMsg, setSomeDragging }) => {
     }
   }, [data])
   return (<Container>
-    <Layout>
-      {studentList && studentList.map((item, index) => {
-        if (item?.listId) {
-          return <ListItem
-            key={index}
-            listName={item?.listName}
-            index={index}
-            listOrder={item?.listOrder}
-            listId={item?.listId}
-            someDragging={someDragging}
-            setSuccessMsg={setSuccessMsg}
-            setSomeDragging={setSomeDragging}
-          />
-        } else {
-          return <EmptyItem
-            key={index}
-            index={index}
-            listOrder={item?.listOrder}
-            studentList={studentList}
-            setSudentList={setSudentList}
-          />
-        }
-      })}
-      <AddIcon onClick={onClickAddIcon}><FcPlus /></AddIcon>
-      <DelIcon><FcEmptyTrash /></DelIcon>
-      {isPopup === "createList" && <PopupCreateList />}
-    </Layout>
+    {studentList && studentList.map((item, index) => {
+      if (item?.listId) {
+        return <ListItem
+          key={index}
+          listName={item?.listName}
+          index={index}
+          listOrder={item?.listOrder}
+          listId={item?.listId}
+          someDragging={someDragging}
+          setSuccessMsg={setSuccessMsg}
+          setSomeDragging={setSomeDragging}
+        />
+      } else {
+        return <EmptyItem
+          key={index}
+          index={index}
+          listOrder={item?.listOrder}
+          studentList={studentList}
+          setSudentList={setSudentList}
+        />
+      }
+    })}
+    <AddIcon onClick={onClickAddIcon}><FcPlus /></AddIcon>
+    <DelIcon><FcFullTrash /></DelIcon>
+    {isPopup === "createList" && <PopupCreateList />}
+
   </Container>);
 }
 

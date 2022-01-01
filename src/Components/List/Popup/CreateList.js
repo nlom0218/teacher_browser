@@ -7,7 +7,7 @@ import { outPopup } from '../../../apollo';
 import useMe from '../../../Hooks/useMe';
 import { customMedia } from '../../../styles';
 import PopupContainer from '../../Shared/PopupContainer';
-import { SEE_STUDENT_LIST_QUERY } from '../AllList';
+import { SEE_ALL_STUDENT_LIST_QUERY } from '../AllList';
 
 const CREATE_STUDENT_LIST_MUTATION = gql`
   mutation CreateStudentList($teacherEmail: String!, $listName: String!) {
@@ -71,7 +71,7 @@ const CreateList = () => {
   }
   const [createStudentList, { loading }] = useMutation(CREATE_STUDENT_LIST_MUTATION, {
     onCompleted,
-    refetchQueries: [{ query: SEE_STUDENT_LIST_QUERY }]
+    refetchQueries: [{ query: SEE_ALL_STUDENT_LIST_QUERY }]
   })
   const onSubmit = (data) => {
     if (loading) {

@@ -14,7 +14,18 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: 3fr 1fr;
   align-items: flex-start;
+  position: relative;
+`
+
+const Layout = styled.div`
+  height: 100%;
+  min-height: 100%;
   position: absolute;
+  top: 0;
+  left: 0;
+  width: 75%;
+  padding: 40px;
+  padding: 2.5rem;
 `
 
 const SuccessMsg = styled.div`
@@ -59,9 +70,11 @@ const List = () => {
   }, [successMsg])
   return (<BasicContainer menuItem={true}>
     <Container>
-      {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
-      {type === "student" && "학생 상세 정보 보기 및 수정"}
-      {type === "detail" && <DetailList />}
+      <Layout>
+        {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
+        {type === "student" && "학생 상세 정보 보기 및 수정"}
+        {type === "detail" && <DetailList listId={id} />}
+      </Layout>
       <StudentList setSomeDragging={setSomeDragging} />
     </Container>
     {successMsg && <SuccessMsg>{successMsg}</SuccessMsg>}
