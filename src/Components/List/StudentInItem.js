@@ -78,6 +78,7 @@ const FnBtn = styled.div`
     padding: 0.3125rem;
     border-radius: 50%;
     border: 1px solid ${props => props.theme.fontColor};
+    transition: border 1s ease;
     cursor: pointer;
     ${customMedia.greaterThan("desktop")`
       border: 1px solid ${props => props.theme.bgColor};
