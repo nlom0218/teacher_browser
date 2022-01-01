@@ -12,6 +12,7 @@ import PopupCreateList from './Popup/CreateList';
 export const SEE_ALL_STUDENT_LIST_QUERY = gql`
   query SeeStudentList {
     seeStudentList {
+      teacherEmail
       listId
       listOrder
       listName
@@ -106,6 +107,7 @@ const AllList = ({ someDragging, setSuccessMsg, setSomeDragging }) => {
           listOrder={item?.listOrder}
           studentList={studentList}
           setSudentList={setSudentList}
+          teacherEmail={studentList[0]?.teacherEmail}
         />
       }
     })}

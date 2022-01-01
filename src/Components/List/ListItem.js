@@ -60,7 +60,7 @@ const ListItem = ({ listName, listOrder, index, listId, someDragging, setSuccess
     type: "LIST",
 
     // drag를 통해 전달할 내용들
-    item: { listOrder, index },
+    item: { listOrder, index, listId },
 
     // 현재 드래그를 하고 있는지 안하고 있는지 확인하기 위한 것....(블로그 참고)
     // useDrag의 첫 번째 인자의 객체에 속해 있는 isDragging으로 알 수 있다.

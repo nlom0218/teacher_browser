@@ -1,7 +1,20 @@
+import { useMutation } from '@apollo/client';
+import gql from 'graphql-tag';
 import React from 'react';
 import { useDrop } from "react-dnd"
+import useMe from '../../../Hooks/useMe';
 
-const EmptyItem = ({ moveStudentList, index, listOrder, studentList, setSudentList }) => {
+const EDIT_STUDENT_LIST_ORDER = gql`
+  mutation Mutation($teacherEmail: String!, $listId: ID!, $listOrder: Int) {
+    editStudentList(teacherEmail: $teacherEmail, listId: $listId, listOrder: $listOrder) {
+      ok
+      error
+    }
+  }
+`
+
+const EmptyItem = ({ moveStudentList, index, listOrder, studentList, setSudentList, teacherEmail }) => {
+  const [editStudentList, { loading }] = useMutation(EDIT_STUDENT_LIST_ORDER)
 
   // 학생을 리스트에 추가하기 위한 drop
   const [_, drop] = useDrop({
@@ -9,7 +22,8 @@ const EmptyItem = ({ moveStudentList, index, listOrder, studentList, setSudentLi
 
     // drop을 하게 되면 아래의 로직이 실행된다.
     drop: (item) => {
-      const { listOrder: draggedOrder, index: draggedIndex } = item
+      const { listOrder: draggedOrder, index: draggedIndex, listId } = item
+      console.log(listId, listOrder);
 
       // 기존 studentList에서 변경되는 리스트의 인덱스
       const fromIndex = studentList.findIndex(item => item.listOrder === draggedOrder)
@@ -21,6 +35,13 @@ const EmptyItem = ({ moveStudentList, index, listOrder, studentList, setSudentLi
       newStudentList.splice(fromIndex, 1, { listOrder: draggedOrder })
       newStudentList.splice(toIndex, 1, { ...studentList[fromIndex], listOrder })
       setSudentList(newStudentList)
+      editStudentList({
+        variables: {
+          teacherEmail,
+          listId,
+          listOrder
+        }
+      })
     },
 
     hover: (item) => {
