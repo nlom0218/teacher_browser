@@ -7,7 +7,7 @@ import { inPopup, isPopupVar } from '../../apollo';
 import SetEmoji from './Popup/SetEmoji';
 import StudentInList from './StudentInList';
 
-const SEE_ONE_STUDENT_LIST_QUERY = gql`
+export const SEE_ONE_STUDENT_LIST_QUERY = gql`
   query SeeStudentList($listId: ID) {
     seeStudentList(listId: $listId) {
       listId

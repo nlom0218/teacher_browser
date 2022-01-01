@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import { useDrop } from "react-dnd"
 import { useMutation } from '@apollo/client';
 import useMe from '../../../Hooks/useMe';
+import { SEE_ONE_STUDENT_LIST_QUERY } from "../DetailList"
 
 const ADD_STUDENT_MUTATION = gql`
   mutation AddStudent($teacherEmail: String!, $studentId: ID!, $listId: ID!) {
@@ -32,7 +33,13 @@ const CenterDndContainer = ({ someDragging, setSuccessMsg, listName, listId, set
     }
   }
   const [addStudent, { loading }] = useMutation(ADD_STUDENT_MUTATION, {
-    onCompleted
+    onCompleted,
+    refetchQueries: [{
+      query: SEE_ONE_STUDENT_LIST_QUERY,
+      variables: {
+        listId
+      }
+    }]
   })
 
   // 학생을 리스트에 추가하기 위한 drop
