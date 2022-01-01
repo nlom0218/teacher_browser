@@ -81,7 +81,7 @@ const EditAccount = () => {
           </Item>
         </Changes>
       </Container>
-      {isPopup && (
+      {isPopup === "registerSchool" && (
         <RegisterSchool />
       )}
     </BasicContainer>

@@ -31,7 +31,7 @@ export const ligthTheme = {
   hoverColor: "#d6d6d6",
   cardBg: "rgba(247,247,247,0.8)",
   cardHoverBg: "rgba(10,10,10,0.9)",
-  cardBorder: "rgba(200,200,200,1)"
+  cardBorder: "rgba(160,160,160,1)"
 }
 export const darkTheme = {
   fontColor: color.white,

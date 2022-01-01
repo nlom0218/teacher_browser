@@ -30,7 +30,7 @@ const SchoolAdress = styled.div`
 
 const EditSchool = ({ userEmail, schoolName, schoolAdress }) => {
   const onClickRegisterBtn = () => {
-    inPopup()
+    inPopup("registerSchool")
   }
   const [deleteSchoolInfo, { loading }] = useMutation(DELETE_SCHOOL_INFO_MUTATION, {
     refetchQueries: [{ query: ME_QUERY }]
