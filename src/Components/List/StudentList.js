@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../../apollo';
-import { color } from '../../styles';
+import { color, customMedia } from '../../styles';
 import CreateStudent from './Popup/CreateStudent';
 import StudentItem from './StudentItem';
 
@@ -19,23 +19,25 @@ export const SEE_ALL_STUDENT_QUERY = gql`
 `
 
 const StudentContainer = styled.div`
-  position: absolute;
-  right: 1%;
-  top: 2%;
-  width: 24%;
-  height: 96%;
-  min-height: 96%;
-  padding: 20px;
-  padding: 1.25rem;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  row-gap: 30px;
-  row-gap: 1.875rem;
-  background-color: ${props => props.theme.bgColor};
-  transition: background-color 1s ease;
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  box-shadow: ${color.boxShadow};
+  ${customMedia.greaterThan("desktop")`
+    position: absolute;
+    right: 1%;
+    top: 2%;
+    width: 24%;
+    height: 96%;
+    min-height: 96%;
+    padding: 20px;
+    padding: 1.25rem;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    row-gap: 30px;
+    row-gap: 1.875rem;
+    background-color: ${props => props.theme.bgColor};
+    transition: background-color 1s ease;
+    border-radius: 5px;
+    border-radius: 0.3125rem;
+    box-shadow: ${color.boxShadow};
+  `}
 `
 
 const SStudentList = styled.div`

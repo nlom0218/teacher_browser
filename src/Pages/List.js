@@ -5,6 +5,7 @@ import AllList from '../Components/List/AllList';
 import DetailList from '../Components/List/DetailList';
 import StudentList from '../Components/List/StudentList';
 import BasicContainer from '../Components/Shared/BasicContainer';
+import useMedia from '../Hooks/useMedia';
 import { color, customMedia } from '../styles';
 
 const Container = styled.div`
@@ -12,20 +13,26 @@ const Container = styled.div`
   max-height: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: 3fr 1fr;
   align-items: flex-start;
   position: relative;
+  ${customMedia.greaterThan("desktop")`
+    grid-template-columns: 3fr 1fr;
+  `}
 `
 
 const Layout = styled.div`
   height: 100%;
   min-height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 75%;
-  padding: 40px;
-  padding: 2.5rem;
+  padding: 20px;
+  padding: 1.25rem;
+  ${customMedia.greaterThan("desktop")`
+    padding: 40px;
+    padding: 2.5rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 75%;
+  `}
 `
 
 const SuccessMsg = styled.div`
@@ -44,6 +51,8 @@ const SuccessMsg = styled.div`
 `
 
 const List = () => {
+  const media = useMedia()
+
   // 드래그 중일 때와 아닐 때를 나타내기 위한 값
   const [someDragging, setSomeDragging] = useState(false)
 
@@ -75,7 +84,7 @@ const List = () => {
         {type === "student" && "학생 상세 정보 보기 및 수정"}
         {type === "detail" && <DetailList listId={id} />}
       </Layout>
-      <StudentList setSomeDragging={setSomeDragging} />
+      {media === "Desktop" && <StudentList setSomeDragging={setSomeDragging} />}
     </Container>
     {successMsg && <SuccessMsg>{successMsg}</SuccessMsg>}
   </BasicContainer>);

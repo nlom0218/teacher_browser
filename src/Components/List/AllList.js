@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { FcEmptyTrash, FcFullTrash, FcPlus } from 'react-icons/fc';
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../../apollo';
+import { customMedia } from '../../styles';
 import EmptyItem from './Dorp/EmptyItem';
 import ListItem from './ListItem';
 import PopupCreateList from './Popup/CreateList';
@@ -21,19 +22,27 @@ export const SEE_ALL_STUDENT_LIST_QUERY = gql`
 const Container = styled.div`
   max-height: 100%;
   min-height: 100%;
-  overflow: scroll;
-  -ms-overflow-style: none; // IE and Edge
-  scrollbar-width: none; // Firefox
-  ::-webkit-scrollbar {
-    display: none; // Chrome, Safari, Opera
-  }
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(4, minmax(120px, 1fr)); 
   row-gap: 40px;
   row-gap: 2.5rem;
   column-gap: 40px;
   column-gap: 2.5rem;
+  padding: 20px;
+  padding: 1.25rem;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    `}
+  ${customMedia.greaterThan("desktop")`
+    padding: 0px;
+    overflow: scroll;
+    -ms-overflow-style: none; // IE and Edge
+    scrollbar-width: none; // Firefox
+    ::-webkit-scrollbar {
+      display: none; // Chrome, Safari, Opera
+    }
+  `}
 `
 
 const AddIcon = styled.div`
