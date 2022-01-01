@@ -1,7 +1,7 @@
 import { useQuery, useReactiveVar } from '@apollo/client';
 import gql from 'graphql-tag';
 import React, { useEffect, useState } from 'react';
-import { FcEmptyTrash, FcFullTrash, FcPlus } from 'react-icons/fc';
+import { FcFullTrash, FcPlus } from 'react-icons/fc';
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../../apollo';
 import { customMedia } from '../../styles';
@@ -69,11 +69,13 @@ const DelIcon = styled.div`
 const AllList = ({ someDragging, setSuccessMsg, setSomeDragging }) => {
   // 학생 리스트가 아니라 명렬표임!!!
   const [studentList, setSudentList] = useState(undefined)
+  console.log(studentList);
 
   const isPopup = useReactiveVar(isPopupVar)
   const { data, loading } = useQuery(SEE_ALL_STUDENT_LIST_QUERY)
   const onClickAddIcon = () => inPopup("createList")
 
+  console.log(data);
   useEffect(() => {
     if (data) {
       const initStudentList = []
@@ -109,7 +111,6 @@ const AllList = ({ someDragging, setSuccessMsg, setSomeDragging }) => {
           listOrder={item?.listOrder}
           studentList={studentList}
           setSudentList={setSudentList}
-          teacherEmail={studentList[0]?.teacherEmail}
         />
       }
     })}

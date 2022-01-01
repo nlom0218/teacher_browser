@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 import React from 'react';
 import { useDrop } from "react-dnd"
 import useMe from '../../../Hooks/useMe';
+import { SEE_ALL_STUDENT_LIST_QUERY } from '../AllList';
 
 const EDIT_STUDENT_LIST_ORDER = gql`
   mutation Mutation($teacherEmail: String!, $listId: ID!, $listOrder: Int) {
@@ -13,8 +14,11 @@ const EDIT_STUDENT_LIST_ORDER = gql`
   }
 `
 
-const EmptyItem = ({ moveStudentList, index, listOrder, studentList, setSudentList, teacherEmail }) => {
-  const [editStudentList, { loading }] = useMutation(EDIT_STUDENT_LIST_ORDER)
+const EmptyItem = ({ moveStudentList, index, listOrder, studentList, setSudentList }) => {
+  const me = useMe()
+  const [editStudentList, { loading }] = useMutation(EDIT_STUDENT_LIST_ORDER, {
+    refetchQueries: [{ query: SEE_ALL_STUDENT_LIST_QUERY }]
+  })
 
   // 학생을 리스트에 추가하기 위한 drop
   const [_, drop] = useDrop({
@@ -36,7 +40,7 @@ const EmptyItem = ({ moveStudentList, index, listOrder, studentList, setSudentLi
       setSudentList(newStudentList)
       editStudentList({
         variables: {
-          teacherEmail,
+          teacherEmail: me?.email,
           listId,
           listOrder
         }
