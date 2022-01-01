@@ -10,6 +10,7 @@ import { SEE_ALL_STUDENT_LIST_QUERY } from './AllList';
 import SetEmoji from './Popup/SetEmoji';
 import StudentInList from './StudentInList';
 import { BtnFadeIn } from "../../Animations/Fade"
+import { customMedia } from '../../styles';
 
 
 export const SEE_ONE_STUDENT_LIST_QUERY = gql`
@@ -59,28 +60,36 @@ const Container = styled.div`
 
 const NameContainer = styled.div`
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  column-gap: 5px;
-  column-gap: 0.3125rem;
+  grid-template-columns: 1fr;
   row-gap: 5px;
   row-gap: 0.3125rem;
   justify-items: flex-start;
-  form {
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: 1fr;
+  `}
+    form {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr auto;
-    border: 5px;
-    border: 0.3125rem;
-    column-gap: 40px;
-    column-gap: 2.5rem;
+    grid-template-columns: 1fr;
+    column-gap: 5px;
+    column-gap: 0.3125rem;
+    row-gap: 10px;
+    row-gap: 0.625rem;
+    ${customMedia.greaterThan("tablet")`
+    grid-template-columns: auto 1fr auto;
+    column-gap: 10px;
+    column-gap: 0.625rem;
+    row-gap: 20px;
+    row-gap: 1.25rem;
+  `}
   }
 `
 
 const ListEomji = styled.div`
   display: flex;
   align-self: center;
-  font-size: 1.75em;
-  font-size: 1.75rem;
+  font-size: 1.5em;
+  font-size: 1.5rem;
   cursor: pointer;
   padding: 5px;
   padding: 0.3125rem;
@@ -91,6 +100,10 @@ const ListEomji = styled.div`
     background-color: ${props => props.theme.blurColor};
     transition: background-color 0.6s ease;
   }
+  ${customMedia.greaterThan("tablet")`
+    font-size: 1.75em;
+    font-size: 1.75rem;
+  `}
 `
 
 const InputLayOut = styled.div`
@@ -112,23 +125,23 @@ const InputLayOut = styled.div`
 
 const ListName = styled.input`
   width: 100%;
-  font-size: 1.75em;
-  font-size: 1.75rem;
+  font-size: 1.5em;
+  font-size: 1.5rem;
   padding: 10px 0px;
   padding: 0.625rem 0rem;
-  /* border-radius: 5px;
-  border-radius: 0.3125rem;
-  background-color: ${props => props.theme.contentBgColor};
-  transition: background-color 1s ease; */
   ::placeholder {
     color: ${props => props.theme.fontColor};
     opacity: 0.8;
     transition: color 1s ease, opacity 1s ease;
   }
+  ${customMedia.greaterThan("tablet")`
+    font-size: 1.75em;
+    font-size: 1.75rem;
+  `}
 `
 
 const SubmitInput = styled.input`
-  grid-column: -2 / -1;
+  grid-column: 1 / -1;
   align-self: center;
   padding: 10px 30px;
   padding: 0.625rem 1.875rem;
@@ -139,6 +152,12 @@ const SubmitInput = styled.input`
   border-radius: 0.3125rem;
   cursor: pointer;
   animation: ${BtnFadeIn} 0.6s ease forwards;
+  text-align: center;
+  ${customMedia.greaterThan("tablet")`
+    grid-column: -2 / -1;
+    margin-left: 30px;
+    margin-left: 1.875rem;
+  `}
 `
 
 const SettingBtn = styled.div`
@@ -183,6 +202,7 @@ const DetailList = ({ listId }) => {
   const [teacherEmail, setTeacherEmail] = useState(undefined)
   const [listName, setListName] = useState(undefined)
   const [isEditName, setIsEditName] = useState(false)
+  const [placeholder, setPlaceholder] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
 
   const [seeSettingBtn, setSeeSettingBtn] = useState(false)
@@ -202,6 +222,7 @@ const DetailList = ({ listId }) => {
       setErrMsg(error)
     } else {
       setIsEditName(false)
+      setErrMsg(undefined)
     }
   }
 
@@ -247,7 +268,7 @@ const DetailList = ({ listId }) => {
       return
     }
     if (name.length < 3 || name.length > 11) {
-      setErrMsg("명렬표의 이름은 3~11자 사이로 입력하세요.")
+      setErrMsg("명렬표의 이름은 3~10자 사이로 입력하세요.")
       return
     }
     if (editLoading) {
@@ -264,7 +285,6 @@ const DetailList = ({ listId }) => {
 
   // form 영역 밖을 클릭 했을 때도 listName이 바뀌게 설정
   const onBlurName = () => {
-    console.log("ddd");
     const name = getValues("name")
     onSubmit({ name })
   }
@@ -277,20 +297,26 @@ const DetailList = ({ listId }) => {
       setTeacherEmail(data?.seeStudentList[0].teacherEmail)
       setListName(data?.seeStudentList[0].listName)
       setValue("name", data?.seeStudentList[0].listName)
+      setPlaceholder("명렬표 이름을 입력하세요.")
     }
   }, [data])
 
   return (<Container>
     <NameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName} >
-      {chosenEmoji ? <ListEomji onClick={onClickEmojiBtn}>{chosenEmoji}</ListEomji> : <div></div>}
       <form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurName}>
+        {chosenEmoji ? <ListEomji onClick={onClickEmojiBtn}>
+          {chosenEmoji}
+        </ListEomji> : <div></div>}
         <InputLayOut>
           <ListName
             {...register("name", {
               required: true,
-              onChange: () => setErrMsg(undefined)
+              onChange: () => {
+                setErrMsg(undefined)
+                setIsEditName(true)
+              }
             })}
-            placeholder="명렬표 이름을 입력하세요."
+            placeholder={placeholder}
             autoComplete="off"
             onClick={onClickListName}
           />
