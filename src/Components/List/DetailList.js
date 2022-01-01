@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import gql from 'graphql-tag';
 import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { FadeIn } from '../../Animations/Fade';
 import { inPopup, isPopupVar } from '../../apollo';
@@ -55,15 +56,20 @@ const Container = styled.div`
 
 const NameContainer = styled.div`
   display: grid;
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: auto 1fr auto;
   column-gap: 5px;
   column-gap: 0.3125rem;
   row-gap: 5px;
   row-gap: 0.3125rem;
   justify-items: flex-start;
+  form {
+    width: 100%;
+  }
 `
 
 const ListEomji = styled.div`
+  display: flex;
+  align-self: center;
   font-size: 2em;
   font-size: 2rem;
   cursor: pointer;
@@ -78,7 +84,8 @@ const ListEomji = styled.div`
   }
 `
 
-const ListName = styled.div`
+const ListName = styled.input`
+  width: 100%;
   font-size: 2em;
   font-size: 2rem;
   padding: 5px;
@@ -105,6 +112,7 @@ const SetEmojiBtn = styled.div`
 
 const DetailList = ({ listId }) => {
   const isPopup = useReactiveVar(isPopupVar)
+  const [teacherEmail, setTeacherEmail] = useState(undefined)
 
   const [seeSetEmojiBtn, setSeeEmojilBtn] = useState(false)
 
@@ -125,6 +133,10 @@ const DetailList = ({ listId }) => {
     ]
   })
 
+  const { register, setValue, handleSubmit } = useForm({
+    mode: "onChange",
+  })
+
   const onClickEmojiBtn = () => inPopup("emoji")
   const onClickEmojiDelBtn = () => {
     setChosenEmoji(null)
@@ -133,8 +145,8 @@ const DetailList = ({ listId }) => {
     }
     editStudentList({
       variables: {
-        teacherEmail: data?.seeStudentList[0].teacherEmail,
-        listId: data?.seeStudentList[0].listId,
+        teacherEmail,
+        listId,
         listIcon: "delete"
       }
     })
@@ -143,15 +155,43 @@ const DetailList = ({ listId }) => {
   const onMouseEnterName = () => setSeeEmojilBtn(true)
   const onMouseLeaveName = () => setSeeEmojilBtn(false)
 
+  const onSubmit = (data) => {
+    const { name } = data
+    console.log(name);
+    if (editLoading) {
+      return
+    }
+    editStudentList({
+      variables: {
+        teacherEmail,
+        listId,
+        listName: name
+      }
+    })
+  }
+
+  // 데이터 정보가 불러온 뒤 아이콘과 이름 값 세팅하기
   useEffect(() => {
     if (data) {
       setChosenEmoji(data?.seeStudentList[0].listIcon)
+      setTeacherEmail(data?.seeStudentList[0].teacherEmail)
+      setValue("name", data?.seeStudentList[0].listName)
     }
   }, [data])
   return (<Container>
     <NameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName}>
       {chosenEmoji && <ListEomji onClick={onClickEmojiBtn}>{chosenEmoji}</ListEomji>}
-      <ListName>{data?.seeStudentList[0].listName}</ListName>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <ListName
+          {...register("name", {
+            required: true,
+            minLength: 3,
+            maxLength: 10
+          })}
+          placeholder="명렬표 이름을 입력하세요."
+          autoComplete="off"
+        />
+      </form>
       {seeSetEmojiBtn && (chosenEmoji ?
         <SetEmojiBtn onClick={onClickEmojiDelBtn}>아이콘 삭제</SetEmojiBtn>
         :
