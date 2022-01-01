@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { FadeIn } from '../../Animations/Fade';
 import { inPopup, isPopupVar } from '../../apollo';
 import SetEmoji from './Popup/SetEmoji';
+import StudentInList from './StudentInList';
 
 const SEE_ONE_STUDENT_LIST_QUERY = gql`
   query SeeStudentList($listId: ID) {
@@ -16,6 +17,7 @@ const SEE_ONE_STUDENT_LIST_QUERY = gql`
         _id
         studentName
         studentGender
+        studentOrder
         listId
       }
     }
@@ -118,6 +120,7 @@ const DetailList = ({ listId }) => {
         <SetEmojiBtn onClick={onClickEmojiBtn}>아이콘 추가</SetEmojiBtn>)
       }
     </NameContainer>
+    {data?.seeStudentList[0]?.students && <StudentInList students={data?.seeStudentList[0]?.students} />}
   </Container>);
 }
 
