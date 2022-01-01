@@ -4,11 +4,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { FadeIn } from '../../Animations/Fade';
+import { inputLine } from '../../Animations/InputLine';
 import { inPopup, isPopupVar } from '../../apollo';
-import { color } from '../../styles';
 import { SEE_ALL_STUDENT_LIST_QUERY } from './AllList';
 import SetEmoji from './Popup/SetEmoji';
 import StudentInList from './StudentInList';
+import { BtnFadeIn } from "../../Animations/Fade"
 
 
 export const SEE_ONE_STUDENT_LIST_QUERY = gql`
@@ -68,32 +69,62 @@ const NameContainer = styled.div`
     width: 100%;
     display: grid;
     grid-template-columns: 1fr auto;
+    border: 5px;
+    border: 0.3125rem;
+    column-gap: 40px;
+    column-gap: 2.5rem;
   }
 `
 
 const ListEomji = styled.div`
   display: flex;
   align-self: center;
-  font-size: 2em;
-  font-size: 2rem;
+  font-size: 1.75em;
+  font-size: 1.75rem;
   cursor: pointer;
   padding: 5px;
   padding: 0.3125rem;
-  transform: background-color 0.6s ease;
   border-radius: 5px;
   border-radius: 0.3125rem;
+  transform: background-color 0.6s ease;
   :hover {
     background-color: ${props => props.theme.blurColor};
     transition: background-color 0.6s ease;
   }
 `
 
+const InputLayOut = styled.div`
+  .line-box {
+    position: relative;
+  }
+  .line {
+    position: absolute;
+    height: 2px;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: ${props => props.theme.fontColor};
+    opacity: 0.6;
+    transition: background 1s ease, opacity 1s ease;
+    animation: ${inputLine} 0.6s ease forwards;
+  }
+`
+
 const ListName = styled.input`
   width: 100%;
-  font-size: 2em;
-  font-size: 2rem;
-  padding: 5px;
-  padding: 0.3125rem;
+  font-size: 1.75em;
+  font-size: 1.75rem;
+  padding: 10px 0px;
+  padding: 0.625rem 0rem;
+  /* border-radius: 5px;
+  border-radius: 0.3125rem;
+  background-color: ${props => props.theme.contentBgColor};
+  transition: background-color 1s ease; */
+  ::placeholder {
+    color: ${props => props.theme.fontColor};
+    opacity: 0.8;
+    transition: color 1s ease, opacity 1s ease;
+  }
 `
 
 const SubmitInput = styled.input`
@@ -107,6 +138,7 @@ const SubmitInput = styled.input`
   border-radius: 5px;
   border-radius: 0.3125rem;
   cursor: pointer;
+  animation: ${BtnFadeIn} 0.6s ease forwards;
 `
 
 const SettingBtn = styled.div`
@@ -149,6 +181,7 @@ const ErrMsg = styled.div`
 const DetailList = ({ listId }) => {
   const isPopup = useReactiveVar(isPopupVar)
   const [teacherEmail, setTeacherEmail] = useState(undefined)
+  const [listName, setListName] = useState(undefined)
   const [isEditName, setIsEditName] = useState(false)
   const [errMsg, setErrMsg] = useState(undefined)
 
@@ -199,7 +232,7 @@ const DetailList = ({ listId }) => {
       }
     })
   }
-  const onClickEditListBtn = () => {
+  const onClickListName = () => {
     setIsEditName(true)
     setFocus("name")
   }
@@ -209,6 +242,10 @@ const DetailList = ({ listId }) => {
 
   const onSubmit = (data) => {
     const { name } = data
+    if (name === listName) {
+      setIsEditName(false)
+      return
+    }
     if (name.length < 3 || name.length > 11) {
       setErrMsg("명렬표의 이름은 3~11자 사이로 입력하세요.")
       return
@@ -230,6 +267,7 @@ const DetailList = ({ listId }) => {
     if (data) {
       setChosenEmoji(data?.seeStudentList[0].listIcon)
       setTeacherEmail(data?.seeStudentList[0].teacherEmail)
+      setListName(data?.seeStudentList[0].listName)
       setValue("name", data?.seeStudentList[0].listName)
     }
   }, [data])
@@ -238,16 +276,20 @@ const DetailList = ({ listId }) => {
     <NameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName}>
       {chosenEmoji ? <ListEomji onClick={onClickEmojiBtn}>{chosenEmoji}</ListEomji> : <div></div>}
       <form onSubmit={handleSubmit(onSubmit)}>
-        <ListName
-          {...register("name", {
-            required: true,
-            onChange: () => setErrMsg(undefined)
-          })}
-          placeholder="명렬표 이름을 입력하세요."
-          autoComplete="off"
-          readOnly={!isEditName}
-        // id="change_list_name_input"
-        />
+        <InputLayOut>
+          <ListName
+            {...register("name", {
+              required: true,
+              onChange: () => setErrMsg(undefined)
+            })}
+            placeholder="명렬표 이름을 입력하세요."
+            autoComplete="off"
+            onClick={onClickListName}
+          />
+          {isEditName && <div className="line-box">
+            <div className="line"></div>
+          </div>}
+        </InputLayOut>
         {isEditName && <SubmitInput type="submit" value="수정" />}
       </form>
       {seeSettingBtn &&
@@ -256,21 +298,22 @@ const DetailList = ({ listId }) => {
             <SetEmojiBtn onClick={onClickEmojiDelBtn}>아이콘 삭제</SetEmojiBtn>
             :
             <SetEmojiBtn onClick={onClickEmojiBtn}>아이콘 추가</SetEmojiBtn>}
-          <EditListName onClick={onClickEditListBtn}>명렬표 이름 수정</EditListName>
         </SettingBtn>
       }
       {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
     </NameContainer>
     {data?.seeStudentList[0]?.students && <StudentInList students={data?.seeStudentList[0]?.students} />}
-    {isPopup === "emoji" &&
+    {
+      isPopup === "emoji" &&
       <SetEmoji
         setChosenEmoji={setChosenEmoji}
         teacherEmail={data?.seeStudentList[0].teacherEmail}
         listId={data?.seeStudentList[0].listId}
         editStudentList={editStudentList}
         loading={editLoading}
-      />}
-  </Container>);
+      />
+    }
+  </Container >);
 }
 
 export default DetailList;

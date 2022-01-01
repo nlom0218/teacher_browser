@@ -17,3 +17,12 @@ export const CardFadeIn = keyframes`
     opacity: 0.9;
   }
 `
+
+export const BtnFadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`

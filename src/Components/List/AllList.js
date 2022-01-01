@@ -69,13 +69,11 @@ const DelIcon = styled.div`
 const AllList = ({ someDragging, setSuccessMsg, setSomeDragging }) => {
   // 학생 리스트가 아니라 명렬표임!!!
   const [studentList, setSudentList] = useState(undefined)
-  console.log(studentList);
 
   const isPopup = useReactiveVar(isPopupVar)
   const { data, loading } = useQuery(SEE_ALL_STUDENT_LIST_QUERY)
   const onClickAddIcon = () => inPopup("createList")
 
-  console.log(data);
   useEffect(() => {
     if (data) {
       const initStudentList = []
