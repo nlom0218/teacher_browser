@@ -1,10 +1,11 @@
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import gql from 'graphql-tag';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { FadeIn } from '../../Animations/Fade';
 import { inPopup, isPopupVar } from '../../apollo';
+import { color } from '../../styles';
 import { SEE_ALL_STUDENT_LIST_QUERY } from './AllList';
 import SetEmoji from './Popup/SetEmoji';
 import StudentInList from './StudentInList';
@@ -29,10 +30,11 @@ export const SEE_ONE_STUDENT_LIST_QUERY = gql`
   }
 `
 
-const EDIT_STUDENT_LIST_ICON = gql`
+const EDIT_STUDENT_LIST = gql`
   mutation Mutation($teacherEmail: String!, $listId: ID!, $listIcon: String, $listName: String) {
     editStudentList(teacherEmail: $teacherEmail, listId: $listId, listIcon: $listIcon, listName: $listName) {
       ok
+      error
     }
   }
 `
@@ -64,6 +66,8 @@ const NameContainer = styled.div`
   justify-items: flex-start;
   form {
     width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
   }
 `
 
@@ -92,29 +96,63 @@ const ListName = styled.input`
   padding: 0.3125rem;
 `
 
-const SetEmojiBtn = styled.div`
+const SubmitInput = styled.input`
+  grid-column: -2 / -1;
+  align-self: center;
+  padding: 10px 30px;
+  padding: 0.625rem 1.875rem;
+  background-color: ${props => props.theme.btnBgColor};
+  color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+`
+
+const SettingBtn = styled.div`
   grid-column: 1 / -1;
   grid-row: 2 / 3;
   font-size: 0.875em;
   font-size: 0.875rem;
-  /* opacity: 0.8; */
-  padding: 5px;
-  padding: 0.3125rem;
-  cursor: pointer;
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  :hover {
+  animation: ${FadeIn} 0.2s ease forwards;
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 20px;
+  div {
+    padding: 5px;
+    padding: 0.3125rem;
+    :hover {
     background-color: ${props => props.theme.blurColor};
     transition: background-color 0.6s ease;
+    cursor: pointer;
+    border-radius: 5px;
+    border-radius: 0.3125rem;
+    }
   }
-  animation: ${FadeIn} 0.2s ease forwards;
+`
+
+const SetEmojiBtn = styled.div`
+`
+
+const EditListName = styled.div``
+
+const ErrMsg = styled.div`
+  width: 100%;
+  grid-column: 1 / -1;
+  grid-row: 3 / 4;
+  text-align: center;
+  color: ${props => props.theme.redColor};
+  transition: color 1s ease;
+  font-weight: 600;
 `
 
 const DetailList = ({ listId }) => {
   const isPopup = useReactiveVar(isPopupVar)
   const [teacherEmail, setTeacherEmail] = useState(undefined)
+  const [isEditName, setIsEditName] = useState(false)
+  const [errMsg, setErrMsg] = useState(undefined)
 
-  const [seeSetEmojiBtn, setSeeEmojilBtn] = useState(false)
+  const [seeSettingBtn, setSeeSettingBtn] = useState(false)
 
   const [chosenEmoji, setChosenEmoji] = useState(null)
 
@@ -125,15 +163,25 @@ const DetailList = ({ listId }) => {
     }
   })
 
+  const onCompleted = (result) => {
+    const { editStudentList: { ok, error } } = result
+    if (!ok) {
+      setErrMsg(error)
+    } else {
+      setIsEditName(false)
+    }
+  }
+
   // 리스트 아이콘 수정을 위한
-  const [editStudentList, { loading: editLoading }] = useMutation(EDIT_STUDENT_LIST_ICON, {
+  const [editStudentList, { loading: editLoading }] = useMutation(EDIT_STUDENT_LIST, {
+    onCompleted,
     refetchQueries: [
       { query: SEE_ONE_STUDENT_LIST_QUERY, variables: { listId } },
       { query: SEE_ALL_STUDENT_LIST_QUERY }
     ]
   })
 
-  const { register, setValue, handleSubmit } = useForm({
+  const { register, setValue, handleSubmit, setFocus } = useForm({
     mode: "onChange",
   })
 
@@ -151,13 +199,20 @@ const DetailList = ({ listId }) => {
       }
     })
   }
+  const onClickEditListBtn = () => {
+    setIsEditName(true)
+    setFocus("name")
+  }
 
-  const onMouseEnterName = () => setSeeEmojilBtn(true)
-  const onMouseLeaveName = () => setSeeEmojilBtn(false)
+  const onMouseEnterName = () => setSeeSettingBtn(true)
+  const onMouseLeaveName = () => setSeeSettingBtn(false)
 
   const onSubmit = (data) => {
     const { name } = data
-    console.log(name);
+    if (name.length < 3 || name.length > 11) {
+      setErrMsg("명렬표의 이름은 3~11자 사이로 입력하세요.")
+      return
+    }
     if (editLoading) {
       return
     }
@@ -178,25 +233,33 @@ const DetailList = ({ listId }) => {
       setValue("name", data?.seeStudentList[0].listName)
     }
   }, [data])
+
   return (<Container>
     <NameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName}>
-      {chosenEmoji && <ListEomji onClick={onClickEmojiBtn}>{chosenEmoji}</ListEomji>}
+      {chosenEmoji ? <ListEomji onClick={onClickEmojiBtn}>{chosenEmoji}</ListEomji> : <div></div>}
       <form onSubmit={handleSubmit(onSubmit)}>
         <ListName
           {...register("name", {
             required: true,
-            minLength: 3,
-            maxLength: 10
+            onChange: () => setErrMsg(undefined)
           })}
           placeholder="명렬표 이름을 입력하세요."
           autoComplete="off"
+          readOnly={!isEditName}
+        // id="change_list_name_input"
         />
+        {isEditName && <SubmitInput type="submit" value="수정" />}
       </form>
-      {seeSetEmojiBtn && (chosenEmoji ?
-        <SetEmojiBtn onClick={onClickEmojiDelBtn}>아이콘 삭제</SetEmojiBtn>
-        :
-        <SetEmojiBtn onClick={onClickEmojiBtn}>아이콘 추가</SetEmojiBtn>)
+      {seeSettingBtn &&
+        <SettingBtn>
+          {chosenEmoji ?
+            <SetEmojiBtn onClick={onClickEmojiDelBtn}>아이콘 삭제</SetEmojiBtn>
+            :
+            <SetEmojiBtn onClick={onClickEmojiBtn}>아이콘 추가</SetEmojiBtn>}
+          <EditListName onClick={onClickEditListBtn}>명렬표 이름 수정</EditListName>
+        </SettingBtn>
       }
+      {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
     </NameContainer>
     {data?.seeStudentList[0]?.students && <StudentInList students={data?.seeStudentList[0]?.students} />}
     {isPopup === "emoji" &&
