@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { outPopup } from '../../../apollo';
@@ -56,7 +56,14 @@ const SubmitInput = styled.input`
   transition: opacity 0.6s ease;
 `
 
+const ErrMsg = styled.div`
+  grid-column: 1 / -1;
+  color: ${props => props.theme.redColor};
+  text-align: center;
+`
+
 const CreateList = () => {
+  const [errMsg, setErrMsg] = useState(undefined)
   const me = useMe()
   const { register, handleSubmit, formState: { isValid } } = useForm({
     mode: "onChange"
@@ -64,7 +71,7 @@ const CreateList = () => {
   const onCompleted = (result) => {
     const { createStudentList: { ok, error } } = result
     if (!ok) {
-      window.alert(error)
+      setErrMsg(error)
       return
     }
     outPopup()
@@ -77,7 +84,12 @@ const CreateList = () => {
     if (loading) {
       return
     }
-    const { listName, listOrder } = data
+    const { listName } = data
+    console.log(listName);
+    if (listName.length < 3 || listName.length > 11) {
+      setErrMsg("명렬표의 이름은 3~10자 사이로 입력하세요.")
+      return
+    }
     createStudentList({
       variables: {
         teacherEmail: me?.email,
@@ -90,8 +102,7 @@ const CreateList = () => {
       <NameInput
         {...register("listName", {
           required: true,
-          minLength: 3,
-          maxLength: 10
+          onChange: () => setErrMsg(undefined)
         })}
         type="text"
         autoComplete="off"
@@ -100,9 +111,9 @@ const CreateList = () => {
       />
       <SubmitInput
         type="submit"
-        disabled={!isValid}
         value="생성"
       />
+      {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
     </Form>
   </PopupContainer>);
 }

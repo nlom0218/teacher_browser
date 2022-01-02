@@ -323,6 +323,7 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
             })}
             placeholder={placeholder}
             autoComplete="off"
+            maxLength="10"
             onClick={onClickListName}
           />
           {isEditName && <div className="line-box">

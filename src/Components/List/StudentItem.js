@@ -22,7 +22,6 @@ const StudentName = styled.div`
 `
 
 const StudentItem = ({ item, setSomeDragging }) => {
-  console.log(item);
   // 학생 이름 drag를 위해 필요한 것
   // 아래의 두번째 인자를 드래그 할 곳에 참조로 넣는다.
   const [{ isDragging }, drag] = useDrag(() => ({

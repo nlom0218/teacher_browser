@@ -62,6 +62,7 @@ const CreateManyStudentInput = ({ index, existStudentArray, register, setStudent
         }
       })}
       autoComplete="off"
+      maxLength="12"
       placeholder={`${index + 1}번째 학생 이름을 입력하세요.`}
     />
     <GenderBtnContainer

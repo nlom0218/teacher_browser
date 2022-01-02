@@ -88,6 +88,7 @@ const CreateOneStudent = ({ createStudent, loading, email, existStudentArray }) 
       type="text"
       autoComplete="off"
       placeholder="학생 이름을 입력하세요."
+      maxLength="12"
     />
     <GenderBtnContainer
       gender={gender}

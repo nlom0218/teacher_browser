@@ -100,7 +100,6 @@ const Trash = ({ someDragging }) => {
     // drop을 하게 되면 아래의 로직이 실행된다.
     drop: (item) => {
       const { studentId, studentName } = item
-      console.log(studentId, studentName);
       deleteStudent({
         variables: {
           teacherEmail: me?.email,
