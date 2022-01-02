@@ -26,7 +26,8 @@ const DndBox = styled.div`
     (props.darkMode ? "#8dbdff" : "#3b7dd8")
     :
     (props.darkMode ? "#3b7dd8" : "#8dbdff")};
-  transition: background-color 1s ease;
+  border: 1px solid ${props => props.darkMode ? "#8dbdff" : "#3b7dd8"};
+  transition: background-color 1s ease, border 1s ease;
 `
 
 const UploadIcon = styled.div`
