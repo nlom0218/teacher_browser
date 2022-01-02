@@ -90,7 +90,7 @@ const FnBtn = styled.div`
 
 const StudentInItem = ({ item }) => {
   const media = useMedia();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [hoverContainer, setHoverContainer] = useState(false)
 

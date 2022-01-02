@@ -1,10 +1,13 @@
 import { useReactiveVar } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
+import { FaUserFriends } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { isSeeStudentListVar } from '../apollo';
+import { inPopup, isPopupVar, isSeeStudentListVar } from '../apollo';
 import AllList from '../Components/List/AllList';
 import DetailList from '../Components/List/DetailList';
+import DetailStudent from '../Components/List/DetailStudent';
+import SeeStudents from '../Components/List/Popup/SeeStudents';
 import StudentList from '../Components/List/StudentList';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import useMedia from '../Hooks/useMedia';
@@ -20,6 +23,25 @@ const Container = styled.div`
   ${customMedia.greaterThan("desktop")`
     grid-template-columns: 3fr 1fr;
   `}
+`
+
+const StudentIcon = styled.div`
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  font-size: 1.75em;
+  font-size: 1.75rem;
+  padding: 10px;
+  padding: 0.625rem;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  :hover {
+    background-color: ${props => props.theme.btnBgColor};
+    color: ${props => props.theme.bgColor};
+    transition: color 0.6s ease;
+  }
+    transition: background-color 0.6s ease;
 `
 
 const Layout = styled.div`
@@ -55,6 +77,7 @@ const SuccessMsg = styled.div`
 
 const List = () => {
   const isSeeStudentList = useReactiveVar(isSeeStudentListVar)
+  const isPopup = useReactiveVar(isPopupVar)
 
   const media = useMedia()
 
@@ -66,6 +89,8 @@ const List = () => {
 
   // url 주소에서 가져오는 값들
   const { type, id } = useParams()
+
+  const onClickStudentIcon = () => inPopup("students")
 
   // 무언가를 드래그 중일 때 successMsg 초기화
   useEffect(() => {
@@ -90,12 +115,19 @@ const List = () => {
     <Container>
       <Layout isSeeStudentList={isSeeStudentList}>
         {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
-        {type === "student" && "학생 상세 정보 보기 및 수정"}
+        {type === "student" && <DetailStudent />}
         {type === "detail" && <DetailList listId={id} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
       </Layout>
-      {media === "Desktop" && <StudentList setSomeDragging={setSomeDragging} />}
+      {media === "Desktop" ?
+        <StudentList setSomeDragging={setSomeDragging} />
+        :
+        <StudentIcon onClick={onClickStudentIcon}><FaUserFriends /></StudentIcon>
+      }
     </Container>
     {successMsg && <SuccessMsg error={successMsg.ok === false}>{successMsg.msg}</SuccessMsg>}
+
+    {/* 데스크탑이 아닐 때 학생 전체 리스트를 팝업으로 띄우기 */}
+    {isPopup === "students" && <SeeStudents />}
   </BasicContainer>);
 }
 

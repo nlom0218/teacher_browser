@@ -108,6 +108,7 @@ const CreateList = () => {
         autoComplete="off"
         placeholder="리스트 이름을 입력하세요."
         maxLength="10"
+        autoFocus
       />
       <SubmitInput
         type="submit"
