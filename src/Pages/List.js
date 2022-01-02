@@ -1,6 +1,8 @@
+import { useReactiveVar } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { isSeeStudentListVar } from '../apollo';
 import AllList from '../Components/List/AllList';
 import DetailList from '../Components/List/DetailList';
 import StudentList from '../Components/List/StudentList';
@@ -31,7 +33,8 @@ const Layout = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    width: 75%;
+    width: ${props => props.isSeeStudentList ? "75%" : "100%"};
+    transition: width 1s ease;
   `}
 `
 
@@ -51,6 +54,8 @@ const SuccessMsg = styled.div`
 `
 
 const List = () => {
+  const isSeeStudentList = useReactiveVar(isSeeStudentListVar)
+
   const media = useMedia()
 
   // 드래그 중일 때와 아닐 때를 나타내기 위한 값
@@ -83,7 +88,7 @@ const List = () => {
   }, [successMsg])
   return (<BasicContainer menuItem={true} notScroll={true}>
     <Container>
-      <Layout>
+      <Layout isSeeStudentList={isSeeStudentList}>
         {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
         {type === "student" && "학생 상세 정보 보기 및 수정"}
         {type === "detail" && <DetailList listId={id} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}

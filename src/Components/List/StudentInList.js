@@ -24,7 +24,7 @@ const Container = styled.div`
 const StudentInList = ({ students }) => {
 
   return (<React.Fragment>
-    <StudentNum>{students.length}명</StudentNum>
+    {students.length !== 0 && <StudentNum>{students.length}명</StudentNum>}
     <Container>
       {students?.length !== 0 && students?.map((item, index) => {
         return <StudentInItem key={index} item={item} />
