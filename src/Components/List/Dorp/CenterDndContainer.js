@@ -28,8 +28,11 @@ const CenterDndContainer = ({ someDragging, setSuccessMsg, listName, listId, set
 
   const onCompleted = (result) => {
     const { addStudent: { ok, error } } = result
+    if (!ok) {
+      setSuccessMsg({ msg: error, ok: false })
+    }
     if (ok) {
-      setSuccessMsg(`${listName}에 추가되었습니다 😀`)
+      setSuccessMsg({ msg: `${listName}에 추가되었습니다 😀`, ok: true })
     }
   }
   const [addStudent, { loading }] = useMutation(ADD_STUDENT_MUTATION, {

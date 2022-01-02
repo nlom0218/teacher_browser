@@ -101,6 +101,7 @@ const CreateList = () => {
       <SubmitInput
         type="submit"
         disabled={!isValid}
+        value="생성"
       />
     </Form>
   </PopupContainer>);
