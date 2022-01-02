@@ -23,7 +23,6 @@ const SCenterDndContainer = styled.div`
 `
 
 const CenterDndContainer = ({ someDragging, setSuccessMsg, listName, listId, setMouseEnter, inList }) => {
-  console.log(inList);
   const me = useMe()
 
   const onCompleted = (result) => {

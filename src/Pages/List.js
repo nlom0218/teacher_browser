@@ -58,7 +58,6 @@ const List = () => {
 
   // 드래그 성공 및 메시지를 띄우기 위한 값
   const [successMsg, setSuccessMsg] = useState(undefined)
-  console.log(successMsg);
 
   // url 주소에서 가져오는 값들
   const { type, id } = useParams()

@@ -77,11 +77,10 @@ const NameContainer = styled.div`
     row-gap: 10px;
     row-gap: 0.625rem;
     ${customMedia.greaterThan("tablet")`
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 1fr auto;
     column-gap: 10px;
     column-gap: 0.625rem;
-    row-gap: 20px;
-    row-gap: 1.25rem;
+
   `}
   }
 `
@@ -89,21 +88,23 @@ const NameContainer = styled.div`
 const ListEomji = styled.div`
   display: flex;
   align-self: center;
-  font-size: 1.5em;
-  font-size: 1.5rem;
+  font-size: 2em;
+  font-size: 2rem;
   cursor: pointer;
   padding: 5px;
   padding: 0.3125rem;
   border-radius: 5px;
   border-radius: 0.3125rem;
   transform: background-color 0.6s ease;
+  justify-self: flex-start;
   :hover {
     background-color: ${props => props.theme.blurColor};
     transition: background-color 0.6s ease;
   }
   ${customMedia.greaterThan("tablet")`
-    font-size: 1.75em;
-    font-size: 1.75rem;
+    font-size: 2.5em;
+    font-size: 2.5rem;
+    grid-column: 1 / -1;
   `}
 `
 
@@ -305,9 +306,9 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
   return (<Container>
     <NameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName} >
       <form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurName}>
-        {chosenEmoji ? <ListEomji onClick={onClickEmojiBtn}>
+        {chosenEmoji && <ListEomji onClick={onClickEmojiBtn}>
           {chosenEmoji}
-        </ListEomji> : <div></div>}
+        </ListEomji>}
         <InputLayOut>
           <ListName
             {...register("name", {
