@@ -58,6 +58,7 @@ const List = () => {
 
   // 드래그 성공 및 메시지를 띄우기 위한 값
   const [successMsg, setSuccessMsg] = useState(undefined)
+  console.log(successMsg);
 
   // url 주소에서 가져오는 값들
   const { type, id } = useParams()
@@ -76,15 +77,17 @@ const List = () => {
         setSuccessMsg(undefined)
       }, 5000)
 
+      // setTimeout 타이머를 사용한 경우 타이머를 해재해야 한다.
+      // 컴포넌트가 사라질 때 타이머를 없애는 코드 추가 필요
       return () => { clearTimeout(timer) }
     }
   }, [successMsg])
-  return (<BasicContainer menuItem={true}>
+  return (<BasicContainer menuItem={true} notScroll={true}>
     <Container>
       <Layout>
         {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
         {type === "student" && "학생 상세 정보 보기 및 수정"}
-        {type === "detail" && <DetailList listId={id} />}
+        {type === "detail" && <DetailList listId={id} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
       </Layout>
       {media === "Desktop" && <StudentList setSomeDragging={setSomeDragging} />}
     </Container>

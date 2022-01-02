@@ -16,24 +16,29 @@ const ADD_STUDENT_MUTATION = gql`
 `
 
 const SCenterDndContainer = styled.div`
-  height: 60%;
-  width: 40%;
-  position: absolute;
+  height: ${props => props.inList ? "100%" : "60%"};
+  width: ${props => props.inList ? "100%" : "40%"};
+  position: absolute; 
   z-index: ${props => props.someDragging ? 30 : -1};
-  /* background-color: blueviolet; */
 `
 
-const CenterDndContainer = ({ someDragging, setSuccessMsg, listName, listId, setMouseEnter }) => {
+const CenterDndContainer = ({ someDragging, setSuccessMsg, listName, listId, setMouseEnter, inList }) => {
+  console.log(inList);
   const me = useMe()
 
   const onCompleted = (result) => {
     const { addStudent: { ok, error } } = result
+    console.log(result);
     if (!ok) {
       setSuccessMsg({ msg: error, ok: false })
+      return
     }
-    if (ok) {
-      setSuccessMsg({ msg: `${listName}에 추가되었습니다 😀`, ok: true })
+    if (ok && inList) {
+      setSuccessMsg({ msg: `리스트에 추가되었습니다 😀`, ok: true })
+    } else {
+      setSuccessMsg({ msg: `${listName} 에 추가되었습니다 😀`, ok: true })
     }
+
   }
   const [addStudent, { loading }] = useMutation(ADD_STUDENT_MUTATION, {
     onCompleted,
@@ -74,7 +79,7 @@ const CenterDndContainer = ({ someDragging, setSuccessMsg, listName, listId, set
     }
   }, [someDragging])
 
-  return (<SCenterDndContainer someDragging={someDragging} ref={studentDrop}></SCenterDndContainer>);
+  return (<SCenterDndContainer someDragging={someDragging} ref={studentDrop} inList={inList}></SCenterDndContainer>);
 }
 
 export default CenterDndContainer;

@@ -11,6 +11,7 @@ import SetEmoji from './Popup/SetEmoji';
 import StudentInList from './StudentInList';
 import { BtnFadeIn } from "../../Animations/Fade"
 import { customMedia } from '../../styles';
+import AddStudentBox from './AddStudentBox';
 
 
 export const SEE_ONE_STUDENT_LIST_QUERY = gql`
@@ -197,7 +198,7 @@ const ErrMsg = styled.div`
   font-weight: 600;
 `
 
-const DetailList = ({ listId }) => {
+const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
   const isPopup = useReactiveVar(isPopupVar)
   const [teacherEmail, setTeacherEmail] = useState(undefined)
   const [listName, setListName] = useState(undefined)
@@ -337,6 +338,12 @@ const DetailList = ({ listId }) => {
       {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
     </NameContainer>
     {data?.seeStudentList[0]?.students && <StudentInList students={data?.seeStudentList[0]?.students} />}
+    <AddStudentBox
+      listId={listId}
+      listName={listName}
+      setSuccessMsg={setSuccessMsg}
+      someDragging={someDragging}
+    />
     {
       isPopup === "emoji" &&
       <SetEmoji

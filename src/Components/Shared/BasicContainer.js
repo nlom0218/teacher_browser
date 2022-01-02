@@ -24,7 +24,7 @@ const ContentLayout = styled.div`
   background: ${props => props.theme.blurColor};
   transition: background 1s ease;
   position: relative;
-  overflow: scroll;
+  overflow: ${props => props.notScroll ? "scroll" : "scroll"};
   -ms-overflow-style: none; // IE and Edge
   scrollbar-width: none; // Firefox
   ::-webkit-scrollbar {
@@ -35,7 +35,7 @@ const ContentLayout = styled.div`
   `}
 `
 
-const BasicContainer = ({ children, menuItem }) => {
+const BasicContainer = ({ children, menuItem, notScroll }) => {
   const [seeSideMenu, setSeeSideMenu] = useState(false)
   const onClickBackground = () => {
     if (seeSideMenu) {
@@ -45,7 +45,7 @@ const BasicContainer = ({ children, menuItem }) => {
   return (<Container onClick={onClickBackground}>
     <Theme />
     <Header seeSideMenu={seeSideMenu} setSeeSideMenu={setSeeSideMenu} />
-    <ContentLayout>
+    <ContentLayout notScroll={notScroll}>
       {menuItem && <PreviousPageBtn />}
       {children}
     </ContentLayout>
