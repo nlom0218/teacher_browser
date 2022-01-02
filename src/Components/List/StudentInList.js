@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import { customMedia } from '../../styles';
 import StudentInItem from './StudentInItem';
 
+const StudentNum = styled.div`
+  justify-self: flex-end;
+`
+
 const Container = styled.div`
   display: grid;
   column-gap: 40px;
@@ -19,11 +23,14 @@ const Container = styled.div`
 
 const StudentInList = ({ students }) => {
 
-  return (<Container>
-    {students?.length !== 0 && students?.map((item, index) => {
-      return <StudentInItem key={index} item={item} />
-    })}
-  </Container>);
+  return (<React.Fragment>
+    <StudentNum>{students.length}명</StudentNum>
+    <Container>
+      {students?.length !== 0 && students?.map((item, index) => {
+        return <StudentInItem key={index} item={item} />
+      })}
+    </Container>
+  </React.Fragment>);
 }
 
 export default StudentInList;
