@@ -93,10 +93,11 @@ const AddBtnMsg = styled.div``
 
 const AddBtn = styled.div`
   cursor: pointer;
-  padding: 10px 20px;
-  padding: 0.625rem 1.25rem;
+  padding: ${props => props.isDesktop ? "10px 20px" : "20px 40px"};
+  padding: ${props => props.isDesktop ? "0.625rem 1.25rem" : "1.25rem 2.5rem"};
   border-radius: 5px;
   border-radius: 0.3125rem;
+  text-align: center;
   color: ${props => props.theme.bgColor};
   background-color: ${props => props.someDragging ?
     (props.darkMode ? "#3b7dd8" : "#8dbdff")
@@ -115,7 +116,7 @@ const AddStudentBox = ({ listName, listId, setSuccessMsg, someDragging }) => {
 
   const onClickAddBtn = () => { window.alert("학생 복수 추가 기능") }
   return (<Container>
-    {media === "Desktop" && <DndBox someDragging={someDragging} darkMode={darkMode}>
+    {media === "Desktop" ? <DndBox someDragging={someDragging} darkMode={darkMode}>
       <UploadIcon someDragging={someDragging} darkMode={darkMode}><BsPersonPlus /></UploadIcon>
       <DragMsg someDragging={someDragging}>
         <div className="mainMsg">Drag & Drop</div>
@@ -123,7 +124,12 @@ const AddStudentBox = ({ listName, listId, setSuccessMsg, someDragging }) => {
       </DragMsg>
       <AddBtnBox someDragging={someDragging}>
         <AddBtnMsg>또는</AddBtnMsg>
-        <AddBtn someDragging={someDragging} darkMode={darkMode} onClick={onClickAddBtn}>학생 추가하기</AddBtn>
+        <AddBtn
+          someDragging={someDragging}
+          darkMode={darkMode}
+          isDesktop={media === "Desktop"}
+          onClick={onClickAddBtn}
+        >학생 추가하기</AddBtn>
       </AddBtnBox>
       <CenterDndContainer
         someDragging={someDragging}
@@ -133,7 +139,16 @@ const AddStudentBox = ({ listName, listId, setSuccessMsg, someDragging }) => {
         setMouseEnter={set__}
         inList={true}
       />
-    </DndBox>}
+    </DndBox>
+      : <AddBtn
+        someDragging={someDragging}
+        darkMode={darkMode}
+        onClick={onClickAddBtn}
+        isDesktop={media === "Desktop"}
+      >
+        학생 추가하기
+      </AddBtn>
+    }
   </Container>);
 }
 
