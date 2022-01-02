@@ -77,7 +77,7 @@ const ListItem = ({ listName, listOrder, index, listId, someDragging, setSuccess
 
       }
     }
-  }),
+  }), [listOrder, index, listId]
   )
 
   // useDrag의 isDragging을 보며 someDragging값 바꾸기

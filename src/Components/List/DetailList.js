@@ -211,8 +211,8 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
 
   const [chosenEmoji, setChosenEmoji] = useState(null)
 
-  // 리스트으 정보를 불러오는 쿼리
-  const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
+  // 리스트 정보를 불러오는 쿼리
+  const { data, loading, refetch } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: {
       listId
     }
@@ -302,6 +302,9 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
       setPlaceholder("명렬표 이름을 입력하세요.")
     }
   }, [data])
+  useEffect(() => {
+    refetch()
+  }, [])
 
   return (<Container>
     <NameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName} >
