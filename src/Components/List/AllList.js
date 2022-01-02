@@ -1,11 +1,12 @@
 import { useQuery, useReactiveVar } from '@apollo/client';
 import gql from 'graphql-tag';
 import React, { useEffect, useState } from 'react';
-import { FcFullTrash, FcPlus } from 'react-icons/fc';
+import { FcPlus } from 'react-icons/fc';
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../../apollo';
 import { customMedia } from '../../styles';
 import EmptyItem from './Dorp/EmptyItem';
+import Trash from './Dorp/Trash';
 import ListItem from './ListItem';
 import PopupCreateList from './Popup/CreateList';
 
@@ -51,15 +52,6 @@ const AddIcon = styled.div`
   align-self: center;
   justify-self: center;
   cursor: pointer;
-  svg {
-    font-size: 2.5rem;
-    font-size: 2.5em;
-  }
-`
-
-const DelIcon = styled.div`
-  align-self: center;
-  justify-self: center;
   svg {
     font-size: 2.5rem;
     font-size: 2.5em;
@@ -113,7 +105,7 @@ const AllList = ({ someDragging, setSuccessMsg, setSomeDragging }) => {
       }
     })}
     <AddIcon onClick={onClickAddIcon}><FcPlus /></AddIcon>
-    <DelIcon><FcFullTrash /></DelIcon>
+    <Trash someDragging={someDragging} />
     {isPopup === "createList" && <PopupCreateList />}
 
   </Container>);
