@@ -120,7 +120,7 @@ const AddStudentBox = ({ listName, listId, setSuccessMsg, someDragging }) => {
       <UploadIcon someDragging={someDragging} darkMode={darkMode}><BsPersonPlus /></UploadIcon>
       <DragMsg someDragging={someDragging}>
         <div className="mainMsg">Drag & Drop</div>
-        <div className="subMsg">오른쪽 학생 목록에서 학생을 드래그하여 명렬표에 추가하세요! 😁</div>
+        <div className="subMsg">학생 목록에서 학생을 드래그하여 명렬표에 추가하세요! 😁</div>
       </DragMsg>
       <AddBtnBox someDragging={someDragging}>
         <AddBtnMsg>또는</AddBtnMsg>

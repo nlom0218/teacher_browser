@@ -5,6 +5,8 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { BsPerson, BsPersonDash } from "react-icons/bs";
 import { customMedia } from '../../styles';
 import useMedia from '../../Hooks/useMedia';
+import { useNavigate } from 'react-router';
+import routes from '../../routes';
 
 const Student = styled.div`
   position: relative;
@@ -88,6 +90,7 @@ const FnBtn = styled.div`
 
 const StudentInItem = ({ item }) => {
   const media = useMedia();
+  const navigate = useNavigate()
 
   const [hoverContainer, setHoverContainer] = useState(false)
 
@@ -103,21 +106,31 @@ const StudentInItem = ({ item }) => {
     }
     setHoverContainer(false)
   }
+
+  const onClickProfile = () => {
+    navigate(`${routes.list}/student/${item._id}`)
+  }
+  const onClickEdit = () => {
+    window.alert("학급일지로 이동하기 기능")
+  }
+  const onClickDel = () => {
+    window.alert("해당 학생 리스트에서 제거 기능")
+  }
   return (<Student onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
     <StudentName hoverContainer={hoverContainer}>{item.studentName}</StudentName>
     {media !== "Desktop" ? <HoverContainer>
       <FnBtn>
-        <div className="fnBtn_icon"><AiOutlineEdit /></div>
-        <div className="fnBtn_icon"><BsPerson /></div>
-        <div className="fnBtn_icon"><BsPersonDash /></div>
+        <div className="fnBtn_icon" onClick={onClickEdit}><AiOutlineEdit /></div>
+        <div className="fnBtn_icon" onClick={onClickProfile}><BsPerson /></div>
+        <div className="fnBtn_icon" onClick={onClickDel}><BsPersonDash /></div>
       </FnBtn>
     </HoverContainer>
       : (
         hoverContainer && <HoverContainer>
           <FnBtn>
-            <div className="fnBtn_icon"><AiOutlineEdit /></div>
-            <div className="fnBtn_icon"><BsPerson /></div>
-            <div className="fnBtn_icon"><BsPersonDash /></div>
+            <div className="fnBtn_icon" onClick={onClickEdit}><AiOutlineEdit /></div>
+            <div className="fnBtn_icon" onClick={onClickProfile}><BsPerson /></div>
+            <div className="fnBtn_icon" onClick={onClickDel}><BsPersonDash /></div>
           </FnBtn>
         </HoverContainer>
       )}
