@@ -12,6 +12,8 @@ import CenterDndContainer from './Dorp/CenterDndContainer';
 // 진한 블루: #3b7dd8
 
 const Container = styled.div`
+  height: 100%;
+  align-self: flex-end;
   display: grid;
   align-items: center;
   grid-template-columns: 1fr;

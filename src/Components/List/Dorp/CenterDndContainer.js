@@ -7,7 +7,7 @@ import useMe from '../../../Hooks/useMe';
 import { SEE_ONE_STUDENT_LIST_QUERY } from "../DetailList"
 
 const ADD_STUDENT_MUTATION = gql`
-  mutation AddStudent($teacherEmail: String!, $studentId: ID!, $listId: ID!) {
+  mutation AddStudent($teacherEmail: String!, $studentId: [ID!], $listId: ID!) {
     addStudent(teacherEmail: $teacherEmail, studentId: $studentId, listId: $listId) {
       ok
       error
@@ -28,8 +28,8 @@ const CenterDndContainer = ({ someDragging, setSuccessMsg, listName, listId, set
   const onCompleted = (result) => {
     const { addStudent: { ok, error } } = result
     console.log(result);
-    if (!ok) {
-      setSuccessMsg({ msg: error, ok: false })
+    if (error) {
+      setSuccessMsg({ msg: "이미 리스트에 존재합니다.", ok: false })
       return
     }
     if (ok && inList) {
@@ -59,7 +59,7 @@ const CenterDndContainer = ({ someDragging, setSuccessMsg, listName, listId, set
       addStudent({
         variables: {
           teacherEmail: me?.email,
-          studentId,
+          studentId: [studentId],
           listId
         }
       })
