@@ -7,6 +7,10 @@ import { customMedia } from '../../styles';
 import useMedia from '../../Hooks/useMedia';
 import { useNavigate } from 'react-router';
 import routes from '../../routes';
+import { useMutation } from '@apollo/client';
+import { DELETE_STUDENT_MUTATION } from './Dorp/Trash';
+import useMe from '../../Hooks/useMe';
+import { SEE_ONE_STUDENT_LIST_QUERY } from './DetailList';
 
 const Student = styled.div`
   position: relative;
@@ -88,11 +92,17 @@ const FnBtn = styled.div`
   }
 `
 
-const StudentInItem = ({ item }) => {
+const StudentInItem = ({ item, listId }) => {
+  const me = useMe()
+
   const media = useMedia();
   const navigate = useNavigate();
 
   const [hoverContainer, setHoverContainer] = useState(false)
+
+  const [deleteStudent, { loading }] = useMutation(DELETE_STUDENT_MUTATION, {
+    refetchQueries: [{ query: SEE_ONE_STUDENT_LIST_QUERY, variables: { listId } }]
+  })
 
   const onMouseEnter = () => {
     if (media === "Mobile") {
@@ -114,7 +124,14 @@ const StudentInItem = ({ item }) => {
     window.alert("학급일지로 이동하기 기능")
   }
   const onClickDel = () => {
-    window.alert("해당 학생 리스트에서 제거 기능")
+    deleteStudent({
+      variables: {
+        disconnectOnly: true,
+        teacherEmail: me?.email,
+        studentId: item._id,
+        listId
+      }
+    })
   }
   return (<Student onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
     <StudentName hoverContainer={hoverContainer}>{item.studentName}</StudentName>

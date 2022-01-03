@@ -21,13 +21,13 @@ const Container = styled.div`
   `}
 `
 
-const StudentInList = ({ students }) => {
+const StudentInList = ({ students, listId }) => {
 
   return (<React.Fragment>
     {students.length !== 0 && <StudentNum>{students.length}명</StudentNum>}
     <Container>
       {students?.length !== 0 && students?.map((item, index) => {
-        return <StudentInItem key={index} item={item} />
+        return <StudentInItem key={index} item={item} listId={listId} />
       })}
     </Container>
   </React.Fragment>);

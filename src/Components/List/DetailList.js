@@ -341,7 +341,7 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
       }
       {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
     </NameContainer>
-    {data?.seeStudentList[0]?.students && <StudentInList students={data?.seeStudentList[0]?.students} />}
+    {data?.seeStudentList[0]?.students && <StudentInList students={data?.seeStudentList[0]?.students} listId={listId} />}
     <AddStudentBox
       listId={listId}
       listName={listName}

@@ -17,9 +17,9 @@ const DELETE_STUDENT_LIST_MUTATION = gql`
   }
 `
 
-const DELETE_STUDENT_MUTATION = gql`
-  mutation DeleteStudent($teacherEmail: String!, $studentId: ID!) {
-    deleteStudent(teacherEmail: $teacherEmail, studentId: $studentId) {
+export const DELETE_STUDENT_MUTATION = gql`
+  mutation DeleteStudent($teacherEmail: String!, $studentId: ID!, $disconnectOnly: Boolean!, $listId: ID) {
+    deleteStudent(teacherEmail: $teacherEmail, studentId: $studentId, disconnectOnly: $disconnectOnly, listId: $listId) {
       ok
       error
     }
@@ -102,6 +102,7 @@ const Trash = ({ someDragging }) => {
       const { studentId, studentName } = item
       deleteStudent({
         variables: {
+          disconnectOnly: false,
           teacherEmail: me?.email,
           studentId
         }
