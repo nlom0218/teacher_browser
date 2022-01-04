@@ -21,6 +21,7 @@
     "react-responsive": "^9.0.0-beta.4",
     "react-router-dom": "^6.0.2",
     "react-scripts": "4.0.3",
+    "react-table": "^7.7.0",
     "styled-components": "^5.3.3",
     "styled-media-query": "^2.1.2",
     "styled-reset": "^4.3.4",
