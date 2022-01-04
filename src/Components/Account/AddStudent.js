@@ -8,7 +8,7 @@ import { customMedia } from '../../styles';
 import { SEE_ALL_STUDENT_QUERY } from "./StudentInfo"
 
 const ADD_STUDENT_MUTATION = gql`
-  mutation DeleteStudent($teacherEmail: String!, $name: String!, $order: Int!) {
+  mutation AddStudent($teacherEmail: String!, $name: String!, $order: Int!) {
     addStudent(teacherEmail: $teacherEmail, name: $name, order: $order) {
       ok
       error

@@ -1,11 +1,12 @@
 import { useQuery, useReactiveVar } from '@apollo/client';
 import gql from 'graphql-tag';
-import React from 'react';
-import { FcPlus } from 'react-icons/fc';
+import React, { useEffect, useState } from 'react';
+import { FcNext, FcPrevious } from 'react-icons/fc';
 import styled from 'styled-components';
-import { inPopup, isPopupVar } from '../../apollo';
+import { FadeInBtn, FadeInList, FadeOutBtn, FadeOutList } from '../../Animations/StudentListAni';
+import { disableSeeStudentList, inPopup, isPopupVar, isSeeStudentListVar, enableSeeStudentList } from '../../apollo';
 import { color } from '../../styles';
-import PopupCreateStudent from './PopupCreateStudent';
+import CreateStudent from './Popup/CreateStudent';
 import StudentItem from './StudentItem';
 
 export const SEE_ALL_STUDENT_QUERY = gql`
@@ -19,9 +20,25 @@ export const SEE_ALL_STUDENT_QUERY = gql`
   }
 `
 
+const SeeBtn = styled.div`
+  cursor: pointer;
+  position: absolute;
+  top: 2%;
+  right: ${props => props.isSeeStudentList ? "26%" : "1%"};
+  animation: 1s ease forwards ${props => !props.initLoad && (props.isSeeStudentList ? FadeInBtn : FadeOutBtn)};
+  padding: 10px;
+  border-radius: 50%;
+  background-color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease;
+  svg {
+    display: flex; 
+  }
+`
+
 const StudentContainer = styled.div`
   position: absolute;
-  right: 1%;
+  right: ${props => props.isSeeStudentList ? "1%" : "-24%"};
+  animation: 1s ease forwards ${props => !props.initLoad && (props.isSeeStudentList ? FadeInList : FadeOutList)};
   top: 2%;
   width: 24%;
   height: 96%;
@@ -49,8 +66,8 @@ const SStudentList = styled.div`
     display: none; // Chrome, Safari, Opera
   }
   display: grid;
-  row-gap: 10px;
-  row-gap: 0.625rem;
+  /* row-gap: 10px;
+  row-gap: 0.625rem; */
   .noStudnet {
     text-align: center;
     color: ${props => props.theme.redColor};
@@ -60,27 +77,70 @@ const SStudentList = styled.div`
 
 const AddStudentBtn = styled.div`
   justify-self: center;
-  font-size: 2.5em;
-  font-size: 2.5rem;
   cursor: pointer;
+  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
+  background-color: ${props => props.theme.btnBgColor};
+  color: ${props => props.theme.bgColor};
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  transition: background-color 1s ease, color 1s ease;
 `
 
-const StudentList = () => {
+const StudentList = ({ setSomeDragging }) => {
+  // 초기 로드 시 에니메이션 작동 안하게 하기
+  const [initLoad, setInitLoad] = useState(true)
+
+  const isSeeStudentList = useReactiveVar(isSeeStudentListVar)
+
   const isPopup = useReactiveVar(isPopupVar)
+
+  // studentArray => 복수생성할 때 이미 존재하는 학생들의 이름과 새롭게 생성하는 학생들의 이름을 비교하기 위한 배열
+  // 중복생성을 막기 위함
+  const [existStudentArray, setExistStudentArray] = useState(undefined)
+
   const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY)
+
+  // 학생 생성을 위한 팝업창
   const onClickAddBtn = () => inPopup("createStudent")
-  return (<StudentContainer>
-    <SStudentList>
-      {data?.seeAllStudent?.length === 0 ?
-        <div className="noStudnet">생성된 학생이 없습니다.</div>
-        :
-        data?.seeAllStudent?.map((item, index) => {
-          return <StudentItem key={index} item={item} />
-        })}
-    </SStudentList>
-    <AddStudentBtn onClick={onClickAddBtn}><FcPlus /></AddStudentBtn>
-    {isPopup === "createStudent" && <PopupCreateStudent />}
-  </StudentContainer>);
+
+  const onClickSeeBtn = () => {
+    if (initLoad) {
+      setInitLoad(false)
+    }
+    if (isSeeStudentList) {
+      disableSeeStudentList()
+    } else {
+      enableSeeStudentList()
+    }
+  }
+
+  // 학생 정보가 불러와지면 existStudentArray 값 생성
+  useEffect(() => {
+    if (data) {
+      const newExistStudentArray = data?.seeAllStudent.map((item) => item.studentName)
+      setExistStudentArray(newExistStudentArray)
+    }
+  }, [data])
+  return (<React.Fragment>
+    <SeeBtn onClick={onClickSeeBtn} isSeeStudentList={isSeeStudentList} initLoad={initLoad}>
+      {isSeeStudentList ? <FcNext /> : <FcPrevious />}
+    </SeeBtn>
+    <StudentContainer isSeeStudentList={isSeeStudentList} initLoad={initLoad}>
+      <SStudentList>
+        {data?.seeAllStudent?.length === 0 ?
+          <div className="noStudnet">생성된 학생이 없습니다.</div>
+          :
+          data?.seeAllStudent?.map((item, index) => {
+            return <StudentItem key={index} item={item} setSomeDragging={setSomeDragging} />
+
+          })}
+      </SStudentList>
+      <AddStudentBtn onClick={onClickAddBtn}>학생 생성하기</AddStudentBtn>
+      {isPopup === "createStudent" && <CreateStudent existStudentArray={existStudentArray} />}
+    </StudentContainer>
+  </React.Fragment>
+  );
 }
 
 export default StudentList;

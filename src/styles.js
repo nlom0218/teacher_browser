@@ -28,7 +28,10 @@ export const ligthTheme = {
   contentBgColor: color.gray,
   btnBgColor: color.blue,
   popupBgColor: "rgba(0,0,0,0.75)",
-  hoverColor: "#d6d6d6"
+  hoverColor: "#d6d6d6",
+  cardBg: "rgba(247,247,247,0.8)",
+  cardHoverBg: "rgba(10,10,10,0.9)",
+  cardBorder: "rgba(160,160,160,1)"
 }
 export const darkTheme = {
   fontColor: color.white,
@@ -38,7 +41,10 @@ export const darkTheme = {
   contentBgColor: color.maroon,
   btnBgColor: color.lightBlue,
   popupBgColor: "rgba(200,200,200,0.75)",
-  hoverColor: color.maroon
+  hoverColor: color.maroon,
+  cardBg: "rgba(10,10,10,0.8)",
+  cardHoverBg: "rgba(247,247,247,1)",
+  cardBorder: "rgba(120,120,120,1)"
 }
 
 export const GlobalStyle = createGlobalStyle`
