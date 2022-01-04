@@ -14,7 +14,6 @@ export const SEE_ALL_STUDENT_QUERY = gql`
       _id
       teacherEmail
       studentName
-      studentOrder
       listId
     } 
   }
@@ -41,6 +40,7 @@ const StudentContainer = styled.div`
 `
 
 const SStudentList = styled.div`
+  max-height: 100%;
   align-self: flex-start;
   overflow: scroll;
   -ms-overflow-style: none; // IE and Edge
