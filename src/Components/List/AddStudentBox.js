@@ -157,7 +157,7 @@ const AddStudentBox = ({ listName, listId, setSuccessMsg, someDragging, inStuden
         학생 추가하기
       </AddBtn>
     }
-    {isPopup === "addManyStudent" && <AddManyStudent inStudent={inStudent} />}
+    {isPopup === "addManyStudent" && <AddManyStudent inStudent={inStudent} listId={listId} />}
   </Container>);
 }
 

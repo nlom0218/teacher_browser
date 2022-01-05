@@ -6,7 +6,7 @@ import { useMutation } from '@apollo/client';
 import useMe from '../../../Hooks/useMe';
 import { SEE_ONE_STUDENT_LIST_QUERY } from "../DetailList"
 
-const ADD_STUDENT_MUTATION = gql`
+export const ADD_STUDENT_MUTATION = gql`
   mutation AddStudent($teacherEmail: String!, $studentId: [ID!], $listId: ID!) {
     addStudent(teacherEmail: $teacherEmail, studentId: $studentId, listId: $listId) {
       ok
