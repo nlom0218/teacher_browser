@@ -12,6 +12,7 @@ import StudentInList from './StudentInList';
 import { BtnFadeIn } from "../../Animations/Fade"
 import { customMedia } from '../../styles';
 import AddStudentBox from './AddStudentBox';
+import InputUnderLine from './InputUnderLine';
 
 
 export const SEE_ONE_STUDENT_LIST_QUERY = gql`
@@ -105,23 +106,6 @@ const ListEomji = styled.div`
     font-size: 2.5rem;
     grid-column: 1 / -1;
   `}
-`
-
-const InputLayOut = styled.div`
-  .line-box {
-    position: relative;
-  }
-  .line {
-    position: absolute;
-    height: 2px;
-    top: 0px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: ${props => props.theme.fontColor};
-    opacity: 0.6;
-    transition: background 1s ease, opacity 1s ease;
-    animation: ${inputLine} 0.6s ease forwards;
-  }
 `
 
 const ListName = styled.input`
@@ -311,7 +295,7 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
         {chosenEmoji && <ListEomji onClick={onClickEmojiBtn}>
           {chosenEmoji}
         </ListEomji>}
-        <InputLayOut>
+        <InputUnderLine isEdit={isEditName}>
           <ListName
             {...register("name", {
               required: true,
@@ -325,10 +309,7 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
             maxLength="10"
             onClick={onClickListName}
           />
-          {isEditName && <div className="line-box">
-            <div className="line"></div>
-          </div>}
-        </InputLayOut>
+        </InputUnderLine>
         {isEditName && <SubmitInput type="submit" value="수정" />}
       </form>
       {seeSettingBtn &&
