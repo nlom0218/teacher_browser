@@ -106,7 +106,7 @@ const CreateList = () => {
         })}
         type="text"
         autoComplete="off"
-        placeholder="리스트 이름을 입력하세요."
+        placeholder="명렬표 이름을 입력하세요."
         maxLength="10"
         autoFocus
       />

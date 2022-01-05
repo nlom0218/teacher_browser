@@ -347,6 +347,7 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
       listName={listName}
       setSuccessMsg={setSuccessMsg}
       someDragging={someDragging}
+      inStudent={data?.seeStudentList[0]?.students}
     />
     {
       isPopup === "emoji" &&
