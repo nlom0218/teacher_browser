@@ -20,7 +20,7 @@ const NumForm = styled.form`
     padding: 0.75rem 1.25rem;
     background-color: ${props => props.theme.contentBgColor};
     border-radius: 5px;
-    border-radius: 0.625rem;
+    border-radius: 0.3125rem;
     ::placeholder {
       color: ${props => props.theme.fontColor};
       opacity: 0.8;

@@ -14,6 +14,7 @@ export const ME_QUERY = gql`
       studentNum
       bgTheme
       alergy
+      tag
     }
   }
 `;

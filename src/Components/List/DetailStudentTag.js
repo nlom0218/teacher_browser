@@ -1,6 +1,9 @@
+import { useReactiveVar } from '@apollo/client';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { BtnFadeIn } from '../../Animations/Fade';
+import { inPopup, isPopupVar } from '../../apollo';
+import CreateTag from './Popup/CreateTag';
 import { DetailStudentLayout, DetailTitle } from './styled/DetailStudent';
 
 const StudentTagContainer = styled.div`
@@ -34,18 +37,23 @@ const CreateTagBtn = styled.div`
 `
 
 const DetailStudentTag = ({ studentInfo }) => {
+  const isPopup = useReactiveVar(isPopupVar)
+
   const [isEdit, setIsEdit] = useState(false)
 
   const onMouseEnterTag = () => setIsEdit(true)
   const onMouseLeaveTag = () => setIsEdit(false)
+
+  const onClickCreateTag = () => inPopup("createTag")
   return (<DetailStudentLayout>
     <DetailTitle>태그</DetailTitle>
     <StudentTagContainer onMouseEnter={onMouseEnterTag} onMouseLeave={onMouseLeaveTag} isEdit={isEdit}>
       <div>{studentInfo?.tag.length === 0 ? "등록된 태그가 없습니다." : ""}</div>
       {isEdit && <EditContainer>
-        <CreateTagBtn>태그 생성하기</CreateTagBtn>
+        <CreateTagBtn onClick={onClickCreateTag}>태그 생성하기</CreateTagBtn>
       </EditContainer>}
     </StudentTagContainer>
+    {isPopup === "createTag" && <CreateTag />}
   </DetailStudentLayout>);
 }
 
