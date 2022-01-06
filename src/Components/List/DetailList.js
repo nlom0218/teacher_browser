@@ -68,6 +68,11 @@ const NameContainer = styled.div`
   justify-items: flex-start;
   ${customMedia.greaterThan("tablet")`
     grid-template-columns: 1fr;
+    margin-top: 20px;
+    margin-top: 1.25rem;
+  `}
+  ${customMedia.greaterThan("desktop")`
+    margin-top: 0;
   `}
     form {
     width: 100%;

@@ -121,7 +121,7 @@ const List = () => {
         {type === "detail" && <DetailList listId={id} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
       </Layout>
       {media === "Desktop" ?
-        <StudentList setSomeDragging={setSomeDragging} />
+        <StudentList setSomeDragging={setSomeDragging} studentId={id} />
         :
         <StudentIcon onClick={onClickStudentIcon}><FaUserFriends /></StudentIcon>
       }

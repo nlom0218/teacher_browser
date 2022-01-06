@@ -62,6 +62,7 @@ const TagItem = styled.div`
   border-radius: 5px;
   border-radius: 0.3125rem;
   background-color: ${props => props.theme.purple};
+  transition: background-color 1s ease;
   svg {
     display: flex;
     cursor: pointer;

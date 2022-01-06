@@ -78,14 +78,14 @@ const Form = styled.form`
   row-gap: 10px;
   row-gap: 0.625rem;
   ${customMedia.greaterThan("tablet")`
-  grid-template-columns: 1fr auto;
-  column-gap: 10px;
-  column-gap: 0.625rem;
-  margin-top: 20px;
-  margin-top: 1.25rem;
+    grid-template-columns: 1fr auto;
+    column-gap: 10px;
+    column-gap: 0.625rem;
+    margin-top: 20px;
+    margin-top: 1.25rem;
   `}
   ${customMedia.greaterThan("desktop")`
-  margin-top: 0;
+    margin-top: 0;
   `}
 `
 
