@@ -13,6 +13,7 @@ export const ME_QUERY = gql`
       schoolAdress
       studentNum
       bgTheme
+      alergy
     }
   }
 `;
