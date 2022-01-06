@@ -1,58 +1,77 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import styled from 'styled-components';
-import { FcAlarmClock, FcDonate, FcRefresh, FcNumericalSorting12, FcContacts, FcDataSheet, FcDocument, FcList } from "react-icons/fc";
-import { customMedia } from '../styles';
-import { Link } from 'react-router-dom';
-import routes from '../routes';
 import useMe from '../Hooks/useMe';
+import { BsGrid3X3GapFill, BsFilterLeft } from "react-icons/bs";
+import { ToLeft, ToRight } from '../Animations/MenuBtn';
+import GridType from '../Components/Menu/GridType';
+import ListType from '../Components/Menu/ListType';
 
 const Container = styled.div`
-  min-height: 100%;
-  width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  row-gap: 60px;
-  row-gap: 3.75rem;
-  column-gap: 30px;
-  column-gap: 1.875rem;
-  align-content: flex-start;
-  justify-items: center;
-  padding: 40px;
-  padding: 2.5rem;
- ${customMedia.greaterThan("tablet")`
-    grid-template-columns: 1fr 1fr 1fr;
-  `}
-  ${customMedia.greaterThan("desktop")`
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  `}
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  padding: 20px;
+  padding: 1.25rem;
 `
 
-const SMenu = styled.div`
+const SeeType = styled.div`
+  text-align: end;
   display: grid;
-  grid-template-rows: auto auto;
-  row-gap: 10px;
-  row-gap: 0.625rem;
-  color: ${props => props.theme.fontColor};
-  transition: color 1s ease;
-  cursor: pointer;
-  img {
-    margin: 0 auto;
+  justify-items: flex-end;
+`
+
+const Type = styled.div`
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto;
+  background-color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease;
+  border-radius: 20px;
+  border-radius: 1.25rem;
+  .see_type_icon {
+    padding: 10px 16px;
+    padding: 0.625rem 1rem;
+    border-radius: 20px;
+    border-radius: 1.25rem;
+    cursor: pointer;
   }
   svg {
-    margin: 0 auto;
-    font-size: 2.5em;
-    font-size: 2.5rem;
+    display: flex;
+    font-size: 1em;
+    font-size: 1rem;
   }
 `
 
-const Title = styled.div`
-  font-weight: 600;
-  text-align: center;
+const Background = styled.div`
+  position: absolute;
+  left: 0;
+  transform: translateX(0%);
+  border-radius: 20px;
+  border-radius: 1.25rem;
+  background-color: ${props => props.theme.btnBgColor};
+  color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
+  height: 100%;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: ${props => !props.init && (props.seeType === "list" ? ToLeft : ToRight)} 1s ease forwards;
+`
+
+const ListTypeIcon = styled.div`
+`
+
+const GridTypeIcon = styled.div`
 `
 
 const Menu = () => {
+  const [seeType, setSeeType] = useState("list")
+  const [init, setInit] = useState(true)
+
   const me = useMe()
+
   // 런치메뉴를 눌렀을 때 me가 있으면 lmSetting 생성, 없으면 삭제
   const onClickLunchmenu = () => {
     if (me) {
@@ -71,59 +90,29 @@ const Menu = () => {
       }))
     }
   }
+
+  const onClickType = (type) => {
+    setInit(false)
+    setSeeType(type)
+  }
+
   return (<BasicContainer>
     <Container>
-      <Link to={routes.timer}>
-        <SMenu>
-          <FcAlarmClock />
-          <Title>타이머</Title>
-        </SMenu>
-      </Link>
-      <Link to={routes.draw}>
-        <SMenu>
-          <FcDonate />
-          <Title>랜덤뽑기</Title>
-        </SMenu>
-      </Link>
-      <Link to={routes.swap}>
-        <SMenu>
-          <FcRefresh />
-          <Title>자리바꾸기</Title>
-        </SMenu>
-      </Link>
-      <Link to={routes.order}>
-        <SMenu>
-          <FcNumericalSorting12 />
-          <Title>순서정하기</Title>
-          {/* 급식순서 -> 순서정하기 */}
-        </SMenu>
-      </Link>
-      <Link to={routes.lunchmenu} onClick={onClickLunchmenu}>
-        <SMenu>
-          {/* <FcList /> */}
-          <img src="https://img.icons8.com/color/40/000000/white-sesame-seeds.png" />
-          <Title>식단표</Title>
-        </SMenu>
-      </Link>
-      <Link to={routes.schedule}>
-        <SMenu>
-          <FcDataSheet />
-          <Title>시간표</Title>
-        </SMenu>
-      </Link>
-      <Link to={routes.journal}>
-        <SMenu>
-          {/* <FcDocument /> */}
-          <img src="https://img.icons8.com/color/40/000000/right-handed.png" />
-          <Title>학급일지</Title>
-        </SMenu>
-      </Link>
-      <Link to={routes.list}>
-        <SMenu>
-          <FcContacts />
-          <Title>명렬표</Title>
-        </SMenu>
-      </Link>
+      <SeeType>
+        <Type>
+          <ListTypeIcon seeType={seeType === "list"} className="see_type_icon" onClick={() => onClickType("list")}>
+            <BsFilterLeft />
+          </ListTypeIcon>
+          <GridTypeIcon seeType={seeType === "grid"} className="see_type_icon" onClick={() => onClickType("grid")}>
+            <BsGrid3X3GapFill />
+          </GridTypeIcon>
+          <Background seeType={seeType} init={init}>
+            {seeType === "list" ? <BsFilterLeft /> : <BsGrid3X3GapFill />}
+          </Background>
+        </Type>
+      </SeeType>
+      {seeType === "list" && <ListType onClickLunchmenu={onClickLunchmenu} />}
+      {seeType === "grid" && <GridType onClickLunchmenu={onClickLunchmenu} />}
     </Container>
   </BasicContainer>);
 }
