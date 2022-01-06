@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { DetailStudentLayout } from './styled/DetailStudent';
+import { DetailStudentLayout, DetailTitle } from './styled/DetailStudent';
 import { RiCheckboxBlankLine, RiCheckboxLine } from 'react-icons/ri';
 import { BtnFadeIn } from "../../Animations/Fade"
-import { EDIT_STUDENT_MUTATION } from "./DetailStudent"
+import { EDIT_STUDENT_MUTATION, SEE_ONE_STUDENT } from "./DetailStudent"
 import { useMutation } from '@apollo/client';
 import { customMedia } from '../../styles';
-
-const InfoTitle = styled.div`
-  font-weight: 600;
-  padding: 10px 0px;
-  padding: 0.625rem 0rem;
-`
 
 const AllergyList = styled.div`
   padding: 10px;
@@ -81,6 +75,7 @@ const DetailStudentAllergy = ({ studentInfo }) => {
   }
   const [editStudent, { loading }] = useMutation(EDIT_STUDENT_MUTATION, {
     onCompleted,
+    refetchQueries: [{ query: SEE_ONE_STUDENT, variables: { studentId: studentInfo?._id } }]
   })
 
   const onClickAdd = (allergy) => {
@@ -114,7 +109,7 @@ const DetailStudentAllergy = ({ studentInfo }) => {
     }
   }, [studentInfo])
   return (<DetailStudentLayout>
-    <InfoTitle>알레르기</InfoTitle>
+    <DetailTitle>알레르기</DetailTitle>
     <AllergyList isEdit={isEdit}>
       {allergy.map((item, index) => {
         return <AllergyItem key={index}>

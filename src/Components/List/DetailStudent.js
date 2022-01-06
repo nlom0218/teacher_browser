@@ -5,11 +5,11 @@ import styled from 'styled-components';
 import { BtnFadeIn } from '../../Animations/Fade';
 import { customMedia } from '../../styles';
 import DetailStudentAllergy from './DetailStudentAllergy';
-import DetailStudentOrder from './DetailStudentOrder';
+import DetailStudentNumber from './DetailStudentNumber';
 import InputUnderLine from './InputUnderLine';
 import { SEE_ALL_STUDENT_QUERY } from './StudentList';
 
-const SEE_ONE_STUDENT = gql`
+export const SEE_ONE_STUDENT = gql`
   query SeeAllStudent($studentId: ID) {
     seeAllStudent(studentId: $studentId) {
       _id
@@ -29,6 +29,7 @@ mutation Mutation(
   $teacherEmail: String!,
   $studentId: ID!,
   $studentName: String,
+  $studentOrder: Int,
   $studentGender: String,
   $parentPhoneNum: String, 
   $allergy: [Int], 
@@ -38,6 +39,7 @@ mutation Mutation(
     teacherEmail: $teacherEmail, 
     studentId: $studentId, 
     studentName: $studentName, 
+    studentOrder: $studentOrder,
     studentGender: $studentGender, 
     parentPhoneNum: $parentPhoneNum, 
     allergy: $allergy, 
@@ -134,12 +136,6 @@ const ErrMsg = styled.div`
   font-weight: 600;
 `
 
-const Part = styled.div``
-
-const Title = styled.div``
-
-const Contents = styled.div``
-
 const DetailStudent = ({ studentId }) => {
   const [studentInfo, setStudentInfo] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
@@ -177,7 +173,7 @@ const DetailStudent = ({ studentId }) => {
     }
     editStudent({
       variables: {
-        teacherEmail: studentInfo.teacherEmail,
+        teacherEmail: studentInfo?.teacherEmail,
         studentId,
         studentName: newStudentName
       }
@@ -221,8 +217,8 @@ const DetailStudent = ({ studentId }) => {
       {isEdit && <SubmitInput type="submit" value="수정" />}
       {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
     </Form>
+    <DetailStudentNumber studentInfo={studentInfo} />
     <DetailStudentAllergy studentInfo={studentInfo} editStudent={editStudent} onCompleted={onCompleted} />
-    <DetailStudentOrder studentInfo={studentInfo} />
   </Container>);
 }
 
