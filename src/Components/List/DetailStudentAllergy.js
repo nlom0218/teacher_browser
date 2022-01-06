@@ -8,8 +8,8 @@ import { useMutation } from '@apollo/client';
 import { customMedia } from '../../styles';
 
 const AllergyList = styled.div`
-  padding: 10px;
-  padding: 0.625rem;
+  padding: 20px;
+  padding: 1.25rem;
   display: grid;
   column-gap: 20px;
   column-gap: 1.25rem;

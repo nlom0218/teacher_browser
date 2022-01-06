@@ -10,6 +10,8 @@ import InputUnderLine from './InputUnderLine';
 import { DetailStudentLayout, DetailTitle } from "./styled/DetailStudent"
 
 const DetailNumberForm = styled.form`
+  padding: 10px 0px;
+  padding: 0.625rem 0rem;
   display: grid;
   row-gap: 20px;
   row-gap: 1.25rem;
@@ -22,8 +24,8 @@ const DetailNumberForm = styled.form`
 
 const Input = styled.input`
   width: 100%;
-  padding: 10px;
-  padding: 0.625rem;
+  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
   border-radius: 5px;
   border-radius: 0.3125rem;
   background-color: ${props => props.isEdit && props.theme.contentBgColor};

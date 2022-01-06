@@ -6,6 +6,7 @@ import { BtnFadeIn } from '../../Animations/Fade';
 import { customMedia } from '../../styles';
 import DetailStudentAllergy from './DetailStudentAllergy';
 import DetailStudentNumber from './DetailStudentNumber';
+import DetailStudentTag from './DetailStudentTag';
 import InputUnderLine from './InputUnderLine';
 import { SEE_ALL_STUDENT_QUERY } from './StudentList';
 
@@ -62,8 +63,8 @@ const Container = styled.div`
   padding: 20px;
   padding: 1.25rem;
   display: grid;
-  row-gap: 40px;
-  row-gap: 2.5rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
   column-gap: 40px;
   column-gap: 2.5rem;
 `
@@ -218,6 +219,7 @@ const DetailStudent = ({ studentId }) => {
       {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
     </Form>
     <DetailStudentNumber studentInfo={studentInfo} />
+    <DetailStudentTag studentInfo={studentInfo} />
     <DetailStudentAllergy studentInfo={studentInfo} editStudent={editStudent} onCompleted={onCompleted} />
   </Container>);
 }
