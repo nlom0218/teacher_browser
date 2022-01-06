@@ -12,7 +12,7 @@ const SeeStudents = () => {
 
   const { data } = useQuery(SEE_ALL_STUDENT_QUERY)
 
-  const onClickName = ({ id }) => {
+  const onClickName = (id) => {
     outPopup()
     navigate(`${routes.list}/student/${id}`)
   }

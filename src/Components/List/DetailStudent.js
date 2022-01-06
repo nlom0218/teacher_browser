@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { BtnFadeIn } from '../../Animations/Fade';
-import useMe from '../../Hooks/useMe';
 import { customMedia } from '../../styles';
+import DetailStudentAllergy from './DetailStudentAllergy';
+import DetailStudentOrder from './DetailStudentOrder';
 import InputUnderLine from './InputUnderLine';
 import { SEE_ALL_STUDENT_QUERY } from './StudentList';
 
@@ -23,7 +24,7 @@ const SEE_ONE_STUDENT = gql`
   }
 `
 
-const EDIT_STUDENT_MUTATION = gql`
+export const EDIT_STUDENT_MUTATION = gql`
 mutation Mutation(
   $teacherEmail: String!,
   $studentId: ID!,
@@ -140,8 +141,7 @@ const Title = styled.div``
 const Contents = styled.div``
 
 const DetailStudent = ({ studentId }) => {
-  const [studentName, setStudentName] = useState(undefined)
-  const [teacherEmail, setTeacherEmail] = useState(undefined)
+  const [studentInfo, setStudentInfo] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
   const [isEdit, setIsEdit] = useState(false)
   const { data, loading } = useQuery(SEE_ONE_STUDENT, {
@@ -163,13 +163,12 @@ const DetailStudent = ({ studentId }) => {
     onCompleted,
     refetchQueries: [{ query: SEE_ALL_STUDENT_QUERY }]
   })
-  console.log(editLoading);
   const { register, setValue, handleSubmit, getValues } = useForm({
     mode: "onChange"
   })
   const onSubmit = (data) => {
     const { newStudentName } = data
-    if (newStudentName === studentName) {
+    if (newStudentName === studentInfo.studentName) {
       setIsEdit(false)
       return
     }
@@ -178,7 +177,7 @@ const DetailStudent = ({ studentId }) => {
     }
     editStudent({
       variables: {
-        teacherEmail,
+        teacherEmail: studentInfo.teacherEmail,
         studentId,
         studentName: newStudentName
       }
@@ -198,8 +197,7 @@ const DetailStudent = ({ studentId }) => {
   useEffect(() => {
     if (data) {
       setValue("newStudentName", data?.seeAllStudent[0]?.studentName)
-      setStudentName(data?.seeAllStudent[0]?.studentName)
-      setTeacherEmail(data?.seeAllStudent[0]?.teacherEmail)
+      setStudentInfo(data?.seeAllStudent[0])
     }
   }, [data])
   return (<Container>
@@ -223,10 +221,8 @@ const DetailStudent = ({ studentId }) => {
       {isEdit && <SubmitInput type="submit" value="수정" />}
       {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
     </Form>
-    <Part>
-      <Title>번호</Title>
-      <Contents>{data?.seeAllStudent[0]?.studentName}</Contents>
-    </Part>
+    <DetailStudentAllergy studentInfo={studentInfo} editStudent={editStudent} onCompleted={onCompleted} />
+    <DetailStudentOrder studentInfo={studentInfo} />
   </Container>);
 }
 

@@ -23,7 +23,7 @@ export const color = {
 export const ligthTheme = {
   fontColor: color.black,
   bgColor: color.white,
-  blurColor: "rgba(230, 230, 230, 0.6)",
+  blurColor: "rgba(230, 230, 230, 0.8)",
   redColor: color.red,
   contentBgColor: color.gray,
   btnBgColor: color.blue,
@@ -36,7 +36,7 @@ export const ligthTheme = {
 export const darkTheme = {
   fontColor: color.white,
   bgColor: color.black,
-  blurColor: "rgba(60, 60, 60, 0.6)",
+  blurColor: "rgba(60, 60, 60, 0.8)",
   redColor: color.ligthRed,
   contentBgColor: color.maroon,
   btnBgColor: color.lightBlue,
