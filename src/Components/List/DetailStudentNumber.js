@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { BtnFadeIn } from '../../Animations/Fade';
+import useMedia from '../../Hooks/useMedia';
+import { customMedia } from '../../styles';
 import { EDIT_STUDENT_MUTATION, SEE_ONE_STUDENT } from "./DetailStudent"
 import InputUnderLine from './InputUnderLine';
 import { DetailStudentLayout, DetailTitle } from "./styled/DetailStudent"
@@ -13,7 +15,9 @@ const DetailNumberForm = styled.form`
   row-gap: 1.25rem;
   column-gap: 40px;
   column-gap: 2.5rem;
-  grid-template-columns: 5fr 2fr;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: 5fr 2fr;
+  `}
 `
 
 const Input = styled.input`
@@ -33,6 +37,8 @@ const Input = styled.input`
 
 const Submit = styled.input`
   cursor: pointer;
+  padding: 10px 40px;
+  padding: 0.625rem 2.5rem;
   text-align: center;
   grid-column: 2 / -1;
   border-radius: 5px;
@@ -41,10 +47,15 @@ const Submit = styled.input`
   color: ${props => props.theme.bgColor};
   transition: background-color 1s ease, color 1s ease;
   animation: ${BtnFadeIn} 1s ease;
+  ${customMedia.greaterThan("tablet")`
+    padding: 0;
+  `}
 `
 
 const DetailStudentNumber = ({ studentInfo }) => {
   const [isEdit, setIsEdit] = useState(false)
+
+  const media = useMedia()
 
   const onCompleted = (result) => {
     const { editStudent: { ok } } = result
@@ -108,7 +119,7 @@ const DetailStudentNumber = ({ studentInfo }) => {
       {isEdit ? <Submit
         value="수정"
         type="submit"
-      /> : <div></div>}
+      /> : (media !== "Mobile" && <div></div>)}
     </DetailNumberForm>
   </DetailStudentLayout>);
 }
