@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import useMe, { ME_QUERY } from '../../../Hooks/useMe';
 import { customMedia } from '../../../styles';
 import PopupContainer from '../../Shared/PopupContainer';
+import { SEE_ONE_STUDENT } from '../DetailStudent';
 
 const CREATE_TAG_MUTATION = gql`
   mutation CreateTagMutation($userEmail: String!, $tag: [String]!) {
@@ -99,7 +100,7 @@ const TagItem = styled.div`
   }
 `
 
-const CreateTag = () => {
+const CreateTag = ({ studentId }) => {
   const me = useMe()
   const [tagArr, setTagArr] = useState([])
   const [errMsg, setErrMsg] = useState(undefined)
@@ -120,7 +121,9 @@ const CreateTag = () => {
   })
 
   const [deleteTag, { loadng: delLoading }] = useMutation(DELETE_TAG_MUTATION, {
-    refetchQueries: [{ query: ME_QUERY }]
+    refetchQueries: [
+      { query: ME_QUERY },
+      { query: SEE_ONE_STUDENT, variables: { studentId } }]
   })
 
   const onSubmit = (data) => {
@@ -165,6 +168,8 @@ const CreateTag = () => {
           onChange: () => setErrMsg(undefined)
         })}
         autoComplete="off"
+        autoFocus
+        placeholder="태그 이름을 입력하세요."
         type="text"
       />
       <SubmitInput

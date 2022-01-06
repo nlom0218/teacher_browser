@@ -44,7 +44,7 @@ const Submit = styled.input`
   text-align: center;
   grid-column: 2 / -1;
   border-radius: 5px;
-  border-radius: 0.625rem;
+  border-radius: 0.3125rem;
   background-color: ${props => props.theme.btnBgColor};
   color: ${props => props.theme.bgColor};
   transition: background-color 1s ease, color 1s ease;
