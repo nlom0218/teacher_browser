@@ -62,6 +62,12 @@ const SubmitInput = styled.input`
   border-radius: 0.3125rem;
 `
 
+const ErrMsg = styled.div`
+  grid-column: 1 / -1;
+  color: ${props => props.theme.redColor};
+  text-align: center;
+`
+
 const SeeTag = styled.div`
   padding-bottom: 20px;
   padding-bottom: 1.25rem;
@@ -95,7 +101,8 @@ const TagItem = styled.div`
 
 const CreateTag = () => {
   const me = useMe()
-  const [tag, setTag] = useState([])
+  const [tagArr, setTagArr] = useState([])
+  const [errMsg, setErrMsg] = useState(undefined)
   const { register, handleSubmit, setValue } = useForm({
     mode: "onChange"
   })
@@ -121,6 +128,10 @@ const CreateTag = () => {
     if (loading) {
       return
     }
+    if (tagArr.includes(tag)) {
+      setErrMsg("같은 이름의 태그가 있습니다.")
+      return
+    }
     createTag({
       variables: {
         userEmail: me?.email,
@@ -143,14 +154,15 @@ const CreateTag = () => {
 
   useEffect(() => {
     if (me) {
-      setTag(me?.tag)
+      setTagArr(me?.tag)
     }
   }, [me])
   return (<PopupContainer>
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Input
         {...register("tag", {
-          required: true
+          required: true,
+          onChange: () => setErrMsg(undefined)
         })}
         autoComplete="off"
         type="text"
@@ -159,11 +171,12 @@ const CreateTag = () => {
         type="submit"
         value="생성"
       />
+      {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
     </Form>
     <SeeTag>
-      <div>{tag.length === 0 ? "생성된 태그가 없습니다." : "셍상된 태그"}</div>
+      <div>{tagArr.length === 0 ? "생성된 태그가 없습니다." : "셍상된 태그"}</div>
       <TagList>
-        {tag.map((item, index) => {
+        {tagArr.map((item, index) => {
           return <TagItem key={index}>
             <div>{item}</div>
             <BsTrash onClick={() => onClickDelBtn(item)} />

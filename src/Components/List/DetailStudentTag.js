@@ -32,7 +32,7 @@ const CreateTagBtn = styled.div`
   background-color: ${props => props.theme.btnBgColor};
   color: ${props => props.theme.bgColor};
   border-radius: 5px;
-  border-radius: 0.625rem;
+  border-radius: 0.3125rem;
   cursor: pointer;
 `
 
