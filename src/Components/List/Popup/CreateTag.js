@@ -2,8 +2,10 @@ import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { BsTrash } from 'react-icons/bs';
 import styled from 'styled-components';
 import useMe, { ME_QUERY } from '../../../Hooks/useMe';
+import { customMedia } from '../../../styles';
 import PopupContainer from '../../Shared/PopupContainer';
 
 const CREATE_TAG_MUTATION = gql`
@@ -15,13 +17,26 @@ const CREATE_TAG_MUTATION = gql`
   }
 `
 
+const DELETE_TAG_MUTATION = gql`
+  mutation DeleteTag($userEmail: String!, $tag: String!) {
+    deleteTag(userEmail: $userEmail, tag: $tag) {
+      ok
+      error
+    }
+  }
+`
+
 const Form = styled.form`
   display: grid;
-  grid-template-columns: 1fr auto;
   column-gap: 40px;
   column-gap: 2.5rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
   padding-top: 20px;
   padding-top: 1.25rem;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: 1fr auto;
+  `}
 `
 
 const Input = styled.input`
@@ -37,6 +52,7 @@ const Input = styled.input`
 `
 
 const SubmitInput = styled.input`
+  text-align: center;
   cursor: pointer;
   padding: 10px 40px;
   padding: 0.625rem 2.5rem;
@@ -60,6 +76,7 @@ const TagList = styled.div`
 `
 
 const TagItem = styled.div`
+  display: flex;
   margin-top: 10px;
   margin-top: 0.625rem;
   margin-right: 10px;
@@ -69,6 +86,11 @@ const TagItem = styled.div`
   border-radius: 5px;
   border-radius: 0.3125rem;
   background-color: ${props => props.theme.purple};
+  svg {
+    display: flex;
+    cursor: pointer;
+    margin-left: 5px;
+  }
 `
 
 const CreateTag = () => {
@@ -90,6 +112,10 @@ const CreateTag = () => {
     refetchQueries: [{ query: ME_QUERY }]
   })
 
+  const [deleteTag, { loadng: delLoading }] = useMutation(DELETE_TAG_MUTATION, {
+    refetchQueries: [{ query: ME_QUERY }]
+  })
+
   const onSubmit = (data) => {
     const { tag } = data
     if (loading) {
@@ -99,6 +125,18 @@ const CreateTag = () => {
       variables: {
         userEmail: me?.email,
         tag: [tag]
+      }
+    })
+  }
+
+  const onClickDelBtn = (tag) => {
+    if (delLoading) {
+      return
+    }
+    deleteTag({
+      variables: {
+        userEmail: me?.email,
+        tag
       }
     })
   }
@@ -127,7 +165,8 @@ const CreateTag = () => {
       <TagList>
         {tag.map((item, index) => {
           return <TagItem key={index}>
-            {item}
+            <div>{item}</div>
+            <BsTrash onClick={() => onClickDelBtn(item)} />
           </TagItem>
         })}
       </TagList>
