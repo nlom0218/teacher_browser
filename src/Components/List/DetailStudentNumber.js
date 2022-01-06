@@ -79,6 +79,9 @@ const DetailStudentNumber = ({ studentInfo }) => {
 
   const onSubmit = (data) => {
     const { studentNum } = data
+    if (loading) {
+      return
+    }
     editStudent({
       variables: {
         teacherEmail: studentInfo?.teacherEmail,
@@ -106,14 +109,21 @@ const DetailStudentNumber = ({ studentInfo }) => {
     <DetailNumberForm onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
       <InputUnderLine isEdit={isEdit}>
         <Input
-          {...register("studentNum")}
+          {...register("studentNum", {
+            onChange: () => {
+              if (!isEdit) {
+                setIsEdit(true)
+              }
+            }
+          })}
           autoComplete="off"
           placeholder="학생 번호를 입력하세요."
           type="number"
           onClick={onClickInput}
           isEdit={isEdit}
           min={1}
-          max={999999999999}
+          max={999999999}
+        // int범위로 인해... 줄어듬...
         />
       </InputUnderLine>
       {isEdit ? <Submit
