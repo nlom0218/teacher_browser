@@ -7,7 +7,7 @@ import { FcContacts } from "react-icons/fc";
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { inPopup, isPopupVar } from "../apollo";
 import { useParams } from "react-router-dom";
-import { SEE_ONE_STUDENT_LIST_QUERY } from "../Components/List/DetailList";
+import { SEE_ONE_STUDENT_LIST_QUERY } from '../Graphql/StudentList/query';
 import useMedia from "../Hooks/useMedia";
 import { customMedia } from "../styles";
 import { useEffect } from "react/cjs/react.development";

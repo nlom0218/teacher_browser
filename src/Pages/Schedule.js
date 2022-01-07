@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import { useTable } from "react-table";
 import styled from "styled-components";
-import ScheduleData from "../Components/Schedule/ScheduleData";
 
 const Styles = styled.div`
   padding: 1rem;
@@ -98,12 +97,12 @@ const Schedule = () => {
 
     []
   );
-  const data = React.useMemo(() => ScheduleData(6), []);
+  // const data = React.useMemo(() => ScheduleData(6), []);
 
   return (
     <BasicContainer menuItem={true}>
       <Styles>
-        <Table columns={columns} data={data} />
+        {/* <Table columns={columns} data={data} /> */}
       </Styles>
     </BasicContainer>
   );

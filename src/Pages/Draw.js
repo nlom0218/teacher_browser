@@ -6,12 +6,12 @@ import { useQuery, useReactiveVar } from '@apollo/client';
 import StudentList from '../Components/Draw/Popup/StudentList';
 import { FcContacts } from "react-icons/fc";
 import { useParams } from 'react-router-dom';
-import { SEE_ONE_STUDENT_LIST_QUERY } from '../Components/List/DetailList';
 import useMedia from '../Hooks/useMedia';
 import { customMedia } from '../styles';
 import { useState } from 'react/cjs/react.development';
 import { inputLine } from '../Animations/InputLine';
 import { BtnFadeIn } from '../Animations/Fade';
+import { SEE_ONE_STUDENT_LIST_QUERY } from '../Graphql/StudentList/query';
 
 
 const Container = styled.div`
@@ -111,17 +111,17 @@ const ListName = styled.div`
 
 
 const Draw = () => {
-  const {id} = useParams()
+  const { id } = useParams()
   const media = useMedia()
   const isPopup = useReactiveVar(isPopupVar)
   const [studentListName, setStudentListName] = useState(null)
   const [isEdit, setIsEdit] = useState(false)
   const [title, setTitle] = useState(undefined)
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
-    variables : {
-      listId : id
+    variables: {
+      listId: id
     },
-    skip : !id
+    skip: !id
   })
   const onClickListIcon = () => inPopup("seeStudentList")
   const onClickInput = () => {
@@ -131,7 +131,7 @@ const Draw = () => {
     setIsEdit(false)
   }
   useEffect(() => {
-    if(data){
+    if (data) {
       setStudentListName(data?.seeStudentList[0]?.listName)
     }
   }, [data])
@@ -142,36 +142,36 @@ const Draw = () => {
         <TopContents>
           <Title onBlur={onBlurForm}>
             <InputLayout>
-            <Input
-              type = "text"
-              placeholder = "제목을 입력하세요."
-              autocomplete = "off"
-              onClick ={onClickInput}
-            />
+              <Input
+                type="text"
+                placeholder="제목을 입력하세요."
+                autocomplete="off"
+                onClick={onClickInput}
+              />
               {isEdit && <LineBox>
                 <Line></Line>
               </LineBox>}
             </InputLayout>
             {isEdit && <SubmitInput
-              type = "submit"
-              value = "저장"
+              type="submit"
+              value="저장"
             />}
           </Title>
-          {media !== "Desktop" && 
-          <ListIcon>
-            <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다."}</ListName>
-            <FcContacts onClick ={onClickListIcon}/>
+          {media !== "Desktop" &&
+            <ListIcon>
+              <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다."}</ListName>
+              <FcContacts onClick={onClickListIcon} />
             </ListIcon>}
         </TopContents>
       </Container>
-      {isPopup === "seeStudentList" && <StudentList/>}
+      {isPopup === "seeStudentList" && <StudentList />}
     </BasicContainer>
   );
 };
 
 export default Draw;
 
-    {/* <div style={style}>
+{/* <div style={style}>
       <input
         type="text"
         name="name"

@@ -1,11 +1,10 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
-import { SEE_ALL_STUDENT_LIST_QUERY } from "../../List/AllList";
 import PopupContainer from "../../Shared/PopupContainer";
 import styled from "styled-components";
-import { FcFolder, FcOpenedFolder } from "react-icons/fc";
 import StudentListItem from "./StudentListItem";
-import { useParams } from "react-router-dom";
+import { SEE_ALL_STUDENT_LIST_QUERY } from "../../../Graphql/StudentList/query";
+
 const Container = styled.div`
   padding: 20px 0px;
   padding: 1.25rem 0rem;
