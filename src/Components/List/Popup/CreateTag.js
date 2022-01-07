@@ -3,8 +3,11 @@ import gql from 'graphql-tag';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BsTrash } from 'react-icons/bs';
+import { IoArrowBackSharp } from 'react-icons/io5';
 import styled from 'styled-components';
+import { inPopup } from '../../../apollo';
 import useMe, { ME_QUERY } from '../../../Hooks/useMe';
+import useMedia from '../../../Hooks/useMedia';
 import { customMedia } from '../../../styles';
 import PopupContainer from '../../Shared/PopupContainer';
 import { SEE_ONE_STUDENT } from '../DetailStudent';
@@ -27,14 +30,21 @@ const DELETE_TAG_MUTATION = gql`
   }
 `
 
+const BackBtn = styled.div`
+  font-size: 1.5em;
+  font-size: 1.5rem;
+  padding-top: 20px;
+  padding-top: 1.25rem;
+`
+
 const Form = styled.form`
   display: grid;
   column-gap: 40px;
   column-gap: 2.5rem;
+  padding-top: ${props => props.isDesktop && "20px"};
+  padding-top: ${props => props.isDesktop && "1.25rem"};
   row-gap: 20px;
   row-gap: 1.25rem;
-  padding-top: 20px;
-  padding-top: 1.25rem;
   ${customMedia.greaterThan("tablet")`
     grid-template-columns: 1fr auto;
   `}
@@ -102,6 +112,7 @@ const TagItem = styled.div`
 
 const CreateTag = ({ studentId }) => {
   const me = useMe()
+  const media = useMedia()
   const [tagArr, setTagArr] = useState([])
   const [errMsg, setErrMsg] = useState(undefined)
   const { register, handleSubmit, setValue } = useForm({
@@ -155,13 +166,16 @@ const CreateTag = ({ studentId }) => {
     })
   }
 
+  const onClickBackBtn = () => inPopup("addTag")
+
   useEffect(() => {
     if (me) {
       setTagArr(me?.tag)
     }
   }, [me])
   return (<PopupContainer>
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    {media !== "Desktop" && <BackBtn onClick={onClickBackBtn}><IoArrowBackSharp /></BackBtn>}
+    <Form onSubmit={handleSubmit(onSubmit)} isDesktop={media === "Desktop"}>
       <Input
         {...register("tag", {
           required: true,

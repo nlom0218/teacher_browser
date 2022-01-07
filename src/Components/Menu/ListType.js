@@ -16,7 +16,7 @@ const Theme = styled.div`
 `
 
 const Title = styled.div`
-  justify-self: center;
+  /* justify-self: center; */
   margin: 0px 40px;
   margin: 0rem 2.5rem;
   padding: 10px 0px;
@@ -25,7 +25,7 @@ const Title = styled.div`
   font-size: 1.25rem;
   opacity: 0.8;
   position: relative;
-  ${customMedia.greaterThan("tablet")`
+  ${customMedia.greaterThan('tablet')`
     justify-self: flex-start;
   `}
 `
@@ -35,7 +35,7 @@ const UnderLine = styled.div`
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 180%;
+  width: 100%;
   height: 2px;
   background-color: ${props => props.theme.fontColor};
   opacity: 0.8;

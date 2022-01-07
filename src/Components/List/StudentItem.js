@@ -16,8 +16,6 @@ const Layout = styled.div`
   transition: background-color 1s ease;
 `
 
-const StudentIcon = styled.div``
-
 const StudentName = styled.div`
   padding: 10px;
   padding: 0.625rem;
@@ -25,7 +23,6 @@ const StudentName = styled.div`
 `
 
 const StudentItem = ({ item, setSomeDragging, studentId }) => {
-  console.log(studentId === item._id);
   // 학생 이름 drag를 위해 필요한 것
   // 아래의 두번째 인자를 드래그 할 곳에 참조로 넣는다.
   const [{ isDragging }, drag] = useDrag(() => ({

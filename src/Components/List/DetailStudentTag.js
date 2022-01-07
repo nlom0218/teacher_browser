@@ -8,6 +8,8 @@ import CreateTag from './Popup/CreateTag';
 import { DetailStudentLayout, DetailTitle } from './styled/DetailStudent';
 import { IoIosAddCircleOutline, IoIosRemoveCircleOutline } from "react-icons/io";
 import { EDIT_STUDENT_MUTATION, SEE_ONE_STUDENT } from './DetailStudent';
+import useMedia from '../../Hooks/useMedia';
+import AddTag from './Popup/AddTag';
 
 const StudentTagContainer = styled.div`
   padding: 20px;
@@ -23,8 +25,8 @@ const StudentTag = styled.div`
   display: flex;
   flex-wrap: wrap;
   .no_student_tag {
-    padding-top: 5px;
-    padding-top: 0.3125rem;
+    padding-top: 15px;
+    padding-top: 0.9375rem;
   }
 `
 
@@ -55,6 +57,8 @@ const TagBox = styled.div`
 const TagItem = styled.div`
   display: flex;
   align-items: center;
+  margin-top: 10px;
+  margin-top: 0.625rem;
   margin-right: 10px;
   margin-right: 0.625rem;
   padding: 5px 10px;
@@ -97,10 +101,22 @@ const CreateTagBtn = styled.div`
   cursor: pointer;
 `
 
+const AddTagBtn = styled.div`
+  text-align: center;
+  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
+  background-color: ${props => props.theme.btnBgColor};
+  color: ${props => props.theme.bgColor};
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+`
+
 const DetailStudentTag = ({ studentInfo }) => {
   const isPopup = useReactiveVar(isPopupVar)
 
   const me = useMe()
+  const media = useMedia()
 
   const [tagArr, setTagArr] = useState([])
   const [studentTatArr, setStudentTagArr] = useState(undefined)
@@ -135,6 +151,8 @@ const DetailStudentTag = ({ studentInfo }) => {
 
   const onClickCreateTag = () => inPopup("createTag")
 
+  const onClickPopupAddTag = () => inPopup("addTag")
+
   useEffect(() => {
     if (me) {
       setTagArr(me?.tag)
@@ -144,7 +162,7 @@ const DetailStudentTag = ({ studentInfo }) => {
     setStudentTagArr(studentInfo?.tag)
   }, [studentInfo])
   return (<DetailStudentLayout>
-    <DetailTitle style={{ marginTop: "5px", marginTop: "0.3125rem" }}>태그</DetailTitle>
+    <DetailTitle style={{ marginTop: "15px", marginTop: "0.9375rem" }}>태그</DetailTitle>
     <StudentTagContainer onMouseEnter={onMouseEnterTag} onMouseLeave={onMouseLeaveTag} onClick={onMouseEnterTag} isEdit={isEdit}>
       <StudentTag>{studentTatArr?.length === 0 ?
         <div className="no_student_tag">등록된 태그가 없습니다.</div>
@@ -156,7 +174,7 @@ const DetailStudentTag = ({ studentInfo }) => {
           </TagItem>
         })
       }</StudentTag>
-      {isEdit && <EditContainer>
+      {media === "Desktop" ? (isEdit && <EditContainer>
         <TagBox isEdit={isEdit}>
           {tagArr.length === 0 ? <div className="no_tag_div">생성된 태그가 없습니다.</div>
             : tagArr.map((item, index) => {
@@ -167,9 +185,20 @@ const DetailStudentTag = ({ studentInfo }) => {
           }
         </TagBox>
         <CreateTagBtn onClick={onClickCreateTag}>태그 관리하기</CreateTagBtn>
-      </EditContainer>}
+      </EditContainer>)
+        :
+        <AddTagBtn onClick={onClickPopupAddTag}>태그 추가</AddTagBtn>
+      }
     </StudentTagContainer>
     {isPopup === "createTag" && <CreateTag studentId={studentInfo?._id} />}
+    {isPopup === "addTag" &&
+      <AddTag
+        studentTatArr={studentTatArr}
+        onClickDelTag={onClickDelTag}
+        onClickCreateTag={onClickCreateTag}
+        tagArr={tagArr}
+        onClickAddTag={onClickAddTag}
+      />}
   </DetailStudentLayout>);
 }
 
