@@ -1,19 +1,11 @@
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import styled from "styled-components";
 import { ME_QUERY } from "../../Hooks/useMe";
 import { useForm } from "react-hook-form";
 import BtnContainer from "./styled/BtnContainer";
 import RegisterBtn from "./styled/RegisterBtn";
-
-const UPDATE_USER_MUTATION = gql`
-  mutation UpdateUser($userEmail: String!, $bgTheme: String) {
-    updateUser(userEmail: $userEmail, bgTheme: $bgTheme) {
-      ok
-      error
-    }
-  }
-`;
+import { UPDATE_USER_BGTHEME_MUTATION } from "../../Graphql/User/mutation";
 
 const Container = styled.div`
   display: grid;
@@ -27,7 +19,7 @@ const Form = styled.form`
 `;
 
 const EditBg = ({ userEmail, bgTheme }) => {
-  const [updateBgTheme] = useMutation(UPDATE_USER_MUTATION, {
+  const [updateBgTheme] = useMutation(UPDATE_USER_BGTHEME_MUTATION, {
     refetchQueries: [{ query: ME_QUERY }],
   });
   const { register, handleSubmit, setValue } = useForm({ mode: "onChange" });

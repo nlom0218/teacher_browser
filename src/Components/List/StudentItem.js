@@ -7,13 +7,14 @@ import { useDrag } from "react-dnd"
 const Layout = styled.div`
   :hover {
     background-color: ${props => props.theme.hoverColor};
-    transition: background-color 0.6s ease;
     border-radius: 5px;
     border-radius: 0.3125rem;
   }
+  background-color: ${props => props.isSeleted && props.theme.hoverColor};
+  border-radius: ${props => props.isSeleted && "5px"};
+  border-radius: ${props => props.isSeleted && "0.3125rem"};
+  transition: background-color 1s ease;
 `
-
-const StudentIcon = styled.div``
 
 const StudentName = styled.div`
   padding: 10px;
@@ -21,7 +22,7 @@ const StudentName = styled.div`
   cursor: pointer;
 `
 
-const StudentItem = ({ item, setSomeDragging }) => {
+const StudentItem = ({ item, setSomeDragging, studentId }) => {
   // 학생 이름 drag를 위해 필요한 것
   // 아래의 두번째 인자를 드래그 할 곳에 참조로 넣는다.
   const [{ isDragging }, drag] = useDrag(() => ({
@@ -43,7 +44,7 @@ const StudentItem = ({ item, setSomeDragging }) => {
   useEffect(() => {
     isDragging ? setSomeDragging(true) : setSomeDragging(false)
   }, [isDragging, setSomeDragging])
-  return (<Layout ref={drag}>
+  return (<Layout ref={drag} isSeleted={studentId === item._id}>
     <Link to={`${routes.list}/student/${item._id}`}>
       <StudentName>{item.studentName}</StudentName>
     </Link>

@@ -1,26 +1,14 @@
 import { useQuery, useReactiveVar } from '@apollo/client';
-import gql from 'graphql-tag';
 import React, { useEffect, useState } from 'react';
 import { FcPlus } from 'react-icons/fc';
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../../apollo';
+import { SEE_ALL_STUDENT_LIST_QUERY } from '../../Graphql/StudentList/query';
 import { customMedia } from '../../styles';
 import EmptyItem from './Dorp/EmptyItem';
 import Trash from './Dorp/Trash';
 import ListItem from './ListItem';
 import PopupCreateList from './Popup/CreateList';
-
-export const SEE_ALL_STUDENT_LIST_QUERY = gql`
-  query SeeStudentList {
-    seeStudentList {
-      teacherEmail
-      listId
-      listOrder
-      listName
-      listIcon
-    }
-  }
-`
 
 const Container = styled.div`
   max-height: 100%;

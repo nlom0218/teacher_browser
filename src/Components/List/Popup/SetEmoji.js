@@ -1,12 +1,7 @@
 import React from 'react';
 import PopupContainer from '../../Shared/PopupContainer';
 import Picker from 'emoji-picker-react';
-import styled from 'styled-components';
 import { outPopup } from '../../../apollo';
-import gql from 'graphql-tag';
-import { useMutation } from '@apollo/client';
-import { SEE_ONE_STUDENT_LIST_QUERY } from '../DetailList';
-import { SEE_ALL_STUDENT_LIST_QUERY } from '../AllList';
 
 const SetEmoji = ({ setChosenEmoji, teacherEmail, listId, editStudentList, loading }) => {
   const onEmojiClick = (e, emojiObject) => {

@@ -1,19 +1,10 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import gql from 'graphql-tag';
 import { useDrop } from "react-dnd"
 import { useMutation } from '@apollo/client';
 import useMe from '../../../Hooks/useMe';
-import { SEE_ONE_STUDENT_LIST_QUERY } from "../DetailList"
-
-const ADD_STUDENT_MUTATION = gql`
-  mutation AddStudent($teacherEmail: String!, $studentId: [ID!], $listId: ID!) {
-    addStudent(teacherEmail: $teacherEmail, studentId: $studentId, listId: $listId) {
-      ok
-      error
-    }
-  }
-`
+import { SEE_ONE_STUDENT_LIST_QUERY } from '../../../Graphql/StudentList/query';
+import { ADD_STUDENT_MUTATION } from '../../../Graphql/StudentList/mutation';
 
 const SCenterDndContainer = styled.div`
   height: ${props => props.inList ? "100%" : "60%"};

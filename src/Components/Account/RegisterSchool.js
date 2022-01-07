@@ -1,22 +1,14 @@
 import React, { useState } from 'react';
 import { FcSearch } from 'react-icons/fc';
 import styled from 'styled-components';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
 import useMe, { ME_QUERY } from '../../Hooks/useMe';
 import PopupContainer from '../Shared/PopupContainer';
 import RegisterForm from './styled/RegisterForm';
 import RegisterErrMsg from './styled/RegisterErrMsg';
 import { outPopup } from '../../apollo';
-
-const UPDATE_USER_MUTATION = gql`
-  mutation UpdateUser($userEmail: String!, $schoolName: String, $schoolCode: String, $areaCode: String, $schoolAdress: String) {
-    updateUser(userEmail: $userEmail, schoolName: $schoolName, schoolCode: $schoolCode, areaCode: $areaCode, schoolAdress: $schoolAdress) {
-      ok
-      error
-    }
-  }
-`
+import { UPDATE_USER_MUTATION } from '../../Graphql/User/mutation';
 
 const SearchInput = styled.input`
   width: 100%;

@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 import { BsPersonPlus } from 'react-icons/bs';
 import { FcUpload } from 'react-icons/fc';
 import styled from 'styled-components';
-import { darkModeVar } from '../../apollo';
+import { darkModeVar, inPopup, isPopupVar } from '../../apollo';
 import useMedia from '../../Hooks/useMedia';
 import { color } from '../../styles';
 import CenterDndContainer from './Dorp/CenterDndContainer';
+import AddManyStudent from './Popup/AddManyStudent';
 
 // 연한 블루: #8dbdff
 // 진한 블루: #3b7dd8
@@ -109,15 +110,19 @@ const AddBtn = styled.div`
   transition: color 1s ease, background-color 1s ease;
 `
 
-const AddStudentBox = ({ listName, listId, setSuccessMsg, someDragging }) => {
+const AddStudentBox = ({ listName, listId, setSuccessMsg, someDragging, inStudent }) => {
   const darkMode = useReactiveVar(darkModeVar)
+
+  const isPopup = useReactiveVar(isPopupVar)
 
   // 아무런 전혀 의미없는 값.. 단지 에러 방지
   const [__, set__] = useState(null)
 
   const media = useMedia()
 
-  const onClickAddBtn = () => { window.alert("학생 복수 추가 기능") }
+  const onClickAddBtn = () => {
+    inPopup("addManyStudent")
+  }
   return (<Container>
     {media === "Desktop" ? <DndBox someDragging={someDragging} darkMode={darkMode}>
       <UploadIcon someDragging={someDragging} darkMode={darkMode}><BsPersonPlus /></UploadIcon>
@@ -152,6 +157,7 @@ const AddStudentBox = ({ listName, listId, setSuccessMsg, someDragging }) => {
         학생 추가하기
       </AddBtn>
     }
+    {isPopup === "addManyStudent" && <AddManyStudent inStudent={inStudent} listId={listId} />}
   </Container>);
 }
 

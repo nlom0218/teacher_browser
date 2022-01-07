@@ -1,46 +1,18 @@
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
-import gql from 'graphql-tag';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { FadeIn } from '../../Animations/Fade';
-import { inputLine } from '../../Animations/InputLine';
 import { inPopup, isPopupVar } from '../../apollo';
-import { SEE_ALL_STUDENT_LIST_QUERY } from './AllList';
 import SetEmoji from './Popup/SetEmoji';
 import StudentInList from './StudentInList';
 import { BtnFadeIn } from "../../Animations/Fade"
 import { customMedia } from '../../styles';
 import AddStudentBox from './AddStudentBox';
-
-
-export const SEE_ONE_STUDENT_LIST_QUERY = gql`
-  query SeeStudentList($listId: ID) {
-    seeStudentList(listId: $listId) {
-      listId
-      listOrder
-      listName
-      listIcon
-      teacherEmail
-      students {
-        _id
-        studentName
-        studentGender
-        studentOrder
-        listId
-      }
-    }
-  }
-`
-
-const EDIT_STUDENT_LIST = gql`
-  mutation Mutation($teacherEmail: String!, $listId: ID!, $listIcon: String, $listName: String) {
-    editStudentList(teacherEmail: $teacherEmail, listId: $listId, listIcon: $listIcon, listName: $listName) {
-      ok
-      error
-    }
-  }
-`
+import InputUnderLine from './InputUnderLine';
+import { SEE_ALL_STUDENT_LIST_QUERY, SEE_ONE_STUDENT_LIST_QUERY } from '../../Graphql/StudentList/query';
+import { EDIT_STUDENT_LIST } from "../../Graphql/StudentList/mutation"
+import useMedia from '../../Hooks/useMedia';
 
 const Container = styled.div`
   max-height: 100%;
@@ -67,6 +39,11 @@ const NameContainer = styled.div`
   justify-items: flex-start;
   ${customMedia.greaterThan("tablet")`
     grid-template-columns: 1fr;
+    margin-top: 20px;
+    margin-top: 1.25rem;
+  `}
+  ${customMedia.greaterThan("desktop")`
+    margin-top: 0;
   `}
     form {
     width: 100%;
@@ -105,23 +82,6 @@ const ListEomji = styled.div`
     font-size: 2.5rem;
     grid-column: 1 / -1;
   `}
-`
-
-const InputLayOut = styled.div`
-  .line-box {
-    position: relative;
-  }
-  .line {
-    position: absolute;
-    height: 2px;
-    top: 0px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: ${props => props.theme.fontColor};
-    opacity: 0.6;
-    transition: background 1s ease, opacity 1s ease;
-    animation: ${inputLine} 0.6s ease forwards;
-  }
 `
 
 const ListName = styled.input`
@@ -206,6 +166,8 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
   const [placeholder, setPlaceholder] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
 
+  const media = useMedia()
+
   const [seeSettingBtn, setSeeSettingBtn] = useState(false)
 
   const [chosenEmoji, setChosenEmoji] = useState(null)
@@ -268,8 +230,8 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
       setIsEditName(false)
       return
     }
-    if (name.length < 3 || name.length > 11) {
-      setErrMsg("명렬표의 이름은 3~10자 사이로 입력하세요.")
+    if (name.length < 2 || name.length > 11) {
+      setErrMsg("명렬표의 이름은 2~10자 사이로 입력하세요.")
       return
     }
     if (editLoading) {
@@ -311,7 +273,7 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
         {chosenEmoji && <ListEomji onClick={onClickEmojiBtn}>
           {chosenEmoji}
         </ListEomji>}
-        <InputLayOut>
+        <InputUnderLine isEdit={isEditName}>
           <ListName
             {...register("name", {
               required: true,
@@ -325,20 +287,23 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
             maxLength="10"
             onClick={onClickListName}
           />
-          {isEditName && <div className="line-box">
-            <div className="line"></div>
-          </div>}
-        </InputLayOut>
+        </InputUnderLine>
         {isEditName && <SubmitInput type="submit" value="수정" />}
       </form>
       {seeSettingBtn &&
-        <SettingBtn>
+        (media === "Desktop" && <SettingBtn>
           {chosenEmoji ?
             <SetEmojiBtn onClick={onClickEmojiDelBtn}>아이콘 삭제</SetEmojiBtn>
             :
             <SetEmojiBtn onClick={onClickEmojiBtn}>아이콘 추가</SetEmojiBtn>}
-        </SettingBtn>
+        </SettingBtn>)
       }
+      {media !== "Desktop" && <SettingBtn>
+        {chosenEmoji ?
+          <SetEmojiBtn onClick={onClickEmojiDelBtn}>아이콘 삭제</SetEmojiBtn>
+          :
+          <SetEmojiBtn onClick={onClickEmojiBtn}>아이콘 추가</SetEmojiBtn>}
+      </SettingBtn>}
       {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
     </NameContainer>
     {data?.seeStudentList[0]?.students && <StudentInList students={data?.seeStudentList[0]?.students} listId={listId} />}
@@ -347,6 +312,7 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
       listName={listName}
       setSuccessMsg={setSuccessMsg}
       someDragging={someDragging}
+      inStudent={data?.seeStudentList[0]?.students}
     />
     {
       isPopup === "emoji" &&

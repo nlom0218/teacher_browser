@@ -1,25 +1,14 @@
 import { useMutation } from '@apollo/client';
-import gql from 'graphql-tag';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import CreateOneStudent from './CreateOneStudent';
 import CreateManyStudent from './CreateManyStudent';
 import useMe from '../../../Hooks/useMe';
 import { outPopup } from '../../../apollo';
-import { SEE_ALL_STUDENT_QUERY } from '../StudentList';
 import PopupContainer from '../../Shared/PopupContainer';
 import { customMedia } from '../../../styles';
-
-// createStudent로 복수, 단일 학생 생성하기로 mutation로 바꾸기, 이때 복수일때와 단일일때 전달하는 값을 다르게 한다.
-// ex) type = "복수" / type="단일"
-const CREATE_STUDENT_MUTATION = gql`
-    mutation CreateStudent($teacherEmail: String!, $studentString: String!) {
-    createStudent(teacherEmail: $teacherEmail, studentString: $studentString) {
-      ok
-      error
-    }
-  }
-`
+import { SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
+import { CREATE_STUDENT_MUTATION } from '../../../Graphql/Student/mutation';
 
 const CreationType = styled.div`
   display: grid;

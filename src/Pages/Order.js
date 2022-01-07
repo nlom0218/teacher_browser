@@ -2,13 +2,7 @@ import React, { useState } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
 import StudentList from "../Components/Order/Popup/StudentList";
-import {
-  BsChevronLeft,
-  BsPeopleFill,
-  BsFillCheckSquareFill,
-  BsPrinter,
-  BsChevronRight,
-} from "react-icons/bs";
+import { BsChevronLeft, BsPeopleFill, BsFillCheckSquareFill, BsPrinter, BsChevronRight } from "react-icons/bs";
 import { FcContacts } from "react-icons/fc";
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { inPopup, isPopupVar } from "../apollo";
@@ -221,7 +215,6 @@ const PrintBtn = styled.div`
   border-width: thick;
   border-radius: 2px;
   border-radius: 20px;
-  align: right;
   cursor: pointer;
 `;
 
@@ -289,12 +282,7 @@ const Order = () => {
         <TopContents>
           <Title onBlur={onBlurForm}>
             <InputLayout>
-              <Input
-                type="text"
-                placeholder="제목을 입력하세요."
-                autoComplete="off"
-                onClick={onClickInput}
-              />
+              <Input type="text" placeholder="제목을 입력하세요." autoComplete="off" onClick={onClickInput} />
 
               {isEdit && (
                 <LineBox>
@@ -306,9 +294,7 @@ const Order = () => {
           </Title>
           {media !== "Desktop" && (
             <ListIcon>
-              <ListName>
-                {studentListName ? studentListName : "선택된 명렬표가 없습니다"}
-              </ListName>
+              <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다"}</ListName>
               <FcContacts onClick={onClickListIcon} />
             </ListIcon>
           )}
