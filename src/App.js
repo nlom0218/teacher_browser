@@ -53,6 +53,7 @@ function App() {
         <Route path={routes.menu} element={<Menu />} />
         <Route path={routes.timer} element={<Timer />} />
         <Route path={routes.draw} element={<Draw />} />
+        <Route path={`${routes.order}/:id`} element={<Draw />} />
         <Route path={routes.swap} element={<Swap />} />
         <Route path={routes.order} element={<Order />} />
         <Route path={routes.lunchmenu} element={<Lunchmenu />} />
