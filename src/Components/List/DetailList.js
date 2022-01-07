@@ -227,8 +227,8 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
       setIsEditName(false)
       return
     }
-    if (name.length < 3 || name.length > 11) {
-      setErrMsg("명렬표의 이름은 3~10자 사이로 입력하세요.")
+    if (name.length < 2 || name.length > 11) {
+      setErrMsg("명렬표의 이름은 2~10자 사이로 입력하세요.")
       return
     }
     if (editLoading) {

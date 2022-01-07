@@ -77,8 +77,8 @@ const CreateList = () => {
     }
     const { listName } = data
     console.log(listName);
-    if (listName.length < 3 || listName.length > 11) {
-      setErrMsg("명렬표의 이름은 3~10자 사이로 입력하세요.")
+    if (listName.length < 2 || listName.length > 11) {
+      setErrMsg("명렬표의 이름은 2~10자 사이로 입력하세요.")
       return
     }
     createStudentList({
