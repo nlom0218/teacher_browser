@@ -12,6 +12,7 @@ import AddStudentBox from './AddStudentBox';
 import InputUnderLine from './InputUnderLine';
 import { SEE_ALL_STUDENT_LIST_QUERY, SEE_ONE_STUDENT_LIST_QUERY } from '../../Graphql/StudentList/query';
 import { EDIT_STUDENT_LIST } from "../../Graphql/StudentList/mutation"
+import useMedia from '../../Hooks/useMedia';
 
 const Container = styled.div`
   max-height: 100%;
@@ -165,6 +166,8 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
   const [placeholder, setPlaceholder] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
 
+  const media = useMedia()
+
   const [seeSettingBtn, setSeeSettingBtn] = useState(false)
 
   const [chosenEmoji, setChosenEmoji] = useState(null)
@@ -288,13 +291,19 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
         {isEditName && <SubmitInput type="submit" value="수정" />}
       </form>
       {seeSettingBtn &&
-        <SettingBtn>
+        (media === "Desktop" && <SettingBtn>
           {chosenEmoji ?
             <SetEmojiBtn onClick={onClickEmojiDelBtn}>아이콘 삭제</SetEmojiBtn>
             :
             <SetEmojiBtn onClick={onClickEmojiBtn}>아이콘 추가</SetEmojiBtn>}
-        </SettingBtn>
+        </SettingBtn>)
       }
+      {media !== "Desktop" && <SettingBtn>
+        {chosenEmoji ?
+          <SetEmojiBtn onClick={onClickEmojiDelBtn}>아이콘 삭제</SetEmojiBtn>
+          :
+          <SetEmojiBtn onClick={onClickEmojiBtn}>아이콘 추가</SetEmojiBtn>}
+      </SettingBtn>}
       {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
     </NameContainer>
     {data?.seeStudentList[0]?.students && <StudentInList students={data?.seeStudentList[0]?.students} listId={listId} />}
