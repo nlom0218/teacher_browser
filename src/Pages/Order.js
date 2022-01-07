@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
-import PopupList from "../Components/Order/Popuplist";
 import {
   BsChevronLeft,
   BsPeopleFill,
@@ -255,7 +254,6 @@ const Order = () => {
           </LeftRight>
         </RollList>
       </Container>
-      {popup === "list" && <PopupList setPopup={setPopup} />}
     </BasicContainer>
   );
 };

@@ -1,127 +1,177 @@
 import BasicContainer from '../Components/Shared/BasicContainer';
-import React from "react";
+import React, { useEffect } from "react";
 import styled from 'styled-components';
-
-// const Container = styled.div`
-// high: 100%
-// display: grid;
-// align-items: center;
-// color: ${props=>props.theme.bgColor};
-// `
-
-// const LayOut = styled.div`
-// width: 100%;
-// max-width: 400px;
-// margin: auto;
-// margin-top : 150px;
-// padding: 30px;
-// display: flex;
-// flex-direction: column;
-// background: rgba(4, 4, 43, 0.7);
-// high: 100%
-// `
-
-// const RandomNum = styled.div`
-// background: #181831;
-// padding: 20px;
-// p{
-//   color: #9cff9c;
-//   font-weight: 600;
-// }
-// `
-
-// const NumContainer = styled.div`
-// display: flex;
-// justify-content : space-between;
-// padding : 60px 0;
-// width : 100%;
-// div{
-//   width : 100%;
-//   max-width: 42%;
-// }
-// input{
-//   padding: 8px;
-//   border: none;
-//   outline: none;
-//   width : 100%;
-//   background : #181831;
-//   color : #9cff9c;
-// }
-// `
-
-// const Button = styled.div`
-// align-self: flex-end;
-// border: none;
-// outline : none;
-// background : #292977;
-// color: #fff;
-// padding : 14px;
-// width : 100%;
-// font-size : 22px;
-// cursor : pointer; 
-// `
+import { inPopup, isPopupVar } from '../apollo';
+import { useQuery, useReactiveVar } from '@apollo/client';
+import StudentList from '../Components/Draw/Popup/StudentList';
+import { FcContacts } from "react-icons/fc";
+import { useParams } from 'react-router-dom';
+import { SEE_ONE_STUDENT_LIST_QUERY } from '../Components/List/DetailList';
+import useMedia from '../Hooks/useMedia';
+import { customMedia } from '../styles';
+import { useState } from 'react/cjs/react.development';
+import { inputLine } from '../Animations/InputLine';
+import { BtnFadeIn } from '../Animations/Fade';
 
 
+const Container = styled.div`
+  display : grid;
+  padding : 40px;
+  padding : 2.5rem;
+  align-items : flex-start;
+`
 
-// export default function Draw() {
-//   const [minVal, setMinVal] = useState(0);
-//   const [maxVal, setMaxVal] = useState(10);
-//   const [randomNum, setRandomNum] = useState(5);
 
-//   const handleRandomNum = () => {
-//     if (minVal > maxVal) {
-//       window.alert("시작값이 끝값보다 큽니다.")
-//     return
-//     }
-//     setRandomNum(Math.floor(Math.random() * (maxVal - minVal + 1) + minVal));
-//   };
+const TopContents = styled.div`
+  display : grid;  
+  grid-template-columns : 1fr;
+  row-gap : 20px;
+  row-gap : 1.25rem;
+  align-items : center;
+  ${customMedia.greaterThan("tablet")`
+  grid-template-columns : 1fr auto;
+  column-gap : 20px;
+  column-gap : 1.25rem;
+  `}
+  ${customMedia.greaterThan("desktop")`
+  grid-template-columns : 1fr;
+  `}
+`
 
-//   return (
-//     <BasicContainer>
-//       <Container>
-//       <LayOut>
-//         <RandomNum>
-//           <p>
-//             숫자 뽑기 <span>{randomNum}</span>
-//           </p>
-//         </RandomNum>
-//         <NumContainer>
-//           <div>
-//           <p>시작:</p>
-//           <input 
-//             type="number" 
-//             value={minVal} 
-//             onChange={e => setMinVal(+e.target.value)} 
-//            />
-//           </div>
-//           <div>
-//           <p>끝:</p>
-//           <input 
-//             type="number" 
-//             value={maxVal} 
-//             onChange={e => setMaxVal(+e.target.value)}
-//            />
-//           </div>
-//         </NumContainer>
-//         <Button onClick ={handleRandomNum}>결과값</Button>
-//       </LayOut>
-//     </Container> 
-//     </BasicContainer>
-   
-//   );
-// }
+const Title = styled.form`
+  grid-row : 2 / 3;
+  display : grid;
+  grid-template-columns : 1fr auto;
+  align-items : center;
+  column-gap : 20px;
+  column-gap : 1.25rem;
+  ${customMedia.greaterThan("tablet")`
+  grid-row: 1 / 2;
+  `}
+`
 
-function CreateStudent({ name, onDataChange, onCreate }) {
-  const style = {
-    width: "600px",
-    margin: "20px",
-    padding: "10px",
-    border: "3px solid black"
-  };
+const Input = styled.input`
+  font-size : 1.5em;
+  font-size : 1.5rem;
+  padding : 10px 0px;
+  padding : 0.625rem 0rem;
+`
+
+const InputLayout = styled.div`
+`
+
+const LineBox = styled.div`
+  position : relative;
+`
+
+const Line = styled.div`
+  position : absolute;
+  height : 2px;
+  top : 0px;
+  left : 50%;
+  transform : translateX(-50%);
+  background : ${props => props.theme.fontColor};
+  opacity : 0.6;
+  transition : background 1s ease, opacity 1s ease;
+  animation : ${inputLine} 0.6s ease forwards;
+`
+
+
+const SubmitInput = styled.input`
+  cursor : pointer;
+  padding : 10px 30px ;
+  padding : 0.625rem 1.875rem;
+  background-color : ${props => props.theme.btnBgColor};
+  color : ${props => props.theme.bgColor};
+  border-radius : 5px;
+  border-radius : 0.3125rem;
+  animation : ${BtnFadeIn} 0.6s ease;
+`
+
+
+const ListIcon = styled.div`
+  grid-row : 1 / 2;
+  justify-self : flex-end;
+  display : grid;
+  grid-template-columns : auto auto;
+  column-gap : 10px;
+  column-gap : 0.625rem;
+  align-items : center;
+  svg {
+    display : flex;
+    font-size : 2.5em;
+    font-size : 2.5rem;
+    cursor : pointer;
+  }
+`
+
+const ListName = styled.div`
+`
+
+
+
+const Draw = () => {
+  const {id} = useParams()
+  const media = useMedia()
+  const isPopup = useReactiveVar(isPopupVar)
+  const [studentListName, setStudentListName] = useState(null)
+  const [isEdit, setIsEdit] = useState(false)
+  const [title, setTitle] = useState(undefined)
+  const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
+    variables : {
+      listId : id
+    },
+    skip : !id
+  })
+  const onClickListIcon = () => inPopup("seeStudentList")
+  const onClickInput = () => {
+    setIsEdit(true)
+  }
+  const onBlurForm = () => {
+    setIsEdit(false)
+  }
+  useEffect(() => {
+    if(data){
+      setStudentListName(data?.seeStudentList[0]?.listName)
+    }
+  }, [data])
 
   return (
-    <BasicContainer>
-    <div style={style}>
+    <BasicContainer menuItem={true}>
+      <Container>
+        <TopContents>
+          <Title onBlur={onBlurForm}>
+            <InputLayout>
+            <Input
+              type = "text"
+              placeholder = "제목을 입력하세요."
+              autocomplete = "off"
+              onClick ={onClickInput}
+            />
+              {isEdit && <LineBox>
+                <Line></Line>
+              </LineBox>}
+            </InputLayout>
+            {isEdit && <SubmitInput
+              type = "submit"
+              value = "저장"
+            />}
+          </Title>
+          {media !== "Desktop" && 
+          <ListIcon>
+            <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다."}</ListName>
+            <FcContacts onClick ={onClickListIcon}/>
+            </ListIcon>}
+        </TopContents>
+      </Container>
+      {isPopup === "seeStudentList" && <StudentList/>}
+    </BasicContainer>
+  );
+};
+
+export default Draw;
+
+    {/* <div style={style}>
       <input
         type="text"
         name="name"
@@ -132,9 +182,4 @@ function CreateStudent({ name, onDataChange, onCreate }) {
       />
       &nbsp;&nbsp;
       <button onClick={onCreate}>추가</button>
-    </div>
-    </BasicContainer>
-  );
-}
-
-export default CreateStudent;
+    </div> */}
