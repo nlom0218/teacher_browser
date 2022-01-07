@@ -36,17 +36,13 @@ const StudeuntListName = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background-color: ${(props) =>
-    props.selectedList ? props.theme.bgColor : props.theme.btnBgColor};
-  color: ${(props) =>
-    props.selectedList ? props.theme.fontColor : props.theme.bgColor};
+  background-color: ${(props) => (props.selectedList ? props.theme.bgColor : props.theme.btnBgColor)};
+  color: ${(props) => (props.selectedList ? props.theme.fontColor : props.theme.bgColor)};
   transition: background-color 1s ease, color 1s ease;
 `;
 
 const PopupList = ({ setPopup }) => {
-  const [listArray, setListArray] = useState(
-    JSON.parse(localStorage.getItem("orderList"))
-  ); // 각각 리스트 보내기
+  const [listArray, setListArray] = useState(JSON.parse(localStorage.getItem("orderList"))); // 각각 리스트 보내기
   const [itemObj, setItemObj] = useState({}); // 각각 리스트 안에 있는 배열 보내기
   const [studentList, setStudentList] = useState([]);
   const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY);
@@ -61,10 +57,10 @@ const PopupList = ({ setPopup }) => {
       type === "changedListName"
         ? changedItemList
         : {
-          order: itemObj.order,
-          listName: itemObj.listName,
-          list: changedItemList,
-        };
+            order: itemObj.order,
+            listName: itemObj.listName,
+            list: changedItemList,
+          };
     const existItem = listArray.filter((item) => item.listName !== name);
     const newListArray = [...existItem, newItemObj].sort(compare("order"));
     setItemObj(newItemObj);
@@ -131,11 +127,7 @@ const PopupList = ({ setPopup }) => {
           );
         })}
       </Container>
-      <PopupListItem
-        itemObj={itemObj}
-        modifyListArray={modifyListArray}
-        listArray={listArray}
-      />
+      <PopupListItem itemObj={itemObj} modifyListArray={modifyListArray} listArray={listArray} />
     </PopupContainer>
   );
 };
