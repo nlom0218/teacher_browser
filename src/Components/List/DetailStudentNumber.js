@@ -89,7 +89,7 @@ const DetailStudentNumber = ({ studentInfo }) => {
       variables: {
         teacherEmail: studentInfo?.teacherEmail,
         studentId: studentInfo?._id,
-        studentOrder: parseInt(studentNum)
+        studentNumber: parseInt(studentNum)
       }
     })
   }
@@ -101,9 +101,9 @@ const DetailStudentNumber = ({ studentInfo }) => {
   }
 
   useEffect(() => {
-    if (studentInfo?.studentOrder) {
-      setValue("studentNum", studentInfo?.studentOrder)
-    } else if (studentInfo?.studentOrder === null) {
+    if (studentInfo?.studentNumber) {
+      setValue("studentNum", studentInfo?.studentNumber)
+    } else if (studentInfo?.studentNumber === null) {
       setValue("studentNum", "")
     }
   }, [studentInfo])

@@ -100,7 +100,6 @@ const Menu = () => {
     setMenuType(type)
   }
 
-  console.log(menuType);
   return (<BasicContainer>
     <Container>
       <SeeType>

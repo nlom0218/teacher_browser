@@ -17,7 +17,7 @@ export const SEE_ONE_STUDENT_QUERY = gql`
       _id
       teacherEmail
       studentName
-      studentOrder
+      studentNumber
       studentGender
       parentPhoneNum
       allergy
