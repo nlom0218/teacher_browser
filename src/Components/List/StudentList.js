@@ -1,24 +1,13 @@
 import { useQuery, useReactiveVar } from '@apollo/client';
-import gql from 'graphql-tag';
 import React, { useEffect, useState } from 'react';
 import { FcNext, FcPrevious } from 'react-icons/fc';
 import styled from 'styled-components';
 import { FadeInBtn, FadeInList, FadeOutBtn, FadeOutList } from '../../Animations/StudentListAni';
 import { disableSeeStudentList, inPopup, isPopupVar, isSeeStudentListVar, enableSeeStudentList } from '../../apollo';
+import { SEE_ALL_STUDENT_QUERY } from '../../Graphql/Student/query';
 import { color } from '../../styles';
 import CreateStudent from './Popup/CreateStudent';
 import StudentItem from './StudentItem';
-
-export const SEE_ALL_STUDENT_QUERY = gql`
-  query Query {
-    seeAllStudent {
-      _id
-      teacherEmail
-      studentName
-      listId
-    } 
-  }
-`
 
 const SeeBtn = styled.div`
   cursor: pointer;
@@ -66,8 +55,8 @@ const SStudentList = styled.div`
     display: none; // Chrome, Safari, Opera
   }
   display: grid;
-  /* row-gap: 10px;
-  row-gap: 0.625rem; */
+  row-gap: 5px;
+  row-gap: 0.3125rem;
   .noStudnet {
     text-align: center;
     color: ${props => props.theme.redColor};
@@ -87,7 +76,7 @@ const AddStudentBtn = styled.div`
   transition: background-color 1s ease, color 1s ease;
 `
 
-const StudentList = ({ setSomeDragging }) => {
+const StudentList = ({ setSomeDragging, studentId }) => {
   // 초기 로드 시 에니메이션 작동 안하게 하기
   const [initLoad, setInitLoad] = useState(true)
 
@@ -132,7 +121,7 @@ const StudentList = ({ setSomeDragging }) => {
           <div className="noStudnet">생성된 학생이 없습니다.</div>
           :
           data?.seeAllStudent?.map((item, index) => {
-            return <StudentItem key={index} item={item} setSomeDragging={setSomeDragging} />
+            return <StudentItem key={index} item={item} setSomeDragging={setSomeDragging} studentId={studentId} />
 
           })}
       </SStudentList>

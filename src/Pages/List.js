@@ -10,6 +10,7 @@ import DetailStudent from '../Components/List/DetailStudent';
 import SeeStudents from '../Components/List/Popup/SeeStudents';
 import StudentList from '../Components/List/StudentList';
 import BasicContainer from '../Components/Shared/BasicContainer';
+import useMe from '../Hooks/useMe';
 import useMedia from '../Hooks/useMedia';
 import { color, customMedia } from '../styles';
 
@@ -76,6 +77,7 @@ const SuccessMsg = styled.div`
 `
 
 const List = () => {
+  const me = useMe()
   const isSeeStudentList = useReactiveVar(isSeeStudentListVar)
   const isPopup = useReactiveVar(isPopupVar)
 
@@ -115,11 +117,11 @@ const List = () => {
     <Container>
       <Layout isSeeStudentList={isSeeStudentList}>
         {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
-        {type === "student" && <DetailStudent />}
+        {type === "student" && <DetailStudent studentId={id} />}
         {type === "detail" && <DetailList listId={id} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
       </Layout>
       {media === "Desktop" ?
-        <StudentList setSomeDragging={setSomeDragging} />
+        <StudentList setSomeDragging={setSomeDragging} studentId={id} />
         :
         <StudentIcon onClick={onClickStudentIcon}><FaUserFriends /></StudentIcon>
       }

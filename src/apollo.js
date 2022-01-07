@@ -6,6 +6,13 @@ const DARK = "dark"
 const TOKEN = "token"
 const POPUP = "popup"
 const IS_SEE_STUDENT_LIST = "isSeeStudentList"
+const MENU_TYPE = "menuType"
+
+export const menuTypeVar = makeVar(localStorage.getItem(MENU_TYPE))
+export const setMenuType = (type) => {
+  localStorage.setItem(MENU_TYPE, type)
+  menuTypeVar(type)
+}
 
 export const darkModeVar = makeVar(Boolean(localStorage.getItem(DARK)))
 export const enableDarkMode = () => {

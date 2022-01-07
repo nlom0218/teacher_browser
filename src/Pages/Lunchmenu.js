@@ -148,6 +148,12 @@ const Food = styled.div`
 
 const Allergy = styled.div`
   opacity: 0.6;
+  display: flex;
+`
+
+const AllergyItem = styled.div`
+  margin-right: 10px;
+  margin-right: 0.625rem;
 `
 
 const LunchmenuBtn = styled.div`
@@ -268,7 +274,7 @@ const Lunchmenu = () => {
             (json.mealServiceDietInfo[1]).row[0].DDISH_NM.split("<br/>").map(item => {
               return {
                 food: item.replace(/[0-9]/g, "").replace(/\./g, ""),
-                allergy: item.split(/[^0-9]/g).filter(item => item !== "").join()
+                allergy: item.split(/[^0-9]/g).filter(item => item !== "")
               }
             })
           );
@@ -349,7 +355,9 @@ const Lunchmenu = () => {
                 menu.map((item, index) => (
                   <SLunchmenu key={index}>
                     <Food>{item.food}</Food>
-                    <Allergy>{item.allergy}</Allergy>
+                    <Allergy>{item.allergy.map((item, index) => {
+                      return <AllergyItem key={index}>{item}</AllergyItem>
+                    })}</Allergy>
                   </SLunchmenu>
                 ))
                 :

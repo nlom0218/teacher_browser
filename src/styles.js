@@ -23,7 +23,7 @@ export const color = {
 export const ligthTheme = {
   fontColor: color.black,
   bgColor: color.white,
-  blurColor: "rgba(230, 230, 230, 0.6)",
+  blurColor: "rgba(230, 230, 230, 0.8)",
   redColor: color.red,
   contentBgColor: color.gray,
   btnBgColor: color.blue,
@@ -31,12 +31,13 @@ export const ligthTheme = {
   hoverColor: "#d6d6d6",
   cardBg: "rgba(247,247,247,0.8)",
   cardHoverBg: "rgba(10,10,10,0.9)",
-  cardBorder: "rgba(160,160,160,1)"
+  cardBorder: "rgba(160,160,160,1)",
+  purple: "#ecbdfc"
 }
 export const darkTheme = {
   fontColor: color.white,
   bgColor: color.black,
-  blurColor: "rgba(60, 60, 60, 0.6)",
+  blurColor: "rgba(60, 60, 60, 0.8)",
   redColor: color.ligthRed,
   contentBgColor: color.maroon,
   btnBgColor: color.lightBlue,
@@ -44,7 +45,8 @@ export const darkTheme = {
   hoverColor: color.maroon,
   cardBg: "rgba(10,10,10,0.8)",
   cardHoverBg: "rgba(247,247,247,1)",
-  cardBorder: "rgba(120,120,120,1)"
+  cardBorder: "rgba(120,120,120,1)",
+  purple: "#6b018c"
 }
 
 export const GlobalStyle = createGlobalStyle`
