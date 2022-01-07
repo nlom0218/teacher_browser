@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
-import PopupList from "../Components/Order/Popuplist";
+import StudentList from "../Components/Order/Popup/StudentList";
 import {
   BsChevronLeft,
   BsPeopleFill,
@@ -9,16 +9,38 @@ import {
   BsPrinter,
   BsChevronRight,
 } from "react-icons/bs";
+import { FcContacts } from "react-icons/fc";
+import { useQuery, useReactiveVar } from "@apollo/client";
+import { inPopup, isPopupVar } from "../apollo";
+import { useParams } from "react-router-dom";
+import { SEE_ONE_STUDENT_LIST_QUERY } from "../Components/List/DetailList";
+import useMedia from "../Hooks/useMedia";
+import { customMedia } from "../styles";
+import { useEffect } from "react/cjs/react.development";
+import { inputLine } from "../Animations/InputLine";
+import { BtnFadeIn } from "../Animations/Fade";
 
 // 전체 틀
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 1fr auto;
-  padding: 50px;
+  padding: 40px;
   padding: 3.125rem;
   align-items: flex-start;
-  opacity: ${(props) => (props.popup ? 0.2 : 1)};
-  transition: opacity 0.6s ease;
+`;
+const TopContents = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  align-items: center;
+  ${customMedia.greaterThan("tablet")`
+   grid-template-columns: 1fr auto;
+   column-gap:20px;
+   column-gap:1.25rem;
+  `}
+  ${customMedia.greaterThan("desktop")`
+   grid-template-columns: 1fr;
+  `}
 `;
 //상단
 const Main = styled.div`
@@ -31,13 +53,56 @@ const Main = styled.div`
   grid-row: 1/-1;
   align-items: center;
 `;
+
 //제목
-const Title = styled.div`
-  grid-column: 1/-1;
-  font-size: 2.5em;
-  font-size: 2.5rem;
-  text-align: center;
+const Title = styled.form`
+  grid-row: 2/3;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  ${customMedia.greaterThan("tablet")`
+   grid-row : 1/2;
+  `}
 `;
+
+const Input = styled.input`
+  font-size: 1.5em;
+  font-size: 1.5rem;
+  padding: 10px 0px;
+  padding: 0.625rem 0rem;
+`;
+
+const InputLayout = styled.div``;
+
+const LineBox = styled.div`
+  position: relative;
+`;
+
+const Line = styled.div`
+  position: absolute;
+  height: 2px;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: ${(props) => props.theme.fontColor};
+  opacity: 0.6;
+  transition: background 1s ease, opacity 1s ease;
+  animation: ${inputLine} 0.6s ease forwards;
+`;
+
+const SubmitInput = styled.input`
+  background-color: ${(props) => props.theme.btnBgColor};
+  padding: 10px 30px;
+  padding: 0.625rem 1.875rem;
+  cursor: pointer;
+  color: ${(props) => props.theme.bgColor};
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  animation: ${BtnFadeIn} 0.6s ease;
+`;
+
 //명단 선택
 const OptionBtn = styled.div`
   background-color: ${(props) => props.theme.btnBgColor};
@@ -61,7 +126,23 @@ const MenuBtn = styled.div`
   }
 `;
 //명단 아이콘
-const ListIcon = styled.div``;
+const ListIcon = styled.div`
+  grid-row: 1/2;
+  justify-self: flex-end;
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 10px;
+  column-gap: 0.625rem;
+  align-items: center;
+  svg {
+    display: flex;
+    font-size: 2.5em;
+    font-size: 2.5rem;
+    cursor: pointer;
+  }
+`;
+
+const ListName = styled.div``;
 //조건 아이콘
 const ConditionIcon = styled.div``;
 
@@ -156,33 +237,25 @@ const PrintBtn = styled.div`
 //     hiddenBtn.style.display = "block";
 //     document.body = initBody;
 //   }
-//   window.print();ㄹ
+//   window.print();
 // }
 
 const Order = () => {
-  //명단과 조건 아이콘 누르면 팝업창 나오도록 함.
-  const [popup, setPopup] = useState(undefined);
-  const onClickIcon = (newPopup) => {
-    setPopup(newPopup);
-  };
-  //명단 불러오기 수정해야 함.
-  const unshuffled = [
-    "하나",
-    "둘",
-    "셋",
-    "넷",
-    "다섯",
-    "여섯",
-    "일곱",
-    "여덟",
-    "아홉",
-    "열",
-    //"열하나",
-    //"열둘",
-    // "열셋",
-    // "열넷",
-    // "열다섯",
-  ];
+  const { id } = useParams();
+  console.log(id);
+  const media = useMedia();
+  const isPopup = useReactiveVar(isPopupVar);
+
+  const [studentListName, setStudentListName] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
+  const [title, setTitle] = useState(undefined);
+  const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
+    variables: { listId: id },
+    skip: !id,
+  });
+  //  console.log(data);
+
+  const unshuffled = ["하나", "둘", "셋"];
   //목록 내 순서 변경
   const shuffled = unshuffled
     .map((value) => ({ value, sort: Math.random() }))
@@ -196,10 +269,52 @@ const Order = () => {
   const shuffledList = shuffled.map((value) => <li>{value}</li>);
   //결과 , 설명글 추가함. 순서 제목 입력->프린트할 때 제목 나오도록, 설명글 추가하니 밑줄 안 사라짐....
   //프린트 버튼이랑 롤업 버튼이랑 위치박스는 그대로하고 나오는 것만 다르게? 하는지 박스 자체도 변경할 것인지 선택
+  const onClickListIcon = () => inPopup("seeStudentList");
+  const onClickInput = () => {
+    setIsEdit(true);
+  };
+  const onBlurForm = () => {
+    setIsEdit(false);
+  };
+
+  useEffect(() => {
+    if (data) {
+      setStudentListName(data?.seeStudentList[0]?.listName);
+    }
+  }, [data]);
+
   return (
     <BasicContainer menuItem={true}>
-      <Container popup={popup}>
-        <Main>
+      <Container>
+        <TopContents>
+          <Title onBlur={onBlurForm}>
+            <InputLayout>
+              <Input
+                type="text"
+                placeholder="제목을 입력하세요."
+                autoComplete="off"
+                onClick={onClickInput}
+              />
+
+              {isEdit && (
+                <LineBox>
+                  <Line></Line>
+                </LineBox>
+              )}
+            </InputLayout>
+            {isEdit && <SubmitInput type="submit" value="저장" />}
+          </Title>
+          {media !== "Desktop" && (
+            <ListIcon>
+              <ListName>
+                {studentListName ? studentListName : "선택된 명렬표가 없습니다"}
+              </ListName>
+              <FcContacts onClick={onClickListIcon} />
+            </ListIcon>
+          )}
+        </TopContents>
+
+        {/* <Main>
           <Title>
             <acronym
               title="원하는 제목을 입력해주세요."
@@ -253,9 +368,9 @@ const Order = () => {
           <LeftRight>
             <BsChevronRight />
           </LeftRight>
-        </RollList>
+        </RollList> */}
       </Container>
-      {popup === "list" && <PopupList setPopup={setPopup} />}
+      {isPopup === "seeStudentList" && <StudentList />}
     </BasicContainer>
   );
 };
