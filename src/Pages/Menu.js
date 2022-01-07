@@ -6,6 +6,8 @@ import { BsGrid3X3GapFill, BsFilterLeft } from "react-icons/bs";
 import { ToLeft, ToRight } from '../Animations/MenuBtn';
 import GridType from '../Components/Menu/GridType';
 import ListType from '../Components/Menu/ListType';
+import { useReactiveVar } from '@apollo/client';
+import { menuTypeVar, setMenuType } from '../apollo';
 
 const Container = styled.div`
   display: grid;
@@ -46,7 +48,7 @@ const Type = styled.div`
 const Background = styled.div`
   position: absolute;
   left: 0;
-  transform: translateX(0%);
+  transform: ${props => props.seeType === "list" ? "translateX(0%)" : "translateX(100%)"};
   border-radius: 20px;
   border-radius: 1.25rem;
   background-color: ${props => props.theme.btnBgColor};
@@ -67,6 +69,8 @@ const GridTypeIcon = styled.div`
 `
 
 const Menu = () => {
+  const menuType = useReactiveVar(menuTypeVar)
+
   const [seeType, setSeeType] = useState("list")
   const [init, setInit] = useState(true)
 
@@ -93,26 +97,30 @@ const Menu = () => {
 
   const onClickType = (type) => {
     setInit(false)
-    setSeeType(type)
+    setMenuType(type)
   }
 
+  console.log(menuType);
   return (<BasicContainer>
     <Container>
       <SeeType>
         <Type>
-          <ListTypeIcon seeType={seeType === "list"} className="see_type_icon" onClick={() => onClickType("list")}>
+          <ListTypeIcon seeType={menuType === "list"} className="see_type_icon" onClick={() => onClickType("list")}>
             <BsFilterLeft />
           </ListTypeIcon>
-          <GridTypeIcon seeType={seeType === "grid"} className="see_type_icon" onClick={() => onClickType("grid")}>
+          <GridTypeIcon seeType={menuType === "grid" || null} className="see_type_icon" onClick={() => onClickType("grid")}>
             <BsGrid3X3GapFill />
           </GridTypeIcon>
-          <Background seeType={seeType} init={init}>
-            {seeType === "list" ? <BsFilterLeft /> : <BsGrid3X3GapFill />}
+          <Background seeType={menuType} init={init}>
+            {menuType === "list" ? <BsFilterLeft /> : <BsGrid3X3GapFill />}
           </Background>
         </Type>
       </SeeType>
-      {seeType === "list" && <ListType onClickLunchmenu={onClickLunchmenu} />}
-      {seeType === "grid" && <GridType onClickLunchmenu={onClickLunchmenu} />}
+      {menuType === "list" ?
+        <ListType onClickLunchmenu={onClickLunchmenu} />
+        :
+        <GridType onClickLunchmenu={onClickLunchmenu} />
+      }
     </Container>
   </BasicContainer>);
 }
