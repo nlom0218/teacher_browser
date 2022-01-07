@@ -1,22 +1,13 @@
 import { useMutation } from '@apollo/client';
-import gql from 'graphql-tag';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { outPopup } from '../../../apollo';
+import { CREATE_STUDENT_LIST_MUTATION } from '../../../Graphql/StudentList/mutation';
+import { SEE_ALL_STUDENT_LIST_QUERY } from '../../../Graphql/StudentList/query';
 import useMe from '../../../Hooks/useMe';
 import { customMedia } from '../../../styles';
 import PopupContainer from '../../Shared/PopupContainer';
-import { SEE_ALL_STUDENT_LIST_QUERY } from '../AllList';
-
-const CREATE_STUDENT_LIST_MUTATION = gql`
-  mutation CreateStudentList($teacherEmail: String!, $listName: String!) {
-    createStudentList(teacherEmail: $teacherEmail, listName: $listName) {
-      ok
-      error
-    }
-  }
-`
 
 const Form = styled.form`
   display: grid;

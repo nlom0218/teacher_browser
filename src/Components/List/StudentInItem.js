@@ -8,9 +8,9 @@ import useMedia from '../../Hooks/useMedia';
 import { useNavigate } from 'react-router';
 import routes from '../../routes';
 import { useMutation } from '@apollo/client';
-import { DELETE_STUDENT_MUTATION } from './Dorp/Trash';
 import useMe from '../../Hooks/useMe';
-import { SEE_ONE_STUDENT_LIST_QUERY } from './DetailList';
+import { SEE_ONE_STUDENT_LIST_QUERY } from '../../Graphql/StudentList/query';
+import { DELETE_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
 
 const Student = styled.div`
   position: relative;

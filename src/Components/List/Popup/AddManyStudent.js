@@ -2,12 +2,12 @@ import { useMutation, useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { RiCheckboxBlankLine, RiCheckboxLine } from 'react-icons/ri';
 import PopupContainer from '../../Shared/PopupContainer';
-import { SEE_ALL_STUDENT_QUERY } from '../StudentList';
 import { Btn, Container, Item, List } from '../styled/PopupSeeStudent';
-import { ADD_STUDENT_MUTATION } from "../Dorp/CenterDndContainer"
-import { SEE_ONE_STUDENT_LIST_QUERY } from '../DetailList';
 import useMe from '../../../Hooks/useMe';
 import { outPopup } from '../../../apollo';
+import { SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
+import { SEE_ONE_STUDENT_LIST_QUERY } from '../../../Graphql/StudentList/query';
+import { ADD_STUDENT_MUTATION } from '../../../Graphql/StudentList/mutation';
 
 const AddManyStudent = ({ inStudent, listId }) => {
   const me = useMe()

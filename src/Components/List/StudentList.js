@@ -1,24 +1,13 @@
 import { useQuery, useReactiveVar } from '@apollo/client';
-import gql from 'graphql-tag';
 import React, { useEffect, useState } from 'react';
 import { FcNext, FcPrevious } from 'react-icons/fc';
 import styled from 'styled-components';
 import { FadeInBtn, FadeInList, FadeOutBtn, FadeOutList } from '../../Animations/StudentListAni';
 import { disableSeeStudentList, inPopup, isPopupVar, isSeeStudentListVar, enableSeeStudentList } from '../../apollo';
+import { SEE_ALL_STUDENT_QUERY } from '../../Graphql/Student/query';
 import { color } from '../../styles';
 import CreateStudent from './Popup/CreateStudent';
 import StudentItem from './StudentItem';
-
-export const SEE_ALL_STUDENT_QUERY = gql`
-  query Query {
-    seeAllStudent {
-      _id
-      teacherEmail
-      studentName
-      listId
-    } 
-  }
-`
 
 const SeeBtn = styled.div`
   cursor: pointer;

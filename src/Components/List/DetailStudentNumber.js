@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { BtnFadeIn } from '../../Animations/Fade';
+import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
+import { SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
 import useMedia from '../../Hooks/useMedia';
 import { customMedia } from '../../styles';
-import { EDIT_STUDENT_MUTATION, SEE_ONE_STUDENT } from "./DetailStudent"
 import InputUnderLine from './InputUnderLine';
 import { DetailStudentLayout, DetailTitle } from "./styled/DetailStudent"
 
@@ -68,7 +69,7 @@ const DetailStudentNumber = ({ studentInfo }) => {
 
   const [editStudent, { loading }] = useMutation(EDIT_STUDENT_MUTATION, {
     onCompleted,
-    refetchQueries: [{ query: SEE_ONE_STUDENT, variables: { studentId: studentInfo?._id } }]
+    refetchQueries: [{ query: SEE_ONE_STUDENT_QUERY, variables: { studentId: studentInfo?._id } }]
   })
 
   const { register, setValue, handleSubmit, getValues } = useForm({

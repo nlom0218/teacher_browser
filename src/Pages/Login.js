@@ -13,19 +13,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import routes from '../routes';
 import { useForm } from 'react-hook-form';
 import BackBtn from '../Components/Account/BackBtn';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { logInUser } from '../apollo';
 import ErrMsg from '../Components/Account/styled/ErrMsg';
-
-const LOGIN_USER_MUTATION = gql`
-  mutation LoginUser($email: String!, $password: String!) {
-    loginUser(email: $email, password: $password) {
-      ok
-      token
-      error
-    }
-}
-`
+import { LOGIN_USER_MUTATION } from '../Graphql/User/mutation';
 
 const Login = () => {
   const [errMsg, setErrMsg] = useState(undefined)

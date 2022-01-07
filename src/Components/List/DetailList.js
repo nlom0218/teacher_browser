@@ -1,47 +1,17 @@
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
-import gql from 'graphql-tag';
 import React, { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { FadeIn } from '../../Animations/Fade';
-import { inputLine } from '../../Animations/InputLine';
 import { inPopup, isPopupVar } from '../../apollo';
-import { SEE_ALL_STUDENT_LIST_QUERY } from './AllList';
 import SetEmoji from './Popup/SetEmoji';
 import StudentInList from './StudentInList';
 import { BtnFadeIn } from "../../Animations/Fade"
 import { customMedia } from '../../styles';
 import AddStudentBox from './AddStudentBox';
 import InputUnderLine from './InputUnderLine';
-
-
-export const SEE_ONE_STUDENT_LIST_QUERY = gql`
-  query SeeStudentList($listId: ID) {
-    seeStudentList(listId: $listId) {
-      listId
-      listOrder
-      listName
-      listIcon
-      teacherEmail
-      students {
-        _id
-        studentName
-        studentGender
-        studentOrder
-        listId
-      }
-    }
-  }
-`
-
-const EDIT_STUDENT_LIST = gql`
-  mutation Mutation($teacherEmail: String!, $listId: ID!, $listIcon: String, $listName: String) {
-    editStudentList(teacherEmail: $teacherEmail, listId: $listId, listIcon: $listIcon, listName: $listName) {
-      ok
-      error
-    }
-  }
-`
+import { SEE_ALL_STUDENT_LIST_QUERY, SEE_ONE_STUDENT_LIST_QUERY } from '../../Graphql/StudentList/query';
+import { EDIT_STUDENT_LIST } from "../../Graphql/StudentList/mutation"
 
 const Container = styled.div`
   max-height: 100%;

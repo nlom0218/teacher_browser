@@ -1,18 +1,9 @@
 import { useMutation } from '@apollo/client';
-import gql from 'graphql-tag';
 import React from 'react';
 import { useDrop } from "react-dnd"
+import { EDIT_STUDENT_LIST_ORDER } from '../../../Graphql/StudentList/mutation';
+import { SEE_ALL_STUDENT_LIST_QUERY } from '../../../Graphql/StudentList/query';
 import useMe from '../../../Hooks/useMe';
-import { SEE_ALL_STUDENT_LIST_QUERY } from '../AllList';
-
-const EDIT_STUDENT_LIST_ORDER = gql`
-  mutation Mutation($teacherEmail: String!, $listId: ID!, $listOrder: Int) {
-    editStudentList(teacherEmail: $teacherEmail, listId: $listId, listOrder: $listOrder) {
-      ok
-      error
-    }
-  }
-`
 
 const EmptyItem = ({ moveStudentList, index, listOrder, studentList, setSudentList }) => {
   const me = useMe()

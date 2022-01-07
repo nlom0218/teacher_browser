@@ -1,4 +1,4 @@
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaLock, FaUser } from 'react-icons/fa';
@@ -14,16 +14,8 @@ import ErrMsg from '../Components/Account/styled/ErrMsg';
 import InputLayout from '../Components/Account/styled/InputLayout';
 import LoginNavigation from '../Components/Account/styled/LoginNavigation';
 import AccountContainer from '../Components/Shared/AccountContainer';
+import { CREATE_USER_MUTATION } from '../Graphql/User/mutation';
 import routes from '../routes';
-
-const CREATE_USER_MUTATION = gql`
-  mutation CreateUser($email: String!, $password: String!) {
-    createUser(email: $email, password: $password) {
-      ok
-      error
-    }
-  }
-`
 
 const CreateAccount = () => {
   const navigate = useNavigate()

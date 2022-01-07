@@ -1,34 +1,16 @@
 import { useMutation } from '@apollo/client';
-import gql from 'graphql-tag';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BsTrash } from 'react-icons/bs';
 import { IoArrowBackSharp } from 'react-icons/io5';
 import styled from 'styled-components';
 import { inPopup } from '../../../apollo';
+import { SEE_ONE_STUDENT_QUERY } from '../../../Graphql/Student/query';
+import { CREATE_TAG_MUTATION, DELETE_TAG_MUTATION } from '../../../Graphql/User/mutation';
 import useMe, { ME_QUERY } from '../../../Hooks/useMe';
 import useMedia from '../../../Hooks/useMedia';
 import { customMedia } from '../../../styles';
 import PopupContainer from '../../Shared/PopupContainer';
-import { SEE_ONE_STUDENT } from '../DetailStudent';
-
-const CREATE_TAG_MUTATION = gql`
-  mutation CreateTagMutation($userEmail: String!, $tag: [String]!) {
-    createTag(userEmail: $userEmail, tag: $tag) {
-      ok
-      error
-    }
-  }
-`
-
-const DELETE_TAG_MUTATION = gql`
-  mutation DeleteTag($userEmail: String!, $tag: String!) {
-    deleteTag(userEmail: $userEmail, tag: $tag) {
-      ok
-      error
-    }
-  }
-`
 
 const BackBtn = styled.div`
   font-size: 1.5em;
@@ -134,7 +116,7 @@ const CreateTag = ({ studentId }) => {
   const [deleteTag, { loadng: delLoading }] = useMutation(DELETE_TAG_MUTATION, {
     refetchQueries: [
       { query: ME_QUERY },
-      { query: SEE_ONE_STUDENT, variables: { studentId } }]
+      { query: SEE_ONE_STUDENT_QUERY, variables: { studentId } }]
   })
 
   const onSubmit = (data) => {

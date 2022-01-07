@@ -1,56 +1,15 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { BtnFadeIn } from '../../Animations/Fade';
+import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
+import { SEE_ALL_STUDENT_QUERY, SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
 import { customMedia } from '../../styles';
 import DetailStudentAllergy from './DetailStudentAllergy';
 import DetailStudentNumber from './DetailStudentNumber';
 import DetailStudentTag from './DetailStudentTag';
 import InputUnderLine from './InputUnderLine';
-import { SEE_ALL_STUDENT_QUERY } from './StudentList';
-
-export const SEE_ONE_STUDENT = gql`
-  query SeeAllStudent($studentId: ID) {
-    seeAllStudent(studentId: $studentId) {
-      _id
-      teacherEmail
-      studentName
-      studentOrder
-      studentGender
-      parentPhoneNum
-      allergy
-      tag
-    }
-  }
-`
-
-export const EDIT_STUDENT_MUTATION = gql`
-mutation Mutation(
-  $teacherEmail: String!,
-  $studentId: ID!,
-  $studentName: String,
-  $studentOrder: Int,
-  $studentGender: String,
-  $parentPhoneNum: String, 
-  $allergy: [Int], 
-  $tag: [String], 
-  $delTag: String) {
-  editStudent(
-    teacherEmail: $teacherEmail, 
-    studentId: $studentId, 
-    studentName: $studentName, 
-    studentOrder: $studentOrder,
-    studentGender: $studentGender, 
-    parentPhoneNum: $parentPhoneNum, 
-    allergy: $allergy, 
-    tag: $tag, 
-    delTag: $delTag) {
-      ok
-      error
-  }
-}
-`
 
 const Container = styled.div`
   max-height: 100%;
@@ -141,7 +100,7 @@ const DetailStudent = ({ studentId }) => {
   const [studentInfo, setStudentInfo] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
   const [isEdit, setIsEdit] = useState(false)
-  const { data, loading } = useQuery(SEE_ONE_STUDENT, {
+  const { data, loading } = useQuery(SEE_ONE_STUDENT_QUERY, {
     variables: {
       studentId
     }

@@ -7,9 +7,10 @@ import useMe from '../../Hooks/useMe';
 import CreateTag from './Popup/CreateTag';
 import { DetailStudentLayout, DetailTitle } from './styled/DetailStudent';
 import { IoIosAddCircleOutline, IoIosRemoveCircleOutline } from "react-icons/io";
-import { EDIT_STUDENT_MUTATION, SEE_ONE_STUDENT } from './DetailStudent';
 import useMedia from '../../Hooks/useMedia';
 import AddTag from './Popup/AddTag';
+import { SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
+import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
 
 const StudentTagContainer = styled.div`
   padding: 20px;
@@ -123,7 +124,7 @@ const DetailStudentTag = ({ studentInfo }) => {
   const [isEdit, setIsEdit] = useState(false)
 
   const [editStudent, { loading }] = useMutation(EDIT_STUDENT_MUTATION, {
-    refetchQueries: [{ query: SEE_ONE_STUDENT, variables: { studentId: studentInfo?._id } }]
+    refetchQueries: [{ query: SEE_ONE_STUDENT_QUERY, variables: { studentId: studentInfo?._id } }]
   })
 
   const onClickAddTag = (tag) => {

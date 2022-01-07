@@ -1,20 +1,12 @@
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import React from 'react';
 import styled from 'styled-components';
 import { inPopup } from '../../apollo';
+import { DELETE_SCHOOL_INFO_MUTATION } from '../../Graphql/User/mutation';
 import { ME_QUERY } from '../../Hooks/useMe';
 import BtnContainer from './styled/BtnContainer';
 import DelBtn from './styled/DelBtn';
 import RegisterBtn from './styled/RegisterBtn';
-
-const DELETE_SCHOOL_INFO_MUTATION = gql`
-  mutation DeleteSchoolInfo($userEmail: String!) {
-    deleteSchoolInfo(userEmail: $userEmail) {
-      ok
-      error
-    }
-  }
-`
 
 const Container = styled.div`
   display: grid;

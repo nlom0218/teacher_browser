@@ -2,29 +2,12 @@ import React from 'react';
 import { FcFullTrash } from 'react-icons/fc';
 import styled from 'styled-components';
 import { useDrop } from "react-dnd"
-import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
 import useMe from '../../../Hooks/useMe';
-import { SEE_ALL_STUDENT_LIST_QUERY } from '../AllList';
-import { SEE_ALL_STUDENT_QUERY } from '../StudentList';
-
-const DELETE_STUDENT_LIST_MUTATION = gql`
-  mutation Mutation($teacherEmail: String!, $listId: ID!) {
-    deleteStudentList(teacherEmail: $teacherEmail, listId: $listId) {
-      ok
-      error
-    }
-  }
-`
-
-export const DELETE_STUDENT_MUTATION = gql`
-  mutation DeleteStudent($teacherEmail: String!, $studentId: ID!, $disconnectOnly: Boolean!, $listId: ID) {
-    deleteStudent(teacherEmail: $teacherEmail, studentId: $studentId, disconnectOnly: $disconnectOnly, listId: $listId) {
-      ok
-      error
-    }
-  }
-`
+import { SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
+import { DELETE_STUDENT_MUTATION } from '../../../Graphql/Student/mutation';
+import { SEE_ALL_STUDENT_LIST_QUERY } from '../../../Graphql/StudentList/query';
+import { DELETE_STUDENT_LIST_MUTATION } from '../../../Graphql/StudentList/mutation';
 
 const Container = styled.div`
   display: grid;

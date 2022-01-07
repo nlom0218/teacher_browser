@@ -1,18 +1,9 @@
 import { useMutation } from '@apollo/client';
-import gql from 'graphql-tag';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { logInUser } from '../apollo';
+import { NAVER_LOGIN_MUTATION } from '../Graphql/User/mutation';
 import routes from '../routes';
-
-const NAVER_LOGIN_MUTATION = gql`
-  mutation NaverLogin($email: String!) {
-    naverLogin(email: $email) {
-      ok
-      token
-    }
-  }
-`
 
 const NaverLoginCallBack = () => {
   const navigate = useNavigate()

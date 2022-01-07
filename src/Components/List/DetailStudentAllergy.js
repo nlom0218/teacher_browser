@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { DetailStudentLayout, DetailTitle } from './styled/DetailStudent';
 import { RiCheckboxBlankLine, RiCheckboxLine } from 'react-icons/ri';
 import { BtnFadeIn } from "../../Animations/Fade"
-import { EDIT_STUDENT_MUTATION, SEE_ONE_STUDENT } from "./DetailStudent"
 import { useMutation } from '@apollo/client';
 import { customMedia } from '../../styles';
+import { SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
+import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
 
 const AllergyList = styled.div`
   padding: 20px;
@@ -75,7 +76,7 @@ const DetailStudentAllergy = ({ studentInfo }) => {
   }
   const [editStudent, { loading }] = useMutation(EDIT_STUDENT_MUTATION, {
     onCompleted,
-    refetchQueries: [{ query: SEE_ONE_STUDENT, variables: { studentId: studentInfo?._id } }]
+    refetchQueries: [{ query: SEE_ONE_STUDENT_QUERY, variables: { studentId: studentInfo?._id } }]
   })
 
   const onClickAdd = (allergy) => {

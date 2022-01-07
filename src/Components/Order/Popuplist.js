@@ -2,10 +2,10 @@ import { useQuery } from "@apollo/client";
 import React, { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import PopupContainer from "./PopupContainer";
-import { SEE_ALL_STUDENT_QUERY } from "../Account/StudentInfo";
 import styled from "styled-components";
 import PopupListItem from "./Popuplistitem";
 import PopupListName from "./Popuplistname";
+import { SEE_ALL_STUDENT_QUERY } from "../../Graphql/Student/query";
 
 const Container = styled.div`
   display: grid;
@@ -61,10 +61,10 @@ const PopupList = ({ setPopup }) => {
       type === "changedListName"
         ? changedItemList
         : {
-            order: itemObj.order,
-            listName: itemObj.listName,
-            list: changedItemList,
-          };
+          order: itemObj.order,
+          listName: itemObj.listName,
+          list: changedItemList,
+        };
     const existItem = listArray.filter((item) => item.listName !== name);
     const newListArray = [...existItem, newItemObj].sort(compare("order"));
     setItemObj(newItemObj);
