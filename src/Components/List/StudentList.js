@@ -79,6 +79,7 @@ const AddStudentBtn = styled.div`
 const StudentList = ({ setSomeDragging, studentId }) => {
   // 초기 로드 시 에니메이션 작동 안하게 하기
   const [initLoad, setInitLoad] = useState(true)
+  const [sort, setASort] = useState()
 
   const isSeeStudentList = useReactiveVar(isSeeStudentListVar)
 
