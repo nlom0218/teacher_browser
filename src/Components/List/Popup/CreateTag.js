@@ -12,19 +12,31 @@ import useMedia from '../../../Hooks/useMedia';
 import { customMedia } from '../../../styles';
 import PopupContainer from '../../Shared/PopupContainer';
 
+const Container = styled.div`
+  display: grid;
+  column-gap: 40px;
+  column-gap: 2.5rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+`
+
 const BackBtn = styled.div`
   font-size: 1.5em;
   font-size: 1.5rem;
   padding-top: 20px;
   padding-top: 1.25rem;
+  svg {
+    cursor: pointer;
+    display: flex;
+  }
 `
 
 const Form = styled.form`
+  padding-top: ${props => props.isDesktop && "20px"};
+  padding-top: ${props => props.isDesktop && "1.25rem"};
   display: grid;
   column-gap: 40px;
   column-gap: 2.5rem;
-  padding-top: ${props => props.isDesktop && "20px"};
-  padding-top: ${props => props.isDesktop && "1.25rem"};
   row-gap: 20px;
   row-gap: 1.25rem;
   ${customMedia.greaterThan("tablet")`
@@ -92,7 +104,7 @@ const TagItem = styled.div`
   }
 `
 
-const CreateTag = ({ studentId }) => {
+const CreateTag = ({ studentId, isBackBtn }) => {
   const me = useMe()
   const media = useMedia()
   const [tagArr, setTagArr] = useState([])
@@ -148,7 +160,8 @@ const CreateTag = ({ studentId }) => {
     })
   }
 
-  const onClickBackBtn = () => inPopup("addTag")
+  const onClickBackAddTagBtn = () => inPopup("addTag")
+  const onClickBackSettingSortTagBtn = () => inPopup("studentSetting")
 
   useEffect(() => {
     if (me) {
@@ -156,35 +169,38 @@ const CreateTag = ({ studentId }) => {
     }
   }, [me])
   return (<PopupContainer>
-    {media !== "Desktop" && <BackBtn onClick={onClickBackBtn}><IoArrowBackSharp /></BackBtn>}
-    <Form onSubmit={handleSubmit(onSubmit)} isDesktop={media === "Desktop"}>
-      <Input
-        {...register("tag", {
-          required: true,
-          onChange: () => setErrMsg(undefined)
-        })}
-        autoComplete="off"
-        autoFocus
-        placeholder="태그 이름을 입력하세요."
-        type="text"
-      />
-      <SubmitInput
-        type="submit"
-        value="생성"
-      />
-      {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
-    </Form>
-    <SeeTag>
-      <div>{tagArr.length === 0 ? "생성된 태그가 없습니다." : "셍상된 태그"}</div>
-      <TagList>
-        {tagArr.map((item, index) => {
-          return <TagItem key={index}>
-            <div>{item}</div>
-            <BsTrash onClick={() => onClickDelBtn(item)} />
-          </TagItem>
-        })}
-      </TagList>
-    </SeeTag>
+    <Container>
+      {media !== "Desktop" && <BackBtn onClick={onClickBackAddTagBtn}><IoArrowBackSharp /></BackBtn>}
+      {isBackBtn && <BackBtn onClick={onClickBackSettingSortTagBtn}><IoArrowBackSharp /></BackBtn>}
+      <Form onSubmit={handleSubmit(onSubmit)} isDesktop={media === "Desktop"}>
+        <Input
+          {...register("tag", {
+            required: true,
+            onChange: () => setErrMsg(undefined)
+          })}
+          autoComplete="off"
+          autoFocus
+          placeholder="태그 이름을 입력하세요."
+          type="text"
+        />
+        <SubmitInput
+          type="submit"
+          value="생성"
+        />
+        {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
+      </Form>
+      <SeeTag>
+        <div>{tagArr.length === 0 ? "생성된 태그가 없습니다." : "셍상된 태그"}</div>
+        <TagList>
+          {tagArr.map((item, index) => {
+            return <TagItem key={index}>
+              <div>{item}</div>
+              <BsTrash onClick={() => onClickDelBtn(item)} />
+            </TagItem>
+          })}
+        </TagList>
+      </SeeTag>
+    </Container>
   </PopupContainer>);
 }
 

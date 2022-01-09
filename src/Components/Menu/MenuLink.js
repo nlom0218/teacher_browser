@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import routes from '../../routes';
 import { FcAlarmClock, FcDonate, FcRefresh, FcNumericalSorting12, FcContacts, FcDataSheet } from "react-icons/fc";
 import styled from 'styled-components';
+import icon from "../../image/icons/휴지통.svg"
 
 const SMenu = styled.div`
   display: grid;
@@ -12,6 +13,9 @@ const SMenu = styled.div`
   color: ${props => props.theme.fontColor};
   transition: color 1s ease;
   cursor: pointer;
+  a {
+    z-index: 10;
+  }
   img {
     margin: 0 auto;
   }
@@ -20,6 +24,9 @@ const SMenu = styled.div`
     font-size: 2.5em;
     font-size: 2.5rem;
   }
+  /* object {
+    filter:drop-shadow(2px 2px 1px rgb(0,0,0))
+  } */
 `
 
 const Title = styled.div`
@@ -30,10 +37,11 @@ const Title = styled.div`
 export const TimerLink = () => {
   return (<Link to={routes.timer}>
     <SMenu>
+      {/* <object type="image/svg+xml" data={icon}></object> */}
       <FcAlarmClock />
       <Title>타이머</Title>
     </SMenu>
-  </Link>);
+  </Link >);
 }
 
 export const DrawLink = () => {

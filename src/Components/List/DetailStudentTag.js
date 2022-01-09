@@ -9,8 +9,9 @@ import { DetailStudentLayout, DetailTitle } from './styled/DetailStudent';
 import { IoIosAddCircleOutline, IoIosRemoveCircleOutline } from "react-icons/io";
 import useMedia from '../../Hooks/useMedia';
 import AddTag from './Popup/AddTag';
-import { SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
+import { SEE_ALL_STUDENT_QUERY, SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
 import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
+import TagItem from './TagItem';
 
 const StudentTagContainer = styled.div`
   padding: 20px;
@@ -55,29 +56,6 @@ const TagBox = styled.div`
   }
 `
 
-const TagItem = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  margin-top: 0.625rem;
-  margin-right: 10px;
-  margin-right: 0.625rem;
-  padding: 5px 10px;
-  padding: 0.3215rem 0.625rem;
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  background-color: ${props => props.theme.purple};
-  transition: background-color 1s ease;
-  svg {
-    display: flex;
-    cursor: pointer;
-    margin-left: 5px;
-    margin-left: 0.3125rem;
-    font-size: 1.25em;
-    font-size: 1.25rem;
-  }
-`
-
 const Tag = styled.div`
   cursor: pointer;
   display: flex;
@@ -115,6 +93,7 @@ const AddTagBtn = styled.div`
 
 const DetailStudentTag = ({ studentInfo }) => {
   const isPopup = useReactiveVar(isPopupVar)
+  const selectedTag = JSON.parse(localStorage.getItem("selectedTag"))
 
   const me = useMe()
   const media = useMedia()
@@ -124,7 +103,14 @@ const DetailStudentTag = ({ studentInfo }) => {
   const [isEdit, setIsEdit] = useState(false)
 
   const [editStudent, { loading }] = useMutation(EDIT_STUDENT_MUTATION, {
-    refetchQueries: [{ query: SEE_ONE_STUDENT_QUERY, variables: { studentId: studentInfo?._id } }]
+    refetchQueries: [
+      { query: SEE_ONE_STUDENT_QUERY, variables: { studentId: studentInfo?._id } },
+      {
+        query: SEE_ALL_STUDENT_QUERY, variables: {
+          ...(selectedTag && { tag: selectedTag })
+        }
+      }
+    ]
   })
 
   const onClickAddTag = (tag) => {
@@ -169,10 +155,7 @@ const DetailStudentTag = ({ studentInfo }) => {
         <div className="no_student_tag">등록된 태그가 없습니다.</div>
         :
         studentTatArr?.map((item, index) => {
-          return <TagItem key={index}>
-            <div>{item}</div>
-            <IoIosRemoveCircleOutline onClick={() => onClickDelTag(item)} />
-          </TagItem>
+          return <TagItem key={index} item={item} onClickDelTag={onClickDelTag} />
         })
       }</StudentTag>
       {media === "Desktop" ? (isEdit && <EditContainer>
