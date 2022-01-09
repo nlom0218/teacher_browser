@@ -86,6 +86,7 @@ const List = () => {
 
   const [selectedTag, setSeletedTag] = useState([])
   const [selectedSort, setSeletedSort] = useState(undefined)
+  const [seeNum, setSeeNum] = useState(Boolean(localStorage.getItem("seeNum")))
 
   // 드래그 중일 때와 아닐 때를 나타내기 위한 값
   const [someDragging, setSomeDragging] = useState(false)
@@ -134,7 +135,7 @@ const List = () => {
         {type === "detail" && <DetailList listId={id} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
       </Layout>
       {media === "Desktop" ?
-        <StudentList setSomeDragging={setSomeDragging} studentId={id} meTag={me?.tag} selectedTag={selectedTag} />
+        <StudentList setSomeDragging={setSomeDragging} studentId={id} meTag={me?.tag} selectedTag={selectedTag} seeNum={seeNum} />
         :
         <StudentIcon onClick={onClickStudentIcon}><FaUserFriends /></StudentIcon>
       }
@@ -148,6 +149,8 @@ const List = () => {
         setSeletedTag={setSeletedTag}
         selectedTag={selectedTag}
         meTag={me?.tag}
+        setSeeNum={setSeeNum}
+        seeNum={seeNum}
       />}
   </BasicContainer>);
 }

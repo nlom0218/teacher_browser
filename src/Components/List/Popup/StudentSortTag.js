@@ -6,6 +6,7 @@ import useMedia from '../../../Hooks/useMedia';
 import { customMedia } from '../../../styles';
 import PopupContainer from '../../Shared/PopupContainer';
 import TagItem from '../TagItem';
+import { RiCheckboxBlankLine, RiCheckboxLine } from 'react-icons/ri';
 
 const Container = styled.div`
   padding: 20px 0px;
@@ -78,13 +79,35 @@ const MeTag = styled.div`
 
 const Tag = styled.div`
   margin: 10px 10px 0px 0px;
-  cursor: pointer;
   :hover {
     text-decoration: underline;
   }
 `
 
-const StudentSortTag = ({ meTag, selectedTag, setSeletedTag }) => {
+const SeeStudentNum = styled.div`
+  display: grid;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  ${customMedia.greaterThan("tablet")`
+  `}
+`
+
+const SeeStudentNumBtn = styled.div`
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  svg {
+    cursor: pointer;
+    display: flex;
+    margin-right: 10px;
+    margin-right: 0.625rem;
+  }
+`
+
+const StudentSortTag = ({ meTag, selectedTag, setSeletedTag, setSeeNum, seeNum }) => {
   const media = useMedia()
   const onClickAddTag = (tag) => {
     const exist = selectedTag.includes(tag)
@@ -104,6 +127,16 @@ const StudentSortTag = ({ meTag, selectedTag, setSeletedTag }) => {
   const onClickResetBtn = () => {
     localStorage.removeItem("selectedTag")
     setSeletedTag([])
+  }
+
+  const onClickSeeNumBtn = (type) => {
+    if (type === "see") {
+      setSeeNum(true)
+      localStorage.setItem("seeNum", true)
+    } else {
+      setSeeNum(false)
+      localStorage.removeItem("seeNum")
+    }
   }
 
   return (<PopupContainer>
@@ -132,6 +165,20 @@ const StudentSortTag = ({ meTag, selectedTag, setSeletedTag }) => {
         </MeTag> : <React.Fragment>
           <div className="no_tag">생성된 태그가 없습니다.</div>
         </React.Fragment>}
+      </SettingLayout>
+      <SettingLayout>
+        <Title>✲ 번호 보이기</Title>
+        <SeeStudentNum>
+          {/* RiCheckboxBlankLine, RiCheckboxLine  */}
+          <SeeStudentNumBtn>
+            <div onClick={() => onClickSeeNumBtn("see")}>{seeNum ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+            <div>보이기</div>
+          </SeeStudentNumBtn>
+          <SeeStudentNumBtn>
+            <div onClick={() => onClickSeeNumBtn("hide")}>{!seeNum ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+            <div>숨기기</div>
+          </SeeStudentNumBtn>
+        </SeeStudentNum>
       </SettingLayout>
     </Container>
   </PopupContainer>);
