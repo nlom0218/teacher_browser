@@ -1,5 +1,9 @@
 import React from 'react';
+import { IoArrowBackSharp } from 'react-icons/io5';
 import styled from 'styled-components';
+import { inPopup } from '../../../apollo';
+import useMedia from '../../../Hooks/useMedia';
+import { customMedia } from '../../../styles';
 import PopupContainer from '../../Shared/PopupContainer';
 import TagItem from '../TagItem';
 
@@ -9,6 +13,40 @@ const Container = styled.div`
   display: grid;
   row-gap: 20px;
   row-gap: 1.25rem;
+`
+
+const BackBtn = styled.div`
+  font-size: 1.5em;
+  font-size: 1.5rem;
+  svg {
+    cursor: pointer;
+    display: flex;
+  }
+`
+
+const TopContents = styled.div`
+  display: grid;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: 1fr auto;
+  `}
+`
+
+const ResetBtn = styled.div`
+  text-align: center;
+  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  background-color: ${props => props.theme.btnBgColor};
+  color: ${props => props.theme.bgColor};
+  cursor: pointer;
+  ${customMedia.greaterThan("tablet")`
+    justify-self: flex-end;
+  `}
 `
 
 const SettingLayout = styled.div`
@@ -46,20 +84,8 @@ const Tag = styled.div`
   }
 `
 
-const CreateTagBtn = styled.div`
-  text-align: center;
-  padding: 10px 20px;
-  padding: 0.625rem 1.25rem;
-  margin-bottom: 10px;
-  margin-bottom: 0.625rem;
-  background-color: ${props => props.theme.btnBgColor};
-  color: ${props => props.theme.bgColor};
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  cursor: pointer;
-`
-
 const StudentSortTag = ({ meTag, selectedTag, setSeletedTag }) => {
+  const media = useMedia()
   const onClickAddTag = (tag) => {
     const exist = selectedTag.includes(tag)
     if (exist) {
@@ -74,9 +100,19 @@ const StudentSortTag = ({ meTag, selectedTag, setSeletedTag }) => {
     setSeletedTag(newSeletedTag)
     localStorage.setItem("selectedTag", JSON.stringify(newSeletedTag))
   }
+  const onClickBackAddTagBtn = () => inPopup("students")
+  const onClickResetBtn = () => {
+    localStorage.removeItem("selectedTag")
+    setSeletedTag([])
+  }
 
   return (<PopupContainer>
     <Container>
+      {media !== "Desktop" && <BackBtn onClick={onClickBackAddTagBtn}><IoArrowBackSharp /></BackBtn>}
+      <TopContents>
+        <div>학생 보기 설정</div>
+        <ResetBtn onClick={onClickResetBtn}>초기화</ResetBtn>
+      </TopContents>
       <SettingLayout>
         <Title>✲ 태그</Title>
         <SelectedTag>
@@ -97,14 +133,6 @@ const StudentSortTag = ({ meTag, selectedTag, setSeletedTag }) => {
           <div className="no_tag">생성된 태그가 없습니다.</div>
         </React.Fragment>}
       </SettingLayout>
-      {/* <SettingLayout>
-        <Title>✲ 정렬</Title>
-        <SelectedTag></SelectedTag>
-        <MeTag>
-          {meTag?.map((item, index) => {
-            return <div key={index}>{item}</div>
-          })}</MeTag>
-      </SettingLayout> */}
     </Container>
   </PopupContainer>);
 }

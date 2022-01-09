@@ -8,6 +8,7 @@ import AllList from '../Components/List/AllList';
 import DetailList from '../Components/List/DetailList';
 import DetailStudent from '../Components/List/DetailStudent';
 import SeeStudents from '../Components/List/Popup/SeeStudents';
+import StudentSortTag from '../Components/List/Popup/StudentSortTag';
 import StudentList from '../Components/List/StudentList';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import useMe from '../Hooks/useMe';
@@ -83,6 +84,9 @@ const List = () => {
 
   const media = useMedia()
 
+  const [selectedTag, setSeletedTag] = useState([])
+  const [selectedSort, setSeletedSort] = useState(undefined)
+
   // 드래그 중일 때와 아닐 때를 나타내기 위한 값
   const [someDragging, setSomeDragging] = useState(false)
 
@@ -113,6 +117,15 @@ const List = () => {
       return () => { clearTimeout(timer) }
     }
   }, [successMsg])
+  useEffect(() => {
+    const localTag = JSON.parse(localStorage.getItem("selectedTag"))
+    const localSort = localStorage.getItem("selectedSort")
+    if (localTag) {
+      setSeletedTag(localTag)
+    } else {
+      setSeletedTag([])
+    }
+  }, [])
   return (<BasicContainer menuItem={true} notScroll={true}>
     <Container>
       <Layout isSeeStudentList={isSeeStudentList}>
@@ -121,7 +134,7 @@ const List = () => {
         {type === "detail" && <DetailList listId={id} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
       </Layout>
       {media === "Desktop" ?
-        <StudentList setSomeDragging={setSomeDragging} studentId={id} meTag={me?.tag} />
+        <StudentList setSomeDragging={setSomeDragging} studentId={id} meTag={me?.tag} selectedTag={selectedTag} />
         :
         <StudentIcon onClick={onClickStudentIcon}><FaUserFriends /></StudentIcon>
       }
@@ -129,7 +142,13 @@ const List = () => {
     {successMsg && <SuccessMsg error={successMsg.ok === false}>{successMsg.msg}</SuccessMsg>}
 
     {/* 데스크탑이 아닐 때 학생 전체 리스트를 팝업으로 띄우기 */}
-    {isPopup === "students" && <SeeStudents />}
+    {isPopup === "students" && <SeeStudents meTag={me?.tag} selectedTag={selectedTag} />}
+    {isPopup === "seeStudentSetting" &&
+      <StudentSortTag
+        setSeletedTag={setSeletedTag}
+        selectedTag={selectedTag}
+        meTag={me?.tag}
+      />}
   </BasicContainer>);
 }
 

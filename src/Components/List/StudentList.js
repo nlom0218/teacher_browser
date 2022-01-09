@@ -78,11 +78,9 @@ const AddStudentBtn = styled.div`
   transition: background-color 1s ease, color 1s ease;
 `
 
-const StudentList = ({ setSomeDragging, studentId, meTag }) => {
+const StudentList = ({ setSomeDragging, studentId, meTag, selectedTag }) => {
   // 초기 로드 시 에니메이션 작동 안하게 하기
   const [initLoad, setInitLoad] = useState(true)
-  const [selectedTag, setSeletedTag] = useState([])
-  const [selectedSort, setSeletedSort] = useState(undefined)
 
   const isSeeStudentList = useReactiveVar(isSeeStudentListVar)
 
@@ -120,16 +118,6 @@ const StudentList = ({ setSomeDragging, studentId, meTag }) => {
     }
   }, [data])
 
-  useEffect(() => {
-    const localTag = JSON.parse(localStorage.getItem("selectedTag"))
-    const localSort = localStorage.getItem("selectedSort")
-    if (localTag) {
-      setSeletedTag(localTag)
-    } else {
-      setSeletedTag([])
-    }
-  }, [])
-
   return (<React.Fragment>
     <SeeBtn onClick={onClickSeeBtn} isSeeStudentList={isSeeStudentList} initLoad={initLoad}>
       {isSeeStudentList ? <FcNext /> : <FcPrevious />}
@@ -147,12 +135,6 @@ const StudentList = ({ setSomeDragging, studentId, meTag }) => {
       </SStudentList>
       <AddStudentBtn onClick={onClickAddBtn}>학생 생성하기</AddStudentBtn>
       {isPopup === "createStudent" && <CreateStudent existStudentArray={existStudentArray} />}
-      {isPopup === "studentSetting" &&
-        <StudentSortTag
-          setSeletedTag={setSeletedTag}
-          selectedTag={selectedTag}
-          meTag={meTag}
-        />}
     </StudentContainer>
   </React.Fragment>
   );

@@ -5,12 +5,17 @@ import { outPopup } from '../../../apollo';
 import { SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
 import routes from '../../../routes';
 import PopupContainer from '../../Shared/PopupContainer';
+import SortTagBtn from '../SortTagBtn';
 import { Btn, Container, Item, List } from '../styled/PopupSeeStudent';
 
-const SeeStudents = () => {
+const SeeStudents = ({ meTag, selectedTag }) => {
   const navigate = useNavigate()
 
-  const { data } = useQuery(SEE_ALL_STUDENT_QUERY)
+  const { data } = useQuery(SEE_ALL_STUDENT_QUERY, {
+    variables: {
+      ...(selectedTag.length !== 0 && { tag: selectedTag })
+    }
+  })
 
   const onClickName = (id) => {
     outPopup()
@@ -21,6 +26,7 @@ const SeeStudents = () => {
     window.alert("학생 추가하기, 팝업안의 팝업")
   }
   return (<PopupContainer maxHeight={true}>
+    <SortTagBtn meTag={meTag} />
     <Container>
       <List>
         {data?.seeAllStudent?.length === 0 ?

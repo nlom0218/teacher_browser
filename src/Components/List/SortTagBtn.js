@@ -19,9 +19,8 @@ const Container = styled.div`
 `
 
 const SortTagBtn = ({ meTag }) => {
-  const isPopup = useReactiveVar(isPopupVar)
 
-  const onClickStudentSetting = () => inPopup("studentSetting")
+  const onClickStudentSetting = () => inPopup("seeStudentSetting")
 
   return (<Container>
     <FcSettings onClick={onClickStudentSetting} />
