@@ -7,6 +7,8 @@ import { disableSeeStudentList, inPopup, isPopupVar, isSeeStudentListVar, enable
 import { SEE_ALL_STUDENT_QUERY } from '../../Graphql/Student/query';
 import { color } from '../../styles';
 import CreateStudent from './Popup/CreateStudent';
+import StudentSortTag from './Popup/StudentSortTag';
+import SortTagBtn from './SortTagBtn';
 import StudentItem from './StudentItem';
 
 const SeeBtn = styled.div`
@@ -36,8 +38,8 @@ const StudentContainer = styled.div`
   padding: 1.25rem;
   display: grid;
   grid-template-rows: 1fr auto;
-  row-gap: 30px;
-  row-gap: 1.875rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
   background-color: ${props => props.theme.bgColor};
   transition: background-color 1s ease;
   border-radius: 5px;
@@ -76,10 +78,11 @@ const AddStudentBtn = styled.div`
   transition: background-color 1s ease, color 1s ease;
 `
 
-const StudentList = ({ setSomeDragging, studentId }) => {
+const StudentList = ({ setSomeDragging, studentId, meTag }) => {
   // 초기 로드 시 에니메이션 작동 안하게 하기
   const [initLoad, setInitLoad] = useState(true)
-  const [sort, setASort] = useState()
+  const [selectedTag, setSeletedTag] = useState([])
+  const [selectedSort, setSeletedSort] = useState(undefined)
 
   const isSeeStudentList = useReactiveVar(isSeeStudentListVar)
 
@@ -89,7 +92,11 @@ const StudentList = ({ setSomeDragging, studentId }) => {
   // 중복생성을 막기 위함
   const [existStudentArray, setExistStudentArray] = useState(undefined)
 
-  const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY)
+  const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY, {
+    variables: {
+      ...(selectedTag.length !== 0 && { tag: selectedTag })
+    }
+  })
 
   // 학생 생성을 위한 팝업창
   const onClickAddBtn = () => inPopup("createStudent")
@@ -112,11 +119,23 @@ const StudentList = ({ setSomeDragging, studentId }) => {
       setExistStudentArray(newExistStudentArray)
     }
   }, [data])
+
+  useEffect(() => {
+    const localTag = JSON.parse(localStorage.getItem("selectedTag"))
+    const localSort = localStorage.getItem("selectedSort")
+    if (localTag) {
+      setSeletedTag(localTag)
+    } else {
+      setSeletedTag([])
+    }
+  }, [])
+
   return (<React.Fragment>
     <SeeBtn onClick={onClickSeeBtn} isSeeStudentList={isSeeStudentList} initLoad={initLoad}>
       {isSeeStudentList ? <FcNext /> : <FcPrevious />}
     </SeeBtn>
     <StudentContainer isSeeStudentList={isSeeStudentList} initLoad={initLoad}>
+      <SortTagBtn meTag={meTag} />
       <SStudentList>
         {data?.seeAllStudent?.length === 0 ?
           <div className="noStudnet">생성된 학생이 없습니다.</div>
@@ -128,6 +147,12 @@ const StudentList = ({ setSomeDragging, studentId }) => {
       </SStudentList>
       <AddStudentBtn onClick={onClickAddBtn}>학생 생성하기</AddStudentBtn>
       {isPopup === "createStudent" && <CreateStudent existStudentArray={existStudentArray} />}
+      {isPopup === "studentSetting" &&
+        <StudentSortTag
+          setSeletedTag={setSeletedTag}
+          selectedTag={selectedTag}
+          meTag={meTag}
+        />}
     </StudentContainer>
   </React.Fragment>
   );

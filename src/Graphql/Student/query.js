@@ -1,12 +1,13 @@
 import gql from "graphql-tag";
 
 export const SEE_ALL_STUDENT_QUERY = gql`
-  query Query {
-    seeAllStudent {
+  query Query($tag: [String]) {
+    seeAllStudent(tag: $tag) {
       _id
       teacherEmail
       studentName
       listId
+      tag
     } 
   }
 `
