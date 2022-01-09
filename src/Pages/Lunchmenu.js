@@ -11,6 +11,7 @@ import { inPopup, isPopupVar } from "../apollo";
 import useMe from "../Hooks/useMe";
 import useMedia from "../Hooks/useMedia";
 import { customMedia } from "../styles";
+import SeeAllergy from "../Components/Lunchmenu/SeeAllergy";
 dotenv.config();
 
 const LunchmenuContainer = styled.div`
@@ -332,7 +333,13 @@ const Lunchmenu = () => {
   // 팝업창으로 이동하기
   const onClickSchoolIcon = () => inPopup("lmSearchSchool")
 
-  console.log(me?.allergy.includes(parseInt(menu[3]?.allergy[4])));
+  // 알러지를 가지고 있는 학생 보기 팝업
+  const onClickAllergy = (allergy) => {
+    if (me?.allergy.includes(parseInt(allergy))) {
+      inPopup("seeAllergy")
+      localStorage.setItem("AllergyNum", allergy)
+    }
+  }
 
   //리턴
   return (
@@ -363,6 +370,7 @@ const Lunchmenu = () => {
                       return <AllergyItem
                         key={index}
                         myAllergy={me?.allergy.includes(parseInt(item))}
+                        onClick={() => onClickAllergy(item)}
                       >
                         {item}
                       </AllergyItem>
@@ -396,6 +404,7 @@ const Lunchmenu = () => {
         setSchoolCode={setSchoolCode}
         setSchoolName={setSchoolName}
       />}
+      {isPopup == "seeAllergy" && <SeeAllergy />}
     </BasicContainer>
   );
 };

@@ -12,8 +12,8 @@ export const SEE_ALL_STUDENT_QUERY = gql`
 `
 
 export const SEE_ONE_STUDENT_QUERY = gql`
-  query SeeAllStudent($studentId: ID) {
-    seeAllStudent(studentId: $studentId) {
+  query SeeAllStudent($studentId: ID, $allergy: Int) {
+    seeAllStudent(studentId: $studentId, allergy: $allergy) {
       _id
       teacherEmail
       studentName
