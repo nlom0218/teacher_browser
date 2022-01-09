@@ -32,6 +32,8 @@ const BackBtn = styled.div`
 `
 
 const Form = styled.form`
+  padding-top: ${props => props.isDesktop && "20px"};
+  padding-top: ${props => props.isDesktop && "1.25rem"};
   display: grid;
   column-gap: 40px;
   column-gap: 2.5rem;

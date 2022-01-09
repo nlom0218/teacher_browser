@@ -89,7 +89,7 @@ const DetailStudentNumber = ({ studentInfo }) => {
       variables: {
         teacherEmail: studentInfo?.teacherEmail,
         studentId: studentInfo?._id,
-        studentNumber: parseInt(studentNum)
+        studentNumber: studentNum
       }
     })
   }

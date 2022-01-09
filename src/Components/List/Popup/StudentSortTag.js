@@ -54,6 +54,7 @@ const SettingLayout = styled.div`
   display: grid;
   row-gap: 10px;
   row-gap: 0.625rem;
+  cursor: pointer;
   .no_tag {
     opacity: 0.6;
     margin-bottom: 5px;
@@ -99,8 +100,8 @@ const SeeStudentNumBtn = styled.div`
   display: grid;
   grid-template-columns: auto auto 1fr;
   align-items: center;
+  cursor: pointer;
   svg {
-    cursor: pointer;
     display: flex;
     margin-right: 10px;
     margin-right: 0.625rem;
@@ -126,7 +127,9 @@ const StudentSortTag = ({ meTag, selectedTag, setSeletedTag, setSeeNum, seeNum }
   const onClickBackAddTagBtn = () => inPopup("students")
   const onClickResetBtn = () => {
     localStorage.removeItem("selectedTag")
+    localStorage.removeItem("seeNum")
     setSeletedTag([])
+    setSeeNum(undefined)
   }
 
   const onClickSeeNumBtn = (type) => {
@@ -170,12 +173,12 @@ const StudentSortTag = ({ meTag, selectedTag, setSeletedTag, setSeeNum, seeNum }
         <Title>✲ 번호 보이기</Title>
         <SeeStudentNum>
           {/* RiCheckboxBlankLine, RiCheckboxLine  */}
-          <SeeStudentNumBtn>
-            <div onClick={() => onClickSeeNumBtn("see")}>{seeNum ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+          <SeeStudentNumBtn onClick={() => onClickSeeNumBtn("see")}>
+            <div>{seeNum ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
             <div>보이기</div>
           </SeeStudentNumBtn>
-          <SeeStudentNumBtn>
-            <div onClick={() => onClickSeeNumBtn("hide")}>{!seeNum ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+          <SeeStudentNumBtn onClick={() => onClickSeeNumBtn("hide")}>
+            <div>{!seeNum ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
             <div>숨기기</div>
           </SeeStudentNumBtn>
         </SeeStudentNum>

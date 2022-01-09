@@ -5,7 +5,7 @@ mutation Mutation(
   $teacherEmail: String!,
   $studentId: ID!,
   $studentName: String,
-  $studentNumber: Int,
+  $studentNumber: String,
   $studentGender: String,
   $parentPhoneNum: String, 
   $allergy: [Int], 
