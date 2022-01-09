@@ -11,7 +11,7 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   column-gap: 20px;
-  column-gap: 1.25 rem;
+  column-gap: 1.25rem;
   row-gap: 30px;
   row-gap: 1.875rem;
   justify-items: center;
@@ -19,7 +19,6 @@ const Container = styled.div`
 
 const StudentList = () => {
   const { data, loading } = useQuery(SEE_ALL_STUDENT_LIST_QUERY);
-  //console.log(data);
   return (
     <PopupContainer>
       <Container>

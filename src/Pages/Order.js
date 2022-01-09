@@ -2,23 +2,33 @@ import React, { useState } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
 import StudentList from "../Components/Order/Popup/StudentList";
-import { BsChevronLeft, BsPeopleFill, BsFillCheckSquareFill, BsPrinter, BsChevronRight } from "react-icons/bs";
+import {
+  BsChevronLeft,
+  BsPeopleFill,
+  BsFillCheckSquareFill,
+  BsPrinter,
+  BsChevronRight,
+} from "react-icons/bs";
 import { FcContacts } from "react-icons/fc";
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { inPopup, isPopupVar } from "../apollo";
 import { useParams } from "react-router-dom";
-import { SEE_ONE_STUDENT_LIST_QUERY } from '../Graphql/StudentList/query';
+import { SEE_ONE_STUDENT_LIST_QUERY } from "../Graphql/StudentList/query";
 import useMedia from "../Hooks/useMedia";
 import { customMedia } from "../styles";
 import { useEffect } from "react/cjs/react.development";
 import { inputLine } from "../Animations/InputLine";
 import { BtnFadeIn } from "../Animations/Fade";
+import { useForm } from "react-hook-form";
+import StudentOrder from "../Components/Order/StudentOrder";
 
 // 전체 틀
 const Container = styled.div`
   display: grid;
   padding: 40px;
-  padding: 3.125rem;
+  padding: 2.5rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
   align-items: flex-start;
 `;
 const TopContents = styled.div`
@@ -62,6 +72,7 @@ const Title = styled.form`
 `;
 
 const Input = styled.input`
+  width: 100%;
   font-size: 1.5em;
   font-size: 1.5rem;
   padding: 10px 0px;
@@ -97,16 +108,29 @@ const SubmitInput = styled.input`
   animation: ${BtnFadeIn} 0.6s ease;
 `;
 
+const OptionContents = styled.div`
+  width: 100%;
+  display: grid;
+  row-gap: 10px;
+  row-gap: 0.625rem;
+  text-align: center;
+  ${customMedia.greaterThan("tablet")`
+   grid-template-columns : auto auto 1fr;
+   column-gap:10px;
+   column-gap:0.625rem;
+  `}
+`;
+
 //명단 선택
 const OptionBtn = styled.div`
-  background-color: ${(props) => props.theme.btnBgColor};
+  background-color: ${(props) =>
+    props.isShuffling ? props.theme.redColor : props.theme.btnBgColor};
   color: ${(props) => props.theme.bgColor};
   transition: background-color 1s ease, color 1s ease;
-  justify-self: flex-start;
   padding: 10px 20px;
   padding: 0.625rem 1.25rem;
-  border-radius: 20px;
-  border-radius: 1.25rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
   cursor: pointer;
 `;
 // 옵션 선택
@@ -235,18 +259,26 @@ const PrintBtn = styled.div`
 
 const Order = () => {
   const { id } = useParams();
-  console.log(id);
+
   const media = useMedia();
   const isPopup = useReactiveVar(isPopupVar);
 
   const [studentListName, setStudentListName] = useState(null);
+  const [selectedStudent, setSelectedStudent] = useState([]);
+  const [isShuffle, setIsShuffle] = useState("init");
+
   const [isEdit, setIsEdit] = useState(false);
+  //title : 인쇄할 때 필요한 제목
   const [title, setTitle] = useState(undefined);
+
+  const { register, handleSubmit, getValues } = useForm({
+    mode: "onChange",
+    defaultValues: { title: "순서 정하기 제목" },
+  });
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: { listId: id },
     skip: !id,
   });
-  //  console.log(data);
 
   const unshuffled = ["하나", "둘", "셋"];
   //목록 내 순서 변경
@@ -266,23 +298,47 @@ const Order = () => {
   const onClickInput = () => {
     setIsEdit(true);
   };
-  const onBlurForm = () => {
+
+  const onSubmit = (data) => {
+    const { title } = data;
+    setTitle(title);
     setIsEdit(false);
+  };
+
+  const onBlurForm = () => {
+    const title = getValues("title");
+    onSubmit({ title });
+  };
+
+  const onClickShuffleBtn = (type) => {
+    setIsShuffle(type);
   };
 
   useEffect(() => {
     if (data) {
       setStudentListName(data?.seeStudentList[0]?.listName);
+      setSelectedStudent(
+        data?.seeStudentList[0]?.students.map((item) => item.studentName)
+      );
     }
   }, [data]);
-
+  console.log(data);
   return (
     <BasicContainer menuItem={true}>
       <Container>
         <TopContents>
-          <Title onBlur={onBlurForm}>
+          <Title onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
             <InputLayout>
-              <Input type="text" placeholder="제목을 입력하세요." autoComplete="off" onClick={onClickInput} />
+              <Input
+                {...register("title", {
+                  required: true,
+                  onChange: () => setIsEdit(true),
+                })}
+                type="text"
+                placeholder="제목을 입력하세요."
+                autoComplete="off"
+                onClick={onClickInput}
+              />
 
               {isEdit && (
                 <LineBox>
@@ -294,38 +350,49 @@ const Order = () => {
           </Title>
           {media !== "Desktop" && (
             <ListIcon>
-              <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다"}</ListName>
+              <ListName>
+                {studentListName ? studentListName : "선택된 명렬표가 없습니다"}
+              </ListName>
               <FcContacts onClick={onClickListIcon} />
             </ListIcon>
           )}
         </TopContents>
+        {id && (
+          <React.Fragment>
+            <OptionContents>
+              {isShuffle === "init" && (
+                <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
+                  순서 섞기
+                </OptionBtn>
+              )}
 
-        {/* <Main>
-          <Title>
-            <acronym
-              title="원하는 제목을 입력해주세요."
-              text-decoration-line="none"
-            >
-              <input type="text" placeholder="순서정하기 제목"></input>{" "}
-            </acronym>{" "}
-          </Title>
-          <OptionBtn>
-            <acronym
-              title="순서대로 한 명씩만 보이게 나옵니다."
-              text-decoration-line="none"
-            >
-              한 명씩 보기
-            </acronym>
-          </OptionBtn>
-          <OptionBtn onClick={onClickShuffled}>
-            <acronym
-              title="순서가 바뀐 명단을 한꺼번에 볼 수 있습니다."
-              text-decoration-line="none"
-            >
-              바뀐 순서 전체 보기
-            </acronym>{" "}
-          </OptionBtn>
-        </Main>
+              {isShuffle === "ing" && (
+                <OptionBtn
+                  onClick={() => onClickShuffleBtn("finish")}
+                  isShuffling={true}
+                >
+                  멈추기
+                </OptionBtn>
+              )}
+
+              {isShuffle === "finish" && (
+                <React.Fragment>
+                  <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
+                    다시하기
+                  </OptionBtn>
+                  <OptionBtn> 한 명씩 보이기 </OptionBtn>
+                </React.Fragment>
+              )}
+            </OptionContents>
+            <StudentOrder
+              selectedStudent={selectedStudent}
+              setSelectedStudent={setSelectedStudent}
+              isShuffle={isShuffle}
+            />
+          </React.Fragment>
+        )}
+
+        {/*
         <MenuBtn>
           <ListIcon onClick={() => onClickIcon("list")}>
             <BsPeopleFill />{" "}
@@ -356,6 +423,7 @@ const Order = () => {
           </LeftRight>
         </RollList> */}
       </Container>
+
       {isPopup === "seeStudentList" && <StudentList />}
     </BasicContainer>
   );
