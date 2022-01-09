@@ -123,7 +123,8 @@ const OptionContents = styled.div`
 
 //명단 선택
 const OptionBtn = styled.div`
-  background-color: ${(props) => props.theme.btnBgColor};
+  background-color: ${(props) =>
+    props.isShuffling ? props.theme.redColor : props.theme.btnBgColor};
   color: ${(props) => props.theme.bgColor};
   transition: background-color 1s ease, color 1s ease;
   padding: 10px 20px;
@@ -264,6 +265,8 @@ const Order = () => {
 
   const [studentListName, setStudentListName] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState([]);
+  const [isShuffle, setIsShuffle] = useState("init");
+
   const [isEdit, setIsEdit] = useState(false);
   //title : 인쇄할 때 필요한 제목
   const [title, setTitle] = useState(undefined);
@@ -305,6 +308,10 @@ const Order = () => {
   const onBlurForm = () => {
     const title = getValues("title");
     onSubmit({ title });
+  };
+
+  const onClickShuffleBtn = (type) => {
+    setIsShuffle(type);
   };
 
   useEffect(() => {
@@ -353,12 +360,35 @@ const Order = () => {
         {id && (
           <React.Fragment>
             <OptionContents>
-              <OptionBtn>한 명씩 보기 </OptionBtn>
-              <OptionBtn onClick={onClickShuffled}>
-                바뀐 순서 전체 보기
-              </OptionBtn>
+              {isShuffle === "init" && (
+                <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
+                  순서 섞기
+                </OptionBtn>
+              )}
+
+              {isShuffle === "ing" && (
+                <OptionBtn
+                  onClick={() => onClickShuffleBtn("finish")}
+                  isShuffling={true}
+                >
+                  멈추기
+                </OptionBtn>
+              )}
+
+              {isShuffle === "finish" && (
+                <React.Fragment>
+                  <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
+                    다시하기
+                  </OptionBtn>
+                  <OptionBtn> 한 명씩 보이기 </OptionBtn>
+                </React.Fragment>
+              )}
             </OptionContents>
-            <StudentOrder selectedStudent={selectedStudent} />
+            <StudentOrder
+              selectedStudent={selectedStudent}
+              setSelectedStudent={setSelectedStudent}
+              isShuffle={isShuffle}
+            />
           </React.Fragment>
         )}
 
@@ -393,6 +423,7 @@ const Order = () => {
           </LeftRight>
         </RollList> */}
       </Container>
+
       {isPopup === "seeStudentList" && <StudentList />}
     </BasicContainer>
   );
