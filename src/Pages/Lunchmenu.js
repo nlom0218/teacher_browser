@@ -147,13 +147,15 @@ const Food = styled.div`
 `
 
 const Allergy = styled.div`
-  opacity: 0.6;
   display: flex;
 `
 
 const AllergyItem = styled.div`
   margin-right: 10px;
   margin-right: 0.625rem;
+  opacity: ${props => props.myAllergy ? 1 : 0.6};
+  cursor: ${props => props.myAllergy && "pointer"};
+  color: ${props => props.myAllergy && props.theme.redColor};
 `
 
 const LunchmenuBtn = styled.div`
@@ -330,6 +332,8 @@ const Lunchmenu = () => {
   // 팝업창으로 이동하기
   const onClickSchoolIcon = () => inPopup("lmSearchSchool")
 
+  console.log(me?.allergy.includes(parseInt(menu[3]?.allergy[4])));
+
   //리턴
   return (
     <BasicContainer menuItem={true}>
@@ -356,7 +360,12 @@ const Lunchmenu = () => {
                   <SLunchmenu key={index}>
                     <Food>{item.food}</Food>
                     <Allergy>{item.allergy.map((item, index) => {
-                      return <AllergyItem key={index}>{item}</AllergyItem>
+                      return <AllergyItem
+                        key={index}
+                        myAllergy={me?.allergy.includes(parseInt(item))}
+                      >
+                        {item}
+                      </AllergyItem>
                     })}</Allergy>
                   </SLunchmenu>
                 ))
