@@ -103,6 +103,7 @@ const List = () => {
       return () => { clearTimeout(timer) }
     }
   }, [successMsg])
+
   useEffect(() => {
     const localTag = JSON.parse(localStorage.getItem("selectedTag"))
     const localSort = localStorage.getItem("selectedSort")
@@ -115,7 +116,7 @@ const List = () => {
   return (<BasicContainer menuItem={true} notScroll={true}>
     <Container>
       <DivideLeftContents isSeeList={isSeeList}>
-        {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
+        {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} successMsg={successMsg} />}
         {type === "student" && <DetailStudent studentId={id} />}
         {type === "detail" && <DetailList listId={id} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
       </DivideLeftContents>

@@ -1,12 +1,6 @@
-import { useMutation } from '@apollo/client';
 import React from 'react';
-import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { outPopup } from '../../../apollo';
-import { DELETE_STUDENT_LIST_MUTATION } from '../../../Graphql/StudentList/mutation';
-import { SEE_ALL_STUDENT_LIST_QUERY } from "../../../Graphql/StudentList/query"
-import useMe from '../../../Hooks/useMe';
-import routes from '../../../routes';
 import { customMedia } from '../../../styles';
 import BtnPopupContainer from '../../Shared/BtnPopupContainer';
 
@@ -20,6 +14,7 @@ const Container = styled.div`
     justify-items: center;
   `}
 `
+
 
 const Btn = styled.div`
   display: grid;
@@ -53,34 +48,9 @@ const Msg = styled.div`
   line-height: 120%;
 `
 
-const DeleteList = ({ listId }) => {
-  const me = useMe()
-  const navigate = useNavigate()
-  const onCompleted = (result) => {
-    const { deleteStudentList: { ok } } = result
-    if (ok) {
-      outPopup()
-      navigate(routes.list)
-    }
-  }
-  const [deleteStudentList, { loading }] = useMutation(DELETE_STUDENT_LIST_MUTATION, {
-    onCompleted,
-    refetchQueries: [{ query: SEE_ALL_STUDENT_LIST_QUERY }]
-  })
+const DeleteStudent = () => {
   const onClickDelBtn = () => {
-    if (loading) {
-      return
-    }
-    if (!listId) {
-      window.alert("오류가 발생하였습니다. 취소 후 다시 시도하세요. 계속 될 경우 관리자에게 문의 부탁드립니다.")
-      return
-    }
-    deleteStudentList({
-      variables: {
-        listId,
-        teacherEmail: me?.email
-      }
-    })
+    window.alert("휴지통으로 이동 => backend에서 학생 필드 trash값 이용하기")
   }
   return (<BtnPopupContainer>
     <Container>
@@ -88,10 +58,10 @@ const DeleteList = ({ listId }) => {
         <DelBtn onClick={onClickDelBtn}>삭제하기</DelBtn>
         <CancleBtn onClick={() => outPopup()}>취소하기</CancleBtn>
       </Btn>
-      <Msg>명렬표를 삭제하시겠습니까?</Msg>
-      <Msg>명렬표를 삭제하면 다시 복구할 수 없습니다.</Msg>
+      <Msg>학생을 삭제하시겠습니까?</Msg>
+      <Msg>삭제한 학생은 휴지통에서 확인 가능합니다.</Msg>
     </Container>
   </BtnPopupContainer>);
 }
 
-export default DeleteList;
+export default DeleteStudent;

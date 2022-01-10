@@ -15,6 +15,7 @@ import { EDIT_STUDENT_LIST } from "../../Graphql/StudentList/mutation"
 import useMedia from '../../Hooks/useMedia';
 import BtnPopupContainer from "../Shared/BtnPopupContainer"
 import DeleteList from './Popup/DeleteList';
+import { DelBtn } from './styled/DelBtn';
 
 const Container = styled.div`
   padding: 20px;
@@ -151,18 +152,6 @@ const ErrMsg = styled.div`
   color: ${props => props.theme.redColor};
   transition: color 1s ease;
   font-weight: 600;
-`
-
-const DeleteContainer = styled.div`
-  background-color: ${props => props.theme.redColor};
-  color: ${props => props.theme.bgColor};
-  transition: background-color 1s ease, color 1s ease;
-  text-align: center;
-  padding: 20px;
-  padding: 1.25rem;
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  cursor: pointer;
 `
 
 const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
@@ -325,9 +314,9 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
       someDragging={someDragging}
       inStudent={data?.seeStudentList[0]?.students}
     />
-    <DeleteContainer onClick={onClickDeleteListBtn}>
+    <DelBtn onClick={onClickDeleteListBtn}>
       명렬표 삭제하기
-    </DeleteContainer>
+    </DelBtn>
     {
       isPopup === "emoji" &&
       <SetEmoji

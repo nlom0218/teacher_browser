@@ -41,7 +41,7 @@ export const darkTheme = {
   redColor: color.ligthRed,
   contentBgColor: color.maroon,
   btnBgColor: color.lightBlue,
-  popupBgColor: "rgba(220,220,220,0.8)",
+  popupBgColor: "rgba(200,200,200,0.8)",
   hoverColor: color.maroon,
   cardBg: "rgba(10,10,10,0.8)",
   cardHoverBg: "rgba(247,247,247,1)",

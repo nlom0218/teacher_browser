@@ -18,13 +18,12 @@ const CenterDndContainer = ({ someDragging, setSuccessMsg, listName, listId, set
 
   const onCompleted = (result) => {
     const { addStudent: { ok, error } } = result
-    console.log(result);
     if (error) {
-      setSuccessMsg({ msg: "이미 리스트에 존재합니다.", ok: false })
+      setSuccessMsg({ msg: "이미 명렬표에 존재합니다.", ok: false })
       return
     }
     if (ok && inList) {
-      setSuccessMsg({ msg: `리스트에 추가되었습니다 😀`, ok: true })
+      setSuccessMsg({ msg: `명렬표에 추가되었습니다 😀`, ok: true })
     } else {
       setSuccessMsg({ msg: `${listName} 에 추가되었습니다 😀`, ok: true })
     }
