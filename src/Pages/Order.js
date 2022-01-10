@@ -57,7 +57,7 @@ const Main = styled.div`
   grid-row: 1/-1;
   align-items: center;
 `;
-
+ 
 //제목
 const Title = styled.form`
   grid-row: 2/3;
@@ -280,7 +280,6 @@ const Order = () => {
     skip: !id,
   });
 
-  const unshuffled = ["하나", "둘", "셋"];
   //목록 내 순서 변경
   const shuffled = unshuffled
     .map((value) => ({ value, sort: Math.random() }))
@@ -394,9 +393,7 @@ const Order = () => {
 
         {/*
         <MenuBtn>
-          <ListIcon onClick={() => onClickIcon("list")}>
-            <BsPeopleFill />{" "}
-          </ListIcon>
+        
           <ConditionIcon onClick={() => onClickIcon("condition")}>
             <BsFillCheckSquareFill />
           </ConditionIcon>
@@ -404,7 +401,6 @@ const Order = () => {
         <br />
         <hr />
         <Border>
-          <List>{shuffledList}</List>
           <PrintBtn>
             {" "}
             &nbsp;
