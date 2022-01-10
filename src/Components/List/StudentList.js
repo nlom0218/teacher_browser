@@ -36,7 +36,7 @@ const StudentContainer = styled.div`
   min-height: 96%;
   padding: 20px;
   padding: 1.25rem;
-  display: grid;
+  display: ${props => props.isSeedisplay ? "grid" : "none"};
   grid-template-rows: 1fr auto;
   row-gap: 20px;
   row-gap: 1.25rem;
@@ -83,6 +83,7 @@ const StudentList = ({ setSomeDragging, studentId, meTag, selectedTag, seeNum })
   const [initLoad, setInitLoad] = useState(true)
 
   const isSeeStudentList = useReactiveVar(isSeeStudentListVar)
+  const [isSeedisplay, isSeeSetDisplay] = useState(isSeeStudentList)
 
   const isPopup = useReactiveVar(isPopupVar)
 
@@ -105,8 +106,12 @@ const StudentList = ({ setSomeDragging, studentId, meTag, selectedTag, seeNum })
     }
     if (isSeeStudentList) {
       disableSeeStudentList()
+      setTimeout(() => {
+        isSeeSetDisplay(false)
+      }, 1000)
     } else {
       enableSeeStudentList()
+      isSeeSetDisplay(true)
     }
   }
 
@@ -122,7 +127,7 @@ const StudentList = ({ setSomeDragging, studentId, meTag, selectedTag, seeNum })
     <SeeBtn onClick={onClickSeeBtn} isSeeStudentList={isSeeStudentList} initLoad={initLoad}>
       {isSeeStudentList ? <FcNext /> : <FcPrevious />}
     </SeeBtn>
-    <StudentContainer isSeeStudentList={isSeeStudentList} initLoad={initLoad}>
+    <StudentContainer isSeeStudentList={isSeeStudentList} initLoad={initLoad} isSeedisplay={isSeedisplay}>
       <SortTagBtn meTag={meTag} />
       <SStudentList>
         {data?.seeAllStudent?.length === 0 ?
