@@ -41,7 +41,7 @@ export const List = styled.div`
 export const Item = styled.div`
   padding: 10px;
   padding: 0.625rem;
-  cursor: ${props => !props.addStudent && "pointer"};
+  cursor: pointer;
   :hover {
     background-color: ${props => props.theme.hoverColor};
     transition: background-color 0.6s ease;

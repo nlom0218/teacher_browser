@@ -95,7 +95,6 @@ const StudentList = ({ setSomeDragging, studentId, meTag, selectedTag, seeNum })
       ...(selectedTag.length !== 0 && { tag: selectedTag })
     }
   })
-  console.log(data, selectedTag);
 
   // 학생 생성을 위한 팝업창
   const onClickAddBtn = () => inPopup("createStudent")

@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import { outPopup } from '../../../apollo';
 import { SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
 import routes from '../../../routes';
@@ -8,7 +9,16 @@ import PopupContainer from '../../Shared/PopupContainer';
 import SortTagBtn from '../SortTagBtn';
 import { Btn, Container, Item, List } from '../styled/PopupSeeStudent';
 
-const SeeStudents = ({ meTag, selectedTag }) => {
+const StudentName = styled.div`
+`
+
+const StudentNum = styled.div`
+  font-size: 0.85em;
+  font-size: 0.85rem;
+  opacity: 0.8;
+`
+
+const SeeStudents = ({ meTag, selectedTag, seeNum }) => {
   const navigate = useNavigate()
 
   const { data } = useQuery(SEE_ALL_STUDENT_QUERY, {
@@ -34,8 +44,11 @@ const SeeStudents = ({ meTag, selectedTag }) => {
           :
           data?.seeAllStudent?.map((item, index) => {
             return <Item
-              onClick={() => onClickName(item._id)} key={index}>
-              {item.studentName}
+              key={index}
+              onClick={() => onClickName(item._id)}
+            >
+              <StudentName>{item.studentName}</StudentName>
+              {seeNum && <StudentNum>{item.studentNumber ? item.studentNumber : "번호가 없습니다."}</StudentNum>}
             </Item>
           })}
       </List>

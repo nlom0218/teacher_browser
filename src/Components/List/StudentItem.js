@@ -14,10 +14,10 @@ const Layout = styled.div`
   border-radius: ${props => props.isSeleted && "5px"};
   border-radius: ${props => props.isSeleted && "0.3125rem"};
   transition: background-color 1s ease;
-  padding: 10px;
-  padding: 0.625rem;
   cursor: pointer;
   a {
+  padding: 10px;
+  padding: 0.625rem;
     display: grid;
     row-gap: 5px;
     row-gap: 0.3125rem;

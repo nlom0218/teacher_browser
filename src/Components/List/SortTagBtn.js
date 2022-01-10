@@ -10,6 +10,7 @@ const Container = styled.div`
   top: 0.625rem;
   right: 10px;
   right: 0.625rem;
+  z-index: 2;
   svg {
     font-size: 1.5em;
     font-size: 1.5rem;

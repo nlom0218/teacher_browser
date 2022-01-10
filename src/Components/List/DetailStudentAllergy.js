@@ -20,6 +20,7 @@ const AllergyList = styled.div`
   transition: background-color 1s ease;
   border-radius: 5px;
   border-radius: 0.3125rem;
+  justify-items: flex-start;
   ${customMedia.greaterThan("tablet")`
     grid-template-columns: 1fr 1fr;
   `}
@@ -34,9 +35,9 @@ const AllergyItem = styled.div`
   column-gap: 10px;
   column-gap: 0.625rem;
   align-items: center;
+  cursor: pointer;
   svg {
     display: flex;
-    cursor: pointer;
   }
 `
 
@@ -79,7 +80,7 @@ const DetailStudentAllergy = ({ studentInfo }) => {
     refetchQueries: [{ query: SEE_ONE_STUDENT_QUERY, variables: { studentId: studentInfo?._id } }]
   })
 
-  const onClickAdd = (allergy) => {
+  const addAllergy = (allergy) => {
     setIsEdit(true)
     if (studentAllergy.length === 0) {
       setStudentAllergy([allergy])
@@ -88,10 +89,19 @@ const DetailStudentAllergy = ({ studentInfo }) => {
     }
   }
 
-  const onClickRemove = (allergy) => {
+  const removeAllergy = (allergy) => {
     setIsEdit(true)
     const newStudentAllergy = studentAllergy.filter(item => item !== allergy)
     setStudentAllergy(newStudentAllergy)
+  }
+
+  const onClickAllergy = (allergy) => {
+    const exist = studentAllergy.includes(allergy)
+    if (exist) {
+      removeAllergy(allergy)
+    } else {
+      addAllergy(allergy)
+    }
   }
 
   const onClickEditBtn = () => {
@@ -113,11 +123,11 @@ const DetailStudentAllergy = ({ studentInfo }) => {
     <DetailTitle>알레르기</DetailTitle>
     <AllergyList isEdit={isEdit}>
       {allergy.map((item, index) => {
-        return <AllergyItem key={index}>
+        return <AllergyItem key={index} onClick={() => onClickAllergy(index + 1)}>
           <div>{studentAllergy.includes(index + 1) ?
-            <RiCheckboxLine onClick={() => onClickRemove(index + 1)} />
+            <RiCheckboxLine />
             :
-            <RiCheckboxBlankLine onClick={() => onClickAdd(index + 1)} />}
+            <RiCheckboxBlankLine />}
           </div>
           <Allergy isTrue={studentAllergy.includes(index + 1)}>{item}</Allergy>
         </AllergyItem>
