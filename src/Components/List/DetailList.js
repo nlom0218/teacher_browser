@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { FadeIn } from '../../Animations/Fade';
@@ -13,6 +13,8 @@ import InputUnderLine from './InputUnderLine';
 import { SEE_ALL_STUDENT_LIST_QUERY, SEE_ONE_STUDENT_LIST_QUERY } from '../../Graphql/StudentList/query';
 import { EDIT_STUDENT_LIST } from "../../Graphql/StudentList/mutation"
 import useMedia from '../../Hooks/useMedia';
+import BtnPopupContainer from "../Shared/BtnPopupContainer"
+import DeleteList from './Popup/DeleteList';
 
 const Container = styled.div`
   padding: 20px;
@@ -257,6 +259,10 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
     onSubmit({ name })
   }
 
+  const onClickDeleteListBtn = () => {
+    inPopup("deleteList")
+  }
+
 
   // 데이터 정보가 불러온 뒤 아이콘과 이름 값 세팅하기
   useEffect(() => {
@@ -319,7 +325,7 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
       someDragging={someDragging}
       inStudent={data?.seeStudentList[0]?.students}
     />
-    <DeleteContainer>
+    <DeleteContainer onClick={onClickDeleteListBtn}>
       명렬표 삭제하기
     </DeleteContainer>
     {
@@ -332,6 +338,7 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
         loading={editLoading}
       />
     }
+    {isPopup === "deleteList" && <DeleteList />}
   </Container >);
 }
 
