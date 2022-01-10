@@ -31,6 +31,9 @@ const TopContents = styled.div`
   column-gap: 1.25rem;
   row-gap: 20px;
   row-gap: 1.25rem;
+  :first-child {
+    font-weight: 600;
+  }
   ${customMedia.greaterThan("tablet")`
     grid-template-columns: 1fr auto;
   `}
@@ -54,7 +57,6 @@ const SettingLayout = styled.div`
   display: grid;
   row-gap: 10px;
   row-gap: 0.625rem;
-  cursor: pointer;
   .no_tag {
     opacity: 0.6;
     margin-bottom: 5px;
@@ -62,7 +64,9 @@ const SettingLayout = styled.div`
   }
 `
 
-const Title = styled.div``
+const Title = styled.div`
+  font-weight: 600;
+`
 
 const SelectedTag = styled.div`
   display: flex;
@@ -79,6 +83,7 @@ const MeTag = styled.div`
 `
 
 const Tag = styled.div`
+  cursor: pointer;
   margin: 10px 10px 0px 0px;
   :hover {
     text-decoration: underline;
@@ -92,6 +97,7 @@ const SeeStudentNum = styled.div`
   grid-template-columns: 1fr 1fr;
   row-gap: 20px;
   row-gap: 1.25rem;
+  justify-items: flex-start;
   ${customMedia.greaterThan("tablet")`
   `}
 `

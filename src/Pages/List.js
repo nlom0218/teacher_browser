@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { FaUserFriends } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { inPopup, isPopupVar, isSeeStudentListVar } from '../apollo';
+import { inPopup, isPopupVar, isSeeStudentVar } from '../apollo';
 import AllList from '../Components/List/AllList';
 import DetailList from '../Components/List/DetailList';
 import DetailStudent from '../Components/List/DetailStudent';
@@ -11,6 +11,7 @@ import SeeStudents from '../Components/List/Popup/SeeStudents';
 import StudentSortTag from '../Components/List/Popup/StudentSortTag';
 import StudentList from '../Components/List/StudentList';
 import BasicContainer from '../Components/Shared/BasicContainer';
+import { DivideLeftContents } from '../Components/Shared/styled/DivideContents';
 import useMe from '../Hooks/useMe';
 import useMedia from '../Hooks/useMedia';
 import { color, customMedia } from '../styles';
@@ -46,22 +47,6 @@ const StudentIcon = styled.div`
     transition: background-color 0.6s ease;
 `
 
-const Layout = styled.div`
-  height: 100%;
-  min-height: 100%;
-  padding: 20px;
-  padding: 1.25rem;
-  ${customMedia.greaterThan("desktop")`
-    padding: 40px;
-    padding: 2.5rem;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: ${props => props.isSeeStudentList ? "75%" : "100%"};
-    transition: width 1s ease;
-  `}
-`
-
 const SuccessMsg = styled.div`
   position: absolute;
   bottom: 30px;
@@ -79,7 +64,7 @@ const SuccessMsg = styled.div`
 
 const List = () => {
   const me = useMe()
-  const isSeeStudentList = useReactiveVar(isSeeStudentListVar)
+  const isSeeList = useReactiveVar(isSeeStudentVar)
   const isPopup = useReactiveVar(isPopupVar)
 
   const media = useMedia()
@@ -118,6 +103,7 @@ const List = () => {
       return () => { clearTimeout(timer) }
     }
   }, [successMsg])
+
   useEffect(() => {
     const localTag = JSON.parse(localStorage.getItem("selectedTag"))
     const localSort = localStorage.getItem("selectedSort")
@@ -129,11 +115,11 @@ const List = () => {
   }, [])
   return (<BasicContainer menuItem={true} notScroll={true}>
     <Container>
-      <Layout isSeeStudentList={isSeeStudentList}>
-        {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
+      <DivideLeftContents isSeeList={isSeeList}>
+        {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} successMsg={successMsg} />}
         {type === "student" && <DetailStudent studentId={id} />}
         {type === "detail" && <DetailList listId={id} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
-      </Layout>
+      </DivideLeftContents>
       {media === "Desktop" ?
         <StudentList setSomeDragging={setSomeDragging} studentId={id} meTag={me?.tag} selectedTag={selectedTag} seeNum={seeNum} />
         :
@@ -143,7 +129,7 @@ const List = () => {
     {successMsg && <SuccessMsg error={successMsg.ok === false}>{successMsg.msg}</SuccessMsg>}
 
     {/* 데스크탑이 아닐 때 학생 전체 리스트를 팝업으로 띄우기 */}
-    {isPopup === "students" && <SeeStudents meTag={me?.tag} selectedTag={selectedTag} />}
+    {isPopup === "students" && <SeeStudents meTag={me?.tag} selectedTag={selectedTag} seeNum={seeNum} />}
     {isPopup === "seeStudentSetting" &&
       <StudentSortTag
         setSeletedTag={setSeletedTag}

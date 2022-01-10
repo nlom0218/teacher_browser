@@ -1,8 +1,9 @@
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { BtnFadeIn } from '../../Animations/Fade';
+import { inPopup, isPopupVar } from '../../apollo';
 import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
 import { SEE_ALL_STUDENT_QUERY, SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
 import { customMedia } from '../../styles';
@@ -10,15 +11,10 @@ import DetailStudentAllergy from './DetailStudentAllergy';
 import DetailStudentNumber from './DetailStudentNumber';
 import DetailStudentTag from './DetailStudentTag';
 import InputUnderLine from './InputUnderLine';
+import DeleteStudent from './Popup/DeleteStudent';
+import { DelBtn } from './styled/DelBtn';
 
 const Container = styled.div`
-  max-height: 100%;
-  overflow: scroll;
-  -ms-overflow-style: none; // IE and Edge
-  scrollbar-width: none; // Firefox
-  ::-webkit-scrollbar {
-    display: none; // Chrome, Safari, Opera
-  }
   padding: 20px;
   padding: 1.25rem;
   display: grid;
@@ -97,6 +93,8 @@ const ErrMsg = styled.div`
 `
 
 const DetailStudent = ({ studentId }) => {
+  const isPopup = useReactiveVar(isPopupVar)
+
   const [studentInfo, setStudentInfo] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
   const [isEdit, setIsEdit] = useState(false)
@@ -150,6 +148,8 @@ const DetailStudent = ({ studentId }) => {
     setIsEdit(true)
   }
 
+  const onClicketeBtn = () => inPopup("deleteStudent")
+
   useEffect(() => {
     if (data) {
       setValue("newStudentName", data?.seeAllStudent[0]?.studentName)
@@ -180,6 +180,8 @@ const DetailStudent = ({ studentId }) => {
     <DetailStudentNumber studentInfo={studentInfo} />
     <DetailStudentTag studentInfo={studentInfo} />
     <DetailStudentAllergy studentInfo={studentInfo} editStudent={editStudent} onCompleted={onCompleted} />
+    <DelBtn onClick={onClicketeBtn}>학생 삭제하기</DelBtn>
+    {isPopup === "deleteStudent" && <DeleteStudent />}
   </Container>);
 }
 

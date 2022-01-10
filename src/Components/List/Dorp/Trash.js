@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FcFullTrash } from 'react-icons/fc';
 import styled from 'styled-components';
 import { useDrop } from "react-dnd"
-import { useMutation } from '@apollo/client';
+import { useMutation, useReactiveVar } from '@apollo/client';
 import useMe from '../../../Hooks/useMe';
 import { SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
 import { DELETE_STUDENT_MUTATION } from '../../../Graphql/Student/mutation';
 import { SEE_ALL_STUDENT_LIST_QUERY } from '../../../Graphql/StudentList/query';
 import { DELETE_STUDENT_LIST_MUTATION } from '../../../Graphql/StudentList/mutation';
+import { inPopup, isPopupVar } from '../../../apollo';
+import DeleteList from '../Popup/DeleteList';
+import { color } from '../../../styles';
 
 const Container = styled.div`
   display: grid;
@@ -49,8 +52,25 @@ const StudentDrop = styled.div`
   border-top: 1px solid ${props => props.theme.hoverColor};
 `
 
-const Trash = ({ someDragging }) => {
+const SuccessMsg = styled.div`
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: ${props => props.error ? props.theme.redColor : props.theme.btnBgColor};
+  color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
+  padding: 20px;
+  padding: 1.25rem;
+  border-radius: 10px;
+  border-radius: 0.625rem;
+  box-shadow: ${color.boxShadow};
+`
+
+const Trash = ({ someDragging, setSuccessMsg }) => {
   const me = useMe()
+  const isPopup = useReactiveVar(isPopupVar)
+  const [listId, sertListId] = useState(undefined)
 
   const [deleteStudentList, { loading: listLoading }] = useMutation(DELETE_STUDENT_LIST_MUTATION, {
     refetchQueries: [{ query: SEE_ALL_STUDENT_LIST_QUERY }]
@@ -66,13 +86,15 @@ const Trash = ({ someDragging }) => {
 
     // drop을 하게 되면 아래의 로직이 실행된다.
     drop: (item) => {
+      inPopup("deleteList")
       const { listId } = item
-      deleteStudentList({
-        variables: {
-          teacherEmail: me?.email,
-          listId
-        }
-      })
+      sertListId(listId)
+      // deleteStudentList({
+      //   variables: {
+      //     teacherEmail: me?.email,
+      //     listId
+      //   }
+      // })
     }
   })
 
@@ -82,23 +104,18 @@ const Trash = ({ someDragging }) => {
 
     // drop을 하게 되면 아래의 로직이 실행된다.
     drop: (item) => {
-      const { studentId, studentName } = item
-      deleteStudent({
-        variables: {
-          disconnectOnly: false,
-          teacherEmail: me?.email,
-          studentId
-        }
-      })
+      window.alert("휴지통으로 이동 => backend에서 학생 필드 trash값 이용하기, 이동 후 suucessMsg띄우기")
+      // setSuccessMsg({ msg: `휴지통으로 이동되었습니다. 😀`, ok: true })
     }
   })
+
   return (<Container>
     <DelIcon><FcFullTrash /></DelIcon>
     <DropContainer someDragging={someDragging}>
       <ListDrop ref={listDrop} className="delDrop">명렬표삭제 🗑</ListDrop>
       <StudentDrop ref={studentDrop} className="delDrop">학생삭제 🗑</StudentDrop>
-
     </DropContainer>
+    {isPopup === "deleteList" && <DeleteList listId={listId} />}
   </Container>
   );
 }

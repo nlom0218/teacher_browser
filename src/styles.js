@@ -16,7 +16,7 @@ export const color = {
   blue: "#1c5b8e",
   lightBlue: "#7CC6FF",
   red: "#db3a1e",
-  ligthRed: "#ef624c",
+  ligthRed: "#fc8876",
   boxShadow: "0px 17px 6px -14px rgba(0,0,0,0.6)",
 };
 
@@ -41,7 +41,7 @@ export const darkTheme = {
   redColor: color.ligthRed,
   contentBgColor: color.maroon,
   btnBgColor: color.lightBlue,
-  popupBgColor: "rgba(200,200,200,0.75)",
+  popupBgColor: "rgba(200,200,200,0.8)",
   hoverColor: color.maroon,
   cardBg: "rgba(10,10,10,0.8)",
   cardHoverBg: "rgba(247,247,247,1)",

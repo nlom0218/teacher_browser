@@ -32,7 +32,7 @@ const AddManyStudent = ({ inStudent, listId }) => {
     }]
   })
 
-  const onClickAddStudent = (id) => {
+  const checkStudent = (id) => {
     if (addStudentId.length === 0) {
       setAddStudentId([id])
     } else {
@@ -41,9 +41,18 @@ const AddManyStudent = ({ inStudent, listId }) => {
     }
   }
 
-  const onClickDelStudent = (id) => {
+  const delStudentId = (id) => {
     const newAddStudentId = addStudentId.filter((item) => item !== id)
     setAddStudentId(newAddStudentId)
+  }
+
+  const onClickStudent = (id) => {
+    const exist = addStudentId.includes(id)
+    if (exist) {
+      delStudentId(id)
+    } else {
+      checkStudent(id)
+    }
   }
 
   const onClickAddBtn = () => {
@@ -78,13 +87,13 @@ const AddManyStudent = ({ inStudent, listId }) => {
         {data?.seeAllStudent?.length !== 0 ? (outStudent.length === 0 ? <div className="noStudnet">학생들이 모두 포함되어 있습니다.</div>
           :
           outStudent.map((item, index) => {
-            return <Item key={index} addStudent={true}>
+            return <Item key={index} addStudent={true} onClick={() => onClickStudent(item._id)} >
               <div>{item.studentName}</div>
               <div>
                 {addStudentId.includes(item._id) ?
-                  <RiCheckboxLine onClick={() => onClickDelStudent(item._id)} />
+                  <RiCheckboxLine />
                   :
-                  <RiCheckboxBlankLine onClick={() => onClickAddStudent(item._id)} />
+                  <RiCheckboxBlankLine />
                 }
               </div>
             </Item>

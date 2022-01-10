@@ -5,7 +5,7 @@ import { makeVar } from "@apollo/client"
 const DARK = "dark"
 const TOKEN = "token"
 const POPUP = "popup"
-const IS_SEE_STUDENT_LIST = "isSeeStudentList"
+const IS_SEE_STUDENT = "isSeeStudent"
 const MENU_TYPE = "menuType"
 
 export const menuTypeVar = makeVar(localStorage.getItem(MENU_TYPE))
@@ -46,14 +46,14 @@ export const outPopup = () => {
 }
 
 // 명렬표에서 학생 리스트를 보일지 숨길지 설정하는 변수
-export const isSeeStudentListVar = makeVar(localStorage.getItem(IS_SEE_STUDENT_LIST))
-export const enableSeeStudentList = () => {
-  localStorage.setItem(IS_SEE_STUDENT_LIST, "true")
-  isSeeStudentListVar(true)
+export const isSeeStudentVar = makeVar(localStorage.getItem(IS_SEE_STUDENT))
+export const enableSeeStudent = () => {
+  localStorage.setItem(IS_SEE_STUDENT, "true")
+  isSeeStudentVar(true)
 }
-export const disableSeeStudentList = () => {
-  localStorage.removeItem(IS_SEE_STUDENT_LIST)
-  isSeeStudentListVar(false)
+export const disableSeeStudent = () => {
+  localStorage.removeItem(IS_SEE_STUDENT)
+  isSeeStudentVar(false)
 }
 
 const httpLink = createHttpLink({

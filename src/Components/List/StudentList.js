@@ -2,50 +2,12 @@ import { useQuery, useReactiveVar } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { FcNext, FcPrevious } from 'react-icons/fc';
 import styled from 'styled-components';
-import { FadeInBtn, FadeInList, FadeOutBtn, FadeOutList } from '../../Animations/StudentListAni';
-import { disableSeeStudentList, inPopup, isPopupVar, isSeeStudentListVar, enableSeeStudentList } from '../../apollo';
+import { disableSeeStudent, inPopup, isPopupVar, isSeeStudentVar, enableSeeStudent } from '../../apollo';
 import { SEE_ALL_STUDENT_QUERY } from '../../Graphql/Student/query';
-import { color } from '../../styles';
+import { DivideRightContents, SeeRightContentsBtn } from '../Shared/styled/DivideContents';
 import CreateStudent from './Popup/CreateStudent';
-import StudentSortTag from './Popup/StudentSortTag';
 import SortTagBtn from './SortTagBtn';
 import StudentItem from './StudentItem';
-
-const SeeBtn = styled.div`
-  cursor: pointer;
-  position: absolute;
-  top: 2%;
-  right: ${props => props.isSeeStudentList ? "26%" : "1%"};
-  animation: 1s ease forwards ${props => !props.initLoad && (props.isSeeStudentList ? FadeInBtn : FadeOutBtn)};
-  padding: 10px;
-  border-radius: 50%;
-  background-color: ${props => props.theme.bgColor};
-  transition: background-color 1s ease;
-  svg {
-    display: flex; 
-  }
-`
-
-const StudentContainer = styled.div`
-  position: absolute;
-  right: ${props => props.isSeeStudentList ? "1%" : "-24%"};
-  animation: 1s ease forwards ${props => !props.initLoad && (props.isSeeStudentList ? FadeInList : FadeOutList)};
-  top: 2%;
-  width: 24%;
-  height: 96%;
-  min-height: 96%;
-  padding: 20px;
-  padding: 1.25rem;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  row-gap: 20px;
-  row-gap: 1.25rem;
-  background-color: ${props => props.theme.bgColor};
-  transition: background-color 1s ease;
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  box-shadow: ${color.boxShadow};
-`
 
 const SStudentList = styled.div`
   max-height: 100%;
@@ -82,7 +44,8 @@ const StudentList = ({ setSomeDragging, studentId, meTag, selectedTag, seeNum })
   // 초기 로드 시 에니메이션 작동 안하게 하기
   const [initLoad, setInitLoad] = useState(true)
 
-  const isSeeStudentList = useReactiveVar(isSeeStudentListVar)
+  const isSeeList = useReactiveVar(isSeeStudentVar)
+  const [isSeedisplay, isSeeSetDisplay] = useState(isSeeList)
 
   const isPopup = useReactiveVar(isPopupVar)
 
@@ -95,7 +58,6 @@ const StudentList = ({ setSomeDragging, studentId, meTag, selectedTag, seeNum })
       ...(selectedTag.length !== 0 && { tag: selectedTag })
     }
   })
-  console.log(data, selectedTag);
 
   // 학생 생성을 위한 팝업창
   const onClickAddBtn = () => inPopup("createStudent")
@@ -104,10 +66,14 @@ const StudentList = ({ setSomeDragging, studentId, meTag, selectedTag, seeNum })
     if (initLoad) {
       setInitLoad(false)
     }
-    if (isSeeStudentList) {
-      disableSeeStudentList()
+    if (isSeeList) {
+      disableSeeStudent()
+      setTimeout(() => {
+        isSeeSetDisplay(false)
+      }, 1000)
     } else {
-      enableSeeStudentList()
+      enableSeeStudent()
+      isSeeSetDisplay(true)
     }
   }
 
@@ -120,10 +86,10 @@ const StudentList = ({ setSomeDragging, studentId, meTag, selectedTag, seeNum })
   }, [data])
 
   return (<React.Fragment>
-    <SeeBtn onClick={onClickSeeBtn} isSeeStudentList={isSeeStudentList} initLoad={initLoad}>
-      {isSeeStudentList ? <FcNext /> : <FcPrevious />}
-    </SeeBtn>
-    <StudentContainer isSeeStudentList={isSeeStudentList} initLoad={initLoad}>
+    <SeeRightContentsBtn onClick={onClickSeeBtn} isSeeList={isSeeList} initLoad={initLoad}>
+      {isSeeList ? <FcNext /> : <FcPrevious />}
+    </SeeRightContentsBtn>
+    <DivideRightContents isSeeList={isSeeList} initLoad={initLoad} isSeedisplay={isSeedisplay}>
       <SortTagBtn meTag={meTag} />
       <SStudentList>
         {data?.seeAllStudent?.length === 0 ?
@@ -136,7 +102,7 @@ const StudentList = ({ setSomeDragging, studentId, meTag, selectedTag, seeNum })
       </SStudentList>
       <AddStudentBtn onClick={onClickAddBtn}>학생 생성하기</AddStudentBtn>
       {isPopup === "createStudent" && <CreateStudent existStudentArray={existStudentArray} />}
-    </StudentContainer>
+    </DivideRightContents>
   </React.Fragment>
   );
 }

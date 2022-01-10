@@ -11,8 +11,6 @@ import ListItem from './ListItem';
 import PopupCreateList from './Popup/CreateList';
 
 const Container = styled.div`
-  max-height: 100%;
-  min-height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(4, minmax(120px, 1fr)); 
@@ -27,12 +25,6 @@ const Container = styled.div`
     `}
   ${customMedia.greaterThan("desktop")`
     padding: 0px;
-    overflow: scroll;
-    -ms-overflow-style: none; // IE and Edge
-    scrollbar-width: none; // Firefox
-    ::-webkit-scrollbar {
-      display: none; // Chrome, Safari, Opera
-    }
   `}
 `
 
@@ -46,7 +38,7 @@ const AddIcon = styled.div`
   }
 `
 
-const AllList = ({ someDragging, setSuccessMsg, setSomeDragging }) => {
+const AllList = ({ someDragging, setSuccessMsg, setSomeDragging, successMsg }) => {
   // 학생 리스트가 아니라 명렬표임!!!
   const [studentList, setSudentList] = useState(undefined)
 
@@ -93,7 +85,7 @@ const AllList = ({ someDragging, setSuccessMsg, setSomeDragging }) => {
       }
     })}
     <AddIcon onClick={onClickAddIcon}><FcPlus /></AddIcon>
-    <Trash someDragging={someDragging} />
+    <Trash someDragging={someDragging} setSuccessMsg={setSuccessMsg} successMsg={successMsg} />
     {isPopup === "createList" && <PopupCreateList />}
 
   </Container>);
