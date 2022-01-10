@@ -1,6 +1,12 @@
+import { useMutation } from '@apollo/client';
 import React from 'react';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { outPopup } from '../../../apollo';
+import { DELETE_STUDENT_LIST_MUTATION } from '../../../Graphql/StudentList/mutation';
+import { SEE_ALL_STUDENT_LIST_QUERY } from "../../../Graphql/StudentList/query"
+import useMe from '../../../Hooks/useMe';
+import routes from '../../../routes';
 import { customMedia } from '../../../styles';
 import BtnPopupContainer from '../../Shared/BtnPopupContainer';
 
@@ -45,11 +51,35 @@ const Msg = styled.div`
   line-height: 120%;
 `
 
-const DeleteList = () => {
+const DeleteList = ({ listId }) => {
+  const me = useMe()
+  const navigate = useNavigate()
+  const onCompleted = (result) => {
+    const { deleteStudentList: { ok } } = result
+    if (ok) {
+      outPopup()
+      navigate(routes.list)
+    }
+  }
+  const [deleteStudentList, { loading }] = useMutation(DELETE_STUDENT_LIST_MUTATION, {
+    onCompleted,
+    refetchQueries: [{ query: SEE_ALL_STUDENT_LIST_QUERY }]
+  })
+  const onClickDelBtn = () => {
+    if (loading) {
+      return
+    }
+    deleteStudentList({
+      variables: {
+        listId,
+        teacherEmail: me?.email
+      }
+    })
+  }
   return (<BtnPopupContainer>
     <Container>
       <Btn>
-        <DelBtn>삭제하기</DelBtn>
+        <DelBtn onClick={onClickDelBtn}>삭제하기</DelBtn>
         <CancleBtn onClick={() => outPopup()}>취소하기</CancleBtn>
       </Btn>
       <Msg>명렬표를 삭제하시겠습니까?</Msg>

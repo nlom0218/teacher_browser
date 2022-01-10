@@ -338,7 +338,7 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
         loading={editLoading}
       />
     }
-    {isPopup === "deleteList" && <DeleteList />}
+    {isPopup === "deleteList" && <DeleteList listId={listId} />}
   </Container >);
 }
 
