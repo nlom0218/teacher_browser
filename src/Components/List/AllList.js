@@ -11,8 +11,6 @@ import ListItem from './ListItem';
 import PopupCreateList from './Popup/CreateList';
 
 const Container = styled.div`
-  max-height: 100%;
-  min-height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(4, minmax(120px, 1fr)); 
@@ -27,12 +25,6 @@ const Container = styled.div`
     `}
   ${customMedia.greaterThan("desktop")`
     padding: 0px;
-    overflow: scroll;
-    -ms-overflow-style: none; // IE and Edge
-    scrollbar-width: none; // Firefox
-    ::-webkit-scrollbar {
-      display: none; // Chrome, Safari, Opera
-    }
   `}
 `
 

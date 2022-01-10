@@ -15,13 +15,6 @@ import { EDIT_STUDENT_LIST } from "../../Graphql/StudentList/mutation"
 import useMedia from '../../Hooks/useMedia';
 
 const Container = styled.div`
-  max-height: 100%;
-  overflow: scroll;
-  -ms-overflow-style: none; // IE and Edge
-  scrollbar-width: none; // Firefox
-  ::-webkit-scrollbar {
-    display: none; // Chrome, Safari, Opera
-  }
   padding: 20px;
   padding: 1.25rem;
   display: grid;

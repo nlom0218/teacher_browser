@@ -12,13 +12,6 @@ import DetailStudentTag from './DetailStudentTag';
 import InputUnderLine from './InputUnderLine';
 
 const Container = styled.div`
-  max-height: 100%;
-  overflow: scroll;
-  -ms-overflow-style: none; // IE and Edge
-  scrollbar-width: none; // Firefox
-  ::-webkit-scrollbar {
-    display: none; // Chrome, Safari, Opera
-  }
   padding: 20px;
   padding: 1.25rem;
   display: grid;
