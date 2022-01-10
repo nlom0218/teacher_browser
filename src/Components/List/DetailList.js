@@ -151,6 +151,18 @@ const ErrMsg = styled.div`
   font-weight: 600;
 `
 
+const DeleteContainer = styled.div`
+  background-color: ${props => props.theme.redColor};
+  color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
+  text-align: center;
+  padding: 20px;
+  padding: 1.25rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+`
+
 const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
   const isPopup = useReactiveVar(isPopupVar)
   const [teacherEmail, setTeacherEmail] = useState(undefined)
@@ -307,6 +319,9 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
       someDragging={someDragging}
       inStudent={data?.seeStudentList[0]?.students}
     />
+    <DeleteContainer>
+      명렬표 삭제하기
+    </DeleteContainer>
     {
       isPopup === "emoji" &&
       <SetEmoji
