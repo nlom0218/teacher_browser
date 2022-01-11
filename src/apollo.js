@@ -57,6 +57,7 @@ export const disableSeeStudent = () => {
   isSeeStudentVar(false)
 }
 
+
 export const isSeeStudentListVar = makeVar(localStorage.getItem(IS_SEE_STUDENT_LIST))
 export const enableSeeStudentList = () => {
   localStorage.setItem(IS_SEE_STUDENT_LIST, "true")
