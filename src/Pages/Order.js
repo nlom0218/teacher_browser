@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
 import StudentList from "../Components/Order/Popup/StudentList";
-import { BsChevronLeft, BsPeopleFill, BsFillCheckSquareFill, BsPrinter, BsChevronRight } from "react-icons/bs";
 import { FcContacts } from "react-icons/fc";
 import { useQuery, useReactiveVar } from "@apollo/client";
-import { inPopup, isPopupVar } from "../apollo";
+import { inPopup, isPopupVar, isSeeStudentVar } from "../apollo";
 import { useParams } from "react-router-dom";
 import { SEE_ONE_STUDENT_LIST_QUERY } from "../Graphql/StudentList/query";
 import useMedia from "../Hooks/useMedia";
@@ -15,15 +14,21 @@ import { inputLine } from "../Animations/InputLine";
 import { BtnFadeIn } from "../Animations/Fade";
 import { useForm } from "react-hook-form";
 import StudentOrder from "../Components/Order/StudentOrder";
+import { DivideLeftContents } from "../Components/Shared/styled/DivideContents";
+import AllStudentList from "../Components/Order/AllStudentList";
+import { isSeeStudentListVar } from "../apollo";
+
 
 // 전체 틀
 const Container = styled.div`
   display: grid;
-  padding: 40px;
-  padding: 2.5rem;
+  padding: 20px;
+  padding: 1.25rem;
   row-gap: 20px;
   row-gap: 1.25rem;
   align-items: flex-start;
+  ${customMedia.greaterThan("desktop")`
+  padding:0;`}
 `;
 const TopContents = styled.div`
   display: grid;
@@ -235,26 +240,13 @@ const PrintBtn = styled.div`
   cursor: pointer;
 `;
 
-// 프린트 기능 추가하기
-// function info_print() {
-//   let initBody = document.body;
-//   let hiddenBtn = document.querySelector('.print-button');
-//   window.onbeforeprint = function () {
-//     hiddenBtn.style.display = "none";
-//     document.body = document.querySelector('.main-container');
-//   }
-//   window.onafterprint = function () {
-//     hiddenBtn.style.display = "block";
-//     document.body = initBody;
-//   }
-//   window.print();
-// }
 
 const Order = () => {
   const { id } = useParams();
 
   const media = useMedia();
   const isPopup = useReactiveVar(isPopupVar);
+  const isSeeList = useReactiveVar(isSeeStudentListVar);
 
   const [studentListName, setStudentListName] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState([]);
@@ -273,17 +265,7 @@ const Order = () => {
     skip: !id,
   });
 
-  //목록 내 순서 변경
-  const shuffled = "unshuffled"
-    .map((value) => ({ value, sort: Math.random() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ value }) => value);
-  const [changeShuffled, setShuffled] = useState(shuffled);
-  const onClickShuffled = (changeShuffled) => {
-    const newShuffled = { ...changeShuffled };
-    setShuffled(newShuffled);
-  };
-  const shuffledList = shuffled.map((value) => <li>{value}</li>);
+
   //결과 , 설명글 추가함. 순서 제목 입력->프린트할 때 제목 나오도록, 설명글 추가하니 밑줄 안 사라짐....
   //프린트 버튼이랑 롤업 버튼이랑 위치박스는 그대로하고 나오는 것만 다르게? 하는지 박스 자체도 변경할 것인지 선택
   const onClickListIcon = () => inPopup("seeStudentList");
@@ -315,6 +297,7 @@ const Order = () => {
   console.log(data);
   return (
     <BasicContainer menuItem={true}>
+      <DivideLeftContents isSeeList={isSeeList}>
       <Container>
         <TopContents>
           <Title onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
@@ -358,43 +341,19 @@ const Order = () => {
 
               {isShuffle === "finish" && (
                 <React.Fragment>
-                  <OptionBtn onClick={() => onClickShuffleBtn("ing")}>다시하기</OptionBtn>
+                  <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
+                    다시 섞기 
+                  </OptionBtn>
                   <OptionBtn> 한 명씩 보이기 </OptionBtn>
                 </React.Fragment>
               )}
             </OptionContents>
             <StudentOrder selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} isShuffle={isShuffle} />
           </React.Fragment>
-        )}
-
-        {/*
-        <MenuBtn>
-        
-          <ConditionIcon onClick={() => onClickIcon("condition")}>
-            <BsFillCheckSquareFill />
-          </ConditionIcon>
-        </MenuBtn>
-        <br />
-        <hr />
-        <Border>
-          <PrintBtn>
-            {" "}
-            &nbsp;
-            <BsPrinter />
-          </PrintBtn>
-        </Border>
-        <br />
-        <RollList>
-          <LeftRight>
-            <BsChevronLeft />
-          </LeftRight>
-          <RollListItems>{shuffledList}</RollListItems>
-
-          <LeftRight>
-            <BsChevronRight />
-          </LeftRight>
-        </RollList> */}
+        )}  
       </Container>
+      </DivideLeftContents>
+      {media=="Desktop"&& <AllStudentList/>}
 
       {isPopup === "seeStudentList" && <StudentList />}
     </BasicContainer>

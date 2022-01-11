@@ -38,7 +38,7 @@ const AddIcon = styled.div`
   }
 `
 
-const AllList = ({ someDragging, setSuccessMsg, setSomeDragging, successMsg }) => {
+const AllList = ({ someDragging, setSuccessMsg, setSomeDragging, successMsg, selectedTag, selectedSort }) => {
   // 학생 리스트가 아니라 명렬표임!!!
   const [studentList, setSudentList] = useState(undefined)
 
@@ -85,7 +85,7 @@ const AllList = ({ someDragging, setSuccessMsg, setSomeDragging, successMsg }) =
       }
     })}
     <AddIcon onClick={onClickAddIcon}><FcPlus /></AddIcon>
-    <Trash someDragging={someDragging} setSuccessMsg={setSuccessMsg} successMsg={successMsg} />
+    <Trash someDragging={someDragging} setSuccessMsg={setSuccessMsg} successMsg={successMsg} selectedTag={selectedTag} selectedSort={selectedSort} />
     {isPopup === "createList" && <PopupCreateList />}
 
   </Container>);

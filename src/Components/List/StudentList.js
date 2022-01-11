@@ -40,7 +40,7 @@ const AddStudentBtn = styled.div`
   transition: background-color 1s ease, color 1s ease;
 `
 
-const StudentList = ({ setSomeDragging, studentId, meTag, selectedTag, seeNum }) => {
+const StudentList = ({ setSomeDragging, studentId, meTag, selectedTag, seeNum, selectedSort }) => {
   // 초기 로드 시 에니메이션 작동 안하게 하기
   const [initLoad, setInitLoad] = useState(true)
 
@@ -55,7 +55,8 @@ const StudentList = ({ setSomeDragging, studentId, meTag, selectedTag, seeNum })
 
   const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY, {
     variables: {
-      ...(selectedTag.length !== 0 && { tag: selectedTag })
+      ...(selectedTag.length !== 0 && { tag: selectedTag }),
+      ...(selectedSort && { sort: selectedSort })
     }
   })
 
@@ -101,7 +102,12 @@ const StudentList = ({ setSomeDragging, studentId, meTag, selectedTag, seeNum })
           })}
       </SStudentList>
       <AddStudentBtn onClick={onClickAddBtn}>학생 생성하기</AddStudentBtn>
-      {isPopup === "createStudent" && <CreateStudent existStudentArray={existStudentArray} />}
+      {isPopup === "createStudent" &&
+        <CreateStudent
+          existStudentArray={existStudentArray}
+          selectedTag={selectedTag}
+          selectedSort={selectedSort}
+        />}
     </DivideRightContents>
   </React.Fragment>
   );

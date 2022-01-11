@@ -1,7 +1,7 @@
 import BasicContainer from '../Components/Shared/BasicContainer';
 import React, { useEffect } from "react";
 import styled from 'styled-components';
-import { inPopup, isPopupVar } from '../apollo';
+import { inPopup, isPopupVar, isSeeStudentListVar } from '../apollo';
 import { useQuery, useReactiveVar } from '@apollo/client';
 import StudentList from '../Components/Draw/Popup/StudentList';
 import { FcContacts } from "react-icons/fc";
@@ -12,13 +12,19 @@ import { useState } from 'react/cjs/react.development';
 import { inputLine } from '../Animations/InputLine';
 import { BtnFadeIn } from '../Animations/Fade';
 import { SEE_ONE_STUDENT_LIST_QUERY } from '../Graphql/StudentList/query';
-
+import { DivideLeftContents } from '../Components/Shared/styled/DivideContents';
+import AllStudentList from '../Components/Draw/AllStudentList';
 
 const Container = styled.div`
   display : grid;
-  padding : 40px;
-  padding : 2.5rem;
+  padding : 20px;
+  padding : 1.25rem;
+  row-gap : 20px;
+  row-gap : 1.25rem;
   align-items : flex-start;
+  ${customMedia.greaterThan("desktop")`
+  padding : 0
+  `}
 `
 
 
@@ -51,6 +57,7 @@ const Title = styled.form`
 `
 
 const Input = styled.input`
+  width : 100%;
   font-size : 1.5em;
   font-size : 1.5rem;
   padding : 10px 0px;
@@ -113,7 +120,8 @@ const ListName = styled.div`
 const Draw = () => {
   const { id } = useParams()
   const media = useMedia()
-  const isPopup = useReactiveVar(isPopupVar)
+  const isPopup = useReactiveVar(isPopupVar);
+  const isSeeList = useReactiveVar(isSeeStudentListVar)
   const [studentListName, setStudentListName] = useState(null)
   const [isEdit, setIsEdit] = useState(false)
   const [title, setTitle] = useState(undefined)
@@ -138,6 +146,7 @@ const Draw = () => {
 
   return (
     <BasicContainer menuItem={true}>
+      <DivideLeftContents isSeeList={isSeeList}>
       <Container>
         <TopContents>
           <Title onBlur={onBlurForm}>
@@ -165,6 +174,8 @@ const Draw = () => {
         </TopContents>
       </Container>
       {isPopup === "seeStudentList" && <StudentList />}
+      </DivideLeftContents>
+      { media === "Desktop" && <AllStudentList />}
     </BasicContainer>
   );
 };

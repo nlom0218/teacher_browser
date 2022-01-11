@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import routes from '../../routes';
 import { FcAlarmClock, FcDonate, FcRefresh, FcNumericalSorting12, FcContacts, FcDataSheet } from "react-icons/fc";
 import styled from 'styled-components';
-import icon from "../../image/icons/휴지통.svg"
 
 const SMenu = styled.div`
   display: grid;

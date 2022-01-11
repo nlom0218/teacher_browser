@@ -38,9 +38,8 @@ const Order = styled.div`
 `;
 
 const Name = styled.div`
-  font-size: 2.25rem;
-  font-size: 2.25em;
-  font-style: bold;
+  font-size: 2.0rem;
+  font-size: 2.0em;
 `;
 
 const StudentOrder = ({ selectedStudent, setSelectedStudent, isShuffle }) => {

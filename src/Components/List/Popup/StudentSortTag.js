@@ -12,8 +12,8 @@ const Container = styled.div`
   padding: 20px 0px;
   padding: 1.25rem 0rem;
   display: grid;
-  row-gap: 20px;
-  row-gap: 1.25rem;
+  row-gap: 40px;
+  row-gap: 2.5rem;
 `
 
 const BackBtn = styled.div`
@@ -31,7 +31,7 @@ const TopContents = styled.div`
   column-gap: 1.25rem;
   row-gap: 20px;
   row-gap: 1.25rem;
-  :first-child {
+  .sort_tag_name{
     font-weight: 600;
   }
   ${customMedia.greaterThan("tablet")`
@@ -90,6 +90,18 @@ const Tag = styled.div`
   }
 `
 
+const SeeStudentSort = styled.div`
+  display: grid;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  grid-template-columns: 1fr 1fr 1fr;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  justify-items: flex-start;
+  ${customMedia.greaterThan("tablet")`
+  `}
+`
+
 const SeeStudentNum = styled.div`
   display: grid;
   column-gap: 20px;
@@ -102,7 +114,7 @@ const SeeStudentNum = styled.div`
   `}
 `
 
-const SeeStudentNumBtn = styled.div`
+const SeeStudentBtn = styled.div`
   display: grid;
   grid-template-columns: auto auto 1fr;
   align-items: center;
@@ -114,7 +126,7 @@ const SeeStudentNumBtn = styled.div`
   }
 `
 
-const StudentSortTag = ({ meTag, selectedTag, setSeletedTag, setSeeNum, seeNum }) => {
+const StudentSortTag = ({ meTag, selectedTag, setSelectedTag, setSeeNum, seeNum, setSelectedSort, selectedSort }) => {
   const media = useMedia()
   const onClickAddTag = (tag) => {
     const exist = selectedTag.includes(tag)
@@ -122,20 +134,32 @@ const StudentSortTag = ({ meTag, selectedTag, setSeletedTag, setSeeNum, seeNum }
       return
     }
     const newSeletedTag = [...selectedTag, tag]
-    setSeletedTag(newSeletedTag)
+    setSelectedTag(newSeletedTag)
     localStorage.setItem("selectedTag", JSON.stringify(newSeletedTag))
   }
   const onClickRemoveTag = (tag) => {
     const newSeletedTag = selectedTag.filter(item => item !== tag)
-    setSeletedTag(newSeletedTag)
+    setSelectedTag(newSeletedTag)
     localStorage.setItem("selectedTag", JSON.stringify(newSeletedTag))
   }
   const onClickBackAddTagBtn = () => inPopup("students")
   const onClickResetBtn = () => {
     localStorage.removeItem("selectedTag")
     localStorage.removeItem("seeNum")
-    setSeletedTag([])
+    localStorage.removeItem("seletedSort")
+    setSelectedTag([])
+    setSelectedSort(undefined)
     setSeeNum(undefined)
+  }
+
+  const onClickSortBtn = (type) => {
+    if (type === "defalut") {
+      setSelectedSort(undefined)
+      localStorage.removeItem("selectedSort")
+    } else {
+      setSelectedSort(type)
+      localStorage.setItem("selectedSort", type)
+    }
   }
 
   const onClickSeeNumBtn = (type) => {
@@ -152,7 +176,7 @@ const StudentSortTag = ({ meTag, selectedTag, setSeletedTag, setSeeNum, seeNum }
     <Container>
       {media !== "Desktop" && <BackBtn onClick={onClickBackAddTagBtn}><IoArrowBackSharp /></BackBtn>}
       <TopContents>
-        <div>학생 보기 설정</div>
+        <div className="sort_tag_name">학생 보기 설정</div>
         <ResetBtn onClick={onClickResetBtn}>초기화</ResetBtn>
       </TopContents>
       <SettingLayout>
@@ -176,17 +200,35 @@ const StudentSortTag = ({ meTag, selectedTag, setSeletedTag, setSeeNum, seeNum }
         </React.Fragment>}
       </SettingLayout>
       <SettingLayout>
+        <Title>✲ 정렬 방법</Title>
+        <SeeStudentSort>
+          {/* RiCheckboxBlankLine, RiCheckboxLine  */}
+          <SeeStudentBtn onClick={() => onClickSortBtn("defalut")}>
+            <div>{!selectedSort ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+            <div>생성일</div>
+          </SeeStudentBtn>
+          <SeeStudentBtn onClick={() => onClickSortBtn("name")}>
+            <div>{selectedSort === "name" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+            <div>이름</div>
+          </SeeStudentBtn>
+          <SeeStudentBtn onClick={() => onClickSortBtn("num")}>
+            <div>{selectedSort === "num" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+            <div>번호</div>
+          </SeeStudentBtn>
+        </SeeStudentSort>
+      </SettingLayout>
+      <SettingLayout>
         <Title>✲ 번호 보이기</Title>
         <SeeStudentNum>
           {/* RiCheckboxBlankLine, RiCheckboxLine  */}
-          <SeeStudentNumBtn onClick={() => onClickSeeNumBtn("see")}>
-            <div>{seeNum ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
-            <div>보이기</div>
-          </SeeStudentNumBtn>
-          <SeeStudentNumBtn onClick={() => onClickSeeNumBtn("hide")}>
+          <SeeStudentBtn onClick={() => onClickSeeNumBtn("hide")}>
             <div>{!seeNum ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
             <div>숨기기</div>
-          </SeeStudentNumBtn>
+          </SeeStudentBtn>
+          <SeeStudentBtn onClick={() => onClickSeeNumBtn("see")}>
+            <div>{seeNum ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+            <div>보이기</div>
+          </SeeStudentBtn>
         </SeeStudentNum>
       </SettingLayout>
     </Container>

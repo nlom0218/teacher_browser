@@ -20,6 +20,8 @@ const CREATEACCOUNT = "/create-account"
 const EDITACCOUNT = "/edit-account"
 const NAVERLOGINCALLBACK = "/naverLogin"
 
+const TRASH = "/trash"
+
 const routes = {
   home: HOME,
   todo: TODO,
@@ -41,7 +43,9 @@ const routes = {
   login: LOGIN,
   createAccount: CREATEACCOUNT,
   editAccount: EDITACCOUNT,
-  naverLoginCallBack: NAVERLOGINCALLBACK
+  naverLoginCallBack: NAVERLOGINCALLBACK,
+
+  trash: TRASH
 }
 
 export default routes
