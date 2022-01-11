@@ -21,6 +21,7 @@ const Container = styled.div`
 
 const DelIcon = styled.div`
   cursor: pointer;
+  z-index: ${props => props.someDragging ? -5 : 5};
   svg {
     font-size: 2.5rem;
     font-size: 2.5em;
@@ -37,6 +38,7 @@ const DropContainer = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr;
   opacity: ${props => props.someDragging ? 0.8 : 0};
+  z-index: ${props => props.someDragging ? 5 : -5};
   transition: opacity 0.6s ease;
   border: 1px solid ${props => props.theme.hoverColor};
   background-color: ${props => props.theme.bgColor};
