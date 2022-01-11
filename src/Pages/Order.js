@@ -242,7 +242,6 @@ const PrintBtn = styled.div`
 `;
 
 
-
 const Order = () => {
   const { id } = useParams();
 
@@ -267,7 +266,7 @@ const Order = () => {
     skip: !id,
   });
 
-  
+
   //결과 , 설명글 추가함. 순서 제목 입력->프린트할 때 제목 나오도록, 설명글 추가하니 밑줄 안 사라짐....
   //프린트 버튼이랑 롤업 버튼이랑 위치박스는 그대로하고 나오는 것만 다르게? 하는지 박스 자체도 변경할 것인지 선택
   const onClickListIcon = () => inPopup("seeStudentList");

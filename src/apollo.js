@@ -57,19 +57,16 @@ export const disableSeeStudent = () => {
   isSeeStudentVar(false)
 }
 
-export const isSeeStudentListVar=makeVar(
-  localStorage.getItem(IS_SEE_STUDENT_LIST)
-);
 
-export const enableSeeStudentList=()=> {
-  localStorage.setItem(IS_SEE_STUDENT_LIST,true);
-  isSeeStudentListVar(true);
+export const isSeeStudentListVar = makeVar(localStorage.getItem(IS_SEE_STUDENT_LIST))
+export const enableSeeStudentList = () => {
+  localStorage.setItem(IS_SEE_STUDENT_LIST, "true")
+  isSeeStudentListVar(true)
 }
-
-export const disableSeeStudentList=()=>{
-  localStorage.removeItem(IS_SEE_STUDENT_LIST);
-  isSeeStudentListVar(false);
-};
+export const disableSeeStudentList = () => {
+  localStorage.removeItem(IS_SEE_STUDENT_LIST)
+  isSeeStudentListVar(false)
+}
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
