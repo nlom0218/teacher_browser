@@ -20,7 +20,7 @@ const Withdrawal = ({ userEmail }) => {
 
   return (
     <Container>
-      <BtnContainer>
+      <BtnContainer onlyone={true}>
         <DelBtn onClick={onClickDelBtn}>계정 삭제 & 회원 탈퇴</DelBtn>
       </BtnContainer>
       {isPopup === "deleteUser" && <DeleteUser teacherEmail={userEmail} />}
