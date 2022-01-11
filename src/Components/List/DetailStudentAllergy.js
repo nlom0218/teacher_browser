@@ -7,6 +7,7 @@ import { useMutation } from '@apollo/client';
 import { customMedia } from '../../styles';
 import { SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
 import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
+import { ME_QUERY } from '../../Hooks/useMe';
 
 const AllergyList = styled.div`
   padding: 20px;
@@ -77,7 +78,10 @@ const DetailStudentAllergy = ({ studentInfo }) => {
   }
   const [editStudent, { loading }] = useMutation(EDIT_STUDENT_MUTATION, {
     onCompleted,
-    refetchQueries: [{ query: SEE_ONE_STUDENT_QUERY, variables: { studentId: studentInfo?._id } }]
+    refetchQueries: [
+      { query: SEE_ONE_STUDENT_QUERY, variables: { studentId: studentInfo?._id } },
+      { query: ME_QUERY }
+    ]
   })
 
   const addAllergy = (allergy) => {
