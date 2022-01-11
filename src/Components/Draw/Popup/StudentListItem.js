@@ -33,7 +33,7 @@ const StudentListItem = ({item}) => {
     const onMouseEnterIcon = () => setIsEnterIcon(true)
     const onMouseLeaveIcon = () => setIsEnterIcon(false)
     const onClickItem = () => {
-        navigate(`${routes.order}/${item.listId}`)
+        navigate(`${routes.draw}/${item.listId}`)
         outPopup()
     }
     return( <ListItem 

@@ -280,17 +280,7 @@ const Order = () => {
     skip: !id,
   });
 
-  //목록 내 순서 변경
-  const shuffled = unshuffled
-    .map((value) => ({ value, sort: Math.random() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(({ value }) => value);
-  const [changeShuffled, setShuffled] = useState(shuffled);
-  const onClickShuffled = (changeShuffled) => {
-    const newShuffled = { ...changeShuffled };
-    setShuffled(newShuffled);
-  };
-  const shuffledList = shuffled.map((value) => <li>{value}</li>);
+
   //결과 , 설명글 추가함. 순서 제목 입력->프린트할 때 제목 나오도록, 설명글 추가하니 밑줄 안 사라짐....
   //프린트 버튼이랑 롤업 버튼이랑 위치박스는 그대로하고 나오는 것만 다르게? 하는지 박스 자체도 변경할 것인지 선택
   const onClickListIcon = () => inPopup("seeStudentList");
