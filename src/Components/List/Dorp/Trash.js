@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { FcFullTrash } from 'react-icons/fc';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useDrop } from "react-dnd"
 import { useMutation, useReactiveVar } from '@apollo/client';
@@ -11,6 +10,7 @@ import { DELETE_STUDENT_LIST_MUTATION } from '../../../Graphql/StudentList/mutat
 import { inPopup, isPopupVar } from '../../../apollo';
 import DeleteList from '../Popup/DeleteList';
 import { color } from '../../../styles';
+import IcCloseTrash from '../../../icons/Trash/IcCloseTrash';
 
 const Container = styled.div`
   display: grid;
@@ -20,9 +20,11 @@ const Container = styled.div`
 `
 
 const DelIcon = styled.div`
+  cursor: pointer;
   svg {
     font-size: 2.5rem;
     font-size: 2.5em;
+    filter: drop-shadow(1px 1px 1px rgb(0, 0, 0))
   }
 `
 
@@ -110,7 +112,7 @@ const Trash = ({ someDragging, setSuccessMsg }) => {
   })
 
   return (<Container>
-    <DelIcon><FcFullTrash /></DelIcon>
+    <DelIcon onClick={() => window.alert("ss")}><IcCloseTrash /></DelIcon>
     <DropContainer someDragging={someDragging}>
       <ListDrop ref={listDrop} className="delDrop">명렬표삭제 🗑</ListDrop>
       <StudentDrop ref={studentDrop} className="delDrop">학생삭제 🗑</StudentDrop>
