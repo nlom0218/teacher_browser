@@ -1,13 +1,14 @@
-import React from 'react';
-import styled from 'styled-components';
-import { isPopupVar } from '../apollo';
-import EditSchool from '../Components/Account/EditSchool';
+import React from "react";
+import styled from "styled-components";
+import { isPopupVar } from "../apollo";
+import EditSchool from "../Components/Account/EditSchool";
 import EditBgTheme from "../Components/Account/EditBgTheme";
-import RegisterSchool from '../Components/Account/RegisterSchool';
-import BasicContainer from '../Components/Shared/BasicContainer';
-import useMe from '../Hooks/useMe';
-import { color, customMedia } from '../styles';
-import { useReactiveVar } from '@apollo/client';
+import RegisterSchool from "../Components/Account/RegisterSchool";
+import Withdrawal from "../Components/Account/Withdrawal";
+import BasicContainer from "../Components/Shared/BasicContainer";
+import useMe from "../Hooks/useMe";
+import { color, customMedia } from "../styles";
+import { useReactiveVar } from "@apollo/client";
 
 const Container = styled.div`
   padding: 60px 0px;
@@ -55,7 +56,7 @@ const Item = styled.div`
 `;
 
 const EditAccount = () => {
-  const isPopup = useReactiveVar(isPopupVar)
+  const isPopup = useReactiveVar(isPopupVar);
   const me = useMe();
   return (
     <BasicContainer menuItem={true}>
@@ -67,11 +68,7 @@ const EditAccount = () => {
         <Changes>
           <List>학교정보</List>
           <Item>
-            <EditSchool
-              userEmail={me?.email}
-              schoolName={me?.schoolName}
-              schoolAdress={me?.schoolAdress}
-            />
+            <EditSchool userEmail={me?.email} schoolName={me?.schoolName} schoolAdress={me?.schoolAdress} />
           </Item>
         </Changes>
         <Changes>
@@ -80,10 +77,14 @@ const EditAccount = () => {
             <EditBgTheme userEmail={me?.email} bgTheme={me?.bgTheme} />
           </Item>
         </Changes>
+        <Changes>
+          <List>회원 탈퇴</List>
+          <Item>
+            <Withdrawal userEmail={me?.email} />
+          </Item>
+        </Changes>
       </Container>
-      {isPopup === "registerSchool" && (
-        <RegisterSchool />
-      )}
+      {isPopup === "registerSchool" && <RegisterSchool />}
     </BasicContainer>
   );
 };

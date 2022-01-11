@@ -2,13 +2,7 @@ import React, { useState } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
 import StudentList from "../Components/Order/Popup/StudentList";
-import {
-  BsChevronLeft,
-  BsPeopleFill,
-  BsFillCheckSquareFill,
-  BsPrinter,
-  BsChevronRight,
-} from "react-icons/bs";
+import { BsChevronLeft, BsPeopleFill, BsFillCheckSquareFill, BsPrinter, BsChevronRight } from "react-icons/bs";
 import { FcContacts } from "react-icons/fc";
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { inPopup, isPopupVar } from "../apollo";
@@ -57,7 +51,7 @@ const Main = styled.div`
   grid-row: 1/-1;
   align-items: center;
 `;
- 
+
 //제목
 const Title = styled.form`
   grid-row: 2/3;
@@ -123,8 +117,7 @@ const OptionContents = styled.div`
 
 //명단 선택
 const OptionBtn = styled.div`
-  background-color: ${(props) =>
-    props.isShuffling ? props.theme.redColor : props.theme.btnBgColor};
+  background-color: ${(props) => (props.isShuffling ? props.theme.redColor : props.theme.btnBgColor)};
   color: ${(props) => props.theme.bgColor};
   transition: background-color 1s ease, color 1s ease;
   padding: 10px 20px;
@@ -281,7 +274,7 @@ const Order = () => {
   });
 
   //목록 내 순서 변경
-  const shuffled = unshuffled
+  const shuffled = "unshuffled"
     .map((value) => ({ value, sort: Math.random() }))
     .sort((a, b) => a.sort - b.sort)
     .map(({ value }) => value);
@@ -316,9 +309,7 @@ const Order = () => {
   useEffect(() => {
     if (data) {
       setStudentListName(data?.seeStudentList[0]?.listName);
-      setSelectedStudent(
-        data?.seeStudentList[0]?.students.map((item) => item.studentName)
-      );
+      setSelectedStudent(data?.seeStudentList[0]?.students.map((item) => item.studentName));
     }
   }, [data]);
   console.log(data);
@@ -349,9 +340,7 @@ const Order = () => {
           </Title>
           {media !== "Desktop" && (
             <ListIcon>
-              <ListName>
-                {studentListName ? studentListName : "선택된 명렬표가 없습니다"}
-              </ListName>
+              <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다"}</ListName>
               <FcContacts onClick={onClickListIcon} />
             </ListIcon>
           )}
@@ -359,35 +348,22 @@ const Order = () => {
         {id && (
           <React.Fragment>
             <OptionContents>
-              {isShuffle === "init" && (
-                <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
-                  순서 섞기
-                </OptionBtn>
-              )}
+              {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
 
               {isShuffle === "ing" && (
-                <OptionBtn
-                  onClick={() => onClickShuffleBtn("finish")}
-                  isShuffling={true}
-                >
+                <OptionBtn onClick={() => onClickShuffleBtn("finish")} isShuffling={true}>
                   멈추기
                 </OptionBtn>
               )}
 
               {isShuffle === "finish" && (
                 <React.Fragment>
-                  <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
-                    다시하기
-                  </OptionBtn>
+                  <OptionBtn onClick={() => onClickShuffleBtn("ing")}>다시하기</OptionBtn>
                   <OptionBtn> 한 명씩 보이기 </OptionBtn>
                 </React.Fragment>
               )}
             </OptionContents>
-            <StudentOrder
-              selectedStudent={selectedStudent}
-              setSelectedStudent={setSelectedStudent}
-              isShuffle={isShuffle}
-            />
+            <StudentOrder selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} isShuffle={isShuffle} />
           </React.Fragment>
         )}
 
