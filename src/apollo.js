@@ -7,6 +7,7 @@ const TOKEN = "token"
 const POPUP = "popup"
 const IS_SEE_STUDENT = "isSeeStudent"
 const MENU_TYPE = "menuType"
+const IS_SEE_STUDENT_LIST = "isSeeStudentList"
 
 export const menuTypeVar = makeVar(localStorage.getItem(MENU_TYPE))
 export const setMenuType = (type) => {
@@ -54,6 +55,17 @@ export const enableSeeStudent = () => {
 export const disableSeeStudent = () => {
   localStorage.removeItem(IS_SEE_STUDENT)
   isSeeStudentVar(false)
+}
+
+
+export const isSeeStudentListVar = makeVar(localStorage.getItem(IS_SEE_STUDENT_LIST))
+export const enableSeeStudentList = () => {
+  localStorage.setItem(IS_SEE_STUDENT_LIST, "true")
+  isSeeStudentListVar(true)
+}
+export const disableSeeStudentList = () => {
+  localStorage.removeItem(IS_SEE_STUDENT_LIST)
+  isSeeStudentListVar(false)
 }
 
 const httpLink = createHttpLink({
