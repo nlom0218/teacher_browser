@@ -122,8 +122,7 @@ const OptionContents = styled.div`
 
 //명단 선택
 const OptionBtn = styled.div`
-  background-color: ${(props) =>
-    props.isShuffling ? props.theme.redColor : props.theme.btnBgColor};
+  background-color: ${(props) => (props.isShuffling ? props.theme.redColor : props.theme.btnBgColor)};
   color: ${(props) => props.theme.bgColor};
   transition: background-color 1s ease, color 1s ease;
   padding: 10px 20px;
@@ -265,7 +264,8 @@ const Order = () => {
     variables: { listId: id },
     skip: !id,
   });
-  
+
+
   //결과 , 설명글 추가함. 순서 제목 입력->프린트할 때 제목 나오도록, 설명글 추가하니 밑줄 안 사라짐....
   //프린트 버튼이랑 롤업 버튼이랑 위치박스는 그대로하고 나오는 것만 다르게? 하는지 박스 자체도 변경할 것인지 선택
   const onClickListIcon = () => inPopup("seeStudentList");
@@ -291,9 +291,7 @@ const Order = () => {
   useEffect(() => {
     if (data) {
       setStudentListName(data?.seeStudentList[0]?.listName);
-      setSelectedStudent(
-        data?.seeStudentList[0]?.students.map((item) => item.studentName)
-      );
+      setSelectedStudent(data?.seeStudentList[0]?.students.map((item) => item.studentName));
     }
   }, [data]);
   console.log(data);
@@ -325,9 +323,7 @@ const Order = () => {
           </Title>
           {media !== "Desktop" && (
             <ListIcon>
-              <ListName>
-                {studentListName ? studentListName : "선택된 명렬표가 없습니다"}
-              </ListName>
+              <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다"}</ListName>
               <FcContacts onClick={onClickListIcon} />
             </ListIcon>
           )}
@@ -335,17 +331,10 @@ const Order = () => {
         {id && (
           <React.Fragment>
             <OptionContents>
-              {isShuffle === "init" && (
-                <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
-                  순서 섞기
-                </OptionBtn>
-              )}
+              {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
 
               {isShuffle === "ing" && (
-                <OptionBtn
-                  onClick={() => onClickShuffleBtn("finish")}
-                  isShuffling={true}
-                >
+                <OptionBtn onClick={() => onClickShuffleBtn("finish")} isShuffling={true}>
                   멈추기
                 </OptionBtn>
               )}
@@ -359,11 +348,7 @@ const Order = () => {
                 </React.Fragment>
               )}
             </OptionContents>
-            <StudentOrder
-              selectedStudent={selectedStudent}
-              setSelectedStudent={setSelectedStudent}
-              isShuffle={isShuffle}
-            />
+            <StudentOrder selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} isShuffle={isShuffle} />
           </React.Fragment>
         )}  
       </Container>

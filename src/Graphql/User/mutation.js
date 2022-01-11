@@ -1,4 +1,4 @@
-import gql from "graphql-tag"
+import gql from "graphql-tag";
 
 export const CREATE_USER_MUTATION = gql`
   mutation CreateUser($email: String!, $password: String!) {
@@ -7,7 +7,7 @@ export const CREATE_USER_MUTATION = gql`
       error
     }
   }
-`
+`;
 
 export const LOGIN_USER_MUTATION = gql`
   mutation LoginUser($email: String!, $password: String!) {
@@ -16,8 +16,8 @@ export const LOGIN_USER_MUTATION = gql`
       token
       error
     }
-}
-`
+  }
+`;
 
 export const NAVER_LOGIN_MUTATION = gql`
   mutation NaverLogin($email: String!) {
@@ -26,7 +26,7 @@ export const NAVER_LOGIN_MUTATION = gql`
       token
     }
   }
-`
+`;
 
 export const UPDATE_USER_BGTHEME_MUTATION = gql`
   mutation UpdateUser($userEmail: String!, $bgTheme: String) {
@@ -44,7 +44,7 @@ export const DELETE_SCHOOL_INFO_MUTATION = gql`
       error
     }
   }
-`
+`;
 
 export const UPDATE_USER_MUTATION = gql`
   mutation UpdateUser($userEmail: String!, $schoolName: String, $schoolCode: String, $areaCode: String, $schoolAdress: String) {
@@ -53,8 +53,7 @@ export const UPDATE_USER_MUTATION = gql`
       error
     }
   }
-`
-
+`;
 
 export const CREATE_TAG_MUTATION = gql`
   mutation CreateTagMutation($userEmail: String!, $tag: [String]!) {
@@ -63,7 +62,7 @@ export const CREATE_TAG_MUTATION = gql`
       error
     }
   }
-`
+`;
 
 export const DELETE_TAG_MUTATION = gql`
   mutation DeleteTag($userEmail: String!, $tag: String!) {
@@ -72,4 +71,13 @@ export const DELETE_TAG_MUTATION = gql`
       error
     }
   }
-`
+`;
+
+export const DELETE_USER_MUTATION = gql`
+  mutation DeleteUser($teacherEmail: String!) {
+    deleteUser(teacherEmail: $teacherEmail) {
+      ok
+      error
+    }
+  }
+`;
