@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useReactiveVar } from "@apollo/client";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import { darkModeVar } from "./apollo";
+import { darkModeVar, isPopupVar, outPopup } from "./apollo";
 import { darkTheme, GlobalStyle, ligthTheme } from "./styles";
 import Home from "./Pages/Home";
 import Calendar from "./Pages/Calendar";
@@ -25,14 +25,33 @@ import useMe from "./Hooks/useMe";
 import HeaderWeather from "./Components/Shared/HeaderWeather";
 import useMedia from "./Hooks/useMedia";
 import List from "./Pages/List";
+import Trash from "./Pages/Trash";
 
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
   const media = useMedia();
 
+  const navigate = useNavigate()
+  const isPopup = useReactiveVar(isPopupVar)
+
   // me 값을 불러오는데 시간이 걸려서 bgTheme의 디폴트 값으로 설정된 nature가 불려오다가 수정됨...
   // useMe() 값을 다 불러온 뒤에 return할 수 있을까?
   const me = useMe();
+
+  // 뒤로가기, 팝업창 벗어나기 키 다운 이벤트 등록
+  // useEffect(() => {
+  //   window.onkeydown = (e) => {
+  //     console.log(e.key);
+  //     if (e.key === "Backspace" && !isPopup) {
+  //       navigate(-1)
+  //     } else {
+  //       outPopup()
+  //     }
+  //     if (e.key === "Escape" && isPopup) {
+  //       outPopup()
+  //     }
+  //   }
+  // }, [isPopup])
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : ligthTheme}>
@@ -62,6 +81,7 @@ function App() {
         <Route path={routes.journal} element={<Journal />} />
         <Route path={routes.list} element={<List />} />
         <Route path={`${routes.list}/:type/:id`} element={<List />} />
+        <Route path={routes.trash} element={<Trash />} />
       </Routes>
     </ThemeProvider>
   );

@@ -10,7 +10,8 @@ mutation Mutation(
   $parentPhoneNum: String, 
   $allergy: [Int], 
   $tag: [String], 
-  $delTag: String) {
+  $delTag: String,
+  $trash: Boolean) {
   editStudent(
     teacherEmail: $teacherEmail, 
     studentId: $studentId, 
@@ -20,7 +21,8 @@ mutation Mutation(
     parentPhoneNum: $parentPhoneNum, 
     allergy: $allergy, 
     tag: $tag, 
-    delTag: $delTag) {
+    delTag: $delTag,
+    trash: $trash) {
       ok
       error
   }
