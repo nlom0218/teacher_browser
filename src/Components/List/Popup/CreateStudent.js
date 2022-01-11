@@ -45,7 +45,7 @@ const ManyTypeBtn = styled.div`
   color: ${props => props.creationType === "many" && props.theme.bgColor};
 `
 
-const CreateStudent = ({ existStudentArray }) => {
+const CreateStudent = ({ existStudentArray, selectedTag, selectedSort }) => {
   // 단일 생성, 복수 생성을 위한 state값
   const [creationType, setCreationType] = useState(undefined)
 
@@ -59,7 +59,13 @@ const CreateStudent = ({ existStudentArray }) => {
   }
   const [createStudent, { loading }] = useMutation(CREATE_STUDENT_MUTATION, {
     onCompleted,
-    refetchQueries: [{ query: SEE_ALL_STUDENT_QUERY }]
+    refetchQueries: [{
+      query: SEE_ALL_STUDENT_QUERY,
+      variables: {
+        ...(selectedTag.length !== 0 && { tag: selectedTag }),
+        ...(selectedSort && { sort: selectedSort })
+      }
+    }]
   })
   const onClickCreationType = (type) => setCreationType(type)
   return (<PopupContainer>

@@ -69,8 +69,8 @@ const List = () => {
 
   const media = useMedia()
 
-  const [selectedTag, setSeletedTag] = useState([])
-  const [selectedSort, setSeletedSort] = useState(undefined)
+  const [selectedTag, setSelectedTag] = useState([])
+  const [selectedSort, setSelectedSort] = useState(undefined)
   const [seeNum, setSeeNum] = useState(Boolean(localStorage.getItem("seeNum")))
 
   // 드래그 중일 때와 아닐 때를 나타내기 위한 값
@@ -108,20 +108,25 @@ const List = () => {
     const localTag = JSON.parse(localStorage.getItem("selectedTag"))
     const localSort = localStorage.getItem("selectedSort")
     if (localTag) {
-      setSeletedTag(localTag)
+      setSelectedTag(localTag)
     } else {
-      setSeletedTag([])
+      setSelectedTag([])
+    }
+    if (localSort) {
+      setSelectedSort(localSort)
+    } else {
+      setSelectedSort(undefined)
     }
   }, [])
   return (<BasicContainer menuItem={true} notScroll={true}>
     <Container>
       <DivideLeftContents isSeeList={isSeeList}>
         {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} successMsg={successMsg} />}
-        {type === "student" && <DetailStudent studentId={id} />}
+        {type === "student" && <DetailStudent studentId={id} selectedTag={selectedTag} selectedSort={selectedSort} />}
         {type === "detail" && <DetailList listId={id} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
       </DivideLeftContents>
       {media === "Desktop" ?
-        <StudentList setSomeDragging={setSomeDragging} studentId={id} meTag={me?.tag} selectedTag={selectedTag} seeNum={seeNum} />
+        <StudentList setSomeDragging={setSomeDragging} studentId={id} meTag={me?.tag} selectedTag={selectedTag} seeNum={seeNum} selectedSort={selectedSort} />
         :
         <StudentIcon onClick={onClickStudentIcon}><FaUserFriends /></StudentIcon>
       }
@@ -129,14 +134,16 @@ const List = () => {
     {successMsg && <SuccessMsg error={successMsg.ok === false}>{successMsg.msg}</SuccessMsg>}
 
     {/* 데스크탑이 아닐 때 학생 전체 리스트를 팝업으로 띄우기 */}
-    {isPopup === "students" && <SeeStudents meTag={me?.tag} selectedTag={selectedTag} seeNum={seeNum} />}
+    {isPopup === "students" && <SeeStudents meTag={me?.tag} selectedTag={selectedTag} seeNum={seeNum} selectedSort={selectedSort} />}
     {isPopup === "seeStudentSetting" &&
       <StudentSortTag
-        setSeletedTag={setSeletedTag}
+        setSelectedTag={setSelectedTag}
         selectedTag={selectedTag}
         meTag={me?.tag}
         setSeeNum={setSeeNum}
         seeNum={seeNum}
+        setSelectedSort={setSelectedSort}
+        selectedSort={selectedSort}
       />}
   </BasicContainer>);
 }

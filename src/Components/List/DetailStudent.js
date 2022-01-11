@@ -92,7 +92,7 @@ const ErrMsg = styled.div`
   font-weight: 600;
 `
 
-const DetailStudent = ({ studentId }) => {
+const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
   const isPopup = useReactiveVar(isPopupVar)
 
   const [studentInfo, setStudentInfo] = useState(undefined)
@@ -115,7 +115,13 @@ const DetailStudent = ({ studentId }) => {
   }
   const [editStudent, { loading: editLoading }] = useMutation(EDIT_STUDENT_MUTATION, {
     onCompleted,
-    refetchQueries: [{ query: SEE_ALL_STUDENT_QUERY }]
+    refetchQueries: [{
+      query: SEE_ALL_STUDENT_QUERY,
+      variables: {
+        ...(selectedTag.length !== 0 && { tag: selectedTag }),
+        ...(selectedSort && { sort: selectedSort })
+      }
+    }]
   })
   const { register, setValue, handleSubmit, getValues } = useForm({
     mode: "onChange"
@@ -177,7 +183,7 @@ const DetailStudent = ({ studentId }) => {
       {isEdit && <SubmitInput type="submit" value="수정" />}
       {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
     </Form>
-    <DetailStudentNumber studentInfo={studentInfo} />
+    <DetailStudentNumber studentInfo={studentInfo} selectedTag={selectedTag} selectedSort={selectedSort} />
     <DetailStudentTag studentInfo={studentInfo} />
     <DetailStudentAllergy studentInfo={studentInfo} editStudent={editStudent} onCompleted={onCompleted} />
     <DelBtn onClick={onClicketeBtn}>학생 삭제하기</DelBtn>

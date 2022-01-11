@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { BtnFadeIn } from '../../Animations/Fade';
 import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
-import { SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
+import { SEE_ALL_STUDENT_QUERY, SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
 import useMedia from '../../Hooks/useMedia';
 import { customMedia } from '../../styles';
 import InputUnderLine from './InputUnderLine';
@@ -55,7 +55,7 @@ const Submit = styled.input`
   `}
 `
 
-const DetailStudentNumber = ({ studentInfo }) => {
+const DetailStudentNumber = ({ studentInfo, selectedSort, selectedTag }) => {
   const [isEdit, setIsEdit] = useState(false)
 
   const media = useMedia()
@@ -69,7 +69,16 @@ const DetailStudentNumber = ({ studentInfo }) => {
 
   const [editStudent, { loading }] = useMutation(EDIT_STUDENT_MUTATION, {
     onCompleted,
-    refetchQueries: [{ query: SEE_ONE_STUDENT_QUERY, variables: { studentId: studentInfo?._id } }]
+    refetchQueries: [
+      { query: SEE_ONE_STUDENT_QUERY, variables: { studentId: studentInfo?._id } },
+      {
+        query: SEE_ALL_STUDENT_QUERY,
+        variables: {
+          ...(selectedTag.length !== 0 && { tag: selectedTag }),
+          ...(selectedSort && { sort: selectedSort })
+        }
+      }
+    ]
   })
 
   const { register, setValue, handleSubmit, getValues } = useForm({

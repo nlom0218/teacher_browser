@@ -18,12 +18,13 @@ const StudentNum = styled.div`
   opacity: 0.8;
 `
 
-const SeeStudents = ({ meTag, selectedTag, seeNum }) => {
+const SeeStudents = ({ meTag, selectedTag, seeNum, selectedSort }) => {
   const navigate = useNavigate()
 
   const { data } = useQuery(SEE_ALL_STUDENT_QUERY, {
     variables: {
-      ...(selectedTag.length !== 0 && { tag: selectedTag })
+      ...(selectedTag.length !== 0 && { tag: selectedTag }),
+      ...(selectedSort && { sort: selectedSort })
     }
   })
 
