@@ -4,13 +4,15 @@ import { useDrop } from "react-dnd"
 import { useMutation, useReactiveVar } from '@apollo/client';
 import useMe from '../../../Hooks/useMe';
 import { SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
-import { DELETE_STUDENT_MUTATION } from '../../../Graphql/Student/mutation';
+import { EDIT_STUDENT_MUTATION } from '../../../Graphql/Student/mutation';
 import { SEE_ALL_STUDENT_LIST_QUERY } from '../../../Graphql/StudentList/query';
 import { DELETE_STUDENT_LIST_MUTATION } from '../../../Graphql/StudentList/mutation';
 import { inPopup, isPopupVar } from '../../../apollo';
 import DeleteList from '../Popup/DeleteList';
 import { color } from '../../../styles';
 import IcCloseTrash from '../../../icons/Trash/IcCloseTrash';
+import { useNavigate } from 'react-router';
+import routes from '../../../routes';
 
 const Container = styled.div`
   display: grid;
@@ -71,17 +73,28 @@ const SuccessMsg = styled.div`
   box-shadow: ${color.boxShadow};
 `
 
-const Trash = ({ someDragging, setSuccessMsg }) => {
+const Trash = ({ someDragging, setSuccessMsg, selectedTag, selectedSort }) => {
   const me = useMe()
   const isPopup = useReactiveVar(isPopupVar)
-  const [listId, sertListId] = useState(undefined)
+  const navigate = useNavigate()
+  const [listId, setListId] = useState(undefined)
 
-  const [deleteStudentList, { loading: listLoading }] = useMutation(DELETE_STUDENT_LIST_MUTATION, {
-    refetchQueries: [{ query: SEE_ALL_STUDENT_LIST_QUERY }]
-  })
+  const onCompleted = (result) => {
+    const { editStudent: { ok } } = result
+    if (ok) {
+      setSuccessMsg({ msg: `휴지통으로 이동되었습니다. 😀`, ok: true })
+    }
+  }
 
-  const [deleteStudent, { loading: studentLoading }] = useMutation(DELETE_STUDENT_MUTATION, {
-    refetchQueries: [{ query: SEE_ALL_STUDENT_QUERY }],
+  const [moveTrashStudent, { loading: studentLoading }] = useMutation(EDIT_STUDENT_MUTATION, {
+    refetchQueries: [{
+      query: SEE_ALL_STUDENT_QUERY,
+      variables: {
+        ...(selectedTag.length !== 0 && { tag: selectedTag }),
+        ...(selectedSort && { sort: selectedSort })
+      }
+    }],
+    onCompleted
   })
 
   // 리스트를 삭제하기 위한 drop
@@ -92,13 +105,7 @@ const Trash = ({ someDragging, setSuccessMsg }) => {
     drop: (item) => {
       inPopup("deleteList")
       const { listId } = item
-      sertListId(listId)
-      // deleteStudentList({
-      //   variables: {
-      //     teacherEmail: me?.email,
-      //     listId
-      //   }
-      // })
+      setListId(listId)
     }
   })
 
@@ -108,13 +115,23 @@ const Trash = ({ someDragging, setSuccessMsg }) => {
 
     // drop을 하게 되면 아래의 로직이 실행된다.
     drop: (item) => {
-      window.alert("휴지통으로 이동 => backend에서 학생 필드 trash값 이용하기, 이동 후 suucessMsg띄우기")
-      // setSuccessMsg({ msg: `휴지통으로 이동되었습니다. 😀`, ok: true })
+      const { studentId } = item
+      console.log(studentId);
+      moveTrashStudent({
+        variables: {
+          teacherEmail: me?.email,
+          studentId,
+          trash: true
+        }
+      })
     }
   })
 
+  const onClickTrash = () => {
+    navigate(routes.trash)
+  }
   return (<Container>
-    <DelIcon onClick={() => window.alert("ss")}><IcCloseTrash /></DelIcon>
+    <DelIcon onClick={onClickTrash}><IcCloseTrash /></DelIcon>
     <DropContainer someDragging={someDragging}>
       <ListDrop ref={listDrop} className="delDrop">명렬표삭제 🗑</ListDrop>
       <StudentDrop ref={studentDrop} className="delDrop">학생삭제 🗑</StudentDrop>

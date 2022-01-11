@@ -121,7 +121,7 @@ const List = () => {
   return (<BasicContainer menuItem={true} notScroll={true}>
     <Container>
       <DivideLeftContents isSeeList={isSeeList}>
-        {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} successMsg={successMsg} />}
+        {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} successMsg={successMsg} selectedTag={selectedTag} selectedSort={selectedSort} />}
         {type === "student" && <DetailStudent studentId={id} selectedTag={selectedTag} selectedSort={selectedSort} />}
         {type === "detail" && <DetailList listId={id} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
       </DivideLeftContents>

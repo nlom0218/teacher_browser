@@ -25,6 +25,7 @@ import useMe from "./Hooks/useMe";
 import HeaderWeather from "./Components/Shared/HeaderWeather";
 import useMedia from "./Hooks/useMedia";
 import List from "./Pages/List";
+import Trash from "./Pages/Trash";
 
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
@@ -80,6 +81,7 @@ function App() {
         <Route path={routes.journal} element={<Journal />} />
         <Route path={routes.list} element={<List />} />
         <Route path={`${routes.list}/:type/:id`} element={<List />} />
+        <Route path={routes.trash} element={<Trash />} />
       </Routes>
     </ThemeProvider>
   );
