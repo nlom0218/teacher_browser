@@ -33,8 +33,8 @@ const AddIcon = styled.div`
   justify-self: center;
   cursor: pointer;
   svg {
-    font-size: 2.5rem;
     font-size: 2.5em;
+    font-size: 2.5rem;
   }
 `
 

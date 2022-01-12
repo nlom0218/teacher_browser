@@ -32,6 +32,9 @@ const Container = styled.div`
 const ListIcon = styled.div`
     font-size: 2.5em;
     font-size: 2.5rem;
+    svg {
+      display: flex;
+    }
 `
 
 const ListName = styled.div`

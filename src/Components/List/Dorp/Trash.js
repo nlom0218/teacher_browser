@@ -13,6 +13,7 @@ import { color } from '../../../styles';
 import IcCloseTrash from '../../../icons/Trash/IcCloseTrash';
 import { useNavigate } from 'react-router';
 import routes from '../../../routes';
+import IcOpenTrashCan from '../../../icons/Trash/IcOpenTrashCan';
 
 const Container = styled.div`
   display: grid;
@@ -25,8 +26,8 @@ const DelIcon = styled.div`
   cursor: pointer;
   z-index: ${props => props.someDragging ? -5 : 5};
   svg {
-    font-size: 2.5rem;
     font-size: 2.5em;
+    font-size: 2.5rem;
     filter: drop-shadow(1px 1px 1px rgb(0, 0, 0))
   }
 `
@@ -78,6 +79,7 @@ const Trash = ({ someDragging, setSuccessMsg, selectedTag, selectedSort }) => {
   const isPopup = useReactiveVar(isPopupVar)
   const navigate = useNavigate()
   const [listId, setListId] = useState(undefined)
+  const [isHover, setIsHover] = useState(false)
 
   const onCompleted = (result) => {
     const { editStudent: { ok } } = result
@@ -131,7 +133,9 @@ const Trash = ({ someDragging, setSuccessMsg, selectedTag, selectedSort }) => {
     navigate(routes.trash)
   }
   return (<Container>
-    <DelIcon onClick={onClickTrash}><IcCloseTrash /></DelIcon>
+    <DelIcon onClick={onClickTrash} onMouseLeave={() => setIsHover(false)} onMouseEnter={() => setIsHover(true)}>
+      {isHover ? <IcOpenTrashCan /> : <IcCloseTrash />}
+    </DelIcon>
     <DropContainer someDragging={someDragging}>
       <ListDrop ref={listDrop} className="delDrop">명렬표삭제 🗑</ListDrop>
       <StudentDrop ref={studentDrop} className="delDrop">학생삭제 🗑</StudentDrop>
