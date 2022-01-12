@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const SEE_ALL_STUDENT_QUERY = gql`
-  query Query($tag: [String], $sort: String) {
-    seeAllStudent(tag: $tag, sort: $sort) {
+  query Query($tag: [String], $sort: String, $trash: Boolean) {
+    seeAllStudent(tag: $tag, sort: $sort, trash: $trash) {
       _id
       teacherEmail
       studentName

@@ -75,6 +75,7 @@ const List = () => {
 
   // 드래그 중일 때와 아닐 때를 나타내기 위한 값
   const [someDragging, setSomeDragging] = useState(false)
+  const [dragType, setDragType] = useState(undefined)
 
   // 드래그 성공 및 메시지를 띄우기 위한 값
   const [successMsg, setSuccessMsg] = useState(undefined)
@@ -121,12 +122,12 @@ const List = () => {
   return (<BasicContainer menuItem={true} notScroll={true}>
     <Container>
       <DivideLeftContents isSeeList={isSeeList}>
-        {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} successMsg={successMsg} selectedTag={selectedTag} selectedSort={selectedSort} />}
+        {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} successMsg={successMsg} selectedTag={selectedTag} selectedSort={selectedSort} setDragType={setDragType} dragType={dragType} />}
         {type === "student" && <DetailStudent studentId={id} selectedTag={selectedTag} selectedSort={selectedSort} />}
         {type === "detail" && <DetailList listId={id} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
       </DivideLeftContents>
       {media === "Desktop" ?
-        <StudentList setSomeDragging={setSomeDragging} studentId={id} meTag={me?.tag} selectedTag={selectedTag} seeNum={seeNum} selectedSort={selectedSort} />
+        <StudentList setSomeDragging={setSomeDragging} studentId={id} meTag={me?.tag} selectedTag={selectedTag} seeNum={seeNum} selectedSort={selectedSort} setDragType={setDragType} />
         :
         <StudentIcon onClick={onClickStudentIcon}><FaUserFriends /></StudentIcon>
       }

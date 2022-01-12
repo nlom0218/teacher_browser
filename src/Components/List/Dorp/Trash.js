@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useDrop } from "react-dnd"
 import { useMutation, useReactiveVar } from '@apollo/client';
@@ -34,47 +34,17 @@ const DelIcon = styled.div`
 
 const DropContainer = styled.div`
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  opacity: ${props => props.someDragging ? 0.8 : 0};
-  z-index: ${props => props.someDragging ? 5 : -5};
-  transition: opacity 0.6s ease;
-  border: 1px solid ${props => props.theme.hoverColor};
-  background-color: ${props => props.theme.bgColor};
-  .delDrop {
-    display: grid;
-    align-items: center;
-    justify-items: center;
-  }
-`
-
-const ListDrop = styled.div`
-`
-
-const StudentDrop = styled.div`
-  border-top: 1px solid ${props => props.theme.hoverColor};
-`
-
-const SuccessMsg = styled.div`
-  position: fixed;
-  bottom: 30px;
+  display: flex;
   left: 50%;
+  top: 50%;
   transform: translate(-50%, -50%);
-  background-color: ${props => props.error ? props.theme.redColor : props.theme.btnBgColor};
-  color: ${props => props.theme.bgColor};
-  transition: background-color 1s ease, color 1s ease;
-  padding: 20px;
-  padding: 1.25rem;
-  border-radius: 10px;
-  border-radius: 0.625rem;
-  box-shadow: ${color.boxShadow};
+  opacity: 0;
+  z-index: ${props => props.someDragging ? 5 : -5};
+  width: 60%;
+  height: 60%;
 `
 
-const Trash = ({ someDragging, setSuccessMsg, selectedTag, selectedSort }) => {
+const Trash = ({ someDragging, setSuccessMsg, selectedTag, selectedSort, dragType }) => {
   const me = useMe()
   const isPopup = useReactiveVar(isPopupVar)
   const navigate = useNavigate()
@@ -103,6 +73,10 @@ const Trash = ({ someDragging, setSuccessMsg, selectedTag, selectedSort }) => {
   const [_, listDrop] = useDrop({
     accept: "LIST",
 
+    hover: () => {
+      setIsHover(true)
+    },
+
     // drop을 하게 되면 아래의 로직이 실행된다.
     drop: (item) => {
       inPopup("deleteList")
@@ -114,6 +88,10 @@ const Trash = ({ someDragging, setSuccessMsg, selectedTag, selectedSort }) => {
   // 학생을 삭제하기 위한 drop
   const [__, studentDrop] = useDrop({
     accept: "STUDENT",
+
+    hover: () => {
+      setIsHover(true)
+    },
 
     // drop을 하게 되면 아래의 로직이 실행된다.
     drop: (item) => {
@@ -132,16 +110,21 @@ const Trash = ({ someDragging, setSuccessMsg, selectedTag, selectedSort }) => {
   const onClickTrash = () => {
     navigate(routes.trash)
   }
+
+  useEffect(() => {
+    if (!someDragging) {
+      setIsHover(false)
+    }
+  }, [someDragging])
   return (<Container>
     <DelIcon onClick={onClickTrash} onMouseLeave={() => setIsHover(false)} onMouseEnter={() => setIsHover(true)}>
       {isHover ? <IcOpenTrashCan /> : <IcCloseTrash />}
     </DelIcon>
-    <DropContainer someDragging={someDragging}>
-      <ListDrop ref={listDrop} className="delDrop">명렬표삭제 🗑</ListDrop>
-      <StudentDrop ref={studentDrop} className="delDrop">학생삭제 🗑</StudentDrop>
-    </DropContainer>
-    {isPopup === "deleteList" && <DeleteList listId={listId} />}
-  </Container>
+    <DropContainer />
+    {dragType === "list" && <DropContainer someDragging={someDragging} ref={listDrop}></DropContainer>}
+    {dragType === "student" && <DropContainer DropContainer someDragging={someDragging} ref={studentDrop}></DropContainer>}
+    { isPopup === "deleteList" && <DeleteList listId={listId} />}
+  </Container >
   );
 }
 
