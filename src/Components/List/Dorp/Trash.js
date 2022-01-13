@@ -59,13 +59,16 @@ const Trash = ({ someDragging, setSuccessMsg, selectedTag, selectedSort, dragTyp
   }
 
   const [moveTrashStudent, { loading: studentLoading }] = useMutation(EDIT_STUDENT_MUTATION, {
-    refetchQueries: [{
-      query: SEE_ALL_STUDENT_QUERY,
-      variables: {
-        ...(selectedTag.length !== 0 && { tag: selectedTag }),
-        ...(selectedSort && { sort: selectedSort })
-      }
-    }],
+    refetchQueries: [
+      {
+        query: SEE_ALL_STUDENT_QUERY,
+        variables: {
+          ...(selectedTag.length !== 0 && { tag: selectedTag }),
+          ...(selectedSort && { sort: selectedSort })
+        }
+      },
+      { query: SEE_ALL_STUDENT_QUERY, variables: { trash: true } }
+    ],
     onCompleted
   })
 

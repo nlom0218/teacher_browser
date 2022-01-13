@@ -12,9 +12,10 @@ import StudentSortTag from '../Components/List/Popup/StudentSortTag';
 import StudentList from '../Components/List/StudentList';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import { DivideLeftContents } from '../Components/Shared/styled/DivideContents';
+import { SuccessMsg } from '../Components/Shared/styled/SuccessMsg';
 import useMe from '../Hooks/useMe';
 import useMedia from '../Hooks/useMedia';
-import { color, customMedia } from '../styles';
+import { customMedia } from '../styles';
 
 const Container = styled.div`
   min-height: 100%;
@@ -45,21 +46,6 @@ const StudentIcon = styled.div`
     transition: color 0.6s ease;
   }
     transition: background-color 0.6s ease;
-`
-
-const SuccessMsg = styled.div`
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: ${props => props.error ? props.theme.redColor : props.theme.btnBgColor};
-  color: ${props => props.theme.bgColor};
-  transition: background-color 1s ease, color 1s ease;
-  padding: 20px;
-  padding: 1.25rem;
-  border-radius: 10px;
-  border-radius: 0.625rem;
-  box-shadow: ${color.boxShadow};
 `
 
 const List = () => {

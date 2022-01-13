@@ -266,6 +266,7 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
   useEffect(() => {
     refetch()
   }, [])
+  console.log(data?.seeStudentList[0]?.students);
 
   return (<Container>
     <NameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName} >
@@ -306,7 +307,12 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
       </SettingBtn>}
       {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
     </NameContainer>
-    {data?.seeStudentList[0]?.students && <StudentInList students={data?.seeStudentList[0]?.students} listId={listId} />}
+    {data?.seeStudentList[0]?.students
+      &&
+      <StudentInList
+        students={data?.seeStudentList[0]?.students.filter(item => !item.trash)}
+        listId={listId}
+      />}
     <AddStudentBox
       listId={listId}
       listName={listName}
