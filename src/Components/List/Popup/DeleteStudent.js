@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { outPopup } from '../../../apollo';
 import { EDIT_STUDENT_MUTATION } from '../../../Graphql/Student/mutation';
-import { SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
+import { SEE_ALL_STUDENT_IN_TRASH_QUERY, SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
 import useMe from '../../../Hooks/useMe';
 import { customMedia } from '../../../styles';
 import BtnPopupContainer from '../../Shared/BtnPopupContainer';
@@ -73,7 +73,7 @@ const DeleteStudent = ({ selectedTag, selectedSort, studentId }) => {
           trash: false
         }
       },
-      { query: SEE_ALL_STUDENT_QUERY, variables: { trash: true } },
+      { query: SEE_ALL_STUDENT_IN_TRASH_QUERY, variables: { trash: true } },
     ],
     onCompleted
   })

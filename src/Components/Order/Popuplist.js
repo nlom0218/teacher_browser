@@ -46,7 +46,7 @@ const PopupList = ({ setPopup }) => {
   const [itemObj, setItemObj] = useState({}); // 각각 리스트 안에 있는 배열 보내기
   const [studentList, setStudentList] = useState([]);
 
-  // 정렬 방법, 휴지통에 있는 학생은 제외하게 만들기
+  // 아래의 내용은 삭제?
   const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY);
   const [selectedList, setSelectedList] = useState("학생목록");
   //compare 리스트 순서 유지 => 재사용 가능한 함수로 만들기(export하기)

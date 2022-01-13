@@ -3,13 +3,10 @@ import styled from 'styled-components';
 import { useDrop } from "react-dnd"
 import { useMutation, useReactiveVar } from '@apollo/client';
 import useMe from '../../../Hooks/useMe';
-import { SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
+import { SEE_ALL_STUDENT_IN_TRASH_QUERY, SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
 import { EDIT_STUDENT_MUTATION } from '../../../Graphql/Student/mutation';
-import { SEE_ALL_STUDENT_LIST_QUERY } from '../../../Graphql/StudentList/query';
-import { DELETE_STUDENT_LIST_MUTATION } from '../../../Graphql/StudentList/mutation';
 import { inPopup, isPopupVar } from '../../../apollo';
 import DeleteList from '../Popup/DeleteList';
-import { color } from '../../../styles';
 import IcCloseTrash from '../../../icons/Trash/IcCloseTrash';
 import { useNavigate } from 'react-router';
 import routes from '../../../routes';
@@ -68,7 +65,7 @@ const Trash = ({ someDragging, setSuccessMsg, selectedTag, selectedSort, dragTyp
           trash: false
         }
       },
-      { query: SEE_ALL_STUDENT_QUERY, variables: { trash: true } },
+      { query: SEE_ALL_STUDENT_IN_TRASH_QUERY, variables: { trash: true } },
     ],
     onCompleted
   })

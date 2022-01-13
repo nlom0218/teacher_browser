@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { FcEmptyTrash, FcUndo } from 'react-icons/fc';
 import styled from 'styled-components';
 import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
-import { SEE_ALL_STUDENT_QUERY } from '../../Graphql/Student/query';
+import { SEE_ALL_STUDENT_IN_TRASH_QUERY, SEE_ALL_STUDENT_QUERY } from '../../Graphql/Student/query';
 import useMe from '../../Hooks/useMe';
 
 const Container = styled.div`
@@ -53,13 +53,13 @@ const StudentInTrash = ({ item, setSuccessMsg }) => {
   const [isHover, setIsHover] = useState(false)
   const [editStudent, { loading: editLoadint }] = useMutation(EDIT_STUDENT_MUTATION, {
     refetchQueries: [
-      { query: SEE_ALL_STUDENT_QUERY, variables: { trash: true } },
-      { query: SEE_ALL_STUDENT_QUERY, variables: { trash: false } },
+      { query: SEE_ALL_STUDENT_IN_TRASH_QUERY, variables: { trash: true } },
       {
         query: SEE_ALL_STUDENT_QUERY,
         variables: {
           ...(selectedTag.length !== 0 && { tag: selectedTag }),
-          ...(selectedSort && { sort: selectedSort })
+          ...(selectedSort && { sort: selectedSort }),
+          trash: false
         }
       }
     ],

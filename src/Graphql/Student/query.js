@@ -1,9 +1,40 @@
 import gql from "graphql-tag";
 
-// 학생 목록에 있는 모든 학생 보이기(필요한 인자: tag, sort, trash)
+// 학생 목록에 있는 모든 학생 보이기(필요한 인자 => tag, sort, trash:false)
 // Components/List/Popup/AddManyStudent.js
 // Components/List/Popup/SeeStudents.js
+// Components/List/StudentList.js
+
+// refetchQueries
+// Components/List/Dorp/Trash.js
+// Components/List/Popup/CreateStudent.js
+// Components/List/Popup/DeleteStudent.js
+// Components/List/DetailStudent.js
+// Components/List/DetailStudentNumber.js
+// Components/List/DetailStudentTag.js
+// Components/Trash/StudentInTrash.js
 export const SEE_ALL_STUDENT_QUERY = gql`
+  query Query($tag: [String], $sort: String, $trash: Boolean) {
+    seeAllStudent(tag: $tag, sort: $sort, trash: $trash) {
+      _id
+      teacherEmail
+      studentName
+      studentNumber
+      listId
+      tag
+      trash
+    } 
+  }
+`
+
+// 휴지통 목록에 있는 학생 목록(필요한 인자 => trash:true)
+// Pages/Trash.js
+
+// refetchQueries
+// Components/List/Dorp/Trash.js
+// Components/List/Popup/DeleteStudent.js
+// Components/Trash/StudentInTrash.js
+export const SEE_ALL_STUDENT_IN_TRASH_QUERY = gql`
   query Query($tag: [String], $sort: String, $trash: Boolean) {
     seeAllStudent(tag: $tag, sort: $sort, trash: $trash) {
       _id
