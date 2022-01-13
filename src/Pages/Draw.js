@@ -14,6 +14,7 @@ import { BtnFadeIn } from '../Animations/Fade';
 import { SEE_ONE_STUDENT_LIST_QUERY } from '../Graphql/StudentList/query';
 import { DivideLeftContents } from '../Components/Shared/styled/DivideContents';
 import AllStudentList from '../Components/Draw/AllStudentList';
+import StudentOrder from '../Components/Order/StudentOrder';
 
 const Container = styled.div`
   display : grid;
@@ -95,6 +96,28 @@ const SubmitInput = styled.input`
   animation : ${BtnFadeIn} 0.6s ease;
 `
 
+const OptionContents = styled.div`
+  width : 100%;
+  display : grid;
+  row-gap : 10px;
+  row-gap : 0.625 rem;
+  text-align : center;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns : auto auto 1fr;
+    column-gap : 10px;
+    column-gap : 0.625rem;
+  `}
+`
+const OptionBtn = styled.div`
+  background-color: ${props=> props.theme.btnBgColor};
+  color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
+  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+`
 
 const ListIcon = styled.div`
   grid-row : 1 / 2;
@@ -121,10 +144,11 @@ const Draw = () => {
   const { id } = useParams()
   const media = useMedia()
   const isPopup = useReactiveVar(isPopupVar);
-  const isSeeList = useReactiveVar(isSeeStudentListVar)
-  const [studentListName, setStudentListName] = useState(null)
-  const [isEdit, setIsEdit] = useState(false)
-  const [title, setTitle] = useState(undefined)
+  const isSeeList = useReactiveVar(isSeeStudentListVar);
+  const [studentListName, setStudentListName] = useState(null);
+  const [selectedStudent, setSelectedStudent] = useState([]);
+  const [isEdit, setIsEdit] = useState(false);
+  const [title, setTitle] = useState(undefined);
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: {
       listId: id
@@ -140,7 +164,8 @@ const Draw = () => {
   }
   useEffect(() => {
     if (data) {
-      setStudentListName(data?.seeStudentList[0]?.listName)
+      setStudentListName(data?.seeStudentList[0]?.listName);
+      setSelectedStudent(data?.seeStudentList[0]?.students.map((item) => item.studentName));
     }
   }, [data])
 
@@ -172,6 +197,10 @@ const Draw = () => {
               <FcContacts onClick={onClickListIcon} />
             </ListIcon>}
         </TopContents>
+        <OptionContents>
+          <OptionBtn> 테스트 </OptionBtn>
+        </OptionContents>
+        <StudentOrder selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} />
       </Container>
       {isPopup === "seeStudentList" && <StudentList />}
       </DivideLeftContents>
