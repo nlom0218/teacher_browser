@@ -76,11 +76,12 @@ const DetailStudentAllergy = ({ studentInfo }) => {
       setIsEdit(false)
     }
   }
+
   const [editStudent, { loading }] = useMutation(EDIT_STUDENT_MUTATION, {
     onCompleted,
     refetchQueries: [
       { query: SEE_ONE_STUDENT_QUERY, variables: { studentId: studentInfo?._id } },
-      { query: ME_QUERY }
+      { query: ME_QUERY },
     ]
   })
 

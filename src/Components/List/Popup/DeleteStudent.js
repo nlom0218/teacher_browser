@@ -1,6 +1,11 @@
+import { useMutation } from '@apollo/client';
 import React from 'react';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { outPopup } from '../../../apollo';
+import { EDIT_STUDENT_MUTATION } from '../../../Graphql/Student/mutation';
+import { SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
+import useMe from '../../../Hooks/useMe';
 import { customMedia } from '../../../styles';
 import BtnPopupContainer from '../../Shared/BtnPopupContainer';
 
@@ -48,9 +53,38 @@ const Msg = styled.div`
   line-height: 120%;
 `
 
-const DeleteStudent = () => {
+const DeleteStudent = ({ selectedTag, selectedSort, studentId }) => {
+  const me = useMe()
+  const navigate = useNavigate()
+  const onCompleted = (result) => {
+    const { editStudent: { ok } } = result
+    if (ok) {
+      outPopup()
+      navigate(-1)
+    }
+  }
+  const [moveTrashStudent, { loading: studentLoading }] = useMutation(EDIT_STUDENT_MUTATION, {
+    refetchQueries: [
+      {
+        query: SEE_ALL_STUDENT_QUERY,
+        variables: {
+          ...(selectedTag.length !== 0 && { tag: selectedTag }),
+          ...(selectedSort && { sort: selectedSort })
+        }
+      },
+      { query: SEE_ALL_STUDENT_QUERY, variables: { trash: true } },
+      { query: SEE_ALL_STUDENT_QUERY, variables: { trash: false } },
+    ],
+    onCompleted
+  })
   const onClickDelBtn = () => {
-    window.alert("휴지통으로 이동 => backend에서 학생 필드 trash값 이용하기")
+    moveTrashStudent({
+      variables: {
+        teacherEmail: me?.email,
+        studentId,
+        trash: true
+      }
+    })
   }
   return (<BtnPopupContainer>
     <Container>

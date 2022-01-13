@@ -47,12 +47,21 @@ const DelBtn = styled.div`
 `
 
 const StudentInTrash = ({ item, setSuccessMsg }) => {
+  const selectedTag = JSON.parse(localStorage.getItem("selectedTag")) ? JSON.parse(localStorage.getItem("selectedTag")) : []
+  const selectedSort = localStorage.getItem("selectedSort") ? localStorage.getItem("selectedSort") : undefined
   const me = useMe()
   const [isHover, setIsHover] = useState(false)
   const [editStudent, { loading: editLoadint }] = useMutation(EDIT_STUDENT_MUTATION, {
     refetchQueries: [
       { query: SEE_ALL_STUDENT_QUERY, variables: { trash: true } },
-      { query: SEE_ALL_STUDENT_QUERY }
+      { query: SEE_ALL_STUDENT_QUERY, variables: { trash: false } },
+      {
+        query: SEE_ALL_STUDENT_QUERY,
+        variables: {
+          ...(selectedTag.length !== 0 && { tag: selectedTag }),
+          ...(selectedSort && { sort: selectedSort })
+        }
+      }
     ],
     onCompleted: () => setSuccessMsg({ msg: "학생 목록으로 복구되었습니다. 😀", ok: true })
   })

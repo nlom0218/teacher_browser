@@ -13,7 +13,11 @@ const AddManyStudent = ({ inStudent, listId }) => {
   const me = useMe()
   const [addStudentId, setAddStudentId] = useState([])
   const [outStudent, setOutStudent] = useState([])
-  const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY)
+  const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY, {
+    variables: {
+      trash: false
+    }
+  })
 
   const onCompleted = (result) => {
     const { addStudent: { ok } } = result
