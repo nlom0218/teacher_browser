@@ -185,7 +185,7 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
     }
   }
 
-  // 리스트 아이콘 수정을 위한
+  // 리스트 아이콘, 이름 수정을 위한
   const [editStudentList, { loading: editLoading }] = useMutation(EDIT_STUDENT_LIST, {
     onCompleted,
     refetchQueries: [
