@@ -34,9 +34,11 @@ export const SEE_ALL_STUDENT_QUERY = gql`
 // Components/List/Dorp/Trash.js
 // Components/List/Popup/DeleteStudent.js
 // Components/Trash/StudentInTrash.js
+// Components/List/DetailStudentNumber.js
+// Components/List/DetailStudentTag.js
 export const SEE_ALL_STUDENT_IN_TRASH_QUERY = gql`
-  query Query($tag: [String], $sort: String, $trash: Boolean) {
-    seeAllStudent(tag: $tag, sort: $sort, trash: $trash) {
+  query Query($trash: Boolean) {
+    seeAllStudent(trash: $trash) {
       _id
       teacherEmail
       studentName
@@ -48,9 +50,34 @@ export const SEE_ALL_STUDENT_IN_TRASH_QUERY = gql`
   }
 `
 
+// 학생 세부 정보에서 쓰이는 학생 한명만 불러오는 쿼리(필요한 인자 => studentId)
+// Compnents/DetailStudent.js
+
+// refetchQueries
+// Components/Popup/CreateTag.js
+// Components/List/DetailStudentAllergy.js
+// Components/List/DetailStudentNumber.js
+// Components/List/DetailStudentTag.js
 export const SEE_ONE_STUDENT_QUERY = gql`
   query SeeAllStudent($studentId: ID, $allergy: Int) {
     seeAllStudent(studentId: $studentId, allergy: $allergy) {
+      _id
+      teacherEmail
+      studentName
+      studentNumber
+      studentGender
+      parentPhoneNum
+      allergy
+      tag
+      trash
+    }
+  }
+`
+
+// 해당 알러지가 있는 학생들만 불러오기(필요하 인자 => allergy)
+export const SEE_ALLERGY_STUDENT_QUERY = gql`
+  query SeeAllStudent($allergy: Int) {
+    seeAllStudent(allergy: $allergy) {
       _id
       teacherEmail
       studentName

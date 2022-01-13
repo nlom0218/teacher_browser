@@ -2,8 +2,7 @@ import { useQuery, useReactiveVar } from '@apollo/client';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { isPopupVar } from '../../apollo';
-import { SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
+import { SEE_ALLERGY_STUDENT_QUERY } from '../../Graphql/Student/query';
 import routes from '../../routes';
 import { customMedia } from '../../styles';
 import PopupContainer from '../Shared/PopupContainer';
@@ -43,7 +42,7 @@ const AllergyStudent = styled.div`
 
 const SeeAllergy = () => {
   const allergyNum = parseInt(localStorage.getItem("AllergyNum"))
-  const { data, loading } = useQuery(SEE_ONE_STUDENT_QUERY, {
+  const { data, loading } = useQuery(SEE_ALLERGY_STUDENT_QUERY, {
     variables: {
       allergy: allergyNum
     }
