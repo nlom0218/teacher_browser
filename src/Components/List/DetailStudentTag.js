@@ -91,9 +91,8 @@ const AddTagBtn = styled.div`
   cursor: pointer;
 `
 
-const DetailStudentTag = ({ studentInfo }) => {
+const DetailStudentTag = ({ studentInfo, selectedSort, selectedTag }) => {
   const isPopup = useReactiveVar(isPopupVar)
-  const selectedTag = JSON.parse(localStorage.getItem("selectedTag"))
 
   const me = useMe()
   const media = useMedia()
@@ -107,7 +106,9 @@ const DetailStudentTag = ({ studentInfo }) => {
       { query: SEE_ONE_STUDENT_QUERY, variables: { studentId: studentInfo?._id } },
       {
         query: SEE_ALL_STUDENT_QUERY, variables: {
-          ...(selectedTag && { tag: selectedTag })
+          ...(selectedTag.length !== 0 && { tag: selectedTag }),
+          ...(selectedSort && { sort: selectedSort }),
+          trash: false,
         }
       }
     ]

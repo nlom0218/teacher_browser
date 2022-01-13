@@ -56,7 +56,8 @@ const StudentList = ({ setSomeDragging, studentId, meTag, selectedTag, seeNum, s
   const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY, {
     variables: {
       ...(selectedTag.length !== 0 && { tag: selectedTag }),
-      ...(selectedSort && { sort: selectedSort })
+      ...(selectedSort && { sort: selectedSort }),
+      trash: false
     }
   })
 

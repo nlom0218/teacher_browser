@@ -64,11 +64,11 @@ const Trash = ({ someDragging, setSuccessMsg, selectedTag, selectedSort, dragTyp
         query: SEE_ALL_STUDENT_QUERY,
         variables: {
           ...(selectedTag.length !== 0 && { tag: selectedTag }),
-          ...(selectedSort && { sort: selectedSort })
+          ...(selectedSort && { sort: selectedSort }),
+          trash: false
         }
       },
       { query: SEE_ALL_STUDENT_QUERY, variables: { trash: true } },
-      { query: SEE_ALL_STUDENT_QUERY, variables: { trash: false } },
     ],
     onCompleted
   })

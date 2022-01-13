@@ -24,7 +24,8 @@ const SeeStudents = ({ meTag, selectedTag, seeNum, selectedSort }) => {
   const { data } = useQuery(SEE_ALL_STUDENT_QUERY, {
     variables: {
       ...(selectedTag.length !== 0 && { tag: selectedTag }),
-      ...(selectedSort && { sort: selectedSort })
+      ...(selectedSort && { sort: selectedSort }),
+      trash: false
     }
   })
 
