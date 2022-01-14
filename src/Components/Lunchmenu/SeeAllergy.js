@@ -6,11 +6,13 @@ import { SEE_ALLERGY_STUDENT_QUERY } from '../../Graphql/Student/query';
 import routes from '../../routes';
 import { customMedia } from '../../styles';
 import PopupContainer from '../Shared/PopupContainer';
+import { FcSynchronize } from "react-icons/fc";
 
 const Container = styled.div`
   padding: 20px 0px;
   padding: 1.25rem 0rem;
   display: grid;
+  grid-template-columns: 1fr auto;
   row-gap: 20px;
   row-gap: 1.25rem;
 `
@@ -19,7 +21,14 @@ const AllergyName = styled.div`
   font-weight: 600;
 `
 
+const RefetchBtn = styled.div`
+  font-size: 1.5em;
+  font-size: 1.5rem;
+  cursor: pointer;
+`
+
 const AllergyStudent = styled.div`
+  grid-column:  1 / -1;
   display: grid;
   grid-template-columns: 1fr;
   column-gap: 10px;
@@ -42,7 +51,7 @@ const AllergyStudent = styled.div`
 
 const SeeAllergy = () => {
   const allergyNum = parseInt(localStorage.getItem("AllergyNum"))
-  const { data, loading } = useQuery(SEE_ALLERGY_STUDENT_QUERY, {
+  const { data, loading, refetch } = useQuery(SEE_ALLERGY_STUDENT_QUERY, {
     variables: {
       allergy: allergyNum
     }
@@ -88,13 +97,16 @@ const SeeAllergy = () => {
     }
   }
 
+  const onClickRefetch = () => refetch()
+
   return (<PopupContainer>
     <Container>
       <AllergyName>
         {processAllergyInfo()}
       </AllergyName>
+      <RefetchBtn onClick={onClickRefetch}><FcSynchronize /></RefetchBtn>
       <AllergyStudent>
-        {data?.seeAllStudent.map((item, index) => {
+        {data?.seeAllStudent.filter(item => !item.trash).map((item, index) => {
           return <Link to={`${routes.list}/student/${item._id}`} key={index}>
             {item.studentName}
           </Link>

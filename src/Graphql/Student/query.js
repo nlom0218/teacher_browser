@@ -75,6 +75,7 @@ export const SEE_ONE_STUDENT_QUERY = gql`
 `
 
 // 해당 알러지가 있는 학생들만 불러오기(필요하 인자 => allergy)
+// Components/Lunchmenu/SeeAllergy.js
 export const SEE_ALLERGY_STUDENT_QUERY = gql`
   query SeeAllStudent($allergy: Int) {
     seeAllStudent(allergy: $allergy) {
