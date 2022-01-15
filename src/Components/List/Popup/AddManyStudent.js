@@ -15,7 +15,7 @@ const AddManyStudent = ({ inStudent, listId }) => {
   const me = useMe()
   const [addStudentId, setAddStudentId] = useState([])
   const [outStudent, setOutStudent] = useState([])
-  const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY, {
+  const { data, loading, refetch } = useQuery(SEE_ALL_STUDENT_QUERY, {
     ...(selectedTag.length !== 0 && { tag: selectedTag }),
     ...(selectedSort && { sort: selectedSort }),
     trash: false
@@ -87,6 +87,11 @@ const AddManyStudent = ({ inStudent, listId }) => {
       setOutStudent(data?.seeAllStudent)
     }
   }, [data, inStudent])
+
+  useEffect(() => {
+    refetch()
+  }, [])
+
   return (<PopupContainer maxHeight={true}>
     <Container>
       <List>
