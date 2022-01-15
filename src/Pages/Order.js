@@ -13,22 +13,21 @@ import { useEffect } from "react/cjs/react.development";
 import { inputLine } from "../Animations/InputLine";
 import { BtnFadeIn } from "../Animations/Fade";
 import { useForm } from "react-hook-form";
-import StudentOrder from "../Components/Order/StudentOrder";
 import { DivideLeftContents } from "../Components/Shared/styled/DivideContents";
-import AllStudentList from "../Components/Order/AllStudentList";
 import { isSeeStudentListVar } from "../apollo";
 import Shuffling from "../Components/Order/Popup/Shuffling";
 import SeeResultType from "../Components/Order/SeeResultType";
 import FontSizeBtn from "../Components/Order/FontSizeBtn";
-
+import AllStudentList from "../Components/Order/AllStudentList";
+import StudentOrder from "../Components/Order/StudentOrder";
 
 
 // 전체 틀
 const Container = styled.div`
-min-height: ${props => props.seeResultType==="ONE"&&"100%"};
+  min-height: ${props => props.seeResultType==="ONE"&&"100%"};
   display: grid;
-grid-template-rows: auto auto 1fr;
-padding: 20px;
+  grid-template-rows: auto auto 1fr;
+  padding: 20px;
   padding: 1.25rem;
   row-gap: 20px;
   row-gap: 1.25rem;
@@ -37,7 +36,6 @@ padding: 20px;
    padding:0`}
 `;
 const TopContents = styled.div`
-  
   display: grid;
   grid-template-columns: 1fr;
   row-gap: 20px;
@@ -140,9 +138,8 @@ const OptionBtn = styled.div`
   border-radius: 0.3125rem;
   cursor: pointer;
 `;
-// 옵션 선택
+// 조건 선택
 
-//명단과 옵션 아이콘 버튼 설정
 //명단 아이콘
 const ListIcon = styled.div`
   grid-row: 1/2;
@@ -160,18 +157,14 @@ const ListIcon = styled.div`
   }
 `;
 const ListName = styled.div``;
-//조건 아이콘
-// 아래 롤업 화면
-// 화살표 스타일
-//롤업리스트아이템
-//추가 기능 (프린트, 순서보기)
-//프린트 버튼 위치를 상대적으로 변경할 것인지, 모양, 기능 추가
+
+
+//추가 기능 (프린트)
 
 
 
 const Order = () => {
   const { id } = useParams();
-
   const media = useMedia();
   const isPopup = useReactiveVar(isPopupVar);
   const isSeeList = useReactiveVar(isSeeStudentListVar);
@@ -180,10 +173,8 @@ const Order = () => {
   const [selectedStudent, setSelectedStudent] = useState([]);
   const [isShuffle, setIsShuffle] = useState("init");
   const [seeResultType,setSeeResultType] = useState ("ALL");
-  const [fontSizeAll, setFontSizeAll] = useState(1)
-  const [fontSizeOne, setFontSizeOne] = useState(3)
-
-
+  const [fontSizeAll, setFontSizeAll] = useState(1.5)
+  const [fontSizeOne, setFontSizeOne] = useState(5)
   const [isEdit, setIsEdit] = useState(false);
   //title : 인쇄할 때 필요한 제목
   const [title, setTitle] = useState(undefined);
@@ -197,9 +188,6 @@ const Order = () => {
     skip: !id,
   });
 
-
-  //결과 , 설명글 추가함. 순서 제목 입력->프린트할 때 제목 나오도록, 설명글 추가하니 밑줄 안 사라짐....
-  //프린트 버튼이랑 롤업 버튼이랑 위치박스는 그대로하고 나오는 것만 다르게? 하는지 박스 자체도 변경할 것인지 선택
   const onClickListIcon = () => inPopup("seeStudentList");
   const onClickInput = () => {
     setIsEdit(true);

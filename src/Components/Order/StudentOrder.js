@@ -43,6 +43,7 @@ top:3%;
 right:3%;
 font-size: 1.5em;
 font-size: 1.5rem;
+opacity:0.3;
 cursor: pointer;
 `
 
