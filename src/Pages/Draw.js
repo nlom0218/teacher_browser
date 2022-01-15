@@ -12,12 +12,16 @@ import { useState } from 'react/cjs/react.development';
 import { inputLine } from '../Animations/InputLine';
 import { BtnFadeIn } from '../Animations/Fade';
 import { SEE_ONE_STUDENT_LIST_QUERY } from '../Graphql/StudentList/query';
-import { DivideLeftContents } from '../Components/Shared/styled/DivideContents';
+import { DivideLeftContents, SeeRightContentsBtn } from '../Components/Shared/styled/DivideContents';
 import AllStudentList from '../Components/Draw/AllStudentList';
-import StudentOrder from '../Components/Order/StudentOrder';
+import StudentOrder from '../Components/Draw/StudentOrder';
+import SeeResultType from '../Components/Draw/SeeResultType';
+import FontSizeBtn from '../Components/Draw/FontSizeBtn';
 
 const Container = styled.div`
+  min-height : ${props => props.seeResultType === "ONE" && "100%"};
   display : grid;
+  grid-template-rows : auto auto 1fr;
   padding : 20px;
   padding : 1.25rem;
   row-gap : 20px;
@@ -42,6 +46,8 @@ const TopContents = styled.div`
   `}
   ${customMedia.greaterThan("desktop")`
   grid-template-columns : 1fr;
+  padding : 20px 20px 0px 0px;
+  padding : 1.25rem 1.25rem 0rem 0rem;
   `}
 `
 
@@ -99,13 +105,13 @@ const SubmitInput = styled.input`
 const OptionContents = styled.div`
   width : 100%;
   display : grid;
-  row-gap : 10px;
-  row-gap : 0.625 rem;
+  row-gap : 20px;
+  row-gap : 1.25 rem;
   text-align : center;
   ${customMedia.greaterThan("tablet")`
     grid-template-columns : auto auto 1fr;
-    column-gap : 10px;
-    column-gap : 0.625rem;
+    column-gap : 20px;
+    column-gap : 1.25rem;
   `}
 `
 const OptionBtn = styled.div`
@@ -147,6 +153,10 @@ const Draw = () => {
   const isSeeList = useReactiveVar(isSeeStudentListVar);
   const [studentListName, setStudentListName] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState([]);
+  const [seeResultType, setSeeResultType] = useState("ALL");
+  const [fontSizeAll, setFontSizeAll] = useState(1);
+  const [fontSizeOne, setFontSizeOne] = useState(2);
+
   const [isEdit, setIsEdit] = useState(false);
   const [title, setTitle] = useState(undefined);
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
@@ -154,7 +164,8 @@ const Draw = () => {
       listId: id
     },
     skip: !id
-  })
+  });
+
   const onClickListIcon = () => inPopup("seeStudentList")
   const onClickInput = () => {
     setIsEdit(true)
@@ -165,15 +176,18 @@ const Draw = () => {
   useEffect(() => {
     if (data) {
       setStudentListName(data?.seeStudentList[0]?.listName);
-      setSelectedStudent(data?.seeStudentList[0]?.students.map((item) => item.studentName));
+      setSelectedStudent(data?.seeStudentList[0]?.students
+        .filter(item => !item.trash)
+        .map((item) => item.studentName));
     }
   }, [data])
 
   return (
     <BasicContainer menuItem={true}>
       <DivideLeftContents isSeeList={isSeeList}>
-      <Container>
+      <Container seeResultType={seeResultType}>
         <TopContents>
+      
           <Title onBlur={onBlurForm}>
             <InputLayout>
               <Input
@@ -197,10 +211,27 @@ const Draw = () => {
               <FcContacts onClick={onClickListIcon} />
             </ListIcon>}
         </TopContents>
+        {id && (
+        <React.Fragment>
         <OptionContents>
-          <OptionBtn> 테스트 </OptionBtn>
+          <OptionBtn> 한 명 뽑기 </OptionBtn>
+          <SeeResultType seeResultType={seeResultType} setSeeResultType={setSeeResultType}/>
+          <FontSizeBtn 
+          setFontSizeAll={setFontSizeAll} 
+          fontSizeAll={fontSizeAll}
+          setFontSizeOne={setFontSizeOne}
+          fontSizeOne={fontSizeOne}
+          seeResultType={seeResultType}
+          />
         </OptionContents>
-        <StudentOrder selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} />
+        <StudentOrder 
+        selectedStudent={selectedStudent} 
+        setSelectedStudent={setSelectedStudent}
+        seeResultType={seeResultType}
+        fontSizeAll={fontSizeAll}
+        fontSizeOne={fontSizeOne}/>
+        </React.Fragment>
+        )}
       </Container>
       {isPopup === "seeStudentList" && <StudentList />}
       </DivideLeftContents>

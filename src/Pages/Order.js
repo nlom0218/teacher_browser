@@ -17,6 +17,8 @@ import StudentOrder from "../Components/Order/StudentOrder";
 import { DivideLeftContents } from "../Components/Shared/styled/DivideContents";
 import AllStudentList from "../Components/Order/AllStudentList";
 import { isSeeStudentListVar } from "../apollo";
+import Shuffling from "../Components/Draw/Popup/Shuffling";
+import SeeResultType from "../Components/Draw/SeeResultType";
 
 
 // 전체 틀
@@ -347,6 +349,7 @@ const Order = () => {
                   <OptionBtn> 한 명씩 보이기 </OptionBtn>
                 </React.Fragment>
               )}
+              <SeeResultType/>
             </OptionContents>
             <StudentOrder selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} isShuffle={isShuffle} />
           </React.Fragment>
@@ -356,6 +359,7 @@ const Order = () => {
       {media=="Desktop"&& <AllStudentList/>}
 
       {isPopup === "seeStudentList" && <StudentList />}
+      {isShuffle === "ing" && <Shuffling />}
     </BasicContainer>
   );
 };
