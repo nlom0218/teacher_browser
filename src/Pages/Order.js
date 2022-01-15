@@ -17,20 +17,27 @@ import StudentOrder from "../Components/Order/StudentOrder";
 import { DivideLeftContents } from "../Components/Shared/styled/DivideContents";
 import AllStudentList from "../Components/Order/AllStudentList";
 import { isSeeStudentListVar } from "../apollo";
+import Shuffling from "../Components/Order/Popup/Shuffling";
+import SeeResultType from "../Components/Order/SeeResultType";
+import FontSizeBtn from "../Components/Order/FontSizeBtn";
+
 
 
 // 전체 틀
 const Container = styled.div`
+min-height: ${props => props.seeResultType==="ONE"&&"100%"};
   display: grid;
-  padding: 20px;
+grid-template-rows: auto auto 1fr;
+padding: 20px;
   padding: 1.25rem;
   row-gap: 20px;
   row-gap: 1.25rem;
   align-items: flex-start;
   ${customMedia.greaterThan("desktop")`
-  padding:0;`}
+   padding:0`}
 `;
 const TopContents = styled.div`
+  
   display: grid;
   grid-template-columns: 1fr;
   row-gap: 20px;
@@ -43,6 +50,8 @@ const TopContents = styled.div`
   `}
   ${customMedia.greaterThan("desktop")`
    grid-template-columns: 1fr;
+   padding : 20px 20px 0px 0px;
+  padding : 1.25rem 1.25rem 0rem 0rem;
   `}
 `;
 //상단
@@ -110,13 +119,13 @@ const SubmitInput = styled.input`
 const OptionContents = styled.div`
   width: 100%;
   display: grid;
-  row-gap: 10px;
-  row-gap: 0.625rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
   text-align: center;
   ${customMedia.greaterThan("tablet")`
    grid-template-columns : auto auto 1fr;
-   column-gap:10px;
-   column-gap:0.625rem;
+   column-gap:20px;
+   column-gap:1.25rem;
   `}
 `;
 
@@ -134,13 +143,6 @@ const OptionBtn = styled.div`
 // 옵션 선택
 
 //명단과 옵션 아이콘 버튼 설정
-const MenuBtn = styled.div`
-  font-size: 2em;
-  font-size: 2rem;
-  svg {
-    cursor: pointer;
-  }
-`;
 //명단 아이콘
 const ListIcon = styled.div`
   grid-row: 1/2;
@@ -157,88 +159,14 @@ const ListIcon = styled.div`
     cursor: pointer;
   }
 `;
-
 const ListName = styled.div``;
 //조건 아이콘
-const ConditionIcon = styled.div``;
-
-//순서 변경 메인 화면, 화면 어떻게 구성할 것인지, 한 줄에 몇명까지, 스크롤바, 15명? 10명? 다단 3으로?
-const Border = styled.div`
-  width: 102%;
-  height: 300px;
-  text-align: center;
-  border-style: solid;
-  border-color: darkcyan;
-  border-width: thick;
-  border-radius: 20px;
-  overflow-y: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  padding: 10px;
-`;
-
-// 명단 리스트 화면
-const List = styled.div`
-  display: grid;
-  row-gap: 10px;
-  row-gap: 0.625rem;
-  font-size: 1.5em;
-  font-size: 1.5rem;
-  text-align: center;
-  list-style-type: decimal;
-  align-items: center;
-`;
-
 // 아래 롤업 화면
-const RollList = styled.div`
-  display: grid;
-  width: 1000px;
-  height: 50px;
-  font-size: 1.5em;
-  font-size: 1.5rem;
-  list-style-type: none;
-  align-items: center;
-  overflow: hidden;
-  padding: 10px 30px 5px 50px;
-  grid-template-columns: 0.1fr auto 0.1fr;
-  column-gap: 25px;
-  margin: 15px auto 0 auto;
-  position: relative;
-`;
 // 화살표 스타일
-const LeftRight = styled.div`
-  width: 20px;
-  height: 100%;
-  cursor: pointer;
-`;
 //롤업리스트아이템
-const RollListItems = styled.div`
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  column-gap: 10px;
-  padding: 0.15rem;
-  align-items: center;
-  text-align: center;
-  overflow: hidden;
-`;
-
 //추가 기능 (프린트, 순서보기)
 //프린트 버튼 위치를 상대적으로 변경할 것인지, 모양, 기능 추가
-const PrintBtn = styled.div`
-  width: 50px;
-  height: 35px;
-  position: absolute;
-  right: 5%;
-  bottom: 1%;
-  text-align: center;
-  align-items: center;
-  border-style: solid;
-  border-color: darkcyan;
-  border-width: thick;
-  border-radius: 2px;
-  border-radius: 20px;
-  cursor: pointer;
-`;
+
 
 
 const Order = () => {
@@ -251,6 +179,10 @@ const Order = () => {
   const [studentListName, setStudentListName] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState([]);
   const [isShuffle, setIsShuffle] = useState("init");
+  const [seeResultType,setSeeResultType] = useState ("ALL");
+  const [fontSizeAll, setFontSizeAll] = useState(1)
+  const [fontSizeOne, setFontSizeOne] = useState(3)
+
 
   const [isEdit, setIsEdit] = useState(false);
   //title : 인쇄할 때 필요한 제목
@@ -291,14 +223,14 @@ const Order = () => {
   useEffect(() => {
     if (data) {
       setStudentListName(data?.seeStudentList[0]?.listName);
-      setSelectedStudent(data?.seeStudentList[0]?.students.map((item) => item.studentName));
+      //휴지통에 있는 학생은 filter로 거르기 
+      setSelectedStudent(data?.seeStudentList[0]?.students.filter(item=>!item.trash).map((item) => item.studentName));
     }
   }, [data]);
-  console.log(data);
   return (
     <BasicContainer menuItem={true}>
       <DivideLeftContents isSeeList={isSeeList}>
-      <Container>
+      <Container seeResultType={seeResultType}>
         <TopContents>
           <Title onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
             <InputLayout>
@@ -335,27 +267,26 @@ const Order = () => {
 
               {isShuffle === "ing" && (
                 <OptionBtn onClick={() => onClickShuffleBtn("finish")} isShuffling={true}>
-                  멈추기
+                  섞는 중 
                 </OptionBtn>
               )}
 
               {isShuffle === "finish" && (
-                <React.Fragment>
                   <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
                     다시 섞기 
                   </OptionBtn>
-                  <OptionBtn> 한 명씩 보이기 </OptionBtn>
-                </React.Fragment>
               )}
+              <SeeResultType seeResultType={seeResultType} setSeeResultType={setSeeResultType}/>
+              <FontSizeBtn seeResultType={seeResultType} setFontSizeAll={setFontSizeAll} fontSizeAll={fontSizeAll} fontSizeOne={fontSizeOne} setFontSizeOne={setFontSizeOne}/>
             </OptionContents>
-            <StudentOrder selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} isShuffle={isShuffle} />
+            <StudentOrder fontSizeOne={fontSizeOne} fontSizeAll={fontSizeAll} seeResultType={seeResultType} selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} isShuffle={isShuffle} />
           </React.Fragment>
         )}  
       </Container>
       </DivideLeftContents>
       {media=="Desktop"&& <AllStudentList/>}
-
       {isPopup === "seeStudentList" && <StudentList />}
+      {isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn}/>}
     </BasicContainer>
   );
 };

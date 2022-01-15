@@ -133,7 +133,7 @@ const List = () => {
     </Container>
     {successMsg && <SuccessMsg error={successMsg.ok === false}>{successMsg.msg}</SuccessMsg>}
 
-    {/* 데스크탑이 아닐 때 학생 전체 리스트를 팝업으로 띄우기 */}
+    {/* 데스크탑이 아닐 때 학ㄹ 전체 리스트를 팝업으로 띄우기 */}
     {isPopup === "students" && <SeeStudents meTag={me?.tag} selectedTag={selectedTag} seeNum={seeNum} selectedSort={selectedSort} />}
     {isPopup === "seeStudentSetting" &&
       <StudentSortTag

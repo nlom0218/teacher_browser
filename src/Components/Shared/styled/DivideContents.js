@@ -15,6 +15,7 @@ export const DivideLeftContents = styled.div`
     position: absolute;
     top: 0;
     left: 0;
+    bottom:0;
     width: ${props => props.isSeeList ? "75%" : "100%"};
     transition: width 1s ease;
     overflow: scroll;
