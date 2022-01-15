@@ -22,7 +22,7 @@ const Student = styled.div`
   border-radius: 5px;
   border-radius: 0.3125rem;
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   padding: 10px;
   padding: 0.625rem;
   opacity: ${props => props.hoverContainer ? 0.6 : 1};
@@ -31,6 +31,7 @@ const Student = styled.div`
     max-height: 120px;
   `}
   ${customMedia.greaterThan("desktop")`
+    grid-template-rows: 1fr 1fr;
     min-height: 160px;
     max-height: 160px;
   `}
@@ -92,6 +93,14 @@ const FnBtn = styled.div`
   }
 `
 
+const StudentNumber = styled.div`
+  align-self: center;
+  text-align: center;
+  div {
+    opacity: 0.6;
+  }
+`
+
 const StudentInItem = ({ item, listId }) => {
   const me = useMe()
 
@@ -134,7 +143,8 @@ const StudentInItem = ({ item, listId }) => {
     })
   }
   return (<Student onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-    <StudentName hoverContainer={hoverContainer}>{item.studentName}</StudentName>
+    <StudentName>{item.studentName}</StudentName>
+    <StudentNumber>{item.studentNumber ? item.studentNumber : <div>등록된 번호가 없습니다.</div>}</StudentNumber>
     {media !== "Desktop" ? <HoverContainer>
       <FnBtn>
         <div className="fnBtn_icon" onClick={onClickEdit}><AiOutlineEdit /></div>

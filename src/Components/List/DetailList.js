@@ -266,7 +266,6 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
   useEffect(() => {
     refetch()
   }, [])
-  console.log(data?.seeStudentList[0]?.students);
 
   return (<Container>
     <NameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName} >
