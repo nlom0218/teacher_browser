@@ -54,7 +54,7 @@ const EditBtn = styled.div`
   padding: 10px 40px;
   padding: 0.625rem 2.5rem;
   border-radius: 5px;
-  border-radius: 0.625rem;
+  border-radius: 0.3125rem;
   background-color: ${props => props.theme.btnBgColor};
   color: ${props => props.theme.bgColor};
   transition: background-color 1s ease, color 1s ease;

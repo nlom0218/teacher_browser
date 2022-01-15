@@ -1,5 +1,5 @@
 import { useQuery, useReactiveVar } from '@apollo/client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { SEE_ALLERGY_STUDENT_QUERY } from '../../Graphql/Student/query';
@@ -97,14 +97,18 @@ const SeeAllergy = () => {
     }
   }
 
-  const onClickRefetch = () => refetch()
+  // const onClickRefetch = () => refetch()
+
+  useEffect(() => {
+    refetch()
+  }, [])
 
   return (<PopupContainer>
     <Container>
       <AllergyName>
         {processAllergyInfo()}
       </AllergyName>
-      <RefetchBtn onClick={onClickRefetch}><FcSynchronize /></RefetchBtn>
+      {/* <RefetchBtn onClick={onClickRefetch}><FcSynchronize /></RefetchBtn> */}
       <AllergyStudent>
         {data?.seeAllStudent.filter(item => !item.trash).map((item, index) => {
           return <Link to={`${routes.list}/student/${item._id}`} key={index}>

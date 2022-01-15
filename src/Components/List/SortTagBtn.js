@@ -5,12 +5,8 @@ import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../../apollo';
 
 const Container = styled.div`
-  position: absolute;
-  top: 10px;
-  top: 0.625rem;
-  right: 10px;
-  right: 0.625rem;
-  z-index: 2;
+  justify-self: flex-end;
+  grid-column: 1 / -1;
   svg {
     font-size: 1.5em;
     font-size: 1.5rem;

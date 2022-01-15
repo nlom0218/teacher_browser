@@ -92,8 +92,8 @@ const StudentList = ({ setSomeDragging, studentId, meTag, selectedTag, seeNum, s
       {isSeeList ? <FcNext /> : <FcPrevious />}
     </SeeRightContentsBtn>
     <DivideRightContents isSeeList={isSeeList} initLoad={initLoad} isSeedisplay={isSeedisplay}>
-      <SortTagBtn meTag={meTag} />
       <SStudentList>
+        <SortTagBtn meTag={meTag} />
         {data?.seeAllStudent?.length === 0 ?
           <div className="noStudnet">생성된 학생이 없습니다.</div>
           :

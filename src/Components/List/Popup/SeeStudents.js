@@ -38,9 +38,9 @@ const SeeStudents = ({ meTag, selectedTag, seeNum, selectedSort }) => {
     window.alert("학생 추가하기, 팝업안의 팝업")
   }
   return (<PopupContainer maxHeight={true}>
-    <SortTagBtn meTag={meTag} />
     <Container>
       <List>
+        <SortTagBtn meTag={meTag} />
         {data?.seeAllStudent?.length === 0 ?
           <div className="noStudnet">생성된 학생이 없습니다.</div>
           :
