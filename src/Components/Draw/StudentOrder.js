@@ -32,7 +32,7 @@ const Item = styled.div`
     border-radius : 0.3125rem;
     display : grid;
     justify-items : center;
-    align-itmes : center;
+    align-items : center;
     row-gap : 10px;
     position : relative;
 `
@@ -44,12 +44,6 @@ const RemoveBtn = styled.div`
     font-size : 1.5em;
     font-size : 1.5rem;
     cursor : pointer;
-`
-
-
-const Order = styled.div`
-    font-size : 1.5rem;
-    font-size : 1.5em;    
 `
 
 const Name = styled.div`
@@ -108,7 +102,6 @@ const Student = styled.div`
     border-radius : 5px;
     border-radius : 0.3125rem;
     display : grid;
-    grid-template-rows : 2fr 3fr;
     align-items : center;
     justify-items : center;
     padding : 20px;
@@ -125,7 +118,7 @@ const Student = styled.div`
     `}
 `
 
-const StudentOrder = ({selectedStudent, setSelectedStudent, seeResultType, fontSizeAll, fontSizeOne}) => {
+const StudentOrder = ({selectedStudent, setSelectedStudent, seeResultType, fontSizeAll, fontSizeOne, isShuffle, pickNum, pickType}) => {
     const [order, setOrder] = useState(1)
 
     const onClickArrow = (type) => {
@@ -143,32 +136,45 @@ const StudentOrder = ({selectedStudent, setSelectedStudent, seeResultType, fontS
     }
 
         useEffect(() => {
+        const shuffledStudent = () => {
         const newSelectedStudent = selectedStudent
+        .map((value) => ({ value, sort : Math.random() }))
         .sort((a, b) => a.sort - b.sort)
-        .map((value) => value);
+        .map(({value}) => value);
     setSelectedStudent(newSelectedStudent);
-    },[]);
+    };
+    let shuffling;
+    if (isShuffle === "ing") {
+        shuffling = setInterval(() => {
+            shuffledStudent();
+        }, 100);
+    } else {
+        clearInterval(shuffling);
+    }
+      return () => clearInterval(shuffling);
+    },[isShuffle]);
 
 
     return (
         <Container seeResultType={seeResultType}>
-            {seeResultType === "ALL" ? selectedStudent.map((item, index) => {
+            {isShuffle != "finish" ? (seeResultType === "ALL" ? selectedStudent.map((item, index) => {
                 return (
                     <Item key={item}>
-                        <Order>{index + 1}</Order>
                         <Name fontSize={fontSizeAll}>{item}</Name>
-                        <RemoveBtn onClick={onClickRemoveBtn(item)}><TiDelete/></RemoveBtn>
+                        <RemoveBtn onClick={() => onClickRemoveBtn(item)}><TiDelete/></RemoveBtn>
                     </Item>
                 );
             }) :
              <SeeOneItem order={order} studentLength={selectedStudent.length}>
                <div className="order-student-back-btn" onClick={()=>onClickArrow("back")}><IoIosArrowBack /></div>
                 <Student>
-                  <Order>{order}</Order>
+                  
                   <Name fontSize={fontSizeOne}> {selectedStudent[order-1]}</Name>
                 </Student>
                 <div className="order-student-forward-btn" onClick={()=>onClickArrow("forward")}><IoIosArrowForward /></div>
-             </SeeOneItem>
+             </SeeOneItem>)
+             :
+             <div></div>
              }
         </Container>
     );
