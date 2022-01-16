@@ -65,7 +65,7 @@ export const SEE_ONE_STUDENT_QUERY = gql`
       studentName
       studentNumber
       studentGender
-      parentPhoneNum
+      memo
       allergy
       tag
       trash
