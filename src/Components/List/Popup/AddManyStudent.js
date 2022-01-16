@@ -13,14 +13,18 @@ const AddManyStudent = ({ inStudent, listId }) => {
   const selectedTag = JSON.parse(localStorage.getItem("selectedTag")) ? JSON.parse(localStorage.getItem("selectedTag")) : []
   const selectedSort = localStorage.getItem("selectedSort") ? localStorage.getItem("selectedSort") : undefined
   const me = useMe()
+  console.log(selectedTag, selectedSort);
   const [addStudentId, setAddStudentId] = useState([])
   const [outStudent, setOutStudent] = useState([])
   const { data, loading, refetch } = useQuery(SEE_ALL_STUDENT_QUERY, {
-    ...(selectedTag.length !== 0 && { tag: selectedTag }),
-    ...(selectedSort && { sort: selectedSort }),
-    trash: false
+    variables: {
+      ...(selectedTag.length !== 0 && { tag: selectedTag }),
+      ...(selectedSort && { sort: selectedSort }),
+      trash: false,
+    }
   })
 
+  console.log(data);
   const onCompleted = (result) => {
     const { addStudent: { ok } } = result
     if (ok) {
@@ -90,7 +94,7 @@ const AddManyStudent = ({ inStudent, listId }) => {
 
   useEffect(() => {
     refetch()
-  }, [])
+  }, [selectedTag, selectedSort])
 
   return (<PopupContainer maxHeight={true}>
     <Container>

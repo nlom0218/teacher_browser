@@ -15,7 +15,7 @@ const Container = styled.div`
   }
 `
 
-const SortTagBtn = ({ meTag }) => {
+const SortTagBtn = () => {
 
   const onClickStudentSetting = () => inPopup("seeStudentSetting")
 

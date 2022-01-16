@@ -41,6 +41,7 @@ const StudentName = styled.div`
   text-align: center;
   align-self: center;
   overflow: hidden;
+  line-height: 120%;
 `
 
 const HoverContainer = styled.div`
@@ -97,6 +98,7 @@ const StudentNumber = styled.div`
   align-self: center;
   text-align: center;
   div {
+    font-size: 0.875rem;
     opacity: 0.6;
   }
 `
@@ -144,7 +146,7 @@ const StudentInItem = ({ item, listId }) => {
   }
   return (<Student onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
     <StudentName>{item.studentName}</StudentName>
-    <StudentNumber>{item.studentNumber ? item.studentNumber : <div>등록된 번호가 없습니다.</div>}</StudentNumber>
+    <StudentNumber>{item.studentNumber ? item.studentNumber : <div>번호가 없습니다.</div>}</StudentNumber>
     {media !== "Desktop" ? <HoverContainer>
       <FnBtn>
         <div className="fnBtn_icon" onClick={onClickEdit}><AiOutlineEdit /></div>

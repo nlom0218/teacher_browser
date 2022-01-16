@@ -146,7 +146,7 @@ const StudentSortTag = ({ meTag, selectedTag, setSelectedTag, setSeeNum, seeNum,
   const onClickResetBtn = () => {
     localStorage.removeItem("selectedTag")
     localStorage.removeItem("seeNum")
-    localStorage.removeItem("seletedSort")
+    localStorage.removeItem("selectedSort")
     setSelectedTag([])
     setSelectedSort(undefined)
     setSeeNum(undefined)
