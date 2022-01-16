@@ -27,7 +27,7 @@ const ListContents = styled.div`
         border-radius : 5px;
         border-radius : 0.3125rem;
         :hover {
-            background-color : ${props=>props.theme.hoverColor};
+            background-color : ${props => props.theme.hoverColor};
             transition : background-color 1 ease;
         }
     }
@@ -37,7 +37,7 @@ const MoveToList = styled.div`
     justify-self : center;
     padding : 10px 20px;
     padding : 0.625rem 1.25rem;
-    background-color : ${props=> props.theme.btnBgColor};
+    background-color : ${props => props.theme.btnBgColor};
     color : ${props => props.theme.bgColor};
     border-radius : 5px;
     border-radius : 0.125rem;
@@ -49,19 +49,16 @@ const AllStudentList = () => {
     const isSeeList = useReactiveVar(isSeeStudentListVar)
 
     const navigate = useNavigate()
-    
+
     const [initLoad, setInitLoad] = useState(true)
     const [isSeedisplay, setSeeDisplay] = useState(isSeeList)
 
     const { data, loading } = useQuery(SEE_ALL_STUDENT_LIST_QUERY);
-
-
-
     const onClickSeeBtn = () => {
-        if(initLoad) {
+        if (initLoad) {
             setInitLoad(false)
         }
-        if(isSeeList) {
+        if (isSeeList) {
             disableSeeStudentList()
             setSeeDisplay(false)
             setTimeout(() => {
@@ -76,15 +73,15 @@ const AllStudentList = () => {
     const onClickMoveToList = () => {
         navigate(routes.list)
     }
-    return ( <React.Fragment>
+    return (<React.Fragment>
         <SeeRightContentsBtn onClick={onClickSeeBtn} isSeeList={isSeeList} initLoad={initLoad}>
-            {isSeeList ? <FcNext/> : <FcPrevious />}
+            {isSeeList ? <FcNext /> : <FcPrevious />}
         </SeeRightContentsBtn>
         <DivideRightContents isSeeList={isSeeList} initLoad={initLoad} isSeedisplay={isSeedisplay}>
             <ListContents>
-            {data?.seeStudentList.map((item, index) => {
-                return <Link key={index} to={`${routes.draw}/${item.listId}`}>{item.listName}</Link>
-            })}
+                {data?.seeStudentList.map((item, index) => {
+                    return <Link key={index} to={`${routes.draw}/${item.listId}`}>{item.listName}</Link>
+                })}
             </ListContents>
             <MoveToList onClick={onClickMoveToList}>명렬표로 이동하기</MoveToList>
         </DivideRightContents>

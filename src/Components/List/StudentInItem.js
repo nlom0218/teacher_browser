@@ -14,25 +14,24 @@ import { DELETE_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
 
 const Student = styled.div`
   position: relative;
-  min-height: 120px;
-  max-height: 120px;
+  min-height: 160px;
+  max-height: 160px;
+  min-height: 10rem;
+  max-height: 10rem;
   border: 1px solid ${props => props.theme.cardBorder};
   background-color: ${props => props.theme.cardBg};
   transition: border 1s ease, background-color 1s ease;
   border-radius: 5px;
   border-radius: 0.3125rem;
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   padding: 10px;
   padding: 0.625rem;
   opacity: ${props => props.hoverContainer ? 0.6 : 1};
   ${customMedia.greaterThan("tablet")`
-    min-height: 120px;
-    max-height: 120px;
   `}
   ${customMedia.greaterThan("desktop")`
-    min-height: 160px;
-    max-height: 160px;
+    grid-template-rows: 1fr 1fr;
   `}
 `
 
@@ -40,6 +39,7 @@ const StudentName = styled.div`
   text-align: center;
   align-self: center;
   overflow: hidden;
+  line-height: 120%;
 `
 
 const HoverContainer = styled.div`
@@ -92,6 +92,15 @@ const FnBtn = styled.div`
   }
 `
 
+const StudentNumber = styled.div`
+  align-self: center;
+  text-align: center;
+  div {
+    font-size: 0.875rem;
+    opacity: 0.6;
+  }
+`
+
 const StudentInItem = ({ item, listId }) => {
   const me = useMe()
 
@@ -134,7 +143,8 @@ const StudentInItem = ({ item, listId }) => {
     })
   }
   return (<Student onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
-    <StudentName hoverContainer={hoverContainer}>{item.studentName}</StudentName>
+    <StudentName>{item.studentName}</StudentName>
+    <StudentNumber>{item.studentNumber ? item.studentNumber : <div>번호가 없습니다.</div>}</StudentNumber>
     {media !== "Desktop" ? <HoverContainer>
       <FnBtn>
         <div className="fnBtn_icon" onClick={onClickEdit}><AiOutlineEdit /></div>

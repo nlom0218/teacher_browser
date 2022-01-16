@@ -4,11 +4,24 @@ import styled from 'styled-components';
 import CreateOneStudent from './CreateOneStudent';
 import CreateManyStudent from './CreateManyStudent';
 import useMe from '../../../Hooks/useMe';
-import { outPopup } from '../../../apollo';
+import { inPopup, outPopup } from '../../../apollo';
 import PopupContainer from '../../Shared/PopupContainer';
 import { customMedia } from '../../../styles';
 import { SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
 import { CREATE_STUDENT_MUTATION } from '../../../Graphql/Student/mutation';
+import { IoArrowBackSharp } from 'react-icons/io5';
+import useMedia from '../../../Hooks/useMedia';
+
+const BackBtn = styled.div`
+  font-size: 1.5em;
+  font-size: 1.5rem;
+  margin-top: 20px;
+  margin-top: 1.25rem;
+  svg {
+    cursor: pointer;
+    display: flex;
+  }
+`
 
 const CreationType = styled.div`
   display: grid;
@@ -50,6 +63,7 @@ const CreateStudent = ({ existStudentArray, selectedTag, selectedSort }) => {
   const [creationType, setCreationType] = useState(undefined)
 
   const me = useMe()
+  const media = useMedia()
   const onCompleted = (result) => {
     const { createStudent: { ok } } = result
     if (ok) {
@@ -63,12 +77,15 @@ const CreateStudent = ({ existStudentArray, selectedTag, selectedSort }) => {
       query: SEE_ALL_STUDENT_QUERY,
       variables: {
         ...(selectedTag.length !== 0 && { tag: selectedTag }),
-        ...(selectedSort && { sort: selectedSort })
+        ...(selectedSort && { sort: selectedSort }),
+        trash: false
       }
     }]
   })
   const onClickCreationType = (type) => setCreationType(type)
+  const onClickBackAddTagBtn = () => inPopup("students")
   return (<PopupContainer>
+    {media !== "Desktop" && <BackBtn onClick={onClickBackAddTagBtn}><IoArrowBackSharp /></BackBtn>}
     <CreationType>
       <OneTypeBtn className="creationTypeBtn" onClick={() => onClickCreationType("one")} creationType={creationType}>단일 생성</OneTypeBtn>
       <ManyTypeBtn className="creationTypeBtn" onClick={() => onClickCreationType("many")} creationType={creationType}>복수 생성</ManyTypeBtn>

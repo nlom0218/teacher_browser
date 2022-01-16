@@ -81,3 +81,12 @@ export const DELETE_USER_MUTATION = gql`
     }
   }
 `;
+
+export const CHANGE_PASSWORD_MUTATION = gql`
+  mutation ChangePw($userEmail: String!, $password: String!, $newPassword: String!) {
+    changePw(userEmail: $userEmail, password: $password, newPassword: $newPassword) {
+      ok
+      error
+    }
+  }
+`;

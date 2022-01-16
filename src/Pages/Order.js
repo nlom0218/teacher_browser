@@ -24,7 +24,7 @@ import StudentOrder from "../Components/Order/StudentOrder";
 
 // 전체 틀
 const Container = styled.div`
-  min-height: ${props => props.seeResultType==="ONE"&&"100%"};
+  min-height: ${props => props.seeResultType === "ONE" && "100%"};
   display: grid;
   grid-template-rows: auto auto 1fr;
   padding: 20px;
@@ -172,7 +172,7 @@ const Order = () => {
   const [studentListName, setStudentListName] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState([]);
   const [isShuffle, setIsShuffle] = useState("init");
-  const [seeResultType,setSeeResultType] = useState ("ALL");
+  const [seeResultType, setSeeResultType] = useState("ALL");
   const [fontSizeAll, setFontSizeAll] = useState(1.5)
   const [fontSizeOne, setFontSizeOne] = useState(5)
   const [isEdit, setIsEdit] = useState(false);
@@ -212,69 +212,69 @@ const Order = () => {
     if (data) {
       setStudentListName(data?.seeStudentList[0]?.listName);
       //휴지통에 있는 학생은 filter로 거르기 
-      setSelectedStudent(data?.seeStudentList[0]?.students.filter(item=>!item.trash).map((item) => item.studentName));
+      setSelectedStudent(data?.seeStudentList[0]?.students.filter(item => !item.trash).map((item) => item.studentName));
     }
   }, [data]);
   return (
     <BasicContainer menuItem={true}>
       <DivideLeftContents isSeeList={isSeeList}>
-      <Container seeResultType={seeResultType}>
-        <TopContents>
-          <Title onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
-            <InputLayout>
-              <Input
-                {...register("title", {
-                  required: true,
-                  onChange: () => setIsEdit(true),
-                })}
-                type="text"
-                placeholder="제목을 입력하세요."
-                autoComplete="off"
-                onClick={onClickInput}
-              />
+        <Container seeResultType={seeResultType}>
+          <TopContents>
+            <Title onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
+              <InputLayout>
+                <Input
+                  {...register("title", {
+                    required: true,
+                    onChange: () => setIsEdit(true),
+                  })}
+                  type="text"
+                  placeholder="제목을 입력하세요."
+                  autoComplete="off"
+                  onClick={onClickInput}
+                />
 
-              {isEdit && (
-                <LineBox>
-                  <Line></Line>
-                </LineBox>
-              )}
-            </InputLayout>
-            {isEdit && <SubmitInput type="submit" value="저장" />}
-          </Title>
-          {media !== "Desktop" && (
-            <ListIcon>
-              <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다"}</ListName>
-              <FcContacts onClick={onClickListIcon} />
-            </ListIcon>
-          )}
-        </TopContents>
-        {id && (
-          <React.Fragment>
-            <OptionContents>
-              {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
+                {isEdit && (
+                  <LineBox>
+                    <Line></Line>
+                  </LineBox>
+                )}
+              </InputLayout>
+              {isEdit && <SubmitInput type="submit" value="저장" />}
+            </Title>
+            {media !== "Desktop" && (
+              <ListIcon>
+                <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다"}</ListName>
+                <FcContacts onClick={onClickListIcon} />
+              </ListIcon>
+            )}
+          </TopContents>
+          {id && (
+            <React.Fragment>
+              <OptionContents>
+                {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
 
-              {isShuffle === "ing" && (
-                <OptionBtn onClick={() => onClickShuffleBtn("finish")} isShuffling={true}>
-                  섞는 중 
-                </OptionBtn>
-              )}
-
-              {isShuffle === "finish" && (
-                  <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
-                    다시 섞기 
+                {isShuffle === "ing" && (
+                  <OptionBtn onClick={() => onClickShuffleBtn("finish")} isShuffling={true}>
+                    섞는 중
                   </OptionBtn>
-              )}
-              <SeeResultType seeResultType={seeResultType} setSeeResultType={setSeeResultType}/>
-              <FontSizeBtn seeResultType={seeResultType} setFontSizeAll={setFontSizeAll} fontSizeAll={fontSizeAll} fontSizeOne={fontSizeOne} setFontSizeOne={setFontSizeOne}/>
-            </OptionContents>
-            <StudentOrder fontSizeOne={fontSizeOne} fontSizeAll={fontSizeAll} seeResultType={seeResultType} selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} isShuffle={isShuffle} />
-          </React.Fragment>
-        )}  
-      </Container>
+                )}
+
+                {isShuffle === "finish" && (
+                  <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
+                    다시 섞기
+                  </OptionBtn>
+                )}
+                <SeeResultType seeResultType={seeResultType} setSeeResultType={setSeeResultType} />
+                <FontSizeBtn seeResultType={seeResultType} setFontSizeAll={setFontSizeAll} fontSizeAll={fontSizeAll} fontSizeOne={fontSizeOne} setFontSizeOne={setFontSizeOne} />
+              </OptionContents>
+              <StudentOrder fontSizeOne={fontSizeOne} fontSizeAll={fontSizeAll} seeResultType={seeResultType} selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} isShuffle={isShuffle} />
+            </React.Fragment>
+          )}
+        </Container>
       </DivideLeftContents>
-      {media=="Desktop"&& <AllStudentList/>}
+      {media == "Desktop" && <AllStudentList />}
       {isPopup === "seeStudentList" && <StudentList />}
-      {isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn}/>}
+      {isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
     </BasicContainer>
   );
 };

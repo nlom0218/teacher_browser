@@ -6,6 +6,7 @@ import EditBgTheme from "../Components/Account/EditBgTheme";
 import RegisterSchool from "../Components/Account/RegisterSchool";
 import Withdrawal from "../Components/Account/Withdrawal";
 import BasicContainer from "../Components/Shared/BasicContainer";
+import ChangePw from "../Components/Account/ChangePw";
 import useMe from "../Hooks/useMe";
 import { color, customMedia } from "../styles";
 import { useReactiveVar } from "@apollo/client";
@@ -63,7 +64,10 @@ const EditAccount = () => {
       <Container>
         <Changes>
           <List>이메일</List>
-          <Item>{me?.email}</Item>
+          <Item>
+            {me?.email}
+            <ChangePw userEmail={me?.email}></ChangePw>
+          </Item>
         </Changes>
         <Changes>
           <List>학교정보</List>

@@ -185,7 +185,7 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
     }
   }
 
-  // 리스트 아이콘 수정을 위한
+  // 리스트 아이콘, 이름 수정을 위한
   const [editStudentList, { loading: editLoading }] = useMutation(EDIT_STUDENT_LIST, {
     onCompleted,
     refetchQueries: [
@@ -306,7 +306,12 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
       </SettingBtn>}
       {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
     </NameContainer>
-    {data?.seeStudentList[0]?.students && <StudentInList students={data?.seeStudentList[0]?.students} listId={listId} />}
+    {data?.seeStudentList[0]?.students
+      &&
+      <StudentInList
+        students={data?.seeStudentList[0]?.students.filter(item => !item.trash)}
+        listId={listId}
+      />}
     <AddStudentBox
       listId={listId}
       listName={listName}
