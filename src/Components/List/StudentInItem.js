@@ -16,6 +16,8 @@ const Student = styled.div`
   position: relative;
   min-height: 160px;
   max-height: 160px;
+  min-height: 10rem;
+  max-height: 10rem;
   border: 1px solid ${props => props.theme.cardBorder};
   background-color: ${props => props.theme.cardBg};
   transition: border 1s ease, background-color 1s ease;

@@ -7,31 +7,33 @@ import { SEE_ALL_STUDENT_IN_TRASH_QUERY, SEE_ALL_STUDENT_QUERY } from '../../Gra
 import useMe from '../../Hooks/useMe';
 
 const Container = styled.div`
+  min-height: 160px;
+  max-height: 160px;
+  min-height: 10rem;
+  max-height: 10rem;
   padding: 10px 20px;
   padding: 0.625rem 1.25rem;
   border-radius: 5px;
   border-radius: 0.3125rem;
-  background-color: ${props => props.isHover && props.theme.hoverColor};
-  transition: background-color 0.6s ease;
   position: relative;
+  border: 1px solid ${props => props.theme.cardBorder};
+  background-color: ${props => props.theme.cardBg};
+  transition: background-color 0.6s ease, border 1s ease;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  justify-items: center;
+  align-items: center;
 `
 
 const StudentName = styled.div`
-  opacity: ${props => props.isHover ? 0.4 : 1};
-  transition: opacity 0.6s ease;
+  line-height: 120%;
 `
 
 const StudentBtn = styled.div`
-  position: absolute;
-  top: 0;
-  left: 10%;
-  bottom: 0;
-  right: 10%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  opacity: ${props => props.isHover ? 1 : 0};
-  transition: opacity 0.6s ease;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-self: stretch;
+  justify-items: center;
   svg {
     font-size: 1.5em;
     font-size: 1.5rem;
@@ -50,7 +52,7 @@ const StudentInTrash = ({ item, setSuccessMsg }) => {
   const selectedTag = JSON.parse(localStorage.getItem("selectedTag")) ? JSON.parse(localStorage.getItem("selectedTag")) : []
   const selectedSort = localStorage.getItem("selectedSort") ? localStorage.getItem("selectedSort") : undefined
   const me = useMe()
-  const [isHover, setIsHover] = useState(false)
+
   const [editStudent, { loading: editLoadint }] = useMutation(EDIT_STUDENT_MUTATION, {
     refetchQueries: [
       { query: SEE_ALL_STUDENT_IN_TRASH_QUERY, variables: { trash: true } },
@@ -76,9 +78,9 @@ const StudentInTrash = ({ item, setSuccessMsg }) => {
     })
   }
 
-  return (<Container onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)} isHover={isHover}>
-    <StudentName isHover={isHover}>{item.studentName}</StudentName>
-    <StudentBtn isHover={isHover}>
+  return (<Container>
+    <StudentName>{item.studentName}</StudentName>
+    <StudentBtn>
       <ResetBtn onClick={onClickResetBtn}><FcUndo /></ResetBtn>
       <DelBtn><FcEmptyTrash /></DelBtn>
     </StudentBtn>
