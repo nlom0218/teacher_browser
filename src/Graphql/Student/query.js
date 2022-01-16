@@ -2,8 +2,7 @@ import gql from "graphql-tag";
 
 // 학생 목록에 있는 모든 학생 보이기(필요한 인자 => tag, sort, trash:false)
 // Components/List/Popup/AddManyStudent.js
-// Components/List/Popup/SeeStudents.js
-// Components/List/StudentList.js
+// Components/List
 
 // refetchQueries
 // Components/List/Dorp/Trash.js

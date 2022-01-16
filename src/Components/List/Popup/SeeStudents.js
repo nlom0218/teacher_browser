@@ -1,9 +1,8 @@
-import { useQuery } from '@apollo/client';
+import { useReactiveVar } from '@apollo/client';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { outPopup } from '../../../apollo';
-import { SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
+import { inPopup, isPopupVar, outPopup } from '../../../apollo';
 import routes from '../../../routes';
 import PopupContainer from '../../Shared/PopupContainer';
 import SortTagBtn from '../SortTagBtn';
@@ -18,16 +17,10 @@ const StudentNum = styled.div`
   opacity: 0.8;
 `
 
-const SeeStudents = ({ meTag, selectedTag, seeNum, selectedSort }) => {
-  const navigate = useNavigate()
+const SeeStudents = ({ meTag, selectedTag, seeNum, selectedSort, allStudent }) => {
+  const isPopup = useReactiveVar(isPopupVar)
 
-  const { data } = useQuery(SEE_ALL_STUDENT_QUERY, {
-    variables: {
-      ...(selectedTag.length !== 0 && { tag: selectedTag }),
-      ...(selectedSort && { sort: selectedSort }),
-      trash: false
-    }
-  })
+  const navigate = useNavigate()
 
   const onClickName = (id) => {
     outPopup()
@@ -35,16 +28,16 @@ const SeeStudents = ({ meTag, selectedTag, seeNum, selectedSort }) => {
   }
 
   const onClickAddBtn = () => {
-    window.alert("학생 추가하기, 팝업안의 팝업")
+    inPopup("createStudent")
   }
   return (<PopupContainer maxHeight={true}>
     <Container>
       <List>
-        <SortTagBtn meTag={meTag} />
-        {data?.seeAllStudent?.length === 0 ?
+        <SortTagBtn />
+        {allStudent?.length === 0 ?
           <div className="noStudnet">생성된 학생이 없습니다.</div>
           :
-          data?.seeAllStudent?.map((item, index) => {
+          allStudent?.map((item, index) => {
             return <Item
               key={index}
               onClick={() => onClickName(item._id)}

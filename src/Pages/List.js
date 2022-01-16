@@ -1,4 +1,4 @@
-import { useReactiveVar } from '@apollo/client';
+import { useQuery, useReactiveVar } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { FaUserFriends } from 'react-icons/fa';
 import { useParams } from 'react-router-dom';
@@ -7,12 +7,14 @@ import { inPopup, isPopupVar, isSeeStudentVar } from '../apollo';
 import AllList from '../Components/List/AllList';
 import DetailList from '../Components/List/DetailList';
 import DetailStudent from '../Components/List/DetailStudent';
+import CreateStudent from '../Components/List/Popup/CreateStudent';
 import SeeStudents from '../Components/List/Popup/SeeStudents';
 import StudentSortTag from '../Components/List/Popup/StudentSortTag';
 import StudentList from '../Components/List/StudentList';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import { DivideLeftContents } from '../Components/Shared/styled/DivideContents';
 import { SuccessMsg } from '../Components/Shared/styled/SuccessMsg';
+import { SEE_ALL_STUDENT_QUERY } from '../Graphql/Student/query';
 import useMe from '../Hooks/useMe';
 import useMedia from '../Hooks/useMedia';
 import { customMedia } from '../styles';
@@ -60,8 +62,21 @@ const List = () => {
   // 드래그 성공 및 메시지를 띄우기 위한 값
   const [successMsg, setSuccessMsg] = useState(undefined)
 
+  // studentArray => 복수생성할 때 이미 존재하는 학생들의 이름과 새롭게 생성하는 학생들의 이름을 비교하기 위한 배열
+  // 중복생성을 막기 위함
+  const [existStudentArray, setExistStudentArray] = useState(undefined)
+
   // url 주소에서 가져오는 값들
   const { type, id } = useParams()
+
+  // 학생목록 가져오기
+  const { data } = useQuery(SEE_ALL_STUDENT_QUERY, {
+    variables: {
+      ...(selectedTag.length !== 0 && { tag: selectedTag }),
+      ...(selectedSort && { sort: selectedSort }),
+      trash: false
+    }
+  })
 
   const onClickStudentIcon = () => inPopup("students")
 
@@ -99,6 +114,14 @@ const List = () => {
       setSelectedSort(undefined)
     }
   }, [])
+
+  // 학생 정보가 불러와지면 existStudentArray 값 생성
+  useEffect(() => {
+    if (data) {
+      const newExistStudentArray = data?.seeAllStudent.map((item) => item.studentName)
+      setExistStudentArray(newExistStudentArray)
+    }
+  }, [data])
   return (<BasicContainer menuItem={true} notScroll={true}>
     <Container>
       <DivideLeftContents isSeeList={isSeeList}>
@@ -107,7 +130,16 @@ const List = () => {
         {type === "detail" && <DetailList listId={id} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
       </DivideLeftContents>
       {media === "Desktop" ?
-        <StudentList setSomeDragging={setSomeDragging} studentId={id} meTag={me?.tag} selectedTag={selectedTag} seeNum={seeNum} selectedSort={selectedSort} setDragType={setDragType} />
+
+        <StudentList
+          setSomeDragging={setSomeDragging}
+          studentId={id} meTag={me?.tag}
+          selectedTag={selectedTag}
+          seeNum={seeNum}
+          selectedSort={selectedSort}
+          setDragType={setDragType}
+          allStudent={data?.seeAllStudent}
+        />
         :
         <StudentIcon onClick={onClickStudentIcon}><FaUserFriends /></StudentIcon>
       }
@@ -115,7 +147,13 @@ const List = () => {
     {successMsg && <SuccessMsg error={successMsg.ok === false}>{successMsg.msg}</SuccessMsg>}
 
     {/* 데스크탑이 아닐 때 학생 전체 리스트를 팝업으로 띄우기 */}
-    {isPopup === "students" && <SeeStudents meTag={me?.tag} selectedTag={selectedTag} seeNum={seeNum} selectedSort={selectedSort} />}
+    {isPopup === "students" && <SeeStudents
+      meTag={me?.tag}
+      selectedTag={selectedTag}
+      seeNum={seeNum}
+      selectedSort={selectedSort}
+      allStudent={data?.seeAllStudent}
+    />}
     {isPopup === "seeStudentSetting" &&
       <StudentSortTag
         setSelectedTag={setSelectedTag}
@@ -124,6 +162,12 @@ const List = () => {
         setSeeNum={setSeeNum}
         seeNum={seeNum}
         setSelectedSort={setSelectedSort}
+        selectedSort={selectedSort}
+      />}
+    {isPopup === "createStudent" &&
+      <CreateStudent
+        existStudentArray={existStudentArray}
+        selectedTag={selectedTag}
         selectedSort={selectedSort}
       />}
   </BasicContainer>);
