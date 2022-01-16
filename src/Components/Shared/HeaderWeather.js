@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { FcDown, FcUp } from "react-icons/fc";
-import {
-  weatherBtnDown,
-  weatherBtnUp,
-  weatherDown,
-  weatherUp,
-} from "../../Animations/WeatherAni";
+import { weatherBtnDown, weatherBtnUp, weatherDown, weatherUp } from "../../Animations/WeatherAni";
 import { color } from "../../styles";
 import { BsEmojiDizzy, BsEmojiFrown, BsEmojiHeartEyes, BsEmojiLaughing } from "react-icons/bs";
 
@@ -21,13 +16,7 @@ const WeatherBtn = styled.div`
   cursor: pointer;
   font-size: 1.5em;
   font-size: 1.5rem;
-  animation: ${(props) =>
-    props.firstEnter
-      ? "none"
-      : props.seeWeather
-        ? weatherBtnDown
-        : weatherBtnUp}
-    1s ease forwards;
+  animation: ${(props) => (props.firstEnter ? "none" : props.seeWeather ? weatherBtnDown : weatherBtnUp)} 1s ease forwards;
   background: ${color.white};
   border-radius: 50%;
   display: flex;
@@ -47,42 +36,39 @@ const WeatherContent = styled.div`
   padding: 0.625rem 1.25rem;
   border-radius: 10px;
   border-radius: 0.625rem;
-  animation: ${(props) =>
-    props.firstEnter ? "none" : props.seeWeather ? weatherDown : weatherUp}
-    1s ease forwards;
+  animation: ${(props) => (props.firstEnter ? "none" : props.seeWeather ? weatherDown : weatherUp)} 1s ease forwards;
   svg {
-    
   }
 `;
-
 
 const WeatherItems = styled.div`
   display: grid;
   grid-template-columns: repeat(7, auto);
   align-items: center;
-`
+`;
 
-const Temp = styled.div``
+const Temp = styled.div``;
 
 const WeatherIcon = styled.img`
   vertical-align: middle;
-  margin-top: -20px;
-  margin-bottom: -20px;
+  margin: -20px 5px;
   transform: translate(0%, -5%);
+  width: 25px;
+  height: 25px;
 `;
 
-const Dust = styled.div``
+const Dust = styled.div``;
 
 const DustIcon = styled.div`
   display: flex;
   margin: 0px 5px;
   margin: 0px 0.3125rem;
-`
+`;
 
 const Address = styled.div`
   margin-left: 5px;
   margin: 0px 0.3125rem;
-`
+`;
 
 //
 const HeaderWeather = () => {
@@ -136,37 +122,33 @@ const HeaderWeather = () => {
 
   return (
     <Weather>
-      <WeatherBtn
-        onClick={onClickWeatherBtn}
-        seeWeather={seeWeather}
-        firstEnter={firstEnter}
-      >
+      <WeatherBtn onClick={onClickWeatherBtn} seeWeather={seeWeather} firstEnter={firstEnter}>
         {seeWeather ? <FcUp /> : <FcDown />}
       </WeatherBtn>
       <WeatherContent seeWeather={seeWeather} firstEnter={firstEnter}>
         {weather ? (
           <WeatherItems>
             <Temp>{Math.round(weather.temp)}℃</Temp>
-            <WeatherIcon
-              src={`https://openweathermap.org/img/wn/${weather.icon}.png`}
-            />
+            <WeatherIcon src={require(`../../image/icons/weather/${weather.icon}.svg`).default} />
             <Dust>미세먼지</Dust>
             <DustIcon>
-              {weather.pm10grade === "1"
-                ? <BsEmojiHeartEyes style={{ color: "#1d35e5" }} />
-                : weather.pm10grade === "2"
-                  ? <BsEmojiLaughing style={{ color: "#1fc90c" }} />
-                  : weather.pm10grade === "3"
-                    ? <BsEmojiFrown style={{ color: "#ddab16" }} />
-                    : weather.pm10grade === "4"
-                      ? <BsEmojiDizzy style={{ color: "#dd2a16" }} />
-                      : ""}
+              {weather.pm10grade === "1" ? (
+                <BsEmojiHeartEyes style={{ color: "#1d35e5" }} />
+              ) : weather.pm10grade === "2" ? (
+                <BsEmojiLaughing style={{ color: "#1fc90c" }} />
+              ) : weather.pm10grade === "3" ? (
+                <BsEmojiFrown style={{ color: "#ddab16" }} />
+              ) : weather.pm10grade === "4" ? (
+                <BsEmojiDizzy style={{ color: "#dd2a16" }} />
+              ) : (
+                ""
+              )}
             </DustIcon>
             <div>@</div>
             <Address>{weather.address1 + " " + weather.address2}</Address>
           </WeatherItems>
         ) : (
-          "위치 정보 없음"
+          "날씨 정보 수신 중..."
         )}
       </WeatherContent>
     </Weather>

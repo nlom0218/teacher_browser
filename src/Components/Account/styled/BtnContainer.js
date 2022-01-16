@@ -1,5 +1,5 @@
-import styled from "styled-components"
-import { customMedia } from "../../../styles"
+import styled from "styled-components";
+import { customMedia } from "../../../styles";
 
 const BtnContainer = styled.div`
   display: grid;
@@ -14,12 +14,12 @@ const BtnContainer = styled.div`
     border-radius: 5px;
     border-radius: 0.3125rem;
     cursor: pointer;
-    color: ${props => props.theme.bgColor};
+    color: ${(props) => props.theme.bgColor};
     transition: background-color 1s ease, color 1s ease;
   }
   ${customMedia.greaterThan("tablet")`
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: ${(props) => (props.onlyone ? "1fr" : "1fr 1fr")};
   `}
-`
+`;
 
-export default BtnContainer
+export default BtnContainer;
