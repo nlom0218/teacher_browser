@@ -11,9 +11,11 @@ import ListItem from './ListItem';
 import PopupCreateList from './Popup/CreateList';
 
 const Container = styled.div`
+  min-height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(4, minmax(120px, 1fr)); 
+  /* grid-template-rows: repeat(4, minmax(120px, 1fr));  */
+  grid-template-rows: repeat(8, 1fr);
   row-gap: 40px;
   row-gap: 2.5rem;
   column-gap: 40px;
@@ -22,6 +24,7 @@ const Container = styled.div`
   padding: 1.25rem;
   ${customMedia.greaterThan("tablet")`
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
     `}
   ${customMedia.greaterThan("desktop")`
     padding: 0px;

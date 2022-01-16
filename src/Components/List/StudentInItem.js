@@ -14,8 +14,8 @@ import { DELETE_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
 
 const Student = styled.div`
   position: relative;
-  min-height: 120px;
-  max-height: 120px;
+  min-height: 160px;
+  max-height: 160px;
   border: 1px solid ${props => props.theme.cardBorder};
   background-color: ${props => props.theme.cardBg};
   transition: border 1s ease, background-color 1s ease;
@@ -27,13 +27,9 @@ const Student = styled.div`
   padding: 0.625rem;
   opacity: ${props => props.hoverContainer ? 0.6 : 1};
   ${customMedia.greaterThan("tablet")`
-    min-height: 120px;
-    max-height: 120px;
   `}
   ${customMedia.greaterThan("desktop")`
     grid-template-rows: 1fr 1fr;
-    min-height: 160px;
-    max-height: 160px;
   `}
 `
 

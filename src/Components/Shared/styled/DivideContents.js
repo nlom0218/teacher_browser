@@ -9,20 +9,21 @@ export const DivideLeftContents = styled.div`
   min-height: 100%;
   padding: 20px;
   padding: 1.25rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: ${props => props.isSeeList ? "75%" : "100%"};
+  transition: width 1s ease;
+  overflow: scroll;
+  -ms-overflow-style: none; // IE and Edge
+  scrollbar-width: none; // Firefox
+  ::-webkit-scrollbar {
+    display: none; // Chrome, Safari, Opera
+  }
   ${customMedia.greaterThan("desktop")`
     padding: 40px;
     padding: 2.5rem;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: ${props => props.isSeeList ? "75%" : "100%"};
-    transition: width 1s ease;
-    overflow: scroll;
-    -ms-overflow-style: none; // IE and Edge
-    scrollbar-width: none; // Firefox
-    ::-webkit-scrollbar {
-      display: none; // Chrome, Safari, Opera
-    }
   `}
 `
 

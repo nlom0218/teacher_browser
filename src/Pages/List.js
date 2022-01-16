@@ -40,12 +40,6 @@ const StudentIcon = styled.div`
   border-radius: 50%;
   cursor: pointer;
   display: flex;
-  :hover {
-    background-color: ${props => props.theme.btnBgColor};
-    color: ${props => props.theme.bgColor};
-    transition: color 0.6s ease;
-  }
-    transition: background-color 0.6s ease;
 `
 
 const List = () => {
