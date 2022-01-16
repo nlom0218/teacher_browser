@@ -5,6 +5,7 @@ import { inPopup, isPopupVar } from '../apollo';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import { SuccessMsg } from '../Components/Shared/styled/SuccessMsg';
 import DeleteAllStudent from '../Components/Trash/Popup/DeleteAllStudent';
+import RestoreAllStudent from '../Components/Trash/Popup/RestoreAllStudent';
 import StudentInTrash from '../Components/Trash/StudentInTrash';
 import { SEE_ALL_STUDENT_IN_TRASH_QUERY } from '../Graphql/Student/query';
 import { customMedia } from '../styles';
@@ -79,6 +80,9 @@ const Trash = () => {
   const onClickAllDelete = () => {
     inPopup("deleteAllStudent")
   }
+  const onClickAllRestore = () => {
+    inPopup("restoreAllStudent")
+  }
 
   useEffect(() => {
     if (successMsg) {
@@ -95,7 +99,7 @@ const Trash = () => {
     <Container>
       <TopLayout>
         <Title>휴지통</Title>
-        <AllRestore className="trashBtn">전체 복구</AllRestore>
+        <AllRestore onClick={onClickAllRestore} className="trashBtn">전체 복구</AllRestore>
         <AllDelete onClick={onClickAllDelete} className="trashBtn">전체 삭제</AllDelete>
       </TopLayout>
       <Student>
@@ -106,6 +110,7 @@ const Trash = () => {
     </Container>
     {successMsg && <SuccessMsg>{successMsg.msg}</SuccessMsg>}
     {isPopup === "deleteAllStudent" && <DeleteAllStudent />}
+    {isPopup === "restoreAllStudent" && <RestoreAllStudent />}
   </BasicContainer>);
 }
 
