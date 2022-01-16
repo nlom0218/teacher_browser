@@ -47,7 +47,13 @@ const AllList = ({ someDragging, setSuccessMsg, setSomeDragging, successMsg, sel
 
   const isPopup = useReactiveVar(isPopupVar)
   const { data, loading } = useQuery(SEE_ALL_STUDENT_LIST_QUERY)
-  const onClickAddIcon = () => inPopup("createList")
+  const onClickAddIcon = () => {
+    if (data?.seeStudentList.length === 10) {
+      setSuccessMsg({ ok: false, msg: "명렬표는 최대 10개까지 생성 가능합니다." })
+    } else {
+      inPopup("createList")
+    }
+  }
 
   useEffect(() => {
     if (data) {

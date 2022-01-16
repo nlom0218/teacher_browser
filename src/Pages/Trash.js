@@ -101,18 +101,24 @@ const Trash = () => {
       return () => { clearTimeout(timer) }
     }
   }, [successMsg])
+  console.log(data);
   return (<BasicContainer menuItem={true}>
     <Container>
       <TopLayout>
         <Title>휴지통</Title>
-        <AllRestore onClick={onClickAllRestore} className="trashBtn">전체 복구</AllRestore>
-        <AllDelete onClick={onClickAllDelete} className="trashBtn">전체 삭제</AllDelete>
+        {data?.seeAllStudent?.length !== 0 && <React.Fragment>
+          <AllRestore onClick={onClickAllRestore} className="trashBtn">전체 복구</AllRestore>
+          <AllDelete onClick={onClickAllDelete} className="trashBtn">전체 삭제</AllDelete>
+        </React.Fragment>}
       </TopLayout>
-      <Student>
-        {data?.seeAllStudent?.map((item, index) => {
-          return <StudentInTrash key={index} item={item} setSuccessMsg={setSuccessMsg} />
-        })}
-      </Student>
+      {data?.seeAllStudent?.length !== 0 ?
+        <Student>
+          {data?.seeAllStudent?.map((item, index) => {
+            return <StudentInTrash key={index} item={item} setSuccessMsg={setSuccessMsg} />
+          })}
+        </Student>
+        : <div>휴지통으로 이동된 학생이 없습니다.</div>
+      }
     </Container>
     {successMsg && <SuccessMsg>{successMsg.msg}</SuccessMsg>}
     {isPopup === "deleteAllStudent" && <DeleteAllStudent />}
