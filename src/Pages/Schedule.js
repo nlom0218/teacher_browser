@@ -29,38 +29,22 @@ const TopContents = styled.div`
   grid-template-columns: 1fr;
   row-gap: 20px;
   row-gap: 1.25rem;
-  align-items: center;
-  ${customMedia.greaterThan("tablet")`
-   grid-template-columns: 1fr auto;
-   column-gap:20px;
-   column-gap:1.25rem;
-  `}
-  ${customMedia.greaterThan("desktop")`
-   grid-template-columns: 1fr;
-   padding : 20px 20px 0px 0px;
-  padding : 1.25rem 1.25rem 0rem 0rem;
-  `}
 `;
 const Title = styled.form`
   grid-row: 2/3;
   display: grid;
   grid-template-columns: 1fr auto;
-  align-items: center;
   column-gap: 20px;
   column-gap: 1.25rem;
-  ${customMedia.greaterThan("tablet")`
-   grid-row : 1/2;
-  `}
 `;
-
 const Input = styled.input`
   width: 100%;
-  font-size: 1.5em;
-  font-size: 1.5rem;
+  font-size: 2em;
+  font-size: 2rem;
   padding: 10px 0px;
   padding: 0.625rem 0rem;
+  //text-align:center;
 `;
-
 const InputLayout = styled.div``;
 
 const LineBox = styled.div`
@@ -87,8 +71,42 @@ const SubmitInput = styled.input`
   border-radius: 0.3125rem;
   animation: ${BtnFadeIn} 0.6s ease;
 `;
-
-
+  const Styles = styled.div`
+    justify-self: center;
+    width: 100%;
+    padding: 1rem;
+    table {
+      text-align: center;
+      width: 100%;
+      border-spacing: 0;
+      border: 2px solid black;
+      
+    tr {
+      :only-child{
+        background-color: skyblue;
+      }
+      :last-child {
+        td {
+          border-bottom: 20px;
+          
+        }
+      }
+    }
+    th,
+    td {
+      :first-child{
+        background-color: skyblue;
+      }
+      margin: 2px;
+      padding: 20px;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+      :last-child {
+        border-right: 0;
+      }
+    }
+  }
+`;
 
 const Schedule = () => {
 
@@ -115,31 +133,6 @@ const Schedule = () => {
     onSubmit({ title });
   };
   
-  const Styles = styled.div`
-    padding: 1rem;
-    table {
-      border-spacing: 0;
-      border: 2px solid black;
-    tr {
-      :last-child {
-        td {
-          border-bottom: 20px;
-        }
-      }
-    }
-    th,
-    td {
-      margin: 2px;
-      padding: 20px;
-      border-bottom: 1px solid black;
-      border-right: 2px solid black;
-
-      :last-child {
-        border-right: 0;
-      }
-    }
-  }
-`;
 
 function Table({ columns, data }) {
   const {
@@ -181,10 +174,9 @@ function Table({ columns, data }) {
 }
 
 
-const columns = React.useMemo(
-  () => [
+const columns = React.useMemo(() => [
     {
-      Header: "<시간표>",
+      Header: "교시/요일",
       accessor: "time"
     },
     {
@@ -209,16 +201,13 @@ const columns = React.useMemo(
       accessor: "friday"
     }
   ],
-
-  []
-);
-
+  []);
 const data = React.useMemo(() => makeSchedule(6), []);
 
 
 
   return (
-    <BasicContainer>
+    <BasicContainer menuItem={true}>
       <DivideLeftContents>
         <Container>
           <TopContents>
