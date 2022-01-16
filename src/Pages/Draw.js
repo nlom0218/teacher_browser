@@ -1,5 +1,6 @@
 import BasicContainer from '../Components/Shared/BasicContainer';
 import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import styled from 'styled-components';
 import { inPopup, isPopupVar, isSeeStudentListVar } from '../apollo';
 import { useQuery, useReactiveVar } from '@apollo/client';
@@ -12,11 +13,17 @@ import { useState } from 'react/cjs/react.development';
 import { inputLine } from '../Animations/InputLine';
 import { BtnFadeIn } from '../Animations/Fade';
 import { SEE_ONE_STUDENT_LIST_QUERY } from '../Graphql/StudentList/query';
-import { DivideLeftContents } from '../Components/Shared/styled/DivideContents';
+import { DivideLeftContents, SeeRightContentsBtn } from '../Components/Shared/styled/DivideContents';
 import AllStudentList from '../Components/Draw/AllStudentList';
+import StudentOrder from '../Components/Draw/StudentOrder';
+import SeeResultType from '../Components/Draw/SeeResultType';
+import FontSizeBtn from '../Components/Draw/FontSizeBtn';
+import Shuffling from '../Components/Draw/Popup/Shuffling';
 
 const Container = styled.div`
+  min-height : ${props => props.seeResultType === "ONE" && "100%"};
   display : grid;
+  grid-template-rows : auto auto 1fr;
   padding : 20px;
   padding : 1.25rem;
   row-gap : 20px;
@@ -41,6 +48,8 @@ const TopContents = styled.div`
   `}
   ${customMedia.greaterThan("desktop")`
   grid-template-columns : 1fr;
+  padding : 20px 20px 0px 0px;
+  padding : 1.25rem 1.25rem 0rem 0rem;
   `}
 `
 
@@ -95,6 +104,28 @@ const SubmitInput = styled.input`
   animation : ${BtnFadeIn} 0.6s ease;
 `
 
+const OptionContents = styled.div`
+  width : 100%;
+  display : grid;
+  row-gap : 20px;
+  row-gap : 1.25 rem;
+  text-align : center;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns : auto auto 1fr;
+    column-gap : 20px;
+    column-gap : 1.25rem;
+  `}
+`
+const OptionBtn = styled.div`
+  background-color: ${props=> props.theme.btnBgColor};
+  color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
+  padding: 10px 40px;
+  padding: 0.625rem 2.5rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+`
 
 const ListIcon = styled.div`
   grid-row : 1 / 2;
@@ -121,37 +152,75 @@ const Draw = () => {
   const { id } = useParams()
   const media = useMedia()
   const isPopup = useReactiveVar(isPopupVar);
-  const isSeeList = useReactiveVar(isSeeStudentListVar)
-  const [studentListName, setStudentListName] = useState(null)
-  const [isEdit, setIsEdit] = useState(false)
-  const [title, setTitle] = useState(undefined)
+  const isSeeList = useReactiveVar(isSeeStudentListVar);
+  const [studentListName, setStudentListName] = useState(null);
+  const [selectedStudent, setSelectedStudent] = useState([]);
+  const [seeResultType, setSeeResultType] = useState("ALL");
+  const [fontSizeAll, setFontSizeAll] = useState(1);
+  const [fontSizeOne, setFontSizeOne] = useState(2);
+  const [isEdit, setIsEdit] = useState(false);
+  const [title, setTitle] = useState(undefined);
+  const [isShuffle, setIsShuffle] = useState("init");
+
+// 뽑을 때 필요한 state 값
+  const [pickNum, setPickNum] = useState(1);
+  const [pickType, setPickType] = useState("see");
+
+
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: {
       listId: id
     },
     skip: !id
-  })
+  });
+
+  const { register, handleSubmit, getValues } = useForm({
+    mode : "onChange",
+    defaultValues : { title : "랜덤뽑기 제목"},
+  });
+
   const onClickListIcon = () => inPopup("seeStudentList")
   const onClickInput = () => {
     setIsEdit(true)
   }
-  const onBlurForm = () => {
+
+  const onSubmit = (data) => {
+    const { title } = data
+    setTitle(title)
     setIsEdit(false)
   }
+
+  const onBlurForm = () => {
+    const title = getValues("title")
+    onSubmit({title})
+  }
+
+  const onClickShuffleBtn = (type) => {
+    setIsShuffle(type);
+  }
+
   useEffect(() => {
     if (data) {
-      setStudentListName(data?.seeStudentList[0]?.listName)
+      setStudentListName(data?.seeStudentList[0]?.listName);
+      setSelectedStudent(data?.seeStudentList[0]?.students
+        .filter(item => !item.trash)
+        .map((item) => item.studentName));
     }
   }, [data])
 
   return (
     <BasicContainer menuItem={true}>
       <DivideLeftContents isSeeList={isSeeList}>
-      <Container>
+      <Container seeResultType={seeResultType}>
         <TopContents>
-          <Title onBlur={onBlurForm}>
+      
+          <Title onBlur={onBlurForm} onSubmit={handleSubmit(onSubmit)}>
             <InputLayout>
               <Input
+                {...register("title", {
+                  required : true,
+                  onChange : () => setIsEdit(true)
+                    })}
                 type="text"
                 placeholder="제목을 입력하세요."
                 autocomplete="off"
@@ -172,8 +241,47 @@ const Draw = () => {
               <FcContacts onClick={onClickListIcon} />
             </ListIcon>}
         </TopContents>
+        {id && (
+        <React.Fragment>
+        <OptionContents>
+        {isShuffle === "init" && 
+        <OptionBtn onClick={() => onClickShuffleBtn("ing")}>뽑기</OptionBtn>}
+        {isShuffle === "ing" && 
+        <OptionBtn onClick={() => onClickShuffleBtn("finish")}>뽑는 중</OptionBtn>}
+        {isShuffle === "finish" && 
+        <OptionBtn onClick={() => onClickShuffleBtn("ing")}>다시 뽑기 </OptionBtn>}
+          <SeeResultType seeResultType={seeResultType} setSeeResultType={setSeeResultType}/>
+          <FontSizeBtn 
+          setFontSizeAll={setFontSizeAll} 
+          fontSizeAll={fontSizeAll}
+          setFontSizeOne={setFontSizeOne}
+          fontSizeOne={fontSizeOne}
+          seeResultType={seeResultType}
+          />
+        </OptionContents>
+        <StudentOrder 
+        isShuffle={isShuffle}
+        selectedStudent={selectedStudent} 
+        setSelectedStudent={setSelectedStudent}
+        seeResultType={seeResultType}
+        fontSizeAll={fontSizeAll}
+        fontSizeOne={fontSizeOne}
+        pickNum={pickNum}
+        pickType={pickType}/>
+        </React.Fragment>
+        )}
       </Container>
       {isPopup === "seeStudentList" && <StudentList />}
+      {isShuffle === "ing" && 
+      <Shuffling
+      pickNum={pickNum} 
+      setPickNum={setPickNum}
+      pickType={pickType}
+      setPickType={setPickType}
+      studentNum={selectedStudent.length}
+      setIsShuffle={setIsShuffle}
+      /> 
+      }
       </DivideLeftContents>
       { media === "Desktop" && <AllStudentList />}
     </BasicContainer>

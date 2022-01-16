@@ -1,30 +1,14 @@
 import React from 'react';
 import BasicContainer from '../Components/Shared/BasicContainer';
-import useMe from "../Hooks/useMe"
-import { createGlobalStyle } from 'styled-components';
-import TodoTemplate from '../Components/Test/TodoTemplate';
-import TodoHead from '../Components/Test/TodoHead';
-import TodoList from '../Components/Test/TodoList';
-import TodoCreate from '../Components/Test/TodoCreate';
-import { TodoProvider } from "../Components/Test/TodoContext";
+import styled from 'styled-components';
 
-const GlobalStyle = createGlobalStyle`
 
-`;
 
-function Todo() {
+const TodoList = () => {
   return (
-    <BasicContainer>
-    <TodoProvider>
-      <GlobalStyle />
-      <TodoTemplate>
-        <TodoHead />
-        <TodoList />
-        <TodoCreate />
-      </TodoTemplate>
-    </TodoProvider>
-    </BasicContainer>
-  );
+  <BasicContainer>
+      할 일 목록
+  </BasicContainer>);
 }
 
-export default Todo;
+export default TodoList;
