@@ -24,14 +24,11 @@ const Container = styled.div`
   min-height : ${props => props.seeResultType === "ONE" && "100%"};
   display : grid;
   grid-template-rows : auto auto 1fr;
-  padding : 20px;
-  padding : 1.25rem;
+  padding: 40px;
+  padding: 2.5rem;
   row-gap : 20px;
   row-gap : 1.25rem;
   align-items : flex-start;
-  ${customMedia.greaterThan("desktop")`
-  padding : 0
-  `}
 `
 
 
@@ -48,8 +45,8 @@ const TopContents = styled.div`
   `}
   ${customMedia.greaterThan("desktop")`
   grid-template-columns : 1fr;
-  padding : 20px 20px 0px 0px;
-  padding : 1.25rem 1.25rem 0rem 0rem;
+  column-gap: 60px;
+  column-gap: 3.75rem;
   `}
 `
 
@@ -117,7 +114,7 @@ const OptionContents = styled.div`
   `}
 `
 const OptionBtn = styled.div`
-  background-color: ${props=> props.theme.btnBgColor};
+  background-color: ${props => props.theme.btnBgColor};
   color: ${props => props.theme.bgColor};
   transition: background-color 1s ease, color 1s ease;
   padding: 10px 40px;
@@ -162,7 +159,7 @@ const Draw = () => {
   const [title, setTitle] = useState(undefined);
   const [isShuffle, setIsShuffle] = useState("init");
 
-// 뽑을 때 필요한 state 값
+  // 뽑을 때 필요한 state 값
   const [pickNum, setPickNum] = useState(1);
   const [pickType, setPickType] = useState("see");
 
@@ -175,8 +172,8 @@ const Draw = () => {
   });
 
   const { register, handleSubmit, getValues } = useForm({
-    mode : "onChange",
-    defaultValues : { title : "랜덤뽑기 제목"},
+    mode: "onChange",
+    defaultValues: { title: "랜덤뽑기 제목" },
   });
 
   const onClickListIcon = () => inPopup("seeStudentList")
@@ -192,7 +189,7 @@ const Draw = () => {
 
   const onBlurForm = () => {
     const title = getValues("title")
-    onSubmit({title})
+    onSubmit({ title })
   }
 
   const onClickShuffleBtn = (type) => {
@@ -210,17 +207,15 @@ const Draw = () => {
 
   return (
     <BasicContainer menuItem={true}>
-      <DivideLeftContents isSeeList={isSeeList}>
       <Container seeResultType={seeResultType}>
         <TopContents>
-      
           <Title onBlur={onBlurForm} onSubmit={handleSubmit(onSubmit)}>
             <InputLayout>
               <Input
                 {...register("title", {
-                  required : true,
-                  onChange : () => setIsEdit(true)
-                    })}
+                  required: true,
+                  onChange: () => setIsEdit(true)
+                })}
                 type="text"
                 placeholder="제목을 입력하세요."
                 autocomplete="off"
@@ -235,55 +230,52 @@ const Draw = () => {
               value="저장"
             />}
           </Title>
-          {media !== "Desktop" &&
-            <ListIcon>
-              <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다."}</ListName>
-              <FcContacts onClick={onClickListIcon} />
-            </ListIcon>}
+          <ListIcon>
+            <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다."}</ListName>
+            <FcContacts onClick={onClickListIcon} />
+          </ListIcon>
         </TopContents>
         {id && (
-        <React.Fragment>
-        <OptionContents>
-        {isShuffle === "init" && 
-        <OptionBtn onClick={() => onClickShuffleBtn("ing")}>뽑기</OptionBtn>}
-        {isShuffle === "ing" && 
-        <OptionBtn onClick={() => onClickShuffleBtn("finish")}>뽑는 중</OptionBtn>}
-        {isShuffle === "finish" && 
-        <OptionBtn onClick={() => onClickShuffleBtn("ing")}>다시 뽑기 </OptionBtn>}
-          <SeeResultType seeResultType={seeResultType} setSeeResultType={setSeeResultType}/>
-          <FontSizeBtn 
-          setFontSizeAll={setFontSizeAll} 
-          fontSizeAll={fontSizeAll}
-          setFontSizeOne={setFontSizeOne}
-          fontSizeOne={fontSizeOne}
-          seeResultType={seeResultType}
-          />
-        </OptionContents>
-        <StudentOrder 
-        isShuffle={isShuffle}
-        selectedStudent={selectedStudent} 
-        setSelectedStudent={setSelectedStudent}
-        seeResultType={seeResultType}
-        fontSizeAll={fontSizeAll}
-        fontSizeOne={fontSizeOne}
-        pickNum={pickNum}
-        pickType={pickType}/>
-        </React.Fragment>
+          <React.Fragment>
+            <OptionContents>
+              {isShuffle === "init" &&
+                <OptionBtn onClick={() => onClickShuffleBtn("ing")}>뽑기</OptionBtn>}
+              {isShuffle === "ing" &&
+                <OptionBtn onClick={() => onClickShuffleBtn("finish")}>뽑는 중</OptionBtn>}
+              {isShuffle === "finish" &&
+                <OptionBtn onClick={() => onClickShuffleBtn("ing")}>다시 뽑기 </OptionBtn>}
+              <SeeResultType seeResultType={seeResultType} setSeeResultType={setSeeResultType} />
+              <FontSizeBtn
+                setFontSizeAll={setFontSizeAll}
+                fontSizeAll={fontSizeAll}
+                setFontSizeOne={setFontSizeOne}
+                fontSizeOne={fontSizeOne}
+                seeResultType={seeResultType}
+              />
+            </OptionContents>
+            <StudentOrder
+              isShuffle={isShuffle}
+              selectedStudent={selectedStudent}
+              setSelectedStudent={setSelectedStudent}
+              seeResultType={seeResultType}
+              fontSizeAll={fontSizeAll}
+              fontSizeOne={fontSizeOne}
+              pickNum={pickNum}
+              pickType={pickType} />
+          </React.Fragment>
         )}
       </Container>
       {isPopup === "seeStudentList" && <StudentList />}
-      {isShuffle === "ing" && 
-      <Shuffling
-      pickNum={pickNum} 
-      setPickNum={setPickNum}
-      pickType={pickType}
-      setPickType={setPickType}
-      studentNum={selectedStudent.length}
-      setIsShuffle={setIsShuffle}
-      /> 
+      {isShuffle === "ing" &&
+        <Shuffling
+          pickNum={pickNum}
+          setPickNum={setPickNum}
+          pickType={pickType}
+          setPickType={setPickType}
+          studentNum={selectedStudent.length}
+          setIsShuffle={setIsShuffle}
+        />
       }
-      </DivideLeftContents>
-      { media === "Desktop" && <AllStudentList />}
     </BasicContainer>
   );
 };

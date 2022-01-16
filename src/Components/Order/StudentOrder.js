@@ -74,10 +74,9 @@ row-gap: 1.25rem;
   justify-self:center;
 
 }
-
 ${customMedia.greaterThan('tablet')`
 width: 90%;
-height: 50%;
+height: 80%;
 align-self: center;
 justify-self: center;
 grid-template-columns: auto 1fr auto;
@@ -92,7 +91,6 @@ column-gap: 1.25rem;
   grid-row:1/2;
 
 }
-
 `}
 ${customMedia.greaterThan('desktop')`
 width : 60%;

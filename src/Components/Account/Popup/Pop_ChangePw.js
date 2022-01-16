@@ -6,15 +6,12 @@ import { logOutUser, outPopup } from "../../../apollo";
 import { CHANGE_PASSWORD_MUTATION } from "../../../Graphql/User/mutation";
 import routes from "../../../routes";
 import { customMedia } from "../../../styles";
-import BtnPopupContainer from "../../Shared/BtnPopupContainer";
-
 import { useForm } from "react-hook-form";
-
-import AccountContainer from "../../Shared/AccountContainer";
 import AccountForm from "../styled/AccountForm";
 import InputLayout from "../styled/InputLayout";
 import AccountInput from "../styled/AccountInput";
 import { FaLock } from "react-icons/fa";
+import PopupContainer from "../../Shared/PopupContainer";
 
 const Container = styled.div`
   display: grid;
@@ -25,6 +22,13 @@ const Container = styled.div`
   ${customMedia.greaterThan("desktop")`
     justify-items: center;
   `}
+  svg {
+    color: ${props => props.theme.fontColor};
+  }
+  input {
+    color: ${props => props.theme.fontColor};
+    text-align: start;
+  }
 `;
 
 const Btn = styled.div`
@@ -104,52 +108,50 @@ const Pop_ChangePw = ({ userEmail }) => {
   const [changePw, { loading }] = useMutation(CHANGE_PASSWORD_MUTATION, { onCompleted });
 
   return (
-    <BtnPopupContainer>
+    <PopupContainer>
       <Container>
-        <AccountContainer>
-          <AccountForm>
-            <InputLayout>
-              <FaLock />
-              <AccountInput
-                {...register("password", {
-                  required: true,
-                })}
-                type="password"
-                placeholder="기존 비밀번호를 입력해주세요."
-                autoComplete="off"
-              />
-            </InputLayout>
-            <InputLayout>
-              <FaLock />
-              <AccountInput
-                {...register("newPassword", {
-                  required: true,
-                })}
-                type="password"
-                placeholder="새로운 비밀번호를 입력해주세요."
-                autoComplete="off"
-              />
-            </InputLayout>
-            <InputLayout>
-              <FaLock />
-              <AccountInput
-                {...register("newPasswordConfirm", {
-                  required: true,
-                })}
-                type="password"
-                placeholder="새로운 비밀번호를 다시 입력해주세요."
-                autoComplete="off"
-              />
-            </InputLayout>
-            {errMsg && <Msg>{errMsg}</Msg>}
-            <Btn>
-              <DelBtn onClick={handleSubmit(onSubmit)}>수정하기</DelBtn>
-              <CancleBtn onClick={() => outPopup()}>취소하기</CancleBtn>
-            </Btn>
-          </AccountForm>
-        </AccountContainer>
+        <AccountForm>
+          <InputLayout>
+            <FaLock />
+            <AccountInput
+              {...register("password", {
+                required: true,
+              })}
+              type="password"
+              placeholder="기존 비밀번호를 입력해주세요."
+              autoComplete="off"
+            />
+          </InputLayout>
+          <InputLayout>
+            <FaLock />
+            <AccountInput
+              {...register("newPassword", {
+                required: true,
+              })}
+              type="password"
+              placeholder="새로운 비밀번호를 입력해주세요."
+              autoComplete="off"
+            />
+          </InputLayout>
+          <InputLayout>
+            <FaLock />
+            <AccountInput
+              {...register("newPasswordConfirm", {
+                required: true,
+              })}
+              type="password"
+              placeholder="새로운 비밀번호를 다시 입력해주세요."
+              autoComplete="off"
+            />
+          </InputLayout>
+          {errMsg && <Msg>{errMsg}</Msg>}
+          <Btn>
+            <DelBtn onClick={handleSubmit(onSubmit)}>수정하기</DelBtn>
+            <CancleBtn onClick={() => outPopup()}>취소하기</CancleBtn>
+          </Btn>
+        </AccountForm>
       </Container>
-    </BtnPopupContainer>
+    </PopupContainer>
   );
 };
 

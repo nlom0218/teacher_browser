@@ -4,21 +4,17 @@ import styled from "styled-components";
 import StudentList from "../Components/Order/Popup/StudentList";
 import { FcContacts } from "react-icons/fc";
 import { useQuery, useReactiveVar } from "@apollo/client";
-import { inPopup, isPopupVar, isSeeStudentVar } from "../apollo";
+import { inPopup, isPopupVar } from "../apollo";
 import { useParams } from "react-router-dom";
 import { SEE_ONE_STUDENT_LIST_QUERY } from "../Graphql/StudentList/query";
-import useMedia from "../Hooks/useMedia";
 import { customMedia } from "../styles";
 import { useEffect } from "react/cjs/react.development";
 import { inputLine } from "../Animations/InputLine";
 import { BtnFadeIn } from "../Animations/Fade";
 import { useForm } from "react-hook-form";
-import { DivideLeftContents } from "../Components/Shared/styled/DivideContents";
-import { isSeeStudentListVar } from "../apollo";
 import Shuffling from "../Components/Order/Popup/Shuffling";
 import SeeResultType from "../Components/Order/SeeResultType";
 import FontSizeBtn from "../Components/Order/FontSizeBtn";
-import AllStudentList from "../Components/Order/AllStudentList";
 import StudentOrder from "../Components/Order/StudentOrder";
 
 
@@ -27,14 +23,13 @@ const Container = styled.div`
   min-height: ${props => props.seeResultType === "ONE" && "100%"};
   display: grid;
   grid-template-rows: auto auto 1fr;
-  padding: 20px;
-  padding: 1.25rem;
+  padding: 40px;
+  padding: 2.5rem;
   row-gap: 20px;
   row-gap: 1.25rem;
   align-items: flex-start;
-  ${customMedia.greaterThan("desktop")`
-   padding:0`}
 `;
+
 const TopContents = styled.div`
   display: grid;
   grid-template-columns: 1fr;
@@ -48,9 +43,11 @@ const TopContents = styled.div`
   `}
   ${customMedia.greaterThan("desktop")`
    grid-template-columns: 1fr;
-   padding : 20px 20px 0px 0px;
-  padding : 1.25rem 1.25rem 0rem 0rem;
-  `}
+   column-gap: 60px;
+   column-gap: 3.75rem;
+   `}
+   /* padding : 20px 20px 0px 0px;
+    padding : 1.25rem 1.25rem 0rem 0rem; */
 `;
 //상단
 const Main = styled.div`
@@ -156,18 +153,13 @@ const ListIcon = styled.div`
     cursor: pointer;
   }
 `;
+
 const ListName = styled.div``;
-
-
 //추가 기능 (프린트)
-
-
 
 const Order = () => {
   const { id } = useParams();
-  const media = useMedia();
   const isPopup = useReactiveVar(isPopupVar);
-  const isSeeList = useReactiveVar(isSeeStudentListVar);
 
   const [studentListName, setStudentListName] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState([]);
@@ -217,62 +209,57 @@ const Order = () => {
   }, [data]);
   return (
     <BasicContainer menuItem={true}>
-      <DivideLeftContents isSeeList={isSeeList}>
-        <Container seeResultType={seeResultType}>
-          <TopContents>
-            <Title onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
-              <InputLayout>
-                <Input
-                  {...register("title", {
-                    required: true,
-                    onChange: () => setIsEdit(true),
-                  })}
-                  type="text"
-                  placeholder="제목을 입력하세요."
-                  autoComplete="off"
-                  onClick={onClickInput}
-                />
+      <Container seeResultType={seeResultType}>
+        <TopContents>
+          <Title onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
+            <InputLayout>
+              <Input
+                {...register("title", {
+                  required: true,
+                  onChange: () => setIsEdit(true),
+                })}
+                type="text"
+                placeholder="제목을 입력하세요."
+                autoComplete="off"
+                onClick={onClickInput}
+              />
 
-                {isEdit && (
-                  <LineBox>
-                    <Line></Line>
-                  </LineBox>
-                )}
-              </InputLayout>
-              {isEdit && <SubmitInput type="submit" value="저장" />}
-            </Title>
-            {media !== "Desktop" && (
-              <ListIcon>
-                <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다"}</ListName>
-                <FcContacts onClick={onClickListIcon} />
-              </ListIcon>
-            )}
-          </TopContents>
-          {id && (
-            <React.Fragment>
-              <OptionContents>
-                {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
+              {isEdit && (
+                <LineBox>
+                  <Line></Line>
+                </LineBox>
+              )}
+            </InputLayout>
+            {isEdit && <SubmitInput type="submit" value="저장" />}
+          </Title>
+          <ListIcon>
+            <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다"}</ListName>
+            <FcContacts onClick={onClickListIcon} />
+          </ListIcon>
+        </TopContents>
+        {id && (
+          <React.Fragment>
+            <OptionContents>
+              {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
 
-                {isShuffle === "ing" && (
-                  <OptionBtn onClick={() => onClickShuffleBtn("finish")} isShuffling={true}>
-                    섞는 중
-                  </OptionBtn>
-                )}
+              {isShuffle === "ing" && (
+                <OptionBtn onClick={() => onClickShuffleBtn("finish")} isShuffling={true}>
+                  섞는 중
+                </OptionBtn>
+              )}
 
-                {isShuffle === "finish" && (
-                  <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
-                    다시 섞기
-                  </OptionBtn>
-                )}
-                <SeeResultType seeResultType={seeResultType} setSeeResultType={setSeeResultType} />
-                <FontSizeBtn seeResultType={seeResultType} setFontSizeAll={setFontSizeAll} fontSizeAll={fontSizeAll} fontSizeOne={fontSizeOne} setFontSizeOne={setFontSizeOne} />
-              </OptionContents>
-              <StudentOrder fontSizeOne={fontSizeOne} fontSizeAll={fontSizeAll} seeResultType={seeResultType} selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} isShuffle={isShuffle} />
-            </React.Fragment>
-          )}
-        </Container>
-      </DivideLeftContents>
-      {media == "Desktop" && <AllStudentList />}
+              {isShuffle === "finish" && (
+                <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
+                  다시 섞기
+                </OptionBtn>
+              )}
+              <SeeResultType seeResultType={seeResultType} setSeeResultType={setSeeResultType} />
+              <FontSizeBtn seeResultType={seeResultType} setFontSizeAll={setFontSizeAll} fontSizeAll={fontSizeAll} fontSizeOne={fontSizeOne} setFontSizeOne={setFontSizeOne} />
+            </OptionContents>
+            <StudentOrder fontSizeOne={fontSizeOne} fontSizeAll={fontSizeAll} seeResultType={seeResultType} selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} isShuffle={isShuffle} />
+          </React.Fragment>
+        )}
+      </Container>
       {isPopup === "seeStudentList" && <StudentList />}
       {isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
     </BasicContainer>

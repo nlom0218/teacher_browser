@@ -83,7 +83,7 @@ export const SEE_ALLERGY_STUDENT_QUERY = gql`
       studentName
       studentNumber
       studentGender
-      parentPhoneNum
+      memo
       allergy
       tag
       trash

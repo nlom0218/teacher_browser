@@ -59,6 +59,7 @@ const Item = styled.div`
 const EditAccount = () => {
   const isPopup = useReactiveVar(isPopupVar);
   const me = useMe();
+  console.log(me);
   return (
     <BasicContainer menuItem={true}>
       <Container>
