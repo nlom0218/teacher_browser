@@ -61,6 +61,7 @@ const CancleBtn = styled.div`
 const Msg = styled.div`
   text-align: center;
   line-height: 120%;
+  color: ${props => props.theme.redColor};
 `;
 
 const Pop_ChangePw = ({ userEmail }) => {
