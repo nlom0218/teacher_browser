@@ -18,6 +18,8 @@ const Container = styled.div`
   grid-template-columns: 1fr;
   row-gap: 20px;
   row-gap: 1.25rem;
+  padding: 20px;
+  padding: 1.25rem;
   color: ${(props) => props.theme.bgColor};
   ${customMedia.greaterThan("desktop")`
     justify-items: center;
@@ -25,10 +27,10 @@ const Container = styled.div`
   svg {
     color: ${props => props.theme.fontColor};
   }
-  input {
+  /* input {
     color: ${props => props.theme.fontColor};
     text-align: start;
-  }
+  } */
 `;
 
 const Btn = styled.div`
@@ -50,8 +52,15 @@ const Btn = styled.div`
   `}
 `;
 
-const DelBtn = styled.div`
+const DelBtn = styled.input`
+  padding: 12px 40px;
+  padding: 0.75rem 2.5rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  text-align: center;
   background-color: ${(props) => props.theme.redColor};
+  color: ${props => props.theme.bgColor};
 `;
 
 const CancleBtn = styled.div`
@@ -62,25 +71,20 @@ const Msg = styled.div`
   text-align: center;
   line-height: 120%;
   color: ${props => props.theme.redColor};
+  color: red;
 `;
 
 const Pop_ChangePw = ({ userEmail }) => {
+  console.log(userEmail);
   const [errMsg, setErrMsg] = useState(null);
 
-  const {
-    register,
-    formState: { isValid },
-    handleSubmit,
-  } = useForm({
+  const { register, handleSubmit } = useForm({
     mode: "onChange",
     defaultValues: {},
   });
 
   const onSubmit = (data) => {
     const { password, newPassword, newPasswordConfirm } = data;
-    if (loading) {
-      return;
-    }
     if (newPassword !== newPasswordConfirm) {
       setErrMsg("비밀번호가 서로 일치하지 않습니다.");
       return;
@@ -91,7 +95,6 @@ const Pop_ChangePw = ({ userEmail }) => {
   const navigate = useNavigate();
 
   const onCompleted = (result) => {
-    console.log(result);
     const {
       changePw: { ok, error },
     } = result;
@@ -111,12 +114,13 @@ const Pop_ChangePw = ({ userEmail }) => {
   return (
     <PopupContainer>
       <Container>
-        <AccountForm>
+        <AccountForm onSubmit={handleSubmit(onSubmit)}>
           <InputLayout>
             <FaLock />
             <AccountInput
               {...register("password", {
                 required: true,
+                onChange: () => setErrMsg(undefined)
               })}
               type="password"
               placeholder="기존 비밀번호를 입력해주세요."
@@ -128,6 +132,7 @@ const Pop_ChangePw = ({ userEmail }) => {
             <AccountInput
               {...register("newPassword", {
                 required: true,
+                onChange: () => setErrMsg(undefined)
               })}
               type="password"
               placeholder="새로운 비밀번호를 입력해주세요."
@@ -139,6 +144,7 @@ const Pop_ChangePw = ({ userEmail }) => {
             <AccountInput
               {...register("newPasswordConfirm", {
                 required: true,
+                onChange: () => setErrMsg(undefined)
               })}
               type="password"
               placeholder="새로운 비밀번호를 다시 입력해주세요."
@@ -147,7 +153,7 @@ const Pop_ChangePw = ({ userEmail }) => {
           </InputLayout>
           {errMsg && <Msg>{errMsg}</Msg>}
           <Btn>
-            <DelBtn onClick={handleSubmit(onSubmit)}>수정하기</DelBtn>
+            <DelBtn type="submit" value="수정하기" />
             <CancleBtn onClick={() => outPopup()}>취소하기</CancleBtn>
           </Btn>
         </AccountForm>

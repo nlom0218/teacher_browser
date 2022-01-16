@@ -10,6 +10,7 @@ import ChangePw from "../Components/Account/ChangePw";
 import useMe from "../Hooks/useMe";
 import { color, customMedia } from "../styles";
 import { useReactiveVar } from "@apollo/client";
+import Pop_ChangePw from "../Components/Account/Popup/Pop_ChangePw";
 
 const Container = styled.div`
   padding: 60px 0px;
@@ -73,7 +74,7 @@ const EditAccount = () => {
         <Changes>
           <List>학교정보</List>
           <Item>
-            <EditSchool userEmail={me?.email} schoolName={me?.schoolName} schoolAdress={me?.schoolAdress} />
+            <EditSchool schoolName={me?.schoolName} schoolAdress={me?.schoolAdress} />
           </Item>
         </Changes>
         <Changes>
@@ -90,6 +91,7 @@ const EditAccount = () => {
         </Changes>
       </Container>
       {isPopup === "registerSchool" && <RegisterSchool />}
+      {isPopup === "changePw" && <Pop_ChangePw userEmail={me?.email} />}
     </BasicContainer>
   );
 };

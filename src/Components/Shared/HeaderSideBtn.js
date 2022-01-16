@@ -10,6 +10,7 @@ const SideMenu = styled.div`
   display: grid;
   justify-items: flex-end;
   position: relative;
+  z-index: 10;
 `
 
 const SideBtn = styled.div`

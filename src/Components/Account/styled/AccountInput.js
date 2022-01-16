@@ -3,7 +3,8 @@ import styled from "styled-components"
 const AccountInput = styled.input`
   width: 100%;
   background-color: ${props => props.theme.contentBgColor};
-  transition: background-color 1s ease;
+  color: ${props => props.theme.fontColor};
+  transition: background-color 1s ease, color 1s ease;
   padding: 15px 20px;
   padding: 0.9375rem 1.25rem;
   border-radius: 10px;

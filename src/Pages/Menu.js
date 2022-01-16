@@ -42,6 +42,7 @@ const Type = styled.div`
     display: flex;
     font-size: 1em;
     font-size: 1rem;
+    cursor: pointer;
   }
 `
 
@@ -111,7 +112,7 @@ const Menu = () => {
             <BsGrid3X3GapFill />
           </GridTypeIcon>
           <Background seeType={menuType} init={init}>
-            {menuType === "list" ? <BsFilterLeft /> : <BsGrid3X3GapFill />}
+            {menuType === "list" ? <BsFilterLeft onClick={() => onClickType("grid")} /> : <BsGrid3X3GapFill onClick={() => onClickType("list")} />}
           </Background>
         </Type>
       </SeeType>
