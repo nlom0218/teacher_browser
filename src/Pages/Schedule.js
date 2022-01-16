@@ -9,7 +9,7 @@ import { BtnFadeIn } from "../Animations/Fade";
 import { inPopup, isPopupVar } from "../apollo";
 import useMedia from "../Hooks/useMedia";
 import { useForm } from "react-hook-form";
-
+import makeSchedule from "../Components/Schedule/MakeSchedule";
 
 
 const Container = styled.div`
@@ -115,7 +115,107 @@ const Schedule = () => {
     onSubmit({ title });
   };
   
-  
+  const Styles = styled.div`
+    padding: 1rem;
+    table {
+      border-spacing: 0;
+      border: 2px solid black;
+    tr {
+      :last-child {
+        td {
+          border-bottom: 20px;
+        }
+      }
+    }
+    th,
+    td {
+      margin: 2px;
+      padding: 20px;
+      border-bottom: 1px solid black;
+      border-right: 2px solid black;
+
+      :last-child {
+        border-right: 0;
+      }
+    }
+  }
+`;
+
+function Table({ columns, data }) {
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow
+  } = useTable({
+    columns,
+    data
+  });
+
+  return (
+    <table {...getTableProps()}>
+      <thead>
+        {headerGroups.map((headerGroup) => (
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map((column) => (
+              <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+            ))}
+          </tr>
+        ))}
+      </thead>
+      <tbody {...getTableBodyProps()}>
+        {rows.map((row, i) => {
+          prepareRow(row);
+          return (
+            <tr {...row.getRowProps()}>
+              {row.cells.map((cell) => {
+                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+}
+
+
+const columns = React.useMemo(
+  () => [
+    {
+      Header: "<시간표>",
+      accessor: "time"
+    },
+    {
+      Header: "월요일",
+      accessor: "monday"
+    },
+
+    {
+      Header: "화요일",
+      accessor: "tuesday"
+    },
+    {
+      Header: "수요일",
+      accessor: "wednesday"
+    },
+    {
+      Header: "목요일",
+      accessor: "thursday"
+    },
+    {
+      Header: "금요일",
+      accessor: "friday"
+    }
+  ],
+
+  []
+);
+
+const data = React.useMemo(() => makeSchedule(6), []);
+
+
 
   return (
     <BasicContainer>
@@ -142,6 +242,11 @@ const Schedule = () => {
             {isEdit && <SubmitInput type="submit" value="저장" />}
           </Title>
         </TopContents>
+
+    <Styles>
+          <Table columns={columns} data={data} />
+       </Styles>
+
         </Container>
       </DivideLeftContents>
     </BasicContainer>

@@ -75,8 +75,10 @@ row-gap: 1.25rem;
 
 }
 
-${customMedia.greaterThan('desktop')`
-width: 60%;
+${customMedia.greaterThan('tablet')`
+width: 90%;
+height: 50%;
+align-self: center;
 justify-self: center;
 grid-template-columns: auto 1fr auto;
 column-gap: 20px;
@@ -91,9 +93,14 @@ column-gap: 1.25rem;
 
 }
 
-
+`}
+${customMedia.greaterThan('desktop')`
+width : 60%;
+height : 100%;
 
 `}
+
+
 `
 
 const Student = styled.div`
@@ -110,7 +117,7 @@ padding: 1.25rem;
 row-gap: 40px;
 row-gap: 2.5rem;
 grid-column: 1/-1;
-${customMedia.greaterThan("desktop")`
+${customMedia.greaterThan("tablet")`
 grid-column:2/3;
 `}
 ${customMedia.greaterThan("tablet")`
@@ -119,10 +126,9 @@ padding : 5rem 1.25rem;
 `}
 `
 const Order = styled.div`
-  font-size: 1.5rem;
-  font-size: 1.5em;
+  font-size: ${props=>props.fontSize/2}rem;
+  font-size: ${props=>props.fontSize/2}em;
 `;
-
 const Name = styled.div`
   width:100%;
   overflow: hidden;
@@ -178,7 +184,7 @@ const onClickRemoveBtn = (name) =>{
       {seeResultType === "ALL" ? selectedStudent.map((item, index) => {
         return (
           <Item key={item}>
-            <Order>{index + 1}</Order>
+            <Order fontSize={fontSizeAll}>{index + 1}</Order>
             <Name fontSize={fontSizeAll} >{item}</Name>
             <RemoveBtn onClick={()=>onClickRemoveBtn(item)}><TiDelete/></RemoveBtn>
           </Item>
@@ -189,7 +195,7 @@ const onClickRemoveBtn = (name) =>{
 
         <div className="order-student-back-btn" onClick={()=>{onClickArrow("back")} }> <IoIosArrowBack/> </div>
         <Student>
-<Order>{order}</Order>
+        <Order fontSize={fontSizeOne}>{order}</Order>
         <Name fontSize={fontSizeOne} >{selectedStudent[order -1]}</Name>
         </Student>
         <div className="order-student-forward-btn" onClick={()=>{onClickArrow("forward")}}>        <IoIosArrowForward/>

@@ -9,21 +9,24 @@ export const DivideLeftContents = styled.div`
   min-height: 100%;
   padding: 20px;
   padding: 1.25rem;
-  ${customMedia.greaterThan("desktop")`
-    padding: 40px;
-    padding: 2.5rem;
-    position: absolute;
+  position: absolute;
     top: 0;
     left: 0;
     bottom:0;
-    width: ${props => props.isSeeList ? "75%" : "100%"};
-    transition: width 1s ease;
+    width: 100%;
     overflow: scroll;
     -ms-overflow-style: none; // IE and Edge
     scrollbar-width: none; // Firefox
     ::-webkit-scrollbar {
       display: none; // Chrome, Safari, Opera
     }
+  ${customMedia.greaterThan("desktop")`
+    padding: 40px;
+    padding: 2.5rem;
+    width: ${props => props.isSeeList ? "75%" : "100%"};
+    transition: width 1s ease;
+ 
+
   `}
 `
 
@@ -46,6 +49,7 @@ export const DivideRightContents = styled.div`
   border-radius: 5px;
   border-radius: 0.3125rem;
   box-shadow: ${color.boxShadow};
+  z-index: 5;
 `
 
 export const SeeRightContentsBtn = styled.div`
