@@ -1,17 +1,17 @@
-import { useQuery, useReactiveVar } from '@apollo/client';
-import React from 'react';
+import { useQuery } from '@apollo/client';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { isPopupVar } from '../../apollo';
-import { SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
-import routes from '../../routes';
-import { customMedia } from '../../styles';
-import PopupContainer from '../Shared/PopupContainer';
+import { SEE_ALLERGY_STUDENT_QUERY } from '../../../Graphql/Student/query';
+import routes from '../../../routes';
+import { customMedia } from '../../../styles';
+import PopupContainer from '../../Shared/PopupContainer';
 
 const Container = styled.div`
   padding: 20px 0px;
   padding: 1.25rem 0rem;
   display: grid;
+  grid-template-columns: 1fr auto;
   row-gap: 20px;
   row-gap: 1.25rem;
 `
@@ -21,6 +21,7 @@ const AllergyName = styled.div`
 `
 
 const AllergyStudent = styled.div`
+  grid-column:  1 / -1;
   display: grid;
   grid-template-columns: 1fr;
   column-gap: 10px;
@@ -43,7 +44,7 @@ const AllergyStudent = styled.div`
 
 const SeeAllergy = () => {
   const allergyNum = parseInt(localStorage.getItem("AllergyNum"))
-  const { data, loading } = useQuery(SEE_ONE_STUDENT_QUERY, {
+  const { data, loading, refetch } = useQuery(SEE_ALLERGY_STUDENT_QUERY, {
     variables: {
       allergy: allergyNum
     }
@@ -94,8 +95,9 @@ const SeeAllergy = () => {
       <AllergyName>
         {processAllergyInfo()}
       </AllergyName>
+      {/* <RefetchBtn onClick={onClickRefetch}><FcSynchronize /></RefetchBtn> */}
       <AllergyStudent>
-        {data?.seeAllStudent.map((item, index) => {
+        {data?.seeAllStudent.filter(item => !item.trash).map((item, index) => {
           return <Link to={`${routes.list}/student/${item._id}`} key={index}>
             {item.studentName}
           </Link>

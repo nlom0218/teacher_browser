@@ -1,6 +1,11 @@
+import { useMutation } from '@apollo/client';
 import React from 'react';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { outPopup } from '../../../apollo';
+import { EDIT_STUDENT_MUTATION } from '../../../Graphql/Student/mutation';
+import { SEE_ALL_STUDENT_IN_TRASH_QUERY, SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
+import useMe from '../../../Hooks/useMe';
 import { customMedia } from '../../../styles';
 import BtnPopupContainer from '../../Shared/BtnPopupContainer';
 
@@ -48,18 +53,47 @@ const Msg = styled.div`
   line-height: 120%;
 `
 
-const DeleteStudent = () => {
+const DeleteStudent = ({ selectedTag, selectedSort, studentId }) => {
+  const me = useMe()
+  const navigate = useNavigate()
+  const onCompleted = (result) => {
+    const { editStudent: { ok } } = result
+    if (ok) {
+      outPopup()
+      navigate(-1)
+    }
+  }
+  const [moveTrashStudent, { loading: studentLoading }] = useMutation(EDIT_STUDENT_MUTATION, {
+    refetchQueries: [
+      {
+        query: SEE_ALL_STUDENT_QUERY,
+        variables: {
+          ...(selectedTag.length !== 0 && { tag: selectedTag }),
+          ...(selectedSort && { sort: selectedSort }),
+          trash: false
+        }
+      },
+      { query: SEE_ALL_STUDENT_IN_TRASH_QUERY, variables: { trash: true } },
+    ],
+    onCompleted
+  })
   const onClickDelBtn = () => {
-    window.alert("휴지통으로 이동 => backend에서 학생 필드 trash값 이용하기")
+    moveTrashStudent({
+      variables: {
+        teacherEmail: me?.email,
+        studentId,
+        trash: true
+      }
+    })
   }
   return (<BtnPopupContainer>
     <Container>
       <Btn>
-        <DelBtn onClick={onClickDelBtn}>삭제하기</DelBtn>
+        <DelBtn onClick={onClickDelBtn}>이동하기</DelBtn>
         <CancleBtn onClick={() => outPopup()}>취소하기</CancleBtn>
       </Btn>
-      <Msg>학생을 삭제하시겠습니까?</Msg>
-      <Msg>삭제한 학생은 휴지통에서 확인 가능합니다.</Msg>
+      <Msg>학생을 휴지통으로 이동하시겠습니까?</Msg>
+      <Msg>이동된 학생은 휴지통에서 확인 가능합니다.</Msg>
     </Container>
   </BtnPopupContainer>);
 }

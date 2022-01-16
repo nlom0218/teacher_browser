@@ -11,7 +11,8 @@ import { inPopup, isPopupVar } from "../apollo";
 import useMe from "../Hooks/useMe";
 import useMedia from "../Hooks/useMedia";
 import { customMedia } from "../styles";
-import SeeAllergy from "../Components/Lunchmenu/SeeAllergy";
+import SeeAllergy from "../Components/Lunchmenu/Popup/SeeAllergy";
+import LunchmenuItem from "../Components/Lunchmenu/LunchmenuItem";
 dotenv.config();
 
 const LunchmenuContainer = styled.div`
@@ -132,31 +133,6 @@ const SLunchmenus = styled.div`
   }
   .lunch_loading {
   }
-`
-
-const SLunchmenu = styled.div`
-  display: grid;
-  ${customMedia.greaterThan("tablet")`
-    row-gap: 10px;
-    row-gap: 0.625rem;
-  `}
-`;
-
-const Food = styled.div`
-  font-size: 1.25em;
-  font-size: 1.25rem;
-`
-
-const Allergy = styled.div`
-  display: flex;
-`
-
-const AllergyItem = styled.div`
-  margin-right: 10px;
-  margin-right: 0.625rem;
-  opacity: ${props => props.myAllergy ? 1 : 0.6};
-  cursor: ${props => props.myAllergy && "pointer"};
-  color: ${props => props.myAllergy && props.theme.redColor};
 `
 
 const LunchmenuBtn = styled.div`
@@ -333,14 +309,6 @@ const Lunchmenu = () => {
   // 팝업창으로 이동하기
   const onClickSchoolIcon = () => inPopup("lmSearchSchool")
 
-  // 알러지를 가지고 있는 학생 보기 팝업
-  const onClickAllergy = (allergy) => {
-    if (me?.allergy.includes(parseInt(allergy))) {
-      inPopup("seeAllergy")
-      localStorage.setItem("AllergyNum", allergy)
-    }
-  }
-
   //리턴
   return (
     <BasicContainer menuItem={true}>
@@ -364,18 +332,8 @@ const Lunchmenu = () => {
               :
               (menu ?
                 menu.map((item, index) => (
-                  <SLunchmenu key={index}>
-                    <Food>{item.food}</Food>
-                    <Allergy>{item.allergy.map((item, index) => {
-                      return <AllergyItem
-                        key={index}
-                        myAllergy={me?.allergy.includes(parseInt(item))}
-                        onClick={() => onClickAllergy(item)}
-                      >
-                        {item}
-                      </AllergyItem>
-                    })}</Allergy>
-                  </SLunchmenu>
+                  <LunchmenuItem key={index} item={item} me={me}>
+                  </LunchmenuItem>
                 ))
                 :
                 <div className="lunch_errMsg lunch_subMsg">급식 정보가 없습니다 😢</div>
@@ -388,10 +346,10 @@ const Lunchmenu = () => {
             {me && <div onClick={() => onClickBtn("school")}>우리학교 식단표</div>}
           </LunchmenuBtn>
           <LunchmenuDetail>
-            <LunchmenuOrigin>
+            {menu && <LunchmenuOrigin>
               <div className="detail_title">✲ 원산지</div>
               <div>{origin.join(",")}</div>
-            </LunchmenuOrigin>
+            </LunchmenuOrigin>}
             <div>
               <div className="detail_title">✲ 알레르기정보</div>
               <div>요리명에 표시된 번호는 알레르기를 유발할수 있는 식재료입니다 (1.난류, 2.우유, 3.메밀, 4.땅콩, 5.대두, 6.밀, 7.고등어, 8.게, 9.새우, 10.돼지고기, 11.복숭아, 12.토마토, 13.아황산염, 14.호두, 15.닭고기, 16.쇠고기, 17.오징어, 18.조개류(굴,전복,홍합 등)</div>

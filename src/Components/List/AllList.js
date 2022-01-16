@@ -11,9 +11,11 @@ import ListItem from './ListItem';
 import PopupCreateList from './Popup/CreateList';
 
 const Container = styled.div`
+  min-height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(4, minmax(120px, 1fr)); 
+  /* grid-template-rows: repeat(4, minmax(120px, 1fr));  */
+  grid-template-rows: repeat(8, 1fr);
   row-gap: 40px;
   row-gap: 2.5rem;
   column-gap: 40px;
@@ -22,6 +24,7 @@ const Container = styled.div`
   padding: 1.25rem;
   ${customMedia.greaterThan("tablet")`
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
     `}
   ${customMedia.greaterThan("desktop")`
     padding: 0px;
@@ -33,18 +36,24 @@ const AddIcon = styled.div`
   justify-self: center;
   cursor: pointer;
   svg {
-    font-size: 2.5rem;
     font-size: 2.5em;
+    font-size: 2.5rem;
   }
 `
 
-const AllList = ({ someDragging, setSuccessMsg, setSomeDragging, successMsg, selectedTag, selectedSort }) => {
+const AllList = ({ someDragging, setSuccessMsg, setSomeDragging, successMsg, selectedTag, selectedSort, setDragType, dragType }) => {
   // 학생 리스트가 아니라 명렬표임!!!
   const [studentList, setSudentList] = useState(undefined)
 
   const isPopup = useReactiveVar(isPopupVar)
   const { data, loading } = useQuery(SEE_ALL_STUDENT_LIST_QUERY)
-  const onClickAddIcon = () => inPopup("createList")
+  const onClickAddIcon = () => {
+    if (data?.seeStudentList.length === 10) {
+      setSuccessMsg({ ok: false, msg: "명렬표는 최대 10개까지 생성 가능합니다." })
+    } else {
+      inPopup("createList")
+    }
+  }
 
   useEffect(() => {
     if (data) {
@@ -73,6 +82,7 @@ const AllList = ({ someDragging, setSuccessMsg, setSomeDragging, successMsg, sel
           someDragging={someDragging}
           setSuccessMsg={setSuccessMsg}
           setSomeDragging={setSomeDragging}
+          setDragType={setDragType}
         />
       } else {
         return <EmptyItem
@@ -85,7 +95,7 @@ const AllList = ({ someDragging, setSuccessMsg, setSomeDragging, successMsg, sel
       }
     })}
     <AddIcon onClick={onClickAddIcon}><FcPlus /></AddIcon>
-    <Trash someDragging={someDragging} setSuccessMsg={setSuccessMsg} successMsg={successMsg} selectedTag={selectedTag} selectedSort={selectedSort} />
+    <Trash someDragging={someDragging} setSuccessMsg={setSuccessMsg} successMsg={successMsg} selectedTag={selectedTag} selectedSort={selectedSort} dragType={dragType} />
     {isPopup === "createList" && <PopupCreateList />}
 
   </Container>);

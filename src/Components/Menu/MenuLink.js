@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import routes from '../../routes';
-import { FcAlarmClock, FcDonate, FcRefresh, FcNumericalSorting12, FcContacts, FcDataSheet } from "react-icons/fc";
 import styled from 'styled-components';
+import IcStopwatch from '../../icons/Stopwatch/IcStopwatch';
+import IcPressedStopwatch from '../../icons/Stopwatch/IcPressedStopwatch';
 
 const SMenu = styled.div`
   display: grid;
@@ -20,12 +21,10 @@ const SMenu = styled.div`
   }
   svg {
     margin: 0 auto;
-    font-size: 2.5em;
-    font-size: 2.5rem;
+    font-size: 3.125em;
+    font-size: 3.125rem;
+    filter: drop-shadow(1px 1px 1px rgb(0, 0, 0))
   }
-  /* object {
-    filter:drop-shadow(2px 2px 1px rgb(0,0,0))
-  } */
 `
 
 const Title = styled.div`
@@ -34,10 +33,10 @@ const Title = styled.div`
 `
 
 export const TimerLink = () => {
+  const [isHover, setIsHover] = useState(false)
   return (<Link to={routes.timer}>
-    <SMenu>
-      {/* <object type="image/svg+xml" data={icon}></object> */}
-      <FcAlarmClock />
+    <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+      {isHover ? <IcPressedStopwatch /> : <IcStopwatch />}
       <Title>타이머</Title>
     </SMenu>
   </Link >);
@@ -46,7 +45,7 @@ export const TimerLink = () => {
 export const DrawLink = () => {
   return (<Link to={routes.draw}>
     <SMenu>
-      <FcDonate />
+      {/* <FcDonate /> */}
       <Title>랜덤뽑기</Title>
     </SMenu>
   </Link>);
@@ -55,7 +54,7 @@ export const DrawLink = () => {
 export const SwapLink = () => {
   return (<Link to={routes.swap}>
     <SMenu>
-      <FcRefresh />
+      {/* <FcRefresh /> */}
       <Title>자리바꾸기</Title>
     </SMenu>
   </Link>);
@@ -64,7 +63,7 @@ export const SwapLink = () => {
 export const OrderLink = () => {
   return (<Link to={routes.order}>
     <SMenu>
-      <FcNumericalSorting12 />
+      {/* <FcNumericalSorting12 /> */}
       <Title>순서정하기</Title>
       {/* 급식순서 -> 순서정하기 */}
     </SMenu>
@@ -75,7 +74,6 @@ export const LunchmenuLink = ({ onClickLunchmenu }) => {
   return (<Link to={routes.lunchmenu} onClick={onClickLunchmenu}>
     <SMenu>
       {/* <FcList /> */}
-      <img src="https://img.icons8.com/color/40/000000/white-sesame-seeds.png" />
       <Title>식단표</Title>
     </SMenu>
   </Link>);
@@ -84,7 +82,7 @@ export const LunchmenuLink = ({ onClickLunchmenu }) => {
 export const ScheduleLink = () => {
   return (<Link to={routes.schedule}>
     <SMenu>
-      <FcDataSheet />
+      {/* <FcDataSheet /> */}
       <Title>시간표</Title>
     </SMenu>
   </Link>);
@@ -95,7 +93,6 @@ export const JournalLink = () => {
     <Link to={routes.journal}>
       <SMenu>
         {/* <FcDocument /> */}
-        <img src="https://img.icons8.com/color/40/000000/right-handed.png" />
         <Title>학급일지</Title>
       </SMenu>
     </Link>);
@@ -104,7 +101,7 @@ export const JournalLink = () => {
 export const ListLink = () => {
   return (<Link to={routes.list}>
     <SMenu>
-      <FcContacts />
+      {/* <FcContacts /> */}
       <Title>명렬표</Title>
     </SMenu>
   </Link>);

@@ -10,10 +10,18 @@ import { SEE_ONE_STUDENT_LIST_QUERY } from '../../../Graphql/StudentList/query';
 import { ADD_STUDENT_MUTATION } from '../../../Graphql/StudentList/mutation';
 
 const AddManyStudent = ({ inStudent, listId }) => {
+  const selectedTag = JSON.parse(localStorage.getItem("selectedTag")) ? JSON.parse(localStorage.getItem("selectedTag")) : []
+  const selectedSort = localStorage.getItem("selectedSort") ? localStorage.getItem("selectedSort") : undefined
   const me = useMe()
   const [addStudentId, setAddStudentId] = useState([])
   const [outStudent, setOutStudent] = useState([])
-  const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY)
+  const { data, loading, refetch } = useQuery(SEE_ALL_STUDENT_QUERY, {
+    variables: {
+      ...(selectedTag.length !== 0 && { tag: selectedTag }),
+      ...(selectedSort && { sort: selectedSort }),
+      trash: false,
+    }
+  })
 
   const onCompleted = (result) => {
     const { addStudent: { ok } } = result
@@ -81,6 +89,11 @@ const AddManyStudent = ({ inStudent, listId }) => {
       setOutStudent(data?.seeAllStudent)
     }
   }, [data, inStudent])
+
+  useEffect(() => {
+    refetch()
+  }, [selectedTag, selectedSort])
+
   return (<PopupContainer maxHeight={true}>
     <Container>
       <List>

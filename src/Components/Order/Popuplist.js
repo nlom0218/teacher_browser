@@ -45,6 +45,8 @@ const PopupList = ({ setPopup }) => {
   const [listArray, setListArray] = useState(JSON.parse(localStorage.getItem("orderList"))); // 각각 리스트 보내기
   const [itemObj, setItemObj] = useState({}); // 각각 리스트 안에 있는 배열 보내기
   const [studentList, setStudentList] = useState([]);
+
+  // 아래의 내용은 삭제?
   const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY);
   const [selectedList, setSelectedList] = useState("학생목록");
   //compare 리스트 순서 유지 => 재사용 가능한 함수로 만들기(export하기)
@@ -57,10 +59,10 @@ const PopupList = ({ setPopup }) => {
       type === "changedListName"
         ? changedItemList
         : {
-            order: itemObj.order,
-            listName: itemObj.listName,
-            list: changedItemList,
-          };
+          order: itemObj.order,
+          listName: itemObj.listName,
+          list: changedItemList,
+        };
     const existItem = listArray.filter((item) => item.listName !== name);
     const newListArray = [...existItem, newItemObj].sort(compare("order"));
     setItemObj(newItemObj);

@@ -32,6 +32,9 @@ const Container = styled.div`
 const ListIcon = styled.div`
     font-size: 2.5em;
     font-size: 2.5rem;
+    svg {
+      display: flex;
+    }
 `
 
 const ListName = styled.div`
@@ -42,7 +45,7 @@ const ListName = styled.div`
   text-align: center;
 `
 
-const ListItem = ({ listName, listOrder, index, listId, someDragging, setSuccessMsg, setSomeDragging, listIcon }) => {
+const ListItem = ({ listName, listOrder, index, listId, someDragging, setSuccessMsg, setSomeDragging, listIcon, setDragType }) => {
   // 리스트 아이콘위에 마우스를 올려두면 아이콘을 바꾸기 위한 값
   const [mouseEnter, setMouseEnter] = useState(false)
 
@@ -83,6 +86,7 @@ const ListItem = ({ listName, listOrder, index, listId, someDragging, setSuccess
   // useDrag의 isDragging을 보며 someDragging값 바꾸기
   useEffect(() => {
     isDragging ? setSomeDragging(true) : setSomeDragging(false)
+    isDragging ? setDragType("list") : setDragType(undefined)
   }, [isDragging, setSomeDragging])
   return (
     <DndContainer>

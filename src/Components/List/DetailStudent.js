@@ -119,7 +119,8 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
       query: SEE_ALL_STUDENT_QUERY,
       variables: {
         ...(selectedTag.length !== 0 && { tag: selectedTag }),
-        ...(selectedSort && { sort: selectedSort })
+        ...(selectedSort && { sort: selectedSort }),
+        trash: false
       }
     }]
   })
@@ -184,10 +185,10 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
       {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
     </Form>
     <DetailStudentNumber studentInfo={studentInfo} selectedTag={selectedTag} selectedSort={selectedSort} />
-    <DetailStudentTag studentInfo={studentInfo} />
+    <DetailStudentTag studentInfo={studentInfo} selectedSort={selectedSort} selectedTag={selectedTag} />
     <DetailStudentAllergy studentInfo={studentInfo} editStudent={editStudent} onCompleted={onCompleted} />
-    <DelBtn onClick={onClicketeBtn}>학생 삭제하기</DelBtn>
-    {isPopup === "deleteStudent" && <DeleteStudent />}
+    <DelBtn onClick={onClicketeBtn}>휴지통으로 이동</DelBtn>
+    {isPopup === "deleteStudent" && <DeleteStudent selectedTag={selectedTag} selectedSort={selectedSort} studentId={studentId} />}
   </Container>);
 }
 
