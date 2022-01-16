@@ -75,7 +75,7 @@ const Student = styled.div`
 
 const Trash = () => {
   const isPopup = useReactiveVar(isPopupVar)
-  console.log(isPopup);
+
   const [successMsg, setSuccessMsg] = useState(undefined)
   const { data, loading } = useQuery(SEE_ALL_STUDENT_IN_TRASH_QUERY, {
     variables: {

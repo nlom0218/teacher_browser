@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { color } from "../../../styles";
 
 export const SuccessMsg = styled.div`
-  position: absolute;
-  bottom: 30px;
+  position: fixed;
+  bottom: 1%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: ${props => props.error ? props.theme.redColor : props.theme.btnBgColor};

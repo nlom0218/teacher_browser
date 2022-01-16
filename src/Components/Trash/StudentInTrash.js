@@ -1,10 +1,12 @@
-import { useMutation } from '@apollo/client';
+import { useMutation, useReactiveVar } from '@apollo/client';
 import React, { useState } from 'react';
 import { FcEmptyTrash, FcUndo } from 'react-icons/fc';
 import styled from 'styled-components';
+import { inPopup, isPopupVar } from '../../apollo';
 import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
 import { SEE_ALL_STUDENT_IN_TRASH_QUERY, SEE_ALL_STUDENT_QUERY } from '../../Graphql/Student/query';
 import useMe from '../../Hooks/useMe';
+import DeleteOneStudent from './Popup/DeleteOneStudent';
 
 const Container = styled.div`
   min-height: 160px;
@@ -27,6 +29,7 @@ const Container = styled.div`
 
 const StudentName = styled.div`
   line-height: 120%;
+  text-align: center;
 `
 
 const StudentBtn = styled.div`
@@ -49,6 +52,8 @@ const DelBtn = styled.div`
 `
 
 const StudentInTrash = ({ item, setSuccessMsg }) => {
+  const isPopup = useReactiveVar(isPopupVar)
+
   const selectedTag = JSON.parse(localStorage.getItem("selectedTag")) ? JSON.parse(localStorage.getItem("selectedTag")) : []
   const selectedSort = localStorage.getItem("selectedSort") ? localStorage.getItem("selectedSort") : undefined
   const me = useMe()
@@ -78,12 +83,21 @@ const StudentInTrash = ({ item, setSuccessMsg }) => {
     })
   }
 
+  const onClickDelBtn = (id) => {
+    inPopup(`deleteOneStudent${id}`)
+  }
+
   return (<Container>
     <StudentName>{item.studentName}</StudentName>
     <StudentBtn>
       <ResetBtn onClick={onClickResetBtn}><FcUndo /></ResetBtn>
-      <DelBtn><FcEmptyTrash /></DelBtn>
+      <DelBtn onClick={() => onClickDelBtn(item._id)}><FcEmptyTrash /></DelBtn>
     </StudentBtn>
+    {isPopup === `deleteOneStudent${item._id}` &&
+      <DeleteOneStudent
+        teacherEmail={me?.email}
+        studentId={item?._id}
+      />}
   </Container>);
 }
 
