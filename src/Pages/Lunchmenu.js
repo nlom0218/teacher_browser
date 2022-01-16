@@ -11,7 +11,8 @@ import { inPopup, isPopupVar } from "../apollo";
 import useMe from "../Hooks/useMe";
 import useMedia from "../Hooks/useMedia";
 import { customMedia } from "../styles";
-import SeeAllergy from "../Components/Lunchmenu/SeeAllergy";
+import SeeAllergy from "../Components/Lunchmenu/Popup/SeeAllergy";
+import LunchmenuItem from "../Components/Lunchmenu/LunchmenuItem";
 dotenv.config();
 
 const LunchmenuContainer = styled.div`
@@ -132,31 +133,6 @@ const SLunchmenus = styled.div`
   }
   .lunch_loading {
   }
-`
-
-const SLunchmenu = styled.div`
-  display: grid;
-  ${customMedia.greaterThan("tablet")`
-    row-gap: 10px;
-    row-gap: 0.625rem;
-  `}
-`;
-
-const Food = styled.div`
-  font-size: 1.25em;
-  font-size: 1.25rem;
-`
-
-const Allergy = styled.div`
-  display: flex;
-`
-
-const AllergyItem = styled.div`
-  margin-right: 10px;
-  margin-right: 0.625rem;
-  opacity: ${props => props.myAllergy ? 1 : 0.6};
-  cursor: ${props => props.myAllergy && "pointer"};
-  color: ${props => props.myAllergy && props.theme.redColor};
 `
 
 const LunchmenuBtn = styled.div`
@@ -333,14 +309,6 @@ const Lunchmenu = () => {
   // 팝업창으로 이동하기
   const onClickSchoolIcon = () => inPopup("lmSearchSchool")
 
-  // 알러지를 가지고 있는 학생 보기 팝업
-  const onClickAllergy = (allergy) => {
-    if (me?.allergy.includes(parseInt(allergy))) {
-      inPopup("seeAllergy")
-      localStorage.setItem("AllergyNum", allergy)
-    }
-  }
-
   //리턴
   return (
     <BasicContainer menuItem={true}>
@@ -364,18 +332,8 @@ const Lunchmenu = () => {
               :
               (menu ?
                 menu.map((item, index) => (
-                  <SLunchmenu key={index}>
-                    <Food>{item.food}</Food>
-                    <Allergy>{item.allergy.map((item, index) => {
-                      return <AllergyItem
-                        key={index}
-                        myAllergy={me?.allergy.includes(parseInt(item))}
-                        onClick={() => onClickAllergy(item)}
-                      >
-                        {item}
-                      </AllergyItem>
-                    })}</Allergy>
-                  </SLunchmenu>
+                  <LunchmenuItem key={index} item={item} me={me}>
+                  </LunchmenuItem>
                 ))
                 :
                 <div className="lunch_errMsg lunch_subMsg">급식 정보가 없습니다 😢</div>

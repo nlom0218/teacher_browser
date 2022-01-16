@@ -1,12 +1,11 @@
-import { useQuery, useReactiveVar } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { SEE_ALLERGY_STUDENT_QUERY } from '../../Graphql/Student/query';
-import routes from '../../routes';
-import { customMedia } from '../../styles';
-import PopupContainer from '../Shared/PopupContainer';
-import { FcSynchronize } from "react-icons/fc";
+import { SEE_ALLERGY_STUDENT_QUERY } from '../../../Graphql/Student/query';
+import routes from '../../../routes';
+import { customMedia } from '../../../styles';
+import PopupContainer from '../../Shared/PopupContainer';
 
 const Container = styled.div`
   padding: 20px 0px;
@@ -19,12 +18,6 @@ const Container = styled.div`
 
 const AllergyName = styled.div`
   font-weight: 600;
-`
-
-const RefetchBtn = styled.div`
-  font-size: 1.5em;
-  font-size: 1.5rem;
-  cursor: pointer;
 `
 
 const AllergyStudent = styled.div`
@@ -96,12 +89,6 @@ const SeeAllergy = () => {
       return "18. 조개류(굴, 전복, 홍합 등)"
     }
   }
-
-  // const onClickRefetch = () => refetch()
-
-  useEffect(() => {
-    refetch()
-  }, [])
 
   return (<PopupContainer>
     <Container>
