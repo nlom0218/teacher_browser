@@ -26,6 +26,7 @@ export const SEE_ONE_STUDENT_LIST_QUERY = gql`
         studentGender
         studentNumber
         listId
+        trash
       }
     }
   }

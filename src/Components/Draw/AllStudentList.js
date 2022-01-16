@@ -54,7 +54,7 @@ const AllStudentList = () => {
     const [isSeedisplay, setSeeDisplay] = useState(isSeeList)
 
     const { data, loading } = useQuery(SEE_ALL_STUDENT_LIST_QUERY);
-
+    
     const onClickSeeBtn = () => {
         if(initLoad) {
             setInitLoad(false)
