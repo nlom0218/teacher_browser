@@ -18,8 +18,8 @@ const Btn = styled.div`
   row-gap: 20px;
   row-gap: 1.25rem;
   div {
-    padding: 10px 40px;
-    padding: 0.625rem 2.5rem;
+    padding: 12px 40px;
+    padding: 0.75rem 2.5rem;
     border-radius: 5px;
     border-radius: 0.3125rem;
     cursor: pointer;

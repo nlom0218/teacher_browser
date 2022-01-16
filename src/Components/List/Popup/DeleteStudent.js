@@ -89,11 +89,11 @@ const DeleteStudent = ({ selectedTag, selectedSort, studentId }) => {
   return (<BtnPopupContainer>
     <Container>
       <Btn>
-        <DelBtn onClick={onClickDelBtn}>삭제하기</DelBtn>
+        <DelBtn onClick={onClickDelBtn}>이동하기</DelBtn>
         <CancleBtn onClick={() => outPopup()}>취소하기</CancleBtn>
       </Btn>
-      <Msg>학생을 삭제하시겠습니까?</Msg>
-      <Msg>삭제한 학생은 휴지통에서 확인 가능합니다.</Msg>
+      <Msg>학생을 휴지통으로 이동하시겠습니까?</Msg>
+      <Msg>이동된 학생은 휴지통에서 확인 가능합니다.</Msg>
     </Container>
   </BtnPopupContainer>);
 }

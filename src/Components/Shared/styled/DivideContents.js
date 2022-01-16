@@ -47,6 +47,7 @@ export const DivideRightContents = styled.div`
   border-radius: 5px;
   border-radius: 0.3125rem;
   box-shadow: ${color.boxShadow};
+  z-index: 5;
 `
 
 export const SeeRightContentsBtn = styled.div`

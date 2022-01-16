@@ -187,7 +187,7 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
     <DetailStudentNumber studentInfo={studentInfo} selectedTag={selectedTag} selectedSort={selectedSort} />
     <DetailStudentTag studentInfo={studentInfo} selectedSort={selectedSort} selectedTag={selectedTag} />
     <DetailStudentAllergy studentInfo={studentInfo} editStudent={editStudent} onCompleted={onCompleted} />
-    <DelBtn onClick={onClicketeBtn}>학생 삭제하기</DelBtn>
+    <DelBtn onClick={onClicketeBtn}>휴지통으로 이동</DelBtn>
     {isPopup === "deleteStudent" && <DeleteStudent selectedTag={selectedTag} selectedSort={selectedSort} studentId={studentId} />}
   </Container>);
 }
