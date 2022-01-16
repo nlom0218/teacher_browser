@@ -5,6 +5,7 @@ import { FcNews, FcCalendar, FcTodoList, FcGrid, FcBookmark } from "react-icons/
 import { Link } from 'react-router-dom';
 import routes from '../../routes';
 import HeaderSideBtn from './HeaderSideBtn';
+import { HeaderBookMark, HedaerCalender } from "./HeaderLink"
 
 const Container = styled.div`
   width: 100%;
@@ -30,6 +31,7 @@ const PageBtn = styled.div`
     font-size: 2.75em;
     font-size: 2.75rem;
     cursor: pointer;
+    filter: drop-shadow(1px 1px 1px rgb(0, 0, 0))
   }
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
@@ -47,8 +49,8 @@ const Header = ({ seeSideMenu, setSeeSideMenu }) => {
     <PageBtn>
       <Link to={routes.home}><FcNews /></Link>
       <Link to={routes.todo}><FcTodoList /></Link>
-      <Link to={routes.calendar}><FcCalendar /></Link>
-      <Link to={routes.pageLink}><FcBookmark /></Link>
+      <HedaerCalender />
+      <HeaderBookMark />
       <Link to={routes.menu}><FcGrid /></Link>
     </PageBtn>
     <HeaderSideBtn seeSideMenu={seeSideMenu} setSeeSideMenu={setSeeSideMenu} />

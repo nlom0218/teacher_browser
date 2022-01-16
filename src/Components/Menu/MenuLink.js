@@ -4,6 +4,10 @@ import routes from '../../routes';
 import styled from 'styled-components';
 import IcStopwatch from '../../icons/Stopwatch/IcStopwatch';
 import IcPressedStopwatch from '../../icons/Stopwatch/IcPressedStopwatch';
+import IcLunchmenuClick from "../../icons/Lunchmenu/IcLunchmenuClick"
+import IcLunchmenu from '../../icons/Lunchmenu/IcLunchmenu';
+import IcSchedule from '../../icons/Schedule/IcSchedule';
+import IcScheduleClick from '../../icons/Schedule/IcScheduleClick';
 
 const SMenu = styled.div`
   display: grid;
@@ -71,18 +75,20 @@ export const OrderLink = () => {
 }
 
 export const LunchmenuLink = ({ onClickLunchmenu }) => {
+  const [isHover, setIsHover] = useState(false)
   return (<Link to={routes.lunchmenu} onClick={onClickLunchmenu}>
-    <SMenu>
-      {/* <FcList /> */}
+    <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+      {isHover ? <IcLunchmenuClick /> : <IcLunchmenu />}
       <Title>식단표</Title>
     </SMenu>
   </Link>);
 }
 
 export const ScheduleLink = () => {
+  const [isHover, setIsHover] = useState(false)
   return (<Link to={routes.schedule}>
-    <SMenu>
-      {/* <FcDataSheet /> */}
+    <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+      {isHover ? <IcScheduleClick /> : <IcSchedule />}
       <Title>시간표</Title>
     </SMenu>
   </Link>);
