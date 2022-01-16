@@ -4,10 +4,10 @@ import { Btn, BtnContainer, BtnSpan } from '../Components/Timer/Btn';
 import { TimerContainer, TimerInnerFrame, TimerOuterFrame } from '../Components/Timer/TimeDisplay';
 
 const Timer = () => {
-
   // Stopwatch (Countup)
 
   let [isRunning, setIsRunning] = useState(false);
+  let [intervalId, setIntervalId] = useState(null);
   let [milliseconds, setMilliseconds] = useState(0);
   let [seconds, setSeconds] = useState(0);
   let [minutes, setMinutes] = useState(0);
@@ -15,33 +15,60 @@ const Timer = () => {
   let newSeconds = seconds;
   let newMinutes = minutes;
 
-  const countUp = () => {
-    newMilliseconds = milliseconds++;
-    setMilliseconds(newMilliseconds);
+  // const countUp = () => {
+  //   newMilliseconds = milliseconds++;
+  //   setMilliseconds(milliseconds => newMilliseconds);
+  //   if (milliseconds >= 100) {
+  //     newSeconds = ++seconds;
+  //     milliseconds = 0;
+  //     setSeconds(seconds => newSeconds);
+  //   }
+  //   if (seconds > 59) {
+  //     newMinutes = ++minutes;
+  //     seconds = 0;
+  //     setMinutes(minutes => newMinutes);
+  //   }
+  // };
 
-    if (milliseconds >= 100) {
-      newSeconds = ++seconds;
-      milliseconds = 0;
-      setSeconds(newSeconds);
-    }
-
-    if (seconds > 59) {
-      newMinutes = ++minutes;
-      seconds = 0;
-      setMinutes(newMinutes);
-    }
-  };
+  useEffect(() => {
+    if (isRunning) {
+      const id = setInterval(() => {
+        newMilliseconds = milliseconds++;
+        setMilliseconds(milliseconds => newMilliseconds);
+        if (milliseconds >= 100) {
+          newSeconds = ++seconds;
+          milliseconds = 0;
+          setSeconds(seconds => newSeconds);
+        }
+        if (seconds > 59) {
+          newMinutes = ++minutes;
+          seconds = 0;
+          setMinutes(minutes => newMinutes);
+        }
+      }, 10);
+      setIntervalId(id);
+    } else {
+      clearInterval(intervalId);
+    };
+  }, [isRunning]);
 
   const pause = () => {
     // FIXME:
     setIsRunning(false);
-    clearInterval(countUp);
+    // clearInterval(countUp);
   };
 
   const startStopwatch = () => {
-    countUp();
+    // countUp();
     setIsRunning(true);
-    setInterval(countUp, 10);
+    // setInterval(countUp, 10);
+  };
+
+  const resetTime = () => {
+    setMilliseconds(() => 0);
+    setSeconds(() => 0);
+    setMinutes(() => 0);
+    setIsRunning(false);
   };
 
   // Timer (Countdown)
@@ -69,11 +96,11 @@ const Timer = () => {
       <TimerContainer>
         <TimerOuterFrame gauge={seconds}>
           <TimerInnerFrame>
-            <span style={{ color: "limegreen" }}>{minutesDisplay}</span>
+            <span style={{ color: "yellow" }}>{minutesDisplay}</span>
             &nbsp;:&nbsp;
-            <span style={{ color: "red" }}>{secondsDisplay}</span>
-            &nbsp;:&nbsp;
-            <span style={{ color: "yellow" }}>{millisecondsDisplay}</span>
+            <span style={{ color: "yellow" }}>{secondsDisplay}</span>
+            &nbsp;&nbsp;
+            <span style={{ padding: "5px", border: "1px solid grey", fontSize: "30px", color: "grey" }}>{millisecondsDisplay}</span>
           </TimerInnerFrame>
         </TimerOuterFrame>
         <BtnContainer>
@@ -82,11 +109,11 @@ const Timer = () => {
               {isRunning ? "PAUSE" : "START"}
             </BtnSpan>
           </Btn>
-          <Btn>
+          {isRunning ? <Btn onClick={resetTime}>
             <BtnSpan>
               RESET
             </BtnSpan>
-          </Btn>
+          </Btn> : null}
         </BtnContainer>
         <BtnContainer style={{ width: "80%" }}>
           <Btn onClick={countDown}>
