@@ -7,14 +7,13 @@ import { color, customMedia } from "../../../styles";
 export const DivideLeftContents = styled.div`
   max-height: 100%;
   min-height: 100%;
+  width: 100%;
   padding: 20px;
   padding: 1.25rem;
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
-  width: ${props => props.isSeeList ? "75%" : "100%"};
-  transition: width 1s ease;
   overflow: scroll;
   -ms-overflow-style: none; // IE and Edge
   scrollbar-width: none; // Firefox
@@ -22,6 +21,8 @@ export const DivideLeftContents = styled.div`
     display: none; // Chrome, Safari, Opera
   }
   ${customMedia.greaterThan("desktop")`
+    width: ${props => props.isSeeList ? "75%" : "100%"};
+    transition: width 1s ease;
     padding: 40px;
     padding: 2.5rem;
   `}
