@@ -55,5 +55,13 @@ export const RESTORE_STUDENT_MUTATION = gql`
       error
     }
   }
+`
 
+export const DELETE_STUDENT_ALL_IN_TRASH = gql`
+  mutation DeleteAllStudent($teacherEmail: String!) {
+    deleteAllStudent(teacherEmail: $teacherEmail) {
+      ok
+      error
+    }
+  }
 `

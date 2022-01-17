@@ -131,7 +131,10 @@ const Trash = () => {
       }
     </Container>
     {successMsg && <SuccessMsg>{successMsg.msg}</SuccessMsg>}
-    {isPopup === "deleteAllStudent" && <DeleteAllStudent />}
+    {isPopup === "deleteAllStudent" &&
+      <DeleteAllStudent
+        teacherEmail={me?.email}
+      />}
     {isPopup === "restoreAllStudent" &&
       <RestoreAllStudent
         teacherEmail={me?.email}

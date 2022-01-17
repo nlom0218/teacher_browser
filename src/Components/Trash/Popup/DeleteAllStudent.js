@@ -1,6 +1,9 @@
+import { useMutation } from '@apollo/client';
 import React from 'react';
 import styled from 'styled-components';
 import { outPopup } from '../../../apollo';
+import { DELETE_STUDENT_ALL_IN_TRASH } from '../../../Graphql/Student/mutation';
+import { SEE_ALL_STUDENT_IN_TRASH_QUERY } from '../../../Graphql/Student/query';
 import { customMedia } from '../../../styles';
 import BtnPopupContainer from '../../Shared/BtnPopupContainer';
 
@@ -39,10 +42,25 @@ const CancelBtn = styled.div`
   background-color: ${props => props.theme.btnBgColor};
 `
 
-const DeleteAllStudent = () => {
+const DeleteAllStudent = ({ teacherEmail }) => {
+  const onCompleted = (result) => {
+    const { deleteAllStudent: { ok } } = result
+    if (ok) {
+      outPopup()
+    }
+  }
+
+  const [deleteStudentAll, { loading }] = useMutation(DELETE_STUDENT_ALL_IN_TRASH, {
+    onCompleted,
+    refetchQueries: [{ query: SEE_ALL_STUDENT_IN_TRASH_QUERY, variables: { trash: true } }]
+  })
 
   const onClickDeleteBtn = () => {
-    window.alert("학생 전체 삭제하기, 백앤드에 코드 수정 필요 => 8번줄 trash: true / 9번줄 student: [] 수정 ")
+    deleteStudentAll({
+      variables: {
+        teacherEmail
+      }
+    })
   }
 
   const onClickCancelBtn = () => outPopup()
