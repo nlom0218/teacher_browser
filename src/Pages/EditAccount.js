@@ -12,9 +12,15 @@ import { color, customMedia } from "../styles";
 import { useReactiveVar } from "@apollo/client";
 import Pop_ChangePw from "../Components/Account/Popup/Pop_ChangePw";
 
+const Title = styled.div`
+  font-size: 1.5em;
+  font-size: 1.5rem;
+  padding: 60px 0px 60px 60px;
+`
+
 const Container = styled.div`
-  padding: 60px 0px;
-  padding: 3.75rem 0rem;
+  padding-bottom: 60px;
+  padding-bottom: 3.75rem;
   width: 90%;
   margin: 0 auto;
   display: grid;
@@ -48,7 +54,7 @@ const List = styled.div`
 `;
 
 const Item = styled.div`
-  background-color: ${(props) => props.theme.contentBgColor};
+  background-color: ${(props) => props.theme.bgColor};
   transition: background-color 1s ease;
   padding: 20px;
   padding: 1.25rem;
@@ -63,11 +69,11 @@ const EditAccount = () => {
   console.log(me);
   return (
     <BasicContainer menuItem={true}>
+      <Title>회원정보</Title>
       <Container>
         <Changes>
           <List>이메일</List>
           <Item>
-            {me?.email}
             <ChangePw userEmail={me?.email}></ChangePw>
           </Item>
         </Changes>
@@ -85,9 +91,7 @@ const EditAccount = () => {
         </Changes>
         <Changes>
           <List>회원 탈퇴</List>
-          <Item>
-            <Withdrawal userEmail={me?.email} />
-          </Item>
+          <Withdrawal userEmail={me?.email} />
         </Changes>
       </Container>
       {isPopup === "registerSchool" && <RegisterSchool />}
