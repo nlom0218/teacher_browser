@@ -6,6 +6,7 @@ import { forwardRef } from "react";
 import { BsCalendarDate } from "react-icons/bs";
 import useMedia from "../../Hooks/useMedia";
 import { customMedia } from "../../styles";
+import IcCalender from "../../icons/Calender/IcCalender";
 
 const DatePickers = styled(DatePicker)`
   font-size: 2em;
@@ -28,7 +29,7 @@ const DatePickers = styled(DatePicker)`
 const DateContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;
-  align-items: flex-end;
+  align-items: center;
   justify-items: end;
   ${customMedia.greaterThan("tablet")`
     column-gap: 10px;
@@ -40,11 +41,12 @@ const DateContainer = styled.div`
 const DateIcon = styled.div`
   cursor: pointer;  
   display: flex;
-  font-size: 1.5em;
-  font-size: 1.5rem;
+  font-size: 2em;
+  font-size: 2rem;
   ${customMedia.greaterThan("tablet")`
-    font-size: 2em;
-    font-size: 2rem;
+    font-size: 2.5em;
+    font-size: 2.5rem;
+    filter: drop-shadow(1px 1px 1px rgb(0, 0, 0));
   `}
 `
 
@@ -62,7 +64,7 @@ export const Date = ({ date, setDate, processSetDate }) => {
   const CustomInput = forwardRef(({ value, onClick }, ref) => (
     <DateContainer ref={ref}>
       {media !== "Mobile" && <div>{processSetDate()}</div>}
-      <DateIcon onClick={onClick}><BsCalendarDate /></DateIcon>
+      <DateIcon onClick={onClick}><IcCalender /></DateIcon>
     </DateContainer>
   ))
   return (
