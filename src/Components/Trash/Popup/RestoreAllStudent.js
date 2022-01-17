@@ -1,6 +1,9 @@
+import { useMutation } from '@apollo/client';
 import React from 'react';
 import styled from 'styled-components';
 import { outPopup } from '../../../apollo';
+import { RESTORE_STUDENT_MUTATION } from '../../../Graphql/Student/mutation';
+import { SEE_ALL_STUDENT_IN_TRASH_QUERY, SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
 import { customMedia } from '../../../styles';
 import BtnPopupContainer from '../../Shared/BtnPopupContainer';
 
@@ -36,12 +39,41 @@ const RestoreBtn = styled.div``
 
 const CancelBtn = styled.div``
 
-const RestoreAllStudent = () => {
+const RestoreAllStudent = ({ teacherEmail, selectedSort, selectedTag }) => {
+  const onCompleted = (result) => {
+    const { editStudent: { ok } } = result
+    if (ok) {
+      outPopup()
+    }
+  }
+
+  const [restoreStudent, { loading }] = useMutation(RESTORE_STUDENT_MUTATION, {
+    onCompleted,
+    refetchQueries: [
+      { query: SEE_ALL_STUDENT_IN_TRASH_QUERY, variables: { trash: true } },
+      {
+        query: SEE_ALL_STUDENT_QUERY,
+        variables: {
+          ...(selectedTag.length !== 0 && { tag: selectedTag }),
+          ...(selectedSort && { sort: selectedSort }),
+          trash: false
+        }
+      }
+    ]
+  })
+
+
   const onClickRestoreBtn = () => {
-    window.alert("학생 전체 복구하기 => 백앤드 추가 필요")
+    restoreStudent({
+      variables: {
+        teacherEmail,
+        restoreAll: true
+      }
+    })
   }
 
   const onClickCancelBtn = () => outPopup()
+
   return (<BtnPopupContainer>
     <Container>
       <Btn>

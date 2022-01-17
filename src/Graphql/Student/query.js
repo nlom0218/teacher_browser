@@ -12,6 +12,7 @@ import gql from "graphql-tag";
 // Components/List/DetailStudentNumber.js
 // Components/List/DetailStudentTag.js
 // Components/Trash/StudentInTrash.js
+// Components/Trash/Popup/RestoreAllStudent.js
 export const SEE_ALL_STUDENT_QUERY = gql`
   query Query($tag: [String], $sort: String, $trash: Boolean) {
     seeAllStudent(tag: $tag, sort: $sort, trash: $trash) {
@@ -35,6 +36,7 @@ export const SEE_ALL_STUDENT_QUERY = gql`
 // Components/Trash/StudentInTrash.js
 // Components/List/DetailStudentNumber.js
 // Components/List/DetailStudentTag.js
+// Components/Trash/Popup/RestoreAllStudent.js
 export const SEE_ALL_STUDENT_IN_TRASH_QUERY = gql`
   query Query($trash: Boolean) {
     seeAllStudent(trash: $trash) {

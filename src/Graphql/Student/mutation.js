@@ -47,3 +47,13 @@ export const DELETE_STUDENT_MUTATION = gql`
     }
   }
 `
+
+export const RESTORE_STUDENT_MUTATION = gql`
+  mutation Mutation($teacherEmail: String!, $restoreAll: Boolean) {
+    editStudent(teacherEmail: $teacherEmail, restoreAll: $restoreAll) {
+      ok
+      error
+    }
+  }
+
+`
