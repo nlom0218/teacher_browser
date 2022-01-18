@@ -51,7 +51,7 @@ const Msg = styled.div`
   line-height: 120%;
 `;
 
-const DeleteUser = ({ teacherEmail }) => {
+const DeleteUser = ({ teacherEmail, isOwn }) => {
   const onCompleted = (result) => {
     const {
       deleteUser: { ok },
@@ -74,14 +74,26 @@ const DeleteUser = ({ teacherEmail }) => {
   };
   return (
     <BtnPopupContainer>
-      <Container>
-        <Btn>
-          <DelBtn onClick={onClickDelBtn}>탈퇴하기</DelBtn>
-          <CancleBtn onClick={() => outPopup()}>취소하기</CancleBtn>
-        </Btn>
-        <Msg>모든 정보를 삭제하고 탈퇴하시겠습니까?</Msg>
-        <Msg>정보가 삭제되면 다시 복구할 수 없습니다.</Msg>
-      </Container>
+      {isOwn && (
+        <Container>
+          <Btn>
+            <DelBtn onClick={onClickDelBtn}>탈퇴하기</DelBtn>
+            <CancleBtn onClick={() => outPopup()}>취소하기</CancleBtn>
+          </Btn>
+          <Msg>모든 정보를 삭제하고 탈퇴하시겠습니까?</Msg>
+          <Msg>정보가 삭제되면 다시 복구할 수 없습니다.</Msg>
+        </Container>
+      )}
+      {isOwn || (
+        <Container>
+          <Btn>
+            <DelBtn onClick={onClickDelBtn}>삭제하기</DelBtn>
+            <CancleBtn onClick={() => outPopup()}>취소하기</CancleBtn>
+          </Btn>
+          <Msg>모든 정보를 삭제하고 초기화하시겠습니까?</Msg>
+          <Msg>정보가 삭제되면 다시 복구할 수 없습니다.</Msg>
+        </Container>
+      )}
     </BtnPopupContainer>
   );
 };

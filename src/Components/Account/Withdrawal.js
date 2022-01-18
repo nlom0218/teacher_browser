@@ -31,7 +31,7 @@ const Withdrawal = ({ userEmail, isOwn }) => {
         </BtnContainer>
       )}
 
-      {isPopup === "deleteUser" && <DeleteUser teacherEmail={userEmail} />}
+      {isPopup === "deleteUser" && <DeleteUser teacherEmail={userEmail} isOwn={isOwn} />}
     </Container>
   );
 };
