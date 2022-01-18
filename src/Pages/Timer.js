@@ -15,21 +15,6 @@ const Timer = () => {
   let newSeconds = seconds;
   let newMinutes = minutes;
 
-  // const countUp = () => {
-  //   newMilliseconds = milliseconds++;
-  //   setMilliseconds(milliseconds => newMilliseconds);
-  //   if (milliseconds >= 100) {
-  //     newSeconds = ++seconds;
-  //     milliseconds = 0;
-  //     setSeconds(seconds => newSeconds);
-  //   }
-  //   if (seconds > 59) {
-  //     newMinutes = ++minutes;
-  //     seconds = 0;
-  //     setMinutes(minutes => newMinutes);
-  //   }
-  // };
-
   useEffect(() => {
     if (isRunning) {
       const id = setInterval(() => {
@@ -71,8 +56,19 @@ const Timer = () => {
     setIsRunning(false);
   };
 
+  const timeRecordsFromLocal = JSON.parse(localStorage.getItem('timeRecords')) ? JSON.parse(localStorage.getItem('timeRecords')) : [];
+
+  const saveTime = () => {
+    const timestamp = Date.now();
+    const savedTime = { timeId: timestamp, minutes, seconds, milliseconds };
+    const newTimeRecord = [...timeRecordsFromLocal, savedTime];
+    localStorage.setItem('timeRecords', JSON.stringify(newTimeRecord));
+  };
+
+  let timeRecords = [];
+
+
   // Timer (Countdown)
-  // TODO:
   let [millisecondsLeft, setMillisecondsLeft] = useState(0);
   let [secondsLeft, setSecondsLeft] = useState(10);
   let [minutesLeft, setMinutesLeft] = useState(0);
@@ -114,6 +110,11 @@ const Timer = () => {
               RESET
             </BtnSpan>
           </Btn> : null}
+          {milliseconds + seconds + minutes > 0 ? <Btn onClick={saveTime}>
+            <BtnSpan>
+              SAVE
+            </BtnSpan>
+          </Btn> : null}
         </BtnContainer>
         <BtnContainer style={{ width: "80%" }}>
           <Btn onClick={countDown}>
@@ -132,6 +133,13 @@ const Timer = () => {
             <BtnSpan>30분</BtnSpan>
           </Btn>
         </BtnContainer>
+        <div>
+          {timeRecordsFromLocal ?
+            <li>
+              <span> {timeRecordsFromLocal.minutes} min &nbsp;&nbsp; {timeRecordsFromLocal.seconds} seconds &nbsp;&nbsp;
+                {timeRecordsFromLocal.milliseconds} milliseconds </span>
+            </li> : null}
+        </div>
       </TimerContainer >
     </BasicContainer>
   );
