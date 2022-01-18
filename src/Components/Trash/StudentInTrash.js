@@ -51,11 +51,8 @@ const DelBtn = styled.div`
   cursor: pointer;
 `
 
-const StudentInTrash = ({ item, setSuccessMsg }) => {
+const StudentInTrash = ({ item, setSuccessMsg, selectedSort, selectedTag }) => {
   const isPopup = useReactiveVar(isPopupVar)
-
-  const selectedTag = JSON.parse(localStorage.getItem("selectedTag")) ? JSON.parse(localStorage.getItem("selectedTag")) : []
-  const selectedSort = localStorage.getItem("selectedSort") ? localStorage.getItem("selectedSort") : undefined
   const me = useMe()
 
   const [editStudent, { loading: editLoadint }] = useMutation(EDIT_STUDENT_MUTATION, {

@@ -2,10 +2,11 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
-import { forwardRef } from "react";
-import { BsCalendarDate } from "react-icons/bs";
+import { forwardRef, useState } from "react";
 import useMedia from "../../Hooks/useMedia";
 import { customMedia } from "../../styles";
+import IcCalender from "../../icons/Calender/IcCalender";
+import IcCalenderClick from "../../icons/Calender/IcCalenderClick";
 
 const DatePickers = styled(DatePicker)`
   font-size: 2em;
@@ -28,7 +29,7 @@ const DatePickers = styled(DatePicker)`
 const DateContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;
-  align-items: flex-end;
+  align-items: center;
   justify-items: end;
   ${customMedia.greaterThan("tablet")`
     column-gap: 10px;
@@ -40,15 +41,18 @@ const DateContainer = styled.div`
 const DateIcon = styled.div`
   cursor: pointer;  
   display: flex;
-  font-size: 1.5em;
-  font-size: 1.5rem;
+  font-size: 2em;
+  font-size: 2rem;
   ${customMedia.greaterThan("tablet")`
-    font-size: 2em;
-    font-size: 2rem;
+    font-size: 2.5em;
+    font-size: 2.5rem;
+    filter: drop-shadow(1px 1px 1px rgb(0, 0, 0));
   `}
 `
 
 export const Date = ({ date, setDate, processSetDate }) => {
+  const [isHover, setIsHover] = useState(false)
+
   // 반응형
   const media = useMedia()
 
@@ -62,7 +66,9 @@ export const Date = ({ date, setDate, processSetDate }) => {
   const CustomInput = forwardRef(({ value, onClick }, ref) => (
     <DateContainer ref={ref}>
       {media !== "Mobile" && <div>{processSetDate()}</div>}
-      <DateIcon onClick={onClick}><BsCalendarDate /></DateIcon>
+      <DateIcon onClick={onClick} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+        {isHover ? <IcCalenderClick /> : <IcCalender />}
+      </DateIcon>
     </DateContainer>
   ))
   return (

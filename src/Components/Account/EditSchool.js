@@ -10,8 +10,8 @@ import RegisterBtn from './styled/RegisterBtn';
 
 const Container = styled.div`
   display: grid;
-  row-gap: 10px;
-  row-gap: 0.625rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
 `
 
 const SchoolName = styled.div`

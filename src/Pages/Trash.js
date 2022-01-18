@@ -8,6 +8,7 @@ import DeleteAllStudent from '../Components/Trash/Popup/DeleteAllStudent';
 import RestoreAllStudent from '../Components/Trash/Popup/RestoreAllStudent';
 import StudentInTrash from '../Components/Trash/StudentInTrash';
 import { SEE_ALL_STUDENT_IN_TRASH_QUERY } from '../Graphql/Student/query';
+import useMe from '../Hooks/useMe';
 import { customMedia } from '../styles';
 
 const Container = styled.div`
@@ -74,7 +75,11 @@ const Student = styled.div`
 
 
 const Trash = () => {
+  const me = useMe()
   const isPopup = useReactiveVar(isPopupVar)
+
+  const selectedTag = JSON.parse(localStorage.getItem("selectedTag")) ? JSON.parse(localStorage.getItem("selectedTag")) : []
+  const selectedSort = localStorage.getItem("selectedSort") ? localStorage.getItem("selectedSort") : undefined
 
   const [successMsg, setSuccessMsg] = useState(undefined)
   const { data, loading } = useQuery(SEE_ALL_STUDENT_IN_TRASH_QUERY, {
@@ -101,7 +106,6 @@ const Trash = () => {
       return () => { clearTimeout(timer) }
     }
   }, [successMsg])
-  console.log(data);
   return (<BasicContainer menuItem={true}>
     <Container>
       <TopLayout>
@@ -114,15 +118,29 @@ const Trash = () => {
       {data?.seeAllStudent?.length !== 0 ?
         <Student>
           {data?.seeAllStudent?.map((item, index) => {
-            return <StudentInTrash key={index} item={item} setSuccessMsg={setSuccessMsg} />
+            return <StudentInTrash
+              key={index}
+              item={item}
+              setSuccessMsg={setSuccessMsg}
+              selectedTag={selectedTag}
+              selectedSort={selectedSort}
+            />
           })}
         </Student>
         : <div>휴지통으로 이동된 학생이 없습니다.</div>
       }
     </Container>
     {successMsg && <SuccessMsg>{successMsg.msg}</SuccessMsg>}
-    {isPopup === "deleteAllStudent" && <DeleteAllStudent />}
-    {isPopup === "restoreAllStudent" && <RestoreAllStudent />}
+    {isPopup === "deleteAllStudent" &&
+      <DeleteAllStudent
+        teacherEmail={me?.email}
+      />}
+    {isPopup === "restoreAllStudent" &&
+      <RestoreAllStudent
+        teacherEmail={me?.email}
+        selectedTag={selectedTag}
+        selectedSort={selectedSort}
+      />}
   </BasicContainer>);
 }
 

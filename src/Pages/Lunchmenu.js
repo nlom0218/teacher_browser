@@ -13,6 +13,7 @@ import useMedia from "../Hooks/useMedia";
 import { customMedia } from "../styles";
 import SeeAllergy from "../Components/Lunchmenu/Popup/SeeAllergy";
 import LunchmenuItem from "../Components/Lunchmenu/LunchmenuItem";
+import IcSchoolYellow from "../icons/School/IcSchoolYellow";
 dotenv.config();
 
 const LunchmenuContainer = styled.div`
@@ -68,10 +69,10 @@ const SearchIcons = styled.div`
   row-gap: 0.625rem;
 `
 
-const ShoolDate = styled.div`
+const SchoolDate = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;
-  align-items: flex-end;
+  align-items: center;
   justify-items: end;
   ${customMedia.greaterThan("tablet")`
     column-gap: 10px;
@@ -79,15 +80,16 @@ const ShoolDate = styled.div`
   `}
 `
 
-const ShoolIcon = styled.div`
+const SchoolIcon = styled.div`
   align-self: flex-start;
-  font-size: 1.5em;
-  font-size: 1.5rem;
+  font-size: 2em;
+  font-size: 2rem;
   display: flex;
   cursor: pointer;
   ${customMedia.greaterThan("tablet")`
-    font-size: 2em;
-    font-size: 2rem;
+    font-size: 2.5em;
+    font-size: 2.5rem;
+    filter: drop-shadow(1px 1px 1px rgb(0, 0, 0));
   `}
 `
 
@@ -319,10 +321,10 @@ const Lunchmenu = () => {
           <SearchedDay>{processSetDay()}</SearchedDay>
         </Title>
         <SearchIcons>
-          <ShoolDate>
+          <SchoolDate>
             {media !== "Mobile" && <div>{schoolName ? schoolName : "학교검색"}</div>}
-            <ShoolIcon onClick={onClickSchoolIcon}><FaSchool /></ShoolIcon>
-          </ShoolDate>
+            <SchoolIcon onClick={onClickSchoolIcon}><IcSchoolYellow /></SchoolIcon>
+          </SchoolDate>
           <Date date={date} setDate={setDate} processSetDate={processSetDate} />
         </SearchIcons>
         <LunchmenuInfo>
