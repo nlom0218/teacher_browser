@@ -10,10 +10,15 @@ import { inPopup, isPopupVar } from "../apollo";
 import useMedia from "../Hooks/useMedia";
 import { useForm } from "react-hook-form";
 import makeSchedule from "../Components/Schedule/MakeSchedule";
+import { RiCheckboxBlankLine } from "react-icons/ri";
+import TimeTableFont from "../Components/Schedule/TimeTableFont";
+import {TiPlusOutline} from "react-icons/ti";
+import BasicTable from "../Components/Schedule/BasicTable";
+import TimeTableGrid from "../Components/Schedule/TimeTableGrid";
 
 
 const Container = styled.div`
-  min-height: ${props => props.seeResultType==="ONE"&&"100%"};
+  min-height: "100%";
   display: grid;
   grid-template-rows: auto auto 1fr;
   padding: 20px;
@@ -29,7 +34,9 @@ const TopContents = styled.div`
   grid-template-columns: 1fr;
   row-gap: 20px;
   row-gap: 1.25rem;
+  align-items: center;
 `;
+
 const Title = styled.form`
   grid-row: 2/3;
   display: grid;
@@ -71,16 +78,66 @@ const SubmitInput = styled.input`
   border-radius: 0.3125rem;
   animation: ${BtnFadeIn} 0.6s ease;
 `;
-  const Styles = styled.div`
+const OptionContents = styled.div`
+  width: 100%;
+  display: grid;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  column-gap: 10px;
+  column-gap: 0ch.625rem;
+  text-align: center;
+  grid-template-columns : auto auto 1fr;
+`;
+const OptionBtn = styled.div`
+  background-color: ${(props) => props.theme.btnBgColor};
+  color: ${(props) => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
+  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+`;
+const AddSub = styled.div`
+  grid-row: 1/2;
+  justify-self: flex-end;
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 10px;
+  column-gap: 0.625rem;
+  align-items: center;
+  svg {
+    display: flex;
+    font-size: 2.5em;
+    font-size: 2.5rem;
+    cursor: pointer;
+  }
+`;
+const AddSubBtn = styled.div``;
+
+
+
+const TypeBtn = styled.div`
+align-self: flex-end;
+cursor: pointer;
+display: flex;
+svg{
+    margin-right: 5px;
+    margin-right:0.3125rem;
+    display:flex;
+}
+`
+  const TableStyles = styled.div`
     justify-self: center;
     width: 100%;
     padding: 1rem;
+    font-size: ${(props) => props.fontSize} em;
+    font-size: ${(props) => props.fontSize} rem;
     table {
       text-align: center;
       width: 100%;
       border-spacing: 0;
       border: 2px solid black;
-      
     tr {
       :only-child{
         background-color: skyblue;
@@ -88,7 +145,6 @@ const SubmitInput = styled.input`
       :last-child {
         td {
           border-bottom: 20px;
-          
         }
       }
     }
@@ -108,12 +164,19 @@ const SubmitInput = styled.input`
   }
 `;
 
+const TimeTableHeight = styled.div`
+height: 100%;
+width: 100%;
+`
+
 const Schedule = () => {
 
   const media = useMedia();
 
   const [isEdit, setIsEdit] = useState(false);
   const [title, setTitle] = useState(undefined);
+  const [fontSize, setFontSize] = useState(1)
+
 
   const { register, handleSubmit, getValues } = useForm({
     mode: "onChange",
@@ -133,6 +196,10 @@ const Schedule = () => {
     onSubmit({ title });
   };
   
+   const onClickTimeSetBtn = () => {
+
+   }
+   const onClickAddSub = () =>{}
 
 function Table({ columns, data }) {
   const {
@@ -171,7 +238,7 @@ function Table({ columns, data }) {
       </tbody>
     </table>
   );
-}
+} 
 
 
 const columns = React.useMemo(() => [
@@ -230,12 +297,27 @@ const data = React.useMemo(() => makeSchedule(6), []);
             </InputLayout>
             {isEdit && <SubmitInput type="submit" value="저장" />}
           </Title>
+          <AddSub>
+            <AddSubBtn>수업추가/변경</AddSubBtn>
+            <TiPlusOutline onClick={onClickAddSub}/>
+          </AddSub>
         </TopContents>
+        <OptionContents>
+        <OptionBtn onClick={() => onClickTimeSetBtn}> 시간설정하기 </OptionBtn>
+        <TypeBtn> <RiCheckboxBlankLine/> <div> 시간 보기 </div> </TypeBtn>
+        <TimeTableFont fontSize={fontSize} setFontSize={setFontSize}/>
+        </OptionContents>
 
-    <Styles>
-          <Table columns={columns} data={data} />
-       </Styles>
+  {/* <TableStyles fontSize={fontSize}>
+           <Table columns={columns} data={data} />
+ {/* <TimeTableSet data={data} columns={columns}/>  */}
+  {/* </TableStyles> */}
+{/* 
+  < BasicTable/> */}
+  <TimeTableHeight>
+  <TimeTableGrid/>
 
+  </TimeTableHeight>
         </Container>
       </DivideLeftContents>
     </BasicContainer>

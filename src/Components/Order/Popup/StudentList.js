@@ -19,8 +19,10 @@ const Container = styled.div`
 
 const StudentList = () => {
   const { data, loading } = useQuery(SEE_ALL_STUDENT_LIST_QUERY);
-  return (
+
+return (
     <PopupContainer>
+         {/* { data == undefined ? <div> 로그인을 해서 명단 등록 안내 메세지, 일회성 명단 input 화면하는 건 어떨지 </div> : } */}
       <Container>
         {data?.seeStudentList.map((item, index) => {
           return <StudentListItem key={index} item={item} />;

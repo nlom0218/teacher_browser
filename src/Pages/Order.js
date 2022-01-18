@@ -29,7 +29,7 @@ const Container = styled.div`
   row-gap: 1.25rem;
   align-items: flex-start;
 `;
-
+// 상단
 const TopContents = styled.div`
   display: grid;
   grid-template-columns: 1fr;
@@ -41,15 +41,9 @@ const TopContents = styled.div`
    column-gap:20px;
    column-gap:1.25rem;
   `}
-  ${customMedia.greaterThan("desktop")`
-   grid-template-columns: 1fr;
-   column-gap: 60px;
-   column-gap: 3.75rem;
-   `}
    /* padding : 20px 20px 0px 0px;
     padding : 1.25rem 1.25rem 0rem 0rem; */
 `;
-//상단
 const Main = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
@@ -110,7 +104,7 @@ const SubmitInput = styled.input`
   border-radius: 0.3125rem;
   animation: ${BtnFadeIn} 0.6s ease;
 `;
-
+//순서섞기, All, One, 글씨크기조절
 const OptionContents = styled.div`
   width: 100%;
   display: grid;
