@@ -9,11 +9,9 @@ import { BtnFadeIn } from "../Animations/Fade";
 import { inPopup, isPopupVar } from "../apollo";
 import useMedia from "../Hooks/useMedia";
 import { useForm } from "react-hook-form";
-import makeSchedule from "../Components/Schedule/MakeSchedule";
 import { RiCheckboxBlankLine } from "react-icons/ri";
 import TimeTableFont from "../Components/Schedule/TimeTableFont";
 import {TiPlusOutline} from "react-icons/ti";
-import BasicTable from "../Components/Schedule/BasicTable";
 import TimeTableGrid from "../Components/Schedule/TimeTableGrid";
 
 
@@ -127,42 +125,7 @@ svg{
     display:flex;
 }
 `
-  const TableStyles = styled.div`
-    justify-self: center;
-    width: 100%;
-    padding: 1rem;
-    font-size: ${(props) => props.fontSize} em;
-    font-size: ${(props) => props.fontSize} rem;
-    table {
-      text-align: center;
-      width: 100%;
-      border-spacing: 0;
-      border: 2px solid black;
-    tr {
-      :only-child{
-        background-color: skyblue;
-      }
-      :last-child {
-        td {
-          border-bottom: 20px;
-        }
-      }
-    }
-    th,
-    td {
-      :first-child{
-        background-color: skyblue;
-      }
-      margin: 2px;
-      padding: 20px;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
-      :last-child {
-        border-right: 0;
-      }
-    }
-  }
-`;
+
 
 const TimeTableHeight = styled.div`
 height: 100%;
@@ -201,76 +164,6 @@ const Schedule = () => {
    }
    const onClickAddSub = () =>{}
 
-function Table({ columns, data }) {
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow
-  } = useTable({
-    columns,
-    data
-  });
-
-  return (
-    <table {...getTableProps()}>
-      <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()}>{column.render("Header")}</th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => {
-                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
-              })}
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  );
-} 
-
-
-const columns = React.useMemo(() => [
-    {
-      Header: "교시/요일",
-      accessor: "time"
-    },
-    {
-      Header: "월요일",
-      accessor: "monday"
-    },
-
-    {
-      Header: "화요일",
-      accessor: "tuesday"
-    },
-    {
-      Header: "수요일",
-      accessor: "wednesday"
-    },
-    {
-      Header: "목요일",
-      accessor: "thursday"
-    },
-    {
-      Header: "금요일",
-      accessor: "friday"
-    }
-  ],
-  []);
-const data = React.useMemo(() => makeSchedule(6), []);
-
 
 
   return (
@@ -307,15 +200,8 @@ const data = React.useMemo(() => makeSchedule(6), []);
         <TypeBtn> <RiCheckboxBlankLine/> <div> 시간 보기 </div> </TypeBtn>
         <TimeTableFont fontSize={fontSize} setFontSize={setFontSize}/>
         </OptionContents>
-
-  {/* <TableStyles fontSize={fontSize}>
-           <Table columns={columns} data={data} />
- {/* <TimeTableSet data={data} columns={columns}/>  */}
-  {/* </TableStyles> */}
-{/* 
-  < BasicTable/> */}
   <TimeTableHeight>
-  <TimeTableGrid/>
+  <TimeTableGrid fontSize={fontSize}/>
 
   </TimeTableHeight>
         </Container>
