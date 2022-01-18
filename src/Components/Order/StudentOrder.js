@@ -35,6 +35,9 @@ const Item = styled.div`
   align-items: center;
   row-gap: 10px;
   position: relative;
+  border: 1px solid ${props => props.theme.cardBorder};
+  background-color: ${props => props.theme.cardBg};
+  opacity: 0.8;
 `;
 
 const RemoveBtn = styled.div`
@@ -52,6 +55,7 @@ display: grid;
 grid-template-columns: 1fr 1fr;
 row-gap: 20px;
 row-gap: 1.25rem;
+
 .order-student-back-btn,
 .order-student-forward-btn
 {
@@ -104,8 +108,8 @@ height : 100%;
 const Student = styled.div`
 border : 1px solid ${props => props.theme.fontColor};
 transition: border 1s ease;
-border-radius: 5px;
-border-radius: 0.3125rem;
+border-radius: 20x;
+border-radius: 1.25rem;
 display: grid;
 align-items: center;
 justify-items: center;
@@ -115,6 +119,10 @@ padding: 1.25rem;
 row-gap: 40px;
 row-gap: 2.5rem;
 grid-column: 1/-1;
+border: 1px solid ${props => props.theme.cardBorder};
+background-color: ${props => props.theme.cardBg};
+opacity: 0.8;
+
 ${customMedia.greaterThan("tablet")`
 grid-column:2/3;
 `}
@@ -145,9 +153,8 @@ const Name = styled.div`
 `;
 
 
-
 const StudentOrder = ({ fontSizeAll, fontSizeOne, seeResultType, selectedStudent, setSelectedStudent, isShuffle }) => {
-
+ 
   const [order, setOrder] = useState(1)
 
   const onClickArrow = (type) => {

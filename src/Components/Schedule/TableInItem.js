@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CardFadeIn } from '../../Animations/Fade';
-
+import RegisterScheduleOne from './RegisterScheduleOne';
 
 const TableItem = styled.div`
   position: relative;
@@ -9,8 +9,6 @@ const TableItem = styled.div`
   border: 1px solid ${props => props.theme.cardBorder};
   background-color: ${props => props.theme.cardBg};
   //background-color: ${props => props.color};
-  
-
   transition: border 1s ease, background-color 1s ease;
   border-radius: 5px;
   border-radius: 0.3125rem;
@@ -30,6 +28,8 @@ const HoverContainer = styled.div`
   display: grid;
   justify-items: center;
   align-items: center;
+  font-size: 0.8rem;
+  font-size: 0.8em;
   position: absolute;
   top: 0;
   left: 0;
@@ -60,9 +60,12 @@ const TableInItem = ({ item, index, color, tag}) => {
     setHoverContainer(false)
   }
 
-  return (<TableItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} index={index} color={color}>
+  return (<TableItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} index={index} color={color} >
     <SubjectName onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} >{item}
-    {hoverContainer===true ? <HoverContainer>{index}{tag}</HoverContainer>:null}
+    {hoverContainer===true ? <HoverContainer>{tag}<RegisterScheduleOne/>
+    {/* 태그정보는 가장 [0]만 나오도록 하고 나머지는 ... 처리  */}
+  
+    </HoverContainer>:null}
   
     </SubjectName>
 

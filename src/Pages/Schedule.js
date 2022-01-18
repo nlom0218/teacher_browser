@@ -1,6 +1,5 @@
 import React, { useMemo,useState } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
-import { useTable } from "react-table";
 import styled from "styled-components";
 import { DivideLeftContents } from "../Components/Shared/styled/DivideContents";
 import { customMedia } from "../styles";
@@ -13,7 +12,8 @@ import { RiCheckboxBlankLine } from "react-icons/ri";
 import TimeTableFont from "../Components/Schedule/TimeTableFont";
 import {TiPlusOutline} from "react-icons/ti";
 import TimeTableGrid from "../Components/Schedule/TimeTableGrid";
-
+import { useReactiveVar } from "@apollo/client";
+import ClassRegisterPage from "../Components/Schedule/ClassRegisterPage";
 
 const Container = styled.div`
   min-height: "100%";
@@ -134,6 +134,9 @@ width: 100%;
 
 const Schedule = () => {
 
+  const isPopup = useReactiveVar(isPopupVar);
+
+
   const media = useMedia();
 
   const [isEdit, setIsEdit] = useState(false);
@@ -143,7 +146,7 @@ const Schedule = () => {
 
   const { register, handleSubmit, getValues } = useForm({
     mode: "onChange",
-    defaultValues: { title: "선생님의 시간표" },
+    defaultValues: { title: "우리반 시간표" },
   });
 
 
@@ -205,6 +208,8 @@ const Schedule = () => {
 
   </TimeTableHeight>
         </Container>
+        {isPopup === "registerSchool" && <ClassRegisterPage />}
+
       </DivideLeftContents>
     </BasicContainer>
   )
