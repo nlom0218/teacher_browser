@@ -56,16 +56,17 @@ const Timer = () => {
     setIsRunning(false);
   };
 
+  const timeRecordsFromLocal = JSON.parse(localStorage.getItem('timeRecords')) ? JSON.parse(localStorage.getItem('timeRecords')) : [];
+
   const saveTime = () => {
     const timestamp = Date.now();
     const savedTime = { timeId: timestamp, minutes, seconds, milliseconds };
-    timeRecords.push(savedTime);
-    console.log(timeRecords);
-    localStorage.setItem('timeRecords', JSON.stringify(timeRecords));
+    const newTimeRecord = [...timeRecordsFromLocal, savedTime];
+    localStorage.setItem('timeRecords', JSON.stringify(newTimeRecord));
   };
 
   let timeRecords = [];
-  const timeRecordsFromLocal = JSON.parse(localStorage.getItem('timeRecords'));
+
 
   // Timer (Countdown)
   let [millisecondsLeft, setMillisecondsLeft] = useState(0);
