@@ -11,6 +11,8 @@ import useMe from "../Hooks/useMe";
 import { color, customMedia } from "../styles";
 import { useReactiveVar } from "@apollo/client";
 import Pop_ChangePw from "../Components/Account/Popup/Pop_ChangePw";
+import { CHECK_PASSWORD_QUERY } from "../Graphql/User/query";
+import { useQuery } from "@apollo/client";
 
 const Container = styled.div`
   padding: 60px 0px;
@@ -60,7 +62,8 @@ const Item = styled.div`
 const EditAccount = () => {
   const isPopup = useReactiveVar(isPopupVar);
   const me = useMe();
-  console.log(me);
+  const { data } = useQuery(CHECK_PASSWORD_QUERY, { variables: { userEmail: me?.email } });
+
   return (
     <BasicContainer menuItem={true}>
       <Container>
@@ -68,7 +71,7 @@ const EditAccount = () => {
           <List>이메일</List>
           <Item>
             {me?.email}
-            <ChangePw userEmail={me?.email}></ChangePw>
+            {data?.checkPw.ok && <ChangePw userEmail={me?.email}></ChangePw>}
           </Item>
         </Changes>
         <Changes>
