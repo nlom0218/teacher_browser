@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 
 export const BtnContainer = styled.div`
-  width: 250px;
+  width: 300px;
   height: 80px;
   border: 1px solid white;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  gap: 15px;
+  padding: 10px;
 `;
 
 export const BtnSpan = styled.span`
