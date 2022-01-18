@@ -25,10 +25,10 @@ const Container = styled.div`
     justify-items: center;
   `}
   svg {
-    color: ${props => props.theme.fontColor};
+    color: ${(props) => props.theme.fontColor};
   }
   /* input {
-    color: ${props => props.theme.fontColor};
+    color: ${(props) => props.theme.fontColor};
     text-align: start;
   } */
 `;
@@ -60,7 +60,7 @@ const DelBtn = styled.input`
   cursor: pointer;
   text-align: center;
   background-color: ${(props) => props.theme.redColor};
-  color: ${props => props.theme.bgColor};
+  color: ${(props) => props.theme.bgColor};
 `;
 
 const CancleBtn = styled.div`
@@ -70,12 +70,11 @@ const CancleBtn = styled.div`
 const Msg = styled.div`
   text-align: center;
   line-height: 120%;
-  color: ${props => props.theme.redColor};
+  color: ${(props) => props.theme.redColor};
   color: red;
 `;
 
 const Pop_ChangePw = ({ userEmail }) => {
-  console.log(userEmail);
   const [errMsg, setErrMsg] = useState(null);
 
   const { register, handleSubmit } = useForm({
@@ -120,7 +119,7 @@ const Pop_ChangePw = ({ userEmail }) => {
             <AccountInput
               {...register("password", {
                 required: true,
-                onChange: () => setErrMsg(undefined)
+                onChange: () => setErrMsg(undefined),
               })}
               type="password"
               placeholder="기존 비밀번호를 입력해주세요."
@@ -132,7 +131,7 @@ const Pop_ChangePw = ({ userEmail }) => {
             <AccountInput
               {...register("newPassword", {
                 required: true,
-                onChange: () => setErrMsg(undefined)
+                onChange: () => setErrMsg(undefined),
               })}
               type="password"
               placeholder="새로운 비밀번호를 입력해주세요."
@@ -144,7 +143,7 @@ const Pop_ChangePw = ({ userEmail }) => {
             <AccountInput
               {...register("newPasswordConfirm", {
                 required: true,
-                onChange: () => setErrMsg(undefined)
+                onChange: () => setErrMsg(undefined),
               })}
               type="password"
               placeholder="새로운 비밀번호를 다시 입력해주세요."
