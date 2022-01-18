@@ -12,7 +12,7 @@ const Container = styled.div`
   row-gap: 0.625rem;
 `;
 
-const Withdrawal = ({ userEmail }) => {
+const Withdrawal = ({ userEmail, isOwn }) => {
   const isPopup = useReactiveVar(isPopupVar);
   const onClickDelBtn = () => {
     inPopup("deleteUser");
@@ -20,9 +20,17 @@ const Withdrawal = ({ userEmail }) => {
 
   return (
     <Container>
-      <BtnContainer onlyone={true}>
-        <DelBtn onClick={onClickDelBtn}>계정 삭제 & 회원 탈퇴</DelBtn>
-      </BtnContainer>
+      {isOwn && (
+        <BtnContainer onlyone={true}>
+          <DelBtn onClick={onClickDelBtn}>계정 삭제 & 회원 탈퇴</DelBtn>
+        </BtnContainer>
+      )}
+      {isOwn || (
+        <BtnContainer onlyone={true}>
+          <DelBtn onClick={onClickDelBtn}>모든 데이터 삭제</DelBtn>
+        </BtnContainer>
+      )}
+
       {isPopup === "deleteUser" && <DeleteUser teacherEmail={userEmail} />}
     </Container>
   );

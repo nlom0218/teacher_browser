@@ -58,9 +58,8 @@ const DeleteUser = ({ teacherEmail }) => {
     } = result;
     if (ok) {
       outPopup();
-      logOutUser();
       navigate(routes.home);
-      window.location.reload();
+      logOutUser(() => window.location.reload());
     }
   };
   const [deleteUser, { loading }] = useMutation(DELETE_USER_MUTATION, { onCompleted });

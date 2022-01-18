@@ -30,12 +30,18 @@ export const logInUser = (token) => {
   localStorage.setItem(TOKEN, token);
   isLoggedInVar(true);
 };
-export const logOutUser = () => {
+
+export const logOutUser = (callback) => {
   localStorage.removeItem(TOKEN);
   isLoggedInVar(false);
 
+  // 네이버 토근 삭제
+  localStorage.removeItem("com.naver.nid.oauth.state_token");
+  localStorage.removeItem("com.naver.nid.access_token");
+
   // 카카오 로그인 시 로그아웃
-  if (window.Kakao.Auth.getAccessToken()) window.Kakao.Auth.logout();
+  if (window.Kakao.Auth.getAccessToken()) window.Kakao.Auth.logout(() => callback());
+  else callback();
 };
 
 // 현재 상태가 파업인지 아닌지 설정하는 변수와 팝업창으로 이동하기와 벗어나기 함수
