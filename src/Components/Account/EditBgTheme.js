@@ -3,8 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { ME_QUERY } from "../../Hooks/useMe";
 import { useForm } from "react-hook-form";
-import BtnContainer from "./styled/BtnContainer";
-import RegisterBtn from "./styled/RegisterBtn";
+import { BsCheckLg } from "react-icons/bs";
 import { UPDATE_USER_BGTHEME_MUTATION } from "../../Graphql/User/mutation";
 import { RiCheckboxBlankLine, RiCheckboxLine } from 'react-icons/ri';
 import { customMedia } from "../../styles";
@@ -19,9 +18,12 @@ const ColorBgTheme = styled.div`
   row-gap: 10px;
   row-gap: 0.625rem;
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   column-gap: 10px;
   column-gap: 0.625rem;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: repeat(9, 1fr);
+  `}
 `
 
 const Title = styled.div`
@@ -35,6 +37,12 @@ const ColorBgThemeItem = styled.div`
   border-radius: 5px;
   border-radius: 0.3125rem;
   cursor: pointer;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  svg {
+    /* filter: drop-shadow(0px 0px 2px rgb(255, 255, 255)) */
+  }
 `
 
 const RandomBgTheme = styled.div`
@@ -123,6 +131,7 @@ const EditBg = ({ userEmail, bgTheme }) => {
             color={item}
             onClick={() => onClickColorBgTheme(item)}
           >
+            {bgTheme === item && <BsCheckLg />}
           </ColorBgThemeItem>
         })}
       </ColorBgTheme>
