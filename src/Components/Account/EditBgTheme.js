@@ -11,11 +11,33 @@ import { customMedia } from "../../styles";
 
 const Container = styled.div`
   display: grid;
-  row-gap: 10px;
-  row-gap: 0.625rem;
+  row-gap: 40px;
+  row-gap: 2.5rem;
 `;
 
-const BgThemeContainer = styled.div`
+const ColorBgTheme = styled.div`
+  row-gap: 10px;
+  row-gap: 0.625rem;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  column-gap: 10px;
+  column-gap: 0.625rem;
+`
+
+const Title = styled.div`
+  grid-column: 1 / -1;
+`
+
+const ColorBgThemeItem = styled.div`
+  height: 35px;
+  height: 2.1875rem;
+  background-color: ${props => props.color};
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+`
+
+const RandomBgTheme = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   justify-items: flex-start;
@@ -45,6 +67,11 @@ const Form = styled.form`
 `;
 
 const EditBg = ({ userEmail, bgTheme }) => {
+  const bgColorArr = [
+    "#F44336", "#E91E62", "#9C27B0", "#673AB6", "#3F50B5", "#2096F3",
+    "#00A8F4", "#00BCD4", "#009688", "#4CAF4F", "#8BC24A", "#CDDC39",
+    "#FFEB3A", "#FFC007", "#FF9800", "#FF5721", "#795548", "#607D8A"
+  ]
   const [updateBgTheme] = useMutation(UPDATE_USER_BGTHEME_MUTATION, {
     refetchQueries: [{ query: ME_QUERY }],
   });
@@ -56,6 +83,15 @@ const EditBg = ({ userEmail, bgTheme }) => {
   if (check && bgTheme) {
     setCheck(false);
     setValue("bgTheme", bgTheme);
+  }
+
+  const onClickColorBgTheme = (color) => {
+    updateBgTheme({
+      variables: {
+        userEmail: userEmail,
+        bgTheme: color,
+      },
+    });
   }
 
   const onClickBgTheme = (bgTheme) => {
@@ -79,7 +115,19 @@ const EditBg = ({ userEmail, bgTheme }) => {
 
   return (
     <Container>
-      <BgThemeContainer>
+      <ColorBgTheme>
+        <Title>✲ 단색</Title>
+        {bgColorArr.map((item, index) => {
+          return <ColorBgThemeItem
+            key={index}
+            color={item}
+            onClick={() => onClickColorBgTheme(item)}
+          >
+          </ColorBgThemeItem>
+        })}
+      </ColorBgTheme>
+      <RandomBgTheme>
+        <Title>✲ 랜덤 이미지</Title>
         <BgThemeItem onClick={() => onClickBgTheme("nature")}>
           {bgTheme === "nature" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
           <div>자연</div>
@@ -112,7 +160,7 @@ const EditBg = ({ userEmail, bgTheme }) => {
           {bgTheme === "school" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
           <div>학교</div>
         </BgThemeItem>
-      </BgThemeContainer>
+      </RandomBgTheme>
       {/* <Form onChange={handleSubmit(onChange)}>
         <select {...register("bgTheme")}>
           <option value="">배경화면 테마를 선택해주세요.</option>
