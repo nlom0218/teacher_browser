@@ -35,7 +35,7 @@ cursor: pointer;
 const RegisterScheduleOne = ({ subjectName }) => {
 
   const onClickRegisterClassOne = () => {
-    inPopup("registerSchool")
+    inPopup("registerClass")
   }
 
 

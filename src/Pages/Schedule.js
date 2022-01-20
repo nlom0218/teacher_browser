@@ -8,12 +8,13 @@ import { BtnFadeIn } from "../Animations/Fade";
 import { inPopup, isPopupVar } from "../apollo";
 import useMedia from "../Hooks/useMedia";
 import { useForm } from "react-hook-form";
-import { RiCheckboxBlankLine } from "react-icons/ri";
+import { RiCheckboxBlankLine,RiCheckboxLine } from "react-icons/ri";
 import TimeTableFont from "../Components/Schedule/TimeTableFont";
 import {TiPlusOutline} from "react-icons/ti";
 import TimeTableGrid from "../Components/Schedule/TimeTableGrid";
 import { useReactiveVar } from "@apollo/client";
-import ClassRegisterPage from "../Components/Schedule/ClassRegisterPage";
+import ClassRegisterPage from "../Components/Schedule/Popup/ClassRegisterPage";
+import ClassTimeSet from "../Components/Schedule/Popup/ClassTimeSet";
 
 const Container = styled.div`
   min-height: "100%";
@@ -142,6 +143,7 @@ const Schedule = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [title, setTitle] = useState(undefined);
   const [fontSize, setFontSize] = useState(1)
+  const [viewTime, setViewTime] = useState(false);
 
 
   const { register, handleSubmit, getValues } = useForm({
@@ -163,11 +165,13 @@ const Schedule = () => {
   };
   
    const onClickTimeSetBtn = () => {
-
+    inPopup("registerTimeSet");
    }
    const onClickAddSub = () =>{}
 
-
+   const onClickTimeviewBtn = () => {
+    setViewTime(true);
+   }
 
   return (
     <BasicContainer menuItem={true}>
@@ -199,8 +203,8 @@ const Schedule = () => {
           </AddSub>
         </TopContents>
         <OptionContents>
-        <OptionBtn onClick={() => onClickTimeSetBtn}> 시간설정하기 </OptionBtn>
-        <TypeBtn> <RiCheckboxBlankLine/> <div> 시간 보기 </div> </TypeBtn>
+        <OptionBtn onClick={() => onClickTimeSetBtn}> 시간설정 </OptionBtn>
+        <TypeBtn onClick={onClickTimeviewBtn}> {viewTime === "true" ? <RiCheckboxLine/> : <RiCheckboxBlankLine/>} <div> 시간 보기 </div> </TypeBtn>
         <TimeTableFont fontSize={fontSize} setFontSize={setFontSize}/>
         </OptionContents>
   <TimeTableHeight>
@@ -208,8 +212,9 @@ const Schedule = () => {
 
   </TimeTableHeight>
         </Container>
-        {isPopup === "registerSchool" && <ClassRegisterPage />}
-
+        {/* {isPopup === "registerClass" && <ClassRegisterPage />} */}
+        {isPopup === "registerClass" && <ClassTimeSet />}
+        {isPopup === "registerTimeSet" && <ClassTimeSet />}
       </DivideLeftContents>
     </BasicContainer>
   )

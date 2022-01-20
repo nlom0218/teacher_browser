@@ -68,10 +68,6 @@ const TableInItem = ({ item, index, color, tag}) => {
     </HoverContainer>:null}
   
     </SubjectName>
-
-  
-
-
     
   </TableItem >);
 }

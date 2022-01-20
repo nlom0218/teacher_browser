@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useMutation } from '@apollo/client';
 import { useForm } from 'react-hook-form';
-import useMe, { ME_QUERY } from '../../Hooks/useMe';
-import PopupContainer from '../Shared/PopupContainer';
-import { outPopup } from '../../apollo';
-import { UPDATE_USER_MUTATION } from '../../Graphql/User/mutation';
-import DetailClassName from './DetailClassName';
-import DetailClassColor from './DetailClassColor';
-import DetailClassTag from './DetailClasstag';
+import useMe, { ME_QUERY } from '../../../Hooks/useMe';
+import PopupContainer from '../../Shared/PopupContainer';
+import { outPopup } from '../../../apollo';
+import { UPDATE_USER_MUTATION } from '../../../Graphql/User/mutation';
+import DetailStartTime from './DetailStartTime';
 
 const RegisterForm = styled.form`
 width: 100%;
@@ -23,7 +21,7 @@ svg {
   cursor: pointer;
 }
 `
-const ClassRegisterPage = () => {
+const ClassTimeSet = (item={item}) => {
   const me = useMe()
 
   const [preventSubmit, setPreventSubmit] = useState(false)
@@ -54,13 +52,11 @@ const ClassRegisterPage = () => {
   return (<PopupContainer>
     <RegisterForm onSubmit={handleSubmit(onSubmit)}>
         
-    <DetailClassName/>
-    <DetailClassColor/>
-    <DetailClassTag/>
+   <DetailStartTime/>
     </RegisterForm>
 
   
   </PopupContainer>);
 }
 
-export default ClassRegisterPage;
+export default ClassTimeSet;

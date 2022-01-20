@@ -2,13 +2,13 @@ import { useMutation } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { BtnFadeIn } from '../../Animations/Fade';
-import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
-import { SEE_ALL_STUDENT_QUERY, SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
-import useMedia from '../../Hooks/useMedia';
-import { customMedia } from '../../styles';
-import { DetailStudentLayout,DetailTitle } from '../List/styled/DetailStudent';
-import InputUnderLine from '../List/InputUnderLine';
+import { BtnFadeIn } from '../../../Animations/Fade';
+import { EDIT_STUDENT_MUTATION } from '../../../Graphql/Student/mutation';
+import { SEE_ALL_STUDENT_QUERY, SEE_ONE_STUDENT_QUERY } from '../../../Graphql/Student/query';
+import useMedia from '../../../Hooks/useMedia';
+import { customMedia } from '../../../styles';
+import { DetailStudentLayout,DetailTitle } from '../../List/styled/DetailStudent';
+import InputUnderLine from '../../List/InputUnderLine';
 
 const DetailNumberForm = styled.form`
   padding: 10px 0px;
