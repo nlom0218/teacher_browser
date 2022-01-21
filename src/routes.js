@@ -1,26 +1,27 @@
-const HOME = "/"
-const TODO = "/todo"
-const CALENDAR = "/calendar"
-const PAGELINK = "/pageLink"
-const MENU = "/menu"
+const HOME = "/";
+const TODO = "/todo";
+const CALENDAR = "/calendar";
+const PAGELINK = "/pageLink";
+const MENU = "/menu";
 
 // menu link
-const TIMER = "/timer"
-const DRAW = "/draw"
-const SWAP = "/swap"
-const ORDER = "/order"
-const LUNCHMENU = "/lunchmenu"
-const SCHEDULE = "/schedule"
-const JOURNAL = "/journal"
-const LIST = "/list"
+const TIMER = "/timer";
+const DRAW = "/draw";
+const SWAP = "/swap";
+const ORDER = "/order";
+const LUNCHMENU = "/lunchmenu";
+const SCHEDULE = "/schedule";
+const JOURNAL = "/journal";
+const LIST = "/list";
 
 // account link
-const LOGIN = "/login"
-const CREATEACCOUNT = "/create-account"
-const EDITACCOUNT = "/edit-account"
-const NAVERLOGINCALLBACK = "/naverLogin"
+const LOGIN = "/login";
+const CREATEACCOUNT = "/create-account";
+const EDITACCOUNT = "/edit-account";
+const NAVERLOGINCALLBACK = "/naverLogin";
+const FINDPASSWORD = "/find-password";
 
-const TRASH = "/trash"
+const TRASH = "/trash";
 
 const routes = {
   home: HOME,
@@ -44,8 +45,9 @@ const routes = {
   createAccount: CREATEACCOUNT,
   editAccount: EDITACCOUNT,
   naverLoginCallBack: NAVERLOGINCALLBACK,
+  findPassword: FINDPASSWORD,
 
-  trash: TRASH
-}
+  trash: TRASH,
+};
 
-export default routes
+export default routes;
