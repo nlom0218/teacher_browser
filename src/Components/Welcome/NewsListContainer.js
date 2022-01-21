@@ -50,8 +50,8 @@ const StartIcon = styled.div`
   svg {
     /* color: yellow; */
     display: flex;
-    font-size: 2em;
-    font-size: 2rem;
+    font-size: 1.75em;
+    font-size: 1.75rem;
   }
 `
 

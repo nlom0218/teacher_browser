@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -29,7 +28,40 @@ const Title = styled.div`
 
 const Description = styled.div``
 
+const Date = styled.div`
+  justify-self: flex-end;
+`
+
 const NewsItem = ({ item }) => {
+  console.log(new window.Date(item.pubDate));
+  const date = new window.Date(item.pubDate)
+  const processSetDay = () => {
+    const day = date.getDay()
+    if (day === 1) {
+      return "월요일"
+    } else if (day === 2) {
+      return "화요일"
+    } else if (day === 3) {
+      return "수요일"
+    } else if (day === 4) {
+      return "목요일"
+    } else if (day === 5) {
+      return "금요일"
+    } else if (day === 6) {
+      return "토요일"
+    } else if (day === 0) {
+      return "일요일"
+    }
+  }
+  const processSetDate = () => {
+    return `${date.getFullYear()}년 ${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, 0)}월 ${date.getDate().toString().padStart(2, 0)}일`
+  }
+  const processSetTime = () => {
+    return `${date.getHours()}:${(date.getMinutes())}`
+  }
+
   const title = item.title.replace(/&quot;/gi, "'").split("b>")
   const description = item.description.replace(/&quot;/gi, "'").split("b>")
 
@@ -59,6 +91,9 @@ const NewsItem = ({ item }) => {
         }
       })}
     </Description>
+    <Date>
+      {processSetDate()} {processSetDay()} {processSetTime()}
+    </Date>
   </Container>);
 }
 
