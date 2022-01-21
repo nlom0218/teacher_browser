@@ -31,7 +31,7 @@ const Description = styled.div``
 
 const NewsItem = ({ item }) => {
   const title = item.title.replace(/&quot;/gi, "'").split("b>")
-  const description = item.description.split("b>")
+  const description = item.description.replace(/&quot;/gi, "'").split("b>")
 
   const onClickNews = () => {
     window.open(item.link, "__blank")

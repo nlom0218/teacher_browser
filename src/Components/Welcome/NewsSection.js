@@ -12,7 +12,7 @@ const Container = styled.div`
 `
 
 const NewsSection = () => {
-  const [search, setSeacrh] = useState("초등학교")
+  const [search, setSeacrh] = useState(undefined)
   const [start, setStart] = useState(1) // => page
   const [sort, setSort] = useState("sim")
   const { data, loading } = useQuery(GET_NEWS_QUERY, {
@@ -20,10 +20,16 @@ const NewsSection = () => {
       search,
       start,
       sort
-    }
+    },
+    skip: !search
   })
   return (<Container>
-    <SearchContainer />
+    <SearchContainer
+      search={search}
+      setSeacrh={setSeacrh}
+      sort={sort}
+      setSort={setSort}
+    />
     <NewsListContainer search={search} data={data} />
   </Container>);
 }

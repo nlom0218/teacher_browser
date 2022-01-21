@@ -18,6 +18,7 @@ const SNewsListContainer = styled.div`
     display: none; // Chrome, Safari, Opera
   }
   display: grid;
+  align-items: flex-start;
   row-gap: 10px;
   row-gap: 0.625rem;
 `
@@ -56,15 +57,19 @@ const StartIcon = styled.div`
 
 const NewsListContainer = ({ search, data }) => {
   return (<SNewsListContainer>
-    <SearchResult>
-      <SearchTitle><span className="news_search_title">{search}</span> NAVER NEWS 검색 결과</SearchTitle>
-      <StartIcon><BsStar /></StartIcon>
-    </SearchResult>
-    <NewsList>
-      {data?.getNews?.map((item, index) => {
-        return <NewsItem key={index} item={item} />
-      })}
-    </NewsList>
+    {data && <React.Fragment>
+      <SearchResult>
+        <SearchTitle><span className="news_search_title">{search}</span> NAVER NEWS 검색 결과</SearchTitle>
+        <StartIcon><BsStar /></StartIcon>
+      </SearchResult>
+      <NewsList>
+        {data?.getNews?.map((item, index) => {
+          return <NewsItem key={index} item={item} />
+        })}
+      </NewsList>
+    </React.Fragment>
+
+    }
   </SNewsListContainer>);
 }
 
