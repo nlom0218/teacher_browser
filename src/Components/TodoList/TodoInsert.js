@@ -33,12 +33,12 @@ const Input = styled.input`
 `;
 
 const CircleButton = styled.button`
-  background: #38d9a9;
+  background: #828282;
   &:hover {
-    background: #63e6be;
+    background: #969696;
   }
   &:active {
-    background: #20c997;
+    background: #a0a0a0;
   }
 
   z-index: 5;

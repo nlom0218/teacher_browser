@@ -8,6 +8,7 @@ import { inputLine } from '../Animations/InputLine';
 import { BtnFadeIn } from '../Animations/Fade';
 import TodoInsert from '../Components/TodoList/TodoInsert';
 import { MdAdd } from 'react-icons/md';
+import InputBox from '../Components/TodoList/InputBox';
 
 const Container = styled.div`
   display : grid;
@@ -179,14 +180,15 @@ const TodoList = () => {
           />}
         </Title>
       </TopContents>
-      <React.Fragment>
+      
         <OptionContents>
           <OptionBtn>할 일 목록</OptionBtn>
           <AddSub>
             <MdAdd/>
           </AddSub>
         </OptionContents>
-      </React.Fragment>
+      
+      <InputBox></InputBox>
       <TodoInsert></TodoInsert>
     </Container>
   </BasicContainer>);
