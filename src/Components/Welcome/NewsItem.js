@@ -2,12 +2,28 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
+  padding: 20px;
+  padding: 1.25rem;
+  cursor: pointer;
+  display: grid;
+  row-gap: 10px;
+  row-gap: 0.625rem;
+  line-height: 120%;
+  :not(:last-child) {
+    border-bottom: 1px solid ${props => props.theme.fontColor};
+    transition: border-bottom 1s ease;
+  }
+  :hover {
+    background-color: ${props => props.theme.contentBgColor};
+  }
   .bold_text_news {
     font-weight: 600;
   }
 `
 
 const Title = styled.div`
+  font-size:  1.125em;
+  font-size:  1.125rem;
 `
 
 const Description = styled.div``
