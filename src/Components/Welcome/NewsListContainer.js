@@ -47,7 +47,7 @@ const SearchTitle = styled.div`
 const StartIcon = styled.div`
   cursor: pointer;
   svg {
-    color: yellow;
+    /* color: yellow; */
     display: flex;
     font-size: 2em;
     font-size: 2rem;
@@ -58,7 +58,7 @@ const NewsListContainer = ({ search, data }) => {
   return (<SNewsListContainer>
     <SearchResult>
       <SearchTitle><span className="news_search_title">{search}</span> NAVER NEWS 검색 결과</SearchTitle>
-      <StartIcon><BsStarFill /></StartIcon>
+      <StartIcon><BsStar /></StartIcon>
     </SearchResult>
     <NewsList>
       {data?.getNews?.map((item, index) => {

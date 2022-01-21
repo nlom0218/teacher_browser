@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -8,13 +9,13 @@ const Container = styled.div`
   display: grid;
   row-gap: 10px;
   row-gap: 0.625rem;
-  line-height: 120%;
+  line-height: 160%;
   :not(:last-child) {
     border-bottom: 1px solid ${props => props.theme.fontColor};
     transition: border-bottom 1s ease;
   }
   :hover {
-    background-color: ${props => props.theme.contentBgColor};
+    background-color: ${props => props.theme.bgColor};
   }
   .bold_text_news {
     font-weight: 600;
@@ -31,7 +32,11 @@ const Description = styled.div``
 const NewsItem = ({ item }) => {
   const title = item.title.replace(/&quot;/gi, "'").split("b>")
   const description = item.description.split("b>")
-  return (<Container>
+
+  const onClickNews = () => {
+    window.open(item.link, "__blank")
+  }
+  return (<Container onClick={onClickNews}>
     <Title>
       {title.map((item, index) => {
         if (item[item.length - 1] === "<") {
