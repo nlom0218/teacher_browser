@@ -124,6 +124,7 @@ const SearchContainer = ({ search, setSeacrh, sort, setSort, favoriteNews, setSt
   const onSubmit = (data) => {
     const { search } = data
     setSeacrh(search)
+    setStart(1)
   }
 
   const onClickSeeType = (type) => {
@@ -163,7 +164,7 @@ const SearchContainer = ({ search, setSeacrh, sort, setSort, favoriteNews, setSt
       </SeeType>
       <FavoriteNews>
         <Title><BsStarFill /><div>즐겨찾기</div></Title>
-        <FavoriteNewsList favoriteNews={favoriteNews} setSeacrh={setSeacrh} />
+        <FavoriteNewsList favoriteNews={favoriteNews} setSeacrh={setSeacrh} setStart={setStart} />
       </FavoriteNews>
     </SearchBox>
   </SSearchContainer>);
