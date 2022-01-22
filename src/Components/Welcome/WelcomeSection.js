@@ -27,8 +27,8 @@ const MoveIcon = styled.div`
   cursor: pointer;
   svg {
     display: flex;
-    font-size: 2em;
-    font-size: 2rem;
+    font-size: 1.5em;
+    font-size: 1.5rem;
   }
 `
 
@@ -68,7 +68,9 @@ const WelcomeSection = ({ welcomeSection, init, setInit }) => {
   }
 
   return (<MoveContainer welcomeSection={welcomeSection} init={init}>
-    <MoveIcon onClick={onClickMoveIcon}><FaArrowCircleRight /></MoveIcon>
+    <MoveIcon onClick={onClickMoveIcon}>
+      <FaArrowCircleRight />
+    </MoveIcon>
     <WelcomeTitle>WELCOME TO{media !== "Desktop" && <br />} TEACHER CAN</WelcomeTitle>
   </MoveContainer>);
 }

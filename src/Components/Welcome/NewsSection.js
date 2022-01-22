@@ -27,8 +27,8 @@ const MoveIcon = styled.div`
   cursor: pointer;
   svg {
     display: flex;
-    font-size: 2em;
-    font-size: 2rem;
+    font-size: 1.5em;
+    font-size: 1.5rem;
   }
 `
 

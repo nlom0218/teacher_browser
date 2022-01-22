@@ -48,8 +48,8 @@ const Name = styled.input`
   width: 100%;
   font-size: 1.5em;
   font-size: 1.5rem;
-  padding: 10px 20px;
-  padding: 0.625rem 1.25rem;
+  padding: 10px 0px;
+  padding: 0.625rem 0rem;
   /* background-color: red; */
   ::placeholder {
     color: ${props => props.theme.fontColor};
