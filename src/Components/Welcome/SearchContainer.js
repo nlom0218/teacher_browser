@@ -2,6 +2,8 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { RiCheckboxBlankLine, RiCheckboxLine } from 'react-icons/ri';
+import { BsStarFill } from "react-icons/bs"
+import FavoriteNewsList from './FavoriteNewsList';
 
 const SSearchContainer = styled.div`
   top: 0;
@@ -90,6 +92,19 @@ const SeeTypeIcon = styled.div`
   }
 `
 
+const FavoriteNews = styled.div``
+
+const Title = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 10px;
+  column-gap: 0.625rem;
+  svg {
+    display: flex;
+    color: yellow;
+  }
+`
+
 const SearchContainer = ({ seacrh, setSeacrh, sort, setSort }) => {
 
   const { register, handleSubmit } = useForm({
@@ -131,6 +146,10 @@ const SearchContainer = ({ seacrh, setSeacrh, sort, setSort }) => {
           <div>최신순</div>
         </SeeTypeIcon>
       </SeeType>
+      <FavoriteNews>
+        <Title><BsStarFill /><div>즐겨찾기</div></Title>
+        <FavoriteNewsList />
+      </FavoriteNews>
     </SearchBox>
   </SSearchContainer>);
 }

@@ -33,7 +33,6 @@ const Date = styled.div`
 `
 
 const NewsItem = ({ item }) => {
-  console.log(new window.Date(item.pubDate));
   const date = new window.Date(item.pubDate)
   const processSetDay = () => {
     const day = date.getDay()
@@ -59,7 +58,7 @@ const NewsItem = ({ item }) => {
       .padStart(2, 0)}월 ${date.getDate().toString().padStart(2, 0)}일`
   }
   const processSetTime = () => {
-    return `${date.getHours()}:${(date.getMinutes())}`
+    return `${date.getHours().toString().padStart(2, 0)}:${(date.getMinutes().toString().padStart(2, 0))}`
   }
 
   const title = item.title.replace(/&quot;/gi, "'").split("b>")
