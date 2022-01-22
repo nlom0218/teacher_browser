@@ -30,9 +30,14 @@ const NewsSection = ({ favoriteNews, userEmail }) => {
       setSeacrh={setSeacrh}
       sort={sort}
       setSort={setSort}
-      userEmail={userEmail}
+      favoriteNews={favoriteNews}
     />
-    <NewsListContainer search={search} data={data} userEmail={userEmail} favoriteNews={favoriteNews} />
+    <NewsListContainer
+      search={search}
+      data={data}
+      userEmail={userEmail}
+      favoriteNews={favoriteNews}
+    />
   </Container>);
 }
 

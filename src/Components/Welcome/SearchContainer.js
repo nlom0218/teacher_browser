@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { RiCheckboxBlankLine, RiCheckboxLine } from 'react-icons/ri';
@@ -38,7 +38,8 @@ const SearchBox = styled.div`
   display: grid;
   grid-template-rows: auto auto 1fr;
   align-items: flex-start;
-  row-gap: 20px;
+  row-gap: 30px;
+  row-gap: 1.875rem;
 `
 
 const Form = styled.form`
@@ -50,7 +51,7 @@ const Form = styled.form`
 
 const Input = styled.input`
   width: 100%;
-  background-color: ${props => props.theme.hoverColor};
+  background-color: ${props => props.theme.cardBg};
   color: ${props => props.theme.fontColor};
   transition: background-color 1s ease, color 1s ease;
   padding: 15px 20px;
@@ -69,9 +70,10 @@ const SubmitInput = styled.input`
   padding: 0.9375rem 1.25rem;
   border-radius: 5px;
   border-radius: 0.3125rem;
+  cursor: pointer;
   background-color: ${props => props.theme.btnBgColor};
   color: ${props => props.theme.bgColor};
-  transition: color 1s ease;
+  transition: color 1s ease, background-color 1s ease;
 `
 
 const SeeType = styled.div`
@@ -92,7 +94,11 @@ const SeeTypeIcon = styled.div`
   }
 `
 
-const FavoriteNews = styled.div``
+const FavoriteNews = styled.div`
+  display: grid;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+`
 
 const Title = styled.div`
   display: grid;
@@ -105,10 +111,10 @@ const Title = styled.div`
   }
 `
 
-const SearchContainer = ({ seacrh, setSeacrh, sort, setSort, userEmail }) => {
+const SearchContainer = ({ search, setSeacrh, sort, setSort, favoriteNews }) => {
 
-  const { register, handleSubmit } = useForm({
-    mode: "onChange"
+  const { register, handleSubmit, setValue } = useForm({
+    mode: "onChange",
   })
 
   const onSubmit = (data) => {
@@ -119,6 +125,10 @@ const SearchContainer = ({ seacrh, setSeacrh, sort, setSort, userEmail }) => {
   const onClickSeeType = (type) => {
     setSort(type)
   }
+
+  useEffect(() => {
+    setValue("search", search)
+  }, [search])
 
   return (<SSearchContainer>
     <SearchBox>
@@ -148,7 +158,7 @@ const SearchContainer = ({ seacrh, setSeacrh, sort, setSort, userEmail }) => {
       </SeeType>
       <FavoriteNews>
         <Title><BsStarFill /><div>즐겨찾기</div></Title>
-        <FavoriteNewsList />
+        <FavoriteNewsList favoriteNews={favoriteNews} setSeacrh={setSeacrh} />
       </FavoriteNews>
     </SearchBox>
   </SSearchContainer>);
