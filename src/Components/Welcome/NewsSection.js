@@ -5,11 +5,19 @@ import styled from 'styled-components';
 import SearchContainer from './SearchContainer';
 import NewsListContainer from './NewsListContainer';
 import useMe from '../../Hooks/useMe';
+import { customMedia } from '../../styles';
 
 const Container = styled.div`
-  position: relative;
-  min-height: 100%;
-  max-height: 100%;
+  display: grid;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  padding: 20px;
+  padding: 1.25rem;
+  ${customMedia.greaterThan("desktop")`
+    position: relative;
+    min-height: 100%;
+    max-height: 100%;
+  `}
 `
 
 const NewsSection = ({ favoriteNews, userEmail }) => {

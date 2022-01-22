@@ -4,24 +4,28 @@ import styled from 'styled-components';
 import { RiCheckboxBlankLine, RiCheckboxLine } from 'react-icons/ri';
 import { BsStarFill } from "react-icons/bs"
 import FavoriteNewsList from './FavoriteNewsList';
+import { customMedia } from '../../styles';
 
 const SSearchContainer = styled.div`
-  top: 0;
-  left: 0;
-  width: 40%;
-  padding: 20px;
-  position: absolute;
-  min-height: 100%;
-  max-height: 100%;
-  overflow: scroll;
-  -ms-overflow-style: none; // IE and Edge
-  scrollbar-width: none; // Firefox
-  ::-webkit-scrollbar {
-    display: none; // Chrome, Safari, Opera
-  }
-  display: grid;
-  grid-template-rows: 1fr;
-  align-items: flex-start;
+
+  ${customMedia.greaterThan("desktop")`
+    top: 0;
+    left: 0;
+    width: 40%;
+    padding: 20px;
+    position: absolute;
+    min-height: 100%;
+    max-height: 100%;
+    overflow: scroll;
+    -ms-overflow-style: none; // IE and Edge
+    scrollbar-width: none; // Firefox
+    ::-webkit-scrollbar {
+      display: none; // Chrome, Safari, Opera
+    }
+    display: grid;
+    grid-template-rows: 1fr;
+    align-items: flex-start;
+  `}
 `
 
 const SearchBox = styled.div`

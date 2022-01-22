@@ -5,30 +5,33 @@ import { BsStar, BsStarFill } from "react-icons/bs"
 import { useMutation } from '@apollo/client';
 import { SET_FAVORITE_NEWS_MUTATION } from '../../Graphql/News/mutation';
 import { ME_QUERY } from '../../Hooks/useMe';
+import { customMedia } from '../../styles';
 
 const SNewsListContainer = styled.div`
-  padding: 20px;
-  top: 0;
-  right: 0;
-  width: 60%;
-  position: absolute;
-  min-height: 100%;
-  max-height: 100%;
-  overflow: scroll;
-  -ms-overflow-style: none; // IE and Edge
-  scrollbar-width: none; // Firefox
-  ::-webkit-scrollbar {
-    display: none; // Chrome, Safari, Opera
-  }
   display: grid;
   align-items: flex-start;
   row-gap: 10px;
   row-gap: 0.625rem;
-  .empty_news_list {
+  ${customMedia.greaterThan("desktop")`
     padding: 20px;
-    padding: 1.25rem;
-    text-align: center;
-  }
+    top: 0;
+    right: 0;
+    width: 60%;
+    position: absolute;
+    min-height: 100%;
+    max-height: 100%;
+    overflow: scroll;
+    -ms-overflow-style: none; // IE and Edge
+    scrollbar-width: none; // Firefox
+    ::-webkit-scrollbar {
+      display: none; // Chrome, Safari, Opera
+    }
+    .empty_news_list {
+      padding: 20px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+  `}
 `
 
 const NewsList = styled.div`
