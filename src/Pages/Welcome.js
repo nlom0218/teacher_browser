@@ -8,12 +8,12 @@ import WelcomeSection from '../Components/Welcome/WelcomeSection';
 import useMe from '../Hooks/useMe';
 
 const Container = styled.div`
-  display: grid;
-  grid-template-rows: 40px auto;
-  row-gap: 20px;
 `
 
-const WelcomeNavBar = styled.div``
+const WelcomeNavBar = styled.div`
+  position: absolute;
+  z-index: 10;
+`
 
 const Welcome = () => {
   const welcomeSection = useReactiveVar(welcomeSectionVar)
@@ -21,23 +21,17 @@ const Welcome = () => {
 
   const [init, setInit] = useState(true)
 
-  const onClickNavBarIcon = () => {
-    setInit(false)
-    if (welcomeSection === "welcome") {
-      moveNews()
-    } else {
-      moveWelcome()
-    }
-  }
   return (<BasicContainer>
     <Container>
-      <WelcomeNavBar onClick={onClickNavBarIcon}>dddd</WelcomeNavBar>
+      <WelcomeNavBar></WelcomeNavBar>
       <WelcomeSection
         init={init}
+        setInit={setInit}
         welcomeSection={welcomeSection}
       />
       <NewsSection
         init={init}
+        setInit={setInit}
         welcomeSection={welcomeSection}
         userEmail={me?.email}
         favoriteNews={me?.favoriteNews}

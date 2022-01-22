@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_NEWS_QUERY } from '../../Graphql/News/query';
 import styled from 'styled-components';
@@ -6,15 +6,30 @@ import SearchContainer from './SearchContainer';
 import NewsListContainer from './NewsListContainer';
 import { customMedia } from '../../styles';
 import { hideNewsSection, seeNewsSection } from '../../Animations/WelcomeSectionAni';
+import { FaArrowCircleLeft } from 'react-icons/fa';
+import { moveWelcome } from '../../apollo';
 
 const MoveContainer = styled.div`
+  display: ${props => props.isSeeDisplay};
   position: absolute;
-  top: 40px;
-  top: 2.5rem;
+  top: 0;
   bottom: 0;
   right: ${props => props.welcomeSection === "welcome" ? "-100%" : 0};
   left: ${props => props.welcomeSection === "welcome" ? "100%" : 0};
   animation: ${props => !props.init && (props.welcomeSection === "welcome" ? hideNewsSection : seeNewsSection)} 1s ease forwards;
+`
+
+const MoveIcon = styled.div`
+  position: absolute;
+  top: 1%;
+  left: 1%;
+  z-index: 10;
+  cursor: pointer;
+  svg {
+    display: flex;
+    font-size: 2em;
+    font-size: 2rem;
+  }
 `
 
 const Container = styled.div`
@@ -30,7 +45,8 @@ const Container = styled.div`
   `}
 `
 
-const NewsSection = ({ favoriteNews, userEmail, welcomeSection, init }) => {
+const NewsSection = ({ favoriteNews, userEmail, welcomeSection, init, setInit }) => {
+  const [isSeeDisplay, setIsSeeDisplay] = useState(welcomeSection === "welcome" ? "none" : "block")
   const [search, setSeacrh] = useState(undefined)
   const [start, setStart] = useState(1) // => page
   const [sort, setSort] = useState("sim")
@@ -42,7 +58,22 @@ const NewsSection = ({ favoriteNews, userEmail, welcomeSection, init }) => {
     },
     skip: !search
   })
-  return (<MoveContainer welcomeSection={welcomeSection} init={init}>
+  const onClickMoveIcon = () => {
+    setInit(false)
+    moveWelcome()
+    setTimeout(() => {
+      setIsSeeDisplay("none")
+    }, 1000)
+  }
+
+  useEffect(() => {
+    if (welcomeSection === "news") {
+      setIsSeeDisplay("block")
+    }
+  }, [welcomeSection])
+
+  return (<MoveContainer welcomeSection={welcomeSection} init={init} isSeeDisplay={isSeeDisplay}>
+    <MoveIcon onClick={onClickMoveIcon}><FaArrowCircleLeft /></MoveIcon>
     <Container>
       <SearchContainer
         search={search}

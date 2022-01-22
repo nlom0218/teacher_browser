@@ -7,12 +7,12 @@ import FavoriteNewsList from './FavoriteNewsList';
 import { customMedia } from '../../styles';
 
 const SSearchContainer = styled.div`
-
   ${customMedia.greaterThan("desktop")`
     top: 0;
     left: 0;
     width: 40%;
     padding: 20px;
+    padding: 1.25rem;
     position: absolute;
     min-height: 100%;
     max-height: 100%;
