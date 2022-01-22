@@ -1,8 +1,11 @@
 import React from 'react';
 import { FaArrowCircleRight } from 'react-icons/fa';
 import styled from 'styled-components';
+import { welcomeTitleAni } from '../../Animations/TextColorAni';
 import { hideWelcomeSection, seeWelcomSection } from '../../Animations/WelcomeSectionAni';
 import { moveNews } from '../../apollo';
+import useMedia from '../../Hooks/useMedia';
+import { customMedia } from '../../styles';
 
 const MoveContainer = styled.div`
   position: absolute;
@@ -11,6 +14,9 @@ const MoveContainer = styled.div`
   right: ${props => props.welcomeSection === "welcome" ? 0 : "100%"};
   left: ${props => props.welcomeSection === "welcome" ? 0 : "-100%"};
   animation: ${props => !props.init && (props.welcomeSection === "welcome" ? seeWelcomSection : hideWelcomeSection)} 1s ease forwards;
+  display: grid;
+  row-gap: 20px;
+  row-gap: 1.25rem;
 `
 
 const MoveIcon = styled.div`
@@ -26,7 +32,35 @@ const MoveIcon = styled.div`
   }
 `
 
+const WelcomeTitle = styled.div`
+  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
+  font-size: 2em;
+  font-size: 2rem;
+  letter-spacing: 5px;
+  letter-spacing: 0.3125rem;
+  line-height: 160%;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 600;
+  background-image: ${props => props.theme.textAniColor};
+  transition: background-image 1s ease;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: ${welcomeTitleAni} 5s infinite linear;
+  ${customMedia.greaterThan("tablet")`
+    padding: 20px 40px;
+    padding: 1.25rem 2.5rem;
+    font-size: 3em;
+    font-size: 3rem;
+  `}
+`
+
+const Box = styled.div`
+  padding: 50px;
+`
+
 const WelcomeSection = ({ welcomeSection, init, setInit }) => {
+  const media = useMedia()
 
   const onClickMoveIcon = () => {
     setInit(false)
@@ -35,6 +69,7 @@ const WelcomeSection = ({ welcomeSection, init, setInit }) => {
 
   return (<MoveContainer welcomeSection={welcomeSection} init={init}>
     <MoveIcon onClick={onClickMoveIcon}><FaArrowCircleRight /></MoveIcon>
+    <WelcomeTitle>WELCOME TO{media !== "Desktop" && <br />} TEACHER CAN</WelcomeTitle>
   </MoveContainer>);
 }
 
