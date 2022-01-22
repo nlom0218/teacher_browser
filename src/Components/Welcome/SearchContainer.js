@@ -105,7 +105,7 @@ const Title = styled.div`
   }
 `
 
-const SearchContainer = ({ seacrh, setSeacrh, sort, setSort }) => {
+const SearchContainer = ({ seacrh, setSeacrh, sort, setSort, userEmail }) => {
 
   const { register, handleSubmit } = useForm({
     mode: "onChange"

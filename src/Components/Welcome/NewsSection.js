@@ -4,6 +4,7 @@ import { GET_NEWS_QUERY } from '../../Graphql/News/query';
 import styled from 'styled-components';
 import SearchContainer from './SearchContainer';
 import NewsListContainer from './NewsListContainer';
+import useMe from '../../Hooks/useMe';
 
 const Container = styled.div`
   position: relative;
@@ -11,7 +12,7 @@ const Container = styled.div`
   max-height: 100%;
 `
 
-const NewsSection = () => {
+const NewsSection = ({ favoriteNews, userEmail }) => {
   const [search, setSeacrh] = useState(undefined)
   const [start, setStart] = useState(1) // => page
   const [sort, setSort] = useState("sim")
@@ -29,8 +30,9 @@ const NewsSection = () => {
       setSeacrh={setSeacrh}
       sort={sort}
       setSort={setSort}
+      userEmail={userEmail}
     />
-    <NewsListContainer search={search} data={data} />
+    <NewsListContainer search={search} data={data} userEmail={userEmail} favoriteNews={favoriteNews} />
   </Container>);
 }
 

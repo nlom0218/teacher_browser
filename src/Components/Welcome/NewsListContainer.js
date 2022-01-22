@@ -2,6 +2,9 @@ import React from 'react';
 import NewsItem from './NewsItem';
 import styled from 'styled-components';
 import { BsStar, BsStarFill } from "react-icons/bs"
+import { useMutation } from '@apollo/client';
+import { SET_FAVORITE_NEWS_MUTATION } from '../../Graphql/News/mutation';
+import { ME_QUERY } from '../../Hooks/useMe';
 
 const SNewsListContainer = styled.div`
   padding: 20px;
@@ -48,19 +51,41 @@ const SearchTitle = styled.div`
 const StartIcon = styled.div`
   cursor: pointer;
   svg {
-    /* color: yellow; */
+    color: ${props => props.favoriteNews && "yellow"};
     display: flex;
     font-size: 1.75em;
     font-size: 1.75rem;
   }
 `
 
-const NewsListContainer = ({ search, data }) => {
+const NewsListContainer = ({ search, data, userEmail, favoriteNews }) => {
+  const onCompleted = (result) => {
+
+  }
+
+  const [setFavoriteNews, { loading }] = useMutation(SET_FAVORITE_NEWS_MUTATION, {
+    onCompleted,
+    refetchQueries: [{ query: ME_QUERY }]
+  })
+
+  const onClickIcon = () => {
+    if (loading) {
+      return
+    }
+    setFavoriteNews({
+      variables: {
+        news: search,
+        userEmail
+      }
+    })
+  }
   return (<SNewsListContainer>
     {data && <React.Fragment>
       <SearchResult>
         <SearchTitle><span className="news_search_title">{search}</span> NAVER NEWS 검색 결과</SearchTitle>
-        <StartIcon><BsStar /></StartIcon>
+        <StartIcon onClick={onClickIcon} favoriteNews={favoriteNews.includes(search)}>
+          {favoriteNews.includes(search) ? <BsStarFill /> : <BsStar />}
+        </StartIcon>
       </SearchResult>
       <NewsList>
         {data?.getNews?.map((item, index) => {
