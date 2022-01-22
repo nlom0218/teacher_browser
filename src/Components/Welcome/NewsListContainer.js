@@ -63,7 +63,33 @@ const StartIcon = styled.div`
   }
 `
 
-const NewsListContainer = ({ search, data, userEmail, favoriteNews }) => {
+const BottomContents = styled.div`
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+`
+
+const PageNum = styled.div``
+
+const PageBtn = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  cursor: pointer;
+  .news_start_btn {
+    padding: 10px 20px;
+    padding: 0.625rem 1.25rem;
+    border-radius: 5px;
+    border-radius: 0.3125rem;
+    background-color: ${props => props.theme.btnBgColor};
+    color: ${props => props.theme.bgColor};
+    transition: background-color 1s ease, color 1s ease;
+  }
+`
+
+
+const NewsListContainer = ({ search, data, userEmail, favoriteNews, start, setStart }) => {
   const onCompleted = (result) => {
 
   }
@@ -84,11 +110,17 @@ const NewsListContainer = ({ search, data, userEmail, favoriteNews }) => {
       }
     })
   }
+
+  const onClickPreBtn = () => setStart(prev => prev - 1)
+  const onClickNextBtn = () => setStart(prev => prev + 1)
+
   return (<SNewsListContainer>
     {data ? <React.Fragment>
       {data?.getNews.length !== 0 ? <React.Fragment>
         <SearchResult>
-          <SearchTitle><span className="news_search_title">{search}</span> NAVER NEWS 검색 결과</SearchTitle>
+          <SearchTitle>
+            <span className="news_search_title">{search}</span> NAVER NEWS 검색 결과
+          </SearchTitle>
           <StartIcon onClick={onClickIcon} favoriteNews={favoriteNews.includes(search)}>
             {favoriteNews.includes(search) ? <BsStarFill /> : <BsStar />}
           </StartIcon>
@@ -99,6 +131,13 @@ const NewsListContainer = ({ search, data, userEmail, favoriteNews }) => {
           })}
 
         </NewsList>
+        <BottomContents>
+          <PageNum>{start} PAGE</PageNum>
+          <PageBtn>
+            {start !== 1 ? <div onClick={onClickPreBtn} className="news_start_btn">이전</div> : <div></div>}
+            <div onClick={onClickNextBtn} className="news_start_btn">다음</div>
+          </PageBtn>
+        </BottomContents>
       </React.Fragment>
         : <div className="empty_news_list">검색 결과가 없습니다.😅</div>
       }

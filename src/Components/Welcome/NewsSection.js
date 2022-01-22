@@ -28,11 +28,14 @@ const NewsSection = ({ favoriteNews, userEmail }) => {
     <SearchContainer
       search={search}
       setSeacrh={setSeacrh}
+      setStart={setStart}
       sort={sort}
       setSort={setSort}
       favoriteNews={favoriteNews}
     />
     <NewsListContainer
+      start={start}
+      setStart={setStart}
       search={search}
       data={data}
       userEmail={userEmail}

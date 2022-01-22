@@ -30,9 +30,9 @@ const FavoriteNewsList = ({ favoriteNews, setSeacrh }) => {
     setSeacrh(item)
   }
   return (<Container>
-    {favoriteNews.length === 0 ? <div>즐겨찾기 검색어가 없습니다.😭</div>
+    {favoriteNews?.length === 0 ? <div>즐겨찾기 검색어가 없습니다.😭</div>
       : <List>
-        {favoriteNews.map((item, index) => {
+        {favoriteNews?.map((item, index) => {
           return <Items key={index} onClick={() => onClickFavoiteItem(item)}>
             {item}
           </Items>

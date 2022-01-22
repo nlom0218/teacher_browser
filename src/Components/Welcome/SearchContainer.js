@@ -111,7 +111,7 @@ const Title = styled.div`
   }
 `
 
-const SearchContainer = ({ search, setSeacrh, sort, setSort, favoriteNews }) => {
+const SearchContainer = ({ search, setSeacrh, sort, setSort, favoriteNews, setStart }) => {
 
   const { register, handleSubmit, setValue } = useForm({
     mode: "onChange",
@@ -124,6 +124,7 @@ const SearchContainer = ({ search, setSeacrh, sort, setSort, favoriteNews }) => 
 
   const onClickSeeType = (type) => {
     setSort(type)
+    setStart(1)
   }
 
   useEffect(() => {
