@@ -24,6 +24,11 @@ const SNewsListContainer = styled.div`
   align-items: flex-start;
   row-gap: 10px;
   row-gap: 0.625rem;
+  .empty_news_list {
+    padding: 20px;
+    padding: 1.25rem;
+    text-align: center;
+  }
 `
 
 const NewsList = styled.div`
@@ -80,20 +85,25 @@ const NewsListContainer = ({ search, data, userEmail, favoriteNews }) => {
     })
   }
   return (<SNewsListContainer>
-    {data && <React.Fragment>
-      <SearchResult>
-        <SearchTitle><span className="news_search_title">{search}</span> NAVER NEWS 검색 결과</SearchTitle>
-        <StartIcon onClick={onClickIcon} favoriteNews={favoriteNews.includes(search)}>
-          {favoriteNews.includes(search) ? <BsStarFill /> : <BsStar />}
-        </StartIcon>
-      </SearchResult>
-      <NewsList>
-        {data?.getNews?.map((item, index) => {
-          return <NewsItem key={index} item={item} />
-        })}
-      </NewsList>
-    </React.Fragment>
+    {data ? <React.Fragment>
+      {data?.getNews.length !== 0 ? <React.Fragment>
+        <SearchResult>
+          <SearchTitle><span className="news_search_title">{search}</span> NAVER NEWS 검색 결과</SearchTitle>
+          <StartIcon onClick={onClickIcon} favoriteNews={favoriteNews.includes(search)}>
+            {favoriteNews.includes(search) ? <BsStarFill /> : <BsStar />}
+          </StartIcon>
+        </SearchResult>
+        <NewsList>
+          {data?.getNews?.map((item, index) => {
+            return <NewsItem key={index} item={item} />
+          })}
 
+        </NewsList>
+      </React.Fragment>
+        : <div className="empty_news_list">검색 결과가 없습니다.😅</div>
+      }
+    </React.Fragment>
+      : <div className="empty_news_list">검색을 통해 원하는 뉴스를 찾아보세요!😀</div>
     }
   </SNewsListContainer>);
 }
