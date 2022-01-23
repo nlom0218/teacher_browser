@@ -38,15 +38,11 @@ const Timer = () => {
   }, [isRunning]);
 
   const pause = () => {
-    // FIXME:
     setIsRunning(false);
-    // clearInterval(countUp);
   };
 
   const startStopwatch = () => {
-    // countUp();
     setIsRunning(true);
-    // setInterval(countUp, 10);
   };
 
   const resetTime = () => {
@@ -61,8 +57,8 @@ const Timer = () => {
   const saveTime = () => {
     const timestamp = Date.now();
     const savedTime = { timeId: timestamp, minutes, seconds, milliseconds };
-    const newTimeRecord = [...timeRecordsFromLocal, savedTime];
-    localStorage.setItem('timeRecords', JSON.stringify(newTimeRecord));
+    const newTimeRecords = [...timeRecordsFromLocal, savedTime];
+    localStorage.setItem('timeRecords', JSON.stringify(newTimeRecords));
   };
 
   let timeRecords = [];
@@ -136,8 +132,9 @@ const Timer = () => {
         <div>
           {timeRecordsFromLocal ?
             <li>
-              <span> {timeRecordsFromLocal.minutes} min &nbsp;&nbsp; {timeRecordsFromLocal.seconds} seconds &nbsp;&nbsp;
-                {timeRecordsFromLocal.milliseconds} milliseconds </span>
+              <span> {timeRecordsFromLocal[0].minutes} m &nbsp;&nbsp; {timeRecordsFromLocal[0].seconds} s &nbsp;&nbsp;
+                {timeRecordsFromLocal[0].milliseconds} ms
+              </span>
             </li> : null}
         </div>
       </TimerContainer >
