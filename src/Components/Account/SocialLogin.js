@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { SiNaver, SiKakaotalk } from "react-icons/si";
+import { ImBubble } from "react-icons/im";
 import { NAVER_LOGIN_MUTATION } from "../../Graphql/User/mutation";
 import { logInUser } from "../../apollo";
 import { useNavigate } from "react-router";
@@ -33,10 +34,10 @@ const NaverLoginBtn = styled.div`
   }
 `;
 const KakaoLoginBtn = styled.div`
-  background-color: yellow;
+  background-color: #fee500;
   padding: 15px;
   padding: 0.9375rem;
-  color: brown;
+  color: rgba(0, 0, 0, 0, 0.85);
   border-radius: 10px;
   border-radius: 0.625rem;
   display: flex;
@@ -44,6 +45,7 @@ const KakaoLoginBtn = styled.div`
   align-items: center;
   cursor: pointer;
   svg {
+    color: "#000000";
     margin-right: 10px;
     margin-right: 0.625rem;
     font-size: 1.25em;
@@ -105,9 +107,13 @@ const SocialLogin = () => {
         kakao.API.request({
           url: "/v2/user/me",
           success: ({ kakao_account }) => {
-            const email = kakao_account.email;
-            if (loading) return;
-            naverLoginMutation({ variables: { email } });
+            if (kakao_account.email) {
+              const email = kakao_account.email;
+              if (loading) return;
+              naverLoginMutation({ variables: { email } });
+            } else {
+              alert("정상적으로 가입되었습니다.\n다시 로그인 후 이메일 정보를 제공해주세요.");
+            }
           },
           fail: (err) => console.log(err),
         });
@@ -126,7 +132,7 @@ const SocialLogin = () => {
         네이버 로그인
       </NaverLoginBtn>
       <KakaoLoginBtn onClick={onClickKakaoLoginBtn}>
-        <SiKakaotalk />
+        <ImBubble />
         카카오 로그인
       </KakaoLoginBtn>
     </SSocialLogin>

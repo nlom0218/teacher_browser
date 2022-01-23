@@ -71,11 +71,8 @@ const HeaderSideBtn = ({ seeSideMenu, setSeeSideMenu }) => {
     setSeeSideMenu((prev) => !prev);
   };
   const onClickLogOut = () => {
-    // 카카오 로그인 시 로그아웃
-    if (window.Kakao.Auth.getAccessToken()) window.Kakao.Auth.logout();
-    logOutUser();
     navigate(routes.home);
-    window.location.reload();
+    logOutUser(() => window.location.reload());
   };
   return (
     <SideMenu>

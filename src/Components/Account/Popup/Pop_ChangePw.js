@@ -99,9 +99,8 @@ const Pop_ChangePw = ({ userEmail }) => {
     } = result;
     if (ok) {
       outPopup();
-      logOutUser();
       navigate(routes.login);
-      window.location.reload();
+      logOutUser(() => window.location.reload());
       window.alert("비밀번호가 수정되었습니다.\n다시 로그인 해주세요.");
     } else {
       setErrMsg(error);
