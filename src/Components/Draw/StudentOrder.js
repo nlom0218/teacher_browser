@@ -4,9 +4,10 @@ import { customMedia } from "../../styles";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useState } from "react/cjs/react.development";
 import { TiDelete } from "react-icons/ti";
+import SeeSelectedStudent from "./SeeSelectedStudent";
 
 const Container = styled.div`
-    min-height : ${props => props.seeResultType === "ONE" && "100%"};
+    min-height : 100%;
     display : grid;
     grid-template-columns : ${props=>props.seeResultType === "ALL" && "repeat(2,1fr)"};
     row-gap : 10px;
@@ -174,7 +175,12 @@ const StudentOrder = ({selectedStudent, setSelectedStudent, seeResultType, fontS
                 <div className="order-student-forward-btn" onClick={()=>onClickArrow("forward")}><IoIosArrowForward /></div>
              </SeeOneItem>)
              :
-             <div></div>
+             <SeeSelectedStudent
+             selectedStudent={selectedStudent}
+             pickNum={pickNum}
+             pickType={pickType}
+             fontSizeAll={fontSizeAll}
+             />
              }
         </Container>
     );

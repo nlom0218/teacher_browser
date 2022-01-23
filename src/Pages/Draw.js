@@ -13,8 +13,6 @@ import { useState } from 'react/cjs/react.development';
 import { inputLine } from '../Animations/InputLine';
 import { BtnFadeIn } from '../Animations/Fade';
 import { SEE_ONE_STUDENT_LIST_QUERY } from '../Graphql/StudentList/query';
-import { DivideLeftContents, SeeRightContentsBtn } from '../Components/Shared/styled/DivideContents';
-import AllStudentList from '../Components/Draw/AllStudentList';
 import StudentOrder from '../Components/Draw/StudentOrder';
 import SeeResultType from '../Components/Draw/SeeResultType';
 import FontSizeBtn from '../Components/Draw/FontSizeBtn';
@@ -22,6 +20,7 @@ import Shuffling from '../Components/Draw/Popup/Shuffling';
 
 const Container = styled.div`
   min-height : ${props => props.seeResultType === "ONE" && "100%"};
+  min-height : ${props => props.isShuffle === "finish" && (props.pickNum < 4 && "100%")};
   display : grid;
   grid-template-rows : auto auto 1fr;
   padding: 40px;
@@ -108,7 +107,7 @@ const OptionContents = styled.div`
   row-gap : 1.25 rem;
   text-align : center;
   ${customMedia.greaterThan("tablet")`
-    grid-template-columns : auto auto 1fr;
+    grid-template-columns : auto 1fr;
     column-gap : 20px;
     column-gap : 1.25rem;
   `}
@@ -207,7 +206,7 @@ const Draw = () => {
 
   return (
     <BasicContainer menuItem={true}>
-      <Container seeResultType={seeResultType}>
+      <Container isShuffle={isShuffle} seeResultType={seeResultType} pickNum={pickNum}>
         <TopContents>
           <Title onBlur={onBlurForm} onSubmit={handleSubmit(onSubmit)}>
             <InputLayout>
@@ -244,7 +243,7 @@ const Draw = () => {
                 <OptionBtn onClick={() => onClickShuffleBtn("finish")}>뽑는 중</OptionBtn>}
               {isShuffle === "finish" &&
                 <OptionBtn onClick={() => onClickShuffleBtn("ing")}>다시 뽑기 </OptionBtn>}
-              <SeeResultType seeResultType={seeResultType} setSeeResultType={setSeeResultType} />
+              {/* <SeeResultType seeResultType={seeResultType} setSeeResultType={setSeeResultType} /> */}
               <FontSizeBtn
                 setFontSizeAll={setFontSizeAll}
                 fontSizeAll={fontSizeAll}
