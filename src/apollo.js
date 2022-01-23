@@ -2,12 +2,13 @@ import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { makeVar } from "@apollo/client";
 
-const DARK = "dark";
-const TOKEN = "token";
-const POPUP = "popup";
-const IS_SEE_STUDENT = "isSeeStudent";
-const MENU_TYPE = "menuType";
-const IS_SEE_STUDENT_LIST = "isSeeStudentList";
+const DARK = "dark"
+const TOKEN = "token"
+const POPUP = "popup"
+const IS_SEE_STUDENT = "isSeeStudent"
+const MENU_TYPE = "menuType"
+const IS_SEE_STUDENT_LIST = "isSeeStudentList"
+const WELCOME_SECTION = "welcomeSection"
 
 export const menuTypeVar = makeVar(localStorage.getItem(MENU_TYPE));
 export const setMenuType = (type) => {
@@ -75,6 +76,16 @@ export const disableSeeStudentList = () => {
   localStorage.removeItem(IS_SEE_STUDENT_LIST);
   isSeeStudentListVar(false);
 };
+
+export const welcomeSectionVar = makeVar(localStorage.getItem(WELCOME_SECTION) ? localStorage.getItem(WELCOME_SECTION) : "welcome")
+export const moveWelcome = () => {
+  localStorage.setItem(WELCOME_SECTION, "welcome")
+  welcomeSectionVar("welcome")
+}
+export const moveNews = () => {
+  localStorage.setItem(WELCOME_SECTION, "news")
+  welcomeSectionVar("news")
+}
 
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",

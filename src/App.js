@@ -28,6 +28,7 @@ import List from "./Pages/List";
 import Trash from "./Pages/Trash";
 import FindPassword from "./Pages/FindPassword";
 import dotenv from "dotenv";
+import Welcome from "./Pages/Welcome";
 dotenv.config();
 
 function App() {
@@ -66,7 +67,8 @@ function App() {
       <GlobalStyle bgTheme={me?.bgTheme} />
       {media !== "Mobile" && <HeaderWeather />}
       <Routes>
-        <Route path={routes.home} element={<Home />} />
+        {/* <Route path={routes.home} element={<Home />} /> */}
+        <Route path={routes.home} element={<Welcome />} />
         <Route path={routes.login} element={<Login />} />
         <Route path={routes.createAccount} element={<CreateAccount />} />
         <Route path={routes.naverLoginCallBack} element={<NaverLoginCallBack />} />

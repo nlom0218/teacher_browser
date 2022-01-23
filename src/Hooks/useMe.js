@@ -15,6 +15,7 @@ export const ME_QUERY = gql`
       bgTheme
       allergy
       tag
+      favoriteNews
     }
   }
 `;
