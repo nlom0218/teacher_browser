@@ -64,8 +64,13 @@ const Shuffling = ({pickNum, pickType, setPickNum, setPickType, studentNum, setI
         }
     })
 
-    const onClickTypeBtn = (type) => {
-        setPickType(type)
+    const onClickTypeBtn = () => {
+        if(pickType === "see" ) {
+            setPickType("hide")
+        } else {
+            setPickType("see")
+        }
+        
     }
 
 const onSubmit = (data) => {
@@ -89,8 +94,8 @@ const onSubmit = (data) => {
                 placeholder = "몇 명을 뽑나요?"
         />
         <TypeLayout>
-        <Type onClick={() => onClickTypeBtn("see")}>{pickType === "see" ? <RiCheckboxLine/> : <RiCheckboxBlankLine/>}<div>이름 보이기</div></Type>
-        <Type onClick={() => onClickTypeBtn("hide")}>{pickType === "hide" ? <RiCheckboxLine/> : <RiCheckboxBlankLine/>}<div>이름 가리기</div></Type>
+          <Type onClick={onClickTypeBtn}>
+          {pickType === "see" ? <RiCheckboxLine/> : <RiCheckboxBlankLine/>}<div>이름 보이기</div></Type>
         </TypeLayout>
         <SubmitInput
             type = "submit"    

@@ -89,11 +89,11 @@ const Title = styled.form`
 `;
 
 const Input = styled.input`
-  width: 100%;
-  font-size: 1.5eem;
-  font-size: 1.5rem;
-  padding: 10px 0px;
-  padding: 0.625rem 0rem;
+  width : 100%;
+  font-size : 1.5em;
+  font-size : 1.5rem;
+  padding : 10px 0px;
+  padding : 0.625rem 0rem;
 `;
 
 const InputLayout = styled.div``;
