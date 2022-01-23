@@ -28,6 +28,7 @@
     "styled-reset": "^4.3.4",
     "web-vitals": "^1.1.2"
   },
+  "proxy": "https://openapi.naver.com",
   "scripts": {
     "start": "react-scripts start",
     "build": "CI= react-scripts build",

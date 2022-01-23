@@ -33,6 +33,7 @@ export const ligthTheme = {
   cardHoverBg: "rgba(10,10,10,0.9)",
   cardBorder: "rgba(160,160,160,1)",
   purple: "#ecbdfc",
+  textAniColor: "linear-gradient(92deg, #1c5b8e, #db3a1e)"
 };
 export const darkTheme = {
   fontColor: color.white,
@@ -47,6 +48,7 @@ export const darkTheme = {
   cardHoverBg: "rgba(247,247,247,1)",
   cardBorder: "rgba(120,120,120,1)",
   purple: "#6b018c",
+  textAniColor: "linear-gradient(92deg, #7CC6FF, #fc8876)"
 };
 
 export const GlobalStyle = createGlobalStyle`
@@ -56,7 +58,11 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 1em;
     font-size: 1rem;
     background: ${({ bgTheme }) =>
-      bgTheme ? `url("https://source.unsplash.com/random/1920x1080?${bgTheme}")` : `url("https://source.unsplash.com/random/1920x1080?nature")`};
+    bgTheme ?
+      (bgTheme.substr(0, 1) === "#" ? bgTheme :
+        `url("https://source.unsplash.com/random/1920x1080?${bgTheme}")`)
+      :
+      `url("https://source.unsplash.com/random/1920x1080?nature")`};
     background-size: cover;
     background-position: center;
     font-family: 'Nanum Gothic', sans-serif;

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const DetailStudentLayout = styled.div`
-  padding: 20px;
-  padding: 1.25rem;
+  padding: 20px 0px;
+  padding: 1.25rem 0rem;
   display: grid;
   grid-template-columns: 1fr 3fr;
   column-gap: 20px;
