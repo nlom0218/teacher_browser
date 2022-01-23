@@ -173,6 +173,11 @@ const Schedule = () => {
     setViewTime(true);
    }
 
+
+   
+  
+
+
   return (
     <BasicContainer menuItem={true}>
       <DivideLeftContents>
@@ -210,10 +215,11 @@ const Schedule = () => {
   <TimeTableHeight>
   <TimeTableGrid fontSize={fontSize}/>
 
+
   </TimeTableHeight>
         </Container>
-        {/* {isPopup === "registerClass" && <ClassRegisterPage />} */}
-        {isPopup === "registerClass" && <ClassTimeSet />}
+        {isPopup === "registerClass" && <ClassRegisterPage />}
+        {/* {isPopup === "registerClass" && <ClassTimeSet />} */}
         {isPopup === "registerTimeSet" && <ClassTimeSet />}
       </DivideLeftContents>
     </BasicContainer>

@@ -7,7 +7,7 @@ const TableItem = styled.div`
   position: relative;
   height: 100%;
   border: 1px solid ${props => props.theme.cardBorder};
-  background-color: ${props => props.theme.cardBg};
+  background-color : lightblue;
   //background-color: ${props => props.color};
   transition: border 1s ease, background-color 1s ease;
   border-radius: 5px;
@@ -48,7 +48,7 @@ const HoverContainer = styled.div`
 
 
 
-const TableInItem = ({ item, index, color, tag}) => {
+const TableOutItem = ({ item, index, color, tag}) => {
 
 
   const [hoverContainer, setHoverContainer] = useState(false)
@@ -64,7 +64,7 @@ const TableInItem = ({ item, index, color, tag}) => {
 
 
     <SubjectName onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} >{item}
-    {hoverContainer===true ? <HoverContainer>{tag}<RegisterScheduleOne/>
+    {hoverContainer===true ? <HoverContainer>{tag}
     {/* 태그정보는 가장 [0]만 나오도록 하고 나머지는 ... 처리  */}
     </HoverContainer>:null}
   
@@ -73,5 +73,5 @@ const TableInItem = ({ item, index, color, tag}) => {
   </TableItem >);
 }
 
-export default TableInItem;
+export default TableOutItem;
 
