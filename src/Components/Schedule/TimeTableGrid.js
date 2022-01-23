@@ -39,11 +39,11 @@ const dayValue= [
 [,,], ["월","색상",monday], ["화",,tuesday], ["수",,wednesday], ["목",,thursday], ["금", ,friday]]
 
 const classtime1= ["1","","09:00"]
-const classMon1 = ["국어","blue",["운동장","체육관"]]
-const classTue1 = ["수학","blue",["운동장","체육관"]]
+const classMon1 = ["음악","blue",["운동장","체육관"]]
+const classTue1 = ["과학","blue",["운동장","체육관"]]
 const classWed1 = ["사회","blue",["운동장","체육관"]]
-const classThu1 = ["과학","blue",["운동장","체육관"]]
-const classFri1 = ["음악","blue",["운동장","체육관"]]
+const classThu1 = ["수학","blue",["운동장","체육관"]]
+const classFri1 = ["국어","blue",["운동장","체육관"]]
 
 const classtime2= ["2","","09:50"]
 const classMon2 = ["미술","blue",["운동장","체육관"]]
