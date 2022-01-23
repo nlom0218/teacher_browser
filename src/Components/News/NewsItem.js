@@ -3,7 +3,9 @@ import styled from "styled-components";
 
 const NewsListBlock = styled.div`
     display:flex;
-
+    border:1px solid;
+    border-radius: 20px;
+    border-radius: 1.25rem;
     .thumbnail {
         margin-right:1rem;
         img{
@@ -11,9 +13,14 @@ const NewsListBlock = styled.div`
             width : 160px;
             height: 100px;
             object-fit: cover;
+            border-radius: 20px;
+    border-radius: 1.25rem;
         }
     }
     .contents{
+        justify-self: center;
+        align-self: center;
+        overflow: hidden;
         h2{
             margin:0;
             a{
@@ -56,11 +63,12 @@ const NewsItem = ({article})=>{
             )}
             <div className="contents">
                 <h2>
+                    <p>{title.split("-")[1]}</p>
                     <a href={url} target="_blank" rel="noopener noreferrer">
-                        {title}
+                        {title.split("- ")[0]}
                     </a>
                 </h2>
-                <p>{description}</p>
+                {/* <p>{description}</p> */}
             </div>
         </NewsListBlock>
     );

@@ -24,6 +24,8 @@ return (
     <PopupContainer>
          {/* { data == undefined ? <div> 로그인을 해서 명단 등록 안내 메세지, 일회성 명단 input 화면하는 건 어떨지 </div> : } */}
       <Container>
+      <div>학생명단입력 </div>
+        <input></input>
         {data?.seeStudentList.map((item, index) => {
           return <StudentListItem key={index} item={item} />;
         })}
