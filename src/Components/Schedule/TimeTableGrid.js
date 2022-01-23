@@ -82,7 +82,7 @@ const classFri6 = ["창체","blue",["운동장","체육관"]]
 
 
 
-const TimeTableGrid = () => {
+const TimeTableGrid = (fontSize) => {
 
   return (
     <Container>
@@ -92,7 +92,7 @@ const TimeTableGrid = () => {
 
   
   <TableOutItem item={classtime1[0]} color={classtime1[1]} tag={classtime1[2]}/>  
-  <TableInItem item={classMon1[0]} color={classMon1[1]} tag={classMon1[2][0]}/>  
+  <TableInItem fontSize={fontSize} item={classMon1[0]} color={classMon1[1]} tag={classMon1[2][0]}/>  
   <TableInItem item={classTue1[0]} color={classTue1[1]} tag={classTue1[2][0]}/>  
   <TableInItem item={classWed1[0]} color={classWed1[1]} tag={classWed1[2][0]}/>  
   <TableInItem item={classThu1[0]} color={classThu1[1]} tag={classThu1[2][0]}/>  

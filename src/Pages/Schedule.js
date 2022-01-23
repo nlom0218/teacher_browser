@@ -202,13 +202,10 @@ const Schedule = () => {
             </InputLayout>
             {isEdit && <SubmitInput type="submit" value="저장" />}
           </Title>
-          <AddSub>
-            <AddSubBtn>수업추가/변경</AddSubBtn>
-            <TiPlusOutline onClick={onClickAddSub}/>
-          </AddSub>
+    
         </TopContents>
         <OptionContents>
-        <OptionBtn onClick={() => onClickTimeSetBtn}> 시간설정 </OptionBtn>
+        <OptionBtn onClick={onClickTimeSetBtn}> 시간설정 </OptionBtn>
         <TypeBtn onClick={onClickTimeviewBtn}> {viewTime === "true" ? <RiCheckboxLine/> : <RiCheckboxBlankLine/>} <div> 시간 보기 </div> </TypeBtn>
         <TimeTableFont fontSize={fontSize} setFontSize={setFontSize}/>
         </OptionContents>

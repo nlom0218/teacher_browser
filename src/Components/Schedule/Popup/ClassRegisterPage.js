@@ -9,6 +9,7 @@ import { UPDATE_USER_MUTATION } from '../../../Graphql/User/mutation';
 import DetailClassName from './DetailClassName';
 import DetailClassColor from './DetailClassColor';
 import DetailClassTag from './DetailClasstag';
+import DetailClassAdd from './DetailClassAdd';
 
 
 const RegisterForm = styled.form`
@@ -58,6 +59,7 @@ const ClassRegisterPage = (item={item}) => {
     <DetailClassName/>
     <DetailClassColor/>
     <DetailClassTag/>
+    <DetailClassAdd/>
     </RegisterForm>
 
   

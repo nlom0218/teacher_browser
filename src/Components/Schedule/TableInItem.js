@@ -22,6 +22,8 @@ const SubjectName = styled.div`
   align-self: center;
   overflow: hidden;
   line-height: 250%;
+  font-size: ${props => props.fontSize}em;
+  font-size: ${props => props.fontSize}rem;
 `
 
 const HoverContainer = styled.div`
@@ -48,7 +50,7 @@ const HoverContainer = styled.div`
 
 
 
-const TableInItem = ({ item, index, color, tag}) => {
+const TableInItem = ({ item, index, color, tag, fontSize}) => {
 
 
   const [hoverContainer, setHoverContainer] = useState(false)
@@ -63,7 +65,7 @@ const TableInItem = ({ item, index, color, tag}) => {
   return (<TableItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} index={index} color={color} >
 
 
-    <SubjectName onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} >{item}
+    <SubjectName fontSize={fontSize} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} >{item}
     {hoverContainer===true ? <HoverContainer>{tag}<RegisterScheduleOne/>
     {/* 태그정보는 가장 [0]만 나오도록 하고 나머지는 ... 처리  */}
     </HoverContainer>:null}
