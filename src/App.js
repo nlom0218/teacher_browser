@@ -26,6 +26,7 @@ import HeaderWeather from "./Components/Shared/HeaderWeather";
 import useMedia from "./Hooks/useMedia";
 import List from "./Pages/List";
 import Trash from "./Pages/Trash";
+import FindPassword from "./Pages/FindPassword";
 import dotenv from "dotenv";
 import Welcome from "./Pages/Welcome";
 dotenv.config();
@@ -88,6 +89,7 @@ function App() {
         <Route path={routes.list} element={<List />} />
         <Route path={`${routes.list}/:type/:id`} element={<List />} />
         <Route path={routes.trash} element={<Trash />} />
+        <Route path={routes.findPassword} element={<FindPassword />} />
       </Routes>
     </ThemeProvider>
   );

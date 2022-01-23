@@ -18,7 +18,7 @@ const Title = styled.div`
   font-size: 1.5em;
   font-size: 1.5rem;
   padding: 60px 0px 60px 60px;
-`
+`;
 
 const Container = styled.div`
   padding-bottom: 60px;
@@ -76,7 +76,7 @@ const EditAccount = () => {
         <Changes>
           <List>이메일</List>
           <Item>
-            {me?.email}
+            {data?.checkPw.ok || me?.email}
             {data?.checkPw.ok && <ChangePw userEmail={me?.email}></ChangePw>}
           </Item>
         </Changes>
@@ -92,10 +92,18 @@ const EditAccount = () => {
             <EditBgTheme userEmail={me?.email} bgTheme={me?.bgTheme} />
           </Item>
         </Changes>
-        <Changes>
-          <List>회원 탈퇴</List>
-          <Withdrawal userEmail={me?.email} />
-        </Changes>
+        {data?.checkPw.ok && (
+          <Changes>
+            <List>회원 탈퇴</List>
+            <Withdrawal userEmail={me?.email} isOwn={true} />
+          </Changes>
+        )}
+        {data?.checkPw.ok || (
+          <Changes>
+            <List>계정 초기화</List>
+            <Withdrawal userEmail={me?.email} isOwn={false} />
+          </Changes>
+        )}
       </Container>
       {isPopup === "registerSchool" && <RegisterSchool />}
       {isPopup === "changePw" && <Pop_ChangePw userEmail={me?.email} />}

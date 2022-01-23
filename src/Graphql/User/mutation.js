@@ -90,3 +90,12 @@ export const CHANGE_PASSWORD_MUTATION = gql`
     }
   }
 `;
+
+export const NEW_PASSWORD_MUTATION = gql`
+  mutation NewPw($userEmail: String!, $certificate: String, $password: String) {
+    newPw(userEmail: $userEmail, certificate: $certificate, password: $password) {
+      ok
+      error
+    }
+  }
+`;
