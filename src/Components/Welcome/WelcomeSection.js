@@ -23,7 +23,7 @@ const MoveIcon = styled.div`
   position: absolute;
   top: 1%;
   right: 1%;
-  z-index: 10;
+  z-index: 2;
   cursor: pointer;
   svg {
     display: flex;
