@@ -44,6 +44,7 @@ const WelcomeTitle = styled.div`
   font-weight: 600;
   background-image: ${props => props.theme.textAniColor};
   transition: background-image 1s ease;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: ${welcomeTitleAni} 5s infinite linear;

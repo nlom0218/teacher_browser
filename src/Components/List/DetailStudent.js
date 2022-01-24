@@ -8,6 +8,7 @@ import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
 import { SEE_ALL_STUDENT_QUERY, SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
 import { customMedia } from '../../styles';
 import DetailStudentAllergy from './DetailStudentAllergy';
+import DetailStudentMemo from './DetailStudentMemo';
 import DetailStudentNumber from './DetailStudentNumber';
 import DetailStudentTag from './DetailStudentTag';
 import InputUnderLine from './InputUnderLine';
@@ -186,7 +187,8 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
     </Form>
     <DetailStudentNumber studentInfo={studentInfo} selectedTag={selectedTag} selectedSort={selectedSort} />
     <DetailStudentTag studentInfo={studentInfo} selectedSort={selectedSort} selectedTag={selectedTag} />
-    <DetailStudentAllergy studentInfo={studentInfo} editStudent={editStudent} onCompleted={onCompleted} />
+    <DetailStudentAllergy studentInfo={studentInfo} />
+    <DetailStudentMemo studentMemo={studentInfo?.memo} studentId={studentInfo?._id} teacherEmail={studentInfo?.teacherEmail} />
     <DelBtn onClick={onClicketeBtn}>휴지통으로 이동</DelBtn>
     {isPopup === "deleteStudent" && <DeleteStudent selectedTag={selectedTag} selectedSort={selectedSort} studentId={studentId} />}
   </Container>);
