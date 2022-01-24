@@ -152,7 +152,7 @@ const Draw = () => {
   const [studentListName, setStudentListName] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState([]);
   const [seeResultType, setSeeResultType] = useState("ALL");
-  const [fontSizeAll, setFontSizeAll] = useState(1);
+  const [fontSizeAll, setFontSizeAll] = useState(1.5);
   const [fontSizeOne, setFontSizeOne] = useState(2);
   const [isEdit, setIsEdit] = useState(false);
   const [title, setTitle] = useState(undefined);
