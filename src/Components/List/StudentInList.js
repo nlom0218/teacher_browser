@@ -60,17 +60,17 @@ const StudentInList = ({ students, listId, setSort, sort }) => {
   return (<React.Fragment>
     {students.length !== 0 && <SortAndNumContainer>
       <SortBtnLayout>
-        <SortBtn onClick={() => onClickSortBtn("none")}>
-          {!sort ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
-          <div>생성일 순</div>
+        <SortBtn onClick={() => onClickSortBtn("num")}>
+          {sort === "num" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
+          <div>번호 순</div>
         </SortBtn>
         <SortBtn onClick={() => onClickSortBtn("name")}>
           {sort === "name" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
           <div>이름 순</div>
         </SortBtn>
-        <SortBtn onClick={() => onClickSortBtn("num")}>
-          {sort === "num" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
-          <div>번호 순</div>
+        <SortBtn onClick={() => onClickSortBtn("none")}>
+          {!sort ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
+          <div>생성일 순</div>
         </SortBtn>
       </SortBtnLayout>
       <StudentNum>{students.length}명</StudentNum>

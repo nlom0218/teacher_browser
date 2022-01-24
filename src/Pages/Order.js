@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
 import StudentList from "../Components/Order/Popup/StudentList";
@@ -8,7 +8,6 @@ import { inPopup, isPopupVar } from "../apollo";
 import { useParams } from "react-router-dom";
 import { SEE_ONE_STUDENT_LIST_QUERY } from "../Graphql/StudentList/query";
 import { customMedia } from "../styles";
-import { useEffect } from "react/cjs/react.development";
 import { inputLine } from "../Animations/InputLine";
 import { BtnFadeIn } from "../Animations/Fade";
 import { useForm } from "react-hook-form";

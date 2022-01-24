@@ -161,7 +161,7 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
   const [isEditName, setIsEditName] = useState(false)
   const [placeholder, setPlaceholder] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
-  const [sort, setSort] = useState(undefined)
+  const [sort, setSort] = useState("num")
 
   const media = useMedia()
 
