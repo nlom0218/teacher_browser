@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
 import StudentList from "../Components/Order/Popup/StudentList";
@@ -15,6 +15,9 @@ import Shuffling from "../Components/Order/Popup/Shuffling";
 import SeeResultType from "../Components/Order/SeeResultType";
 import FontSizeBtn from "../Components/Order/FontSizeBtn";
 import StudentOrder from "../Components/Order/StudentOrder";
+import PrintOrder from "../Components/Order/PrintOrder";
+import PrintOrderContents from "../Components/Order/PrintOrderContents";
+import useMedia from "../Hooks/useMedia";
 
 
 // 전체 틀
@@ -111,7 +114,7 @@ const OptionContents = styled.div`
   row-gap: 1.25rem;
   text-align: center;
   ${customMedia.greaterThan("tablet")`
-   grid-template-columns : auto auto 1fr;
+   grid-template-columns : auto auto 1fr auto;
    column-gap:20px;
    column-gap:1.25rem;
   `}
@@ -153,6 +156,9 @@ const ListName = styled.div``;
 const Order = () => {
   const { id } = useParams();
   const isPopup = useReactiveVar(isPopupVar);
+  const media = useMedia()
+
+  const componentRef = useRef(null);
 
   const [studentListName, setStudentListName] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState([]);
@@ -162,7 +168,7 @@ const Order = () => {
   const [fontSizeOne, setFontSizeOne] = useState(5)
   const [isEdit, setIsEdit] = useState(false);
   //title : 인쇄할 때 필요한 제목
-  const [title, setTitle] = useState(undefined);
+  const [title, setTitle] = useState("순서 정하기 제목");
 
   const { register, handleSubmit, getValues } = useForm({
     mode: "onChange",
@@ -247,6 +253,7 @@ const Order = () => {
                 </OptionBtn>
               )}
               <SeeResultType seeResultType={seeResultType} setSeeResultType={setSeeResultType} />
+              {media === "Desktop" && <PrintOrder title={title} componentRef={componentRef} />}
               <FontSizeBtn seeResultType={seeResultType} setFontSizeAll={setFontSizeAll} fontSizeAll={fontSizeAll} fontSizeOne={fontSizeOne} setFontSizeOne={setFontSizeOne} />
             </OptionContents>
             <StudentOrder fontSizeOne={fontSizeOne} fontSizeAll={fontSizeAll} seeResultType={seeResultType} selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} isShuffle={isShuffle} />
@@ -254,6 +261,7 @@ const Order = () => {
         )}
       </Container>
       {isPopup === "seeStudentList" && <StudentList />}
+      {isPopup === "print" && <PrintOrderContents printRef={componentRef} title={title} selectedStudent={selectedStudent} />}
       {isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
     </BasicContainer>
   );

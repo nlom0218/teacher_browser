@@ -3,7 +3,6 @@ import { useEffect, useState } from "react/cjs/react.development";
 import styled from "styled-components";
 import { customMedia } from "../../styles";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { toPromise } from "@apollo/client";
 import { TiDelete } from "react-icons/ti"
 
 const Container = styled.div`
