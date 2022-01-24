@@ -51,7 +51,6 @@ const Name = styled.input`
   font-size: 1.5rem;
   padding: 10px 0px;
   padding: 0.625rem 0rem;
-  /* background-color: red; */
   ::placeholder {
     color: ${props => props.theme.fontColor};
     opacity: 0.8;
