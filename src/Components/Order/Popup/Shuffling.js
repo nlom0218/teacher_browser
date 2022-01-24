@@ -5,8 +5,8 @@ import RandomCircle from '../../Shared/RandomCircle';
 
 const Container = styled.div`
   display: grid;
-  row-gap: 10px;
-  row-gap: 0.625rem;
+  /* row-gap: 10px;
+  row-gap: 0.625rem; */
 `
 
 const StopBtn = styled.div`
