@@ -33,14 +33,14 @@ export const SEE_ALL_STUDENT_LIST_QUERY = gql`
 // Components/List/DetailList.js
 // Components/List/StudentInItem.js
 export const SEE_ONE_STUDENT_LIST_QUERY = gql`
-  query SeeStudentList($listId: ID) {
+  query SeeStudentList($listId: ID, $sort: String) {
     seeStudentList(listId: $listId) {
       listId
       listOrder
       listName
       listIcon
       teacherEmail
-      students {
+      students(sort: $sort) {
         _id
         studentName
         studentGender
