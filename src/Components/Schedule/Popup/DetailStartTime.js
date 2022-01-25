@@ -1,7 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import BtnPopupContainer from '../../Shared/BtnPopupContainer';
-import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
 import { useForm } from 'react-hook-form';
 import { useState } from 'react/cjs/react.development';
 import { outPopup } from '../../../apollo';
@@ -55,6 +53,7 @@ const DetailStartTime = () => {
 const onSubmit = (data) => {
     const {num : stringNum} = data
     const num = parseInt(stringNum)
+    console.log(data)
 
     }
 

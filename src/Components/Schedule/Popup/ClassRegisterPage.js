@@ -57,7 +57,6 @@ const ClassRegisterPage = (item={item}) => {
     <RegisterForm onSubmit={handleSubmit(onSubmit)}>
         
     <DetailClassName/>
-    <DetailClassColor/>
     <DetailClassTag/>
     <DetailClassAdd/>
     </RegisterForm>

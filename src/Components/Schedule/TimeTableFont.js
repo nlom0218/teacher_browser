@@ -31,7 +31,7 @@ const onClickSizeBtn = (type)=>{
 }
 
 return (<Container>
-<div> 글씨크기조절 {fontSize }</div>
+<div> 글씨크기조절 </div>
 <AiFillMinusSquare onClick={()=>onClickSizeBtn("minus")}/>
 <AiFillPlusSquare onClick={()=>onClickSizeBtn("plus")}/>
 

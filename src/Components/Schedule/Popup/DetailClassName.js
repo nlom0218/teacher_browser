@@ -39,7 +39,7 @@ const Input = styled.input`
 
 const TypeLayout = styled.div`
     display : grid;
-    grid-template-columns : auto repeat(5,1fr);
+    grid-template-columns : 2fr repeat(6,1fr);
     column-gap : 20px;
     column-gap : 1.25rem;
     cursor : pointer;
@@ -50,6 +50,9 @@ const Type = styled.div`
     column-gap : 10px;
     column-gap : 0.625rem;
     align-items : center;
+    justify-self: center;
+    text-align: center;
+    /* border: 1px solid; */
 
 `
 
@@ -78,10 +81,13 @@ const DetailClassName = ({  }) => {
   const onClickTypeBtn = () => {setPickType(true)}
   const onSubmit = (data) => {
   }
+
+
   const onBlurForm = () => {
     setIsEdit(false)
     const className = getValues("className")
     onSubmit({className})
+
   }
 //useEffect()
 
@@ -106,7 +112,7 @@ const DetailClassName = ({  }) => {
           onClick={onClickInput}
           isEdit={isEdit}
           min={1}
-          max={999999999}  // int범위로ㅌ 조절 인해
+          max={999999999} 
         />
       </InputUnderLine>
       {isEdit ? <Submit
@@ -114,13 +120,22 @@ const DetailClassName = ({  }) => {
         type="submit"
       /> : (media !== "Mobile" && <div></div>)}
         <TypeLayout>
-        <Type>음영</Type>
+        <Type><mark>음영</mark></Type>
         {/* <Type onClick={() => onClickTypeBtn()}>{pickType === "true" ? <RiCheckboxLine color='pink'/> : <AiTwotoneDownSquare  color='pink'/>}<div></div></Type> */}
-        <Type onClick={() => onClickTypeBtn()}> <AiTwotoneDownSquare color='skyblue'/> </Type>
-        <Type onClick={() => onClickTypeBtn()}>{pickType === "true" ? <AiTwotoneDownSquare  color='yellow'/> : <AiTwotoneDownSquare  color='yellow' opacity="0.3"/>}<div></div></Type>
-        <Type onClick={() => onClickTypeBtn()}>{pickType === "true" ? <RiCheckboxLine color='lightgreen'/> : <AiTwotoneDownSquare  color='lightgreen' opacity="0.3" />}<div></div></Type>
-        <Type onClick={() => onClickTypeBtn()}>{pickType === "true" ? <RiCheckboxLine color='pink'/> : <AiTwotoneDownSquare  color='pink' opacity="0.3"/>}<div></div></Type>
-        <Type onClick={() => onClickTypeBtn()}>{pickType === "true" ? <RiCheckboxLine color='violet'/> : <AiTwotoneDownSquare  color='violet' opacity="0.3"/>}<div></div></Type>
+        <Type onClick={onClickTypeBtn}>{pickType === "true" ? <RiCheckboxLine color='pink'/> : <AiTwotoneDownSquare  color='pink'/>}</Type>
+        <Type onClick={onClickTypeBtn}>{pickType === "true" ? <RiCheckboxLine color='#F4A460'/> : <AiTwotoneDownSquare  color='#F4A460'/>}</Type>
+
+
+
+        
+        <Type onClick={onClickTypeBtn}>{pickType === "true" ? <AiTwotoneDownSquare  color='yellow' /> : <AiTwotoneDownSquare  color='yellow' />}</Type>
+        <Type onClick={onClickTypeBtn}>{pickType === "true" ? <RiCheckboxLine color='lightgreen'/> : <AiTwotoneDownSquare  color='lightgreen'  />}</Type>
+
+
+        <Type onClick={onClickTypeBtn}> <AiTwotoneDownSquare color='skyblue' /> </Type>
+        <Type onClick={onClickTypeBtn}>{pickType === "true" ? <RiCheckboxLine color='violet'/> : <AiTwotoneDownSquare  color='violet' />}</Type>
+        
+        
         </TypeLayout>
     </DetailClassNameForm>
   </DetailStudentLayout>);

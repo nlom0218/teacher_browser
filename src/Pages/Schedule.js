@@ -10,7 +10,6 @@ import useMedia from "../Hooks/useMedia";
 import { useForm } from "react-hook-form";
 import { RiCheckboxBlankLine,RiCheckboxLine } from "react-icons/ri";
 import TimeTableFont from "../Components/Schedule/TimeTableFont";
-import {TiPlusOutline} from "react-icons/ti";
 import TimeTableGrid from "../Components/Schedule/TimeTableGrid";
 import { useReactiveVar } from "@apollo/client";
 import ClassRegisterPage from "../Components/Schedule/Popup/ClassRegisterPage";
@@ -97,22 +96,8 @@ const OptionBtn = styled.div`
   border-radius: 0.3125rem;
   cursor: pointer;
 `;
-const AddSub = styled.div`
-  grid-row: 1/2;
-  justify-self: flex-end;
-  display: grid;
-  grid-template-columns: auto auto;
-  column-gap: 10px;
-  column-gap: 0.625rem;
-  align-items: center;
-  svg {
-    display: flex;
-    font-size: 2.5em;
-    font-size: 2.5rem;
-    cursor: pointer;
-  }
-`;
-const AddSubBtn = styled.div``;
+
+
 
 
 
@@ -136,13 +121,10 @@ width: 100%;
 const Schedule = () => {
 
   const isPopup = useReactiveVar(isPopupVar);
-
-
   const media = useMedia();
-
   const [isEdit, setIsEdit] = useState(false);
   const [title, setTitle] = useState(undefined);
-  const [fontSize, setFontSize] = useState(1)
+  const [fontSize, setFontSize] = useState(1.25)
   const [viewTime, setViewTime] = useState(false);
 
 
@@ -167,9 +149,9 @@ const Schedule = () => {
    const onClickTimeSetBtn = () => {
     inPopup("registerTimeSet");
    }
-   const onClickAddSub = () =>{}
 
    const onClickTimeviewBtn = () => {
+     console.log(viewTime)
     setViewTime(true);
    }
 
@@ -207,16 +189,18 @@ const Schedule = () => {
         <OptionContents>
         <OptionBtn onClick={onClickTimeSetBtn}> 시간설정 </OptionBtn>
         <TypeBtn onClick={onClickTimeviewBtn}> {viewTime === "true" ? <RiCheckboxLine/> : <RiCheckboxBlankLine/>} <div> 시간 보기 </div> </TypeBtn>
+
+
+
         <TimeTableFont fontSize={fontSize} setFontSize={setFontSize}/>
         </OptionContents>
   <TimeTableHeight>
-  <TimeTableGrid fontSize={fontSize}/>
+  <TimeTableGrid fontSize={fontSize} setFontSize={setFontSize}/>
 
 
   </TimeTableHeight>
         </Container>
         {isPopup === "registerClass" && <ClassRegisterPage />}
-        {/* {isPopup === "registerClass" && <ClassTimeSet />} */}
         {isPopup === "registerTimeSet" && <ClassTimeSet />}
       </DivideLeftContents>
     </BasicContainer>

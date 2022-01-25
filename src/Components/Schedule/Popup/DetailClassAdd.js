@@ -17,7 +17,9 @@ const StudentTagContainer = styled.div`
 `
 
 const StudentTag = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: ;
+  grid-template-rows: ;
   flex-wrap: wrap;
   .no_student_tag {
     padding-top: 15px;
@@ -107,7 +109,8 @@ const DetailClassAdd = ({ }) => {
     <DetailTitle style={{ marginTop: "15px", marginTop: "0.9375rem" }}>수업 추가</DetailTitle>
     <StudentTagContainer onMouseEnter={onMouseEnterTag} onMouseLeave={onMouseLeaveTag} onClick={onMouseEnterTag} isEdit={isEdit}>
       <StudentTag>
-월요일 1교시      </StudentTag>
+
+  </StudentTag>
     </StudentTagContainer>
     {/* 팝업화면 정보 넣기 */}
   </DetailStudentLayout>);

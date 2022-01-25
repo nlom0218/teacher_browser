@@ -21,7 +21,9 @@ const SubjectName = styled.div`
   text-align: center;
   align-self: center;
   overflow: hidden;
-  line-height: 250%;
+  line-height: 300%;
+  font-size: ${props=>props.fontSize}em;
+  font-size: ${props=>props.fontSize}rem;
 `
 
 const HoverContainer = styled.div`
@@ -48,7 +50,7 @@ const HoverContainer = styled.div`
 
 
 
-const TableOutItem = ({ item, index, color, tag}) => {
+const TableOutItem = ({ item, index, color, tag, fontSize, setFontSize}) => {
 
 
   const [hoverContainer, setHoverContainer] = useState(false)
@@ -63,7 +65,7 @@ const TableOutItem = ({ item, index, color, tag}) => {
   return (<TableItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} index={index} color={color} >
 
 
-    <SubjectName onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} >{item}
+    <SubjectName onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} fontSize={fontSize} setFontSize={setFontSize}>{item}
     {hoverContainer===true ? <HoverContainer>{tag}
     {/* 태그정보는 가장 [0]만 나오도록 하고 나머지는 ... 처리  */}
     </HoverContainer>:null}
