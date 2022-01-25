@@ -253,7 +253,7 @@ const Order = () => {
                 </OptionBtn>
               )}
               <SeeResultType seeResultType={seeResultType} setSeeResultType={setSeeResultType} />
-              {media === "Desktop" && <PrintOrder title={title} componentRef={componentRef} />}
+              {media === "Desktop" && <PrintOrder />}
               <FontSizeBtn seeResultType={seeResultType} setFontSizeAll={setFontSizeAll} fontSizeAll={fontSizeAll} fontSizeOne={fontSizeOne} setFontSizeOne={setFontSizeOne} />
             </OptionContents>
             <StudentOrder fontSizeOne={fontSizeOne} fontSizeAll={fontSizeAll} seeResultType={seeResultType} selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} isShuffle={isShuffle} />

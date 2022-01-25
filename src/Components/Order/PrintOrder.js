@@ -13,6 +13,7 @@ const PrintIcon = styled.div`
     font-size: 2.25em;
     font-size: 2.25rem;
     display: flex;
+    filter: drop-shadow(1px 1px 1px rgb(0, 0, 0))
   }
 `
 
