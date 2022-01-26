@@ -104,8 +104,8 @@ height : 100%;
 const Student = styled.div`
 border : 1px solid ${props => props.theme.fontColor};
 transition: border 1s ease;
-border-radius: 20x;
-border-radius: 1.25rem;
+border-radius: 5px;
+border-radius: 0.3125rem;
 display: grid;
 align-items: center;
 justify-items: center;

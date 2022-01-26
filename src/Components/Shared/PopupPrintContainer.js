@@ -33,7 +33,7 @@ const SRegisterContainer = styled.div`
   max-height: 70%;
   height: 100%;
   border-radius: 5px;
-  border-radius: 0.31325rem;
+  border-radius: 0.3125rem;
 `
 
 const RegisterPage = styled.div`

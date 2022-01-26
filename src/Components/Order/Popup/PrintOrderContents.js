@@ -25,6 +25,8 @@ const PrintContainer = styled.div`
   display: grid;
   row-gap: 40px;
   row-gap: 2.5rem;
+  padding-bottom: 20px;
+  padding-bottom: 1.25rem;
   @media print {
     @page {
       size: A4;
@@ -106,16 +108,6 @@ const PrintOrderContents = ({ printRef, title, selectedStudent }) => {
           <Name className="print_table_row_name">이름</Name>
         </Item>
         {selectedStudent?.map((item, index) => {
-          return <Item key={index}>
-            <Number>{index + 1}</Number>
-            <Name>{item}</Name>
-          </Item>
-        })}      {selectedStudent?.map((item, index) => {
-          return <Item key={index}>
-            <Number>{index + 1}</Number>
-            <Name>{item}</Name>
-          </Item>
-        })}      {selectedStudent?.map((item, index) => {
           return <Item key={index}>
             <Number>{index + 1}</Number>
             <Name>{item}</Name>

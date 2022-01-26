@@ -36,7 +36,7 @@ const FontSizeBtn = ({ setFontSizeAll, fontSizeAll, setFontSizeOne, fontSizeOne,
             if (type === "plus") {
                 setFontSizeOne(prev => prev + (0.0625 * 4))
             }
-            if (type === "minus" && fontSizeOne > 1) {
+            if (type === "minus" && fontSizeOne > 5) {
                 setFontSizeOne(prev => prev - (0.0625 * 4))
             }
         }
