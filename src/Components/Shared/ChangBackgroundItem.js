@@ -1,7 +1,5 @@
-import { useReactiveVar } from '@apollo/client';
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { bgThemeAniVar } from '../../apollo';
 
 const bgDownAni = keyframes`
   0% {
@@ -38,7 +36,7 @@ const Container = styled.div`
   background: ${props => props.color};
   background-size: cover;
   background-position: center;
-  animation: ${props => props.bgThemeAni && bgDownAni} 1s ease forwards;
+  animation: ${props => props.bgThemeAni && bgDownAni} 2s ease forwards;
 `
 
 const ChangBackgroundItem = ({ color, userBgTheme, bgThemeAni }) => {

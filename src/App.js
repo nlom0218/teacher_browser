@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useReactiveVar } from "@apollo/client";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import { darkModeVar, isPopupVar, outPopup } from "./apollo";
+import { darkModeVar, disableBgThemeAni, isPopupVar, outPopup } from "./apollo";
 import { darkTheme, GlobalStyle, ligthTheme } from "./styles";
 import Home from "./Pages/Home";
 import Calendar from "./Pages/Calendar";
@@ -59,6 +59,7 @@ function App() {
 
   useEffect(() => {
     window.Kakao.init(process.env.REACT_APP_KAKAO_API_KEY);
+    disableBgThemeAni()
   }, []);
 
   return (

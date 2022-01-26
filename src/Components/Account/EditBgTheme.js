@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import { useState } from "react";
 import styled from "styled-components";
 import { ME_QUERY } from "../../Hooks/useMe";
@@ -7,7 +7,7 @@ import { BsCheckLg } from "react-icons/bs";
 import { UPDATE_USER_BGTHEME_MUTATION } from "../../Graphql/User/mutation";
 import { RiCheckboxBlankLine, RiCheckboxLine } from 'react-icons/ri';
 import { customMedia } from "../../styles";
-import { enableBgThemeAni } from "../../apollo";
+import { bgThemeAniVar, enableBgThemeAni } from "../../apollo";
 
 const Container = styled.div`
   display: grid;
@@ -37,13 +37,11 @@ const ColorBgThemeItem = styled.div`
   background-color: ${props => props.color};
   border-radius: 5px;
   border-radius: 0.3125rem;
+  /* cursor: ${props => props.bgThemeAni ? "progress" : "pointer"}; */
   cursor: pointer;
   display: grid;
   align-items: center;
   justify-items: center;
-  svg {
-    /* filter: drop-shadow(0px 0px 2px rgb(255, 255, 255)) */
-  }
 `
 
 const RandomBgTheme = styled.div`
@@ -63,6 +61,7 @@ const BgThemeItem = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
+  /* cursor: ${props => props.bgThemeAni ? "progress" : "pointer"}; */
   cursor: pointer;
   svg {
     margin-right: 10px;
@@ -76,6 +75,7 @@ const Form = styled.form`
 `;
 
 const EditBg = ({ userEmail, bgTheme }) => {
+  const bgThemeAni = useReactiveVar(bgThemeAniVar)
   const bgColorArr = [
     "#F44336", "#E91E62", "#9C27B0", "#673AB6", "#3F50B5", "#2096F3",
     "#00A8F4", "#00BCD4", "#009688", "#4CAF4F", "#8BC24A", "#CDDC39",
@@ -94,7 +94,9 @@ const EditBg = ({ userEmail, bgTheme }) => {
     setValue("bgTheme", bgTheme);
   }
 
+
   const onClickColorBgTheme = (color) => {
+    // if (!bgThemeAni) {
     enableBgThemeAni()
     updateBgTheme({
       variables: {
@@ -102,9 +104,11 @@ const EditBg = ({ userEmail, bgTheme }) => {
         bgTheme: color,
       },
     });
+    // }
   }
 
   const onClickBgTheme = (bgTheme) => {
+    // if (!bgThemeAni) {
     if (bgTheme) {
       // 배경화면만 리렌더링 되는 거 왜 그럴까? refetchQuery로 me쿼리를 다시 불러와서?
       // 값을 변경했다 다시 원래 값으로 변경할 때 사진이 왜 바로 다른 사진으로 안 바뀌지?
@@ -115,6 +119,7 @@ const EditBg = ({ userEmail, bgTheme }) => {
         },
       });
     }
+    // }
   };
 
   const handleClick = () => {
@@ -132,6 +137,7 @@ const EditBg = ({ userEmail, bgTheme }) => {
             key={index}
             color={item}
             onClick={() => onClickColorBgTheme(item)}
+            bgThemeAni={bgThemeAni}
           >
             {bgTheme === item && <BsCheckLg />}
           </ColorBgThemeItem>
@@ -139,35 +145,35 @@ const EditBg = ({ userEmail, bgTheme }) => {
       </ColorBgTheme>
       <RandomBgTheme>
         <Title>✲ 랜덤 이미지</Title>
-        <BgThemeItem onClick={() => onClickBgTheme("nature")}>
+        <BgThemeItem bgThemeAni={bgThemeAni} onClick={() => onClickBgTheme("nature")}>
           {bgTheme === "nature" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
           <div>자연</div>
         </BgThemeItem>
-        <BgThemeItem onClick={() => onClickBgTheme("city")}>
+        <BgThemeItem bgThemeAni={bgThemeAni} onClick={() => onClickBgTheme("city")}>
           {bgTheme === "city" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
           <div>도시</div>
         </BgThemeItem>
-        <BgThemeItem onClick={() => onClickBgTheme("cat")}>
+        <BgThemeItem bgThemeAni={bgThemeAni} onClick={() => onClickBgTheme("cat")}>
           {bgTheme === "cat" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
           <div>고양이</div>
         </BgThemeItem>
-        <BgThemeItem onClick={() => onClickBgTheme("dog")}>
+        <BgThemeItem bgThemeAni={bgThemeAni} onClick={() => onClickBgTheme("dog")}>
           {bgTheme === "dog" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
           <div>강아지</div>
         </BgThemeItem>
-        <BgThemeItem onClick={() => onClickBgTheme("space")}>
+        <BgThemeItem bgThemeAni={bgThemeAni} onClick={() => onClickBgTheme("space")}>
           {bgTheme === "space" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
           <div>우주</div>
         </BgThemeItem>
-        <BgThemeItem onClick={() => onClickBgTheme("cafe")}>
+        <BgThemeItem bgThemeAni={bgThemeAni} onClick={() => onClickBgTheme("cafe")}>
           {bgTheme === "cafe" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
           <div>카페</div>
         </BgThemeItem>
-        <BgThemeItem onClick={() => onClickBgTheme("food")}>
+        <BgThemeItem bgThemeAni={bgThemeAni} onClick={() => onClickBgTheme("food")}>
           {bgTheme === "food" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
           <div>음식</div>
         </BgThemeItem>
-        <BgThemeItem onClick={() => onClickBgTheme("school")}>
+        <BgThemeItem bgThemeAni={bgThemeAni} onClick={() => onClickBgTheme("school")}>
           {bgTheme === "school" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
           <div>학교</div>
         </BgThemeItem>

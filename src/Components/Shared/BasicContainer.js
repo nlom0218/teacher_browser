@@ -1,10 +1,23 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Header from './Header';
 import Theme from './Theme';
 import { customMedia } from '../../styles';
 import PreviousPageBtn from './PreviousPageBtn';
-import ChangBackground from './ChangBackground';
+import { useReactiveVar } from '@apollo/client';
+import { bgThemeAniVar } from '../../apollo';
+
+const opacityContainerAni = keyframes`
+  0% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`
 
 const Container = styled.div`
   display: grid;
@@ -13,6 +26,7 @@ const Container = styled.div`
   min-height: 100vh;
   height: 100vh;
   z-index: 0;
+  /* animation: ${props => props.bgThemeAni && opacityContainerAni} 2.1s ease; */
 `
 
 const ContentLayout = styled.div`
@@ -37,13 +51,14 @@ const ContentLayout = styled.div`
 `
 
 const BasicContainer = ({ children, menuItem, notScroll }) => {
+  const bgThemeAni = useReactiveVar(bgThemeAniVar)
   const [seeSideMenu, setSeeSideMenu] = useState(false)
   const onClickBackground = () => {
     if (seeSideMenu) {
       setSeeSideMenu(false)
     }
   }
-  return (<Container onClick={onClickBackground}>
+  return (<Container onClick={onClickBackground} bgThemeAni={bgThemeAni}>
     <Theme />
     <Header seeSideMenu={seeSideMenu} setSeeSideMenu={setSeeSideMenu} />
     <ContentLayout notScroll={notScroll}>
