@@ -25,12 +25,12 @@ const PrintContainer = styled.div`
   display: grid;
   row-gap: 40px;
   row-gap: 2.5rem;
-  padding-bottom: 20px;
-  padding-bottom: 1.25rem;
+  padding: 20px;
+  padding: 1.25rem;
   @media print {
     @page {
       size: A4;
-      padding: 10mm;
+      margin: 10mm;
     }
   }
 `

@@ -1,11 +1,14 @@
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { BtnFadeIn } from '../../Animations/Fade';
 import { inPopup, isPopupVar } from '../../apollo';
 import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
 import { SEE_ALL_STUDENT_QUERY, SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
+import IcBookMark from '../../icons/Bookmark/IcBookMark';
+import routes from '../../routes';
 import { customMedia } from '../../styles';
 import DetailStudentAllergy from './DetailStudentAllergy';
 import DetailStudentMemo from './DetailStudentMemo';
@@ -23,6 +26,14 @@ const Container = styled.div`
   row-gap: 1.25rem;
   column-gap: 40px;
   column-gap: 2.5rem;
+`
+
+const ListIcon = styled.div`
+  font-size: 2em;
+  font-size: 2rem;
+  svg {
+    filter: drop-shadow(1px 1px 1px rgb(0, 0, 0))
+  }
 `
 
 const Form = styled.form`
@@ -164,6 +175,10 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
     }
   }, [data])
   return (<Container>
+    <Link to={routes.list}>
+      <ListIcon><IcBookMark /></ListIcon>
+      {/* 명렬표로 바로 이동하는 기능의 아이콘입니다. 아이콘 업데이트되면 바꿉니다. */}
+    </Link>
     <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
       <InputUnderLine isEdit={isEdit}>
         <Name
