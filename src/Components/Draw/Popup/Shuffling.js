@@ -5,6 +5,7 @@ import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
 import { useForm } from 'react-hook-form';
 import { useState } from 'react/cjs/react.development';
 import RandomCircle from '../../Shared/RandomCircle';
+import CardShuffle from '../../Shared/CardShuffle';
 
 const Container = styled.div`
   display: grid;
@@ -92,7 +93,8 @@ const Shuffling = ({ pickNum, pickType, setPickNum, setPickType, studentNum, set
 
     return (<BtnPopupContainer>
         <Container>
-            <RandomCircle />
+            <CardShuffle />
+            {/* <RandomCircle /> */}
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Input
                     {...register("num", {
