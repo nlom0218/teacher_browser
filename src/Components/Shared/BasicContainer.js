@@ -4,6 +4,7 @@ import Header from './Header';
 import Theme from './Theme';
 import { customMedia } from '../../styles';
 import PreviousPageBtn from './PreviousPageBtn';
+import ChangBackground from './ChangBackground';
 
 const Container = styled.div`
   display: grid;
