@@ -16,7 +16,7 @@ import SeeResultType from "../Components/Order/SeeResultType";
 import FontSizeBtn from "../Components/Order/FontSizeBtn";
 import StudentOrder from "../Components/Order/StudentOrder";
 import PrintOrder from "../Components/Order/PrintOrder";
-import PrintOrderContents from "../Components/Order/PrintOrderContents";
+import PrintOrderContents from "../Components/Order/Popup/PrintOrderContents";
 import useMedia from "../Hooks/useMedia";
 
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import IcPrint from '../../icons/Print/IcPrint';
-import PopupPrintContainer from '../Shared/PopupPrintContainer';
+import IcPrint from '../../../icons/Print/IcPrint';
+import PopupPrintContainer from '../../Shared/PopupPrintContainer';
 import { useReactToPrint } from 'react-to-print';
 
 const PrintIcon = styled.div`
@@ -22,11 +22,15 @@ const PrintIcon = styled.div`
 `
 
 const PrintContainer = styled.div`
-  padding: 20px;
-  padding: 1.25rem;
   display: grid;
   row-gap: 40px;
   row-gap: 2.5rem;
+  @media print {
+    @page {
+      size: A4;
+      padding: 10mm;
+    }
+  }
 `
 
 const PageTitle = styled.div`
@@ -58,9 +62,9 @@ const List = styled.div`
 const Item = styled.div`
   background-color: #ffffff;
   display: grid;
-  grid-template-columns: 2fr 5fr;
-  font-size: 1.25em;
-  font-size: 1.25rem;
+  grid-template-columns: 1fr 3fr;
+  font-size: 1.2em;
+  font-size: 1.2rem;
 `
 
 const Number = styled.div`
@@ -80,7 +84,7 @@ const Name = styled.div`
 
 const PrintOrderContents = ({ printRef, title, selectedStudent }) => {
   const handlePrint = useReactToPrint({
-    content: () => printRef.current
+    content: () => printRef.current,
   });
 
   const onClickPrint = () => {
@@ -102,6 +106,16 @@ const PrintOrderContents = ({ printRef, title, selectedStudent }) => {
           <Name className="print_table_row_name">이름</Name>
         </Item>
         {selectedStudent?.map((item, index) => {
+          return <Item key={index}>
+            <Number>{index + 1}</Number>
+            <Name>{item}</Name>
+          </Item>
+        })}      {selectedStudent?.map((item, index) => {
+          return <Item key={index}>
+            <Number>{index + 1}</Number>
+            <Name>{item}</Name>
+          </Item>
+        })}      {selectedStudent?.map((item, index) => {
           return <Item key={index}>
             <Number>{index + 1}</Number>
             <Name>{item}</Name>
