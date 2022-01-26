@@ -1,54 +1,40 @@
+import { useReactiveVar } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import { bgThemeAniVar, disableBgThemeAni, enableBgThemeAni } from '../../apollo';
 import useMe from '../../Hooks/useMe';
-
-const bgDownAni = keyframes`
-  from {
-    top: -100%;
-    bottom: 100%;
-  }
-  to {
-    top: 0;
-    bottom: 0;
-  }
-`
-
-const Container = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  z-index: -1;
-  background: ${({ bgTheme }) =>
-    bgTheme ?
-      (bgTheme.substr(0, 1) === "#" ? bgTheme :
-        `url("https://source.unsplash.com/random/1920x1080?${bgTheme}")`)
-      :
-      `url("https://source.unsplash.com/random/1920x1080?nature")`};
-  background-size: cover;
-  background-position: center;
-  animation: ${bgDownAni} 2s ease forwards;
-`
+import ChangBackgroundItem from './ChangBackgroundItem';
 
 const ChangBackground = () => {
+  const bgColorArr = [
+    "#F44336", "#E91E62", "#9C27B0", "#673AB6", "#3F50B5", "#2096F3",
+    "#00A8F4", "#00BCD4", "#009688", "#4CAF4F", "#8BC24A", "#CDDC39",
+    "#FFEB3A", "#FFC007", "#FF9800", "#FF5721", "#795548", "#607D8A"
+  ]
+  const bgThemeAni = useReactiveVar(bgThemeAniVar)
+
   const me = useMe()
   const [userBgTheme, setUserBgTheme] = useState(undefined)
 
   useEffect(() => {
-    if (me) {
-      setUserBgTheme(me.bgTheme)
+    if (me && bgThemeAni) {
+      if (me.bgTheme.substr(0, 1) === "#") {
+        setUserBgTheme(me.bgTheme)
+      }
     }
   }, [me])
 
   useEffect(() => {
     const removeBgTheme = setTimeout(() => {
       setUserBgTheme(undefined)
+      disableBgThemeAni()
     }, [2000])
     return () => { clearTimeout(removeBgTheme) }
   }, [userBgTheme])
 
-
   return (<React.Fragment>
-    {userBgTheme && <Container bgTheme={userBgTheme}></Container>}
+    {bgColorArr.map((item, index) => {
+      return <ChangBackgroundItem color={item} key={index} userBgTheme={userBgTheme} bgThemeAni={bgThemeAni} />
+    })}
   </React.Fragment>
   );
 }

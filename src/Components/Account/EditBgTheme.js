@@ -7,6 +7,7 @@ import { BsCheckLg } from "react-icons/bs";
 import { UPDATE_USER_BGTHEME_MUTATION } from "../../Graphql/User/mutation";
 import { RiCheckboxBlankLine, RiCheckboxLine } from 'react-icons/ri';
 import { customMedia } from "../../styles";
+import { enableBgThemeAni } from "../../apollo";
 
 const Container = styled.div`
   display: grid;
@@ -94,6 +95,7 @@ const EditBg = ({ userEmail, bgTheme }) => {
   }
 
   const onClickColorBgTheme = (color) => {
+    enableBgThemeAni()
     updateBgTheme({
       variables: {
         userEmail: userEmail,

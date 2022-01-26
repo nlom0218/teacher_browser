@@ -43,14 +43,17 @@ function App() {
   // useMe() 값을 다 불러온 뒤에 return할 수 있을까?
   const me = useMe();
   const [userBgTheme, setUserBgTheme] = useState(undefined)
-  console.log(userBgTheme);
 
   useEffect(() => {
     if (me) {
-      const changBg = setTimeout(() => {
+      if (me.bgTheme.substr(0, 1) === "#") {
+        const changBg = setTimeout(() => {
+          setUserBgTheme(me.bgTheme)
+        }, [1800])
+        return () => { clearTimeout(changBg) }
+      } else {
         setUserBgTheme(me.bgTheme)
-      }, [1800])
-      return () => { clearTimeout(changBg) }
+      }
     }
   }, [me])
 
