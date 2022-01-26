@@ -8,6 +8,10 @@ import IcLunchmenuClick from "../../icons/Lunchmenu/IcLunchmenuClick"
 import IcLunchmenu from '../../icons/Lunchmenu/IcLunchmenu';
 import IcSchedule from '../../icons/Schedule/IcSchedule';
 import IcScheduleClick from '../../icons/Schedule/IcScheduleClick';
+import IcRandom from '../../icons/Random/IcRandom';
+import IcRandomClick from '../../icons/Random/IcRandomClick';
+import IcChangingSeatsClick from '../../icons/ChangingSeats/IcChangingSeatsClick';
+import IcChangingSeats from '../../icons/ChangingSeats/IcChangingSeats';
 
 const SMenu = styled.div`
   display: grid;
@@ -47,18 +51,20 @@ export const TimerLink = () => {
 }
 
 export const DrawLink = () => {
+  const [isHover, setIsHover] = useState(false)
   return (<Link to={routes.draw}>
-    <SMenu>
-      {/* <FcDonate /> */}
+    <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+      {isHover ? <IcRandomClick /> : <IcRandom />}
       <Title>랜덤뽑기</Title>
     </SMenu>
   </Link>);
 }
 
 export const SwapLink = () => {
+  const [isHover, setIsHover] = useState(false)
   return (<Link to={routes.swap}>
-    <SMenu>
-      {/* <FcRefresh /> */}
+    <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+      {isHover ? <IcChangingSeatsClick /> : <IcChangingSeats />}
       <Title>자리바꾸기</Title>
     </SMenu>
   </Link>);
