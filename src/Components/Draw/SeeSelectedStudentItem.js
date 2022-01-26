@@ -82,9 +82,8 @@ const SeeSelectedStudentItem = ({ item, fontSize, pickNum, pickType }) => {
       <HideBox
         seeHideBox={seeHideBox}
         onClick={onClickHideBox}
-      >
-
-        클릭하여 확인 </HideBox>}
+      >클릭하여 확인</HideBox>
+    }
   </StudentItem>);
 }
 
