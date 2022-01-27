@@ -2,7 +2,7 @@ import React from 'react';
 import { RiCheckboxBlankLine, RiCheckboxLine } from 'react-icons/ri';
 import styled from 'styled-components';
 
-const Container = styled.div `
+const Container = styled.div`
 align-self: flex-end;
 display: grid;
 grid-template-columns: 1fr 1fr;
@@ -25,17 +25,18 @@ svg{
 
 
 
-const SeeResultType = ({seeResultType,setSeeResultType}) => {
+const SeeResultType = ({ seeResultType, setSeeResultType }) => {
     const onClickTypeBtn = (type) => {
         setSeeResultType(type)
     }
 
-return (
- <Container>
-<TypeBtn onClick={()=> onClickTypeBtn("ALL")}>{seeResultType==="ALL" ? <RiCheckboxLine/> : <RiCheckboxBlankLine/> }<div> ALL </div> </TypeBtn>
-<TypeBtn onClick={()=> onClickTypeBtn("ONE")}> {seeResultType === "ONE" ? <RiCheckboxLine/> : <RiCheckboxBlankLine/>} <div>ONE </div> </TypeBtn>
+    return (
+        <Container>
+            <TypeBtn onClick={() => onClickTypeBtn("ALL")}>{seeResultType === "ALL" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}<div> ALL </div> </TypeBtn>
+            <TypeBtn onClick={() => onClickTypeBtn("ONE")}> {seeResultType === "ONE" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />} <div>ONE </div> </TypeBtn>
 
- </Container>
+        </Container>
 
-)}
-export default SeeResultType ;
+    )
+}
+export default SeeResultType;

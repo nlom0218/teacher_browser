@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { outPopup } from "../../apollo";
-import { customMedia } from "../../styles";
+import { color, customMedia } from "../../styles";
 
 const Background = styled.div`
   position: fixed;
@@ -8,8 +8,9 @@ const Background = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: ${props => props.theme.popupBgColor};
+  background-color: rgba(0,0,0,0.75);
   z-index: 10;
+  color: ${color.black};
 `;
 
 const SRegisterContainer = styled.div`
