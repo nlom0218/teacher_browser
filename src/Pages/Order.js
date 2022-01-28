@@ -18,6 +18,8 @@ import StudentOrder from "../Components/Order/StudentOrder";
 import PrintOrder from "../Components/Order/PrintOrder";
 import PrintOrderContents from "../Components/Order/Popup/PrintOrderContents";
 import useMedia from "../Hooks/useMedia";
+import IcNameTableClick from "../icons/NameTable/IcNameTableClick";
+import IcNameTable from "../icons/NameTable/IcNameTable";
 
 
 // 전체 틀
@@ -147,6 +149,7 @@ const ListIcon = styled.div`
     font-size: 2.5em;
     font-size: 2.5rem;
     cursor: pointer;
+    filter: drop-shadow(1px 1px 1px rgb(0, 0, 0))
   }
 `;
 
@@ -160,6 +163,7 @@ const Order = () => {
 
   const componentRef = useRef(null);
 
+  const [IconsLIstisHover, setIconListIsHover] = useState(false)
   const [studentListName, setStudentListName] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState([]);
   const [isShuffle, setIsShuffle] = useState("init");
@@ -233,7 +237,9 @@ const Order = () => {
           </Title>
           <ListIcon>
             <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다"}</ListName>
-            <FcContacts onClick={onClickListIcon} />
+            <div onClick={onClickListIcon} onMouseEnter={() => setIconListIsHover(true)} onMouseLeave={() => setIconListIsHover(false)}>
+              {IconsLIstisHover ? <IcNameTableClick /> : <IcNameTable />}
+            </div>
           </ListIcon>
         </TopContents>
         {id && (
@@ -260,10 +266,10 @@ const Order = () => {
           </React.Fragment>
         )}
       </Container>
-      {isPopup === "seeStudentList" && <StudentList />}
-      {isPopup === "print" && <PrintOrderContents printRef={componentRef} title={title} selectedStudent={selectedStudent} />}
-      {isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
-    </BasicContainer>
+      { isPopup === "seeStudentList" && <StudentList />}
+      { isPopup === "print" && <PrintOrderContents printRef={componentRef} title={title} selectedStudent={selectedStudent} />}
+      { isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
+    </BasicContainer >
   );
 };
 

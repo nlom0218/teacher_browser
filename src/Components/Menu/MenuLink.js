@@ -12,6 +12,8 @@ import IcRandom from '../../icons/Random/IcRandom';
 import IcRandomClick from '../../icons/Random/IcRandomClick';
 import IcChangingSeatsClick from '../../icons/ChangingSeats/IcChangingSeatsClick';
 import IcChangingSeats from '../../icons/ChangingSeats/IcChangingSeats';
+import IcNameTableClick from '../../icons/NameTable/IcNameTableClick';
+import IcNameTable from '../../icons/NameTable/IcNameTable';
 
 const SMenu = styled.div`
   display: grid;
@@ -111,9 +113,10 @@ export const JournalLink = () => {
 }
 
 export const ListLink = () => {
+  const [isHover, setIsHover] = useState(false)
   return (<Link to={routes.list}>
-    <SMenu>
-      {/* <FcContacts /> */}
+    <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+      {isHover ? <IcNameTableClick /> : <IcNameTable />}
       <Title>명렬표</Title>
     </SMenu>
   </Link>);

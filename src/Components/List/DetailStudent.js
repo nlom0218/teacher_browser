@@ -8,6 +8,8 @@ import { inPopup, isPopupVar } from '../../apollo';
 import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
 import { SEE_ALL_STUDENT_QUERY, SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
 import IcBookMark from '../../icons/Bookmark/IcBookMark';
+import IcNameTable from '../../icons/NameTable/IcNameTable';
+import IcNameTableClick from '../../icons/NameTable/IcNameTableClick';
 import routes from '../../routes';
 import { customMedia } from '../../styles';
 import DetailStudentAllergy from './DetailStudentAllergy';
@@ -26,6 +28,9 @@ const Container = styled.div`
   row-gap: 1.25rem;
   column-gap: 40px;
   column-gap: 2.5rem;
+  a {
+    justify-self: flex-start;
+  }
 `
 
 const ListIcon = styled.div`
@@ -106,6 +111,7 @@ const ErrMsg = styled.div`
 const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
   const isPopup = useReactiveVar(isPopupVar)
 
+  const [IconsLIstisHover, setIconListIsHover] = useState(false)
   const [studentInfo, setStudentInfo] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
   const [isEdit, setIsEdit] = useState(false)
@@ -175,9 +181,8 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
     }
   }, [data])
   return (<Container>
-    <Link to={routes.list}>
-      <ListIcon><IcBookMark /></ListIcon>
-      {/* 명렬표로 바로 이동하는 기능의 아이콘입니다. 아이콘 업데이트되면 바꿉니다. */}
+    <Link to={routes.list} onMouseEnter={() => setIconListIsHover(true)} onMouseLeave={() => setIconListIsHover(false)}>
+      <ListIcon>{IconsLIstisHover ? <IcNameTableClick /> : <IcNameTable />}</ListIcon>
     </Link>
     <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
       <InputUnderLine isEdit={isEdit}>
