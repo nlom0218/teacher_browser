@@ -17,6 +17,31 @@ import ClassTimeSet from "../Components/Schedule/Popup/ClassTimeSet";
 
 
 
+const date = new Date()
+const processSetDay = () => {
+  const day = date.getDay()
+  if (day === 1) {
+    return "월요일"
+  } else if (day === 2) {
+    return "화요일"
+  } else if (day === 3) {
+    return "수요일"
+  } else if (day === 4) {
+    return "목요일"
+  } else if (day === 5) {
+    return "금요일"
+  } else if (day === 6) {
+    return "토요일"
+  } else if (day === 0) {
+    return "일요일"
+  }
+}
+const processSetDate = () => {
+  return `${date.getFullYear()}년 ${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, 0)}월 ${date.getDate().toString().padStart(2, 0)}일`
+}
+
 
 //시간설정에서 누른 값을 바탕으로 시간 계산 함수 만들기 -> timetable out item으로 보내기
 //시간설정 완료 눌렀을 때 outPopup이 안 됨. 
@@ -24,7 +49,8 @@ import ClassTimeSet from "../Components/Schedule/Popup/ClassTimeSet";
 //칸 안에는 삭제아이콘 없앨까?
 //수업정보를 어떻게 받아서 전달????
 //태그랑 태그 관리 
-//음영표시 어떻게? 
+//음영표시 어떻게? 체크?? 보더??
+//음영한 뒤 다크모드에서 글씨 안 보임. 
 // 인쇄기능
 
 
@@ -55,6 +81,11 @@ const Title = styled.form`
   grid-template-columns: 1fr auto;
   column-gap: 20px;
   column-gap: 1.25rem;
+  h1 {
+    font-size: 0.9rem;
+    font-size: 0.9em;
+    opacity: 0.7;
+  }
 `;
 const Input = styled.input`
   width: 100%;
@@ -165,8 +196,7 @@ const Schedule = () => {
    }
 
    const onClickTimeviewBtn = () => {
-     console.log(viewTime)
-    setViewTime(true);
+    setViewTime(!viewTime);
    }
 
 
@@ -181,6 +211,7 @@ const Schedule = () => {
           <TopContents>
             <Title onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
             <InputLayout>
+            <h1>{processSetDate()} {processSetDay()}</h1>
             <Input
             {...register("title",{
               required:true,
@@ -202,19 +233,19 @@ const Schedule = () => {
         </TopContents>
         <OptionContents>
         <OptionBtn onClick={onClickTimeSetBtn}> 시간설정 </OptionBtn>
-        <TypeBtn onClick={onClickTimeviewBtn}> {viewTime === "true" ? <RiCheckboxLine/> : <RiCheckboxBlankLine/>} <div> 시간 보기 </div> </TypeBtn>
+        <TypeBtn onClick={onClickTimeviewBtn}> {viewTime===true?<RiCheckboxLine/>:<RiCheckboxBlankLine/>}  <div> 시간 보기 </div> </TypeBtn>
 
 
 
         <TimeTableFont fontSize={fontSize} setFontSize={setFontSize}/>
         </OptionContents>
   <TimeTableHeight>
-  <TimeTableGrid fontSize={fontSize} setFontSize={setFontSize}/>
+  <TimeTableGrid fontSize={fontSize} setFontSize={setFontSize} viewTime={viewTime} setViewTime={setViewTime}/>
 
 
   </TimeTableHeight>
         </Container>
-        {isPopup === "registerClass" && <ClassRegisterPage />}
+        {isPopup === "registerClass" && <ClassRegisterPage/>}
         {isPopup === "registerTimeSet" && <ClassTimeSet />}
       </DivideLeftContents>
     </BasicContainer>

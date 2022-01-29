@@ -50,7 +50,8 @@ const daytime = ["월요일","1","2","3","4","5","6",
       
     <AddClassContainer>
     {daytime.map((item, index) => {
-        return (<TimeTable onClick={onClickBtn} index={index}>{item}</TimeTable>)
+        return (<TimeTable 
+          onClick={onClickBtn} index={index}>{item}</TimeTable>)
       })}
  
 

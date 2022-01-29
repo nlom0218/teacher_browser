@@ -75,12 +75,16 @@ const DetailClassName = () => {
   const [pickType, setPickType] = useState (false)
 
   const media = useMedia()
-  const {register,setValue,handleSubmit,getValues}=useForm({mode:"onChange"})
+  const {register,setValue,handleSubmit,getValues}=useForm({
+    mode:"onChange"})
   const onClickInput = () => {setIsEdit(true)}
 
-  const onClickTypeBtn = () => {setPickType(true)}
+  const onClickTypeBtn = () => {
+    setPickType(true)
+      }
   const onSubmit = (data) => {
     const { className } = data
+    const newClassName = className
   }
 
 
@@ -88,8 +92,6 @@ const DetailClassName = () => {
     setIsEdit(false)
     const className = getValues("className")
     onSubmit({className})
-    console.log(className)
-
   }
 //useEffect()
 

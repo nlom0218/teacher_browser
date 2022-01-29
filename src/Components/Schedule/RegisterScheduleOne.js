@@ -34,7 +34,7 @@ font-size: 1.5rem;
 cursor: pointer;
 `
 
-const RegisterScheduleOne = ({ subjectName }) => {
+const RegisterScheduleOne = ({ item, color, tag }) => {
 
   const onClickRegisterClassOne = () => {
     inPopup("registerClass")
@@ -48,8 +48,8 @@ const RegisterScheduleOne = ({ subjectName }) => {
 
   return (<Container>
             <RegisterClassOneBtn onClick={onClickRegisterClassOne}> <AiOutlineEdit/> </RegisterClassOneBtn>
-            <DelClassBtn onClick={onClickDelClass} subjectName={subjectName}><TiDelete/></DelClassBtn>
-  {/* 과목정보가 있을 때만 삭제 버튼이 나오도록  */}
+            
+
   </Container>);
 }
 

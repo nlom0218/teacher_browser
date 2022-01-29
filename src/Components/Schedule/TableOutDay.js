@@ -16,26 +16,6 @@ const TableItem = styled.div`
   grid-template-rows: 1fr;
   opacity: ${props => props.hoverContainer ? 0.6 : 1};
 `
-const TimeUp=styled.div`
-position: absolute;
-left: 5%;
-top: 5%;
-padding: 5px;
-padding: 0.3125rem;
-font-size: 0.6rem;
-font-size: 0.6em;
-opacity: 0.6;
-`
-const TimeDown=styled.div`
-position: absolute;
-right: 5%;
-bottom: 5%;
-padding: 5px;
-padding: 0.3125rem;
-font-size: 0.6rem;
-font-size: 0.6em;
-opacity: 0.6;
-`
 
 const SubjectName = styled.div`
   text-align: center;
@@ -70,7 +50,7 @@ const HoverContainer = styled.div`
 
 
 
-const TableOutItem = ({ item, index, color, tag, fontSize, setFontSize, viewTime, setViewTime}) => {
+const TableOutItem = ({ item, index, color, tag, fontSize, setFontSize}) => {
 
 
   const [hoverContainer, setHoverContainer] = useState(false)
@@ -83,17 +63,11 @@ const TableOutItem = ({ item, index, color, tag, fontSize, setFontSize, viewTime
   }
 
   return (<TableItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} index={index} color={color} >
-{viewTime===true 
-?<React.Fragment>
-<TimeUp>{tag[0]}</TimeUp>
-<TimeDown>{tag[1]}</TimeDown></React.Fragment>
-
-: null}
 
 
 
     <SubjectName onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} fontSize={fontSize} setFontSize={setFontSize}>{item}
-    {hoverContainer===true ? <HoverContainer>{tag[0]}
+    {hoverContainer===true ? <HoverContainer>{tag}
     {/* 태그정보는 가장 [0]만 나오도록 하고 나머지는 ... 처리  */}
     </HoverContainer>:null}
   

@@ -51,6 +51,7 @@ const HoverContainer = styled.div`
   border-radius: 0.3125rem;
   animation: ${CardFadeIn} 0.6s ease forwards;
   color: ${props => props.theme.bgColor};
+  overflow: hidden;
   
 `
 
@@ -69,10 +70,8 @@ const TableInItem = ({ item, index, color, tag, fontSize}) => {
   }
 
   return (<TableItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} index={index} color={color} >
-  
-    <SubjectName fontSize={fontSize} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} ><SPAN color={color}> &nbsp; {item} &nbsp; </SPAN>
-    {hoverContainer===true ? <HoverContainer>{tag}<RegisterScheduleOne/>
-    {/* 태그정보는 가장 [0]만 나오도록 하고 나머지는 ... 처리  */}
+    <SubjectName item={item} color={color} tag={tag} fontSize={fontSize} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} ><SPAN color={color}> &nbsp; {item} &nbsp; </SPAN>
+    {hoverContainer===true ? <HoverContainer>{tag}<RegisterScheduleOne item={item} color={color} tag={tag} />
     </HoverContainer>:null}
   
     </SubjectName>

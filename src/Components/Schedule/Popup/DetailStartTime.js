@@ -53,7 +53,6 @@ const onSubmit = (data) => {
     const { lunchminutes } = data
     const { breaktime } = data
     const { breakminutes } = data
-    console.log(hour,minutes,classtime,resttime,lunchhour,lunchminutes,breaktime,breakminutes)
 }
 
 
