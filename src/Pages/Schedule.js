@@ -15,6 +15,20 @@ import { useReactiveVar } from "@apollo/client";
 import ClassRegisterPage from "../Components/Schedule/Popup/ClassRegisterPage";
 import ClassTimeSet from "../Components/Schedule/Popup/ClassTimeSet";
 
+
+
+
+//시간설정에서 누른 값을 바탕으로 시간 계산 함수 만들기 -> timetable out item으로 보내기
+//시간설정 완료 눌렀을 때 outPopup이 안 됨. 
+//시간보기 버튼 눌렀을 때 아이콘 안 바뀜
+//칸 안에는 삭제아이콘 없앨까?
+//수업정보를 어떻게 받아서 전달????
+//태그랑 태그 관리 
+//음영표시 어떻게? 
+// 인쇄기능
+
+
+
 const Container = styled.div`
   min-height: "100%";
   display: grid;

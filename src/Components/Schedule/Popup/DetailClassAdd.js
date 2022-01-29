@@ -6,7 +6,7 @@ import { DetailStudentLayout, DetailTitle } from '../../List/styled/DetailStuden
 import useMedia from '../../../Hooks/useMedia';
 
 
-const StudentTagContainer = styled.div`
+const AddClassContainer = styled.div`
   padding: 20px;
   padding: 1.25rem;
   display: grid;
@@ -14,75 +14,15 @@ const StudentTagContainer = styled.div`
   row-gap: 0.625rem;
   border-radius: 5px;
   border-radius: 0.625rem;
+  grid-template-columns: 2fr repeat(6,1fr);
+  grid-template-rows: repeat(5,1fr) ;
 `
 
-const StudentTag = styled.div`
+const TimeTable = styled.button`
   display: grid;
-  grid-template-columns: ;
-  grid-template-rows: ;
+text-align: center;
   flex-wrap: wrap;
-  .no_student_tag {
-    padding-top: 15px;
-    padding-top: 0.9375rem;
-  }
-`
-
-const EditContainer = styled.div`
-  display: grid;
-  row-gap: 10px;
-  row-gap: 0.625rem;
-  animation: ${BtnFadeIn} 1s ease;
-`
-
-const TagBox = styled.div`
-  padding: 20px;
-  padding: 1.25rem;
-  padding-top: 10px;
-  padding-top: 0.625rem;
-  border-radius: 5px;
-  border-radius: 0.625rem;
-  background-color: ${props => props.isEdit && props.theme.contentBgColor};
-  transition: background-color 1s ease;
-  display: flex;
-  flex-wrap: wrap;
-  .no_tag_div {
-    padding-top: 10px;
-    padding-top: 0.625rem
-  }
-`
-
-const Tag = styled.div`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  margin-top: 0.625rem;
-  margin-right: 16px;
-  margin-right: 1rem;
-  :hover {
-    text-decoration: underline;
-  }
-`
-
-const CreateTagBtn = styled.div`
-  justify-self: flex-end;
-  padding: 10px 20px;
-  padding: 0.625rem 1.25rem;
-  background-color: ${props => props.theme.btnBgColor};
-  color: ${props => props.theme.bgColor};
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  cursor: pointer;
-`
-
-const AddTagBtn = styled.div`
-  text-align: center;
-  padding: 10px 20px;
-  padding: 0.625rem 1.25rem;
-  background-color: ${props => props.theme.btnBgColor};
-  color: ${props => props.theme.bgColor};
-  border-radius: 5px;
-  border-radius: 0.3125rem;
+  border:1px solid;
   cursor: pointer;
 `
 
@@ -93,26 +33,28 @@ const DetailClassAdd = ({ }) => {
 
 
   const [isEdit, setIsEdit] = useState(false)
+  const [pick, setPick] = useState(false)
 
-
-  const onMouseEnterTag = () => setIsEdit(true)
-  const onMouseLeaveTag = () => setIsEdit(false)
-
-  const onClickCreateTag = () => inPopup("createTag")
-  const onClickPopupAddTag = () => inPopup("addTag")
-
-
+const onClickBtn = ()=>{setPick(true)}
 
   //useEffect
 
+const daytime = ["월요일","1","2","3","4","5","6",
+                "화요일","1","2","3","4","5","6",
+                "수요일","1","2","3","4","5","6",
+                "목요일","1","2","3","4","5","6",
+                "금요일","1","2","3","4","5","6"]
+
   return (<DetailStudentLayout>
     <DetailTitle style={{ marginTop: "15px", marginTop: "0.9375rem" }}>수업 추가</DetailTitle>
-    <StudentTagContainer onMouseEnter={onMouseEnterTag} onMouseLeave={onMouseLeaveTag} onClick={onMouseEnterTag} isEdit={isEdit}>
-      <StudentTag>
+      
+    <AddClassContainer>
+    {daytime.map((item, index) => {
+        return (<TimeTable onClick={onClickBtn} index={index}>{item}</TimeTable>)
+      })}
+ 
 
-  </StudentTag>
-    </StudentTagContainer>
-    {/* 팝업화면 정보 넣기 */}
+ </AddClassContainer>
   </DetailStudentLayout>);
 }
 

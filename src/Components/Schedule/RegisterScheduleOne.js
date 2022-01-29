@@ -9,12 +9,14 @@ import {AiOutlineEdit} from "react-icons/ai"
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
+
+
 `
 
 const DelClassBtn = styled.div`
 position: absolute;
 top:3%;
-right:10%;
+right:3%;
 font-size: 1.5em;
 font-size: 1.5rem;
 opacity:0.8;

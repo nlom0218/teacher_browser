@@ -26,20 +26,10 @@ const Font = styled.div`
  
     color: black;
     font-weight: 600;
-  padding: 20px 0px;
-  padding: 1.25rem 0rem;
+    padding: 20px 0px;
+    padding: 1.25rem 0rem;
 `
-
-const DetailStartTime = () => {
-    const [errMsg, setErrMsg] = useState(undefined)
-    const { register, handleSubmit, getValues } = useForm({
-        mode : "onChange" ,
-        defaultValues : {
-           
-        }
-    })
-
-    const AddTagBtn = styled.div`
+const AddTagBtn = styled.div`
     text-align: center;
     padding: 10px 20px;
     padding: 0.625rem 1.25rem;
@@ -48,20 +38,49 @@ const DetailStartTime = () => {
     border-radius: 5px;
     border-radius: 0.3125rem;
     cursor: pointer;
-  `
+`
+const DetailStartTime = () => {
+    const { register, handleSubmit, getValues } = useForm({
+        mode : "onChange" ,
+    })
 
 const onSubmit = (data) => {
-    const {num : stringNum} = data
-    const num = parseInt(stringNum)
-    console.log(data)
+    const { hour } = data
+    const { minutes } = data
+    const { classtime } = data
+    const { resttime } = data
+    const { lunchhour } = data
+    const { lunchminutes } = data
+    const { breaktime } = data
+    const { breakminutes } = data
+    console.log(hour,minutes,classtime,resttime,lunchhour,lunchminutes,breaktime,breakminutes)
+}
 
-    }
+
+
+const onBlurTimeSet = () => {
+    const hour = getValues("hour")
+    const minutes = getValues("minutes")
+    const classtime = getValues("classtime")
+    const resttime = getValues("resttime")
+    const lunchhour = getValues("lunchhour")
+    const lunchminutes = getValues("lunchminutes")
+    const breaktime = getValues("breaktime")
+    const breakminutes = getValues("breakminutes")
+    onSubmit({hour,minutes,classtime,resttime,lunchhour,lunchminutes,breaktime,breakminutes})
+  }
+
+const timeCheck = ()=>{
+    
+}
+
+
 
     return ( 
         <React.Fragment>
         <DetailStudentLayout>
             <DetailTitle>수업 시작</DetailTitle>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurTimeSet}>
             <Input
             {...register("hour", {
                 required : true
@@ -85,7 +104,7 @@ const onSubmit = (data) => {
         </DetailStudentLayout>
         <DetailStudentLayout>
             <DetailTitle>수업 시간</DetailTitle>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurTimeSet}>
                <Input
             {...register("classtime", {
                 required : true
@@ -100,7 +119,7 @@ const onSubmit = (data) => {
         </DetailStudentLayout>
         <DetailStudentLayout>
             <DetailTitle>쉬는 시간</DetailTitle>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurTimeSet}>
                <Input
             {...register("resttime", {
                 required : true
@@ -115,7 +134,7 @@ const onSubmit = (data) => {
         </DetailStudentLayout>
         <DetailStudentLayout>
             <DetailTitle>점심 시간</DetailTitle>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurTimeSet}>
             <Input
             {...register("lunchhour", {
                 required : true
@@ -139,7 +158,7 @@ const onSubmit = (data) => {
         </DetailStudentLayout>
         <DetailStudentLayout>
             <DetailTitle>중간 놀이</DetailTitle>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurTimeSet}>
             <Input
             {...register("breaktime", {
                 required : true
@@ -164,7 +183,7 @@ const onSubmit = (data) => {
         </DetailStudentLayout>
         <DetailStudentLayout>
         <div/>
-    <AddTagBtn>완료</AddTagBtn>
+    <AddTagBtn onClick={onBlurTimeSet}>완료</AddTagBtn>
         </DetailStudentLayout>
      
         </React.Fragment>

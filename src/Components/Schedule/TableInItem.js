@@ -35,7 +35,7 @@ const SPAN = styled.span`
 const HoverContainer = styled.div`
   display: grid;
   justify-items: center;
-  align-items: center;
+  align-self: center;
   font-size: 0.8rem;
   font-size: 0.8em;
   position: absolute;

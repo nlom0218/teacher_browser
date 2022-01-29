@@ -155,7 +155,7 @@ const DetailClassTag = ({ }) => {
   //useEffect
 
   return (<DetailStudentLayout>
-    <DetailTitle style={{ marginTop: "15px", marginTop: "0.9375rem" }}>메모</DetailTitle>
+    <DetailTitle style={{ marginTop: "15px", marginTop: "0.9375rem" }}>태그</DetailTitle>
     <DetailClassTagForm onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
       <InputUnderLine isEdit={isEdit}>
         <Input
@@ -176,7 +176,7 @@ const DetailClassTag = ({ }) => {
         />
       </InputUnderLine>
       {isEdit ? <Submit
-        value="메모 추가"
+        value="태그 관리"
         type="submit"
       /> : (media !== "Mobile" && <div></div>)}
 
