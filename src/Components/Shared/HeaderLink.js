@@ -4,7 +4,16 @@ import IcBookMark from '../../icons/Bookmark/IcBookMark';
 import IcBookMarkClick from '../../icons/Bookmark/IcBookMarkClick';
 import IcCalender from '../../icons/Calender/IcCalender';
 import IcCalenderClick from '../../icons/Calender/IcCalenderClick';
+import IcNews from '../../icons/News/IcNews';
+import IcNewsClick from '../../icons/News/IcNewsClick';
 import routes from '../../routes';
+
+export const HeaderNews = () => {
+  const [isHover, setIsHover] = useState(false)
+  return (<Link to={routes.home} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+    {isHover ? <IcNewsClick /> : <IcNews />}
+  </Link>);
+}
 
 export const HeaderBookMark = () => {
   const [isHover, setIsHover] = useState(false)

@@ -21,7 +21,7 @@ const Container = styled.div`
 
 const TopContents = styled.div`
   display : grid;
-  gritd-template-columns : 1fr;
+  grid-template-columns : 1fr;
   row-gap : 20px;
   row-gap : 1.25rem;
   align-items : center;
@@ -132,8 +132,8 @@ const TodoList = () => {
   const [isEdit, setIsEdit] = useState(false);
 
   const { register, handleSubmit, getValues } = useForm({
-    mode : "onChange",
-    defaultValues : { title : "오늘의 할 일 목록"},
+    mode: "onChange",
+    defaultValues: { title: "오늘의 할 일 목록" },
   });
 
   const onSubmit = (data) => {
@@ -144,7 +144,7 @@ const TodoList = () => {
 
   const onBlurForm = () => {
     const title = getValues("title");
-    onSubmit( {title} );
+    onSubmit({ title });
   };
 
   const onClickInput = () => {
@@ -153,45 +153,45 @@ const TodoList = () => {
 
 
   return (
-  <BasicContainer>
-    <Container>
-      <TopContents>
-        <Title onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
-          <InputLayout>
-            <Input
-              {...register("title", {
-                required : true,
-                onChange : () => setIsEdit(true),
-              })}
-              type = "text"
-              placeholder = "제목을 입력하세요."
-              autocomplete = "off"
-              onClick = {onClickInput}
-            />
-            {isEdit && (
-            <LineBox>
-              <Line></Line>
-            </LineBox>
-            )}
-          </InputLayout>
-          {isEdit && <SubmitInput
-          type = "submit"
-          value = "저장"
-          />}
-        </Title>
-      </TopContents>
-      
+    <BasicContainer>
+      <Container>
+        <TopContents>
+          <Title onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
+            <InputLayout>
+              <Input
+                {...register("title", {
+                  required: true,
+                  onChange: () => setIsEdit(true),
+                })}
+                type="text"
+                placeholder="제목을 입력하세요."
+                autocomplete="off"
+                onClick={onClickInput}
+              />
+              {isEdit && (
+                <LineBox>
+                  <Line></Line>
+                </LineBox>
+              )}
+            </InputLayout>
+            {isEdit && <SubmitInput
+              type="submit"
+              value="저장"
+            />}
+          </Title>
+        </TopContents>
+
         <OptionContents>
           <OptionBtn>할 일 목록</OptionBtn>
           <AddSub>
-            <MdAdd/>
+            <MdAdd />
           </AddSub>
         </OptionContents>
-      
-      <InputBox></InputBox>
-      <TodoInsert></TodoInsert>
-    </Container>
-  </BasicContainer>);
+
+        <InputBox></InputBox>
+        <TodoInsert></TodoInsert>
+      </Container>
+    </BasicContainer>);
 }
 
 export default TodoList;
