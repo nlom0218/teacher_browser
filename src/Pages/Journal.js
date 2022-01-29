@@ -7,11 +7,11 @@ import TitleArea from "../Components/Journal/TitleArea";
 import MainArea from "../Components/Journal/MainArea";
 //
 
-const Journal = () => {
+const Journal = ({ me }) => {
   return (
     <BasicContainer menuItem={true}>
       <TitleArea />
-      <MainArea />
+      <MainArea me={me} />
     </BasicContainer>
   );
 };

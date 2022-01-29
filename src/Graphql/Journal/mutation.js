@@ -8,3 +8,12 @@ export const WRITE_JOURNAL_MUTATION = gql`
     }
   }
 `;
+
+export const DELETE_JOURNAL_MUTATION = gql`
+  mutation deleteJournal($userEmail: ID!, $ownerId: ID!, $index: Int) {
+    deleteJournal(userEmail: $userEmail, ownerId: $ownerId, index: $index) {
+      ok
+      error
+    }
+  }
+`;
