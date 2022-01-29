@@ -1,36 +1,91 @@
 import React from 'react';
+import { MdAddCircle } from 'react-icons/md';
 import styled from 'styled-components';
+import { inPopup } from '../../apollo';
+import { customMedia } from '../../styles';
 
 const TodoHeadBlock = styled.div`
-  padding-top : 48px;
-  padding-left : 32px;
-  padding-right : 32px;
-  padding-bottom : 24px;
-  border-bottom : 1px solid #e9ecef;
+  display : grid;
+  grid-template-columns : 1fr auto;
+  column-gap : 40px;
+  column-gap : 2.5rem;
+`;
+
+const HeadLayout = styled.div`
   h1 {
-      margin : 0;
-      font-size : 36px;
-      color : #343a40;
+      font-size : 1.5em;
+      font-size : 1.5rem;
+      ${customMedia.greaterThan("tablet")`
+      font-size : 2em;
+      font-size : 2rem;
+      `}
   }
   .day {
-      margin-top : 4px;
-      color : #868e96;
-      font-size : 21px;
+      font-size : 1.25em;
+      font-size : 1.25rem;
+      opacity : 0.7;
   }
   .tasks-left {
       color : #20c997;
-      font-size : 18px;
-      margin-top : 40px;
+      font-size : 1.25em;
+      font-size : 1.25rem;
+      margin-top : 10px;
+      margin-top : 0.625rem;
       font-weight : bold;
   }
-`
+`;
 
-const TodoHead = ({ todoLength }) => {
+const ButtonContent = styled.div`
+  cursor : pointer;
+  font-size : 3rem;
+  font-size : 3em;
+  color : ${props => props.theme.btnBgColor};
+  transition : color 1s ease;
+  svg {
+      display : flex;
+  }
+`;
+
+const TodoHead = ({ todoLength, onInsertToggle }) => {
+    const date = new Date()
+    const processSetDay = () => {
+        const day = date.getDay()
+        if (day === 1) {
+          return "월요일"
+        } else if (day === 2) {
+          return "화요일"
+        } else if (day === 3) {
+          return "수요일"
+        } else if (day === 4) {
+          return "목요일"
+        } else if (day === 5) {
+          return "금요일"
+        } else if (day === 6) {
+          return "토요일"
+        } else if (day === 0) {
+          return "일요일"
+        }
+      }
+      const processSetDate = () => {
+        return `${date.getFullYear()}년 ${(date.getMonth() + 1)
+          .toString()
+          .padStart(2, 0)}월 ${date.getDate().toString().padStart(2, 0)}일`
+      }
+
+      const onClickCreateBtn = () => {
+          inPopup("todoCreate")
+      }
+
     return(
         <TodoHeadBlock>
-            <h1> 2021년 1월 29일 </h1>
-            <div className = "day"> 금요일 </div>
+            <HeadLayout>
+            <h1> {processSetDate()} </h1>
+            <div className = "day"> {processSetDay()} </div>
             <div className = "tasks-left"> 할 일 {todoLength}개 남음</div>
+            </HeadLayout>
+            <ButtonContent>
+                <MdAddCircle onClick={onClickCreateBtn}/>
+            </ButtonContent>
         </TodoHeadBlock>
     );
 }
