@@ -86,7 +86,7 @@ function App() {
         <Route path={`${routes.order}/:id`} element={<Order />} />
         <Route path={routes.lunchmenu} element={<Lunchmenu />} />
         <Route path={routes.schedule} element={<Schedule />} />
-        <Route path={routes.journal} element={<Journal />} />
+        <Route path={routes.journal} element={<Journal me={me} />} />
         <Route path={routes.list} element={<List />} />
         <Route path={`${routes.list}/:type/:id`} element={<List />} />
         <Route path={routes.trash} element={<Trash />} />

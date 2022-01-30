@@ -23,9 +23,9 @@ export const SEE_ALL_STUDENT_QUERY = gql`
       listId
       tag
       trash
-    } 
+    }
   }
-`
+`;
 
 // 휴지통 목록에 있는 학생 목록(필요한 인자 => trash:true)
 // Pages/Trash.js
@@ -47,9 +47,9 @@ export const SEE_ALL_STUDENT_IN_TRASH_QUERY = gql`
       listId
       tag
       trash
-    } 
+    }
   }
-`
+`;
 
 // 학생 세부 정보에서 쓰이는 학생 한명만 불러오는 쿼리(필요한 인자 => studentId)
 // Compnents/DetailStudent.js
@@ -72,10 +72,10 @@ export const SEE_ONE_STUDENT_QUERY = gql`
       allergy
       tag
       trash
-      memo
+      journal
     }
   }
-`
+`;
 
 // 해당 알러지가 있는 학생들만 불러오기(필요하 인자 => allergy)
 // Components/Lunchmenu/SeeAllergy.js
@@ -93,4 +93,4 @@ export const SEE_ALLERGY_STUDENT_QUERY = gql`
       trash
     }
   }
-`
+`;
