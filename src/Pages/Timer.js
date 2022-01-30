@@ -84,10 +84,7 @@ const Timer = () => {
           newMillisecondsLeft = millisecondsLeft--;
           setMillisecondsLeft(millisecondsLeft => newMillisecondsLeft);
         } else {
-          newMillisecondsLeft = 100;
-          setMillisecondsLeft(millisecondsLeft => newMillisecondsLeft)
-        }
-        if (millisecondsLeft <= 0) {
+          setMillisecondsLeft(millisecondsLeft => 100);
           newSecondsLeft = secondsLeft--;
           setMillisecondsLeft(millisecondsLeft => newSecondsLeft);
           setSeconds(secondsLeft => newSecondsLeft);
