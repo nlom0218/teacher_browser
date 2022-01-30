@@ -9,6 +9,8 @@ import { UPDATE_USER_MUTATION } from '../../../Graphql/User/mutation';
 import DetailClassName from './DetailClassName';
 import DetailClassColor from './DetailClassColor';
 import DetailClassTag from './DetailClasstag';
+import DetailClassAdd from './DetailClassAdd';
+import { DetailStudentLayout,DetailTitle } from '../../List/styled/DetailStudent';
 
 
 const RegisterForm = styled.form`
@@ -24,29 +26,52 @@ svg {
   cursor: pointer;
 }
 `
-const ClassRegisterPage = (item={item}) => {
+
+const AddTagBtn = styled.div`
+text-align: center;
+padding: 10px 20px;
+padding: 0.625rem 1.25rem;
+background-color: ${props => props.theme.btnBgColor};
+color: ${props => props.theme.bgColor};
+border-radius: 5px;
+border-radius: 0.3125rem;
+cursor: pointer;
+`
+
+const DelBtn = styled.div`
+  background-color: ${props => props.theme.redColor};
+  text-align: center;
+padding: 10px 20px;
+padding: 0.625rem 1.25rem;
+
+color: ${props => props.theme.bgColor};
+border-radius: 5px;
+border-radius: 0.3125rem;
+cursor: pointer;
+`
+const BtnFrame = styled.div`
+display: grid;
+grid-template-columns: 1fr 1fr;
+column-gap: 20px;
+column-gap: 1.25rem;
+
+`
+
+const ClassRegisterPage = () => {
   const me = useMe()
-
-  const [preventSubmit, setPreventSubmit] = useState(false)
-
 
   const { register, handleSubmit, setValue, getValues } = useForm()
   const onSubmit = (data) => {
-    const { school } = data
-    setPreventSubmit(true)
+  
   }
   const onCompleted = () => {
     onChangeInput()
     outPopup()
-    setValue("school", "")
+
   }
-  const [updateUser] = useMutation(UPDATE_USER_MUTATION, {
-    onCompleted,
-    refetchQueries: [{ query: ME_QUERY }]
-  })
+
 
   const onChangeInput = () => {
-    setPreventSubmit(false)
 
  
 
@@ -56,11 +81,18 @@ const ClassRegisterPage = (item={item}) => {
     <RegisterForm onSubmit={handleSubmit(onSubmit)}>
         
     <DetailClassName/>
-    <DetailClassColor/>
     <DetailClassTag/>
-    </RegisterForm>
+    <DetailClassAdd/>
 
-  
+ 
+   
+    </RegisterForm>
+    <DetailStudentLayout>
+      <div></div>
+      <BtnFrame> <AddTagBtn onClick={onCompleted}>완료</AddTagBtn>
+    <DelBtn>초기화</DelBtn></BtnFrame>
+   
+    </DetailStudentLayout>
   </PopupContainer>);
 }
 

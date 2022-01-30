@@ -29,25 +29,13 @@ const ClassTimeSet = (item={item}) => {
 
   const { register, handleSubmit, setValue, getValues } = useForm()
   const onSubmit = (data) => {
-    const { school } = data
+    const {  } = data
     setPreventSubmit(true)
-  }
-  const onCompleted = () => {
-    onChangeInput()
     outPopup()
-    setValue("school", "")
   }
-  const [updateUser] = useMutation(UPDATE_USER_MUTATION, {
-    onCompleted,
-    refetchQueries: [{ query: ME_QUERY }]
-  })
 
-  const onChangeInput = () => {
-    setPreventSubmit(false)
 
- 
 
-  }
 
   return (<PopupContainer>
     <RegisterForm onSubmit={handleSubmit(onSubmit)}>

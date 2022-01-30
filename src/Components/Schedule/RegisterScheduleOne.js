@@ -9,12 +9,14 @@ import {AiOutlineEdit} from "react-icons/ai"
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
+
+
 `
 
 const DelClassBtn = styled.div`
 position: absolute;
 top:3%;
-right:10%;
+right:3%;
 font-size: 1.5em;
 font-size: 1.5rem;
 opacity:0.8;
@@ -32,7 +34,7 @@ font-size: 1.5rem;
 cursor: pointer;
 `
 
-const RegisterScheduleOne = ({ subjectName }) => {
+const RegisterScheduleOne = ({ item, color, tag }) => {
 
   const onClickRegisterClassOne = () => {
     inPopup("registerClass")
@@ -46,8 +48,8 @@ const RegisterScheduleOne = ({ subjectName }) => {
 
   return (<Container>
             <RegisterClassOneBtn onClick={onClickRegisterClassOne}> <AiOutlineEdit/> </RegisterClassOneBtn>
-            <DelClassBtn onClick={onClickDelClass} subjectName={subjectName}><TiDelete/></DelClassBtn>
-  {/* 과목정보가 있을 때만 삭제 버튼이 나오도록  */}
+            
+
   </Container>);
 }
 

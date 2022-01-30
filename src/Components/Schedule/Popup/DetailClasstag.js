@@ -4,6 +4,8 @@ import { BtnFadeIn } from '../../../Animations/Fade';
 import { inPopup, isPopupVar } from '../../../apollo';
 import { DetailStudentLayout, DetailTitle } from '../../List/styled/DetailStudent';
 import useMedia from '../../../Hooks/useMedia';
+import InputUnderLine from '../../List/InputUnderLine';
+import { useForm } from 'react-hook-form';
 
 
 const StudentTagContainer = styled.div`
@@ -24,7 +26,20 @@ const StudentTag = styled.div`
     padding-top: 0.9375rem;
   }
 `
-
+const Input = styled.input`
+  width: 100%;
+  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  background-color: ${props => props.isEdit && props.theme.contentBgColor};
+  transition: background-color 1s ease;
+  ::placeholder {
+    color: ${props => props.theme.fontColor};
+    opacity: 0.8;
+    transition: color 1s ease, opacity 1s ease;
+  }
+`
 const EditContainer = styled.div`
   display: grid;
   row-gap: 10px;
@@ -47,6 +62,15 @@ const TagBox = styled.div`
     padding-top: 10px;
     padding-top: 0.625rem
   }
+`
+const DetailClassTagForm = styled.form`
+  padding: 10px 0px;
+  padding: 0.625rem 0rem;
+  display: grid;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  column-gap: 40px;
+  column-gap: 2.5rem;
 `
 
 const Tag = styled.div`
@@ -84,10 +108,26 @@ const AddTagBtn = styled.div`
   cursor: pointer;
 `
 
+const Submit = styled.input`
+  cursor: pointer;
+  padding: 10px 40px;
+  padding: 0.625rem 2.5rem;
+  text-align: center;
+  grid-column: 2 / -1;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  background-color: ${props => props.theme.btnBgColor};
+  color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
+  animation: ${BtnFadeIn} 1s ease;
+`
+
 const DetailClassTag = ({ }) => {
 
 
   const media = useMedia()
+  const {register,setValue,handleSubmit,getValues}=useForm({mode:"onChange"})
+
 
 
   const [isEdit, setIsEdit] = useState(false)
@@ -99,21 +139,52 @@ const DetailClassTag = ({ }) => {
   const onClickCreateTag = () => inPopup("createTag")
   const onClickPopupAddTag = () => inPopup("addTag")
 
+  const onClickInput = () => {setIsEdit(true)}
 
+  const onSubmit = (data) => {
+  }
+
+
+  const onBlurForm = () => {
+    setIsEdit(false)
+    const classTag = getValues("classTag")
+    onSubmit({classTag})
+
+  }
 
   //useEffect
 
   return (<DetailStudentLayout>
     <DetailTitle style={{ marginTop: "15px", marginTop: "0.9375rem" }}>태그</DetailTitle>
-    <StudentTagContainer onMouseEnter={onMouseEnterTag} onMouseLeave={onMouseLeaveTag} onClick={onMouseEnterTag} isEdit={isEdit}>
-      <StudentTag>
-          수업장소, 교사명, 동아리명 태그 넣기 
-      </StudentTag>
+    <DetailClassTagForm onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
+      <InputUnderLine isEdit={isEdit}>
+        <Input
+          {...register("classTag", {
+            onChange: () => {
+              if (!isEdit) {
+                setIsEdit(true)
+              }
+            } 
+          })}
+          autoComplete="off"
+          placeholder="수업장소, 교사명 등 메모"
+          type="string"
+          onClick={onClickInput}
+          isEdit={isEdit}
+          min={1}
+          max={999999999} 
+        />
+      </InputUnderLine>
+      {isEdit ? <Submit
+        value="태그 관리"
+        type="submit"
+      /> : (media !== "Mobile" && <div></div>)}
+
+
+
      
-        <AddTagBtn onClick={onClickPopupAddTag}>태그 추가</AddTagBtn>
       
-    </StudentTagContainer>
-    {/* 팝업화면 정보 넣기 */}
+    </DetailClassTagForm>
   </DetailStudentLayout>);
 }
 
