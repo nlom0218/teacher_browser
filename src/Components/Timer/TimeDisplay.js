@@ -20,6 +20,7 @@ export const TimerOuterFrame = styled.div`
   border: 1px solid red;
   border-radius: 200px;
   background: conic-gradient(red ${props => props.gauge * 6}deg, white ${props => props.gauge}deg);
+  box-shadow: 0 0 40px 7px black;
 `;
 
 export const TimerInnerFrame = styled.div`

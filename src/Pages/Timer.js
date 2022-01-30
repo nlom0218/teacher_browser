@@ -4,10 +4,12 @@ import { Btn, BtnContainer, BtnSpan } from '../Components/Timer/Btn';
 import { TimerContainer, TimerInnerFrame, TimerOuterFrame } from '../Components/Timer/TimeDisplay';
 
 const Timer = () => {
-  // Stopwatch (Countup)
-
+  // Basic Setting
   let [isRunning, setIsRunning] = useState(false);
+  let [isCountdownTimer, setIsCountdownTimer] = useState(false);
   let [intervalId, setIntervalId] = useState(null);
+
+  // Stopwatch
   let [milliseconds, setMilliseconds] = useState(0);
   let [seconds, setSeconds] = useState(0);
   let [minutes, setMinutes] = useState(0);
@@ -16,7 +18,7 @@ const Timer = () => {
   let newMinutes = minutes;
 
   useEffect(() => {
-    if (isRunning) {
+    if (!isCountdownTimer && isRunning) {
       const id = setInterval(() => {
         newMilliseconds = milliseconds++;
         setMilliseconds(milliseconds => newMilliseconds);
@@ -43,12 +45,16 @@ const Timer = () => {
 
   const startStopwatch = () => {
     setIsRunning(true);
+    setIsCountdownTimer(false);
   };
 
   const resetTime = () => {
     setMilliseconds(() => 0);
     setSeconds(() => 0);
     setMinutes(() => 0);
+    setMillisecondsLeft(() => 0);
+    setSecondsLeft(() => 0);
+    setMinutesLeft(() => 0);
     setIsRunning(false);
   };
 
@@ -63,18 +69,44 @@ const Timer = () => {
 
   let timeRecords = [];
 
-
-  // Timer (Countdown)
+  // CountdownTimer
   let [millisecondsLeft, setMillisecondsLeft] = useState(0);
   let [secondsLeft, setSecondsLeft] = useState(10);
-  let [minutesLeft, setMinutesLeft] = useState(0);
+  let [minutesLeft, setMinutesLeft] = useState(1);
   let newMillisecondsLeft = millisecondsLeft;
   let newSecondsLeft = secondsLeft;
   let newMinutesLeft = minutesLeft;
 
-  const countDown = () => {
-    setInterval(setSecondsLeft(secondsLeft => secondsLeft - 1), 1000);
-    console.log(secondsLeft);
+  useEffect(() => {
+    if (isCountdownTimer && isRunning) {
+      const id = setInterval(() => {
+        if (millisecondsLeft > 0) {
+          newMillisecondsLeft = millisecondsLeft--;
+          setMillisecondsLeft(millisecondsLeft => newMillisecondsLeft);
+        } else {
+          newMillisecondsLeft = 100;
+          setMillisecondsLeft(millisecondsLeft => newMillisecondsLeft)
+        }
+        if (millisecondsLeft <= 0) {
+          newSecondsLeft = secondsLeft--;
+          setMillisecondsLeft(millisecondsLeft => newSecondsLeft);
+          setSeconds(secondsLeft => newSecondsLeft);
+        }
+        if (secondsLeft <= 0) {
+          newMinutesLeft = minutesLeft--;
+          setSecondsLeft(() => newMinutesLeft);
+          setMinutesLeft(minutesLeft => newMinutesLeft);
+        }
+      }, 10);
+      setIntervalId(id);
+    } else {
+      clearInterval(intervalId);
+    };
+  }, [isRunning]);
+
+  const startCountdown = () => {
+    setIsRunning(true);
+    setIsCountdownTimer(true);
   }
 
   // For display
@@ -83,17 +115,32 @@ const Timer = () => {
   let secondsDisplay = String(seconds).padStart(2, '0');
   let minutesDisplay = String(minutes).padStart(2, '0');
 
+  let millisecondsLeftDisplay = String(millisecondsLeft).padStart(2, '0');
+  let secondsLeftDisplay = String(secondsLeft).padStart(2, '0');
+  let minutesLeftDisplay = String(minutesLeft).padStart(2, '0');
+
   return (
     <BasicContainer menuItem={true}>
       <TimerContainer>
         <TimerOuterFrame gauge={seconds}>
-          <TimerInnerFrame>
-            <span style={{ color: "yellow" }}>{minutesDisplay}</span>
-            &nbsp;:&nbsp;
-            <span style={{ color: "yellow" }}>{secondsDisplay}</span>
-            &nbsp;&nbsp;
-            <span style={{ padding: "5px", border: "1px solid grey", fontSize: "30px", color: "grey" }}>{millisecondsDisplay}</span>
-          </TimerInnerFrame>
+          {!isCountdownTimer ?
+            // 1. Stopwatch Display
+            <TimerInnerFrame>
+              <span style={{ color: "white" }}>{minutesDisplay}</span>
+              &nbsp;:&nbsp;
+              <span style={{ color: "white" }}>{secondsDisplay}</span>
+              &nbsp;&nbsp;
+              <span style={{ padding: "5px", border: "1px solid grey", fontSize: "30px", color: "white" }}>{millisecondsDisplay}</span>
+            </TimerInnerFrame> :
+            // 2. CountdownTimer Display
+            <TimerInnerFrame>
+              <span style={{ color: "yellow" }}>{minutesLeftDisplay}</span>
+              &nbsp;:&nbsp;
+              <span style={{ color: "yellow" }}>{secondsLeftDisplay}</span>
+              &nbsp;&nbsp;
+              <span style={{ padding: "5px", border: "1px solid grey", fontSize: "30px", color: "white" }}>{millisecondsLeftDisplay}</span>
+            </TimerInnerFrame>
+          }
         </TimerOuterFrame>
         <BtnContainer>
           <Btn onClick={isRunning ? pause : startStopwatch}>
@@ -101,11 +148,11 @@ const Timer = () => {
               {isRunning ? "PAUSE" : "START"}
             </BtnSpan>
           </Btn>
-          {isRunning ? <Btn onClick={resetTime}>
+          {<Btn onClick={resetTime}>
             <BtnSpan>
               RESET
             </BtnSpan>
-          </Btn> : null}
+          </Btn>}
           {milliseconds + seconds + minutes > 0 ? <Btn onClick={saveTime}>
             <BtnSpan>
               SAVE
@@ -113,7 +160,7 @@ const Timer = () => {
           </Btn> : null}
         </BtnContainer>
         <BtnContainer style={{ width: "80%" }}>
-          <Btn onClick={countDown}>
+          <Btn onClick={startCountdown}>
             <BtnSpan>1분</BtnSpan>
           </Btn>
           <Btn>
@@ -130,12 +177,12 @@ const Timer = () => {
           </Btn>
         </BtnContainer>
         <div>
-          {timeRecordsFromLocal ?
+          {/* {timeRecordsFromLocal ?
             <li>
               <span> {timeRecordsFromLocal[0].minutes} m &nbsp;&nbsp; {timeRecordsFromLocal[0].seconds} s &nbsp;&nbsp;
                 {timeRecordsFromLocal[0].milliseconds} ms
               </span>
-            </li> : null}
+            </li> : null} */}
         </div>
       </TimerContainer >
     </BasicContainer>
