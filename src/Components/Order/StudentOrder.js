@@ -3,7 +3,6 @@ import { useEffect, useState } from "react/cjs/react.development";
 import styled from "styled-components";
 import { customMedia } from "../../styles";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { toPromise } from "@apollo/client";
 import { TiDelete } from "react-icons/ti"
 
 const Container = styled.div`
@@ -26,7 +25,6 @@ const Item = styled.div`
   min-height: 7.5rem;
   padding: 20px 10px;
   padding: 1.25rem 0.625rem;
-  border: 1px solid ${(props) => props.theme.fontColor};
   transition: border 1s ease;
   border-radius: 5px;
   border-radius: 0.3125rem;
@@ -37,15 +35,15 @@ const Item = styled.div`
   position: relative;
   border: 1px solid ${props => props.theme.cardBorder};
   background-color: ${props => props.theme.cardBg};
-  opacity: 0.8;
+  transition: border 1s ease, background-color 1s ease;
 `;
 
 const RemoveBtn = styled.div`
 position: absolute;
 top:3%;
 right:3%;
-font-size: 1.5em;
-font-size: 1.5rem;
+font-size: 1.75em;
+font-size: 1.75rem;
 opacity:0.3;
 cursor: pointer;
 `
@@ -101,15 +99,13 @@ width : 60%;
 height : 100%;
 
 `}
-
-
 `
 
 const Student = styled.div`
 border : 1px solid ${props => props.theme.fontColor};
 transition: border 1s ease;
-border-radius: 20x;
-border-radius: 1.25rem;
+border-radius: 5px;
+border-radius: 0.3125rem;
 display: grid;
 align-items: center;
 justify-items: center;
@@ -154,7 +150,7 @@ const Name = styled.div`
 
 
 const StudentOrder = ({ fontSizeAll, fontSizeOne, seeResultType, selectedStudent, setSelectedStudent, isShuffle }) => {
- 
+
   const [order, setOrder] = useState(1)
 
   const onClickArrow = (type) => {
@@ -201,9 +197,7 @@ const StudentOrder = ({ fontSizeAll, fontSizeOne, seeResultType, selectedStudent
           </Item>
         );
       }) :
-
         <SeeOneItem order={order} studentLength={selectedStudent.length}>
-
           <div className="order-student-back-btn" onClick={() => { onClickArrow("back") }}> <IoIosArrowBack /> </div>
           <Student>
             <Order fontSize={fontSizeOne}>{order}</Order>

@@ -9,6 +9,7 @@ const IS_SEE_STUDENT = "isSeeStudent"
 const MENU_TYPE = "menuType"
 const IS_SEE_STUDENT_LIST = "isSeeStudentList"
 const WELCOME_SECTION = "welcomeSection"
+const BG_ANI = "bgAni"
 
 export const menuTypeVar = makeVar(localStorage.getItem(MENU_TYPE));
 export const setMenuType = (type) => {
@@ -85,6 +86,16 @@ export const moveWelcome = () => {
 export const moveNews = () => {
   localStorage.setItem(WELCOME_SECTION, "news")
   welcomeSectionVar("news")
+}
+
+export const bgThemeAniVar = makeVar(Boolean(localStorage.getItem(BG_ANI)))
+export const enableBgThemeAni = () => {
+  localStorage.setItem(BG_ANI, "true")
+  bgThemeAniVar(true)
+}
+export const disableBgThemeAni = () => {
+  localStorage.removeItem(BG_ANI)
+  bgThemeAniVar(false)
 }
 
 const httpLink = createHttpLink({

@@ -12,6 +12,11 @@ const SNewsListContainer = styled.div`
   align-items: flex-start;
   row-gap: 10px;
   row-gap: 0.625rem;
+  .empty_news_list {
+      padding: 20px;
+      padding: 1.25rem;
+      text-align: center;
+    }
   ${customMedia.greaterThan("desktop")`
     padding: 20px;
     top: 0;
@@ -25,11 +30,6 @@ const SNewsListContainer = styled.div`
     scrollbar-width: none; // Firefox
     ::-webkit-scrollbar {
       display: none; // Chrome, Safari, Opera
-    }
-    .empty_news_list {
-      padding: 20px;
-      padding: 1.25rem;
-      text-align: center;
     }
   `}
 `

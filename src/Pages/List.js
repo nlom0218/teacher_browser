@@ -70,7 +70,7 @@ const List = () => {
   const { type, id } = useParams()
 
   // 학생목록 가져오기
-  const { data } = useQuery(SEE_ALL_STUDENT_QUERY, {
+  const { data, loading } = useQuery(SEE_ALL_STUDENT_QUERY, {
     variables: {
       ...(selectedTag.length !== 0 && { tag: selectedTag }),
       ...(selectedSort && { sort: selectedSort }),

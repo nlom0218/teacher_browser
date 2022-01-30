@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
 import StudentList from "../Components/Order/Popup/StudentList";
@@ -8,7 +8,6 @@ import { inPopup, isPopupVar } from "../apollo";
 import { useParams } from "react-router-dom";
 import { SEE_ONE_STUDENT_LIST_QUERY } from "../Graphql/StudentList/query";
 import { customMedia } from "../styles";
-import { useEffect } from "react/cjs/react.development";
 import { inputLine } from "../Animations/InputLine";
 import { BtnFadeIn } from "../Animations/Fade";
 import { useForm } from "react-hook-form";
@@ -16,6 +15,11 @@ import Shuffling from "../Components/Order/Popup/Shuffling";
 import SeeResultType from "../Components/Order/SeeResultType";
 import FontSizeBtn from "../Components/Order/FontSizeBtn";
 import StudentOrder from "../Components/Order/StudentOrder";
+import PrintOrder from "../Components/Order/PrintOrder";
+import PrintOrderContents from "../Components/Order/Popup/PrintOrderContents";
+import useMedia from "../Hooks/useMedia";
+import IcNameTableClick from "../icons/NameTable/IcNameTableClick";
+import IcNameTable from "../icons/NameTable/IcNameTable";
 
 
 // 전체 틀
@@ -112,7 +116,7 @@ const OptionContents = styled.div`
   row-gap: 1.25rem;
   text-align: center;
   ${customMedia.greaterThan("tablet")`
-   grid-template-columns : auto auto 1fr;
+   grid-template-columns : auto auto 1fr auto;
    column-gap:20px;
    column-gap:1.25rem;
   `}
@@ -145,6 +149,7 @@ const ListIcon = styled.div`
     font-size: 2.5em;
     font-size: 2.5rem;
     cursor: pointer;
+    filter: drop-shadow(1px 1px 1px rgb(0, 0, 0))
   }
 `;
 
@@ -154,7 +159,11 @@ const ListName = styled.div``;
 const Order = () => {
   const { id } = useParams();
   const isPopup = useReactiveVar(isPopupVar);
+  const media = useMedia()
 
+  const componentRef = useRef(null);
+
+  const [IconsLIstisHover, setIconListIsHover] = useState(false)
   const [studentListName, setStudentListName] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState([]);
   const [isShuffle, setIsShuffle] = useState("init");
@@ -163,7 +172,7 @@ const Order = () => {
   const [fontSizeOne, setFontSizeOne] = useState(5)
   const [isEdit, setIsEdit] = useState(false);
   //title : 인쇄할 때 필요한 제목
-  const [title, setTitle] = useState(undefined);
+  const [title, setTitle] = useState("순서 정하기 제목");
 
   const { register, handleSubmit, getValues } = useForm({
     mode: "onChange",
@@ -228,7 +237,9 @@ const Order = () => {
           </Title>
           <ListIcon>
             <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다"}</ListName>
-            <FcContacts onClick={onClickListIcon} />
+            <div onClick={onClickListIcon} onMouseEnter={() => setIconListIsHover(true)} onMouseLeave={() => setIconListIsHover(false)}>
+              {IconsLIstisHover ? <IcNameTableClick /> : <IcNameTable />}
+            </div>
           </ListIcon>
         </TopContents>
         {id && (
@@ -248,15 +259,17 @@ const Order = () => {
                 </OptionBtn>
               )}
               <SeeResultType seeResultType={seeResultType} setSeeResultType={setSeeResultType} />
+              {media === "Desktop" && <PrintOrder />}
               <FontSizeBtn seeResultType={seeResultType} setFontSizeAll={setFontSizeAll} fontSizeAll={fontSizeAll} fontSizeOne={fontSizeOne} setFontSizeOne={setFontSizeOne} />
             </OptionContents>
             <StudentOrder fontSizeOne={fontSizeOne} fontSizeAll={fontSizeAll} seeResultType={seeResultType} selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} isShuffle={isShuffle} />
           </React.Fragment>
         )}
       </Container>
-      {isPopup === "seeStudentList" && <StudentList />}
-      {isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
-    </BasicContainer>
+      { isPopup === "seeStudentList" && <StudentList />}
+      { isPopup === "print" && <PrintOrderContents printRef={componentRef} title={title} selectedStudent={selectedStudent} />}
+      { isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
+    </BasicContainer >
   );
 };
 

@@ -35,8 +35,8 @@ const SRegisterContainer = styled.div`
   `}
   background-color: ${props => props.theme.bgColor};
   transition: background-color 1s ease;
-  border-radius: 10px;
-  border-radius: 0.625rem;
+  border-radius: 5px;
+  border-radius: .3125rem;
 `
 
 const RegisterPage = styled.div`
