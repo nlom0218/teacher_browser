@@ -11,6 +11,7 @@ import { useState } from 'react/cjs/react.development';
 
 
 const Container = styled.div`
+  height: 100%;
   display: grid;
   font-size: 1.25rem;
   font-size: 1.25 em;

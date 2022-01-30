@@ -10,6 +10,7 @@ const MENU_TYPE = "menuType"
 const IS_SEE_STUDENT_LIST = "isSeeStudentList"
 const WELCOME_SECTION = "welcomeSection"
 const BG_ANI = "bgAni"
+const PAGELINK_SECTION = "pageLinkSection"
 
 export const menuTypeVar = makeVar(localStorage.getItem(MENU_TYPE));
 export const setMenuType = (type) => {
@@ -117,3 +118,13 @@ export const client = new ApolloClient({
     typePolicies: {},
   }),
 });
+
+export const pageLinkSectionVar = makeVar(localStorage.getItem(PAGELINK_SECTION) ? localStorage.getItem(PAGELINK_SECTION) : "pageLink")
+export const movePageLink = () => {
+  localStorage.setItem(PAGELINK_SECTION, "pageLink")
+  pageLinkSectionVar("pageLink")
+}
+export const moveLinkPick = () => {
+  localStorage.setItem(PAGELINK_SECTION, "linkPick")
+  pageLinkSectionVar("linkPick")
+}

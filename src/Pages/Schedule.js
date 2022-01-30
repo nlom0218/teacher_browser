@@ -142,10 +142,6 @@ const OptionBtn = styled.div`
   cursor: pointer;
 `;
 
-
-
-
-
 const TypeBtn = styled.div`
 align-self: flex-end;
 cursor: pointer;
