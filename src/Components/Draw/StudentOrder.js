@@ -9,16 +9,16 @@ import SeeSelectedStudent from "./SeeSelectedStudent";
 const Container = styled.div`
     min-height : 100%;
     display : grid;
-    grid-template-columns : ${props=>props.seeResultType === "ALL" && "repeat(2,1fr)"};
+    grid-template-columns : ${props => props.seeResultType === "ALL" && "repeat(2,1fr)"};
     row-gap : 10px;
     row-gap : 0.625rem;
     column-gap : 10px;
     column-gap : 0.625rem;
     ${customMedia.greaterThan("tablet")`
-    grid-template-columns : ${props=>props.seeResultType === "ALL" && "repeat(4,1fr)"};
+    grid-template-columns : ${props => props.seeResultType === "ALL" && "repeat(4,1fr)"};
     `}
     ${customMedia.greaterThan("desktop")`
-    grid-template-columns : ${props=>props.seeResultType === "ALL" && "repeat(6,1fr)"};
+    grid-template-columns : ${props => props.seeResultType === "ALL" && "repeat(6,1fr)"};
     `}
 `;
 
@@ -27,7 +27,6 @@ const Item = styled.div`
     min-height : 7.5rem;
     padding : 20px 10px;
     padding : 1.25rem 0.625rem;
-    border : 1px solid ${(props) => props.theme.fontColor};
     transition : border 1s ease;
     border-radius : 5px;
     border-radius : 0.3125rem;
@@ -36,15 +35,19 @@ const Item = styled.div`
     align-items : center;
     row-gap : 10px;
     position : relative;
+    border: 1px solid ${props => props.theme.cardBorder};
+    background-color: ${props => props.theme.cardBg};
+    transition: border 1s ease, background-color 1s ease;
 `
 
 const RemoveBtn = styled.div`
-    position : absolute;
-    top : 3%;
-    right : 3%;
-    font-size : 1.5em;
-    font-size : 1.5rem;
-    cursor : pointer;
+    position: absolute;
+    top:3%;
+    right:3%;
+    font-size: 1.75em;
+    font-size: 1.75rem;
+    opacity:0.3;
+    cursor: pointer;
 `
 
 const Name = styled.div`
@@ -66,7 +69,7 @@ const SeeOneItem = styled.div`
 }
     .order-student-back-btn {
     opacity : ${props => props.order === 1 && 0};
-    cursor : ${props => props.order !==1 && "pointer"};
+    cursor : ${props => props.order !== 1 && "pointer"};
     grid-column : 1/2;
     grid-row : 2/3;
     justify-self : center;
@@ -119,14 +122,14 @@ const Student = styled.div`
     `}
 `
 
-const StudentOrder = ({selectedStudent, setSelectedStudent, seeResultType, fontSizeAll, fontSizeOne, isShuffle, pickNum, pickType}) => {
+const StudentOrder = ({ selectedStudent, setSelectedStudent, seeResultType, fontSizeAll, fontSizeOne, isShuffle, pickNum, pickType }) => {
     const [order, setOrder] = useState(1)
 
     const onClickArrow = (type) => {
-        if(type === "back" && order !==1) {
-            setOrder(prev => prev-1)
+        if (type === "back" && order !== 1) {
+            setOrder(prev => prev - 1)
         }
-        if(type === "forward" && order !== selectedStudent.length) {
+        if (type === "forward" && order !== selectedStudent.length) {
             setOrder(prev => prev + 1)
         }
     }
@@ -136,24 +139,24 @@ const StudentOrder = ({selectedStudent, setSelectedStudent, seeResultType, fontS
         setSelectedStudent(newSelectedStudent)
     }
 
-        useEffect(() => {
+    useEffect(() => {
         const shuffledStudent = () => {
-        const newSelectedStudent = selectedStudent
-        .map((value) => ({ value, sort : Math.random() }))
-        .sort((a, b) => a.sort - b.sort)
-        .map(({value}) => value);
-    setSelectedStudent(newSelectedStudent);
-    };
-    let shuffling;
-    if (isShuffle === "ing") {
-        shuffling = setInterval(() => {
-            shuffledStudent();
-        }, 100);
-    } else {
-        clearInterval(shuffling);
-    }
-      return () => clearInterval(shuffling);
-    },[isShuffle]);
+            const newSelectedStudent = selectedStudent
+                .map((value) => ({ value, sort: Math.random() }))
+                .sort((a, b) => a.sort - b.sort)
+                .map(({ value }) => value);
+            setSelectedStudent(newSelectedStudent);
+        };
+        let shuffling;
+        if (isShuffle === "ing") {
+            shuffling = setInterval(() => {
+                shuffledStudent();
+            }, 100);
+        } else {
+            clearInterval(shuffling);
+        }
+        return () => clearInterval(shuffling);
+    }, [isShuffle]);
 
 
     return (
@@ -162,26 +165,26 @@ const StudentOrder = ({selectedStudent, setSelectedStudent, seeResultType, fontS
                 return (
                     <Item key={item}>
                         <Name fontSize={fontSizeAll}>{item}</Name>
-                        <RemoveBtn onClick={() => onClickRemoveBtn(item)}><TiDelete/></RemoveBtn>
+                        <RemoveBtn onClick={() => onClickRemoveBtn(item)}><TiDelete /></RemoveBtn>
                     </Item>
                 );
             }) :
-             <SeeOneItem order={order} studentLength={selectedStudent.length}>
-               <div className="order-student-back-btn" onClick={()=>onClickArrow("back")}><IoIosArrowBack /></div>
-                <Student>
-                  
-                  <Name fontSize={fontSizeOne}> {selectedStudent[order-1]}</Name>
-                </Student>
-                <div className="order-student-forward-btn" onClick={()=>onClickArrow("forward")}><IoIosArrowForward /></div>
-             </SeeOneItem>)
-             :
-             <SeeSelectedStudent
-             selectedStudent={selectedStudent}
-             pickNum={pickNum}
-             pickType={pickType}
-             fontSizeAll={fontSizeAll}
-             />
-             }
+                <SeeOneItem order={order} studentLength={selectedStudent.length}>
+                    <div className="order-student-back-btn" onClick={() => onClickArrow("back")}><IoIosArrowBack /></div>
+                    <Student>
+
+                        <Name fontSize={fontSizeOne}> {selectedStudent[order - 1]}</Name>
+                    </Student>
+                    <div className="order-student-forward-btn" onClick={() => onClickArrow("forward")}><IoIosArrowForward /></div>
+                </SeeOneItem>)
+                :
+                <SeeSelectedStudent
+                    selectedStudent={selectedStudent}
+                    pickNum={pickNum}
+                    pickType={pickType}
+                    fontSizeAll={fontSizeAll}
+                />
+            }
         </Container>
     );
 };

@@ -161,6 +161,7 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
   const [isEditName, setIsEditName] = useState(false)
   const [placeholder, setPlaceholder] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
+  const [sort, setSort] = useState("num")
 
   const media = useMedia()
 
@@ -171,7 +172,8 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
   // 리스트 정보를 불러오는 쿼리
   const { data, loading, refetch } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: {
-      listId
+      listId,
+      sort
     }
   })
 
@@ -311,17 +313,19 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
       <StudentInList
         students={data?.seeStudentList[0]?.students.filter(item => !item.trash)}
         listId={listId}
+        setSort={setSort}
+        sort={sort}
       />}
-    <AddStudentBox
+    {!loading && <AddStudentBox
       listId={listId}
       listName={listName}
       setSuccessMsg={setSuccessMsg}
       someDragging={someDragging}
       inStudent={data?.seeStudentList[0]?.students}
-    />
-    <DelBtn onClick={onClickDeleteListBtn}>
+    />}
+    {!loading && <DelBtn onClick={onClickDeleteListBtn}>
       명렬표 삭제하기
-    </DelBtn>
+    </DelBtn>}
     {
       isPopup === "emoji" &&
       <SetEmoji

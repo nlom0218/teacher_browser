@@ -87,7 +87,6 @@ const TodoBody = styled.div`
   ]
 
 const TodoList = () => {
-
     // 1. 기간 내에 있는 할 일 목록 & 완료가 되지 않는 목록 => 진행중인 목록 ing
     // 2. 기간 내에 있는 할 일 목록 & 완료된 목록이면 => 진행중인 목록 맨 아래에 체크된 표시로 있어야 함 ing, complete
     // 3. 기간 내에 없는 할 일 목록 & 완료가 되지 않는 목록 => 미완료된 목록 notcompleted
@@ -122,5 +121,6 @@ const TodoList = () => {
     </BasicContainer>
   )
 };
+
 
 export default TodoList;

@@ -1,13 +1,19 @@
 import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { BtnFadeIn } from '../../Animations/Fade';
 import { inPopup, isPopupVar } from '../../apollo';
 import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
 import { SEE_ALL_STUDENT_QUERY, SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
+import IcBookMark from '../../icons/Bookmark/IcBookMark';
+import IcNameTable from '../../icons/NameTable/IcNameTable';
+import IcNameTableClick from '../../icons/NameTable/IcNameTableClick';
+import routes from '../../routes';
 import { customMedia } from '../../styles';
 import DetailStudentAllergy from './DetailStudentAllergy';
+import DetailStudentMemo from './DetailStudentMemo';
 import DetailStudentNumber from './DetailStudentNumber';
 import DetailStudentTag from './DetailStudentTag';
 import InputUnderLine from './InputUnderLine';
@@ -22,6 +28,17 @@ const Container = styled.div`
   row-gap: 1.25rem;
   column-gap: 40px;
   column-gap: 2.5rem;
+  a {
+    justify-self: flex-start;
+  }
+`
+
+const ListIcon = styled.div`
+  font-size: 2em;
+  font-size: 2rem;
+  svg {
+    filter: drop-shadow(1px 1px 1px rgb(0, 0, 0))
+  }
 `
 
 const Form = styled.form`
@@ -50,7 +67,6 @@ const Name = styled.input`
   font-size: 1.5rem;
   padding: 10px 0px;
   padding: 0.625rem 0rem;
-  /* background-color: red; */
   ::placeholder {
     color: ${props => props.theme.fontColor};
     opacity: 0.8;
@@ -95,6 +111,7 @@ const ErrMsg = styled.div`
 const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
   const isPopup = useReactiveVar(isPopupVar)
 
+  const [IconsLIstisHover, setIconListIsHover] = useState(false)
   const [studentInfo, setStudentInfo] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
   const [isEdit, setIsEdit] = useState(false)
@@ -164,6 +181,9 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
     }
   }, [data])
   return (<Container>
+    <Link to={routes.list} onMouseEnter={() => setIconListIsHover(true)} onMouseLeave={() => setIconListIsHover(false)}>
+      <ListIcon>{IconsLIstisHover ? <IcNameTableClick /> : <IcNameTable />}</ListIcon>
+    </Link>
     <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
       <InputUnderLine isEdit={isEdit}>
         <Name
@@ -186,7 +206,8 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
     </Form>
     <DetailStudentNumber studentInfo={studentInfo} selectedTag={selectedTag} selectedSort={selectedSort} />
     <DetailStudentTag studentInfo={studentInfo} selectedSort={selectedSort} selectedTag={selectedTag} />
-    <DetailStudentAllergy studentInfo={studentInfo} editStudent={editStudent} onCompleted={onCompleted} />
+    <DetailStudentAllergy studentInfo={studentInfo} />
+    <DetailStudentMemo studentMemo={studentInfo?.memo} studentId={studentInfo?._id} teacherEmail={studentInfo?.teacherEmail} />
     <DelBtn onClick={onClicketeBtn}>휴지통으로 이동</DelBtn>
     {isPopup === "deleteStudent" && <DeleteStudent selectedTag={selectedTag} selectedSort={selectedSort} studentId={studentId} />}
   </Container>);
