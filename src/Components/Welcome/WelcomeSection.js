@@ -40,7 +40,6 @@ const WelcomeTitle = styled.div`
   letter-spacing: 5px;
   letter-spacing: 0.3125rem;
   line-height: 160%;
-  font-family: 'Times New Roman', Times, serif;
   font-weight: 600;
   background-image: ${props => props.theme.textAniColor};
   transition: background-image 1s ease;
