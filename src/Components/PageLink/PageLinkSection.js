@@ -153,7 +153,7 @@ const OptionBtn = styled.div`
   cursor: pointer;
 `;
 
-
+//백엔드 연결하면 리스트 내용 삭제하기 
 const pageLinkFolderName = [["교육청",["사이트이름/","메모"],["사이트이름/","메모"]],["미술",["사이트이름/","메모"]],["영어",["사이트이름/","메모"]],["과학",["사이트이름/","메모"]],["연수원",["사이트이름/","메모"]]]
 const PageLinkSection = ({ pageLinkSection, init, setInit }) => {
 
