@@ -7,7 +7,7 @@ import { customMedia } from "../../styles";
 import { useForm } from "react-hook-form";
 import { inputLine } from "../../Animations/InputLine";
 import { BtnFadeIn } from "../../Animations/Fade";
-import Button from 'react-bootstrap/Button'
+import Accordion from 'react-bootstrap/Accordion'
 
 
 const MoveContainer = styled.div`
@@ -97,45 +97,64 @@ const SubmitInput = styled.input`
 `;
 const FolderPage=styled.div`
   display:grid;
-  grid-template-columns: 1fr 7fr;
+  grid-template-columns: 1fr;
   padding: 20px;
   padding: 1.25rem;
   row-gap: 20px;
   row-gap: 1.25rem;
   column-gap: 20px;
   column-gap: 1.25rem;
-  height: 100%;
+  align-items: flex-start;
 `
 const LinkFolder = styled.div`
   display:grid;
   grid-template-columns: 1fr;
-  padding: 20px;
-  padding: 1.25rem;
-  border: 1px solid;
-  border-radius: 10px;
-  border-radius: 0.625rem;
-  text-align: center;
-  align-items: center;
-  font-size: 1.2rem;
-  font-size: 1.2em;
-  background-color: ${(props) => props.theme.btnBgColor};
-  color: ${(props) => props.theme.bgColor};
-  transition: background-color 1s ease, color 1s ease;
+  padding: 10px;
+  padding: 0.625rem;
+  row-gap: 10px;
+  row-gap: 0.625rem;
+ 
   `
 const LinkContents = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
-  padding: 20px;
-  padding: 1.25rem;
+  grid-template-columns: 1fr 3fr 0.5fr;
+  padding: 5px;
+  padding: 0.3125rem;
   border: 1px solid;
-  border-radius: 10px;
-  border-radius: 0.625rem;
-  font-size: 1.2rem;
-  font-size: 1.2em;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  column-gap: 5px;
+  column-gap: 0.3125rem;
+  text-align: center;
+  align-items: center;
+  font-size: 1rem;
+  font-size: 1em;
+  background-color: ${(props) => props.theme.btnBgColor};
+  color: ${(props) => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
 `
+const ContentsOne = styled.div`
+display: grid;
+border: 1px solid;
+padding: 10px;
+padding: 0.625rem;
+
+background-color: white;
+color: black;
+`
+const OptionBtn = styled.div`
+  background-color: ${(props) => props.theme.btnBgColor};
+  color: ${(props) => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
+  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+`;
 
 
-const pageLinkFolderName = [["교육청",["사이트이름/","메모/편집버튼"],["사이트이름/","메모/편집버튼"]],["미술"],["영어"],["과학"],["연수원"],["학급경영"]]
+const pageLinkFolderName = [["교육청",["사이트이름/","메모"],["사이트이름/","메모"]],["미술",["사이트이름/","메모"]],["영어",["사이트이름/","메모"]],["과학",["사이트이름/","메모"]],["연수원",["사이트이름/","메모"]]]
 const PageLinkSection = ({ pageLinkSection, init, setInit }) => {
 
     const [isEdit, setIsEdit] = useState(false);
@@ -190,9 +209,21 @@ const PageLinkSection = ({ pageLinkSection, init, setInit }) => {
     </Title>
     </TopContents>
     <FolderPage>
-        {pageLinkFolderName.map((item,index)=>
-        <><LinkFolder key={index}>{item[0]}</LinkFolder>
-        <LinkContents>{item.map((i,index)=><div key={{index}}>{i}</div>)}</LinkContents></>)}
+      
+{pageLinkFolderName.map((item,index)=>
+        <Accordion>
+  <Accordion.Item>
+    <Accordion.Header>{item[0]}</Accordion.Header>
+    <Accordion.Body>
+    {item.map((i,index)=><LinkFolder key={{index}}>
+        <LinkContents><ContentsOne>{i[0]}</ContentsOne>
+        <ContentsOne>
+      {i[1]}
+        </ContentsOne>
+        <OptionBtn>수정</OptionBtn></LinkContents></LinkFolder>)}
+    </Accordion.Body>
+  </Accordion.Item>
+</Accordion>)}
     </FolderPage>
     </Container>
   </MoveContainer>);

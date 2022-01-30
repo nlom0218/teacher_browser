@@ -51,6 +51,7 @@ const LinkPickSection = ({userEmail, pageLinkSection, init, setInit }) => {
     <MoveIcon onClick={onClickMoveIcon}><FaArrowCircleLeft /></MoveIcon>
     <Container>
   <div>LINK PICK</div>
+
     </Container>
   </MoveContainer>)
 }

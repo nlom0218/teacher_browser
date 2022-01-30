@@ -14,13 +14,15 @@ const AddClassContainer = styled.div`
   row-gap: 0.625rem;
   border-radius: 5px;
   border-radius: 0.625rem;
-  grid-template-columns: 2fr repeat(6,1fr);
-  grid-template-rows: repeat(5,1fr) ;
+  /* grid-template-columns: 2fr repeat(6,1fr);
+  grid-template-rows: repeat(5,1fr) ; */
+  grid-template-columns: 2fr repeat(5,1fr);
+  grid-template-rows: repeat(6,1fr) ;
 `
 
-const TimeTable = styled.button`
+const TimeTable = styled.div`
   display: grid;
-text-align: center;
+  text-align: center;
   flex-wrap: wrap;
   border:1px solid;
   cursor: pointer;
@@ -35,7 +37,11 @@ const DetailClassAdd = ({ }) => {
   const [isEdit, setIsEdit] = useState(false)
   const [pick, setPick] = useState(false)
 
-const onClickBtn = ()=>{setPick(true)}
+
+const onClickBtn = ()=>{
+  setPick(true)
+
+}
 
   //useEffect
 
@@ -44,12 +50,18 @@ const daytime = ["월요일","1","2","3","4","5","6",
                 "수요일","1","2","3","4","5","6",
                 "목요일","1","2","3","4","5","6",
                 "금요일","1","2","3","4","5","6"]
+const timeday = ["1교시","월","화","수","목","금",
+                 "2교시","월","화","수","목","금",
+                 "3교시","월","화","수","목","금",
+                 "4교시","월","화","수","목","금",
+                 "5교시","월","화","수","목","금",
+                 "6교시","월","화","수","목","금",]
 
   return (<DetailStudentLayout>
     <DetailTitle style={{ marginTop: "15px", marginTop: "0.9375rem" }}>수업 추가</DetailTitle>
       
     <AddClassContainer>
-    {daytime.map((item, index) => {
+    {timeday.map((item, index) => {
         return (<TimeTable 
           onClick={onClickBtn} index={index}>{item}</TimeTable>)
       })}
