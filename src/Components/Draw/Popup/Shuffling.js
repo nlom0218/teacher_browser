@@ -4,7 +4,14 @@ import BtnPopupContainer from '../../Shared/BtnPopupContainer';
 import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
 import { useForm } from 'react-hook-form';
 import { useState } from 'react/cjs/react.development';
-import { outPopup } from '../../../apollo';
+import RandomCircle from '../../Shared/RandomCircle';
+import CardShuffle from '../../Shared/CardShuffle';
+
+const Container = styled.div`
+  display: grid;
+  row-gap: 10px;
+  row-gap: 0.625rem;
+`
 
 
 const Form = styled.form`
@@ -55,55 +62,59 @@ const ErrMsg = styled.div`
     color : #db3a1e;
 `
 
-const Shuffling = ({pickNum, pickType, setPickNum, setPickType, studentNum, setIsShuffle}) => {
+const Shuffling = ({ pickNum, pickType, setPickNum, setPickType, studentNum, setIsShuffle }) => {
     const [errMsg, setErrMsg] = useState(undefined)
     const { register, handleSubmit, getValues } = useForm({
-        mode : "onChange" ,
-        defaultValues : {
-            num : pickNum
+        mode: "onChange",
+        defaultValues: {
+            num: pickNum
         }
     })
 
     const onClickTypeBtn = () => {
-        if(pickType === "see" ) {
+        if (pickType === "see") {
             setPickType("hide")
         } else {
             setPickType("see")
         }
-        
+
     }
 
-const onSubmit = (data) => {
-    const {num : stringNum} = data
-    const num = parseInt(stringNum)
-    if(num <= 0 || num >= studentNum) {
-        setErrMsg("입력값을 다시 확인하세요.")
+    const onSubmit = (data) => {
+        const { num: stringNum } = data
+        const num = parseInt(stringNum)
+        if (num <= 0 || num >= studentNum) {
+            setErrMsg("입력값을 다시 확인하세요.")
             return
         }
         setPickNum(num)
         setIsShuffle("finish")
     }
 
-    return ( <BtnPopupContainer>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-            <Input
-            {...register("num", {
-                required : true
-            })}
-                type = "number"    
-                placeholder = "몇 명을 뽑나요?"
-        />
-        <TypeLayout>
-          <Type onClick={onClickTypeBtn}>
-          {pickType === "see" ? <RiCheckboxLine/> : <RiCheckboxBlankLine/>}<div>이름 보이기</div></Type>
-        </TypeLayout>
-        <SubmitInput
-            type = "submit"    
-            value = "뽑기"
-        />
-        {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
-        </Form>
-    </BtnPopupContainer>) ;
+    return (<BtnPopupContainer>
+        <Container>
+            <CardShuffle />
+            {/* <RandomCircle /> */}
+            <Form onSubmit={handleSubmit(onSubmit)}>
+                <Input
+                    {...register("num", {
+                        required: true
+                    })}
+                    type="number"
+                    placeholder="몇 명을 뽑나요?"
+                />
+                <TypeLayout>
+                    <Type onClick={onClickTypeBtn}>
+                        {pickType === "see" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}<div>이름 보이기</div></Type>
+                </TypeLayout>
+                <SubmitInput
+                    type="submit"
+                    value="뽑기"
+                />
+                {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
+            </Form>
+        </Container>
+    </BtnPopupContainer>);
 }
 
-export default Shuffling ;
+export default Shuffling;

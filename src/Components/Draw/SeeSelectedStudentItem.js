@@ -9,12 +9,14 @@ const StudentItem = styled.div`
   display : flex;
   justify-content : center;
   align-items : center;
-  border : 1px solid ${props => props.theme.fontColor};
+  border: 1px solid ${props => props.theme.cardBorder};
+  background-color: ${props => props.theme.cardBg};
+  transition: border 1s ease, background-color 1s ease;
   transition : border 1s ease;
   border-radius : 5px;
   border-radius : 0.3125rem;
-  font-size : ${props => props.fontSize +1}em;
-  font-size : ${props => props.fontSize +1}rem;
+  font-size : ${props => props.fontSize + 1}em;
+  font-size : ${props => props.fontSize + 1}rem;
   position : relative;
 `
 
@@ -69,21 +71,20 @@ const HideBox = styled.div`
   animation : ${props => !props.seeHideBox && hideBoxClickAni} 1s ease forwards;
 `
 
-const SeeSelectedStudentItem = ( {item, fontSizeAll, pickNum, pickType} ) => {
-    const [seeHideBox, setSeeHideBox ] = useState(true)
+const SeeSelectedStudentItem = ({ item, fontSize, pickNum, pickType }) => {
+  const [seeHideBox, setSeeHideBox] = useState(true)
 
-    const onClickHideBox = () => setSeeHideBox(false)
+  const onClickHideBox = () => setSeeHideBox(false)
 
-    return (<StudentItem pickNum={pickNum} fontSize={fontSizeAll}>
+  return (<StudentItem pickNum={pickNum} fontSize={fontSize}>
     {item}
-    {pickType === "hide" && 
-    <HideBox 
-    seeHideBox={seeHideBox} 
-    onClick={onClickHideBox}
-    > 
-    
-    클릭하여 확인 </HideBox>}
-    </StudentItem>);
+    {pickType === "hide" &&
+      <HideBox
+        seeHideBox={seeHideBox}
+        onClick={onClickHideBox}
+      >클릭하여 확인</HideBox>
+    }
+  </StudentItem>);
 }
 
 export default SeeSelectedStudentItem;

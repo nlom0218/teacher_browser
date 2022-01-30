@@ -59,6 +59,7 @@ export const SEE_ALL_STUDENT_IN_TRASH_QUERY = gql`
 // Components/List/DetailStudentAllergy.js
 // Components/List/DetailStudentNumber.js
 // Components/List/DetailStudentTag.js
+// Components/List/DetailStudentMemo.js
 export const SEE_ONE_STUDENT_QUERY = gql`
   query SeeAllStudent($studentId: ID, $allergy: Int) {
     seeAllStudent(studentId: $studentId, allergy: $allergy) {
@@ -71,6 +72,7 @@ export const SEE_ONE_STUDENT_QUERY = gql`
       allergy
       tag
       trash
+      memo
     }
   }
 `

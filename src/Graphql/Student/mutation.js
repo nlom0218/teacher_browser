@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 export const EDIT_STUDENT_MUTATION = gql`
 mutation Mutation(
   $teacherEmail: String!,
-  $studentId: ID!,
+  $studentId: ID,
   $studentName: String,
   $studentNumber: String,
   $studentGender: String,
@@ -11,6 +11,7 @@ mutation Mutation(
   $allergy: [Int], 
   $tag: [String], 
   $delTag: String,
+  $memo: String,
   $trash: Boolean) {
   editStudent(
     teacherEmail: $teacherEmail, 
@@ -22,6 +23,7 @@ mutation Mutation(
     allergy: $allergy, 
     tag: $tag, 
     delTag: $delTag,
+    memo: $memo,
     trash: $trash) {
       ok
       error

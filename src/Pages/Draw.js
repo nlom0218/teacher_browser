@@ -1,5 +1,5 @@
 import BasicContainer from '../Components/Shared/BasicContainer';
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from 'styled-components';
 import { inPopup, isPopupVar, isSeeStudentListVar } from '../apollo';
@@ -9,14 +9,14 @@ import { FcContacts } from "react-icons/fc";
 import { useParams } from 'react-router-dom';
 import useMedia from '../Hooks/useMedia';
 import { customMedia } from '../styles';
-import { useState } from 'react/cjs/react.development';
 import { inputLine } from '../Animations/InputLine';
 import { BtnFadeIn } from '../Animations/Fade';
 import { SEE_ONE_STUDENT_LIST_QUERY } from '../Graphql/StudentList/query';
 import StudentOrder from '../Components/Draw/StudentOrder';
-import SeeResultType from '../Components/Draw/SeeResultType';
 import FontSizeBtn from '../Components/Draw/FontSizeBtn';
 import Shuffling from '../Components/Draw/Popup/Shuffling';
+import IcNameTableClick from '../icons/NameTable/IcNameTableClick';
+import IcNameTable from '../icons/NameTable/IcNameTable';
 
 const Container = styled.div`
   min-height : ${props => props.seeResultType === "ONE" && "100%"};
@@ -149,10 +149,12 @@ const Draw = () => {
   const media = useMedia()
   const isPopup = useReactiveVar(isPopupVar);
   const isSeeList = useReactiveVar(isSeeStudentListVar);
+
+  const [IconsLIstisHover, setIconListIsHover] = useState(false)
   const [studentListName, setStudentListName] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState([]);
   const [seeResultType, setSeeResultType] = useState("ALL");
-  const [fontSizeAll, setFontSizeAll] = useState(1);
+  const [fontSizeAll, setFontSizeAll] = useState(1.5);
   const [fontSizeOne, setFontSizeOne] = useState(2);
   const [isEdit, setIsEdit] = useState(false);
   const [title, setTitle] = useState(undefined);
@@ -231,7 +233,9 @@ const Draw = () => {
           </Title>
           <ListIcon>
             <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다."}</ListName>
-            <FcContacts onClick={onClickListIcon} />
+            <div onClick={onClickListIcon} onMouseEnter={() => setIconListIsHover(true)} onMouseLeave={() => setIconListIsHover(false)}>
+              {IconsLIstisHover ? <IcNameTableClick /> : <IcNameTable />}
+            </div>
           </ListIcon>
         </TopContents>
         {id && (
