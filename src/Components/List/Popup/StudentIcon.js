@@ -9,8 +9,8 @@ import PopupContainer from '../../Shared/PopupContainer';
 const StudentIconList = styled.div`
   padding: 20px 0px;
   padding: 1.25rem 0rem;
-  font-size: 3em;
-  font-size: 3rem;
+  font-size: 2.5em;
+  font-size: 2.5rem;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   row-gap: 20px;

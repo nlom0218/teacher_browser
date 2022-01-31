@@ -22,6 +22,13 @@ const DetailEomjiIcon = styled.div`
     font-size: 2.5rem;
     grid-column: 1 / -1;
   `}
+  .student_detail_studentIcon {
+    font-size: 3em;
+    font-size: 3rem;
+    svg {
+      display: flex;
+    }
+  }
 `
 
 export default DetailEomjiIcon

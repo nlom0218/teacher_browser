@@ -231,7 +231,7 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
     <DetailNameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName}>
       <form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
         {studentIcon && <DetailEomjiIcon onClick={onClickStudentIconBtn}>
-          {processStudentIcon(studentIcon)}
+          <div className="student_detail_studentIcon">{processStudentIcon(studentIcon)}</div>
         </DetailEomjiIcon>}
         <InputUnderLine isEdit={isEdit}>
           <Name
