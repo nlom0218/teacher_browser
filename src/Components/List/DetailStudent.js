@@ -206,7 +206,7 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
     if (data) {
       setValue("newStudentName", data?.seeAllStudent[0]?.studentName)
       setStudentInfo(data?.seeAllStudent[0])
-      setStudentIcon(data?.seeAllStudent[0].studentIcon)
+      setStudentIcon(data?.seeAllStudent[0].icon)
     }
   }, [data])
   return (<Container>
@@ -260,7 +260,12 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
     <DetailStudentMemo studentMemo={studentInfo?.memo} studentId={studentInfo?._id} teacherEmail={studentInfo?.teacherEmail} />
     <DelBtn onClick={onClicketeBtn}>휴지통으로 이동</DelBtn>
     {isPopup === "studentIcon" &&
-      <StudentIcon />
+      <StudentIcon
+        editStudent={editStudent}
+        studentId={studentId}
+        teacherEmail={studentInfo?.teacherEmail}
+        setStudentIcon={setStudentIcon}
+      />
     }
     {isPopup === "deleteStudent" && <DeleteStudent selectedTag={selectedTag} selectedSort={selectedSort} studentId={studentId} />}
   </Container>);

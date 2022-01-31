@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { outPopup } from '../../../apollo';
 import IcNameTable from '../../../icons/NameTable/IcNameTable';
 import { IcStudent1, IcStudent10, IcStudent11, IcStudent12, IcStudent13, IcStudent14, IcStudent15, IcStudent16, IcStudent17, IcStudent18, IcStudent19, IcStudent2, IcStudent20, IcStudent21, IcStudent22, IcStudent23, IcStudent24, IcStudent26, IcStudent27, IcStudent28, IcStudent29, IcStudent3, IcStudent30, IcStudent31, IcStudent32, IcStudent33, IcStudent34, IcStudent35, IcStudent38, IcStudent39, IcStudent4, IcStudent40, IcStudent41, IcStudent42, IcStudent43, IcStudent44, IcStudent46, IcStudent47, IcStudent48, IcStudent49, IcStudent5, IcStudent50, IcStudent6, IcStudent7, IcStudent8, IcStudent9 } from '../../../icons/Students/IcStudents';
 import { customMedia } from '../../../styles';
@@ -16,7 +17,7 @@ const StudentIconList = styled.div`
   row-gap: 1.25rem;
   justify-items: center;
   ${customMedia.greaterThan("tablet")`
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
   `}
 `
 
@@ -33,7 +34,20 @@ const StudentIconItem = styled.div`
   }
 `
 
-const StudentIcon = () => {
+const StudentIcon = ({ editStudent, studentId, teacherEmail, setStudentIcon }) => {
+
+  const onClickStudentIcon = (number) => {
+    editStudent({
+      variables: {
+        teacherEmail,
+        studentId,
+        icon: parseInt(number)
+      }
+    })
+    setStudentIcon(parseInt(number))
+    outPopup()
+  }
+
   const studentIconArr = [
     <IcStudent1 />, <IcStudent2 />, <IcStudent3 />, <IcStudent4 />, <IcStudent5 />,
     <IcStudent6 />, <IcStudent7 />, <IcStudent8 />, <IcStudent9 />, <IcStudent10 />,
@@ -49,7 +63,9 @@ const StudentIcon = () => {
   return (<PopupContainer>
     <StudentIconList>
       {studentIconArr.map((item, index) => {
-        return <StudentIconItem key={index}>{item}</StudentIconItem>
+        return <StudentIconItem key={index} onClick={() => onClickStudentIcon(index + 1)}>
+          {item}
+        </StudentIconItem>
       })}
     </StudentIconList>
   </PopupContainer>);

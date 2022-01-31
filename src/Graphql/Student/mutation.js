@@ -12,6 +12,7 @@ mutation Mutation(
   $tag: [String], 
   $delTag: String,
   $memo: String,
+  $icon: Int,
   $trash: Boolean) {
   editStudent(
     teacherEmail: $teacherEmail, 
@@ -24,6 +25,7 @@ mutation Mutation(
     tag: $tag, 
     delTag: $delTag,
     memo: $memo,
+    icon: $icon,
     trash: $trash) {
       ok
       error
