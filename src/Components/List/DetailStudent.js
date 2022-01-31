@@ -145,10 +145,6 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
   const onMouseEnterName = () => setSeeSettingBtn(true)
   const onMouseLeaveName = () => setSeeSettingBtn(false)
 
-  const onClickStudentIconBtn = () => {
-    inPopup("studentIcon")
-  }
-
   const onCompleted = (result) => {
     const { editStudent: { ok, error } } = result
     if (error) {
@@ -170,9 +166,25 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
       }
     }]
   })
+
   const { register, setValue, handleSubmit, getValues } = useForm({
     mode: "onChange"
   })
+
+  const onClickStudentIconBtn = () => {
+    inPopup("studentIcon")
+  }
+  const onClickDelStudentIconBtn = () => {
+    editStudent({
+      variables: {
+        teacherEmail: studentInfo?.teacherEmail,
+        studentId,
+        studentIcon: "delete"
+      }
+    })
+    setStudentIcon(null)
+  }
+
   const onSubmit = (data) => {
     const { newStudentName } = data
     if (newStudentName === studentInfo.studentName) {
@@ -243,14 +255,14 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
       {seeSettingBtn &&
         (media === "Desktop" && <SettingEmojiIconBtn>
           {studentIcon ?
-            <div>아이콘 삭제</div>
+            <div onClick={onClickDelStudentIconBtn}>아이콘 삭제</div>
             :
             <div onClick={onClickStudentIconBtn}>아이콘 추가</div>}
         </SettingEmojiIconBtn>)
       }
       {media !== "Desktop" && <SettingEmojiIconBtn>
         {studentIcon ?
-          <div>아이콘 삭제</div>
+          <div onClick={onClickDelStudentIconBtn}>아이콘 삭제</div>
           :
           <div onClick={onClickStudentIconBtn}>아이콘 추가</div>}
       </SettingEmojiIconBtn>}
