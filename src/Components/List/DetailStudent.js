@@ -10,6 +10,7 @@ import { SEE_ALL_STUDENT_QUERY, SEE_ONE_STUDENT_QUERY } from '../../Graphql/Stud
 import IcBookMark from '../../icons/Bookmark/IcBookMark';
 import IcNameTable from '../../icons/NameTable/IcNameTable';
 import IcNameTableClick from '../../icons/NameTable/IcNameTableClick';
+import { IcStudent1 } from '../../icons/Students/IcStudents';
 import routes from '../../routes';
 import { customMedia } from '../../styles';
 import DetailStudentAllergy from './DetailStudentAllergy';
