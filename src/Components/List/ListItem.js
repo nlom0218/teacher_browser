@@ -14,7 +14,7 @@ const DndContainer = styled.div`
   align-items: center;
   position: relative;
   .list-dndContainer {
-    width: 40%;
+    width: 70%;
   }
 `
 
@@ -43,6 +43,7 @@ const ListName = styled.div`
   /* text-shadow: 0.5px 0.5px 0.5px ${props => props.theme.bgColor}; */
   transition: text-shadow 1s ease;
   text-align: center;
+  line-height: 120%;
 `
 
 const ListItem = ({ listName, listOrder, index, listId, someDragging, setSuccessMsg, setSomeDragging, listIcon, setDragType }) => {
