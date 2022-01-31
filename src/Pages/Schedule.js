@@ -14,6 +14,9 @@ import TimeTableGrid from "../Components/Schedule/TimeTableGrid";
 import { useReactiveVar } from "@apollo/client";
 import ClassRegisterPage from "../Components/Schedule/Popup/ClassRegisterPage";
 import ClassTimeSet from "../Components/Schedule/Popup/ClassTimeSet";
+import PrintSchedule from "../Components/Schedule/PrintSchedule";
+import PrintScheduleContents from "../Components/Schedule/Popup/PrintScheduleContents";
+import { useRef } from "react";
 
 
 
@@ -43,18 +46,39 @@ const processSetDate = () => {
 }
 
 
+const plus = [9,0,40,10,4,50,0,0]
+const timeResult=[]
+function timePush(){timeResult.push(tDate.toTimeString().slice(0,5))}
+const tDate = new Date()
+tDate.setHours(plus[0])
+tDate.setMinutes(plus[1]) 
+timePush() //1교시 시작
+tDate.setMinutes(tDate.getMinutes()+plus[2]) //1교시 끝
+timePush()
+for (var i =0; i<(plus[4]-1); i++)
+{tDate.setMinutes(tDate.getMinutes()+plus[3]) //2-4교시 시작
+  timePush()
+  tDate.setMinutes(tDate.getMinutes()+plus[2]) //2-4교시 끝
+  timePush()}
+tDate.setMinutes(tDate.getMinutes()+plus[5]) //점심 후 5교시 시작
+timePush()
+tDate.setMinutes(tDate.getMinutes()+plus[2]) //5교시 끝
+timePush()
+for (var i =0; i<(6-plus[4]-1); i++){
+  tDate.setMinutes(tDate.getMinutes()+plus[3]) //6교시 시작
+  timePush()
+  tDate.setMinutes(tDate.getMinutes()+plus[2]) //6교시 끝
+  timePush() }
 
 
 
-//시간설정에서 누른 값을 바탕으로 시간 계산 함수 만들기 -> timetable out item으로 보내기
-//시간설정 완료 눌렀을 때 outPopup이 안 됨. 
-//시간보기 버튼 눌렀을 때 아이콘 안 바뀜
-//칸 안에는 삭제아이콘 없앨까?
+
+//시간설정 완료 눌렀을 때 outPopup이 안 됨. 콘솔창에 예전에는 값이 나왔는데 왜 안 나오지?
 //수업정보를 어떻게 받아서 전달????
 //태그랑 태그 관리 
-//음영표시 어떻게? 체크?? 보더??
 //음영한 뒤 다크모드에서 글씨 안 보임. 
-// 인쇄기능
+// 인쇄기능에 과목명이랑 색상 보내기 
+//수업추가 어떻게?
 
 
 
@@ -72,14 +96,16 @@ const Container = styled.div`
 `;
 const TopContents = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 12fr 1fr;
+  padding-top: 32px;
+  padding-top: 2rem;
   row-gap: 20px;
   row-gap: 1.25rem;
   align-items: center;
 `;
 
 const Title = styled.form`
-  grid-row: 2/3;
+  grid-row: 1/2;
   display: grid;
   grid-template-columns: 1fr auto;
   column-gap: 20px;
@@ -166,8 +192,10 @@ const Schedule = () => {
 
   const isPopup = useReactiveVar(isPopupVar);
   const media = useMedia();
+  const componentRef = useRef(null);
+
   const [isEdit, setIsEdit] = useState(false);
-  const [title, setTitle] = useState(undefined);
+  const [title, setTitle] = useState("우리반 시간표");
   const [fontSize, setFontSize] = useState(1.25)
   const [viewTime, setViewTime] = useState(false);
 
@@ -228,7 +256,7 @@ const Schedule = () => {
             </InputLayout>
             {isEdit && <SubmitInput type="submit" value="저장" />}
           </Title>
-    
+          {media === "Desktop" && <PrintSchedule />}
         </TopContents>
         <OptionContents>
         <OptionBtn onClick={onClickTimeSetBtn}> 시간설정 </OptionBtn>
@@ -239,13 +267,15 @@ const Schedule = () => {
         <TimeTableFont fontSize={fontSize} setFontSize={setFontSize}/>
         </OptionContents>
   <TimeTableHeight>
-  <TimeTableGrid fontSize={fontSize} setFontSize={setFontSize} viewTime={viewTime} setViewTime={setViewTime}/>
+  <TimeTableGrid timeResult={timeResult} fontSize={fontSize} setFontSize={setFontSize} viewTime={viewTime} setViewTime={setViewTime}/>
 
 
   </TimeTableHeight>
         </Container>
         {isPopup === "registerClass" && <ClassRegisterPage/>}
         {isPopup === "registerTimeSet" && <ClassTimeSet />}
+        { isPopup === "print" && <PrintScheduleContents printRef={componentRef} title={title} viewTime={viewTime} timeResult={timeResult}/>}
+
       </DivideLeftContents>
     </BasicContainer>
   )

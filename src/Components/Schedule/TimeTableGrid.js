@@ -34,71 +34,40 @@ for (var i =0; i<6; i++)
 result.push(myDate.toLocaleDateString().slice(5,))}
 
 
-const plus = [9,0,40,10,4,50,0,0]
-const timeResult=[]
-function timePush(){timeResult.push(tDate.toTimeString().slice(0,5))}
-const tDate = new Date()
-tDate.setHours(plus[0])
-tDate.setMinutes(plus[1]) 
-timePush() //1교시 시작
-tDate.setMinutes(tDate.getMinutes()+plus[2]) //1교시 끝
-timePush()
-for (var i =0; i<(plus[4]-1); i++)
-{tDate.setMinutes(tDate.getMinutes()+plus[3]) //2-4교시 시작
-  timePush()
-  tDate.setMinutes(tDate.getMinutes()+plus[2]) //2-4교시 끝
-  timePush()}
-tDate.setMinutes(tDate.getMinutes()+plus[5]) //점심 후 5교시 시작
-timePush()
-tDate.setMinutes(tDate.getMinutes()+plus[2]) //5교시 끝
-timePush()
-for (var i =0; i<(6-plus[4]-1); i++){
-  tDate.setMinutes(tDate.getMinutes()+plus[3]) //6교시 시작
-  timePush()
-  tDate.setMinutes(tDate.getMinutes()+plus[2]) //6교시 끝
-  timePush() }
-
-
 
 const dayValue= [
 [,,], ["월",,result[0]], ["화",,result[1]], ["수",,result[2]], ["목",,result[3]], ["금", ,result[4]]]
 
-const classtime1= ["1","",[timeResult[0],timeResult[1]]]
 const classMon1 = ["음악",,["운동장","체육관"]]
 const classTue1 = ["과학","#87CDDB",["운동장","체육관","배드민턴"]]
 const classWed1 = ["사회","#FFB6C1",["운동장","체육관"]]
 const classThu1 = ["수학","",["운동장","체육관"]]
 const classFri1 = ["국어","",[]]
 
-const classtime2= ["2","",[timeResult[2],timeResult[3]]]
 const classMon2 = ["미술","",["운동장","체육관"]]
 const classTue2 = ["체육","#FFFF00",[]]
 const classWed2 = ["실과","#98FB98",["운동장","체육관"]]
 const classThu2 = ["영어","",[]]
 const classFri2 = ["창체","",[]]
 
-const classtime3= ["3","",[timeResult[4],timeResult[5]]]
 const classMon3 = ["국어","#DA70D6",["운동장","체육관"]]
 const classTue3 = ["수학","",[]]
 const classWed3 = ["사회","",[]]
 const classThu3 = ["과학","",["운동장","체육관"]]
 const classFri3 = ["음악","",["운동장","체육관"]]
 
-const classtime4= ["4","",[timeResult[6],timeResult[7]]]
 const classMon4 = ["미술","#F4A460",[]]
 const classTue4 = ["체육","",["운동장","체육관"]]
 const classWed4 = ["실과","#98FB98",[]]
 const classThu4 = ["영어","",["운동장","체육관"]]
 const classFri4 = ["창체","#FFFF00",["운동장","체육관"]]
 
-const classtime5= ["5","",[timeResult[8],timeResult[9]]]
 const classMon5 = ["국어","",["운동장","체육관"]]
 const classTue5 = ["수학","",[]]
 const classWed5 = ["사회","",["운동장","체육관"]]
 const classThu5 = ["과학","#DA70D6",[]]
 const classFri5 = ["음악","",["운동장","체육관"]]
 
-const classtime6= ["6","",[timeResult[10],timeResult[11]]]
 const classMon6 = ["미술","",["운동장","체육관"]]
 const classTue6 = ["체육","",[]]
 const classWed6 = ["실과","#98FB98",[]]
@@ -119,7 +88,15 @@ const timeTableArr = [
   }
 ]
 
-const TimeTableGrid = ({fontSize,setFontSize,viewTime,setViewTime}) => {
+const TimeTableGrid = ({fontSize,setFontSize,viewTime,setViewTime,timeResult}) => {
+  const classtime1= ["1","",[timeResult[0],timeResult[1]]]
+  const classtime2= ["2","",[timeResult[2],timeResult[3]]]
+  const classtime3= ["3","",[timeResult[4],timeResult[5]]]
+  const classtime4= ["4","",[timeResult[6],timeResult[7]]]
+  const classtime5= ["5","",[timeResult[8],timeResult[9]]]
+  const classtime6= ["6","",[timeResult[10],timeResult[11]]]
+
+
 
   return (
     <Container>

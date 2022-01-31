@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { customMedia } from '../../styles';
+import { color, customMedia } from '../../styles';
 import { FaArrowCircleLeft } from 'react-icons/fa';
 import { hideNewsSection, seeNewsSection } from '../../Animations/WelcomeSectionAni';
 import PageLinkSection from './PageLinkSection';
 import { movePageLink } from '../../apollo';
 import Tabs from 'react-bootstrap/Tabs';
-import {Tab, Row, Col, Nav, Button} from 'react-bootstrap';
-
+import {Tab, Row, Col, Nav, Button, Collapse,DropdownButton,Dropdown} from 'react-bootstrap';
+import { BsStar, BsStarFill } from 'react-icons/bs';
 
 const MoveContainer = styled.div`
   display: ${props => props.isSeeDisplay};
@@ -57,6 +57,7 @@ display: grid;
 cursor: pointer;
 `
 const Outline = styled.div`
+width: 100%;
 border: 1px solid;
 border-radius: 5px;
 border-radius: 0.3125rem;
@@ -68,6 +69,8 @@ height: 100%;
 
 const LinkPickSection = ({userEmail, pageLinkSection, init, setInit,pageLinkFolderName }) => {
   const [isSeeDisplay, setIsSeeDisplay] = useState(pageLinkSection === "pageLink" ? "none" : "block")
+  const [open, setOpen] = useState(false);
+
   const onClickMoveIcon = () => {
     setInit(false)
     movePageLink()
@@ -100,11 +103,49 @@ const LinkPickSection = ({userEmail, pageLinkSection, init, setInit,pageLinkFold
       <br/><br/><div className="d-grid gap-2"><Button variant="warning" > 사이트 추천하기</Button></div>
     </Col> 
     <Col sm={9}> <Outline>
-  
-      <Tab.Content>
+    <br /> <br />
+      <Tab.Content class="h5">
       {pageLinkFolderName.map((item,index)=>{
-        return(        <Tab.Pane eventKey={index}>
-          <div>{item}</div>
+        return(     <Tab.Pane eventKey={index}>
+          <div class="text-center">
+          <div class="row">
+          <div class="col-sm-1"></div>
+  <div class="col-sm-1"> <span class="text-warning" onClick={() => setOpen(!open)}
+        aria-controls="example-collapse-text"
+        aria-expanded={open}
+      > {open===false ?<BsStar/> :<BsStarFill /> }
+      </span></div>
+  <div class="col-sm-4" >{item[0]}</div>
+  <div class="col-sm-6">{item[1]}</div>
+<hr/>
+  <div class="col-sm-1"></div>
+
+  <div class="col-sm-2">  
+      <Collapse in={open}>
+      <div id="example-collapse-text">
+      <DropdownButton variant='outline-primary' title="폴더 선택">
+  {pageLinkFolderName.map((item,index)=>{
+        return(
+  <Dropdown.Item as="button" key={index}> {item[0]}</Dropdown.Item>)})}
+</DropdownButton>
+        </div></Collapse></div>
+       
+
+
+        <div class="col-sm-3" >
+        <Collapse in={open}>
+      <div id="example-collapse-text">
+
+          {item[0]}</div>
+       </Collapse></div>
+
+  <div class="col-sm-6">
+      <Collapse in={open}>
+      <div id="example-collapse-text"><input placeholder='메모 작성'></input></div></Collapse></div>
+      </div>  </div>
+
+      <br />
+
         </Tab.Pane>)})}
 
      

@@ -49,8 +49,8 @@ const TopContents = styled.div`
   padding: 40px;
   padding: 2.5rem;
   align-items: flex-start;
-  column-gap: 20px;
-  column-gap: 1.25rem;
+  column-gap: 40px;
+  column-gap: 2.5rem;
 `;
 
 const Title = styled.form`
