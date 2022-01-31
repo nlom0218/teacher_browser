@@ -107,7 +107,7 @@ const FolderPage=styled.div`
   row-gap: 1.25rem;
   column-gap: 20px;
   column-gap: 1.25rem;
-  align-items: flex-start;
+  align-self: flex-start;
 `
 const LinkFolder = styled.div`
   display:grid;
@@ -129,7 +129,6 @@ const LinkContents = styled.div`
   column-gap: 1px;
   column-gap: 0.0625rem;
   text-align: center;
-  align-items: center;
   font-size: 1rem;
   font-size: 1em;
   background-color: ${(props) => props.theme.btnBgColor};
@@ -143,7 +142,6 @@ padding: 10px;
 padding: 0.625rem;
 border-radius: 3px;
 border-radius: 0.1875rem;
-
 background-color: white;
 color: black;
 `
@@ -179,8 +177,8 @@ const ButtonContent = styled.div`
 `;
 
 //백엔드 연결하면 리스트 내용 삭제하기 
-const pageLinkFolderName = [["교육청",["사이트이름/","메모"],["사이트이름/","메모"]],["미술",["사이트이름/","메모"]],["영어",["사이트이름/","메모"]],["과학",["사이트이름/","메모"]],["연수원",["사이트이름/","메모"]]]
-const PageLinkSection = ({ pageLinkSection, init, setInit }) => {
+// const pageLinkFolderName = [["교육청",["경기도교육청","메모"],["사이트이름/","메모"]],["미술",["사이트이름/","메모"]],["영어",["사이트이름/","메모"]],["과학",["사이트이름/","메모"]],["연수원",["사이트이름/","메모"]]]
+const PageLinkSection = ({ pageLinkSection, init, setInit, pageLinkFolderName}) => {
 
     const [isEdit, setIsEdit] = useState(false);
     const [title, setTitle] = useState(undefined);
@@ -237,9 +235,7 @@ const PageLinkSection = ({ pageLinkSection, init, setInit }) => {
                 <MdAddCircle onClick={onClickCreateBtn}/>
             </ButtonContent>
     </TopContents>
-    <div>
-  
-   </div>
+   
     <FolderPage>
       
 {pageLinkFolderName.map((item,index)=>
@@ -248,7 +244,7 @@ const PageLinkSection = ({ pageLinkSection, init, setInit }) => {
     <Accordion.Header>{item[0]}</Accordion.Header>
     <Accordion.Body>
     {item.map((i,index)=><LinkFolder key={{index}}>
-        <LinkContents><ContentsOne>{i[0]}</ContentsOne>
+        <LinkContents><ContentsOne >{i[0]}</ContentsOne>
         <ContentsOne>
       {i[1]}
         </ContentsOne>

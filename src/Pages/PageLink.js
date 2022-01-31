@@ -9,6 +9,7 @@ import useMe from '../Hooks/useMe';
 
 const Container = styled.div`
 `
+const pageLinkFolderName = [["교육청",["경기도교육청","메모"],["사이트이름/","메모"]],["미술",["사이트이름/","메모"]],["영어",["사이트이름/","메모"]],["과학",["사이트이름/","메모"]],["연수원",["사이트이름/","메모"]]]
 
 
 const PageLink = () => {
@@ -24,12 +25,14 @@ const PageLink = () => {
 <PageLinkSection
    init={init}
    setInit={setInit}
-   pageLinkSection={pageLinkSection}/>
+   pageLinkSection={pageLinkSection}
+   pageLinkFolderName={pageLinkFolderName}/>
 <LinkPickSection
   init={init}
   setInit={setInit}
   pageLinkSection={pageLinkSection}
   userEmail={me?.email}
+  pageLinkFolderName={pageLinkFolderName}
   // favoriteNews={me?.favoriteNews}
 />
 

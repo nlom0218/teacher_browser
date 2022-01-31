@@ -43,6 +43,9 @@ const processSetDate = () => {
 }
 
 
+
+
+
 //시간설정에서 누른 값을 바탕으로 시간 계산 함수 만들기 -> timetable out item으로 보내기
 //시간설정 완료 눌렀을 때 outPopup이 안 됨. 
 //시간보기 버튼 눌렀을 때 아이콘 안 바뀜

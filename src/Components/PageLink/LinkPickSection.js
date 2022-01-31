@@ -66,7 +66,7 @@ height: 100%;
 
 `
 
-const LinkPickSection = ({userEmail, pageLinkSection, init, setInit }) => {
+const LinkPickSection = ({userEmail, pageLinkSection, init, setInit,pageLinkFolderName }) => {
   const [isSeeDisplay, setIsSeeDisplay] = useState(pageLinkSection === "pageLink" ? "none" : "block")
   const onClickMoveIcon = () => {
     setInit(false)
@@ -88,24 +88,13 @@ const LinkPickSection = ({userEmail, pageLinkSection, init, setInit }) => {
   <Row>
     <Col sm={3} >
     <Nav variant="pills" className="flex-column">
-        <Nav.Item>
-          <Outline><Nav.Link eventKey="first" onClick={onClickTab1}><div class="w-100 p-1"><Font>추천 사이트 전체 보기</Font></div></Nav.Link></Outline><br/>
-        </Nav.Item>
-        <Nav.Item>
-          <Outline><Nav.Link eventKey="second" onClick={onClickTab1}><div class="w-100 p-1"><Font>원격연수원</Font></div></Nav.Link></Outline><br/>
-        </Nav.Item>
-        <Nav.Item>
-          <Outline><Nav.Link eventKey="thrid" onClick={onClickTab1}><div class="w-100 p-1"><Font>학급운영</Font></div></Nav.Link></Outline><br/>
-        </Nav.Item>
-        <Nav.Item>
-          <Outline><Nav.Link eventKey="fourth" onClick={onClickTab1}><div class="w-100 p-1"><Font>국어</Font></div></Nav.Link></Outline><br/>
-        </Nav.Item>
-        <Nav.Item>
-          <Outline><Nav.Link eventKey="fifth" onClick={onClickTab1}><div class="w-100 p-1"><Font>수학</Font></div></Nav.Link></Outline><br/>
-        </Nav.Item>
-        <Nav.Item>
-          <Outline><Nav.Link eventKey="sixth" onClick={onClickTab1}><div class="w-100 p-1"><Font>사회</Font></div></Nav.Link></Outline><br/>
-        </Nav.Item>
+      {pageLinkFolderName.map((item,index)=>{
+        return(
+         <Nav.Item>
+         <Outline><Nav.Link eventKey={index} onClick={onClickTab1}><div class="w-100 p-1"><Font>{item[0]}</Font></div></Nav.Link></Outline><br/>
+       </Nav.Item>)
+      })}
+     
         
       </Nav>
       <br/><br/><div className="d-grid gap-2"><Button variant="warning" > 사이트 추천하기</Button></div>
@@ -113,24 +102,11 @@ const LinkPickSection = ({userEmail, pageLinkSection, init, setInit }) => {
     <Col sm={9}> <Outline>
   
       <Tab.Content>
-        <Tab.Pane eventKey="first">
-          <div>1에 해당하는 내용</div>
-        </Tab.Pane>
-        <Tab.Pane eventKey="second">
-         <div>2에 해당하는 내용</div>
-        </Tab.Pane>
-        <Tab.Pane eventKey="thrid">
-          <div>3 해당하는 내용</div>
-        </Tab.Pane>
-        <Tab.Pane eventKey="fourth">
-         <div>4 해당하는 내용</div>
-        </Tab.Pane>
-        <Tab.Pane eventKey="fifth">
-          <div>5 해당하는 내용</div>
-        </Tab.Pane>
-        <Tab.Pane eventKey="sixth">
-         <div>6 해당하는 내용</div>
-        </Tab.Pane>
+      {pageLinkFolderName.map((item,index)=>{
+        return(        <Tab.Pane eventKey={index}>
+          <div>{item}</div>
+        </Tab.Pane>)})}
+
      
       </Tab.Content></Outline>
     </Col>
