@@ -34,9 +34,18 @@ const Container = styled.div`
 `
 
 const ListIcon = styled.div`
-  font-size: 2em;
-  font-size: 2rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: flex-end;
+  column-gap: 5px;
+  column-gap: 0.3125rem;
+  div {
+    opacity: 0.6;
+  }
   svg {
+    display: flex;
+    font-size: 2em;
+    font-size: 2rem;
     filter: drop-shadow(1px 1px 1px rgb(0, 0, 0))
   }
 `
@@ -182,7 +191,9 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
   }, [data])
   return (<Container>
     <Link to={routes.list} onMouseEnter={() => setIconListIsHover(true)} onMouseLeave={() => setIconListIsHover(false)}>
-      <ListIcon>{IconsLIstisHover ? <IcNameTableClick /> : <IcNameTable />}</ListIcon>
+      <ListIcon>{IconsLIstisHover ? <IcNameTableClick /> : <IcNameTable />} 
+      <div>명렬표로 이동</div>
+      </ListIcon>
     </Link>
     <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
       <InputUnderLine isEdit={isEdit}>
