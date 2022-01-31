@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import routes from '../../routes';
 import { useDrag } from "react-dnd"
+import { processStudentIcon } from '../../shared';
 
 const Layout = styled.div`
   :hover {
@@ -19,21 +20,27 @@ const Layout = styled.div`
   padding: 10px;
   padding: 0.625rem;
     display: grid;
+    grid-template-columns: auto 1fr;
     row-gap: 5px;
     row-gap: 0.3125rem;
+    column-gap: 5px;
+    column-gap: 0.3125rem;
   }
 `
 
 const StudentName = styled.div`
 `
 
+const StudentIcon = styled.div``
+
 const StudentNum = styled.div`
+  grid-row: 2 / 3;
   font-size: 0.85em;
   font-size: 0.85rem;
   opacity: 0.8;
 `
 
-const StudentItem = ({ item, setSomeDragging, studentId, seeNum, setDragType }) => {
+const StudentItem = ({ item, setSomeDragging, studentId, seeNum, setDragType, seeStudentIcon }) => {
   // 학생 이름 drag를 위해 필요한 것
   // 아래의 두번째 인자를 드래그 할 곳에 참조로 넣는다.
   const [{ isDragging }, drag] = useDrag(() => ({
@@ -58,8 +65,9 @@ const StudentItem = ({ item, setSomeDragging, studentId, seeNum, setDragType }) 
   }, [isDragging, setSomeDragging])
   return (<Layout ref={drag} isSeleted={studentId === item._id}>
     <Link to={`${routes.list}/student/${item._id}`}>
+      {seeStudentIcon && (item.icon && <StudentIcon>{processStudentIcon(item.icon)}</StudentIcon>)}
       <StudentName>{item.studentName}</StudentName>
-      {seeNum && <StudentNum>{item.studentNumber ? item.studentNumber : "번호가 없습니다."}</StudentNum>}
+      {seeNum && <StudentNum>{item.studentNumber ? `${item.studentNumber}번` : "번호가 없습니다."}</StudentNum>}
     </Link>
   </Layout>);
 }

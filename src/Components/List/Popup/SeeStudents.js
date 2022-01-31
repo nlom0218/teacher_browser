@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { inPopup, isPopupVar, outPopup } from '../../../apollo';
 import routes from '../../../routes';
+import { processStudentIcon } from '../../../shared';
 import PopupContainer from '../../Shared/PopupContainer';
 import SortTagBtn from '../SortTagBtn';
 import { Btn, Container, Item, List } from '../styled/PopupSeeStudent';
@@ -15,9 +16,12 @@ const StudentNum = styled.div`
   font-size: 0.85em;
   font-size: 0.85rem;
   opacity: 0.8;
+  grid-row: 2 / 3;
 `
 
-const SeeStudents = ({ meTag, selectedTag, seeNum, selectedSort, allStudent }) => {
+const StudentIcon = styled.div``
+
+const SeeStudents = ({ meTag, selectedTag, seeNum, selectedSort, allStudent, seeStudentIcon }) => {
   const isPopup = useReactiveVar(isPopupVar)
 
   const navigate = useNavigate()
@@ -42,8 +46,9 @@ const SeeStudents = ({ meTag, selectedTag, seeNum, selectedSort, allStudent }) =
               key={index}
               onClick={() => onClickName(item._id)}
             >
+              {seeStudentIcon && (item.icon && <StudentIcon>{processStudentIcon(item.icon)}</StudentIcon>)}
               <StudentName>{item.studentName}</StudentName>
-              {seeNum && <StudentNum>{item.studentNumber ? item.studentNumber : "번호가 없습니다."}</StudentNum>}
+              {seeNum && <StudentNum>{item.studentNumber ? `${item.studentNumber}번` : "번호가 없습니다."}</StudentNum>}
             </Item>
           })}
       </List>

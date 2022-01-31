@@ -54,6 +54,7 @@ const List = () => {
   const [selectedTag, setSelectedTag] = useState([])
   const [selectedSort, setSelectedSort] = useState(undefined)
   const [seeNum, setSeeNum] = useState(Boolean(localStorage.getItem("seeNum")))
+  const [seeStudentIcon, setSeeStudentIcon] = useState(Boolean(localStorage.getItem("seeStudentIcon")))
 
   // 드래그 중일 때와 아닐 때를 나타내기 위한 값
   const [someDragging, setSomeDragging] = useState(false)
@@ -130,7 +131,6 @@ const List = () => {
         {type === "detail" && <DetailList listId={id} someDragging={someDragging} setSuccessMsg={setSuccessMsg} />}
       </DivideLeftContents>
       {media === "Desktop" ?
-
         <StudentList
           setSomeDragging={setSomeDragging}
           studentId={id} meTag={me?.tag}
@@ -139,6 +139,7 @@ const List = () => {
           selectedSort={selectedSort}
           setDragType={setDragType}
           allStudent={data?.seeAllStudent}
+          seeStudentIcon={seeStudentIcon}
         />
         :
         <StudentIcon onClick={onClickStudentIcon}><FaUserFriends /></StudentIcon>
@@ -151,6 +152,7 @@ const List = () => {
       meTag={me?.tag}
       selectedTag={selectedTag}
       seeNum={seeNum}
+      seeStudentIcon={seeStudentIcon}
       selectedSort={selectedSort}
       allStudent={data?.seeAllStudent}
     />}
@@ -163,6 +165,8 @@ const List = () => {
         seeNum={seeNum}
         setSelectedSort={setSelectedSort}
         selectedSort={selectedSort}
+        seeStudentIcon={seeStudentIcon}
+        setSeeStudentIcon={setSeeStudentIcon}
       />}
     {isPopup === "createStudent" &&
       <CreateStudent

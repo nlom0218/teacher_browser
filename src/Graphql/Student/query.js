@@ -23,6 +23,7 @@ export const SEE_ALL_STUDENT_QUERY = gql`
       listId
       tag
       trash
+      icon
     }
   }
 `;

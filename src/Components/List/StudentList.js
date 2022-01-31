@@ -38,7 +38,7 @@ const AddStudentBtn = styled.div`
   transition: background-color 1s ease, color 1s ease;
 `
 
-const StudentList = ({ setSomeDragging, studentId, meTag, seeNum, setDragType, allStudent }) => {
+const StudentList = ({ setSomeDragging, studentId, meTag, seeNum, setDragType, allStudent, seeStudentIcon }) => {
   // 초기 로드 시 에니메이션 작동 안하게 하기
   const [initLoad, setInitLoad] = useState(true)
 
@@ -74,7 +74,7 @@ const StudentList = ({ setSomeDragging, studentId, meTag, seeNum, setDragType, a
           <div className="noStudnet">생성된 학생이 없습니다.</div>
           :
           allStudent?.map((item, index) => {
-            return <StudentItem key={index} item={item} setSomeDragging={setSomeDragging} studentId={studentId} seeNum={seeNum} setDragType={setDragType} />
+            return <StudentItem key={index} item={item} setSomeDragging={setSomeDragging} studentId={studentId} seeNum={seeNum} setDragType={setDragType} seeStudentIcon={seeStudentIcon} />
 
           })}
       </SStudentList>
