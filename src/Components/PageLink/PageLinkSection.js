@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { inputLine } from "../../Animations/InputLine";
 import { BtnFadeIn } from "../../Animations/Fade";
 import Accordion from 'react-bootstrap/Accordion'
+import { MdAddCircle } from 'react-icons/md';
 
 
 const MoveContainer = styled.div`
@@ -44,10 +45,12 @@ const Container = styled.div`
 `;
 const TopContents = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 7fr 1fr;
   padding: 40px;
   padding: 2.5rem;
   align-items: flex-start;
+  column-gap: 20px;
+  column-gap: 1.25rem;
 `;
 
 const Title = styled.form`
@@ -154,6 +157,26 @@ const OptionBtn = styled.div`
   border-radius: 0.3125rem;
   cursor: pointer;
 `;
+const ButtonContent = styled.div`
+  display: grid;
+  grid-row: 2/3;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  cursor : pointer;
+  color : ${props => props.theme.btnBgColor};
+  transition : color 1s ease;
+  svg {
+      display : flex;
+      font-size : 3rem;
+  font-size : 3em;
+  }
+  font{
+    font-size: 0.7rem;
+    font-size: 0.7em;
+    align-self: center;
+
+  }
+`;
 
 //백엔드 연결하면 리스트 내용 삭제하기 
 const pageLinkFolderName = [["교육청",["사이트이름/","메모"],["사이트이름/","메모"]],["미술",["사이트이름/","메모"]],["영어",["사이트이름/","메모"]],["과학",["사이트이름/","메모"]],["연수원",["사이트이름/","메모"]]]
@@ -173,7 +196,8 @@ const PageLinkSection = ({ pageLinkSection, init, setInit }) => {
       }
     
     const onClickInput = () => {setIsEdit(true);};
-
+    const onClickCreateBtn = () => {
+  }
     const onSubmit = (data) => {
         const { title } = data;
         setTitle(title);
@@ -209,7 +233,13 @@ const PageLinkSection = ({ pageLinkSection, init, setInit }) => {
             </InputLayout>
             {isEdit && <SubmitInput type="submit" value="저장" />}
     </Title>
+    <ButtonContent><div className="font">폴더추가</div>
+                <MdAddCircle onClick={onClickCreateBtn}/>
+            </ButtonContent>
     </TopContents>
+    <div>
+  
+   </div>
     <FolderPage>
       
 {pageLinkFolderName.map((item,index)=>
