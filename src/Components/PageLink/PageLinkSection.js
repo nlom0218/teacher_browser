@@ -118,13 +118,13 @@ const LinkFolder = styled.div`
 const LinkContents = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr 0.5fr;
-  padding: 5px;
-  padding: 0.3125rem;
+  padding: 1px;
+  padding: 0.0625rem;
   border: 1px solid;
   border-radius: 5px;
   border-radius: 0.3125rem;
-  column-gap: 5px;
-  column-gap: 0.3125rem;
+  column-gap: 1px;
+  column-gap: 0.0625rem;
   text-align: center;
   align-items: center;
   font-size: 1rem;
@@ -138,6 +138,8 @@ display: grid;
 border: 1px solid;
 padding: 10px;
 padding: 0.625rem;
+border-radius: 3px;
+border-radius: 0.1875rem;
 
 background-color: white;
 color: black;

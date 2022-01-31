@@ -7,8 +7,6 @@ import PageLinkSection from '../Components/PageLink/PageLinkSection';
 import LinkPickSection from '../Components/PageLink/LinkPickSection';
 import useMe from '../Hooks/useMe';
 
-
-
 const Container = styled.div`
 `
 

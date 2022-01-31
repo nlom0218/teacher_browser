@@ -45,8 +45,14 @@ const LinkPickSection = ({userEmail, pageLinkSection, init, setInit }) => {
   const onClickMoveIcon = () => {
     setInit(false)
     movePageLink()
-
   }
+  useEffect(() => {
+    if (pageLinkSection === "linkPick") {
+      setIsSeeDisplay("block")
+    }
+  }, [pageLinkSection])
+
+
   return (<MoveContainer pageLinkSection={pageLinkSection} init={init} isSeeDisplay={isSeeDisplay}>
     <MoveIcon onClick={onClickMoveIcon}><FaArrowCircleLeft /></MoveIcon>
     <Container>
