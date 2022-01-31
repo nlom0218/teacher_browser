@@ -16,6 +16,9 @@ import useMedia from '../../Hooks/useMedia';
 import BtnPopupContainer from "../Shared/BtnPopupContainer"
 import DeleteList from './Popup/DeleteList';
 import { DelBtn } from './styled/DelBtn';
+import DetailNameContainer from './styled/DetailNameContainer';
+import DetailEomjiIcon from './styled/DetailEomjiIcon';
+import SettingEmojiIconBtn from './styled/SettingEmojiIconBtn';
 
 const Container = styled.div`
   padding: 20px;
@@ -25,59 +28,6 @@ const Container = styled.div`
   row-gap: 2.5rem;
   column-gap: 40px;
   column-gap: 2.5rem;
-`
-
-const NameContainer = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  row-gap: 5px;
-  row-gap: 0.3125rem;
-  justify-items: flex-start;
-  ${customMedia.greaterThan("tablet")`
-    grid-template-columns: 1fr;
-    margin-top: 20px;
-    margin-top: 1.25rem;
-  `}
-  ${customMedia.greaterThan("desktop")`
-    margin-top: 0;
-  `}
-    form {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr;
-    column-gap: 5px;
-    column-gap: 0.3125rem;
-    row-gap: 10px;
-    row-gap: 0.625rem;
-    ${customMedia.greaterThan("tablet")`
-    grid-template-columns: 1fr auto;
-    column-gap: 10px;
-    column-gap: 0.625rem;
-  `}
-  }
-`
-
-const ListEomji = styled.div`
-  display: flex;
-  align-self: center;
-  font-size: 2em;
-  font-size: 2rem;
-  cursor: pointer;
-  padding: 5px;
-  padding: 0.3125rem;
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  transform: background-color 0.6s ease;
-  justify-self: flex-start;
-  :hover {
-    background-color: ${props => props.theme.blurColor};
-    transition: background-color 0.6s ease;
-  }
-  ${customMedia.greaterThan("tablet")`
-    font-size: 2.5em;
-    font-size: 2.5rem;
-    grid-column: 1 / -1;
-  `}
 `
 
 const ListName = styled.input`
@@ -115,31 +65,6 @@ const SubmitInput = styled.input`
     margin-left: 30px;
     margin-left: 1.875rem;
   `}
-`
-
-const SettingBtn = styled.div`
-  grid-column: 1 / -1;
-  grid-row: 2 / 3;
-  font-size: 0.875em;
-  font-size: 0.875rem;
-  animation: ${FadeIn} 0.2s ease forwards;
-  display: grid;
-  grid-template-columns: auto auto;
-  column-gap: 20px;
-  div {
-    padding: 5px;
-    padding: 0.3125rem;
-    :hover {
-    background-color: ${props => props.theme.blurColor};
-    transition: background-color 0.6s ease;
-    cursor: pointer;
-    border-radius: 5px;
-    border-radius: 0.3125rem;
-    }
-  }
-`
-
-const SetEmojiBtn = styled.div`
 `
 
 const EditListName = styled.div``
@@ -270,11 +195,11 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
   }, [])
 
   return (<Container>
-    <NameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName} >
+    <DetailNameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName} >
       <form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurName}>
-        {chosenEmoji && <ListEomji onClick={onClickEmojiBtn}>
+        {chosenEmoji && <DetailEomjiIcon onClick={onClickEmojiBtn}>
           {chosenEmoji}
-        </ListEomji>}
+        </DetailEomjiIcon>}
         <InputUnderLine isEdit={isEditName}>
           <ListName
             {...register("name", {
@@ -293,21 +218,21 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
         {isEditName && <SubmitInput type="submit" value="수정" />}
       </form>
       {seeSettingBtn &&
-        (media === "Desktop" && <SettingBtn>
+        (media === "Desktop" && <SettingEmojiIconBtn>
           {chosenEmoji ?
-            <SetEmojiBtn onClick={onClickEmojiDelBtn}>아이콘 삭제</SetEmojiBtn>
+            <div onClick={onClickEmojiDelBtn}>아이콘 삭제</div>
             :
-            <SetEmojiBtn onClick={onClickEmojiBtn}>아이콘 추가</SetEmojiBtn>}
-        </SettingBtn>)
+            <div onClick={onClickEmojiBtn}>아이콘 추가</div>}
+        </SettingEmojiIconBtn>)
       }
-      {media !== "Desktop" && <SettingBtn>
+      {media !== "Desktop" && <SettingEmojiIconBtn>
         {chosenEmoji ?
-          <SetEmojiBtn onClick={onClickEmojiDelBtn}>아이콘 삭제</SetEmojiBtn>
+          <div onClick={onClickEmojiDelBtn}>아이콘 삭제</div>
           :
-          <SetEmojiBtn onClick={onClickEmojiBtn}>아이콘 추가</SetEmojiBtn>}
-      </SettingBtn>}
+          <div onClick={onClickEmojiBtn}>아이콘 추가</div>}
+      </SettingEmojiIconBtn>}
       {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
-    </NameContainer>
+    </DetailNameContainer>
     {data?.seeStudentList[0]?.students
       &&
       <StudentInList

@@ -73,6 +73,7 @@ export const SEE_ONE_STUDENT_QUERY = gql`
       tag
       trash
       journal
+      icon
     }
   }
 `;
