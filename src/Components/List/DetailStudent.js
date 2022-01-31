@@ -13,6 +13,7 @@ import IcNameTable from '../../icons/NameTable/IcNameTable';
 import IcNameTableClick from '../../icons/NameTable/IcNameTableClick';
 import { IcStudent1 } from '../../icons/Students/IcStudents';
 import routes from '../../routes';
+import { processStudentIcon } from '../../shared';
 import { customMedia } from '../../styles';
 import DetailStudentAllergy from './DetailStudentAllergy';
 import DetailStudentMemo from './DetailStudentMemo';
@@ -218,7 +219,7 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
     <DetailNameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName}>
       <form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
         {studentIcon && <DetailEomjiIcon onClick={onClickStudentIconBtn}>
-          <IcStudent1 />
+          {processStudentIcon(studentIcon)}
         </DetailEomjiIcon>}
         <InputUnderLine isEdit={isEdit}>
           <Name
