@@ -42,8 +42,8 @@ const InputArea = ({ me, studentId }) => {
         <button onClick={() => addText()}>➕</button>
 
         <div>
-          {[...student.journal].reverse().map((journal, index, array) => (
-            <Content key={index} me={me} studentId={studentId} index={index} journal={journal} array={array} />
+          {student.journal.map((journal, index) => (
+            <Content key={index} me={me} studentId={studentId} index={index} journal={journal} />
           ))}
         </div>
       </div>
