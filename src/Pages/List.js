@@ -93,19 +93,6 @@ const List = () => {
     }
   }, [someDragging])
 
-  // successMsg를 5초 후에 초기화
-  useEffect(() => {
-    if (successMsg) {
-      let timer = setTimeout(() => {
-        setSuccessMsg(undefined)
-      }, 5000)
-
-      // setTimeout 타이머를 사용한 경우 타이머를 해재해야 한다.
-      // 컴포넌트가 사라질 때 타이머를 없애는 코드 추가 필요
-      return () => { clearTimeout(timer) }
-    }
-  }, [successMsg])
-
   useEffect(() => {
     const localTag = JSON.parse(localStorage.getItem("selectedTag"))
     const localSort = localStorage.getItem("selectedSort")
