@@ -17,6 +17,7 @@ const StudentNum = styled.div`
   font-size: 0.85rem;
   opacity: 0.8;
   grid-row: 2 / 3;
+  grid-column: 1 / 3;
 `
 
 const StudentIcon = styled.div``

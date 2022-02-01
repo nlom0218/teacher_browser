@@ -17,8 +17,8 @@ const Layout = styled.div`
   transition: background-color 1s ease;
   cursor: pointer;
   a {
-  padding: 10px;
-  padding: 0.625rem;
+    padding: 10px;
+    padding: 0.625rem;
     display: grid;
     grid-template-columns: auto 1fr;
     row-gap: 5px;
@@ -35,6 +35,7 @@ const StudentIcon = styled.div``
 
 const StudentNum = styled.div`
   grid-row: 2 / 3;
+  grid-column: 1 / 3;
   font-size: 0.85em;
   font-size: 0.85rem;
   opacity: 0.8;
