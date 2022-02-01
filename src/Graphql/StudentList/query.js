@@ -50,6 +50,7 @@ export const SEE_ONE_STUDENT_LIST_QUERY = gql`
         listId
         trash
         journal {
+          _id
           date
           text
         }

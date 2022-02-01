@@ -42,24 +42,26 @@ function App() {
   // me 값을 불러오는데 시간이 걸려서 bgTheme의 디폴트 값으로 설정된 nature가 불려오다가 수정됨...
   // useMe() 값을 다 불러온 뒤에 return할 수 있을까?
   const me = useMe();
-  const [userBgTheme, setUserBgTheme] = useState(undefined)
+  const [userBgTheme, setUserBgTheme] = useState(undefined);
 
   useEffect(() => {
     if (me) {
       if (me.bgTheme.substr(0, 1) === "#") {
         const changBg = setTimeout(() => {
-          setUserBgTheme(me.bgTheme)
-        }, [1800])
-        return () => { clearTimeout(changBg) }
+          setUserBgTheme(me.bgTheme);
+        }, [1800]);
+        return () => {
+          clearTimeout(changBg);
+        };
       } else {
-        setUserBgTheme(me.bgTheme)
+        setUserBgTheme(me.bgTheme);
       }
     }
-  }, [me])
+  }, [me]);
 
   useEffect(() => {
     window.Kakao.init(process.env.REACT_APP_KAKAO_API_KEY);
-    disableBgThemeAni()
+    disableBgThemeAni();
   }, []);
 
   return (
@@ -87,6 +89,7 @@ function App() {
         <Route path={routes.lunchmenu} element={<Lunchmenu />} />
         <Route path={routes.schedule} element={<Schedule />} />
         <Route path={routes.journal} element={<Journal me={me} />} />
+        <Route path={`${routes.journal}/:type/:id`} element={<Journal me={me} />} />
         <Route path={routes.list} element={<List />} />
         <Route path={`${routes.list}/:type/:id`} element={<List />} />
         <Route path={routes.trash} element={<Trash />} />

@@ -10,8 +10,8 @@ export const WRITE_JOURNAL_MUTATION = gql`
 `;
 
 export const DELETE_JOURNAL_MUTATION = gql`
-  mutation deleteJournal($userEmail: ID!, $ownerId: ID!, $index: Int) {
-    deleteJournal(userEmail: $userEmail, ownerId: $ownerId, index: $index) {
+  mutation deleteJournal($userEmail: ID!, $ownerId: ID!, $journalId: ID) {
+    deleteJournal(userEmail: $userEmail, ownerId: $ownerId, journalId: $journalId) {
       ok
       error
     }
@@ -19,8 +19,8 @@ export const DELETE_JOURNAL_MUTATION = gql`
 `;
 
 export const EDIT_JOURNAL_MUTATION = gql`
-  mutation editJournal($userEmail: ID!, $ownerId: ID!, $index: Int, $contents: Contents) {
-    editJournal(userEmail: $userEmail, ownerId: $ownerId, index: $index, contents: $contents) {
+  mutation editJournal($userEmail: ID!, $ownerId: ID!, $journalId: ID, $contents: Contents) {
+    editJournal(userEmail: $userEmail, ownerId: $ownerId, journalId: $journalId, contents: $contents) {
       ok
       error
     }
