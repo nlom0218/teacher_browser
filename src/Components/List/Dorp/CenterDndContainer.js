@@ -13,19 +13,19 @@ const SCenterDndContainer = styled.div`
   z-index: ${props => props.someDragging ? 30 : -1};
 `
 
-const CenterDndContainer = ({ someDragging, setSuccessMsg, listName, listId, setMouseEnter, inList }) => {
+const CenterDndContainer = ({ someDragging, setSuccessMsg, setErrorMsg, listName, listId, setMouseEnter, inList }) => {
   const me = useMe()
 
   const onCompleted = (result) => {
     const { addStudent: { ok, error } } = result
     if (error) {
-      setSuccessMsg({ msg: "이미 명렬표에 존재합니다.", ok: false })
+      setErrorMsg(`이미 명렬표에 존재합니다. 😅`)
       return
     }
     if (ok && inList) {
-      setSuccessMsg({ msg: `명렬표에 추가되었습니다 😀`, ok: true })
+      setSuccessMsg(`명렬표에 추가되었습니다. 😀`)
     } else {
-      setSuccessMsg({ msg: `${listName} 에 추가되었습니다 😀`, ok: true })
+      setSuccessMsg(`${listName} 에 추가되었습니다. 😀`)
     }
 
   }

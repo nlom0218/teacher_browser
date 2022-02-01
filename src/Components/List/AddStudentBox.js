@@ -110,7 +110,7 @@ const AddBtn = styled.div`
   transition: color 1s ease, background-color 1s ease;
 `
 
-const AddStudentBox = ({ listName, listId, setSuccessMsg, someDragging, inStudent }) => {
+const AddStudentBox = ({ listName, listId, setSuccessMsg, setErrorMsg, someDragging, inStudent }) => {
   const darkMode = useReactiveVar(darkModeVar)
 
   const isPopup = useReactiveVar(isPopupVar)
@@ -142,6 +142,7 @@ const AddStudentBox = ({ listName, listId, setSuccessMsg, someDragging, inStuden
       <CenterDndContainer
         someDragging={someDragging}
         setSuccessMsg={setSuccessMsg}
+        setErrorMsg={setErrorMsg}
         listName={listName}
         listId={listId}
         setMouseEnter={set__}

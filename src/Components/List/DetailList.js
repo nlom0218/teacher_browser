@@ -79,7 +79,7 @@ const ErrMsg = styled.div`
   font-weight: 600;
 `
 
-const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
+const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
   const isPopup = useReactiveVar(isPopupVar)
   const [teacherEmail, setTeacherEmail] = useState(undefined)
   const [listName, setListName] = useState(undefined)
@@ -245,6 +245,7 @@ const DetailList = ({ listId, setSuccessMsg, someDragging }) => {
       listId={listId}
       listName={listName}
       setSuccessMsg={setSuccessMsg}
+      setErrorMsg={setErrorMsg}
       someDragging={someDragging}
       inStudent={data?.seeStudentList[0]?.students}
     />}

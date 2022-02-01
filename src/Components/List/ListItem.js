@@ -46,7 +46,7 @@ const ListName = styled.div`
   line-height: 120%;
 `
 
-const ListItem = ({ listName, listOrder, index, listId, someDragging, setSuccessMsg, setSomeDragging, listIcon, setDragType }) => {
+const ListItem = ({ listName, listOrder, index, listId, someDragging, setSuccessMsg, setSomeDragging, listIcon, setDragType, setErrorMsg }) => {
   // 리스트 아이콘위에 마우스를 올려두면 아이콘을 바꾸기 위한 값
   const [mouseEnter, setMouseEnter] = useState(false)
 
@@ -122,6 +122,7 @@ const ListItem = ({ listName, listOrder, index, listId, someDragging, setSuccess
       <CenterDndContainer
         someDragging={someDragging}
         setSuccessMsg={setSuccessMsg}
+        setErrorMsg={setErrorMsg}
         listName={listName}
         listId={listId}
         setMouseEnter={setMouseEnter}

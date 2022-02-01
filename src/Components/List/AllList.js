@@ -41,7 +41,7 @@ const AddIcon = styled.div`
   }
 `
 
-const AllList = ({ someDragging, setSuccessMsg, setSomeDragging, successMsg, selectedTag, selectedSort, setDragType, dragType }) => {
+const AllList = ({ someDragging, setSuccessMsg, setErrorMsg, setSomeDragging, selectedTag, selectedSort, setDragType, dragType }) => {
   // 학생 리스트가 아니라 명렬표임!!!
   const [studentList, setSudentList] = useState(undefined)
 
@@ -49,7 +49,7 @@ const AllList = ({ someDragging, setSuccessMsg, setSomeDragging, successMsg, sel
   const { data, loading } = useQuery(SEE_ALL_STUDENT_LIST_QUERY)
   const onClickAddIcon = () => {
     if (data?.seeStudentList.length === 10) {
-      setSuccessMsg({ ok: false, msg: "명렬표는 최대 10개까지 생성 가능합니다." })
+      setErrorMsg("명렬표는 최대 10개까지 생성 가능합니다. 😅")
     } else {
       inPopup("createList")
     }
@@ -81,6 +81,7 @@ const AllList = ({ someDragging, setSuccessMsg, setSomeDragging, successMsg, sel
           listIcon={item?.listIcon}
           someDragging={someDragging}
           setSuccessMsg={setSuccessMsg}
+          setErrorMsg={setErrorMsg}
           setSomeDragging={setSomeDragging}
           setDragType={setDragType}
         />
@@ -95,7 +96,7 @@ const AllList = ({ someDragging, setSuccessMsg, setSomeDragging, successMsg, sel
       }
     })}
     <AddIcon onClick={onClickAddIcon}><FcPlus /></AddIcon>
-    <Trash someDragging={someDragging} setSuccessMsg={setSuccessMsg} successMsg={successMsg} selectedTag={selectedTag} selectedSort={selectedSort} dragType={dragType} />
+    <Trash someDragging={someDragging} setSuccessMsg={setSuccessMsg} selectedTag={selectedTag} selectedSort={selectedSort} dragType={dragType} />
     {isPopup === "createList" && <PopupCreateList />}
 
   </Container>);
