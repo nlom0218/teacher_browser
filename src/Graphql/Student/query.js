@@ -72,7 +72,10 @@ export const SEE_ONE_STUDENT_QUERY = gql`
       allergy
       tag
       trash
-      journal
+      journal {
+        date
+        text
+      }
     }
   }
 `;

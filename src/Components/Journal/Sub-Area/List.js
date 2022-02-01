@@ -1,7 +1,5 @@
 // 리액트
-import React, { useEffect } from "react";
-import { useForm } from "react-hook-form";
-import Datepicker from "react-datepicker";
+import React from "react";
 
 // 그래프큐엘
 import { useQuery } from "@apollo/client";
@@ -21,14 +19,15 @@ const List = ({ listId, me }) => {
   // 불러온 학생 Array
   const students = data.seeStudentList[0].students;
 
-  // 오늘 날짜 확인하기
-  const date = new Date();
-  const today = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
+  if (students.length === 0) return <div>학생을 추가해주세요.</div>;
+
+  // 팝업 닫으면 localstorage의 학생 정보 삭제
+  if (!localStorage.getItem("popup") && localStorage.getItem("selectedStudent")) localStorage.removeItem("selectedStudent");
 
   return (
     <>
       {students.map((obj, index) => {
-        return <InputArea key={obj.studentNumber} me={me} studentId={obj._id} today={today}></InputArea>;
+        return <InputArea key={index} me={me} studentId={obj._id}></InputArea>;
       })}
     </>
   );

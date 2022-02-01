@@ -49,7 +49,10 @@ export const SEE_ONE_STUDENT_LIST_QUERY = gql`
         studentNumber
         listId
         trash
-        journal
+        journal {
+          date
+          text
+        }
       }
     }
   }

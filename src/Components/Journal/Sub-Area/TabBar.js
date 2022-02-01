@@ -1,9 +1,7 @@
 // 리액트
 import React from "react";
 
-// 그래프큐엘
-import { useQuery } from "@apollo/client";
-
+//
 const TabBar = ({ studentList, setSelectedListId }) => {
   function onClickTabHandle(e) {
     const listId = e.target.id;
