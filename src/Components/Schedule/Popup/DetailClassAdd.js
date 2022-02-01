@@ -4,6 +4,7 @@ import { BtnFadeIn } from '../../../Animations/Fade';
 import { inPopup, isPopupVar } from '../../../apollo';
 import { DetailStudentLayout, DetailTitle } from '../../List/styled/DetailStudent';
 import useMedia from '../../../Hooks/useMedia';
+import {ImRadioUnchecked} from 'react-icons/im';
 
 
 const AddClassContainer = styled.div`
@@ -14,6 +15,7 @@ const AddClassContainer = styled.div`
   row-gap: 0.625rem;
   border-radius: 5px;
   border-radius: 0.625rem;
+  line-height: 120%;
   /* grid-template-columns: 2fr repeat(6,1fr);
   grid-template-rows: repeat(5,1fr) ; */
   grid-template-columns: 2fr repeat(5,1fr);
@@ -26,7 +28,13 @@ const TimeTable = styled.div`
   flex-wrap: wrap;
   border:1px solid;
   cursor: pointer;
+  svg{
+    align-items: center;
+    justify-items: center;
+  }
+
 `
+
 
 const DetailClassAdd = ({ }) => {
 
@@ -35,11 +43,11 @@ const DetailClassAdd = ({ }) => {
 
 
   const [isEdit, setIsEdit] = useState(false)
-  const [pick, setPick] = useState(false)
+  const [pick, setPick] = useState()
 
 
-const onClickBtn = ()=>{
-  setPick(true)
+const onClickBtn = (item)=>{
+  setPick(item)
 
 }
 
@@ -62,11 +70,13 @@ const timeday = ["1교시","월","화","수","목","금",
       
     <AddClassContainer>
     {timeday.map((item, index) => {
-        return (<TimeTable 
-          onClick={onClickBtn} index={index}>{item}</TimeTable>)
+        return (<TimeTable item={item}
+          onClick={()=>onClickBtn(item)} 
+          index={index}>
+            {item}
+            
+          </TimeTable>)
       })}
- 
-
  </AddClassContainer>
   </DetailStudentLayout>);
 }

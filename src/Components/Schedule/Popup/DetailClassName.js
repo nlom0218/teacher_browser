@@ -11,6 +11,9 @@ import { DetailStudentLayout,DetailTitle } from '../../List/styled/DetailStudent
 import InputUnderLine from '../../List/InputUnderLine';
 import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
 import {AiTwotoneDownSquare} from "react-icons/ai";
+import {BsCheck} from "react-icons/bs";
+
+
 
 const DetailClassNameForm = styled.form`
   padding: 10px 0px;
@@ -56,6 +59,20 @@ const Type = styled.div`
 
 `
 
+const ColorBgThemeItem = styled.div`
+  height: 35px;
+  height: 2.1875rem;
+  background-color: ${props => props.color};
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  
+
+`
+
 const Submit = styled.input`
   cursor: pointer;
   padding: 10px 40px;
@@ -79,9 +96,11 @@ const DetailClassName = () => {
     mode:"onChange"})
   const onClickInput = () => {setIsEdit(true)}
 
-  const onClickTypeBtn = () => {
-    setPickType(true)
+  const onClickTypeBtn = (item) => {
+    setPickType(item)
       }
+
+
   const onSubmit = (data) => {
     const { className } = data
     const newClassName = className
@@ -96,7 +115,7 @@ const DetailClassName = () => {
 //useEffect()
 
 
-
+const bgColorArr = [ '#FFB6C1','#F4A460','#FFFF00','#98FB98','#87CDDB','#DA70D6']
 
   return (<DetailStudentLayout>
     <DetailTitle>과목명</DetailTitle>
@@ -121,16 +140,17 @@ const DetailClassName = () => {
       </InputUnderLine>
      
         <TypeLayout>
-        <Type><mark>음영</mark></Type>
-        {/* <Type onClick={() => onClickTypeBtn()}>{pickType === "true" ? <RiCheckboxLine color='pink'/> : <AiTwotoneDownSquare  color='pink'/>}<div></div></Type> */}
-        <Type onClick={onClickTypeBtn}><AiTwotoneDownSquare  color='#FFB6C1'/></Type>
-        <Type onClick={onClickTypeBtn}><AiTwotoneDownSquare  color='#F4A460'/></Type>
-        <Type onClick={onClickTypeBtn}><AiTwotoneDownSquare  color='#FFFF00' /></Type>
-        <Type onClick={onClickTypeBtn}><AiTwotoneDownSquare  color='#98FB98'  /></Type>
-        <Type onClick={onClickTypeBtn}> <AiTwotoneDownSquare color='#87CDDB' /> </Type>
-        <Type onClick={onClickTypeBtn}><AiTwotoneDownSquare  color='#DA70D6' /></Type>
-        
-        
+        <Type><mark>* 음영</mark></Type>
+        {bgColorArr.map((item, index) => {
+          return <ColorBgThemeItem
+            key={index}
+            color={item}
+            onClick={() => onClickTypeBtn(item)}
+          >
+            {pickType === item && <BsCheck />}
+          </ColorBgThemeItem>
+        })}
+       
         </TypeLayout>
     </DetailClassNameForm>
   </DetailStudentLayout>);

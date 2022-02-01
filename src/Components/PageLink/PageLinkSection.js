@@ -9,6 +9,15 @@ import { inputLine } from "../../Animations/InputLine";
 import { BtnFadeIn } from "../../Animations/Fade";
 import Accordion from 'react-bootstrap/Accordion'
 import { MdAddCircle } from 'react-icons/md';
+import {BsFillCaretDownSquareFill,BsFillCaretUpSquareFill} from 'react-icons/bs';
+
+//부트스트랩으로 했던 부분 그리드로 변경 
+//현재 아코디언 부분이 하나를 누르면 닫아지지 않고 다른 걸 눌러야 보임. 
+//정보목록 불러오는 거 수정해야 
+//수정버튼이랑 삭제버튼 기능 구현 필요 
+//사이트 이름 누르면 바로가기 링크 
+//폴더추가 만들기 
+
 
 
 const MoveContainer = styled.div`
@@ -45,10 +54,10 @@ const Container = styled.div`
 `;
 const TopContents = styled.div`
   display: grid;
-  grid-template-columns: 7fr 1fr;
+  grid-template-columns: 7fr 5fr;
   padding: 40px;
   padding: 2.5rem;
-  align-items: flex-start;
+  align-items:flex-end;
   column-gap: 40px;
   column-gap: 2.5rem;
 `;
@@ -59,45 +68,11 @@ const Title = styled.form`
   grid-template-columns: 1fr auto;
   column-gap: 20px;
   column-gap: 1.25rem;
-  h1 {
-    font-size: 0.9rem;
-    font-size: 0.9em;
-    opacity: 0.7;
-  }
+  font-size: 1.5rem;
+  font-size: 1.5em;
+  align-self: bottom;
 `;
-const Input = styled.input`
-  width: 100%;
-  font-size: 2em;
-  font-size: 2rem;
-  padding: 10px 0px;
-  padding: 0.625rem 0rem;
-`;
-const InputLayout = styled.div``;
 
-const LineBox = styled.div`
-  position: relative;
-`;
-const Line = styled.div`
-  position: absolute;
-  height: 2px;
-  top: 0px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: ${(props) => props.theme.fontColor};
-  opacity: 0.6;
-  transition: background 1s ease, opacity 1s ease;
-  animation: ${inputLine} 0.6s ease forwards;
-`;
-const SubmitInput = styled.input`
-  background-color: ${(props) => props.theme.btnBgColor};
-  padding: 10px 30px;
-  padding: 0.625rem 1.875rem;
-  cursor: pointer;
-  color: ${(props) => props.theme.bgColor};
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  animation: ${BtnFadeIn} 0.6s ease;
-`;
 const FolderPage=styled.div`
   display:grid;
   grid-template-columns: 1fr;
@@ -112,15 +87,52 @@ const FolderPage=styled.div`
 const LinkFolder = styled.div`
   display:grid;
   grid-template-columns: 1fr;
-  padding: 10px;
-  padding: 0.625rem;
-  row-gap: 10px;
-  row-gap: 0.625rem;
+  padding: 8px;
+  padding: 0.5rem;
  
   `
+
+const AccordionN = styled.div`
+  display:grid;
+  grid-template-columns: 1fr;
+ `
+
+ const AccordionItem= styled.div`
+  display:grid;
+`
+ const AccordionHeader= styled.div`
+  display:grid;
+  grid-template-columns: 1fr auto;
+  font-size: 1.0625rem;
+  font-size: 1.0625em;
+  border: 1px solid;
+  border-radius: 10px;
+  border-radius: 0.625rem;
+  padding: 12px;
+  padding: 0.75rem;
+  background-color: ${props => props.theme.cardBg};
+  transition: background-color 1s ease, color 1s ease;
+  svg {
+    display: flex;
+    font-size: 1.5em;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  
+
+
+`
+ const AccordionBody= styled.div`
+  display:grid;
+  grid-template-columns: 1fr;
+
+ `
+
+
+
 const LinkContents = styled.div`
   display: grid;
-  grid-template-columns: 1fr 3fr 0.5fr;
+  grid-template-columns: 1fr 3fr 0.5fr 0.5fr;
   padding: 1px;
   padding: 0.0625rem;
   border: 1px solid;
@@ -129,8 +141,8 @@ const LinkContents = styled.div`
   column-gap: 1px;
   column-gap: 0.0625rem;
   text-align: center;
-  font-size: 1rem;
-  font-size: 1em;
+  font-size: 0.8rem;
+  font-size: 0.8em;
   background-color: ${(props) => props.theme.btnBgColor};
   color: ${(props) => props.theme.bgColor};
   transition: background-color 1s ease, color 1s ease;
@@ -143,6 +155,7 @@ padding: 0.625rem;
 border-radius: 3px;
 border-radius: 0.1875rem;
 background-color: white;
+align-items: center;
 color: black;
 `
 const OptionBtn = styled.div`
@@ -155,33 +168,46 @@ const OptionBtn = styled.div`
   border-radius: 0.3125rem;
   cursor: pointer;
 `;
+
+
+const DelBtn = styled.div`
+  background-color: ${props => props.theme.redColor};
+  color: ${(props) => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
+  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
+  border-right: 0.3125rem;
+  border-right: 5px;
+  cursor: pointer;
+`
 const ButtonContent = styled.div`
   display: grid;
   grid-row: 2/3;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
+  grid-template-columns: 5fr 1fr;
+  justify-items: right;
+  align-items: center;  
   cursor : pointer;
   color : ${props => props.theme.btnBgColor};
   transition : color 1s ease;
   svg {
       display : flex;
-      font-size : 3rem;
-  font-size : 3em;
+      font-size : 2.5rem;
+      font-size : 2.5em;
   }
   font{
     font-size: 0.7rem;
     font-size: 0.7em;
-    align-self: center;
-
+    
   }
 `;
-
+// 
 //백엔드 연결하면 리스트 내용 삭제하기 
 // const pageLinkFolderName = [["교육청",["경기도교육청","메모"],["사이트이름/","메모"]],["미술",["사이트이름/","메모"]],["영어",["사이트이름/","메모"]],["과학",["사이트이름/","메모"]],["연수원",["사이트이름/","메모"]]]
 const PageLinkSection = ({ pageLinkSection, init, setInit, pageLinkFolderName}) => {
 
     const [isEdit, setIsEdit] = useState(false);
     const [title, setTitle] = useState(undefined);
+    const [folderOpen, setFolderOpen] = useState();
 
     const { register, handleSubmit, getValues } = useForm({
         mode: "onChange",
@@ -196,6 +222,17 @@ const PageLinkSection = ({ pageLinkSection, init, setInit, pageLinkFolderName}) 
     const onClickInput = () => {setIsEdit(true);};
     const onClickCreateBtn = () => {
   }
+
+
+
+    const onClickFolder = (item) => {
+      if (item===folderOpen){
+        setFolderOpen();
+      }
+      setFolderOpen(item);
+     }
+
+
     const onSubmit = (data) => {
         const { title } = data;
         setTitle(title);
@@ -213,25 +250,9 @@ const PageLinkSection = ({ pageLinkSection, init, setInit, pageLinkFolderName}) 
     </MoveIcon>
     <Container>
     <TopContents>
-    <Title onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
-    <InputLayout>
-            <Input
-            {...register("title",{
-              required:true,
-              onChange : () => setIsEdit(true),
-            })}
-            type="text"
-            autoComplete="off"
-            onClick={onClickInput} />
-            {isEdit && (
-                <LineBox>
-                  <Line></Line>
-                </LineBox>
-              )}
-            </InputLayout>
-            {isEdit && <SubmitInput type="submit" value="저장" />}
+    <Title> 즐겨찾기 
     </Title>
-    <ButtonContent><div className="font">폴더추가</div>
+    <ButtonContent>폴더추가
                 <MdAddCircle onClick={onClickCreateBtn}/>
             </ButtonContent>
     </TopContents>
@@ -239,19 +260,30 @@ const PageLinkSection = ({ pageLinkSection, init, setInit, pageLinkFolderName}) 
     <FolderPage>
       
 {pageLinkFolderName.map((item,index)=>
-        <Accordion>
-  <Accordion.Item>
-    <Accordion.Header>{item[0]}</Accordion.Header>
-    <Accordion.Body>
-    {item.map((i,index)=><LinkFolder key={{index}}>
-        <LinkContents><ContentsOne >{i[0]}</ContentsOne>
-        <ContentsOne>
-      {i[1]}
-        </ContentsOne>
-        <OptionBtn>수정</OptionBtn></LinkContents></LinkFolder>)}
-    </Accordion.Body>
-  </Accordion.Item>
-</Accordion>)}
+ 
+        <AccordionN>
+  <AccordionItem>
+    <AccordionHeader key={index} item={item} onClick={() => onClickFolder(item)}>{item[0]}
+    {folderOpen===item
+    ? <BsFillCaretUpSquareFill/>
+    : <BsFillCaretDownSquareFill/>}
+   </AccordionHeader>
+   { folderOpen===item
+   ?     <AccordionBody>
+   {item.map((i,index)=><LinkFolder key={{index}}>
+       <LinkContents><ContentsOne >{i[0]}</ContentsOne>
+       <ContentsOne>
+     {i[1]}
+       </ContentsOne>
+       <OptionBtn>수정</OptionBtn> <DelBtn>삭제</DelBtn></LinkContents></LinkFolder>)}
+   </AccordionBody>
+    : null
+   }
+
+  </AccordionItem>
+</AccordionN>
+
+)}
     </FolderPage>
     </Container>
   </MoveContainer>);
