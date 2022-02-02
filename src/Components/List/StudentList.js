@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { FcNext, FcPrevious } from 'react-icons/fc';
 import styled from 'styled-components';
 import { disableSeeStudent, inPopup, isSeeStudentVar, enableSeeStudent } from '../../apollo';
+import Loading from '../Shared/Loading';
 import { DivideRightContents, SeeRightContentsBtn } from '../Shared/styled/DivideContents';
 import SortTagBtn from './SortTagBtn';
 import StudentItem from './StudentItem';

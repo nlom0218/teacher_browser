@@ -225,7 +225,7 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
   }, [data])
 
   if (loading) {
-    return <Loading />
+    return <Loading page="subPage" />
   }
 
   return (<Container>

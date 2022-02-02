@@ -196,7 +196,7 @@ const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
   }, [])
 
   if (loading) {
-    return <Loading />
+    return <Loading page="subPage" />
   }
 
   return (<Container>

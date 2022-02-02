@@ -28,7 +28,9 @@ const Loading = ({ page }) => {
       </Container>}
     {page === "popupPage" &&
       <PopupContainer maxHeight={true}>
-        <RandomCircle />
+        <Container>
+          <RandomCircle />
+        </Container>
       </PopupContainer>}
   </React.Fragment>);
 }

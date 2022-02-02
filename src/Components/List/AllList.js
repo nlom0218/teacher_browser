@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../../apollo';
 import { SEE_ALL_STUDENT_LIST_QUERY } from '../../Graphql/StudentList/query';
 import { customMedia } from '../../styles';
+import Loading from '../Shared/Loading';
 import EmptyItem from './Dorp/EmptyItem';
 import Trash from './Dorp/Trash';
 import ListItem from './ListItem';
@@ -69,6 +70,11 @@ const AllList = ({ someDragging, setSuccessMsg, setErrorMsg, setSomeDragging, se
       setSudentList(initStudentList)
     }
   }, [data])
+
+  if (loading) {
+    return <Loading page="subPage" />
+  }
+
   return (<Container>
     {studentList && studentList.map((item, index) => {
       if (item?.listId) {

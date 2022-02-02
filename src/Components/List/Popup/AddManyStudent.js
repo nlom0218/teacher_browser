@@ -96,7 +96,7 @@ const AddManyStudent = ({ inStudent, listId }) => {
   }, [selectedTag, selectedSort])
 
   if (loading) {
-    return <Loading />
+    return <Loading page="popupPage" />
   }
 
   return (<PopupContainer maxHeight={true}>
