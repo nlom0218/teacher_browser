@@ -15,6 +15,7 @@ import IcCalender from "../../../icons/Calender/IcCalender";
 import { BiEdit } from "react-icons/bi";
 import { customMedia } from "../../../styles";
 import IcCloseTrash from "../../../icons/Trash/IcCloseTrash";
+import { inPopup } from "../../../apollo";
 
 const Container = styled.form`
   display: grid;
@@ -50,16 +51,6 @@ const RightContainer = styled.div`
   display: grid;
   row-gap: 10px;
   row-gap: 0.625rem;
-`;
-
-const CalIcon = styled.div`
-  cursor: pointer;
-  svg {
-    display: flex;
-    font-size: 2.25em;
-    font-size: 2.25rem;
-    filter: drop-shadow(1px 1px 1px rgb(0, 0, 0));
-  }
 `;
 
 const LeftContainer = styled.div`
@@ -211,8 +202,11 @@ const Content = ({ me, studentId, journal }) => {
   }
 
   function delBtnHandle() {
+    const variables = { userEmail: me.email, ownerId: studentId, journalId: journal._id };
+    inPopup("deleteJournal");
+    localStorage.setItem("selectedStudent", JSON.stringify(variables));
     setIsEditing(false);
-    deleteJournal({ variables: { userEmail: me.email, ownerId: studentId, journalId: journal._id } });
+    // deleteJournal({ variables: { userEmail: me.email, ownerId: studentId, journalId: journal._id } });
   }
 
   function onChangeTextarea() {

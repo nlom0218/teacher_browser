@@ -15,6 +15,7 @@ import { useQuery, useReactiveVar } from "@apollo/client";
 import { SEE_ONE_STUDENT_LIST_QUERY } from "../Graphql/StudentList/query";
 import Pop_WriteJournal from "../Components/Journal/Popup/Pop_WriteJournal";
 import StudentList from "../Components/Journal/Popup/StudentList";
+import DeleteJournal from "../Components/Journal/Popup/DeleteJournal";
 
 //
 const Journal = ({ me }) => {
@@ -49,6 +50,7 @@ const Journal = ({ me }) => {
       {id ? <MainArea me={me} students={students} loading={loading} error={error} setSort={setSort} sort={sort} /> : <div>학급일지를 설명하는 ? 포스터?</div>}
       {isPopup === "writeJournal" && <Pop_WriteJournal me={me} />}
       {isPopup === "seeStudentList" && <StudentList me={me} />}
+      {isPopup === "deleteJournal" && <DeleteJournal />}
     </BasicContainer>
   );
 };
