@@ -127,15 +127,20 @@ align-items: flex-start;
   grid-template-columns: 1fr 3fr 8fr 1fr;
   column-gap: 10px;
   column-gap: 0.625rem;
+  background-color: ${props => props.theme.cardBg};
+  transition: background-color 1s ease, color 1s ease;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+
   .button{
     cursor: pointer;
   }
 }
 .ContentsPick{
   display: grid;
-  grid-template-columns: 1fr 3fr 8fr 1fr;
-  column-gap: 10px;
-  column-gap: 0.625rem;
+  grid-template-columns: 1fr 2fr 8fr 1fr;
+  column-gap: 20px;
+  column-gap: 1.25rem;
   .button{
     cursor: pointer;
   }
@@ -146,12 +151,16 @@ align-items: flex-start;
   }
 }`
 
-const FolderBtn=styled.button`
-  display: grid;
-  grid-template-columns: 7fr 1fr;
-  font-size: 80%;
-  padding: 4px;
-  padding: 0.25rem;
+const FolderBtn=styled.select`
+
+  color:#000000;
+  font-size: 1rem;
+  font-size: 1em;
+  align-items: center; 
+  cursor: pointer;
+
+
+
 `
 
 
@@ -256,10 +265,11 @@ const LinkPickSection = ({userEmail, pageLinkSection, init, setInit,pageLinkFold
           {fold.expanded &&
           <div className='ContentsPick' onClick={()=>onClickViewContents(fold)}>
           <div></div>
-          <FolderBtn onClick={()=>{
-
-            
-          }}>{fold.folder?fold.folder:"폴더선택"}<BiChevronDown/></FolderBtn>
+          <FolderBtn>
+          <div className='dropbtn' onClick={()=>{
+          }}>fold.folder?fold.folder:"폴더선택"}
+          {/* <BiChevronDown/> */}
+          </div></FolderBtn>
           <input placeholder='메모작성'></input>
           <div className="button"
             onClick={()=>{

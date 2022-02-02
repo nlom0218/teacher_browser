@@ -5,19 +5,16 @@ import { inPopup, isPopupVar } from '../../../apollo';
 import { DetailStudentLayout, DetailTitle } from '../../List/styled/DetailStudent';
 import useMedia from '../../../Hooks/useMedia';
 import {ImRadioUnchecked} from 'react-icons/im';
+import {BsCheck} from "react-icons/bs";
 
 const AddClassContainer = styled.div`
-  padding: 20px;
-  padding: 1.25rem;
+  padding: 10px;
+  padding: 0.625rem;
   display: grid;
-  row-gap: 10px;
-  row-gap: 0.625rem;
+  line-height: 130%;
   border-radius: 5px;
   border-radius: 0.625rem;
-  line-height: 120%;
-  /* grid-template-columns: 2fr repeat(6,1fr);
-  grid-template-rows: repeat(5,1fr) ; */
-  grid-template-columns: 2fr repeat(5,1fr);
+  grid-template-columns: 1.5fr repeat(5,1fr);
   grid-template-rows: repeat(6,1fr) ;
 `
 
@@ -26,12 +23,10 @@ const TimeTable = styled.div`
   text-align: center;
   flex-wrap: wrap;
   border:1px solid;
+  line-height: 190%;
   cursor: pointer;
-  svg{
-    align-items: center;
-    justify-items: center;
-  }
-
+  align-items: center;
+  justify-items: center;
 `
 
 
@@ -43,39 +38,42 @@ const DetailClassAdd = ({ }) => {
 
   const [isEdit, setIsEdit] = useState(false)
   const [pick, setPick] = useState()
+  const [viewTimeDay,setViewTimeDay]=useState(false);
 
 
 const onClickBtn = (item)=>{
   setPick(item)
+}
 
+const onClickViewTimeDay = ()=>{
+  setViewTimeDay(!viewTimeDay)
 }
 
   //useEffect
 
-const daytime = ["월요일","1","2","3","4","5","6",
-                "화요일","1","2","3","4","5","6",
-                "수요일","1","2","3","4","5","6",
-                "목요일","1","2","3","4","5","6",
-                "금요일","1","2","3","4","5","6"]
-const timeday = ["1교시","월","화","수","목","금",
-                 "2교시","월","화","수","목","금",
-                 "3교시","월","화","수","목","금",
-                 "4교시","월","화","수","목","금",
-                 "5교시","월","화","수","목","금",
-                 "6교시","월","화","수","목","금",]
+
+const timeday = ["","월","화","수","목","금",
+                 "1교시","","","","","",
+                 "2교시","","","","","",
+                 "3교시","","","","","",
+                 "4교시","","","","","",
+                 "5교시","","","","","",
+                 "6교시","","","","","",]
 
   return (<DetailStudentLayout>
     <DetailTitle style={{ marginTop: "15px", marginTop: "0.9375rem" }}>수업 추가</DetailTitle>
-      
     <AddClassContainer>
-    {timeday.map((item, index) => {
-        return (<TimeTable item={item}
-          onClick={()=>onClickBtn(item)} 
-          index={index}>
-            {item}
-           
-          </TimeTable>)
-      })}
+      {
+             timeday.map((item, index) => {
+            return (<TimeTable item={item}
+              onClick={()=>onClickBtn(item)} 
+              index={index}>
+                {item} {pick === item && <BsCheck />}
+               
+              </TimeTable>)
+          })
+      }
+
  </AddClassContainer>
   </DetailStudentLayout>);
 }

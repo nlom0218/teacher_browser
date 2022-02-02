@@ -82,16 +82,10 @@ const ClassRegisterPage = () => {
     <DetailClassName/>
     <DetailClassTag/>
     <DetailClassAdd/>
-
-
-      <BtnFrame> <AddTagBtn onClick={onCompleted}>완료</AddTagBtn>
+    <BtnFrame> <AddTagBtn onClick={onCompleted}>완료</AddTagBtn>
     <DelBtn>초기화</DelBtn></BtnFrame>
   
     </RegisterForm>
-    <DetailStudentLayout>
-
-   
-    </DetailStudentLayout>
   </PopupContainer>);
 }
 

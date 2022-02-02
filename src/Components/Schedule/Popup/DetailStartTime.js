@@ -70,9 +70,15 @@ const onBlurTimeSet = () => {
     onSubmit({hour,minutes,classtime,resttime,lunchhour,lunchminutes,breaktime,breakminutes})
   }
 
+
 const timeCheck = ()=>{
     
 }
+
+const onCompleted = () => {
+    outPopup()
+
+  }
 
 
 
@@ -184,7 +190,7 @@ const timeCheck = ()=>{
         </DetailStudentLayout>
         <DetailStudentLayout>
         <div/>
-    <AddTagBtn onClick={onBlurTimeSet}>완료</AddTagBtn>
+    <AddTagBtn onClick={onCompleted}>완료</AddTagBtn>
         </DetailStudentLayout>
      
         </React.Fragment>
