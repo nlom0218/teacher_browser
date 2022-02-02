@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import BasicContainer from './BasicContainer';
+import PopupContainer from './PopupContainer';
 import RandomCircle from './RandomCircle';
 
 const Container = styled.div`
@@ -10,19 +11,26 @@ const Container = styled.div`
   transform: translate(-50%, 50%);
 `
 
-// mainPage => 명렬표, 학급일지, 순서정하기 등 가장 메인이 되는 페이지인지 아닌지 확인
-const Loading = ({ mainPage }) => {
-  return (mainPage ?
-    <BasicContainer>
+// mainPage => 명렬표, 학급일지, 순서정하기 등 가장 메인이 되는 페이지
+// subPage => 명렬표의 학생 디테일, 리스트 디테일 같이 메인 페이지에서 이동되는 서브 페이지
+// popupPage => popup페이지
+const Loading = ({ page }) => {
+  return (<React.Fragment>
+    {page === "mainPage" &&
+      <BasicContainer>
+        <Container>
+          <RandomCircle />
+        </Container>
+      </BasicContainer>}
+    {page === "subPage" &&
       <Container>
         <RandomCircle />
-      </Container>
-    </BasicContainer>
-    :
-    <Container>
-      <RandomCircle />
-    </Container>
-  );
+      </Container>}
+    {page === "popupPage" &&
+      <PopupContainer maxHeight={true}>
+        <RandomCircle />
+      </PopupContainer>}
+  </React.Fragment>);
 }
 
 export default Loading;
