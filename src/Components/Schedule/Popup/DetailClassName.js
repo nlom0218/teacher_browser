@@ -140,7 +140,7 @@ const bgColorArr = [ '#FFB6C1','#F4A460','#FFFF00','#98FB98','#87CDDB','#DA70D6'
       </InputUnderLine>
      
         <TypeLayout>
-        <Type><mark>* 음영</mark></Type>
+        <Type><mark>*음영*</mark></Type>
         {bgColorArr.map((item, index) => {
           return <ColorBgThemeItem
             key={index}

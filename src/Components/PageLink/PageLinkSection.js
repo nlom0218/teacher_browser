@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import styled from 'styled-components';
-import { FaArrowCircleRight } from 'react-icons/fa';
+import styled, { keyframes } from 'styled-components';
 import { moveLinkPick } from '../../apollo';
 import { hideWelcomeSection, seeWelcomSection } from '../../Animations/WelcomeSectionAni';
 import { customMedia } from "../../styles";
@@ -8,7 +7,9 @@ import { useForm } from "react-hook-form";
 import { inputLine } from "../../Animations/InputLine";
 import { BtnFadeIn } from "../../Animations/Fade";
 import Accordion from 'react-bootstrap/Accordion'
-import { MdAddCircle } from 'react-icons/md';
+import { FaArrowCircleRight } from 'react-icons/fa';
+import { AiOutlineEdit } from "react-icons/ai";
+import {BiPlusCircle,BiMinusCircle} from 'react-icons/bi';
 import {BsFillCaretDownSquareFill,BsFillCaretUpSquareFill} from 'react-icons/bs';
 
 //부트스트랩으로 했던 부분 그리드로 변경 
@@ -18,7 +19,14 @@ import {BsFillCaretDownSquareFill,BsFillCaretUpSquareFill} from 'react-icons/bs'
 //사이트 이름 누르면 바로가기 링크 
 //폴더추가 만들기 
 
-
+const btnAni = keyframes`
+from{
+  opacity: 0;
+}
+to{
+  opacity: 1;
+}
+`
 
 const MoveContainer = styled.div`
   position: absolute;
@@ -83,6 +91,7 @@ const FolderPage=styled.div`
   column-gap: 20px;
   column-gap: 1.25rem;
   align-self: flex-start;
+  
 `
 const LinkFolder = styled.div`
   display:grid;
@@ -91,15 +100,6 @@ const LinkFolder = styled.div`
   padding: 0.5rem;
  
   `
-
-const AccordionN = styled.div`
-  display:grid;
-  grid-template-columns: 1fr;
- `
-
- const AccordionItem= styled.div`
-  display:grid;
-`
  const AccordionHeader= styled.div`
   display:grid;
   grid-template-columns: 1fr auto;
@@ -118,18 +118,17 @@ const AccordionN = styled.div`
     font-size: 1.5rem;
     cursor: pointer;
   }
-  
-
-
+  .newfolder{
+    grid-template-columns: 7fr 1fr 1fr;
+  }
 `
  const AccordionBody= styled.div`
   display:grid;
   grid-template-columns: 1fr;
+  animation: ${btnAni} 1.5s ease;
+
 
  `
-
-
-
 const LinkContents = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr 0.5fr 0.5fr;
@@ -178,6 +177,8 @@ const DelBtn = styled.div`
   padding: 0.625rem 1.25rem;
   border-right: 0.3125rem;
   border-right: 5px;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
   cursor: pointer;
 `
 const ButtonContent = styled.div`
@@ -191,8 +192,8 @@ const ButtonContent = styled.div`
   transition : color 1s ease;
   svg {
       display : flex;
-      font-size : 2.5rem;
-      font-size : 2.5em;
+      font-size : 2rem;
+      font-size : 2em;
   }
   font{
     font-size: 0.7rem;
@@ -200,90 +201,89 @@ const ButtonContent = styled.div`
     
   }
 `;
-// 
+
+
+
 //백엔드 연결하면 리스트 내용 삭제하기 
-// const pageLinkFolderName = [["교육청",["경기도교육청","메모"],["사이트이름/","메모"]],["미술",["사이트이름/","메모"]],["영어",["사이트이름/","메모"]],["과학",["사이트이름/","메모"]],["연수원",["사이트이름/","메모"]]]
+
+
 const PageLinkSection = ({ pageLinkSection, init, setInit, pageLinkFolderName}) => {
+    const [folder, setFolder] = useState(pageLinkFolderName.map((item,index)=>
+    {
+      return{
+        title:item[0],
+        description:item[1],
+        expanded:false}
+    }))
 
-    const [isEdit, setIsEdit] = useState(false);
-    const [title, setTitle] = useState(undefined);
-    const [folderOpen, setFolderOpen] = useState();
-
-    const { register, handleSubmit, getValues } = useForm({
-        mode: "onChange",
-        defaultValues: { title: "즐겨찾기" },
-      });
+    const [addFolder, setAddFolder] = useState(false);
 
     const onClickMoveIcon = () => {
         setInit(false)
         moveLinkPick()
       }
-    
-    const onClickInput = () => {setIsEdit(true);};
     const onClickCreateBtn = () => {
   }
 
-
-
-    const onClickFolder = (item) => {
-      if (item===folderOpen){
-        setFolderOpen();
-      }
-      setFolderOpen(item);
-     }
-
-
-    const onSubmit = (data) => {
-        const { title } = data;
-        setTitle(title);
-        setIsEdit(false);
-      };
     
-    const onBlurForm = () => {
-        const title = getValues("title");
-        onSubmit({ title });
-      };
-
+     
+    const onClickAddFolder = ()=>{
+      setAddFolder(!addFolder)
+      console.log(folder[0].title)
+    }
+    
   return (<MoveContainer pageLinkSection={pageLinkSection} init={init}>
     <MoveIcon onClick={onClickMoveIcon}>
-      <FaArrowCircleRight />
-    </MoveIcon>
+      <FaArrowCircleRight /> </MoveIcon>
+
     <Container>
     <TopContents>
-    <Title> 즐겨찾기 
-    </Title>
-    <ButtonContent>폴더추가
-                <MdAddCircle onClick={onClickCreateBtn}/>
-            </ButtonContent>
+    <Title> 즐겨찾기 </Title>
+    <ButtonContent onClick={onClickAddFolder}>폴더수정
+    <AiOutlineEdit onClick={onClickCreateBtn}/>
+    </ButtonContent>
     </TopContents>
    
     <FolderPage>
+
+      {addFolder &&
+      <AccordionHeader>
+      <input placeholder="새로운 폴더명 입력"></input>
+      <BiPlusCircle color="green"/>
+      <BiMinusCircle color="red" onClick={onClickAddFolder}/>
+      </AccordionHeader>} 
       
-{pageLinkFolderName.map((item,index)=>
- 
-        <AccordionN>
-  <AccordionItem>
-    <AccordionHeader key={index} item={item} onClick={() => onClickFolder(item)}>{item[0]}
-    {folderOpen===item
-    ? <BsFillCaretUpSquareFill/>
-    : <BsFillCaretDownSquareFill/>}
-   </AccordionHeader>
-   { folderOpen===item
-   ?     <AccordionBody>
-   {item.map((i,index)=><LinkFolder key={{index}}>
-       <LinkContents><ContentsOne >{i[0]}</ContentsOne>
-       <ContentsOne>
-     {i[1]}
-       </ContentsOne>
-       <OptionBtn>수정</OptionBtn> <DelBtn>삭제</DelBtn></LinkContents></LinkFolder>)}
-   </AccordionBody>
-    : null
-   }
-
-  </AccordionItem>
-</AccordionN>
-
-)}
+      {folder.map((fold, i) => {
+        return (
+          <div key={fold.title}>
+            <AccordionHeader
+              onClick={() => {
+                const fold = [...folder];
+                fold[i].expanded = !fold[i].expanded;
+                setFolder(fold);
+              }}
+            >
+              <div>
+                <b>{fold.title}</b>
+              </div>
+              <div>
+                {fold.expanded ? <BsFillCaretUpSquareFill/> 
+                : <BsFillCaretDownSquareFill/>}
+              </div>
+              </AccordionHeader>
+            {fold.expanded && 
+              <AccordionBody>
+                <LinkFolder>
+                <LinkContents>
+                <ContentsOne >{fold.title}</ContentsOne>
+                <ContentsOne>{fold.description}</ContentsOne>
+                <OptionBtn>수정</OptionBtn> 
+                <DelBtn>삭제</DelBtn></LinkContents></LinkFolder>
+              </AccordionBody>}
+          </div>
+        );
+      })}
+    
     </FolderPage>
     </Container>
   </MoveContainer>);

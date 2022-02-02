@@ -6,7 +6,6 @@ import { DetailStudentLayout, DetailTitle } from '../../List/styled/DetailStuden
 import useMedia from '../../../Hooks/useMedia';
 import {ImRadioUnchecked} from 'react-icons/im';
 
-
 const AddClassContainer = styled.div`
   padding: 20px;
   padding: 1.25rem;
@@ -74,7 +73,7 @@ const timeday = ["1교시","월","화","수","목","금",
           onClick={()=>onClickBtn(item)} 
           index={index}>
             {item}
-            
+           
           </TimeTable>)
       })}
  </AddClassContainer>

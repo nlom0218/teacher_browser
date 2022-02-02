@@ -7,8 +7,8 @@ import PageLinkSection from './PageLinkSection';
 import { movePageLink } from '../../apollo';
 import Tabs from 'react-bootstrap/Tabs';
 import {Tab, Row, Col, Nav, Button, Collapse,DropdownButton,Dropdown} from 'react-bootstrap';
-import { BsStar, BsStarFill } from 'react-icons/bs';
-import { BiPlay } from 'react-icons/bi';
+import { BsBookmarkPlusFill, BsBookmarkPlus,BsStar, BsStarFill } from 'react-icons/bs';
+import { BiPlay,BiChevronDown } from 'react-icons/bi';
 import {IoArrowRedo} from 'react-icons/io5';
 
 //드롭박스 폴더 선택 추가해야 함
@@ -118,46 +118,90 @@ row-gap: 16px;
 row-gap: 1rem;
 align-items: flex-start;
 
+
 .ContentsOne{
   padding: 5px;
   padding: 0.3125rem;
   display: grid;
   border : 1px solid;
   grid-template-columns: 1fr 3fr 8fr 1fr;
+  column-gap: 10px;
+  column-gap: 0.625rem;
+  .button{
+    cursor: pointer;
+  }
 }
 .ContentsPick{
   display: grid;
   grid-template-columns: 1fr 3fr 8fr 1fr;
-}
+  column-gap: 10px;
+  column-gap: 0.625rem;
+  .button{
+    cursor: pointer;
+  }
+  svg{
+    font-size: 1.25rem;
+    font-size: 1.25em;
+    justify-self:left;
+  }
+}`
 
-
+const FolderBtn=styled.button`
+  display: grid;
+  grid-template-columns: 7fr 1fr;
+  font-size: 80%;
+  padding: 4px;
+  padding: 0.25rem;
 `
 
 
-const Font = styled.div`
-font-size: 1rem;
-font-size: 1em;
-text-align: center;
-display: grid;
-cursor: pointer;
-`
-const Outline = styled.div`
-width: 100%;
-border: 1px solid;
-border-radius: 5px;
-border-radius: 0.3125rem;
-background-color: #E6E6E6;
-height: 100%;
+const basicLinkEdu = [ 
+  {id : 0,
+  name : "인디스쿨",
+  info : "초등교사 커뮤니티",
+  link : "www.indischool.co.kr",
+  expanded : false,
+  folder : "학습자료",
+  memo : "",
+  bookMark : false},
+  {id : 1,
+    name : "아이스크림",
+    info : "아이스크림 자료",
+    link : "www.indischool.co.kr",
+    expanded : false,
+    folder : "",
+    memo : "",
+    bookMark : false},
+    {id : 2,
+      name : "티셀파",
+      info : "지학사",
+      link : "www.indischool.co.kr",
+      expanded : false,
+      folder : "",
+      memo : "",
+      bookMark : false},
+      {id : 3,
+        name : "비바샘",
+        info : "천재교육",
+        link : "www.indischool.co.kr",
+        expanded : false,
+        folder : "",
+        memo : "",
+        bookMark : false}
+]
+
+//북마크 누르는데 빨리 빨리 반응을 안 한다.....
 
 
-`
+
+
+
 
 const LinkPickSection = ({userEmail, pageLinkSection, init, setInit,pageLinkFolderName }) => {
   const [isSeeDisplay, setIsSeeDisplay] = useState(pageLinkSection === "pageLink" ? "none" : "block")
-  const [pick, setPick] = useState();
-  const [folderPick, setFolderPick] = useState();
+  const [pick, setPick] = useState(false);
+  const [folderPick, setFolderPick] = useState([]);
   const [viewContents, setViewContents] = useState();
-
 
 
   const onClickMoveIcon = () => {
@@ -169,11 +213,12 @@ const LinkPickSection = ({userEmail, pageLinkSection, init, setInit,pageLinkFold
   }
   const onClickViewContents = (item)=>{
     setViewContents(item);
+    console.log(item)
   }
   const onClickLinkPush = () =>{}
 
-  const onClickBookMark= (item) =>{
-    setPick(item)
+  const onClickBookMark= () =>{
+    setPick(!pick)
   }
   useEffect(() => {
     if (pageLinkSection === "linkPick") {
@@ -194,33 +239,41 @@ const LinkPickSection = ({userEmail, pageLinkSection, init, setInit,pageLinkFold
         <div className='LinkPush' onClick={onClickLinkPush}>페이지 추천</div>
      </FolderList>
 <ContentsList>
-{pageLinkFolderName.map((item,index)=>{
+<div>* {folderPick[0]} 추천사이트 보기</div> 
+
+{basicLinkEdu.map((fold,i)=>{
         return(<>
-        <div className='ContentsOne'onClick={()=>onClickViewContents(item)}>
+
+        <div className='ContentsOne'onClick={()=>{
+          const fold = [...basicLinkEdu];
+          fold[i].expanded = !fold[i].expanded;
+          setViewContents(fold)
+        }}>
           <div><BiPlay/></div>
-          <div>{item[0]}</div>
-          <div>설명글</div>
-          <div><IoArrowRedo/></div></div>
-          {viewContents===item
-          ? <div className='ContentsPick' onClick={()=>onClickViewContents(item)}>
+          <div>{fold.name}</div>
+          <div>{fold.info}</div>
+          <div className='button' onClick={()=> window.open(fold.link)}><IoArrowRedo/></div></div>
+          {fold.expanded &&
+          <div className='ContentsPick' onClick={()=>onClickViewContents(fold)}>
           <div></div>
-          <div>폴더 선택</div>
-          {/* <DropdownButton variant='outline-primary' title="폴더 선택">
-  {pageLinkFolderName.map((item,index)=>{
-        return(
-  <Dropdown.Item as="button" key={index}> {item[0]}</Dropdown.Item>)})}
-</DropdownButton> */}
+          <FolderBtn onClick={()=>{
 
-
+            
+          }}>{fold.folder?fold.folder:"폴더선택"}<BiChevronDown/></FolderBtn>
           <input placeholder='메모작성'></input>
-          <div onClick={()=>onClickBookMark(item)}>
-            {pick===item
-            ? <FaBookmark color='yellow'/>
-            : <FaRegBookmark />
+          <div className="button"
+            onClick={()=>{
+              const fold = [...basicLinkEdu];
+              fold[i].bookMark = !fold[i].bookMark;
+              setViewContents(fold)
+            }}>
+            {fold.bookMark
+            ? <BsBookmarkPlusFill color='yellow'/>
+            : <BsBookmarkPlus />
             }
            </div>
           </div>
-          :null
+         
           }
           </>
         )})}
