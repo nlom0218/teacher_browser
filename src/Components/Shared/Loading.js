@@ -10,12 +10,19 @@ const Container = styled.div`
   transform: translate(-50%, 50%);
 `
 
-const Loading = () => {
-  return (<BasicContainer>
+// mainPage => 명렬표, 학급일지, 순서정하기 등 가장 메인이 되는 페이지인지 아닌지 확인
+const Loading = ({ mainPage }) => {
+  return (mainPage ?
+    <BasicContainer>
+      <Container>
+        <RandomCircle />
+      </Container>
+    </BasicContainer>
+    :
     <Container>
       <RandomCircle />
     </Container>
-  </BasicContainer>);
+  );
 }
 
 export default Loading;

@@ -118,7 +118,7 @@ const List = () => {
   }, [data])
 
   if (loading) {
-    return <Loading />
+    return <Loading mainPage={true} />
   }
 
   return (<BasicContainer menuItem={true} notScroll={true}>

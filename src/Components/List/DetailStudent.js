@@ -15,6 +15,7 @@ import { IcStudent1 } from '../../icons/Students/IcStudents';
 import routes from '../../routes';
 import { processStudentIcon } from '../../shared';
 import { customMedia } from '../../styles';
+import Loading from '../Shared/Loading';
 import DetailStudentAllergy from './DetailStudentAllergy';
 import DetailStudentMemo from './DetailStudentMemo';
 import DetailStudentNumber from './DetailStudentNumber';
@@ -222,6 +223,11 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
       setStudentIcon(data?.seeAllStudent[0].icon)
     }
   }, [data])
+
+  if (loading) {
+    return <Loading />
+  }
+
   return (<Container>
     <Link to={routes.list} onMouseEnter={() => setIconListIsHover(true)} onMouseLeave={() => setIconListIsHover(false)}>
       <ListIcon>{IconsLIstisHover ? <IcNameTableClick /> : <IcNameTable />}

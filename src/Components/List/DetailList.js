@@ -19,6 +19,7 @@ import { DelBtn } from './styled/DelBtn';
 import DetailNameContainer from './styled/DetailNameContainer';
 import DetailEomjiIcon from './styled/DetailEomjiIcon';
 import SettingEmojiIconBtn from './styled/SettingEmojiIconBtn';
+import Loading from '../Shared/Loading';
 
 const Container = styled.div`
   padding: 20px;
@@ -193,6 +194,10 @@ const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
   useEffect(() => {
     refetch()
   }, [])
+
+  if (loading) {
+    return <Loading />
+  }
 
   return (<Container>
     <DetailNameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName} >
