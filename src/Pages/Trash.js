@@ -11,6 +11,7 @@ import StudentInTrash from '../Components/Trash/StudentInTrash';
 import { SEE_ALL_STUDENT_IN_TRASH_QUERY } from '../Graphql/Student/query';
 import useMe from '../Hooks/useMe';
 import { customMedia } from '../styles';
+import Loading from "../Components/Shared/Loading"
 
 const Container = styled.div`
   padding: 60px;
@@ -94,6 +95,10 @@ const Trash = () => {
   }
   const onClickAllRestore = () => {
     inPopup("restoreAllStudent")
+  }
+
+  if (loading) {
+    return <Loading page="mainPage" />
   }
 
   return (<BasicContainer menuItem={true}>
