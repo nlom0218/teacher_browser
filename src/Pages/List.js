@@ -13,6 +13,7 @@ import StudentSortTag from '../Components/List/Popup/StudentSortTag';
 import StudentList from '../Components/List/StudentList';
 import AlertMessage from '../Components/Shared/AlertMessage';
 import BasicContainer from '../Components/Shared/BasicContainer';
+import Loading from '../Components/Shared/Loading';
 import { DivideLeftContents } from '../Components/Shared/styled/DivideContents';
 import { SuccessMsg } from '../Components/Shared/styled/SuccessMsg';
 import { SEE_ALL_STUDENT_QUERY } from '../Graphql/Student/query';
@@ -115,6 +116,11 @@ const List = () => {
       setExistStudentArray(newExistStudentArray)
     }
   }, [data])
+
+  if (loading) {
+    return <Loading />
+  }
+
   return (<BasicContainer menuItem={true} notScroll={true}>
     <Container>
       <DivideLeftContents isSeeList={isSeeList}>
