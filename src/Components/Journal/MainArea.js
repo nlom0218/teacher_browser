@@ -44,6 +44,8 @@ const StudentList = styled.div`
 const MainArea = ({ me, students, loading, error, sort, setSort }) => {
   const [selectedListId, setSelectedListId] = useState();
 
+  const focusStudent = localStorage.getItem("focusStudent");
+
   if (loading) return <div>Loading...</div>;
   if (error)
     return (
@@ -71,6 +73,8 @@ const MainArea = ({ me, students, loading, error, sort, setSort }) => {
       </SortContainer>
       <StudentList>
         {students.map((student, index) => {
+          if (student._id === focusStudent) return <InputArea key={index} me={me} student={student} opened={true}></InputArea>;
+
           return <InputArea key={index} me={me} student={student}></InputArea>;
         })}
       </StudentList>

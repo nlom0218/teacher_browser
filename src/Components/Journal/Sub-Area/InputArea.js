@@ -85,8 +85,10 @@ const NoMsg = styled.div`
 `;
 
 //
-const InputArea = ({ me, student }) => {
-  const [isClosed, setIsClosed] = useState(true);
+const InputArea = ({ me, student, opened }) => {
+  const [isClosed, setIsClosed] = useState(opened ? false : true);
+
+  if (opened) localStorage.removeItem("focusStudent");
 
   function addText() {
     inPopup("writeJournal");
