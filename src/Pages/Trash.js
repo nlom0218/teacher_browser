@@ -1,17 +1,16 @@
 import { useQuery, useReactiveVar } from '@apollo/client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../apollo';
 import AlertMessage from '../Components/Shared/AlertMessage';
 import BasicContainer from '../Components/Shared/BasicContainer';
-import { SuccessMsg } from '../Components/Shared/styled/SuccessMsg';
+import Loading from '../Components/Shared/Loading';
 import DeleteAllStudent from '../Components/Trash/Popup/DeleteAllStudent';
 import RestoreAllStudent from '../Components/Trash/Popup/RestoreAllStudent';
 import StudentInTrash from '../Components/Trash/StudentInTrash';
 import { SEE_ALL_STUDENT_IN_TRASH_QUERY } from '../Graphql/Student/query';
 import useMe from '../Hooks/useMe';
 import { customMedia } from '../styles';
-import Loading from "../Components/Shared/Loading"
 
 const Container = styled.div`
   padding: 60px;

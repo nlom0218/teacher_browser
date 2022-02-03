@@ -38,6 +38,7 @@ const Form = styled.form`
     opacity: 0.8;
     transition: color 1s ease, opacity 1s ease;
 }
+}
 `;
 
 const Input = styled.input`
@@ -118,30 +119,30 @@ const TodoCreate = ({ setToDos, toDos }) => {
     const [endDate, setEndDate] = useState(null);
 
     const { register, handleSubmit, } = useForm({
-        mode : "onChange"
+        mode: "onChange"
     })
 
     const onSubmit = (data) => {
-        if(startDate) {
+        if (startDate) {
             if (!endDate) {
                 window.alert("종료일을 설정해주세요.")
                 return
-            } 
-            if(startDate > endDate) {
+            }
+            if (startDate > endDate) {
                 window.alert("시작일과 종료일을 다시 확인해주세요.")
                 return
             }
         }
         if (endDate) {
-                if (!startDate) {
-                    window.alert("시작일을 설정해주세요.")
-                    return
+            if (!startDate) {
+                window.alert("시작일을 설정해주세요.")
+                return
             }
         }
-        
-        const {toDo, contents} = data
+
+        const { toDo, contents } = data
         const newTodo = {
-            teacherEmail : "sksthsaudgml@naver.com",
+            teacherEmail: "sksthsaudgml@naver.com",
             toDo,
             ...(contents && { contents }),
             ...(startDate && { startDate }),
@@ -157,59 +158,59 @@ const TodoCreate = ({ setToDos, toDos }) => {
         setEndDate(null)
     }
 
-    return(
-            <PopupContainer maxHeight={true}>
+    return (
+        <PopupContainer maxHeight={true}>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Input
-                {...register("todo", {
-                    required : true
-                })} 
-                placeholder = "내용을 입력하세요"
-                autoComplete = "off"
+                    {...register("todo", {
+                        required: true
+                    })}
+                    placeholder="내용을 입력하세요"
+                    autoComplete="off"
                 >
                 </Input>
                 <textarea
                     {...register('contents')}
-                    placeholder = "세부내용을 입력하세요">
+                    placeholder="세부내용을 입력하세요">
                 </textarea>
                 <SetDate>
-                <StartDate>
-                <DateType>시작일</DateType>
-                <DatePicker
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date)}
-                    selectsStart
-                    startDate={startDate}
-                    endDate={endDate}
-                    dateFormat = "yyyy/MM/dd"
-                    locale={ko}
-                    placeholderText = "시작일 설정"
-                />
-                </StartDate>
-                <EndDate>
-                <DateType>종료일</DateType>
-                <DatePicker
-                    selected={endDate}
-                    onChange={(date) => setEndDate(date)}
-                    selectsEnd
-                    startDate={startDate}
-                    endDate={endDate}
-                    minDate={startDate}
-                    dateFormat = "yyyy/MM/dd"
-                    locale={ko}
-                    placeholderText = "종료일 설정"
-                /> 
-                </EndDate>
-                <ResetBtn onClick={onClickResetDateBtn}><GrPowerReset></GrPowerReset></ResetBtn>
+                    <StartDate>
+                        <DateType>시작일</DateType>
+                        <DatePicker
+                            selected={startDate}
+                            onChange={(date) => setStartDate(date)}
+                            selectsStart
+                            startDate={startDate}
+                            endDate={endDate}
+                            dateFormat="yyyy/MM/dd"
+                            locale={ko}
+                            placeholderText="시작일 설정"
+                        />
+                    </StartDate>
+                    <EndDate>
+                        <DateType>종료일</DateType>
+                        <DatePicker
+                            selected={endDate}
+                            onChange={(date) => setEndDate(date)}
+                            selectsEnd
+                            startDate={startDate}
+                            endDate={endDate}
+                            minDate={startDate}
+                            dateFormat="yyyy/MM/dd"
+                            locale={ko}
+                            placeholderText="종료일 설정"
+                        />
+                    </EndDate>
+                    <ResetBtn onClick={onClickResetDateBtn}><GrPowerReset></GrPowerReset></ResetBtn>
                 </SetDate>
 
-                <SubmitBtn 
-                    type = "submit"
-                    value = "등록하기"
+                <SubmitBtn
+                    type="submit"
+                    value="등록하기"
                 />
             </Form>
-            </PopupContainer>
-        
+        </PopupContainer>
+
     );
 }
 
