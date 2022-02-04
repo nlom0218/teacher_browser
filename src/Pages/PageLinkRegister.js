@@ -1,8 +1,11 @@
+import { useMutation } from '@apollo/client';
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import TextareaAutosize from 'react-textarea-autosize';
 import styled from 'styled-components';
 import FolderItem from '../Components/PageLinkRegister/FolderItem';
 import TypeItem from '../Components/PageLinkRegister/TypeItem';
+import { CREATE_PAGE_LINK_MUTATION } from '../Graphql/PageLink/mutation';
 
 const Container = styled.div`
   padding: 20px;
@@ -123,25 +126,69 @@ const PageLinkRegister = () => {
   const pageType = ["블로그", "유튜브"]
   const [submitFolder, setSubmitFolder] = useState([])
   const [submitType, setSubmitType] = useState(undefined)
+
+  const { register, handleSubmit, setValue } = useForm({
+    mode: 'onChange'
+  })
+
+  const onCompleted = (result) => {
+    const { createPageLink: { ok, error } } = result
+    if (!ok) {
+      window.alert(error)
+    } else {
+      window.alert("추천 페이지가 등록되었습니다.")
+      setValue("pageTitle", "")
+      setValue("pageDescription", "")
+      setValue("pageURL", "")
+      setSubmitFolder([])
+      setSubmitType(undefined)
+    }
+  }
+
+  const [createPageLink, { loading }] = useMutation(CREATE_PAGE_LINK_MUTATION, {
+    onCompleted
+  })
+
+  const onSubmit = (data) => {
+    const { pageTitle, pageDescription, pageURL } = data
+    if (submitFolder.length === 0) {
+      window.alert("폴더를 선택하세요.")
+      return
+    }
+    createPageLink({
+      variables: {
+        pageTitle,
+        pageDescription,
+        pageURL,
+        folder: submitFolder,
+        ...(submitType && { type: submitType })
+      }
+    })
+  }
   return (<Container>
     <BasicLayout>
       <PageTitle>추천 페이지 등록</PageTitle>
-      <FormContainer>
+      <FormContainer onSubmit={handleSubmit(onSubmit)}>
         <InputLayout>
           <InputTitle>추천 페이지 이름(중복 불가능): 필수</InputTitle>
           <input
+            {...register("pageTitle", { required: true })}
             placeholder="추천 페이지 이름을 적으세요."
+            autoComplete="off"
           />
         </InputLayout>
         <InputLayout>
           <InputTitle>추천 페이지 URL: 필수</InputTitle>
           <input
+            {...register("pageURL", { required: true })}
+            autoComplete="off"
             placeholder="추천 페이지의 주소를 적으세요. ex) https://www.teacher-can.com (https:// => 필수!!!)"
           />
         </InputLayout>
         <InputLayout>
           <InputTitle>추천 페이지 설명: 필수</InputTitle>
           <TextareaAutosize
+            {...register("pageDescription", { required: true })}
             minRows="8"
             maxRows="8"
             placeholder="추천 페이지 설명을 적으세요. 줄바꿈이 적용됩니다."
