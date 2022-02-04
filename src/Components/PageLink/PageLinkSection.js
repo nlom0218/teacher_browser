@@ -6,7 +6,6 @@ import { customMedia } from "../../styles";
 import { useForm } from "react-hook-form";
 import { inputLine } from "../../Animations/InputLine";
 import { BtnFadeIn } from "../../Animations/Fade";
-import Accordion from 'react-bootstrap/Accordion'
 import { FaArrowCircleRight } from 'react-icons/fa';
 import { AiOutlineEdit } from "react-icons/ai";
 import {BiPlusCircle,BiMinusCircle} from 'react-icons/bi';

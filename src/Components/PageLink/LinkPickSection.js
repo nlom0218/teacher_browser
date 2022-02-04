@@ -5,8 +5,6 @@ import { FaArrowCircleLeft,FaRegBookmark,FaBookmark } from 'react-icons/fa';
 import { hideNewsSection, seeNewsSection } from '../../Animations/WelcomeSectionAni';
 import PageLinkSection from './PageLinkSection';
 import { movePageLink } from '../../apollo';
-import Tabs from 'react-bootstrap/Tabs';
-import {Tab, Row, Col, Nav, Button, Collapse,DropdownButton,Dropdown} from 'react-bootstrap';
 import { BsBookmarkPlusFill, BsBookmarkPlus,BsStar, BsStarFill } from 'react-icons/bs';
 import { BiPlay,BiChevronDown } from 'react-icons/bi';
 import {IoArrowRedo} from 'react-icons/io5';

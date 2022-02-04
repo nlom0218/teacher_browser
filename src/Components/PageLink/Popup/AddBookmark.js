@@ -75,6 +75,7 @@ const SubmitInput = styled.input`
     border-radius: 5px;
     border-radius: 0.3125rem;
     text-align: center;
+    cursor: pointer;
 `
 
 const AddBookmark = ({userEmail}) => {

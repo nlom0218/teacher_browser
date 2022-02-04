@@ -30,7 +30,6 @@ import FindPassword from "./Pages/FindPassword";
 import dotenv from "dotenv";
 import Welcome from "./Pages/Welcome";
 import ChangBackground from "./Components/Shared/ChangBackground";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 dotenv.config();
 
