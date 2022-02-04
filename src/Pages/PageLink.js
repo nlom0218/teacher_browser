@@ -6,6 +6,8 @@ import { useReactiveVar } from '@apollo/client';
 import PageLinkSection from '../Components/PageLink/PageLinkSection';
 import LinkPickSection from '../Components/PageLink/LinkPickSection';
 import useMe from '../Hooks/useMe';
+import AddBookmark from '../Components/PageLink/Popup/AddBookmark';
+import { isPopupVar } from '../apollo';
 
 //폴더 추가 기능(새폴더+date정보)
 //정보 DB map
@@ -24,17 +26,18 @@ import useMe from '../Hooks/useMe';
 
 
 const Container = styled.div`
+ 
 `
 const pageLinkFolderName = [["교육청",["교육청","설명/메모"],["사이트이름/","메모"]],["미술",["설명/","메모"]],["영어",["사이트이름/","메모"]],["과학",["사이트이름/","메모"]],["연수원",["사이트이름/","메모"]]]
 
 
 const PageLink = () => {
   const me = useMe()
+  console.log(me)
+  const isPopup = useReactiveVar(isPopupVar)
   const pageLinkSection = useReactiveVar(pageLinkSectionVar)
   
   const [init, setInit] = useState(true)
-
-
 
   return (<BasicContainer >
     <Container>
@@ -48,12 +51,13 @@ const PageLink = () => {
   setInit={setInit}
   pageLinkSection={pageLinkSection}
   userEmail={me?.email}
+  link={me?.link}
   pageLinkFolderName={pageLinkFolderName}
   // favoriteNews={me?.favoriteNews}
 />
 
     </Container>
-
+{isPopup === "addBookmark" && <AddBookmark userEmail={me?.email}/>}
   </BasicContainer>);
 }
 

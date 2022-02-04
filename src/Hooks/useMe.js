@@ -16,6 +16,10 @@ export const ME_QUERY = gql`
       allergy
       tag
       favoriteNews
+      link{
+        siteName
+        memo
+      }
     }
   }
 `;
