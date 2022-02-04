@@ -122,7 +122,6 @@ const PageLinkRegister = () => {
   ]
   const pageType = ["블로그", "유튜브"]
   const [submitFolder, setSubmitFolder] = useState([])
-  console.log(submitFolder);
   const [submitType, setSubmitType] = useState(undefined)
   return (<Container>
     <BasicLayout>
@@ -160,7 +159,7 @@ const PageLinkRegister = () => {
           <InputTitle>추천 페이지 종류(중복 불가능): 생략 가능</InputTitle>
           <Folder>
             {pageType.map((item, index) => {
-              return <TypeItem key={index} item={item} />
+              return <TypeItem key={index} item={item} setSubmitType={setSubmitType} submitType={submitType} />
             })}
           </Folder>
         </InputLayout>

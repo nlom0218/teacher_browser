@@ -22,9 +22,16 @@ const BoxIcon = styled.div`
   }
 `
 
-const TypeItem = ({ item }) => {
+const TypeItem = ({ item, setSubmitType, submitType }) => {
+  const onClickIcon = () => {
+    if (submitType === item) {
+      setSubmitType(undefined)
+    } else {
+      setSubmitType(item)
+    }
+  }
   return (<SFolderItem>
-    <BoxIcon><GrCheckbox /></BoxIcon>
+    <BoxIcon onClick={onClickIcon}>{submitType === item ? <GrCheckboxSelected /> : <GrCheckbox />}</BoxIcon>
     <div>{item}</div>
   </SFolderItem>);
 }
