@@ -1,7 +1,8 @@
-import React from 'react';
-import { GrCheckbox, GrCheckboxSelected } from 'react-icons/gr';
+import React, { useState } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import styled from 'styled-components';
+import FolderItem from '../Components/PageLinkRegister/FolderItem';
+import TypeItem from '../Components/PageLinkRegister/TypeItem';
 
 const Container = styled.div`
   padding: 20px;
@@ -101,25 +102,6 @@ const Folder = styled.div`
   background-color: ${props => props.theme.contentBgColor};
 `
 
-const FolderItem = styled.div`
-  font-size: 1.2em;
-  font-size: 1.2rem;
-  display: grid;
-  grid-template-columns: auto auto 1fr;
-  column-gap: 10px;
-  column-gap: 0.625rem;
-  align-items: center;
-`
-
-const BoxIcon = styled.div`
-  cursor: pointer;
-  svg {
-    display: flex;
-    font-size: 1em;
-    font-size: 1rem;
-  }
-`
-
 const SubmitInput = styled.input`
   padding: 20px;
   background-color: ${props => props.theme.btnBgColor};
@@ -139,6 +121,9 @@ const PageLinkRegister = () => {
     "교육청", "연수원", "학급경영", "국어", "영어", "수학", "사회", "과학", "음악", "미술", "체육", "실과", "제2외국어", "창체"
   ]
   const pageType = ["블로그", "유튜브"]
+  const [submitFolder, setSubmitFolder] = useState([])
+  console.log(submitFolder);
+  const [submitType, setSubmitType] = useState(undefined)
   return (<Container>
     <BasicLayout>
       <PageTitle>추천 페이지 등록</PageTitle>
@@ -167,10 +152,7 @@ const PageLinkRegister = () => {
           <InputTitle>폴더 선택(중복 가능): 필수</InputTitle>
           <Folder>
             {folder.map((item, index) => {
-              return <FolderItem key={index}>
-                <BoxIcon><GrCheckbox /></BoxIcon>
-                <div>{item}</div>
-              </FolderItem>
+              return <FolderItem key={index} item={item} setSubmitFolder={setSubmitFolder} submitFolder={submitFolder} />
             })}
           </Folder>
         </InputLayout>
@@ -178,10 +160,7 @@ const PageLinkRegister = () => {
           <InputTitle>추천 페이지 종류(중복 불가능): 생략 가능</InputTitle>
           <Folder>
             {pageType.map((item, index) => {
-              return <FolderItem key={index}>
-                <BoxIcon><GrCheckbox /></BoxIcon>
-                <div>{item}</div>
-              </FolderItem>
+              return <TypeItem key={index} item={item} />
             })}
           </Folder>
         </InputLayout>
