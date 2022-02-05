@@ -1,5 +1,11 @@
 import styled from "styled-components";
 import { useState } from "react/cjs/react.development";
+import { useReactiveVar } from "@apollo/client";
+import { movePageLinkFolder, pageLinkFolderVar, removePageLinkFolder } from "../../apollo";
+import { linkPickFolderVar } from "../../apollo";
+import { removeLinkPickFolder } from "../../apollo";
+import { moveLinkPickFolder } from "../../apollo";
+
 
 const Container = styled.div`
   position: absolute;
@@ -29,12 +35,12 @@ const Container = styled.div`
   border-radius: 5px;
   border-radius: 0.3125rem;
 }
-  
-
 `
 const SFolderList = styled.div`
   display: grid;
-  grid-template-rows: repeat(5,auto) 1fr;
+  grid-template-rows: repeat(6,auto) 1fr;
+  row-gap: 10px;
+  row-gap: 0.625rem;
   min-height: 100%;
   max-height: 100%;
   overflow: scroll;
@@ -44,38 +50,84 @@ const SFolderList = styled.div`
   ::-webkit-scrollbar{
       display: none;
   }
-  .Folder{
-      padding: 10px;
-      padding: 0.625rem;
-      border-radius: 5px;
-      border-radius: 0.3125rem;
-      :hover{
-          background-color: ${props => props.theme.hoverColor};
-          border-radius: 5px;
-          border-radius: 0.3125rem;
-      }
-  }
+`
 
+  const Folder = styled.div`
+    padding: 10px;
+    padding: 0.625rem;
+    border-radius: 5px;
+    border-radius: 0.3125rem;
+    :hover{
+      background-color: ${props => props.theme.hoverColor};
+    }
+    background-color: ${props=>props.selected && props.theme.hoverColor};
 `
 
 
 const FolderList = ({right}) =>{
-    const [folderPick,setFolderPick] = useState(undefined);
+
+    const pageLinkFolder = useReactiveVar(pageLinkFolderVar)
+    const linkPickFolder = useReactiveVar(linkPickFolderVar)
+
     const onClickPickFolder = (item) =>{
-        setFolderPick(item);
+      //right => pageLink
+      if (right){
+        if(item==="전체보기"){
+          removePageLinkFolder()
+        }else{
+          movePageLinkFolder(item)
+        }
+      }else{
+        if (item==="전체보기"){
+          removeLinkPickFolder()
+        }else{
+          moveLinkPickFolder(item)
+        }
+      }
       }
       const onClickLinkPush = () =>{}
-      const pageLinkFolderName = ["교육청","영어","미술","과학","연수원"]
+      const pageLinkFolderName = ["전체보기","교육청","영어","미술","과학","연수원"]
 
+const processSelected=(item)=>{
+  if (right) {
+    //pageLink
+    if(item==="전체보기"){
+      if(pageLinkFolder){
+        return false
+      } else{
+        return true
+      }
+    }else{
+      if (pageLinkFolder ===item){
+        return true
+      } else{
+        return false
+      }
+    }
+  } else {
+    //pageLink
+    if(item==="전체보기"){
+      if(linkPickFolder){
+        return false
+      } else{
+        return true
+      }
+    }else{
+      if (linkPickFolder ===item){
+        return true
+      } else{
+        return false
+      }
+}}}
 
     return(
         <Container right={right}>
    <SFolderList>
    {pageLinkFolderName.map((item,index)=>{
-      return(<div 
-        className='Folder'
+      return(<Folder
+        selected={processSelected(item)}
         key={index}
-      onClick={()=>onClickPickFolder(item)}>{item}</div>)})}
+      onClick={()=>onClickPickFolder(item)}>{item}</Folder>)})}
    </SFolderList>
    <div className='LinkPush' onClick={onClickLinkPush}>페이지 추천</div>
 

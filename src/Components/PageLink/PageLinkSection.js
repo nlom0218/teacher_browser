@@ -11,6 +11,8 @@ import { AiOutlineEdit } from "react-icons/ai";
 import {BiPlusCircle,BiMinusCircle} from 'react-icons/bi';
 import {BsFillCaretDownSquareFill,BsFillCaretUpSquareFill} from 'react-icons/bs';
 import FolderList from "./FolderList";
+import ContentsList from "./Styled/ContentsList";
+import PageLinkTitle from "./Styled/PageLinkTitle";
 
 //부트스트랩으로 했던 부분 그리드로 변경 
 //현재 아코디언 부분이 하나를 누르면 닫아지지 않고 다른 걸 눌러야 보임. 
@@ -236,7 +238,9 @@ const PageLinkSection = ({ pageLinkSection, init, setInit, pageLinkFolderName}) 
     <MoveIcon onClick={onClickMoveIcon}>
       <FaArrowCircleRight /> </MoveIcon>
 <FolderList right={true}/>
-
+<ContentsList right={true}>
+<PageLinkTitle left={true}>즐겨찾기 페이지</PageLinkTitle>
+</ContentsList>
     {/* <Container>
     <TopContents>
     <Title> 즐겨찾기 </Title>

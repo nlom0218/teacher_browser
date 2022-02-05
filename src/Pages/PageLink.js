@@ -8,6 +8,7 @@ import LinkPickSection from '../Components/PageLink/LinkPickSection';
 import useMe from '../Hooks/useMe';
 import AddBookmark from '../Components/PageLink/Popup/AddBookmark';
 import { isPopupVar } from '../apollo';
+import SeePageLink from '../Components/PageLink/Popup/SeePageLink';
 
 //폴더 추가 기능(새폴더+date정보)
 //정보 DB map
@@ -22,6 +23,9 @@ import { isPopupVar } from '../apollo';
 // 메모 작성 화면에 배경색 다르게 
 
 
+// 나의 즐겨찾기 페이지 
+// 페이지 id로 체인지
+// 반응형으로 
 
 
 
@@ -58,6 +62,7 @@ const PageLink = () => {
 
     </Container>
 {isPopup === "addBookmark" && <AddBookmark userEmail={me?.email}/>}
+{isPopup === "seePageLink" && <SeePageLink/>}
   </BasicContainer>);
 }
 

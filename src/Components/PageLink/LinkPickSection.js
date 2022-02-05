@@ -4,14 +4,16 @@ import { color, customMedia } from '../../styles';
 import { FaArrowCircleLeft,FaRegBookmark,FaBookmark } from 'react-icons/fa';
 import { hideNewsSection, seeNewsSection } from '../../Animations/WelcomeSectionAni';
 import PageLinkSection from './PageLinkSection';
-import { movePageLink } from '../../apollo';
+import { linkPickFolderVar, movePageLink, pageLinkSectionVar } from '../../apollo';
 import { BsBookmarkPlusFill, BsBookmarkPlus,BsStar, BsStarFill } from 'react-icons/bs';
 import { BiPlay,BiChevronDown } from 'react-icons/bi';
 import {IoArrowRedo} from 'react-icons/io5';
 import FolderList from './FolderList';
 import ContentsItem from './ContentsItem';
-import { useMutation } from '@apollo/client';
-
+import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
+import ContentsList from './Styled/ContentsList';
+import PageLinkTitle from './Styled/PageLinkTitle';
+import { SEE_PAGE_LINK_QUERY } from '../../Graphql/PageLink/query';
 
 //드롭박스 폴더 선택 추가해야 함
 //폴더 누를 때 색 변화 등 추가 
@@ -46,81 +48,22 @@ const MoveIcon = styled.div`
   }
 `
 
-
-
-const ContentsList = styled.div`
-  position: absolute;
-  top: 4%;
-  right: 4%;
-  width: 65%;
-  max-height: 92%;
+const PageLinkList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  column-gap: 20px;
+  column-gap: 1.25rem;
   overflow: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
   ::-webkit-scrollbar{
     display: none;
   }
-  display: grid;
-  grid-template-columns: repeat(4,1fr) ;
-  column-gap: 20px;
-  column-gap: 1.25rem;
-  row-gap: 20px;
-  row-gap: 1.25rem;
-
 `
+
  
-
-const FolderBtn=styled.select`
-  color:#000000;
-  font-size: 1rem;
-  font-size: 1em;
-  align-items: center; 
-  cursor: pointer;
-
-
-
-`
-
-
-const basicLinkEdu = [ 
-  {id : 0,
-  name : "인디스쿨",
-  info : "초등교사 커뮤니티",
-  link : "https://www.indischool.com",
-  expanded : false,
-  folder : "학습자료",
-  memo : "",
-  bookMark : false},
-  {id : 1,
-    name : "아이스크림",
-    info : "아이스크림 자료",
-    link : "https://www.i-scream.co.kr",
-    expanded : false,
-    folder : "",
-    memo : "",
-    bookMark : false},
-    {id : 2,
-      name : "티셀파",
-      info : "지학사",
-      link : "https://tsherpa.co.kr",
-      expanded : false,
-      folder : "",
-      memo : "",
-      bookMark : false},
-      {id : 3,
-        name : "비바샘",
-        info : "천재교육",
-        link : "https://www.vivasam.com",
-        expanded : false,
-        folder : "",
-        memo : "",
-        bookMark : false}
-]
-
-//북마크 누르는데 빨리 빨리 반응을 안 한다.....
-
-
-
 
 
 
@@ -130,6 +73,17 @@ const LinkPickSection = ({userEmail, pageLinkSection, init, setInit,pageLinkFold
   const [folderPick, setFolderPick] = useState([]);
   const [viewContents, setViewContents] = useState();
   const [userLinkTitleArr, setUserLinkTitleArr] = useState([])
+
+  const folder = useReactiveVar(linkPickFolderVar)
+
+  const {data, loading} = useQuery(SEE_PAGE_LINK_QUERY,{
+    variables : {
+      folder :useReactiveVar(linkPickFolderVar)
+    },skip : useReactiveVar(pageLinkSectionVar) !== "linkPick"
+  })
+  console.log(data);
+
+
 
   const onClickMoveIcon = () => {
     setInit(false)
@@ -154,7 +108,8 @@ const LinkPickSection = ({userEmail, pageLinkSection, init, setInit,pageLinkFold
     if (link){
       setUserLinkTitleArr(link.map((item)=>item.siteName))
     }
-  })
+  },[link])
+
 
 
   return (
@@ -162,11 +117,19 @@ const LinkPickSection = ({userEmail, pageLinkSection, init, setInit,pageLinkFold
     <MoveIcon onClick={onClickMoveIcon}><FaArrowCircleLeft /></MoveIcon>
   <FolderList/>
   <ContentsList>
+  <PageLinkTitle>추천 페이지</PageLinkTitle>
+  <PageLinkList>
+{data&& data?.seePageLink.map((item,index)=>{
+  return<ContentsItem item={item} key={index} userEmail={userEmail} userLinkTitleArr={userLinkTitleArr}/>
+})}
 
+  </PageLinkList>
+
+{/* 
 {basicLinkEdu.map((item,i)=>{
         return( 
-          <ContentsItem userLinkTitleArr={userLinkTitleArr} key={i} item={item} link={link} userEmail={userEmail}/>
-)})}
+          <ContentsItem  key={i} item={item} />
+)})} */}
         </ContentsList>
         </MoveContainer>)}
       
