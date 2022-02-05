@@ -31,6 +31,7 @@ import dotenv from "dotenv";
 import Welcome from "./Pages/Welcome";
 import ChangBackground from "./Components/Shared/ChangBackground";
 import PageLinkRegister from "./Pages/PageLinkRegister";
+import PageLinkAllList from "./Pages/PageLinkAllList";
 dotenv.config();
 
 function App() {
@@ -93,6 +94,7 @@ function App() {
         <Route path={routes.trash} element={<Trash />} />
         <Route path={routes.findPassword} element={<FindPassword />} />
         <Route path={routes.pageLinkRegister} element={<PageLinkRegister />} />
+        <Route path={routes.pageLinkAllList} element={<PageLinkAllList />} />
       </Routes>
     </ThemeProvider>
   );
