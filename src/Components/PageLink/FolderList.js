@@ -21,8 +21,8 @@ const Container = styled.div`
   row-gap: 20px;
   row-gap: 1.25rem;
   grid-template-rows: 1fr auto;
-  background-color: ${props => props.theme.contentBgColor};
-  transition: background-color 1s ease, color 1s ease;
+  background-color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease;
   border-radius : 5px;
   border-radius: 0.3125rem;
   .LinkPush{
@@ -61,6 +61,8 @@ const SFolderList = styled.div`
       background-color: ${props => props.theme.hoverColor};
     }
     background-color: ${props=>props.selected && props.theme.hoverColor};
+    transition: background-color 1s ease;
+
 `
 
 
