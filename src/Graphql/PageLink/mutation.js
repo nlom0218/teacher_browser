@@ -17,3 +17,12 @@ export const UPDATE_PAGE_LINK_MUTATION = gql`
     }
   }
 `
+
+export const DELETE_PAGE_LINK_MUTATION = gql`
+  mutation DeletePageLink($pageTitle: String!) {
+    deletePageLink(pageTitle: $pageTitle) {
+      ok
+      error
+    }
+  }
+`

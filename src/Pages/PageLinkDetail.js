@@ -2,14 +2,15 @@ import { useMutation, useQuery } from '@apollo/client';
 import getOverlappingDaysInIntervals from 'date-fns/esm/fp/getOverlappingDaysInIntervals/index.js';
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import TextareaAutosize from 'react-textarea-autosize';
 import { useEffect, useState } from 'react/cjs/react.development';
 import styled from 'styled-components';
 import FolderItem from '../Components/PageLinkRegister/FolderItem';
 import TypeItem from '../Components/PageLinkRegister/TypeItem';
-import { UPDATE_PAGE_LINK_MUTATION } from '../Graphql/PageLink/mutation';
+import { DELETE_PAGE_LINK_MUTATION, UPDATE_PAGE_LINK_MUTATION } from '../Graphql/PageLink/mutation';
 import { SEE_PAGE_LINK_QUERY } from '../Graphql/PageLink/query';
+import routes from '../routes';
 
 const Container = styled.div`
   padding: 20px;
@@ -114,6 +115,18 @@ const SubmitInput = styled.input`
   background-color: ${props => props.theme.btnBgColor};
   color: ${props => props.theme.bgColor};
   text-align: center;
+  border-radius: 20px;
+  border-radius: 1.25rem;
+  cursor: pointer;
+  font-size: 1.25em;
+  font-size: 1.25rem;
+`
+
+const DelBtn = styled.div`
+  padding: 20px;
+  background-color: ${props => props.theme.redColor};
+  color: ${props => props.theme.bgColor};
+  text-align: center;
   margin-bottom: 20px;
   margin-bottom: 1.25rem;
   border-radius: 20px;
@@ -126,6 +139,7 @@ const SubmitInput = styled.input`
 
 const PageLinkDetail = () => {
   const { pageTitle } = useParams()
+  const navigate = useNavigate()
   const { data, loading } = useQuery(SEE_PAGE_LINK_QUERY, {
     variables: {
       pageTitle
@@ -151,8 +165,20 @@ const PageLinkDetail = () => {
     }
   }
 
+  const deleteOnCompleted = (result) => {
+    const { deletePageLink: { ok } } = result
+    if (ok) {
+      window.alert("추천 페이지가 삭제되었습니다.")
+      navigate(routes.pageLinkAllList)
+    }
+  }
+
   const [updatePageLink, { loading: updateLoading }] = useMutation(UPDATE_PAGE_LINK_MUTATION, {
     onCompleted
+  })
+
+  const [deletePageLink, { loading: deleteLoading }] = useMutation(DELETE_PAGE_LINK_MUTATION, {
+    onCompleted: deleteOnCompleted
   })
 
   const onSubmit = (data) => {
@@ -169,6 +195,18 @@ const PageLinkDetail = () => {
         folder: submitFolder,
       }
     })
+  }
+
+  const onClickDelBtn = () => {
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      deletePageLink({
+        variables: {
+          pageTitle
+        }
+      })
+    } else {
+      return
+    }
   }
 
   useEffect(() => {
@@ -231,6 +269,7 @@ const PageLinkDetail = () => {
           value="수정하기"
         />
       </FormContainer>
+      <DelBtn onClick={onClickDelBtn}>삭제하기</DelBtn>
     </BasicLayout>
   </Container>);
 }
