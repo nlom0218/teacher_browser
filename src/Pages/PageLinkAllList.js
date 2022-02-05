@@ -7,6 +7,7 @@ import { BiEdit } from "react-icons/bi"
 import { useState } from 'react/cjs/react.development';
 import { useForm } from 'react-hook-form';
 import { GrPowerReset } from 'react-icons/gr';
+import { useNavigate } from 'react-router';
 
 const Container = styled.div`
   padding: 20px;
@@ -80,7 +81,7 @@ const ResetIcon = styled.div`
 
 const ListContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   background-color: ${props => props.theme.fontColor};
   border: 1px solid ${props => props.theme.fontColor};
   row-gap: 1px;
@@ -106,6 +107,7 @@ const EditIcon = styled.div`
 `
 
 const PageLinkAllList = () => {
+  const navigate = useNavigate()
   const [search, setSearch] = useState(undefined)
   const { data, loading } = useQuery(SEE_PAGE_LINK_QUERY, {
     variables: {
@@ -118,8 +120,8 @@ const PageLinkAllList = () => {
   const onClickLink = (url) => {
     window.open(url, "_blank")
   }
-  const onCLickEdit = (id) => {
-
+  const onCLickEdit = (pageTitle) => {
+    navigate(`/pageLink/${pageTitle}`)
   }
   const onSubmit = (data) => {
     const { search } = data
@@ -151,7 +153,7 @@ const PageLinkAllList = () => {
             <div>{index + 1}.</div>
             <div>{item.pageTitle}</div>
             <LinkIcon onClick={() => onClickLink(item.pageURL)}><FiLink /></LinkIcon>
-            <EditIcon onClick={() => onCLickEdit(item._id)}><BiEdit /></EditIcon>
+            <EditIcon onClick={() => onCLickEdit(item.pageTitle)}><BiEdit /></EditIcon>
           </Item>
         })}
       </ListContainer>}
