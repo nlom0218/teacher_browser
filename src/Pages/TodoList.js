@@ -95,11 +95,7 @@ const TodoList = () => {
     return <Loading page="mainPage" />
   }
 
-  console.log("hi");
-
-
-
-
+  console.log("sdfsdf");
 
   return (
     <BasicContainer>

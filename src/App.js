@@ -27,13 +27,11 @@ import useMedia from "./Hooks/useMedia";
 import List from "./Pages/List";
 import Trash from "./Pages/Trash";
 import FindPassword from "./Pages/FindPassword";
-import dotenv from "dotenv";
 import Welcome from "./Pages/Welcome";
 import ChangBackground from "./Components/Shared/ChangBackground";
 import PageLinkRegister from "./Pages/PageLinkRegister";
 import PageLinkAllList from "./Pages/PageLinkAllList";
 import PageLinkDetail from "./Pages/PageLinkDetail";
-dotenv.config();
 
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
