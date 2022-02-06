@@ -34,7 +34,7 @@ const Form = styled.form`
     border-radius: 5px;
     border-radius: 0.3125rem;
     border: ${props => props.isEdit && `${props.theme.fontColor} 1px solid`};
-    background-color: #ffffff;
+    background-color: ${props => props.theme.originBgColor};
     line-height: 160%;
     ::placeholder {
     color: ${props => props.theme.fontColor};
@@ -70,7 +70,7 @@ const Icon = styled.div`
 
 const Input = styled.input`
 width: 100%;
-background-color: #ffffff;
+background-color: ${props => props.theme.originBgColor};
 padding: 15px 20px;
 padding: 0.9375rem 1.25rem;
 border-radius: 5px;
@@ -104,7 +104,7 @@ const SetDate = styled.div`
     row-gap : 0.625rem;
     input {
         width : 100%;
-        background-color : #ffffff;
+        background-color: ${props => props.theme.originBgColor};
         text-align : center;
         padding : 20px 10px;
         padding : 1.25rem 0.625rem;
@@ -140,7 +140,7 @@ const SetStar = styled.div`
     grid-template-columns: repeat(5, auto);
     column-gap: 20px;
     column-gap: 1.25rem;
-    background-color: #ffffff;
+   background-color: ${props => props.theme.originBgColor};
     padding: 0px 40px;
     padding: 0rem 2.5rem;
     border-radius: 40px;

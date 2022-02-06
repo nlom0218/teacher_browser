@@ -49,6 +49,7 @@ const ToDoItem = styled.div`
 const CheckIcon = styled.div`
   padding: 10px 0px;
   padding: 0.625rem 0rem;
+  cursor: pointer;
   svg {
     display: flex;
     font-size: 1.25em;
@@ -119,7 +120,18 @@ const ToDoIngItem = ({ item }) => {
   const [endDate, setEndDate] = useState(undefined)
   const [complete, setComplete] = useState(false)
 
+  const onCompleted = (result) => {
+    const { completeToDoList: { ok } } = result
+    if (ok) {
+      setComplete(false)
+      if (id === item._id) {
+        navigate(routes.todo)
+      }
+    }
+  }
+
   const [completeToDoList, { loading }] = useMutation(COMPLETE_TO_DO_LIST_MUTATION, {
+    onCompleted,
     refetchQueries: [{ query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: false } }]
   })
 

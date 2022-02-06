@@ -34,7 +34,8 @@ const Form = styled.form`
     border-radius: 5px;
     border-radius: 0.3125rem;
     border: ${props => props.isEdit && `${props.theme.fontColor} 1px solid`};
-    background-color: #ffffff;
+    background-color: ${props => props.theme.originBgColor};
+    transition: background-color 1s ease;
     line-height: 160%;
     ::placeholder {
     color: ${props => props.theme.fontColor};
@@ -70,7 +71,8 @@ const Icon = styled.div`
 
 const Input = styled.input`
 width: 100%;
-background-color: #ffffff;
+background-color: ${props => props.theme.originBgColor};
+transition: background-color 1s ease;
 padding: 15px 20px;
 padding: 0.9375rem 1.25rem;
 border-radius: 5px;
@@ -87,6 +89,7 @@ const SubmitBtn = styled.input`
   cursor : pointer;
   background-color : ${props => props.theme.btnBgColor};
   color : ${props => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
   padding : 10px;
   padding : 0.625rem;
   text-align : center;
@@ -104,7 +107,8 @@ const SetDate = styled.div`
     row-gap : 0.625rem;
     input {
         width : 100%;
-        background-color : #ffffff;
+        background-color: ${props => props.theme.originBgColor};
+        transition: background-color 1s ease;
         text-align : center;
         padding : 20px 10px;
         padding : 1.25rem 0.625rem;
@@ -127,6 +131,7 @@ const EndDate = styled.div`
 const ResetBtn = styled.div`
   cursor: pointer;
   align-self : center;
+  /* color: ${props => props.theme.fontColor}; */
   svg {
       display : flex;
       font-size : 1.25em;
@@ -140,7 +145,8 @@ const SetStar = styled.div`
     grid-template-columns: repeat(5, auto);
     column-gap: 20px;
     column-gap: 1.25rem;
-    background-color: #ffffff;
+    background-color: ${props => props.theme.originBgColor};
+    transition: background-color 1s ease;
     padding: 0px 40px;
     padding: 0rem 2.5rem;
     border-radius: 40px;
@@ -151,6 +157,7 @@ const SetStar = styled.div`
 const StarIcon = styled.div`
     cursor: pointer;
     color: ${props => props.isStar && props.theme.redColor};
+    transition: ${props => props.isStar && "color 1s ease"};
     padding: ${props => props.notPaddingTop ? "0px" : "15px"} 0px;
     padding: ${props => props.notPaddingTop ? "0px" : "0.9375rem"} 0rem;
     font-size: 1.25em;
@@ -164,6 +171,7 @@ const DelBtn = styled.div`
   cursor : pointer;
   background-color : ${props => props.theme.redColor};
   color : ${props => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
   padding : 10px;
   padding : 0.625rem;
   text-align : center;
@@ -331,7 +339,7 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
             placeholderText="종료일 설정"
           />
         </EndDate>
-        <ResetBtn onClick={onClickResetDateBtn}><GrPowerReset></GrPowerReset></ResetBtn>
+        <ResetBtn onClick={onClickResetDateBtn}><GrPowerReset /></ResetBtn>
       </SetDate>
     </Layout>
     <Layout>
