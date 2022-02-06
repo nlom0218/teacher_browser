@@ -12,8 +12,9 @@ export const SEE_PAGE_LINK_QUERY = gql`
       updateAt
     }
   }
+`
 
-export const SEE_MY_PAGE_LINK_QUERY=gql`
+export const SEE_MY_PAGE_LINK_QUERY = gql`
 query SeeMyPageLink($userEmail: String!) {
   seeMyPageLink(userEmail: $userEmail) {
     _id

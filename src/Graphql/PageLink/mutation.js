@@ -7,6 +7,7 @@ export const CREATE_PAGE_LINK_MUTATION = gql`
       error
     }
   }
+`
 
 export const UPDATE_PAGE_LINK_MUTATION = gql`
   mutation Mutation($pageTitle: String!, $pageDescription: String, $folder: [String]) {
@@ -20,6 +21,15 @@ export const UPDATE_PAGE_LINK_MUTATION = gql`
 export const DELETE_PAGE_LINK_MUTATION = gql`
   mutation DeletePageLink($pageTitle: String!) {
     deletePageLink(pageTitle: $pageTitle) {
+      ok
+      error
+    }
+  }
+`
+
+export const EDIT_PAGE_LINK_MEMO_MUTATION = gql`
+  mutation EditPageLinkMemo($userEmail: String!, $memo: String!, $pageTitle: String!) {
+    editPageLinkMemo(userEmail: $userEmail, memo: $memo, pageTitle: $pageTitle) {
       ok
       error
     }
