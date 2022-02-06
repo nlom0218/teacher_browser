@@ -60,6 +60,10 @@ const TodoBody = styled.div`
   }
 `;
 
+const ToDoSortBtn = styled.div`
+  position: relative;
+`
+
 const TodoList = () => {
   // 1. 기간 내에 있는 할 일 목록 & 완료가 되지 않는 목록 => 진행중인 목록 ing
   // 2. 기간 내에 있는 할 일 목록 & 완료된 목록이면 => 진행중인 목록 맨 아래에 체크된 표시로 있어야 함 ing, complete
@@ -101,6 +105,7 @@ const TodoList = () => {
       <Container>
         <TodoHead ingToDosLength={ingToDos.length} />
         <TodoBody>
+          <ToDoSortBtn></ToDoSortBtn>
           {ingToDos.length !== 0 && <div className="ing_todo todo_body"><TodoIng ingToDos={ingToDos} /></div>}
           <div className="not_ing_todo todo_body">
             {id && <ToDoDetail id={id} userEmail={me?.email} setErrMsg={setErrMsg} setMsg={setMsg} />}
