@@ -9,6 +9,9 @@ import TodoIng from '../Components/TodoList/TodoIng';
 import AlertMessage from '../Components/Shared/AlertMessage';
 import { SEE_TO_DO_LIST_QUERY } from '../Graphql/ToDoList/query';
 import useMe from '../Hooks/useMe';
+import { useParams } from 'react-router';
+import ToDoDetail from '../Components/TodoList/ToDoDetail';
+import Loading from '../Components/Shared/Loading';
 
 // const ListContainer = styled.div`
 //   margin-left : auto;
@@ -65,6 +68,7 @@ const TodoList = () => {
   // 6. 기간이 설정되지 않은 목록 => 팝업창 complete
 
   const me = useMe()
+  const { id } = useParams()
 
   const isPopup = useReactiveVar(isPopupVar);
   const [ingToDos, setIngToDos] = useState([])
@@ -86,13 +90,19 @@ const TodoList = () => {
     }
   }, [data])
 
+  if (loading) {
+    return <Loading page="mainPage" />
+  }
+
   return (
     <BasicContainer>
       <Container>
         <TodoHead ingToDosLength={ingToDos.length} />
         <TodoBody>
           <div className="ing_todo todo_body"><TodoIng ingToDos={ingToDos} /></div>
-          <div className="not_ing_todo todo_body"></div>
+          <div className="not_ing_todo todo_body">
+            {id && <ToDoDetail id={id} userEmail={me?.email} setErrMsg={setErrMsg} />}
+          </div>
         </TodoBody>
         {/* <DoList todos={todos} onCheckToggle={onCheckToggle}/> */}
       </Container>

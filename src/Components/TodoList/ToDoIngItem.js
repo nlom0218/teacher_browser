@@ -6,6 +6,8 @@ import { BsStarFill } from 'react-icons/bs';
 import { useMutation } from '@apollo/client';
 import { COMPLETE_TO_DO_LIST_MUTATION } from "../../Graphql/ToDoList/mutation"
 import { SEE_TO_DO_LIST_QUERY } from '../../Graphql/ToDoList/query';
+import { useNavigate, useParams } from 'react-router';
+import routes from '../../routes';
 
 const completeToDoAni = keyframes`
   from {
@@ -30,6 +32,8 @@ const ToDoItem = styled.div`
   grid-template-columns: auto 1fr auto;
   column-gap: 20px;
   column-gap: 1.25rem;
+  row-gap: 10px;
+  row-gap: 0.625rem;
   align-items: flex-start;
   border-bottom: 1px solid ${props => props.theme.hoverColor};
   transition: border-bottom 1s ease;
@@ -50,8 +54,8 @@ const CheckIcon = styled.div`
 `
 
 const ToDo = styled.div`
-  padding: 10px 0px;
-  padding: 0.625rem 0rem;
+  padding: 10px;
+  padding: 0.625rem;
   font-size: 1.2em;
   font-size: 1.2rem;
   overflow: hidden;
@@ -59,6 +63,14 @@ const ToDo = styled.div`
   text-overflow: ellipsis;
   cursor: pointer;
   position: relative;
+  background-color: ${props => props.isSeleted && props.theme.contentBgColor};
+  transition: background-color 1s ease;
+  border-radius: 10px;
+  border-radius: 0.625rem;
+  :hover {
+    background-color: ${props => props.theme.contentBgColor};
+    transition: background-color 0.6s ease;
+  }
 `
 
 const Star = styled.div`
@@ -98,7 +110,9 @@ const CompleteLine = styled.div`
 `
 
 const ToDoIngItem = ({ item }) => {
-  console.log(item._id, item.userEmail);
+  const navigate = useNavigate()
+  const { id } = useParams()
+
   const [endDate, setEndDate] = useState(undefined)
   const [complete, setComplete] = useState(false)
 
@@ -118,6 +132,10 @@ const ToDoIngItem = ({ item }) => {
     }, 1000)
   }
 
+  const onClickToDo = () => {
+    navigate(`${routes.todo}/${item._id}`)
+  }
+
   useEffect(() => {
     if (item.endDate) {
       const date = new window.Date(parseInt(item.endDate))
@@ -127,7 +145,7 @@ const ToDoIngItem = ({ item }) => {
   return (<ToDoItem complete={complete}>
     {/* <Line></Line> */}
     <CheckIcon onClick={onClickCheck}>{complete ? <RiCheckboxCircleLine /> : <RiCheckboxBlankCircleLine />}</CheckIcon>
-    <ToDo>{item.toDo}
+    <ToDo onClick={onClickToDo} isSeleted={id === item._id}>{item.toDo}
       {complete && <CompleteLine></CompleteLine>}
     </ToDo>
     <Star star={item.star}>

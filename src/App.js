@@ -78,6 +78,7 @@ function App() {
         <Route path={routes.naverLoginCallBack} element={<NaverLoginCallBack />} />
         <Route path={routes.editAccount} element={<EditAccount />} />
         <Route path={routes.todo} element={<TodoList />} />
+        <Route path={`${routes.todo}/:id`} element={<TodoList />} />
         <Route path={routes.calendar} element={<Calendar />} />
         <Route path={routes.pageLink} element={<PageLink />} />
         <Route path={routes.menu} element={<Menu />} />
