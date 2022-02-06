@@ -158,7 +158,7 @@ const StarIcon = styled.div`
     }
 `
 
-const ToDoDetail = ({ id, userEmail, setErrMsg }) => {
+const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [star, setStar] = useState(3)
@@ -174,7 +174,15 @@ const ToDoDetail = ({ id, userEmail, setErrMsg }) => {
     mode: "onChange"
   })
 
+  const onCompleted = (result) => {
+    const { editToDoList: { ok } } = result
+    if (ok) {
+      setMsg("할 일 정보가 수정되었습니다.")
+    }
+  }
+
   const [editToDoList, { loading: editLoading }] = useMutation(EDIT_TO_DO_LIST_MUTATION, {
+    onCompleted,
     refetchQueries: [{ query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: false } }]
   })
 
@@ -201,15 +209,14 @@ const ToDoDetail = ({ id, userEmail, setErrMsg }) => {
       }
     }
     const { toDo, contents } = data
-
     editToDoList({
       variables: {
-        id: id,
+        id,
         userEmail,
         toDo,
         contents,
-        startDate,
-        endDate,
+        ...(startDate && { startDate: new Date(startDate) }),
+        ...(endDate && { endDate: new Date(endDate) }),
         star
       }
     })

@@ -73,6 +73,7 @@ export const SEE_ONE_STUDENT_QUERY = gql`
       allergy
       tag
       trash
+      icon
       journal {
         _id
         date

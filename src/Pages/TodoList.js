@@ -75,6 +75,7 @@ const TodoList = () => {
   const [notToDos, setNotToDos] = useState([])
   const [inComingToDos, setInComingToDos] = useState([])
   const [errMsg, setErrMsg] = useState(undefined)
+  const [msg, setMsg] = useState(undefined)
 
   const { data, loading } = useQuery(SEE_TO_DO_LIST_QUERY, {
     variables: {
@@ -101,13 +102,14 @@ const TodoList = () => {
         <TodoBody>
           <div className="ing_todo todo_body"><TodoIng ingToDos={ingToDos} /></div>
           <div className="not_ing_todo todo_body">
-            {id && <ToDoDetail id={id} userEmail={me?.email} setErrMsg={setErrMsg} />}
+            {id && <ToDoDetail id={id} userEmail={me?.email} setErrMsg={setErrMsg} setMsg={setMsg} />}
           </div>
         </TodoBody>
         {/* <DoList todos={todos} onCheckToggle={onCheckToggle}/> */}
       </Container>
       {isPopup === "todoCreate" && <TodoCreate setErrMsg={setErrMsg} userEmail={me?.email} />}
       <AlertMessage msg={errMsg} time={3000} setMsg={setErrMsg} type="error" />
+      <AlertMessage msg={msg} time={3000} setMsg={setMsg} type="success" />
     </BasicContainer>
   )
 };
