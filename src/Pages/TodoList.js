@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import TodoHead from '../Components/TodoList/TodoHead';
 import styled from 'styled-components';
-import TodoCreate from '../Components/TodoList/TodoCreate';
+import TodoCreate from '../Components/TodoList/Popup/TodoCreate';
 import { useQuery, useReactiveVar } from '@apollo/client';
 import { isPopupVar } from '../apollo';
 import TodoIng from '../Components/TodoList/TodoIng';
@@ -48,7 +48,7 @@ const TodoBody = styled.div`
     left : 0;
     width : 60%;
   }
-  .not_completed_todo {
+  .not_ing_todo {
     top : 0;
     bottom : 0;
     right : 0;
@@ -67,7 +67,9 @@ const TodoList = () => {
   const me = useMe()
 
   const isPopup = useReactiveVar(isPopupVar);
-  const [ingTodos, setIngTodos] = useState([])
+  const [ingToDos, setIngToDos] = useState([])
+  const [notToDos, setNotToDos] = useState([])
+  const [inComingToDos, setInComingToDos] = useState([])
   const [errMsg, setErrMsg] = useState(undefined)
 
   const { data, loading } = useQuery(SEE_TO_DO_LIST_QUERY, {
@@ -76,23 +78,21 @@ const TodoList = () => {
     }
   })
 
-  console.log(data);
-
   useEffect(() => {
-    //ing 로 갈 할 일 목록
-    const newIngTodos = () => {
-
+    if (data) {
+      setIngToDos(data?.seeToDoList?.filter(item => item.ingToDo === true))
+      setNotToDos(data?.seeToDoList?.filter(item => item.notToDo === true))
+      setInComingToDos(data?.seeToDoList?.filter(item => item.inComingToDo === true))
     }
-  }, [])
-
+  }, [data])
 
   return (
     <BasicContainer>
       <Container>
-        <TodoHead />
+        <TodoHead ingToDosLength={ingToDos.length} />
         <TodoBody>
-          <div className="ing_todo todo_body"><TodoIng /></div>
-          <div className="not_completed_todo todo_body"></div>
+          <div className="ing_todo todo_body"><TodoIng ingToDos={ingToDos} /></div>
+          <div className="not_ing_todo todo_body"></div>
         </TodoBody>
         {/* <DoList todos={todos} onCheckToggle={onCheckToggle}/> */}
       </Container>

@@ -47,7 +47,7 @@ const ButtonContent = styled.div`
   }
 `;
 
-const TodoHead = ({ todoLength, onInsertToggle }) => {
+const TodoHead = ({ ingToDosLength }) => {
   const date = new Date()
   const processSetDay = () => {
     const day = date.getDay()
@@ -82,7 +82,7 @@ const TodoHead = ({ todoLength, onInsertToggle }) => {
       <HeadLayout>
         <h1>{processSetDate()}</h1>
         <div className="day">{processSetDay()}</div>
-        <div className="tasks-left">할 일 {todoLength}개 남음</div>
+        <div className="tasks-left">할 일 {ingToDosLength}개 남음</div>
       </HeadLayout>
       <ButtonContent>
         <MdAddCircle onClick={onClickCreateBtn} />

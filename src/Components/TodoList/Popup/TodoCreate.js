@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { outPopup } from '../../apollo';
-import PopupContainer from '../Shared/PopupContainer';
+import { outPopup } from '../../../apollo';
+import PopupContainer from '../../Shared/PopupContainer';
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
 import { GrPowerReset } from "react-icons/gr"
 import { BsCalendarDate, BsFillPencilFill } from "react-icons/bs"
 import { CgNotes } from "react-icons/cg"
 import { useMutation } from '@apollo/client';
-import { CREATE_TO_DO_LIST_MUTATION } from '../../Graphql/ToDoList/mutation';
-import { SEE_TO_DO_LIST_QUERY } from '../../Graphql/ToDoList/query';
+import { CREATE_TO_DO_LIST_MUTATION } from '../../../Graphql/ToDoList/mutation';
+import { SEE_TO_DO_LIST_QUERY } from '../../../Graphql/ToDoList/query';
 
 
 
