@@ -5,6 +5,7 @@ import { customMedia } from "../../../styles";
 const PageLinkList = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  /* grid-column: ${(props) => props.none && 1 / 3}; */
   row-gap: 20px;
   row-gap: 1.25rem;
   column-gap: 20px;
@@ -17,6 +18,7 @@ const PageLinkList = styled.div`
   }
   ${customMedia.greaterThan("desktop")`
   grid-template-columns: repeat(4,1fr);
+
 `}
 `;
 

@@ -12,10 +12,9 @@ import SeePageLink from "../Components/PageLink/Popup/SeePageLink";
 import DetailPageLink from "../Components/PageLink/Popup/DetailPageLink";
 
 //추천사이트 목록 정리하기
-//나의 즐겨찾기에서 폴더별 정리
 //즐겨찾기 없을 경우 설명하는 페이지 추가
 //반응형 화면 구성
-//linkname -> id
+// 즐겨찾기 페이지 없을 경우 문구가 줄이 나눠서 나옴.
 
 const Container = styled.div``;
 

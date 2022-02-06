@@ -1,5 +1,5 @@
 // 리액트
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // 팝업
 import { inPopup } from "../../../apollo";
@@ -9,6 +9,7 @@ import styled, { keyframes } from "styled-components";
 import Content from "./Content";
 import { BsFillCaretDownSquareFill, BsFillCaretUpSquareFill, BsFillPlusSquareFill } from "react-icons/bs";
 import { customMedia } from "../../../styles";
+import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
 
 const Container = styled.div`
   display: grid;
@@ -76,6 +77,24 @@ const Bottom = styled.div`
   row-gap: 1.25rem;
 `;
 
+const SortContainer = styled.div`
+  display: grid;
+  grid-template-columns: auto auto auto 1fr;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+`;
+const SortBtn = styled.div`
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  column-gap: 5px;
+  column-gap: 0.3125rem;
+  cursor: pointer;
+  svg {
+    display: flex;
+  }
+`;
+
 const NoMsg = styled.div`
   text-align: center;
   color: ${(props) => props.theme.redColor};
@@ -87,18 +106,27 @@ const NoMsg = styled.div`
 //
 const InputArea = ({ me, student, opened }) => {
   const [isClosed, setIsClosed] = useState(opened ? false : true);
+  const [sort, setSort] = useState("id-up");
+  const [journal, setJournal] = useState(student.journal);
 
   if (opened) localStorage.removeItem("focusStudent");
-
-  function addText() {
-    inPopup("writeJournal");
-    localStorage.setItem("selectedStudent", JSON.stringify(student));
-  }
 
   function onClickPlusBtn() {
     inPopup("writeJournal");
     localStorage.setItem("selectedStudent", JSON.stringify({ studentName: student.studentName, studentNumber: student.studentNumber, studentId: student._id }));
   }
+
+  useEffect(() => {
+    if (opened) setIsClosed(false);
+    else setIsClosed(true);
+  }, [opened, student.studentName]);
+  useEffect(() => {
+    setJournal(student.journal);
+    if (sort === "id-up") setJournal((prev) => [...prev].sort((a, b) => (a._id < b._id ? -1 : a._id > b._id ? 1 : 0)));
+    else if (sort === "id-down") setJournal((prev) => [...prev].sort((a, b) => (a._id > b._id ? -1 : a._id < b._id ? 1 : -1)));
+    else if (sort === "date-up") setJournal((prev) => [...prev].sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0)));
+    else if (sort === "date-down") setJournal((prev) => [...prev].sort((a, b) => (a.date > b.date ? -1 : a.date < b.date ? 1 : -1)));
+  }, [sort, student]);
 
   return (
     <Container>
@@ -116,8 +144,18 @@ const InputArea = ({ me, student, opened }) => {
         </Top>
         {!isClosed && (
           <Bottom>
-            {student.journal.length !== 0 ? (
-              student.journal.map((journal, index) => <Content key={index} me={me} studentId={student._id} journal={journal} />)
+            <SortContainer>
+              <SortBtn onClick={() => setSort((prev) => (prev === "id-up" ? "id-down" : "id-up"))}>
+                <div>{sort === "id-up" || sort === "id-down" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+                <div>생성일 순{sort === "id-up" ? "↑" : sort === "id-down" ? "↓" : ""}</div>
+              </SortBtn>
+              <SortBtn onClick={() => setSort((prev) => (prev === "date-up" ? "date-down" : "date-up"))}>
+                <div>{sort === "date-up" || sort === "date-down" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+                <div>날짜 순{sort === "date-up" ? "↑" : sort === "date-down" ? "↓" : ""}</div>
+              </SortBtn>
+            </SortContainer>
+            {journal.length !== 0 ? (
+              journal.map((journal, index) => <Content key={index} me={me} studentId={student._id} journal={journal} />)
             ) : (
               <NoMsg>우측 상단에 있는 +버튼을 눌러 기록을 추가하세요.</NoMsg>
             )}

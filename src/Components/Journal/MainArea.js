@@ -1,5 +1,5 @@
 // 리액트
-import React, { useState } from "react";
+import React from "react";
 
 // 컴포넌트
 import styled from "styled-components";
@@ -42,8 +42,6 @@ const StudentList = styled.div`
 
 //
 const MainArea = ({ me, students, loading, error, sort, setSort }) => {
-  const [selectedListId, setSelectedListId] = useState();
-
   const focusStudent = localStorage.getItem("focusStudent");
 
   if (loading) return <div>Loading...</div>;
