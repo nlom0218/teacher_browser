@@ -14,6 +14,7 @@ const ToDoList = styled.div`
 `
 
 const TodoIng = ({ ingToDos }) => {
+    console.log(ingToDos);
     return (<Container>
         <ToDoList>{ingToDos.map((item, index) => {
             return <ToDoIngItem key={index} item={item} />

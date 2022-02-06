@@ -19,11 +19,14 @@ const completeToDoAni = keyframes`
 `
 
 const completeToDoItemAni = keyframes`
-  from {
+  0% {
     opacity: 1;
   }
-  to {
+  50% {
     opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 `
 
@@ -40,7 +43,7 @@ const ToDoItem = styled.div`
   padding-bottom: 10px;
   padding-bottom: 0.625rem;
   margin-bottom: 0.625rem;
-  animation: ${props => props.complete && completeToDoItemAni} 1s ease forwards;
+  animation: ${props => props.complete && completeToDoItemAni} 2s ease forwards;
 `
 
 const CheckIcon = styled.div`
@@ -106,7 +109,7 @@ const CompleteLine = styled.div`
   background-color: ${props => props.theme.fontColor};
   top: 50%;
   transform: translate(0, -50%);
-  animation: ${completeToDoAni} 1s ease forwards;
+  animation: ${completeToDoAni} 1s ease;
 `
 
 const ToDoIngItem = ({ item }) => {
@@ -137,6 +140,9 @@ const ToDoIngItem = ({ item }) => {
   }
 
   useEffect(() => {
+    if (!item.endDate) {
+      setEndDate(undefined)
+    }
     if (item.endDate) {
       const date = new window.Date(parseInt(item.endDate))
       setEndDate(`${processSetDate(date)} ${processSetDay(date)}`)

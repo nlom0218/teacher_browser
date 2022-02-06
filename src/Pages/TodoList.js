@@ -95,14 +95,12 @@ const TodoList = () => {
     return <Loading page="mainPage" />
   }
 
-  console.log("sdfsdf");
-
   return (
     <BasicContainer>
       <Container>
         <TodoHead ingToDosLength={ingToDos.length} />
         <TodoBody>
-          <div className="ing_todo todo_body"><TodoIng ingToDos={ingToDos} /></div>
+          {ingToDos.length !== 0 && <div className="ing_todo todo_body"><TodoIng ingToDos={ingToDos} /></div>}
           <div className="not_ing_todo todo_body">
             {id && <ToDoDetail id={id} userEmail={me?.email} setErrMsg={setErrMsg} setMsg={setMsg} />}
           </div>
