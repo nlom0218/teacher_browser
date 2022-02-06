@@ -48,14 +48,18 @@ export const Item = styled.div`
     border-radius: 5px;
     border-radius: 0.3125rem;
   }
-  display: ${props => props.addStudent && "grid"};
-  grid-template-columns: ${props => props.addStudent && "1fr auto"};
+  display: grid;
+  grid-template-columns: ${props => props.addStudent ? "1fr auto" : "auto 1fr"};
   svg {
     font-size: 1.25rem;
     font-size: 1.25em;
     cursor: pointer;
   }
-  align-items: ${props => props.addStudent && "center"};
+  align-items: center;
+  column-gap: 5px;
+  column-gap: 0.3125rem;
+  row-gap: 5px;
+  row-gap: 0.3125rem;
 `
 
 export const Btn = styled.div`

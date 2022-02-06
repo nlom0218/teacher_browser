@@ -23,6 +23,7 @@ export const SEE_ALL_STUDENT_QUERY = gql`
       listId
       tag
       trash
+      icon
     }
   }
 `;
@@ -72,7 +73,11 @@ export const SEE_ONE_STUDENT_QUERY = gql`
       allergy
       tag
       trash
-      journal
+      journal {
+        _id
+        date
+        text
+      }
     }
   }
 `;

@@ -1,9 +1,10 @@
 import { useQuery, useReactiveVar } from '@apollo/client';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../apollo';
+import AlertMessage from '../Components/Shared/AlertMessage';
 import BasicContainer from '../Components/Shared/BasicContainer';
-import { SuccessMsg } from '../Components/Shared/styled/SuccessMsg';
+import Loading from '../Components/Shared/Loading';
 import DeleteAllStudent from '../Components/Trash/Popup/DeleteAllStudent';
 import RestoreAllStudent from '../Components/Trash/Popup/RestoreAllStudent';
 import StudentInTrash from '../Components/Trash/StudentInTrash';
@@ -95,17 +96,10 @@ const Trash = () => {
     inPopup("restoreAllStudent")
   }
 
-  useEffect(() => {
-    if (successMsg) {
-      let timer = setTimeout(() => {
-        setSuccessMsg(undefined)
-      }, 5000)
+  if (loading) {
+    return <Loading page="mainPage" />
+  }
 
-      // setTimeout 타이머를 사용한 경우 타이머를 해재해야 한다.
-      // 컴포넌트가 사라질 때 타이머를 없애는 코드 추가 필요
-      return () => { clearTimeout(timer) }
-    }
-  }, [successMsg])
   return (<BasicContainer menuItem={true}>
     <Container>
       <TopLayout>
@@ -130,7 +124,7 @@ const Trash = () => {
         : <div>휴지통으로 이동된 학생이 없습니다.</div>
       }
     </Container>
-    {successMsg && <SuccessMsg>{successMsg.msg}</SuccessMsg>}
+    <AlertMessage msg={successMsg} setMsg={setSuccessMsg} time={5000} type="success" />
     {isPopup === "deleteAllStudent" &&
       <DeleteAllStudent
         teacherEmail={me?.email}
