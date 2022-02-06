@@ -1,8 +1,7 @@
 import React from "react";
-import { BsFillBookFill, BsPencil } from "react-icons/bs";
+import { BsPencil } from "react-icons/bs";
 import styled from "styled-components";
 import PopupContainer from "../../Shared/PopupContainer";
-import { CgNotes } from "react-icons/cg";
 import TextareaAutosize from "react-textarea-autosize";
 import { useMutation } from "@apollo/client";
 import { SETTING_LINK_MUTATION } from "../../../Graphql/User/mutation";

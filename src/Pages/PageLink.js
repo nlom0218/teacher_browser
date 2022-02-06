@@ -40,7 +40,6 @@ const PageLink = () => {
           pageLinkSection={pageLinkSection}
           userEmail={me?.email}
           link={me?.link}
-          // favoriteNews={me?.favoriteNews}
         />
       </Container>
       {isPopup === "addBookmark" && <AddBookmark userEmail={me?.email} />}

@@ -3,13 +3,10 @@ import styled from "styled-components";
 import { IoArrowRedo } from "react-icons/io5";
 import { BsBookmarkPlus, BsFillBookFill } from "react-icons/bs";
 import { inPopup } from "../../apollo";
-import IcBookMark from "../../icons/Bookmark/IcBookMark";
 import IcBookMarkClick from "../../icons/Bookmark/IcBookMarkClick";
 import { useMutation } from "@apollo/client";
 import { ME_QUERY } from "../../Hooks/useMe";
 import { SETTING_LINK_MUTATION } from "../../Graphql/User/mutation";
-import { CgFileDocument } from "react-icons/cg";
-import { AiFillYoutube } from "react-icons/ai";
 import { useState } from "react/cjs/react.development";
 import { CardFadeIn } from "../../Animations/Fade";
 import ContentsItemLayout from "./Styled/ContentsItemLayout";
@@ -33,26 +30,6 @@ const SiteBtn = styled.div`
   justify-items: center;
   font-size: 1.5rem;
   font-size: 1.5em;
-`;
-const SiteInfo = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: ${(props) => props.theme.cardHoverBg};
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  animation: ${CardFadeIn} 0.6s ease forwards;
-  color: ${(props) => props.theme.bgColor};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 3;
-  padding: 20px;
-  padding: 1.25rem;
-  line-height: 160%;
-  overflow: hidden;
 `;
 
 const LinkBtn = styled.div`

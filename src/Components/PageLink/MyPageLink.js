@@ -1,5 +1,4 @@
 import React from "react";
-import { FaWindowMinimize } from "react-icons/fa";
 import styled from "styled-components";
 import SiteType from "./SiteType";
 import ContentsItemLayout from "./Styled/ContentsItemLayout";
