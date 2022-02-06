@@ -1,11 +1,8 @@
 // 리액트
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 
 // 스타일
 import styled from "styled-components";
-import { BtnFadeIn } from "../../Animations/Fade";
-import { inputLine } from "../../Animations/InputLine";
 import { customMedia } from "../../styles";
 
 // 아이콘
