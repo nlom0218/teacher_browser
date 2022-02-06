@@ -13,6 +13,7 @@ export const SEE_TO_DO_LIST_QUERY = gql`
       ingToDo
       notToDo
       inComingToDo
+      star
     }
   }
 `
