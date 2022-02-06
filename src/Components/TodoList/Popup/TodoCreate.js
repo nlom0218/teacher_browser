@@ -6,7 +6,7 @@ import PopupContainer from '../../Shared/PopupContainer';
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
 import { GrPowerReset } from "react-icons/gr"
-import { BsCalendarDate, BsFillPencilFill } from "react-icons/bs"
+import { BsCalendarDate, BsFillPencilFill, BsStar, BsStarFill } from "react-icons/bs"
 import { CgNotes } from "react-icons/cg"
 import { useMutation } from '@apollo/client';
 import { CREATE_TO_DO_LIST_MUTATION } from '../../../Graphql/ToDoList/mutation';
@@ -18,7 +18,7 @@ const Form = styled.form`
   padding : 20px 0px;
   padding : 1.25rem 0rem;
   display : grid;
-  grid-template-rows : auto auto 1fr auto auto; 
+  grid-template-rows : auto auto 1fr auto auto auto; 
   row-gap : 20px;
   row-gap : 1.25rem;
   min-height : 100%;
@@ -134,9 +134,36 @@ const ResetBtn = styled.div`
   }
 `;
 
+const SetStar = styled.div`
+    justify-self: flex-start;
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    column-gap: 20px;
+    column-gap: 1.25rem;
+    background-color: #ffffff;
+    padding: 0px 40px;
+    padding: 0rem 2.5rem;
+    border-radius: 40px;
+    border-radius: 2.5rem;
+    justify-items: center;
+`
+
+const StarIcon = styled.div`
+    cursor: pointer;
+    color: ${props => props.isStar && props.theme.redColor};
+    padding: ${props => props.notPaddingTop ? "0px" : "15px"} 0px;
+    padding: ${props => props.notPaddingTop ? "0px" : "0.9375rem"} 0rem;
+    font-size: 1.25em;
+    font-size: 1.25rem;
+    svg {
+        display: flex;
+    }
+`
+
 const TodoCreate = ({ setErrMsg, userEmail }) => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+    const [star, setStar] = useState(3)
 
     const onCompleted = (result) => {
         const { createToDoList: { ok } } = result
@@ -177,6 +204,7 @@ const TodoCreate = ({ setErrMsg, userEmail }) => {
             variables: {
                 userEmail,
                 toDo,
+                star,
                 ...(contents && { contents }),
                 ...(startDate && { startDate }),
                 ...(endDate && { endDate })
@@ -242,6 +270,16 @@ const TodoCreate = ({ setErrMsg, userEmail }) => {
                         </EndDate>
                         <ResetBtn onClick={onClickResetDateBtn}><GrPowerReset></GrPowerReset></ResetBtn>
                     </SetDate>
+                </Layout>
+                <Layout>
+                    <Icon><BsStarFill /></Icon>
+                    <SetStar>
+                        <StarIcon onClick={() => setStar(1)} isStar={star > 0}><BsStarFill /></StarIcon>
+                        <StarIcon onClick={() => setStar(2)} isStar={star > 1}>{star > 1 ? <BsStarFill /> : <BsStar />}</StarIcon>
+                        <StarIcon onClick={() => setStar(3)} isStar={star > 2}>{star > 2 ? <BsStarFill /> : <BsStar />}</StarIcon>
+                        <StarIcon onClick={() => setStar(4)} isStar={star > 3}>{star > 3 ? <BsStarFill /> : <BsStar />}</StarIcon>
+                        <StarIcon onClick={() => setStar(5)} isStar={star > 4}>{star > 4 ? <BsStarFill /> : <BsStar />}</StarIcon>
+                    </SetStar>
                 </Layout>
                 <SubmitBtn
                     type="submit"
