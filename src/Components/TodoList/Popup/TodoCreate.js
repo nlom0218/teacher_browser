@@ -18,7 +18,7 @@ const Form = styled.form`
   padding : 20px 0px;
   padding : 1.25rem 0rem;
   display : grid;
-  grid-template-rows : auto 1fr auto auto; 
+  grid-template-rows : auto auto 1fr auto auto; 
   row-gap : 20px;
   row-gap : 1.25rem;
   min-height : 100%;
@@ -43,6 +43,12 @@ const Form = styled.form`
 }
 }
 `;
+
+const Title = styled.div`
+    justify-self: flex-end;
+    font-size: 1.25em;
+    font-size: 1.25rem;
+`
 
 
 const Layout = styled.div`
@@ -119,6 +125,7 @@ const EndDate = styled.div`
 `;
 
 const ResetBtn = styled.div`
+  cursor: pointer;
   align-self : center;
   svg {
       display : flex;
@@ -185,6 +192,7 @@ const TodoCreate = ({ setErrMsg, userEmail }) => {
     return (
         <PopupContainer maxHeight={true}>
             <Form onSubmit={handleSubmit(onSubmit)}>
+                <Title>할 일 작성</Title>
                 <Layout>
                     <Icon><BsFillPencilFill /></Icon>
                     <Input
