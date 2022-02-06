@@ -26,3 +26,12 @@ export const COMPLETE_TO_DO_LIST_MUTATION = gql`
     }
   }
 `
+
+export const DELETE_TO_DO_LIST_MUTATION = gql`
+  mutation DeleteToDoList($id: ID!, $userEmail: String!) {
+    deleteToDoList(_id: $id, userEmail: $userEmail) {
+      error
+      ok
+    }
+  }
+`

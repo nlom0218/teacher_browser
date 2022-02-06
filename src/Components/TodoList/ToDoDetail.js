@@ -10,13 +10,15 @@ import { BsCalendarDate, BsFillPencilFill, BsStar, BsStarFill } from "react-icon
 import { CgNotes } from "react-icons/cg"
 import TextareaAutosize from 'react-textarea-autosize';
 import Loading from '../Shared/Loading';
-import { EDIT_TO_DO_LIST_MUTATION } from '../../Graphql/ToDoList/mutation';
+import { DELETE_TO_DO_LIST_MUTATION, EDIT_TO_DO_LIST_MUTATION } from '../../Graphql/ToDoList/mutation';
+import { useNavigate } from 'react-router-dom';
+import routes from '../../routes';
 
 const Form = styled.form`
   padding : 20px;
   padding : 1.25rem;
   display : grid;
-  grid-template-rows : auto auto 1fr auto auto auto; 
+  grid-template-rows : auto auto 1fr auto auto auto auto; 
   row-gap : 20px;
   row-gap : 1.25rem;
   min-height : 100%;
@@ -158,10 +160,23 @@ const StarIcon = styled.div`
     }
 `
 
+const DelBtn = styled.div`
+  cursor : pointer;
+  background-color : ${props => props.theme.redColor};
+  color : ${props => props.theme.bgColor};
+  padding : 10px;
+  padding : 0.625rem;
+  text-align : center;
+  border-radius : 5px;
+  border-radius : 0.3125rem;
+`
+
 const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [star, setStar] = useState(3)
+
+  const navigate = useNavigate()
 
   const { data, loading } = useQuery(SEE_TO_DO_LIST_QUERY, {
     variables: {
@@ -181,8 +196,21 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
     }
   }
 
+  const delOnCompleted = (result) => {
+    const { deleteToDoList: { ok } } = result
+    if (ok) {
+      navigate(routes.todo)
+      setMsg("할 일이 삭제되었습니다.")
+    }
+  }
+
   const [editToDoList, { loading: editLoading }] = useMutation(EDIT_TO_DO_LIST_MUTATION, {
     onCompleted,
+    refetchQueries: [{ query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: false } }]
+  })
+
+  const [deleteToDoList, { loading: delLoading }] = useMutation(DELETE_TO_DO_LIST_MUTATION, {
+    onCompleted: delOnCompleted,
     refetchQueries: [{ query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: false } }]
   })
 
@@ -218,6 +246,15 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
         ...(startDate && { startDate: new Date(startDate) }),
         ...(endDate && { endDate: new Date(endDate) }),
         star
+      }
+    })
+  }
+
+  const onClickDelBtn = () => {
+    deleteToDoList({
+      variables: {
+        id,
+        userEmail,
       }
     })
   }
@@ -311,6 +348,7 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
       type="submit"
       value="수정하기"
     />
+    <DelBtn onClick={onClickDelBtn}>삭제하기</DelBtn>
   </Form>);
 }
 
