@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { registerLocale } from 'react-datepicker';
 import { useForm } from 'react-hook-form';
-import { MdAddCircle } from "react-icons/md"
 import styled from 'styled-components';
 import { outPopup } from '../../apollo';
 import PopupContainer from '../Shared/PopupContainer';
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
 import { GrPowerReset } from "react-icons/gr"
+import { BsCalendarDate, BsFillPencilFill } from "react-icons/bs"
+import { CgNotes } from "react-icons/cg"
 
 
 
@@ -41,6 +41,24 @@ const Form = styled.form`
 }
 `;
 
+
+const Layout = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+`
+
+const Icon = styled.div`
+  padding: ${props => props.notPaddingTop ? "0px" : "15px"} 0px;
+  padding: ${props => props.notPaddingTop ? "0px" : "0.9375rem"} 0rem;
+  font-size: 1.25em;
+  font-size: 1.25rem;
+  svg {
+    display: flex;
+  }
+`
+
 const Input = styled.input`
 width: 100%;
 background-color: #ffffff;
@@ -69,42 +87,34 @@ const SubmitBtn = styled.input`
 
 const SetDate = styled.div`
     display : grid;
-    grid-template-columns : 1fr 1fr auto;
+    grid-template-columns : 1fr auto 1fr auto;
+    align-items: center;
     column-gap : 20px;
     column-gap : 1.25rem;
     row-gap : 10px;
     row-gap : 0.625rem;
-    input,
-    .create_todo_no_date {
+    input {
         width : 100%;
         background-color : #ffffff;
         text-align : center;
-        padding : 5px;
-        padding : 0.3125rem;
-        border-radius : 5px;
-        border-radius : 0.3125rem;
+        padding : 20px 10px;
+        padding : 1.25rem 0.625rem;
+        border-radius : 40px;
+        border-radius : 2.5rem;
         cursor : pointer;
     }
 `
 
 const StartDate = styled.div`
   display : grid;
-  grid-template-columns : auto 1fr;
   align-items : center;
-  column-gap : 20px;
-  column-gap : 1.25rem;
-`
-
-const DateType = styled.div`
 `
 
 const EndDate = styled.div`
   display : grid;
-  grid-template-columns : auto 1fr;
   align-items : center;
-  column-gap : 20px;
-  column-gap : 1.25rem;
 `;
+
 const ResetBtn = styled.div`
   align-self : center;
   svg {
@@ -114,7 +124,7 @@ const ResetBtn = styled.div`
   }
 `;
 
-const TodoCreate = ({ setToDos, toDos }) => {
+const TodoCreate = ({ setToDos, toDos, setErrMsg }) => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 
@@ -125,17 +135,17 @@ const TodoCreate = ({ setToDos, toDos }) => {
     const onSubmit = (data) => {
         if (startDate) {
             if (!endDate) {
-                window.alert("종료일을 설정해주세요.")
+                setErrMsg("종료일을 설정해주세요.")
                 return
             }
             if (startDate > endDate) {
-                window.alert("시작일과 종료일을 다시 확인해주세요.")
+                setErrMsg("시작일과 종료일을 다시 확인해주세요.")
                 return
             }
         }
         if (endDate) {
             if (!startDate) {
-                window.alert("시작일을 설정해주세요.")
+                setErrMsg("시작일을 설정해주세요.")
                 return
             }
         }
@@ -161,49 +171,56 @@ const TodoCreate = ({ setToDos, toDos }) => {
     return (
         <PopupContainer maxHeight={true}>
             <Form onSubmit={handleSubmit(onSubmit)}>
-                <Input
-                    {...register("todo", {
-                        required: true
-                    })}
-                    placeholder="내용을 입력하세요"
-                    autoComplete="off"
-                >
-                </Input>
-                <textarea
-                    {...register('contents')}
-                    placeholder="세부내용을 입력하세요">
-                </textarea>
-                <SetDate>
-                    <StartDate>
-                        <DateType>시작일</DateType>
-                        <DatePicker
-                            selected={startDate}
-                            onChange={(date) => setStartDate(date)}
-                            selectsStart
-                            startDate={startDate}
-                            endDate={endDate}
-                            dateFormat="yyyy/MM/dd"
-                            locale={ko}
-                            placeholderText="시작일 설정"
-                        />
-                    </StartDate>
-                    <EndDate>
-                        <DateType>종료일</DateType>
-                        <DatePicker
-                            selected={endDate}
-                            onChange={(date) => setEndDate(date)}
-                            selectsEnd
-                            startDate={startDate}
-                            endDate={endDate}
-                            minDate={startDate}
-                            dateFormat="yyyy/MM/dd"
-                            locale={ko}
-                            placeholderText="종료일 설정"
-                        />
-                    </EndDate>
-                    <ResetBtn onClick={onClickResetDateBtn}><GrPowerReset></GrPowerReset></ResetBtn>
-                </SetDate>
-
+                <Layout>
+                    <Icon><BsFillPencilFill /></Icon>
+                    <Input
+                        {...register("todo", {
+                            required: true
+                        })}
+                        placeholder="내용을 입력하세요"
+                        autoComplete="off"
+                    >
+                    </Input>
+                </Layout>
+                <Layout>
+                    <Icon><CgNotes /></Icon>
+                    <textarea
+                        {...register('contents')}
+                        placeholder="세부내용을 입력하세요">
+                    </textarea>
+                </Layout>
+                <Layout>
+                    <Icon><BsCalendarDate /></Icon>
+                    <SetDate>
+                        <StartDate>
+                            <DatePicker
+                                selected={startDate}
+                                onChange={(date) => setStartDate(date)}
+                                selectsStart
+                                startDate={startDate}
+                                endDate={endDate}
+                                dateFormat="yyyy/MM/dd"
+                                locale={ko}
+                                placeholderText="시작일 설정"
+                            />
+                        </StartDate>
+                        <div>~</div>
+                        <EndDate>
+                            <DatePicker
+                                selected={endDate}
+                                onChange={(date) => setEndDate(date)}
+                                selectsEnd
+                                startDate={startDate}
+                                endDate={endDate}
+                                minDate={startDate}
+                                dateFormat="yyyy/MM/dd"
+                                locale={ko}
+                                placeholderText="종료일 설정"
+                            />
+                        </EndDate>
+                        <ResetBtn onClick={onClickResetDateBtn}><GrPowerReset></GrPowerReset></ResetBtn>
+                    </SetDate>
+                </Layout>
                 <SubmitBtn
                     type="submit"
                     value="등록하기"

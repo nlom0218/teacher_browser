@@ -20,6 +20,7 @@ const Container = styled.div`
   grid-template-columns: 1fr auto;
   column-gap: 10px;
   column-gap: 0.625rem;
+  z-index: 10;
 `
 
 const CloseIcon = styled.div`

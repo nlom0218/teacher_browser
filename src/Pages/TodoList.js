@@ -6,6 +6,7 @@ import TodoCreate from '../Components/TodoList/TodoCreate';
 import { useReactiveVar } from '@apollo/client';
 import { isPopupVar } from '../apollo';
 import TodoIng from '../Components/TodoList/TodoIng';
+import AlertMessage from '../Components/Shared/AlertMessage';
 
 // const ListContainer = styled.div`
 //   margin-left : auto;
@@ -53,71 +54,73 @@ const TodoBody = styled.div`
   }
 `;
 
-  const toDoListArr = [
-    { 
-      teacherEmail : "sksthsaudgml@naver.com", // 필수값
-      startDate : "string", // startDate, endDate는 세트로 있으면 기간이 있음
-      endDate : "string", // 무기한... 현재 날짜가 endDate보다 앞설 경우 미완료된 투두리스트로 이동
-      toDo : "사과 먹기", // 필수값
-      contents : "맛있는 사과 먹기",  // => 제목만으로 부족할 때 추가 설명
-      isComplete : false, // 기본값 => false
-      ingTodo : "Boolean",
-      notTodo : "Boolean"
-    },
-    {
-      teacherEmail : "sksthsaudgml@naver.com", // 필수값
-      startDate : "string", // startDate, endDate는 세트로 있으면 기간이 있음
-      endDate : "string", // 무기한... 현재 날짜가 endDate보다 앞설 경우 미완료된 투두리스트로 이동
-      toDo : "토마토 먹기", // 필수값
-      isComplete : false, // 기본값 => false
-      ingTodo : "Boolean",
-      notTodo : "Boolean"
-    },
-  
-    {
-      teacherEmail : "sksthsaudgml@naver.com", // 필수값
-      startDate : "string", // startDate, endDate는 세트로 있으면 기간이 있음
-      endDate : "string", // 무기한... 현재 날짜가 endDate보다 앞설 경우 미완료된 투두리스트로 이동
-      toDo : "포도 먹기", // 필수값
-      contents : "맛있는 포도 먹기",  // => 제목만으로 부족할 때 추가 설명
-      isComplete : false, // 기본값 => false
-      ingTodo : "Boolean",
-      notTodo : "Boolean"
-    }
-  ]
+const toDoListArr = [
+  {
+    teacherEmail: "sksthsaudgml@naver.com", // 필수값
+    startDate: "string", // startDate, endDate는 세트로 있으면 기간이 있음
+    endDate: "string", // 무기한... 현재 날짜가 endDate보다 앞설 경우 미완료된 투두리스트로 이동
+    toDo: "사과 먹기", // 필수값
+    contents: "맛있는 사과 먹기",  // => 제목만으로 부족할 때 추가 설명
+    isComplete: false, // 기본값 => false
+    ingTodo: "Boolean",
+    notTodo: "Boolean"
+  },
+  {
+    teacherEmail: "sksthsaudgml@naver.com", // 필수값
+    startDate: "string", // startDate, endDate는 세트로 있으면 기간이 있음
+    endDate: "string", // 무기한... 현재 날짜가 endDate보다 앞설 경우 미완료된 투두리스트로 이동
+    toDo: "토마토 먹기", // 필수값
+    isComplete: false, // 기본값 => false
+    ingTodo: "Boolean",
+    notTodo: "Boolean"
+  },
+
+  {
+    teacherEmail: "sksthsaudgml@naver.com", // 필수값
+    startDate: "string", // startDate, endDate는 세트로 있으면 기간이 있음
+    endDate: "string", // 무기한... 현재 날짜가 endDate보다 앞설 경우 미완료된 투두리스트로 이동
+    toDo: "포도 먹기", // 필수값
+    contents: "맛있는 포도 먹기",  // => 제목만으로 부족할 때 추가 설명
+    isComplete: false, // 기본값 => false
+    ingTodo: "Boolean",
+    notTodo: "Boolean"
+  }
+]
 
 const TodoList = () => {
-    // 1. 기간 내에 있는 할 일 목록 & 완료가 되지 않는 목록 => 진행중인 목록 ing
-    // 2. 기간 내에 있는 할 일 목록 & 완료된 목록이면 => 진행중인 목록 맨 아래에 체크된 표시로 있어야 함 ing, complete
-    // 3. 기간 내에 없는 할 일 목록 & 완료가 되지 않는 목록 => 미완료된 목록 notcompleted
-    // 4. 기간 내에 없는 할 일 목록 & 완료된 목록이면 => 완료된 공간에 두기(팝업) complete
-    // 5. 기간이 설정되지 않은 목록 => 진행중인 목록 ing
-    // 6. 기간이 설정되지 않은 목록 => 팝업창 complete
+  // 1. 기간 내에 있는 할 일 목록 & 완료가 되지 않는 목록 => 진행중인 목록 ing
+  // 2. 기간 내에 있는 할 일 목록 & 완료된 목록이면 => 진행중인 목록 맨 아래에 체크된 표시로 있어야 함 ing, complete
+  // 3. 기간 내에 없는 할 일 목록 & 완료가 되지 않는 목록 => 미완료된 목록 notcompleted
+  // 4. 기간 내에 없는 할 일 목록 & 완료된 목록이면 => 완료된 공간에 두기(팝업) complete
+  // 5. 기간이 설정되지 않은 목록 => 진행중인 목록 ing
+  // 6. 기간이 설정되지 않은 목록 => 팝업창 complete
 
   const isPopup = useReactiveVar(isPopupVar);
   const [toDos, setToDos] = useState(toDoListArr);
   const [ingTodos, setIngTodos] = useState([])
+  const [errMsg, setErrMsg] = useState(undefined)
 
   useEffect(() => {
     //ing 로 갈 할 일 목록
     const newIngTodos = () => {
 
-    } 
+    }
   }, [toDos])
 
   console.log(toDos);
 
-  return(
+  return (
     <BasicContainer>
       <Container>
-      <TodoHead todoLength={toDos.length}/>
-      <TodoBody>
-        <div className="ing_todo todo_body"><TodoIng toDos={toDos}/></div>
-        <div className="not_completed_todo todo_body"></div>
-      </TodoBody>
-      {/* <DoList todos={todos} onCheckToggle={onCheckToggle}/> */}
-      {isPopup === "todoCreate" && <TodoCreate setToDos={setToDos} toDos={toDos}/>}
+        <TodoHead todoLength={toDos.length} />
+        <TodoBody>
+          <div className="ing_todo todo_body"><TodoIng toDos={toDos} /></div>
+          <div className="not_completed_todo todo_body"></div>
+        </TodoBody>
+        {/* <DoList todos={todos} onCheckToggle={onCheckToggle}/> */}
       </Container>
+      {isPopup === "todoCreate" && <TodoCreate setToDos={setToDos} toDos={toDos} setErrMsg={setErrMsg} />}
+      <AlertMessage msg={errMsg} time={3000} setMsg={setErrMsg} type="error" />
     </BasicContainer>
   )
 };
