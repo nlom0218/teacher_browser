@@ -46,19 +46,20 @@ const MoveIcon = styled.div`
 
 const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit }) => {
   const [myPageLink, setMyPageLink] = useState([]);
+  const [none, setNone] = useState(true);
+  const pageLinkFolder = useReactiveVar(pageLinkFolderVar);
 
   const { data, loading } = useQuery(SEE_MY_PAGE_LINK_QUERY, {
     variables: {
       userEmail,
+      folder: useReactiveVar(pageLinkFolderVar),
     },
     skip: !userEmail,
   });
-
   const onClickMoveIcon = () => {
     setInit(false);
     moveLinkPick();
   };
-
   useEffect(() => {
     if (data) {
       setMyPageLink(data?.seeMyPageLink);
@@ -74,14 +75,26 @@ const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit }) => {
       <ContentsList right={true}>
         <PageLinkTitle left={true}>나의 즐겨찾기 페이지</PageLinkTitle>
 
-        <PageLinkList>
-          {myPageLink.length === 0 ? (
-            <div>등록된 즐겨찾기 페이지가 없습니다.</div>
-          ) : (
-            myPageLink.map((item, index) => {
-              return <MyPageLink key={index} item={item} />;
-            })
-          )}
+        <PageLinkList none={none}>
+          {!pageLinkFolder &&
+            (myPageLink.length === 0 ? (
+              <div>등록된 즐겨찾기 페이지가 없습니다.</div>
+            ) : (
+              myPageLink.map((item, index) => {
+                return <MyPageLink key={index} item={item} />;
+              })
+            ))}
+          {pageLinkFolder &&
+            (myPageLink.filter((item) => item.folder.includes(pageLinkFolder))
+              .length === 0 ? (
+              <div>등록된 즐겨찾기 페이지가 없습니다.</div>
+            ) : (
+              myPageLink
+                .filter((item) => item.folder.includes(pageLinkFolder))
+                .map((item, index) => {
+                  return <MyPageLink key={index} item={item} />;
+                })
+            ))}
         </PageLinkList>
       </ContentsList>
     </MoveContainer>
