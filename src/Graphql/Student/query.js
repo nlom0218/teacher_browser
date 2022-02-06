@@ -23,6 +23,7 @@ export const SEE_ALL_STUDENT_QUERY = gql`
       listId
       tag
       trash
+      icon
     }
   }
 `;
@@ -73,6 +74,7 @@ export const SEE_ONE_STUDENT_QUERY = gql`
       tag
       trash
       journal
+      icon
     }
   }
 `;

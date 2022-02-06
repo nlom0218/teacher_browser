@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaArrowCircleRight } from 'react-icons/fa';
 import styled from 'styled-components';
 import { welcomeTitleAni } from '../../Animations/TextColorAni';
 import { hideWelcomeSection, seeWelcomSection } from '../../Animations/WelcomeSectionAni';
 import { moveNews } from '../../apollo';
+import AlertMessage from '../Shared/AlertMessage';
 import useMedia from '../../Hooks/useMedia';
 import { customMedia } from '../../styles';
 
@@ -60,6 +61,7 @@ const Box = styled.div`
 `
 
 const WelcomeSection = ({ welcomeSection, init, setInit }) => {
+  const [msg, setMsg] = useState(undefined)
   const media = useMedia()
 
   const onClickMoveIcon = () => {
@@ -67,11 +69,17 @@ const WelcomeSection = ({ welcomeSection, init, setInit }) => {
     moveNews()
   }
 
+  const onClickBtn = () => {
+    setMsg("안녕하세요? 잘 되나 시험중입니다~!")
+  }
+
   return (<MoveContainer welcomeSection={welcomeSection} init={init}>
     <MoveIcon onClick={onClickMoveIcon}>
       <FaArrowCircleRight />
     </MoveIcon>
     <WelcomeTitle>WELCOME TO{media !== "Desktop" && <br />} TEACHER CAN</WelcomeTitle>
+    <div onClick={onClickBtn}>클릭미!!</div>
+    <AlertMessage msg={msg} type="success" setMsg={setMsg} />
   </MoveContainer>);
 }
 

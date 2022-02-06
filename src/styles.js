@@ -33,7 +33,8 @@ export const ligthTheme = {
   cardHoverBg: "rgba(10,10,10,0.9)",
   cardBorder: "rgba(160,160,160,1)",
   purple: "#ecbdfc",
-  textAniColor: "linear-gradient(92deg, #1c5b8e, #db3a1e)"
+  textAniColor: "linear-gradient(92deg, #1c5b8e, #db3a1e)",
+  green: "#007f4c"
 };
 export const darkTheme = {
   fontColor: color.white,
@@ -48,7 +49,8 @@ export const darkTheme = {
   cardHoverBg: "rgba(247,247,247,1)",
   cardBorder: "rgba(120,120,120,1)",
   purple: "#6b018c",
-  textAniColor: "linear-gradient(92deg, #7CC6FF, #fc8876)"
+  textAniColor: "linear-gradient(92deg, #7CC6FF, #fc8876)",
+  green: "#20c997"
 };
 
 export const GlobalStyle = createGlobalStyle`
