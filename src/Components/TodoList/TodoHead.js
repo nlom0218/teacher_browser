@@ -29,7 +29,8 @@ const HeadLayout = styled.div`
       opacity : 0.7;
   }
   .tasks-left {
-    color : #20c997;
+    color : ${props => props.theme.green};
+    transition: color 1s ease;
     font-size : 1.25em;
     font-size : 1.25rem;
     font-weight : bold;

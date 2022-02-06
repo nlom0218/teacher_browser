@@ -95,3 +95,27 @@ export const processStudentIcon = (number) => {
     return <IcStudent50 />
   }
 }
+
+export const processSetDay = (date) => {
+  const day = date.getDay()
+  if (day === 1) {
+    return "월"
+  } else if (day === 2) {
+    return "화"
+  } else if (day === 3) {
+    return "수"
+  } else if (day === 4) {
+    return "목"
+  } else if (day === 5) {
+    return "금"
+  } else if (day === 6) {
+    return "토"
+  } else if (day === 0) {
+    return "일"
+  }
+}
+export const processSetDate = (date) => {
+  return `${date.getFullYear().toString().substr(2, 2)}-${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, 0)}-${date.getDate().toString().padStart(2, 0)}`
+}
