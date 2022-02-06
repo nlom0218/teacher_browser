@@ -49,8 +49,6 @@ const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit }) => {
   const [none, setNone] = useState(true);
   const pageLinkFolder = useReactiveVar(pageLinkFolderVar);
 
-  const pageLinkFolder = useReactiveVar(pageLinkFolderVar)
-
   const { data, loading } = useQuery(SEE_MY_PAGE_LINK_QUERY, {
     variables: {
       userEmail,
