@@ -12,6 +12,7 @@
     "dotenv": "^10.0.0",
     "emoji-picker-react": "^3.4.12",
     "history": "^5.1.0",
+    "npm-force-resolutions": "^0.0.10",
     "react": "^17.0.2",
     "react-datepicker": "^4.5.0",
     "react-dnd": "^14.0.4",
@@ -32,6 +33,7 @@
   },
   "proxy": "https://openapi.naver.com",
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "start": "react-scripts start",
     "build": "CI= react-scripts build",
     "test": "react-scripts test",
@@ -54,5 +56,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-error-overlay": "^6.0.9"
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
   }
 }

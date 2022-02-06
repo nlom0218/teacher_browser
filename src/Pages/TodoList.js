@@ -95,6 +95,12 @@ const TodoList = () => {
     return <Loading page="mainPage" />
   }
 
+  console.log("hi");
+
+
+
+
+
   return (
     <BasicContainer>
       <Container>
