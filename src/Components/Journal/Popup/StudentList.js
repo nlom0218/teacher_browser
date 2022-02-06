@@ -3,7 +3,6 @@ import PopupContainer from "../../Shared/PopupContainer";
 import styled from "styled-components";
 import { useQuery } from "@apollo/client";
 import StudentListItem from "./StudentListItem";
-import { useParams } from "react-router-dom";
 import { SEE_ALL_STUDENT_LIST_QUERY } from "../../../Graphql/StudentList/query";
 
 const Container = styled.div`
@@ -19,7 +18,7 @@ const Container = styled.div`
 `;
 
 const StudentList = () => {
-  const { data, loading } = useQuery(SEE_ALL_STUDENT_LIST_QUERY);
+  const { data } = useQuery(SEE_ALL_STUDENT_LIST_QUERY);
   return (
     <PopupContainer>
       <Container>

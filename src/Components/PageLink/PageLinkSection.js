@@ -22,10 +22,10 @@ const MoveContainer = styled.div`
   right: ${(props) => (props.pageLinkSection === "pageLink" ? 0 : "100%")};
   left: ${(props) => (props.pageLinkSection === "pageLink" ? 0 : "-100%")};
   animation: ${(props) =>
-      !props.init &&
-      (props.pageLinkSection === "pageLink"
-        ? seeWelcomSection
-        : hideWelcomeSection)}
+    !props.init &&
+    (props.pageLinkSection === "pageLink"
+      ? seeWelcomSection
+      : hideWelcomeSection)}
     1s ease forwards;
   display: grid;
   row-gap: 20px;
@@ -48,6 +48,8 @@ const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit }) => {
   const [myPageLink, setMyPageLink] = useState([]);
   const [none, setNone] = useState(true);
   const pageLinkFolder = useReactiveVar(pageLinkFolderVar);
+
+  const pageLinkFolder = useReactiveVar(pageLinkFolderVar)
 
   const { data, loading } = useQuery(SEE_MY_PAGE_LINK_QUERY, {
     variables: {
@@ -74,7 +76,6 @@ const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit }) => {
       <FolderList right={true} />
       <ContentsList right={true}>
         <PageLinkTitle left={true}>나의 즐겨찾기 페이지</PageLinkTitle>
-
         <PageLinkList none={none}>
           {!pageLinkFolder &&
             (myPageLink.length === 0 ? (

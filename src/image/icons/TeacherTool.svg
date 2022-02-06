@@ -1,0 +1,27 @@
+<svg  xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024"  width="1em" height="1em">
+<filter color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse" height="810.654" id="844F011C-B256-4577-A1D6-65E5B42F365C" width="822.005" x="109.327" y="100.79">
+<feDropShadow dx="3.85767" dy="10.5989" flood-color="#000000" height="810.654" stdDeviation="3.90007" width="822.005"/>
+</filter>
+<filter color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse" height="253.345" id="AD0C6852-B84A-4325-88EC-3A553DBA5886" width="290.816" x="374.922" y="387.279">
+<feDropShadow dx="1.36808" dy="3.75877" flood-color="#000000" height="253.345" stdDeviation="2.76635" width="290.816"/>
+</filter>
+<filter color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse" height="10.56" id="2D4073DD-02F3-4DDA-9E49-CE0533580A33" width="9.70669" x="793.358" y="353.166">
+<feDropShadow dx="1.36808" dy="3.75877" flood-color="#000000" height="10.56" stdDeviation="2.76635" width="9.70669"/>
+</filter>
+<filter color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse" height="8" id="4CD7EFBD-2DD4-4CB8-A51B-B2C826F4E9EA" width="8.85335" x="551.576" y="464.386">
+<feDropShadow dx="1.36808" dy="3.75877" flood-color="#000000" height="8" stdDeviation="2.76635" width="8.85335"/>
+</filter>
+<g>
+<path d="M407.672 260.996C399.214 64.1717 646.196 66.5241 632.663 259.428" fill="none" opacity="1" stroke="#693cff" stroke-linecap="round" stroke-linejoin="round" stroke-width="57.7661"/>
+<path d="M269.137 338.636C204.12 444.009 30.3647 701.688 140.972 817.035C229.799 909.669 777.991 913.476 871.895 819.573C965.798 725.67 836.571 453.954 772.915 339.905C742.46 285.339 305.937 278.995 269.137 338.636Z" fill="#ffe852" opacity="1"/>
+<path d="M295.835 283.118C263.119 363.913 246.761 494.981 371.081 514.731C430.784 524.215 621.671 522.705 667.159 514.731C784.936 494.083 780.029 370.197 750.584 292.096C704.242 169.171 339.526 175.218 295.835 283.118Z" fill="#6fa7ff" opacity="1"/>
+<path d="M520.33 374.768L520.33 374.768C593.917 374.768 653.571 431.655 653.571 501.829L653.571 510.404C653.571 580.579 593.917 637.466 520.33 637.466L520.33 637.466C446.743 637.466 387.088 580.579 387.088 510.404L387.088 501.829C387.088 431.655 446.743 374.768 520.33 374.768Z" fill="#efefef" filter="url(#844F011C-B256-4577-A1D6-65E5B42F365C)" opacity="1"/>
+<path d="M520.33 406.639L520.33 406.639C576.396 406.639 621.847 449.982 621.847 503.448L621.847 509.982C621.847 563.448 576.396 606.791 520.33 606.791L520.33 606.791C464.263 606.791 418.813 563.448 418.813 509.982L418.813 503.448C418.813 449.982 464.263 406.639 520.33 406.639Z" fill="#efefef" opacity="1" stroke="#ffe852" stroke-linecap="round" stroke-linejoin="round" stroke-width="21.9461"/>
+<g filter="url(#AD0C6852-B84A-4325-88EC-3A553DBA5886)" opacity="1">
+<path d="M473.194 473.06L567.466 474.404" fill="none" opacity="1" stroke="#693cff" stroke-linecap="round" stroke-linejoin="round" stroke-width="35"/>
+<path d="M520.347 477.803L521.402 554.842" fill="none" opacity="1" stroke="#693cff" stroke-linecap="round" stroke-linejoin="round" stroke-width="35"/>
+</g>
+<path d="M798.211 358.02L798.211 358.02C798.368 358.02 798.496 358.147 798.496 358.304L798.496 358.588C798.496 358.746 798.368 358.873 798.211 358.873L798.211 358.873C798.054 358.873 797.927 358.746 797.927 358.588L797.927 358.304C797.927 358.147 798.054 358.02 798.211 358.02Z" fill="#ffffff" filter="url(#2D4073DD-02F3-4DDA-9E49-CE0533580A33)" opacity="1" />
+<path d="M555.861 468.386L556.145 468.386L556.145 468.386L555.861 468.386Z" fill="#ffffff" filter="url(#4CD7EFBD-2DD4-4CB8-A51B-B2C826F4E9EA)" opacity="1" />
+</g>
+</svg>

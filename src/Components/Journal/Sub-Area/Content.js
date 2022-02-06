@@ -1,11 +1,13 @@
+// 리액트
 import React, { useState, forwardRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 // 그래프큐엘
-import { useQuery, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { SEE_ONE_STUDENT_QUERY } from "../../../Graphql/Student/query";
-import { EDIT_JOURNAL_MUTATION, DELETE_JOURNAL_MUTATION } from "../../../Graphql/Journal/mutation";
+import { EDIT_JOURNAL_MUTATION } from "../../../Graphql/Journal/mutation";
 
+// 컴포넌트
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
 import "react-datepicker/dist/react-datepicker.css";
@@ -180,10 +182,6 @@ const Content = ({ me, studentId, journal }) => {
     refetchQueries: [{ query: SEE_ONE_STUDENT_QUERY, variables: { studentId } }],
   });
 
-  const [deleteJournal] = useMutation(DELETE_JOURNAL_MUTATION, {
-    refetchQueries: [{ query: SEE_ONE_STUDENT_QUERY, variables: { studentId } }],
-  });
-
   const processSetDate = () => {
     return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, 0)}-${date.getDate().toString().padStart(2, 0)}`;
   };
@@ -206,7 +204,6 @@ const Content = ({ me, studentId, journal }) => {
     inPopup("deleteJournal");
     localStorage.setItem("selectedStudent", JSON.stringify(variables));
     setIsEditing(false);
-    // deleteJournal({ variables: { userEmail: me.email, ownerId: studentId, journalId: journal._id } });
   }
 
   function onChangeTextarea() {
@@ -228,10 +225,10 @@ const Content = ({ me, studentId, journal }) => {
 
   useEffect(() => {
     if (journal) setValue("text", journal?.text);
-  }, [journal]);
+  }, [journal, setValue]);
   useEffect(() => {
     if (text) setValue("text", text);
-  }, [text]);
+  }, [text, setValue]);
 
   return (
     <Container onSubmit={handleSubmit(onSubmit)}>
