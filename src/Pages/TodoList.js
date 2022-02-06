@@ -103,7 +103,6 @@ const TodoList = () => {
         <TodoBody>
           {ingToDos.length !== 0 && <div className="ing_todo todo_body"><TodoIng ingToDos={ingToDos} /></div>}
           <div className="not_ing_todo todo_body">
-
             {id && <ToDoDetail id={id} userEmail={me?.email} setErrMsg={setErrMsg} setMsg={setMsg} />}
             {!id && <ToDoNot notToDos={notToDos} />}
           </div>
