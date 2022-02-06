@@ -7,18 +7,26 @@ import { BtnFadeIn } from '../../Animations/Fade';
 import { inPopup, isPopupVar } from '../../apollo';
 import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
 import { SEE_ALL_STUDENT_QUERY, SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
+import useMedia from '../../Hooks/useMedia';
 import IcBookMark from '../../icons/Bookmark/IcBookMark';
 import IcNameTable from '../../icons/NameTable/IcNameTable';
 import IcNameTableClick from '../../icons/NameTable/IcNameTableClick';
+import { IcStudent1 } from '../../icons/Students/IcStudents';
 import routes from '../../routes';
+import { processStudentIcon } from '../../shared';
 import { customMedia } from '../../styles';
+import Loading from '../Shared/Loading';
 import DetailStudentAllergy from './DetailStudentAllergy';
 import DetailStudentMemo from './DetailStudentMemo';
 import DetailStudentNumber from './DetailStudentNumber';
 import DetailStudentTag from './DetailStudentTag';
 import InputUnderLine from './InputUnderLine';
 import DeleteStudent from './Popup/DeleteStudent';
+import StudentIcon from './Popup/StudentIcon';
 import { DelBtn } from './styled/DelBtn';
+import DetailEomjiIcon from './styled/DetailEomjiIcon';
+import DetailNameContainer from './styled/DetailNameContainer';
+import SettingEmojiIconBtn from './styled/SettingEmojiIconBtn';
 
 const Container = styled.div`
   padding: 20px;
@@ -34,9 +42,18 @@ const Container = styled.div`
 `
 
 const ListIcon = styled.div`
-  font-size: 2em;
-  font-size: 2rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: flex-end;
+  column-gap: 5px;
+  column-gap: 0.3125rem;
+  div {
+    opacity: 0.6;
+  }
   svg {
+    display: flex;
+    font-size: 2em;
+    font-size: 2rem;
     filter: drop-shadow(1px 1px 1px rgb(0, 0, 0))
   }
 `
@@ -110,16 +127,25 @@ const ErrMsg = styled.div`
 
 const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
   const isPopup = useReactiveVar(isPopupVar)
+  const media = useMedia()
 
   const [IconsLIstisHover, setIconListIsHover] = useState(false)
   const [studentInfo, setStudentInfo] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
   const [isEdit, setIsEdit] = useState(false)
+  const [studentIcon, setStudentIcon] = useState(null)
+
+  const [seeSettingBtn, setSeeSettingBtn] = useState(false)
+
   const { data, loading } = useQuery(SEE_ONE_STUDENT_QUERY, {
     variables: {
       studentId
     }
   })
+
+  const onMouseEnterName = () => setSeeSettingBtn(true)
+  const onMouseLeaveName = () => setSeeSettingBtn(false)
+
   const onCompleted = (result) => {
     const { editStudent: { ok, error } } = result
     if (error) {
@@ -141,9 +167,25 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
       }
     }]
   })
+
   const { register, setValue, handleSubmit, getValues } = useForm({
     mode: "onChange"
   })
+
+  const onClickStudentIconBtn = () => {
+    inPopup("studentIcon")
+  }
+  const onClickDelStudentIconBtn = () => {
+    editStudent({
+      variables: {
+        teacherEmail: studentInfo?.teacherEmail,
+        studentId,
+        studentIcon: "delete"
+      }
+    })
+    setStudentIcon(null)
+  }
+
   const onSubmit = (data) => {
     const { newStudentName } = data
     if (newStudentName === studentInfo.studentName) {
@@ -178,37 +220,72 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
     if (data) {
       setValue("newStudentName", data?.seeAllStudent[0]?.studentName)
       setStudentInfo(data?.seeAllStudent[0])
+      setStudentIcon(data?.seeAllStudent[0].icon)
     }
   }, [data])
+
+  if (loading) {
+    return <Loading page="subPage" />
+  }
+
   return (<Container>
     <Link to={routes.list} onMouseEnter={() => setIconListIsHover(true)} onMouseLeave={() => setIconListIsHover(false)}>
-      <ListIcon>{IconsLIstisHover ? <IcNameTableClick /> : <IcNameTable />}</ListIcon>
+      <ListIcon>{IconsLIstisHover ? <IcNameTableClick /> : <IcNameTable />}
+        <div>명렬표로 이동</div>
+      </ListIcon>
     </Link>
-    <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
-      <InputUnderLine isEdit={isEdit}>
-        <Name
-          {...register("newStudentName", {
-            required: true,
-            onChange: () => {
-              setErrMsg(undefined)
-              setIsEdit(true)
-            }
-          })}
-          type="text"
-          autoComplete="off"
-          placeholder="학생 이름을 입력하세요."
-          maxLength="12"
-          onClick={onClickName}
-        />
-      </InputUnderLine>
-      {isEdit && <SubmitInput type="submit" value="수정" />}
-      {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
-    </Form>
+    <DetailNameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName}>
+      <form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
+        {studentIcon && <DetailEomjiIcon onClick={onClickStudentIconBtn}>
+          <div className="student_detail_studentIcon">{processStudentIcon(studentIcon)}</div>
+        </DetailEomjiIcon>}
+        <InputUnderLine isEdit={isEdit}>
+          <Name
+            {...register("newStudentName", {
+              required: true,
+              onChange: () => {
+                setErrMsg(undefined)
+                setIsEdit(true)
+              }
+            })}
+            type="text"
+            autoComplete="off"
+            placeholder="학생 이름을 입력하세요."
+            maxLength="12"
+            onClick={onClickName}
+          />
+        </InputUnderLine>
+        {isEdit && <SubmitInput type="submit" value="수정" />}
+        {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
+      </form>
+      {seeSettingBtn &&
+        (media === "Desktop" && <SettingEmojiIconBtn>
+          {studentIcon ?
+            <div onClick={onClickDelStudentIconBtn}>아이콘 삭제</div>
+            :
+            <div onClick={onClickStudentIconBtn}>아이콘 추가</div>}
+        </SettingEmojiIconBtn>)
+      }
+      {media !== "Desktop" && <SettingEmojiIconBtn>
+        {studentIcon ?
+          <div onClick={onClickDelStudentIconBtn}>아이콘 삭제</div>
+          :
+          <div onClick={onClickStudentIconBtn}>아이콘 추가</div>}
+      </SettingEmojiIconBtn>}
+    </DetailNameContainer>
     <DetailStudentNumber studentInfo={studentInfo} selectedTag={selectedTag} selectedSort={selectedSort} />
     <DetailStudentTag studentInfo={studentInfo} selectedSort={selectedSort} selectedTag={selectedTag} />
     <DetailStudentAllergy studentInfo={studentInfo} />
     <DetailStudentMemo studentMemo={studentInfo?.memo} studentId={studentInfo?._id} teacherEmail={studentInfo?.teacherEmail} />
     <DelBtn onClick={onClicketeBtn}>휴지통으로 이동</DelBtn>
+    {isPopup === "studentIcon" &&
+      <StudentIcon
+        editStudent={editStudent}
+        studentId={studentId}
+        teacherEmail={studentInfo?.teacherEmail}
+        setStudentIcon={setStudentIcon}
+      />
+    }
     {isPopup === "deleteStudent" && <DeleteStudent selectedTag={selectedTag} selectedSort={selectedSort} studentId={studentId} />}
   </Container>);
 }

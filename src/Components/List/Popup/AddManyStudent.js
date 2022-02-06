@@ -8,6 +8,7 @@ import { outPopup } from '../../../apollo';
 import { SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
 import { SEE_ONE_STUDENT_LIST_QUERY } from '../../../Graphql/StudentList/query';
 import { ADD_STUDENT_MUTATION } from '../../../Graphql/StudentList/mutation';
+import Loading from '../../Shared/Loading';
 
 const AddManyStudent = ({ inStudent, listId }) => {
   const selectedTag = JSON.parse(localStorage.getItem("selectedTag")) ? JSON.parse(localStorage.getItem("selectedTag")) : []
@@ -93,6 +94,10 @@ const AddManyStudent = ({ inStudent, listId }) => {
   useEffect(() => {
     refetch()
   }, [selectedTag, selectedSort])
+
+  if (loading) {
+    return <Loading page="popupPage" />
+  }
 
   return (<PopupContainer maxHeight={true}>
     <Container>

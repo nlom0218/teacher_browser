@@ -126,7 +126,7 @@ const SeeStudentBtn = styled.div`
   }
 `
 
-const StudentSortTag = ({ meTag, selectedTag, setSelectedTag, setSeeNum, seeNum, setSelectedSort, selectedSort }) => {
+const StudentSortTag = ({ meTag, selectedTag, setSelectedTag, setSeeNum, seeNum, setSelectedSort, selectedSort, seeStudentIcon, setSeeStudentIcon }) => {
   const media = useMedia()
   const onClickAddTag = (tag) => {
     const exist = selectedTag.includes(tag)
@@ -147,9 +147,11 @@ const StudentSortTag = ({ meTag, selectedTag, setSelectedTag, setSeeNum, seeNum,
     localStorage.removeItem("selectedTag")
     localStorage.removeItem("seeNum")
     localStorage.removeItem("selectedSort")
+    localStorage.removeItem("seeStudentIcon")
     setSelectedTag([])
     setSelectedSort(undefined)
     setSeeNum(undefined)
+    setSeeStudentIcon(false)
   }
 
   const onClickSortBtn = (type) => {
@@ -169,6 +171,16 @@ const StudentSortTag = ({ meTag, selectedTag, setSelectedTag, setSeeNum, seeNum,
     } else {
       setSeeNum(false)
       localStorage.removeItem("seeNum")
+    }
+  }
+
+  const onClickSeeStudentIcon = (type) => {
+    if (type === "see") {
+      setSeeStudentIcon(true)
+      localStorage.setItem("seeStudentIcon", true)
+    } else {
+      setSeeStudentIcon(false)
+      localStorage.removeItem("seeStudentIcon")
     }
   }
 
@@ -227,6 +239,20 @@ const StudentSortTag = ({ meTag, selectedTag, setSelectedTag, setSeeNum, seeNum,
           </SeeStudentBtn>
           <SeeStudentBtn onClick={() => onClickSeeNumBtn("see")}>
             <div>{seeNum ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+            <div>보이기</div>
+          </SeeStudentBtn>
+        </SeeStudentNum>
+      </SettingLayout>
+      <SettingLayout>
+        <Title>✲ 아이콘 보이기</Title>
+        <SeeStudentNum>
+          {/* RiCheckboxBlankLine, RiCheckboxLine  */}
+          <SeeStudentBtn onClick={() => onClickSeeStudentIcon("hide")}>
+            <div>{!seeStudentIcon ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+            <div>숨기기</div>
+          </SeeStudentBtn>
+          <SeeStudentBtn onClick={() => onClickSeeStudentIcon("see")}>
+            <div>{seeStudentIcon ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
             <div>보이기</div>
           </SeeStudentBtn>
         </SeeStudentNum>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { moveWelcome } from '../../apollo';
 import IcBookMark from '../../icons/Bookmark/IcBookMark';
 import IcBookMarkClick from '../../icons/Bookmark/IcBookMarkClick';
 import IcCalender from '../../icons/Calender/IcCalender';
@@ -12,7 +13,10 @@ import routes from '../../routes';
 
 export const HeaderNews = () => {
   const [isHover, setIsHover] = useState(false)
-  return (<Link to={routes.home} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+  const onClickHome = () => {
+    moveWelcome()
+  }
+  return (<Link to={routes.home} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)} onClick={onClickHome}>
     {isHover ? <IcNewsClick /> : <IcNews />}
   </Link>);
 }

@@ -30,6 +30,9 @@ import FindPassword from "./Pages/FindPassword";
 import dotenv from "dotenv";
 import Welcome from "./Pages/Welcome";
 import ChangBackground from "./Components/Shared/ChangBackground";
+import PageLinkRegister from "./Pages/PageLinkRegister";
+import PageLinkAllList from "./Pages/PageLinkAllList";
+import PageLinkDetail from "./Pages/PageLinkDetail";
 dotenv.config();
 
 function App() {
@@ -77,6 +80,7 @@ function App() {
         <Route path={routes.naverLoginCallBack} element={<NaverLoginCallBack />} />
         <Route path={routes.editAccount} element={<EditAccount />} />
         <Route path={routes.todo} element={<TodoList />} />
+        <Route path={`${routes.todo}/:id`} element={<TodoList />} />
         <Route path={routes.calendar} element={<Calendar />} />
         <Route path={routes.pageLink} element={<PageLink />} />
         <Route path={routes.menu} element={<Menu />} />
@@ -94,6 +98,9 @@ function App() {
         <Route path={`${routes.list}/:type/:id`} element={<List />} />
         <Route path={routes.trash} element={<Trash />} />
         <Route path={routes.findPassword} element={<FindPassword />} />
+        <Route path={routes.pageLinkRegister} element={<PageLinkRegister />} />
+        <Route path={routes.pageLinkAllList} element={<PageLinkAllList />} />
+        <Route path={`${routes.pageLink}/:pageTitle`} element={<PageLinkDetail />} />
       </Routes>
     </ThemeProvider>
   );

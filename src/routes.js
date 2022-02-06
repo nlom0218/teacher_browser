@@ -23,6 +23,9 @@ const FINDPASSWORD = "/find-password";
 
 const TRASH = "/trash";
 
+const PAGE_LINK_REGISTER = "/pageLink-register"
+const PAGE_LINK_ALLLIST = "/pageLink-allList"
+
 const routes = {
   home: HOME,
   todo: TODO,
@@ -48,6 +51,9 @@ const routes = {
   findPassword: FINDPASSWORD,
 
   trash: TRASH,
+
+  pageLinkRegister: PAGE_LINK_REGISTER,
+  pageLinkAllList: PAGE_LINK_ALLLIST
 };
 
 export default routes;

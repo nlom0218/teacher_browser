@@ -51,7 +51,7 @@ const Trash = ({ someDragging, setSuccessMsg, selectedTag, selectedSort, dragTyp
   const onCompleted = (result) => {
     const { editStudent: { ok } } = result
     if (ok) {
-      setSuccessMsg({ msg: `휴지통으로 이동되었습니다. 😀`, ok: true })
+      setSuccessMsg(`휴지통으로 이동되었습니다. 😀`)
     }
   }
 

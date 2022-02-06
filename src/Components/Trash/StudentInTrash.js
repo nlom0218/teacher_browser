@@ -67,7 +67,7 @@ const StudentInTrash = ({ item, setSuccessMsg, selectedSort, selectedTag }) => {
         }
       }
     ],
-    onCompleted: () => setSuccessMsg({ msg: "학생 목록으로 복구되었습니다. 😀", ok: true })
+    onCompleted: () => setSuccessMsg("학생 목록으로 복구되었습니다. 😀")
   })
 
   const onClickResetBtn = () => {
