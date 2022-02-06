@@ -1,50 +1,48 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { CardFadeIn } from '../../Animations/Fade';
-import RegisterScheduleOne from './RegisterScheduleOne';
+import React, { useState } from "react";
+import styled from "styled-components";
+import { CardFadeIn } from "../../Animations/Fade";
 
 const TableItem = styled.div`
   position: relative;
   height: 100%;
-  border: 1px solid ${props => props.theme.cardBorder};
-  background-color : lightblue;
-  //background-color: ${props => props.color};
+  border: 1px solid ${(props) => props.theme.cardBorder};
+  background-color: lightblue;
   transition: border 1s ease, background-color 1s ease;
   border-radius: 5px;
   border-radius: 0.3125rem;
   display: grid;
   grid-template-rows: 1fr;
-  opacity: ${props => props.hoverContainer ? 0.6 : 1};
-`
-const TimeUp=styled.div`
-position: absolute;
-left: 5%;
-top: 5%;
-padding: 5px;
-padding: 0.3125rem;
-font-size: 0.6rem;
-font-size: 0.6em;
-opacity: 0.6;
-`
-const TimeDown=styled.div`
-position: absolute;
-right: 5%;
-bottom: 5%;
-padding: 5px;
-padding: 0.3125rem;
-font-size: 0.6rem;
-font-size: 0.6em;
-opacity: 0.6;
-`
+  opacity: ${(props) => (props.hoverContainer ? 0.6 : 1)};
+`;
+const TimeUp = styled.div`
+  position: absolute;
+  left: 5%;
+  top: 5%;
+  padding: 5px;
+  padding: 0.3125rem;
+  font-size: 0.6rem;
+  font-size: 0.6em;
+  opacity: 0.6;
+`;
+const TimeDown = styled.div`
+  position: absolute;
+  right: 5%;
+  bottom: 5%;
+  padding: 5px;
+  padding: 0.3125rem;
+  font-size: 0.6rem;
+  font-size: 0.6em;
+  opacity: 0.6;
+`;
 
 const SubjectName = styled.div`
   text-align: center;
   align-self: center;
   overflow: hidden;
   line-height: 300%;
-  font-size: ${props=>props.fontSize}em;
-  font-size: ${props=>props.fontSize}rem;
-`
+  font-size: ${(props) => props.fontSize}em;
+  font-size: ${(props) => props.fontSize}rem;
+`;
 
 const HoverContainer = styled.div`
   display: grid;
@@ -60,47 +58,59 @@ const HoverContainer = styled.div`
   padding-bottom: 1.875rem;
   padding-bottom: 30px;
   align-items: flex-end;
-  background-color: ${props => props.theme.cardHoverBg};
+  background-color: ${(props) => props.theme.cardHoverBg};
   border-radius: 5px;
   border-radius: 0.3125rem;
   animation: ${CardFadeIn} 0.6s ease forwards;
-  color: ${props => props.theme.bgColor};
-  
-`
+  color: ${(props) => props.theme.bgColor};
+`;
 
-
-
-const TableOutItem = ({ item, index, color, tag, fontSize, setFontSize, viewTime, setViewTime}) => {
-
-
-  const [hoverContainer, setHoverContainer] = useState(false)
+const TableOutItem = ({
+  item,
+  index,
+  color,
+  tag,
+  fontSize,
+  setFontSize,
+  viewTime,
+  setViewTime,
+}) => {
+  const [hoverContainer, setHoverContainer] = useState(false);
 
   const onMouseEnter = () => {
-    setHoverContainer(true)
-  }
+    setHoverContainer(true);
+  };
   const onMouseLeave = () => {
-    setHoverContainer(false)
-  }
+    setHoverContainer(false);
+  };
 
-  return (<TableItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} index={index} color={color} >
-{viewTime===true 
-?<React.Fragment>
-<TimeUp>{tag[0]}</TimeUp>
-<TimeDown>{tag[1]}</TimeDown></React.Fragment>
+  return (
+    <TableItem
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      index={index}
+      color={color}
+    >
+      {viewTime === true ? (
+        <React.Fragment>
+          <TimeUp>{tag[0]}</TimeUp>
+          <TimeDown>{tag[1]}</TimeDown>
+        </React.Fragment>
+      ) : null}
 
-: null}
-
-
-
-    <SubjectName onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} fontSize={fontSize} setFontSize={setFontSize}>{item}
-    {hoverContainer===true ? <HoverContainer>{tag[0]}
-    {/* 태그정보는 가장 [0]만 나오도록 하고 나머지는 ... 처리  */}
-    </HoverContainer>:null}
-  
-    </SubjectName>
-    
-  </TableItem >);
-}
+      <SubjectName
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        fontSize={fontSize}
+        setFontSize={setFontSize}
+      >
+        {item}
+        {hoverContainer === true ? (
+          <HoverContainer>{tag[0]}</HoverContainer>
+        ) : null}
+      </SubjectName>
+    </TableItem>
+  );
+};
 
 export default TableOutItem;
-
