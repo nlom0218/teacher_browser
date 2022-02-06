@@ -99,3 +99,10 @@ export const NEW_PASSWORD_MUTATION = gql`
     }
   }
 `;
+
+export const SETTING_LINK_MUTATION = gql`
+mutation SettingLink($userEmail: String!, $siteName: String!, $memo: String) {
+  settingLink(userEmail: $userEmail, siteName: $siteName, memo: $memo) {
+    ok
+  }
+}`

@@ -7,7 +7,6 @@ import PopupContainer from '../../Shared/PopupContainer';
 import { outPopup } from '../../../apollo';
 import { UPDATE_USER_MUTATION } from '../../../Graphql/User/mutation';
 import DetailClassName from './DetailClassName';
-import DetailClassColor from './DetailClassColor';
 import DetailClassTag from './DetailClasstag';
 import DetailClassAdd from './DetailClassAdd';
 import { DetailStudentLayout,DetailTitle } from '../../List/styled/DetailStudent';
@@ -83,16 +82,10 @@ const ClassRegisterPage = () => {
     <DetailClassName/>
     <DetailClassTag/>
     <DetailClassAdd/>
-
- 
-   
-    </RegisterForm>
-    <DetailStudentLayout>
-      <div></div>
-      <BtnFrame> <AddTagBtn onClick={onCompleted}>완료</AddTagBtn>
+    <BtnFrame> <AddTagBtn onClick={onCompleted}>완료</AddTagBtn>
     <DelBtn>초기화</DelBtn></BtnFrame>
-   
-    </DetailStudentLayout>
+  
+    </RegisterForm>
   </PopupContainer>);
 }
 

@@ -10,6 +10,9 @@ const MENU_TYPE = "menuType"
 const IS_SEE_STUDENT_LIST = "isSeeStudentList"
 const WELCOME_SECTION = "welcomeSection"
 const BG_ANI = "bgAni"
+const PAGELINK_SECTION = "pageLinkSection"
+const PAGE_LINK_FOLDER = "pageLinkFolder"
+const LINK_PICK_FOLDER = "linkPickFolder"
 
 export const menuTypeVar = makeVar(localStorage.getItem(MENU_TYPE));
 export const setMenuType = (type) => {
@@ -98,6 +101,25 @@ export const disableBgThemeAni = () => {
   bgThemeAniVar(false)
 }
 
+export const pageLinkFolderVar = makeVar(localStorage.getItem(PAGE_LINK_FOLDER))
+export const movePageLinkFolder = (folder) => {
+  localStorage.setItem(PAGE_LINK_FOLDER,folder)
+    pageLinkFolderVar(folder)
+}
+export const removePageLinkFolder = ()=>{
+  localStorage.removeItem(PAGE_LINK_FOLDER)
+  pageLinkFolderVar(undefined)
+}
+export const linkPickFolderVar = makeVar(localStorage.getItem(LINK_PICK_FOLDER))
+export const moveLinkPickFolder = (folder) =>{
+  localStorage.setItem(LINK_PICK_FOLDER,folder)
+  linkPickFolderVar(folder)
+}
+export const removeLinkPickFolder = () =>{
+  localStorage.removeItem(LINK_PICK_FOLDER)
+  linkPickFolderVar(undefined)
+}
+
 const httpLink = createHttpLink({
   uri: "http://localhost:4000/graphql",
 });
@@ -117,3 +139,14 @@ export const client = new ApolloClient({
     typePolicies: {},
   }),
 });
+
+export const pageLinkSectionVar = makeVar(localStorage.getItem(PAGELINK_SECTION) ? localStorage.getItem(PAGELINK_SECTION) : "pageLink")
+export const movePageLink = () => {
+  localStorage.setItem(PAGELINK_SECTION, "pageLink")
+  pageLinkSectionVar("pageLink")
+}
+export const moveLinkPick = () => {
+  localStorage.setItem(PAGELINK_SECTION, "linkPick")
+  pageLinkSectionVar("linkPick")
+}
+

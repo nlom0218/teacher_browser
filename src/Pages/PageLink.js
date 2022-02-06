@@ -1,138 +1,54 @@
-import React from 'react';
-import styled from 'styled-components';
-import AccountInput from '../Components/Account/styled/AccountInput';
-import BasicContainer from '../Components/Shared/BasicContainer';
-import { useForm } from 'react-hook-form';
-import RegisterForm from '../Components/Account/styled/RegisterForm';
-import { useState } from 'react/cjs/react.development';
+import styled from "styled-components";
+import BasicContainer from "../Components/Shared/BasicContainer";
+import React, { useState } from "react";
+import { pageLinkSectionVar } from "../apollo";
+import { useReactiveVar } from "@apollo/client";
+import PageLinkSection from "../Components/PageLink/PageLinkSection";
+import LinkPickSection from "../Components/PageLink/LinkPickSection";
+import useMe from "../Hooks/useMe";
+import AddBookmark from "../Components/PageLink/Popup/AddBookmark";
+import { isPopupVar } from "../apollo";
+import SeePageLink from "../Components/PageLink/Popup/SeePageLink";
+import DetailPageLink from "../Components/PageLink/Popup/DetailPageLink";
 
-const Container=styled.div`
-display: grid;
-padding: 40px;
-padding: 2.5rem;
-row-gap: 10px;
-row-gap: 0.625rem;
-column-gap: 10px;
-column-gap: 0.625rem;
-grid-template-rows: 1fr 10fr;
-height: 100%;
-`
-const TopContents=styled.form`
-display: grid;
-column-gap: 10px;
-column-gap: 0.625rem;
-grid-template-columns: 1fr 1fr 2fr 2fr 1fr;
-background-color: #F2F2F2;
-padding: 10px;
-padding: 0.625rem;
-`
-const LinkPage = styled.div`
-display: grid;
-grid-template-columns: repeat(3,1fr);
-height: 100%;
-border: 1px solid;
-padding: 20px;
-padding: 1.25rem;
-column-gap: 10px;
-column-gap: 0.625rem;
-row-gap: 10px;
-row-gap: 0.625rem;
-border-radius: 10px;
-border-radius: 0.625rem;
-`
-const Folder = styled.div`
-display: gird;
-border: 1px solid;
-padding: 20px;
-padding: 1.25rem;
-height: 100%;
-border-radius: 10px;
-border-radius: 0.625rem;
-`
-const SubmitBtn = styled.button`
-text-align: center;
-padding: 10px 20px;
-padding: 0.625rem 1.25rem;
-background-color: ${props => props.theme.btnBgColor};
-color: ${props => props.theme.bgColor};
-border-radius: 5px;
-border-radius: 0.3125rem;
-cursor: pointer;
-`
+//추천사이트 목록 정리하기
+//나의 즐겨찾기에서 폴더별 정리
+//즐겨찾기 없을 경우 설명하는 페이지 추가
+//반응형 화면 구성
+//linkname -> id
+
+const Container = styled.div``;
 
 const PageLink = () => {
-  
-  const [dataAll, setDataAll] = useState()
+  const me = useMe();
+  const isPopup = useReactiveVar(isPopupVar);
+  const pageLinkSection = useReactiveVar(pageLinkSectionVar);
 
-  const { register, handleSubmit, getValues} = useForm()
-  const onSubmit = (data) => {
-    const { folder, title, link, memo } = data
-    const folderName=getValues("folder")
-    setDataAll([data.folder,data.title,data.link,data.memo])
-  }
-   
-
-
-  return (<BasicContainer menuItem={true}>
-<Container> 
-<TopContents onSubmit={handleSubmit(onSubmit)}>
-<AccountInput
- {...register("folder", {
-  required: true,
-  onChange: onSubmit,
-})}
-type="text"
-autoComplete="off"
-placeholder="폴더명" 
-/>{/* 폴더선택으로 변경 */}
-<AccountInput
- {...register("title", {
-  required: true,
-  onChange: onSubmit,
-})}
-type="text"
-autoComplete="off"
-placeholder='제목'/>
-<AccountInput
- {...register("link", {
-  required: true,
-  onChange: onSubmit,
-})}
-type="text"
-autoComplete="off"
-placeholder='사이트링크'/>
-<AccountInput
- {...register("memo", {
-  required: true,
-  onChange: onSubmit,
-})}
-type="text"
-autoComplete="off"
-placeholder='메모'/>
-<SubmitBtn
-type='submit'
->추가</SubmitBtn>
-</TopContents>
-<LinkPage>
-<Folder>
-1
-</Folder>
-<Folder>2</Folder>
-<Folder>3</Folder>
-<Folder>
-1
-</Folder>
-<Folder>2</Folder>
-<Folder>3</Folder>
-
-
-</LinkPage>
-</Container>
-
-
-
-   
-  </BasicContainer>);
-}
+  const [init, setInit] = useState(true);
+  return (
+    <BasicContainer>
+      <Container>
+        <PageLinkSection
+          init={init}
+          setInit={setInit}
+          pageLinkSection={pageLinkSection}
+          userEmail={me?.email}
+        />
+        <LinkPickSection
+          init={init}
+          setInit={setInit}
+          pageLinkSection={pageLinkSection}
+          userEmail={me?.email}
+          link={me?.link}
+        />
+      </Container>
+      {isPopup === "addBookmark" && <AddBookmark userEmail={me?.email} />}
+      {isPopup === "seePageLink" && <SeePageLink />}
+      {isPopup === "detailPageLink" && (
+        <DetailPageLink memo={me?.link} userEmail={me?.email} />
+      )}
+    </BasicContainer>
+  );
+};
 
 export default PageLink;

@@ -7,7 +7,6 @@ export const CREATE_PAGE_LINK_MUTATION = gql`
       error
     }
   }
-`
 
 export const UPDATE_PAGE_LINK_MUTATION = gql`
   mutation Mutation($pageTitle: String!, $pageDescription: String, $folder: [String]) {
