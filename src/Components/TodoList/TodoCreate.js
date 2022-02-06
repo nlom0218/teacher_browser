@@ -8,6 +8,9 @@ import { ko } from "date-fns/esm/locale";
 import { GrPowerReset } from "react-icons/gr"
 import { BsCalendarDate, BsFillPencilFill } from "react-icons/bs"
 import { CgNotes } from "react-icons/cg"
+import { useMutation } from '@apollo/client';
+import { CREATE_TO_DO_LIST_MUTATION } from '../../Graphql/ToDoList/mutation';
+import { SEE_TO_DO_LIST_QUERY } from '../../Graphql/ToDoList/query';
 
 
 
@@ -124,9 +127,21 @@ const ResetBtn = styled.div`
   }
 `;
 
-const TodoCreate = ({ setToDos, toDos, setErrMsg }) => {
+const TodoCreate = ({ setErrMsg, userEmail }) => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+
+    const onCompleted = (result) => {
+        const { createToDoList: { ok } } = result
+        if (ok) {
+            outPopup()
+        }
+    }
+
+    const [createToDoList, { loading }] = useMutation(CREATE_TO_DO_LIST_MUTATION, {
+        onCompleted,
+        refetchQueries: [{ query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: false } }]
+    })
 
     const { register, handleSubmit, } = useForm({
         mode: "onChange"
@@ -151,16 +166,15 @@ const TodoCreate = ({ setToDos, toDos, setErrMsg }) => {
         }
 
         const { toDo, contents } = data
-        const newTodo = {
-            teacherEmail: "sksthsaudgml@naver.com",
-            toDo,
-            ...(contents && { contents }),
-            ...(startDate && { startDate }),
-            ...(endDate && { endDate })
-        }
-        const newTodoArr = [...toDos, newTodo]
-        setToDos(newTodoArr)
-        outPopup()
+        createToDoList({
+            variables: {
+                userEmail,
+                toDo,
+                ...(contents && { contents }),
+                ...(startDate && { startDate }),
+                ...(endDate && { endDate })
+            }
+        })
     }
 
     const onClickResetDateBtn = () => {
@@ -174,7 +188,7 @@ const TodoCreate = ({ setToDos, toDos, setErrMsg }) => {
                 <Layout>
                     <Icon><BsFillPencilFill /></Icon>
                     <Input
-                        {...register("todo", {
+                        {...register("toDo", {
                             required: true
                         })}
                         placeholder="내용을 입력하세요"

@@ -3,10 +3,12 @@ import BasicContainer from '../Components/Shared/BasicContainer';
 import TodoHead from '../Components/TodoList/TodoHead';
 import styled from 'styled-components';
 import TodoCreate from '../Components/TodoList/TodoCreate';
-import { useReactiveVar } from '@apollo/client';
+import { useQuery, useReactiveVar } from '@apollo/client';
 import { isPopupVar } from '../apollo';
 import TodoIng from '../Components/TodoList/TodoIng';
 import AlertMessage from '../Components/Shared/AlertMessage';
+import { SEE_TO_DO_LIST_QUERY } from '../Graphql/ToDoList/query';
+import useMe from '../Hooks/useMe';
 
 // const ListContainer = styled.div`
 //   margin-left : auto;
@@ -54,39 +56,6 @@ const TodoBody = styled.div`
   }
 `;
 
-const toDoListArr = [
-  {
-    teacherEmail: "sksthsaudgml@naver.com", // 필수값
-    startDate: "string", // startDate, endDate는 세트로 있으면 기간이 있음
-    endDate: "string", // 무기한... 현재 날짜가 endDate보다 앞설 경우 미완료된 투두리스트로 이동
-    toDo: "사과 먹기", // 필수값
-    contents: "맛있는 사과 먹기",  // => 제목만으로 부족할 때 추가 설명
-    isComplete: false, // 기본값 => false
-    ingTodo: "Boolean",
-    notTodo: "Boolean"
-  },
-  {
-    teacherEmail: "sksthsaudgml@naver.com", // 필수값
-    startDate: "string", // startDate, endDate는 세트로 있으면 기간이 있음
-    endDate: "string", // 무기한... 현재 날짜가 endDate보다 앞설 경우 미완료된 투두리스트로 이동
-    toDo: "토마토 먹기", // 필수값
-    isComplete: false, // 기본값 => false
-    ingTodo: "Boolean",
-    notTodo: "Boolean"
-  },
-
-  {
-    teacherEmail: "sksthsaudgml@naver.com", // 필수값
-    startDate: "string", // startDate, endDate는 세트로 있으면 기간이 있음
-    endDate: "string", // 무기한... 현재 날짜가 endDate보다 앞설 경우 미완료된 투두리스트로 이동
-    toDo: "포도 먹기", // 필수값
-    contents: "맛있는 포도 먹기",  // => 제목만으로 부족할 때 추가 설명
-    isComplete: false, // 기본값 => false
-    ingTodo: "Boolean",
-    notTodo: "Boolean"
-  }
-]
-
 const TodoList = () => {
   // 1. 기간 내에 있는 할 일 목록 & 완료가 되지 않는 목록 => 진행중인 목록 ing
   // 2. 기간 내에 있는 할 일 목록 & 완료된 목록이면 => 진행중인 목록 맨 아래에 체크된 표시로 있어야 함 ing, complete
@@ -95,31 +64,39 @@ const TodoList = () => {
   // 5. 기간이 설정되지 않은 목록 => 진행중인 목록 ing
   // 6. 기간이 설정되지 않은 목록 => 팝업창 complete
 
+  const me = useMe()
+
   const isPopup = useReactiveVar(isPopupVar);
-  const [toDos, setToDos] = useState(toDoListArr);
   const [ingTodos, setIngTodos] = useState([])
   const [errMsg, setErrMsg] = useState(undefined)
+
+  const { data, loading } = useQuery(SEE_TO_DO_LIST_QUERY, {
+    variables: {
+      isComplete: false
+    }
+  })
+
+  console.log(data);
 
   useEffect(() => {
     //ing 로 갈 할 일 목록
     const newIngTodos = () => {
 
     }
-  }, [toDos])
+  }, [])
 
-  console.log(toDos);
 
   return (
     <BasicContainer>
       <Container>
-        <TodoHead todoLength={toDos.length} />
+        <TodoHead />
         <TodoBody>
-          <div className="ing_todo todo_body"><TodoIng toDos={toDos} /></div>
+          <div className="ing_todo todo_body"><TodoIng /></div>
           <div className="not_completed_todo todo_body"></div>
         </TodoBody>
         {/* <DoList todos={todos} onCheckToggle={onCheckToggle}/> */}
       </Container>
-      {isPopup === "todoCreate" && <TodoCreate setToDos={setToDos} toDos={toDos} setErrMsg={setErrMsg} />}
+      {isPopup === "todoCreate" && <TodoCreate setErrMsg={setErrMsg} userEmail={me?.email} />}
       <AlertMessage msg={errMsg} time={3000} setMsg={setErrMsg} type="error" />
     </BasicContainer>
   )
