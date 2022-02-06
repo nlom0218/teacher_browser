@@ -2,17 +2,49 @@
 import React, { useState } from "react";
 
 // 컴포넌트
-import TabBar from "./Sub-Area/TabBar";
-import List from "./Sub-Area/List";
+import styled from "styled-components";
+import InputArea from "./Sub-Area/InputArea";
 
-// 그래프큐엘
-import { useQuery } from "@apollo/client";
-import { SEE_ALL_STUDENT_LIST_QUERY } from "../../Graphql/StudentList/query";
+import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
+
+const Container = styled.div`
+  padding: 40px;
+  padding: 2.5rem;
+  padding-top: 0;
+  display: grid;
+  row-gap: 40px;
+  row-gap: 2.5rem;
+`;
+
+const SortContainer = styled.div`
+  display: grid;
+  grid-template-columns: auto auto auto 1fr;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+`;
+const SortBtn = styled.div`
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  column-gap: 5px;
+  column-gap: 0.3125rem;
+  cursor: pointer;
+  svg {
+    display: flex;
+  }
+`;
+
+const StudentList = styled.div`
+  display: grid;
+  row-gap: 40px;
+  row-gap: 2.5rem;
+`;
 
 //
-const MainArea = ({ me }) => {
+const MainArea = ({ me, students, loading, error, sort, setSort }) => {
   const [selectedListId, setSelectedListId] = useState();
-  const { loading, error, data } = useQuery(SEE_ALL_STUDENT_LIST_QUERY);
+
+  const focusStudent = localStorage.getItem("focusStudent");
 
   if (loading) return <div>Loading...</div>;
   if (error)
@@ -23,19 +55,30 @@ const MainArea = ({ me }) => {
       </div>
     );
 
-  const studentList = data.seeStudentList;
-
-  // 명렬표가 없을 경우
-  if (studentList.length === 0) return <div>명렬표와 학생을 추가해주세요.</div>;
-
-  // 선택한 명령표가 없을 경우 첫번째 리스트 자동 선택
-  if (!selectedListId) setSelectedListId(studentList[0].listId);
-
   return (
-    <>
-      <TabBar studentList={studentList} setSelectedListId={setSelectedListId} />
-      <List listId={selectedListId} me={me} />
-    </>
+    <Container>
+      <SortContainer>
+        <SortBtn onClick={() => setSort("num")}>
+          <div>{sort === "num" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+          <div>번호 순</div>
+        </SortBtn>
+        <SortBtn onClick={() => setSort("name")}>
+          <div>{sort === "name" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+          <div>이름 순</div>
+        </SortBtn>
+        <SortBtn onClick={() => setSort("id")}>
+          <div>{sort === "id" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+          <div>생성일 순</div>
+        </SortBtn>
+      </SortContainer>
+      <StudentList>
+        {students.map((student, index) => {
+          if (student._id === focusStudent) return <InputArea key={index} me={me} student={student} opened={true}></InputArea>;
+
+          return <InputArea key={index} me={me} student={student}></InputArea>;
+        })}
+      </StudentList>
+    </Container>
   );
 };
 
