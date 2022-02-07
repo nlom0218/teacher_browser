@@ -36,8 +36,8 @@ const BottomBtn = styled.div`
   column-gap: 1.25rem;
   .bottom_btn {
     cursor : pointer;
-    padding: 10px;
-    padding: 0.625rem;
+    padding: 10px 0px;
+    padding: 0.625rem 0rem;
     text-align : center;
     border-radius : 5px;
     border-radius : 0.3125rem;
@@ -60,6 +60,7 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail }) => {
   const [startDate, setStartDate] = useState(null)
   const [endDate, setEndDate] = useState(null)
   const [star, setStar] = useState(null)
+  const [type, setType] = useState(undefined)
 
   const { register, handleSubmit, getValues, setValue } = useForm({
     mode: "onChange"
@@ -91,7 +92,7 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail }) => {
     const { completeToDoList: { ok } } = result
     if (ok) {
       outPopup()
-      setMsg("할 일 정보가 완료되었습니다. 😄")
+      setMsg("할 일이 완료되었습니다. 😄")
     }
   }
 
@@ -106,11 +107,9 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail }) => {
   })
 
   const [completeToDoList, { loading: completeLoading }] = useMutation(COMPLETE_TO_DO_LIST_MUTATION, {
-    onCompleted, completeOnCompleted,
+    onCompleted: completeOnCompleted,
     refetchQueries: [{ query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: false } }]
   })
-
-
 
   useEffect(() => {
     if (data) {
@@ -119,12 +118,17 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail }) => {
       setStartDate(parseInt(data?.seeToDoList[0]?.startDate))
       setEndDate(parseInt(data?.seeToDoList[0]?.endDate))
       setStar(data?.seeToDoList[0]?.star)
+      if (!data?.seeToDoList[0].startDate) {
+        setType("ing")
+      } else if (new Date(parseInt(data?.seeToDoList[0].startDate)) > new Date().setHours(0, 0, 0, 0)) {
+        setType("inComing")
+      } else if (new Date(parseInt(data?.seeToDoList[0].endDate)) < new Date().setHours(0, 0, 0, 0)) {
+        setType("not")
+      } else {
+        setType("ing")
+      }
     }
   }, [data])
-
-  if (loading) {
-    return (<Loading page="popupPage" />)
-  }
 
   const onSubmit = (data) => {
     if (startDate) {
@@ -175,13 +179,17 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail }) => {
     })
   }
 
+  if (loading) {
+    return (<Loading page="popupPage" />)
+  }
+
   return (<PopupContainer maxHeight={true}>
     <PopupForm create={false} onSubmit={handleSubmit(onSubmit)}>
       <PopupTitle>할 일 세부정보 및 수정하기</PopupTitle>
-      <Type not={data?.seeToDoList[0]?.notToDo}>
-        {data?.seeToDoList[0]?.notToDo && "미완료된 할 일"}
-        {data?.seeToDoList[0]?.inComingToDo && "다가오는 할 일"}
-        {data?.seeToDoList[0]?.ingToDo && "진행중인 할 일"}
+      <Type not={type === "not"}>
+        {type === "not" && "미완료된 할 일"}
+        {type === "inComing" && "다가오는 할 일"}
+        {type === "ing" && "진행중인 할 일"}
       </Type>
       <PopupInputLayout>
         <PopupInput

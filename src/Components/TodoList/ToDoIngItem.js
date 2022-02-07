@@ -9,6 +9,9 @@ import { SEE_TO_DO_LIST_QUERY } from '../../Graphql/ToDoList/query';
 import { useNavigate, useParams } from 'react-router';
 import routes from '../../routes';
 import ToDoItem from './styled/ToDoItem';
+import { customMedia } from '../../styles';
+import useMedia from '../../Hooks/useMedia';
+import { inPopup } from '../../apollo';
 
 const completeToDoAni = keyframes`
   from {
@@ -25,16 +28,21 @@ const CheckIcon = styled.div`
   cursor: pointer;
   svg {
     display: flex;
-    font-size: 1.25em;
-    font-size: 1.25rem;
+    font-size: 1em;
+    font-size: 1rem;
+    ${customMedia.greaterThan("tablet")`
+      font-size: 1.25em;
+      font-size: 1.25rem;
+    `}
   }
 `
 
 const ToDo = styled.div`
+  grid-column: 2 / -1;
   padding: 10px;
   padding: 0.625rem;
-  font-size: 1.2em;
-  font-size: 1.2rem;
+  font-size: 1em;
+  font-size: 1rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -46,11 +54,19 @@ const ToDo = styled.div`
     background-color: ${props => props.theme.contentBgColor};
     transition: background-color 0.6s ease;
   }
+  ${customMedia.greaterThan("tablet")`
+    grid-column: 2 / 3;
+    font-size: 1.2em;
+    font-size: 1.2rem;
+  `}
 `
 
 const Star = styled.div`
+  grid-column: 1 / 3;
   padding: 10px 0px;
   padding: 0.625rem 0rem;
+  font-size: 0.875em;
+  font-size: 0.875rem;
   color: ${props => props.theme.redColor};
   transition: color 1s ease;
   svg {
@@ -59,10 +75,15 @@ const Star = styled.div`
     margin-right: 0.3125rem;
   }
   }
+  ${customMedia.greaterThan("tablet")`
+    grid-column: 3 / 4;
+    font-size: 1em;
+    font-size: 1rem;
+  `}
 `
 
 const Date = styled.div`
-  grid-column: 1 / -1;
+  grid-column: 3 / 4;
   padding: 10px;
   padding: 0.625rem;
   background-color: ${props => props.theme.green};
@@ -70,9 +91,14 @@ const Date = styled.div`
   transition: background-color 1s ease, color 1s ease;
   border-radius: 20px;
   border-radius: 1.25rem;
-  font-size: 0.875em;
-  font-size: 0.875rem;
+  font-size: 0.75em;
+  font-size: 0.75rem;
   justify-self: flex-end;
+  ${customMedia.greaterThan("tablet")`
+    grid-column: 1 / -1;
+    font-size: 0.875em;
+    font-size: 0.875rem;
+  `}
 `
 
 const CompleteLine = styled.div`
@@ -87,6 +113,7 @@ const CompleteLine = styled.div`
 const ToDoIngItem = ({ item }) => {
   const navigate = useNavigate()
   const { id } = useParams()
+  const media = useMedia()
 
   const [endDate, setEndDate] = useState(undefined)
   const [complete, setComplete] = useState(false)
@@ -119,7 +146,12 @@ const ToDoIngItem = ({ item }) => {
   }
 
   const onClickToDo = () => {
-    navigate(`${routes.todo}/${item._id}`)
+    if (media === "Desktop") {
+      navigate(`${routes.todo}/${item._id}`)
+    } else {
+      inPopup("detailToDo")
+      localStorage.setItem("detailToDo", item._id)
+    }
   }
 
   useEffect(() => {
@@ -131,7 +163,7 @@ const ToDoIngItem = ({ item }) => {
       setEndDate(`${processSetDate(date)} ${processSetDay(date)}`)
     }
   }, [item])
-  return (<ToDoItem complete={complete}>
+  return (<ToDoItem complete={complete} ing={true}>
     {/* <Line></Line> */}
     <CheckIcon onClick={onClickCheck}>{complete ? <RiCheckboxCircleLine /> : <RiCheckboxBlankCircleLine />}</CheckIcon>
     <ToDo onClick={onClickToDo} isSeleted={id === item._id}>{item.toDo}

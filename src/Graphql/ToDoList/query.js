@@ -10,9 +10,6 @@ export const SEE_TO_DO_LIST_QUERY = gql`
       isComplete
       startDate
       endDate
-      ingToDo
-      notToDo
-      inComingToDo
       star
     }
   }

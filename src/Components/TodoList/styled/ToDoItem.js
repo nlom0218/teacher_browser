@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import { customMedia } from "../../../styles";
 
 const completeToDoItemAni = keyframes`
   0% {
@@ -14,9 +15,9 @@ const completeToDoItemAni = keyframes`
 
 const ToDoItem = styled.div`
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  column-gap: 20px;
-  column-gap: 1.25rem;
+  grid-template-columns: ${props => props.ing ? "auto 1fr auto" : "1fr auto"};
+  column-gap: 10px;
+  column-gap: 0.625rem;
   row-gap: 10px;
   row-gap: 0.625rem;
   align-items: flex-start;
@@ -26,6 +27,10 @@ const ToDoItem = styled.div`
   padding-bottom: 0.625rem;
   margin-bottom: 0.625rem;
   animation: ${props => props.complete && completeToDoItemAni} 2s ease forwards;
+  ${customMedia.greaterThan("tablet")`
+    column-gap: 20px;
+    column-gap: 1.25rem;
+  `}  
 `
 
 export default ToDoItem

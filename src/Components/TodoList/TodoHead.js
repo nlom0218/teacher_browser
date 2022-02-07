@@ -16,32 +16,40 @@ const HeadLayout = styled.div`
   row-gap: 10px;
   row-gap: 0.625rem;
   h1 {
-      font-size : 1.5em;
-      font-size : 1.5rem;
+      font-size : 1.25em;
+      font-size : 1.25rem;
       ${customMedia.greaterThan("tablet")`
       font-size : 2em;
       font-size : 2rem;
       `}
   }
   .day {
-      font-size : 1.25em;
-      font-size : 1.25rem;
+      font-size : 1em;
+      font-size : 1rem;
       opacity : 0.7;
+      ${customMedia.greaterThan("tablet")`
+      font-size : 1.25em;
+      font-size : 1.25rem
+      `}
   }
 `;
 
 const ButtonContent = styled.div`
   cursor : pointer;
-  font-size : 2.5rem;
-  font-size : 2.5em;
+  font-size : 2rem;
+  font-size : 2em;
   color : ${props => props.theme.btnBgColor};
   transition : color 1s ease;
   svg {
       display : flex;
   }
+  ${customMedia.greaterThan("tablet")`
+    font-size : 2.5rem;
+    font-size : 2.5em;
+  `}
 `;
 
-const TodoHead = ({ ingToDosLength }) => {
+const TodoHead = () => {
   const date = new Date()
   const processSetDay = () => {
     const day = date.getDay()

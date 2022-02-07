@@ -1,10 +1,10 @@
 import React from 'react';
-import { GrPowerReset } from "react-icons/gr"
-import { BsCalendarDate, BsFillPencilFill, BsStar, BsStarFill } from "react-icons/bs"
+import { BsArrowCounterclockwise, BsCalendarDate, BsFillPencilFill, BsStar, BsStarFill } from "react-icons/bs"
 import { CgNotes } from "react-icons/cg"
 import styled from 'styled-components';
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
+import { customMedia } from '../../../styles';
 
 const Layout = styled.div`
   display: grid;
@@ -25,22 +25,25 @@ const Icon = styled.div`
 
 const SetDate = styled.div`
     display : grid;
-    grid-template-columns : 1fr auto 1fr auto;
     align-items: center;
     column-gap : 20px;
     column-gap : 1.25rem;
     row-gap : 10px;
     row-gap : 0.625rem;
+    text-align: center;
     input {
         width : 100%;
         background-color: ${props => props.theme.originBgColor};
-        text-align : center;
         padding : 20px 10px;
         padding : 1.25rem 0.625rem;
         border-radius : 40px;
         border-radius : 2.5rem;
         cursor : pointer;
+        text-align: center;
     }
+    ${customMedia.greaterThan("tablet")`
+       grid-template-columns : 1fr auto 1fr auto;
+    `}
 `
 
 const StartDate = styled.div`
@@ -55,26 +58,35 @@ const EndDate = styled.div`
 
 const ResetBtn = styled.div`
   cursor: pointer;
-  align-self : center;
+  justify-self: center;
   svg {
+      color: ${props => props.theme.fontColor};
       display : flex;
       font-size : 1.25em;
       font-size : 1.25rem;
   }
+  ${customMedia.greaterThan("tablet")`
+    align-self : center;
+  `}
 `;
 
 const SetStar = styled.div`
     justify-self: flex-start;
     display: grid;
     grid-template-columns: repeat(5, auto);
-    column-gap: 20px;
-    column-gap: 1.25rem;
     background-color: ${props => props.theme.originBgColor};
-    padding: 0px 40px;
-    padding: 0rem 2.5rem;
     border-radius: 40px;
     border-radius: 2.5rem;
     justify-items: center;
+    ${customMedia.greaterThan("tablet")`
+      padding: 0px 40px;
+      padding: 0rem 2.5rem;
+      column-gap: 20px;
+      column-gap: 1.25rem;
+    `}
+    ${customMedia.lessThan("tablet")`
+      width: 100%;
+    `}
 `
 
 const StarIcon = styled.div`
@@ -140,7 +152,7 @@ export const PopupDate = ({ startDate, endDate, setStartDate, setEndDate }) => {
           placeholderText="종료일 설정"
         />
       </EndDate>
-      <ResetBtn onClick={onClickResetDateBtn}><GrPowerReset></GrPowerReset></ResetBtn>
+      <ResetBtn onClick={onClickResetDateBtn}><BsArrowCounterclockwise /></ResetBtn>
     </SetDate>
   </Layout>
   )

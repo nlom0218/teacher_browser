@@ -5,8 +5,7 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
-import { GrPowerReset } from "react-icons/gr"
-import { BsCalendarDate, BsFillPencilFill, BsStar, BsStarFill } from "react-icons/bs"
+import { BsCalendarDate, BsFillPencilFill, BsStar, BsStarFill, BsArrowCounterclockwise } from "react-icons/bs"
 import { CgNotes } from "react-icons/cg"
 import TextareaAutosize from 'react-textarea-autosize';
 import Loading from '../Shared/Loading';
@@ -362,7 +361,7 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
             placeholderText="종료일 설정"
           />
         </EndDate>
-        <ResetBtn onClick={onClickResetDateBtn}><GrPowerReset /></ResetBtn>
+        <ResetBtn onClick={onClickResetDateBtn}><BsArrowCounterclockwise /></ResetBtn>
       </SetDate>
     </Layout>
     <Layout>

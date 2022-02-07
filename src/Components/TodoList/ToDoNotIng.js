@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { customMedia } from '../../styles';
 import ToDoNotIngItem from './ToDoNotIngItem';
 
 const Container = styled.div`
@@ -14,16 +15,9 @@ const ToDoListLayout = styled.div`
   display: grid;
 `
 
-const DivideLine = styled.div`
-  height: 1px;
-  width: 100%;
-  background-color: ${props => props.theme.hoverColor};
-  transition: background-color 1s ease;
-`
-
 const Title = styled.div`
-  font-size: 1.25em;
-  font-size: 1.25rem;
+  font-size: 1em;
+  font-size: 1rem;
   padding-bottom: 20px;
   padding-bottom: 1.25rem;
   justify-self: flex-start;
@@ -33,17 +27,25 @@ const Title = styled.div`
   column-gap: 10px;
   column-gap: 0.625rem;
   align-items: flex-end;
+  ${customMedia.greaterThan("tablet")`
+    font-size: 1.25em;
+    font-size: 1.25rem;
+  `}
 `
 
 const Text = styled.div`
 `
 
 const Number = styled.div`
-  font-size: 1em;
-  font-size: 1rem;
+  font-size: 0.875em;
+  font-size: 0.875rem;
   color: ${props => props.not ? props.theme.redColor : props.theme.btnBgColor};
   transition: color 1s ease;
   font-weight: 600;
+  ${customMedia.greaterThan("tablet")`
+    font-size: 1em;
+    font-size: 1rem;
+  `}
 `
 
 const TitleLine = styled.div`
