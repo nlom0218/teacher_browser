@@ -93,7 +93,7 @@ const TodoList = () => {
     if (data) {
       setIngToDos(data?.seeToDoList?.filter(item => item.ingToDo === true).sort(compare("endDate")))
       setNotToDos(data?.seeToDoList?.filter(item => item.notToDo === true).sort(compare("endDate")))
-      setInComingToDos(data?.seeToDoList?.filter(item => item.inComingToDo === true))
+      setInComingToDos(data?.seeToDoList?.filter(item => item.inComingToDo === true).sort(compare("startDate")))
     }
   }, [data])
 

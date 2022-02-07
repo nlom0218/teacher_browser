@@ -7,12 +7,15 @@ const ToDo = styled.div`
   grid-column: 1 / 3;
   padding: 10px 0px;
   padding: 0.625rem 0rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `
 
-const EndDate = styled.div`
+const Date = styled.div`
   padding: 10px;
   padding: 0.625rem;
-  background-color: ${props => props.theme.redColor};
+  background-color: ${props => props.type === "not" ? props.theme.redColor : props.theme.btnBgColor};
   color: ${props => props.theme.bgColor};
   transition: background-color 1s ease, color 1s ease;
   border-radius: 20px;
@@ -22,12 +25,14 @@ const EndDate = styled.div`
   justify-self: flex-end;
 `
 
-const ToDoNotItem = ({ item }) => {
+const ToDoNotIngItem = ({ item, type }) => {
   const endDate = new window.Date(parseInt(item.endDate))
+  const startDate = new window.Date(parseInt(item.startDate))
   return (<ToDoItem>
     <ToDo>{item.toDo}</ToDo>
-    <EndDate>~ {processSetDate(endDate)} {processSetDay(endDate)}</EndDate>
+    {type === "not" && <Date type={type}>~ {processSetDate(endDate)} {processSetDay(endDate)}</Date>}
+    {type === "incoming" && <Date>{processSetDate(endDate)} {processSetDay(endDate)} ~</Date>}
   </ToDoItem>);
 }
 
-export default ToDoNotItem;
+export default ToDoNotIngItem;
