@@ -69,7 +69,7 @@ const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit }) => {
   const found = myPageLink.filter((item) =>
     item.folder.includes(pageLinkFolder)
   );
-  const allNotFound = pageLinkFolder === undefined && myPageLink.length === 0;
+  const allNotFound = !pageLinkFolder && myPageLink.length === 0;
   const folderNotFound = pageLinkFolder && found.length === 0;
 
   useEffect(() => {
