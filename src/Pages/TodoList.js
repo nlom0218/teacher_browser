@@ -14,6 +14,7 @@ import ToDoDetail from '../Components/TodoList/ToDoDetail';
 import Loading from '../Components/Shared/Loading';
 import ToDoNotIng from '../Components/TodoList/ToDoNotIng';
 import { compare } from '../shared';
+import DetailToDo from '../Components/TodoList/Popup/DetailToDo';
 
 // const ListContainer = styled.div`
 //   margin-left : auto;
@@ -116,6 +117,7 @@ const TodoList = () => {
         {/* <DoList todos={todos} onCheckToggle={onCheckToggle}/> */}
       </Container>
       {isPopup === "todoCreate" && <TodoCreate setErrMsg={setErrMsg} userEmail={me?.email} />}
+      {isPopup === "detailToDo" && <DetailToDo setErrMsg={setErrMsg} userEmail={me?.email} />}
       <AlertMessage msg={errMsg} time={3000} setMsg={setErrMsg} type="error" />
       <AlertMessage msg={msg} time={3000} setMsg={setMsg} type="success" />
     </BasicContainer>

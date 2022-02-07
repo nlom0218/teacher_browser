@@ -40,8 +40,6 @@ const ToDo = styled.div`
   text-overflow: ellipsis;
   cursor: pointer;
   position: relative;
-  background-color: ${props => props.isSeleted && props.theme.contentBgColor};
-  transition: background-color 1s ease;
   border-radius: 10px;
   border-radius: 0.625rem;
   :hover {
