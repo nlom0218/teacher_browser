@@ -12,7 +12,8 @@ import useMe from '../Hooks/useMe';
 import { useParams } from 'react-router';
 import ToDoDetail from '../Components/TodoList/ToDoDetail';
 import Loading from '../Components/Shared/Loading';
-import ToDoNot from '../Components/TodoList/ToDoNot';
+import ToDoNotIng from '../Components/TodoList/ToDoNotIng';
+import { compare } from '../shared';
 
 // const ListContainer = styled.div`
 //   margin-left : auto;
@@ -90,8 +91,8 @@ const TodoList = () => {
 
   useEffect(() => {
     if (data) {
-      setIngToDos(data?.seeToDoList?.filter(item => item.ingToDo === true))
-      setNotToDos(data?.seeToDoList?.filter(item => item.notToDo === true))
+      setIngToDos(data?.seeToDoList?.filter(item => item.ingToDo === true).sort(compare("endDate")))
+      setNotToDos(data?.seeToDoList?.filter(item => item.notToDo === true).sort(compare("endDate")))
       setInComingToDos(data?.seeToDoList?.filter(item => item.inComingToDo === true))
     }
   }, [data])
@@ -109,7 +110,7 @@ const TodoList = () => {
           {ingToDos.length !== 0 && <div className="ing_todo todo_body"><TodoIng ingToDos={ingToDos} /></div>}
           <div className="not_ing_todo todo_body">
             {id && <ToDoDetail id={id} userEmail={me?.email} setErrMsg={setErrMsg} setMsg={setMsg} />}
-            {!id && <ToDoNot notToDos={notToDos} />}
+            {!id && <ToDoNotIng notToDos={notToDos} inComingToDos={inComingToDos} />}
           </div>
         </TodoBody>
         {/* <DoList todos={todos} onCheckToggle={onCheckToggle}/> */}

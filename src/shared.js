@@ -119,3 +119,11 @@ export const processSetDate = (date) => {
     .toString()
     .padStart(2, 0)}-${date.getDate().toString().padStart(2, 0)}`
 }
+
+export const compare = (key) => {
+  return (a, b) => (a[key] > b[key] ? 1 : (a[key] < b[key] ? -1 : 0))
+}
+
+export const compareDesc = (key) => {
+  return (a, b) => (a[key] < b[key] ? 1 : (a[key] > b[key] ? -1 : 0))
+}

@@ -202,7 +202,7 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
   const navigate = useNavigate()
 
   const onClickBackIcon = () => {
-    navigate(-1)
+    navigate(routes.todo)
   }
 
   const { data, loading } = useQuery(SEE_TO_DO_LIST_QUERY, {
