@@ -219,7 +219,7 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
   const onCompleted = (result) => {
     const { editToDoList: { ok } } = result
     if (ok) {
-      setMsg("할 일 정보가 수정되었습니다.")
+      setMsg("할 일 정보가 수정되었습니다. 😄")
     }
   }
 
@@ -227,7 +227,7 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
     const { deleteToDoList: { ok } } = result
     if (ok) {
       navigate(routes.todo)
-      setMsg("할 일이 삭제되었습니다.")
+      setMsg("할 일이 삭제되었습니다. 😄")
     }
   }
 
@@ -249,17 +249,17 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
   const onSubmit = (data) => {
     if (startDate) {
       if (!endDate) {
-        setErrMsg("종료일을 설정해주세요.")
+        setErrMsg("종료일을 설정해주세요. 🥲")
         return
       }
       if (startDate > endDate) {
-        setErrMsg("시작일과 종료일을 다시 확인해주세요.")
+        setErrMsg("시작일과 종료일을 다시 확인해주세요. 🥲")
         return
       }
     }
     if (endDate) {
       if (!startDate) {
-        setErrMsg("시작일을 설정해주세요.")
+        setErrMsg("시작일을 설정해주세요. 🥲")
         return
       }
     }
@@ -345,6 +345,7 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
             dateFormat="yyyy/MM/dd"
             locale={ko}
             placeholderText="시작일 설정"
+            todayButton="오늘"
           />
         </StartDate>
         <div>~</div>

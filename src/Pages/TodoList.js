@@ -108,7 +108,7 @@ const TodoList = () => {
         <TodoHead ingToDosLength={ingToDos.length} />
         <TodoBody>
           <ToDoSortBtn></ToDoSortBtn>
-          {ingToDos.length !== 0 && <div className="ing_todo todo_body"><TodoIng ingToDos={ingToDos} /></div>}
+          <div className="ing_todo todo_body"><TodoIng ingToDos={ingToDos} /></div>
           <div className="not_ing_todo todo_body">
             {id && <ToDoDetail id={id} userEmail={me?.email} setErrMsg={setErrMsg} setMsg={setMsg} />}
             {!id && <ToDoNotIng notToDos={notToDos} inComingToDos={inComingToDos} />}
@@ -117,7 +117,7 @@ const TodoList = () => {
         {/* <DoList todos={todos} onCheckToggle={onCheckToggle}/> */}
       </Container>
       {isPopup === "todoCreate" && <TodoCreate setErrMsg={setErrMsg} userEmail={me?.email} />}
-      {isPopup === "detailToDo" && <DetailToDo setErrMsg={setErrMsg} userEmail={me?.email} />}
+      {isPopup === "detailToDo" && <DetailToDo setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} />}
       <AlertMessage msg={errMsg} time={3000} setMsg={setErrMsg} type="error" />
       <AlertMessage msg={msg} time={3000} setMsg={setMsg} type="success" />
     </BasicContainer>

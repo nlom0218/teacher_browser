@@ -123,6 +123,7 @@ export const PopupDate = ({ startDate, endDate, setStartDate, setEndDate }) => {
           dateFormat="yyyy/MM/dd"
           locale={ko}
           placeholderText="시작일 설정"
+          todayButton="오늘"
         />
       </StartDate>
       <div>~</div>

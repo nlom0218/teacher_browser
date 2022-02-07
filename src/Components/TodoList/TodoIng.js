@@ -50,19 +50,28 @@ const ToDoList = styled.div`
     row-gap: 1.25rem; */
 `
 
-const TodoIng = ({ ingToDos }) => {
-    return (<Container>
-        <Title>
-            <Text>진행중인 할 일</Text>
-            <Number>{ingToDos.length}개</Number>
-            <TitleLine></TitleLine>
-        </Title>
-        <ToDoList>{ingToDos.map((item, index) => {
-            return <ToDoIngItem key={index} item={item} />
-        })}</ToDoList>
-    </Container>
+const NoToDo = styled.div`
+  text-align: center;
+  line-height: 160%;
+`
 
-    );
+const TodoIng = ({ ingToDos }) => {
+  return (<Container>
+    <Title>
+      <Text>진행중인 할 일</Text>
+      <Number>{ingToDos.length}개</Number>
+      <TitleLine></TitleLine>
+    </Title>
+    {ingToDos.length === 0 && <NoToDo>
+      <div>진행중인 할 일이 없습니다.</div>
+      <div>우측 상단의 +버튼을 눌러 할 일을 생성하세요! 👊</div>
+    </NoToDo>}
+    <ToDoList>{ingToDos.map((item, index) => {
+      return <ToDoIngItem key={index} item={item} />
+    })}</ToDoList>
+  </Container>
+
+  );
 }
 
 export default TodoIng;

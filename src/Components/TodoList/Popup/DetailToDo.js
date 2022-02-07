@@ -1,8 +1,10 @@
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import TextareaAutosize from 'react-textarea-autosize';
 import styled from 'styled-components';
+import { outPopup } from '../../../apollo';
+import { COMPLETE_TO_DO_LIST_MUTATION, DELETE_TO_DO_LIST_MUTATION, EDIT_TO_DO_LIST_MUTATION } from '../../../Graphql/ToDoList/mutation';
 import { SEE_TO_DO_LIST_QUERY } from '../../../Graphql/ToDoList/query';
 import Loading from '../../Shared/Loading';
 import PopupContainer from '../../Shared/PopupContainer';
@@ -52,7 +54,7 @@ const CompleteBtn = styled.div`
   color : ${props => props.theme.bgColor};
 `
 
-const DetailToDo = () => {
+const DetailToDo = ({ setMsg, setErrMsg, userEmail }) => {
   const id = localStorage.getItem("detailToDo")
 
   const [startDate, setStartDate] = useState(null)
@@ -63,13 +65,52 @@ const DetailToDo = () => {
     mode: "onChange"
   })
 
-  const { data, loading } = useQuery(SEE_TO_DO_LIST_QUERY, {
+  const { data, loading, refetch } = useQuery(SEE_TO_DO_LIST_QUERY, {
     variables: {
       isComplete: false,
       id
     }
   })
-  console.log(data);
+
+  const onCompleted = (result) => {
+    const { editToDoList: { ok } } = result
+    if (ok) {
+      setMsg("할 일 정보가 수정되었습니다. 😄")
+    }
+  }
+
+  const delOnCompleted = (result) => {
+    const { deleteToDoList: { ok } } = result
+    if (ok) {
+      outPopup()
+      setMsg("할 일이 삭제되었습니다. 😄")
+    }
+  }
+
+  const completeOnCompleted = (result) => {
+    const { completeToDoList: { ok } } = result
+    if (ok) {
+      outPopup()
+      setMsg("할 일 정보가 완료되었습니다. 😄")
+    }
+  }
+
+  const [editToDoList, { loading: editLoading }] = useMutation(EDIT_TO_DO_LIST_MUTATION, {
+    onCompleted,
+    refetchQueries: [{ query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: false } }]
+  })
+
+  const [deleteToDoList, { loading: delLoading }] = useMutation(DELETE_TO_DO_LIST_MUTATION, {
+    onCompleted: delOnCompleted,
+    refetchQueries: [{ query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: false } }]
+  })
+
+  const [completeToDoList, { loading: completeLoading }] = useMutation(COMPLETE_TO_DO_LIST_MUTATION, {
+    onCompleted, completeOnCompleted,
+    refetchQueries: [{ query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: false } }]
+  })
+
+
 
   useEffect(() => {
     if (data) {
@@ -85,8 +126,57 @@ const DetailToDo = () => {
     return (<Loading page="popupPage" />)
   }
 
+  const onSubmit = (data) => {
+    if (startDate) {
+      if (!endDate) {
+        setErrMsg("종료일을 설정해주세요. 🥲")
+        return
+      }
+      if (startDate > endDate) {
+        setErrMsg("시작일과 종료일을 다시 확인해주세요. 🥲")
+        return
+      }
+    }
+    if (endDate) {
+      if (!startDate) {
+        setErrMsg("시작일을 설정해주세요. 🥲")
+        return
+      }
+    }
+    const { toDo, contents } = data
+    editToDoList({
+      variables: {
+        id,
+        userEmail,
+        toDo,
+        contents,
+        ...(startDate && { startDate: new Date(startDate) }),
+        ...(endDate && { endDate: new Date(endDate) }),
+        star
+      }
+    })
+  }
+
+  const onClickCompleteBtn = () => {
+    completeToDoList({
+      variables: {
+        userEmail,
+        id
+      }
+    })
+  }
+
+  const onClickDelBtn = () => {
+    deleteToDoList({
+      variables: {
+        id,
+        userEmail,
+      }
+    })
+  }
+
   return (<PopupContainer maxHeight={true}>
-    <PopupForm create={false}>
+    <PopupForm create={false} onSubmit={handleSubmit(onSubmit)}>
       <PopupTitle>할 일 세부정보 및 수정하기</PopupTitle>
       <Type not={data?.seeToDoList[0]?.notToDo}>
         {data?.seeToDoList[0]?.notToDo && "미완료된 할 일"}
@@ -117,8 +207,8 @@ const DetailToDo = () => {
         value="수정하기"
       />
       <BottomBtn>
-        <CompleteBtn className="bottom_btn">완료하기</CompleteBtn>
-        <DelBtn className="bottom_btn">삭제하기</DelBtn>
+        <CompleteBtn onClick={onClickCompleteBtn} className="bottom_btn">완료하기</CompleteBtn>
+        <DelBtn onClick={onClickDelBtn} className="bottom_btn">삭제하기</DelBtn>
       </BottomBtn>
     </PopupForm>
   </PopupContainer>);

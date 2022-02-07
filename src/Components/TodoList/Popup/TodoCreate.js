@@ -48,17 +48,17 @@ const TodoCreate = ({ setErrMsg, userEmail }) => {
     const onSubmit = (data) => {
         if (startDate) {
             if (!endDate) {
-                setErrMsg("종료일을 설정해주세요.")
+                setErrMsg("종료일을 설정해주세요. 🥲")
                 return
             }
             if (startDate > endDate) {
-                setErrMsg("시작일과 종료일을 다시 확인해주세요.")
+                setErrMsg("시작일과 종료일을 다시 확인해주세요. 🥲")
                 return
             }
         }
         if (endDate) {
             if (!startDate) {
-                setErrMsg("시작일을 설정해주세요.")
+                setErrMsg("시작일을 설정해주세요. 🥲")
                 return
             }
         }
