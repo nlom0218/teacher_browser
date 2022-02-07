@@ -18,21 +18,25 @@ dotenv.config();
 
 const LunchmenuContainer = styled.div`
   min-height: 100%;
-  padding: 40px;
-  padding: 2.5rem;
+  padding: 20px;
+  padding: 1.25rem;
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-rows: auto 1fr;
   align-items: flex-start;
   row-gap: 20px;
   row-gap: 1.25rem;
+  margin-top: 30px;
+  margin-top: 1.875rem;
   ${customMedia.greaterThan("tablet")`
-    padding: 60px;
-    padding: 3.75rem;
+    padding: 40px;
+    padding: 2.5rem;
     grid-template-columns: 1fr auto;
     grid-template-rows: auto 1fr;
     row-gap: 40px;
     row-gap: 2.5rem;
+    margin-top: 0px;
+    margin-top: 0rem;
   `}
 `
 
@@ -94,7 +98,6 @@ const SchoolIcon = styled.div`
 `
 
 const LunchmenuInfo = styled.div`
-  height: 100%;
   grid-column: 1 / -1;
   display: grid;
   row-gap: 20px;
@@ -103,6 +106,8 @@ const LunchmenuInfo = styled.div`
     grid-template-columns: 1fr 1.5fr;
     grid-template-rows: auto 1fr;
     column-gap: 30px;
+    min-height: 100%;
+    max-height: 100%;
   `}
 `
 
