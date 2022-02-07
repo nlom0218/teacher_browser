@@ -28,9 +28,21 @@ const Title = styled.div`
   padding-bottom: 1.25rem;
   justify-self: flex-start;
   position: relative;
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 10px;
+  column-gap: 0.625rem;
+  align-items: flex-end;
 `
 
 const Text = styled.div`
+`
+
+const Number = styled.div`
+  font-size: 1em;
+  font-size: 1rem;
+  color: ${props => props.not ? props.theme.redColor : props.theme.btnBgColor};
+  font-weight: 600;
 `
 
 const TitleLine = styled.div`
@@ -51,15 +63,16 @@ const NoToDo = styled.div`
 `
 
 const ToDoNotIng = ({ notToDos, inComingToDos }) => {
-  console.log(notToDos);
+  console.log(notToDos.length);
   console.log(inComingToDos);
   return (<Container>
     <ToDoListLayout>
       <Title>
         <Text>미완료된 할 일</Text>
+        <Number not={true}>{notToDos.length}개</Number>
         <TitleLine not={true}></TitleLine>
       </Title>
-      {notToDos.lenght === 0 ? <NoToDo>미완료된 할 일이 없습니다. 😄</NoToDo> :
+      {notToDos.length === 0 ? <NoToDo>미완료된 할 일이 없습니다. 😄</NoToDo> :
         notToDos.map((item, index) => {
           return <ToDoNotIngItem key={index} item={item} type="not" />
         })
@@ -68,10 +81,11 @@ const ToDoNotIng = ({ notToDos, inComingToDos }) => {
     {/* <DivideLine></DivideLine> */}
     <ToDoListLayout>
       <Title>
-        <Title>다가오는 할 일</Title>
+        <Text>다가오는 할 일</Text>
+        <Number>{inComingToDos.length}개</Number>
         <TitleLine></TitleLine>
       </Title>
-      {inComingToDos.lenght === 0 ? <NoToDo>다가오는 할 일이 없습니다. 😄</NoToDo> :
+      {inComingToDos.length === 0 ? <NoToDo>다가오는 할 일이 없습니다. 😄</NoToDo> :
         inComingToDos.map((item, index) => {
           return <ToDoNotIngItem key={index} item={item} type="incoming" />
         })
