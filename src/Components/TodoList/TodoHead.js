@@ -28,13 +28,6 @@ const HeadLayout = styled.div`
       font-size : 1.25rem;
       opacity : 0.7;
   }
-  .tasks-left {
-    color : ${props => props.theme.green};
-    transition: color 1s ease;
-    font-size : 1.25em;
-    font-size : 1.25rem;
-    font-weight : bold;
-  }
 `;
 
 const ButtonContent = styled.div`
@@ -83,7 +76,6 @@ const TodoHead = ({ ingToDosLength }) => {
       <HeadLayout>
         <h1>{processSetDate()}</h1>
         <div className="day">{processSetDay()}</div>
-        <div className="tasks-left">할 일 {ingToDosLength}개 남음</div>
       </HeadLayout>
       <ButtonContent>
         <MdAddCircle onClick={onClickCreateBtn} />

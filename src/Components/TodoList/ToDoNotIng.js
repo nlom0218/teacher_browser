@@ -42,6 +42,7 @@ const Number = styled.div`
   font-size: 1em;
   font-size: 1rem;
   color: ${props => props.not ? props.theme.redColor : props.theme.btnBgColor};
+  transition: color 1s ease;
   font-weight: 600;
 `
 

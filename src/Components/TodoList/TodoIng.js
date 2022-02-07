@@ -5,6 +5,43 @@ import ToDoIngItem from './ToDoIngItem';
 const Container = styled.div`
     padding: 20px;
     padding: 1.25rem;
+    display: grid;
+`
+
+const Title = styled.div`
+  font-size: 1.25em;
+  font-size: 1.25rem;
+  padding-bottom: 20px;
+  padding-bottom: 1.25rem;
+  justify-self: flex-start;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 10px;
+  column-gap: 0.625rem;
+  align-items: flex-end;
+`
+
+const Text = styled.div`
+`
+
+const Number = styled.div`
+  font-size: 1em;
+  font-size: 1rem;
+  color: ${props => props.not ? props.theme.redColor : props.theme.green};
+  transition: color 1s ease;
+  font-weight: 600;
+`
+
+const TitleLine = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0.625rem;
+  height: 0.625rem;
+  background-color: ${props => props.not ? props.theme.redColor : props.theme.green};
+  opacity: 0.2;
+  transition: background-color 1s ease, opacity 1s ease;
 `
 
 const ToDoList = styled.div`
@@ -15,6 +52,11 @@ const ToDoList = styled.div`
 
 const TodoIng = ({ ingToDos }) => {
     return (<Container>
+        <Title>
+            <Text>진행중인 할 일</Text>
+            <Number>{ingToDos.length}개</Number>
+            <TitleLine></TitleLine>
+        </Title>
         <ToDoList>{ingToDos.map((item, index) => {
             return <ToDoIngItem key={index} item={item} />
         })}</ToDoList>
