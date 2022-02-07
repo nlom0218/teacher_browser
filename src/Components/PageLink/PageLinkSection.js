@@ -22,10 +22,10 @@ const MoveContainer = styled.div`
   right: ${(props) => (props.pageLinkSection === "pageLink" ? 0 : "100%")};
   left: ${(props) => (props.pageLinkSection === "pageLink" ? 0 : "-100%")};
   animation: ${(props) =>
-    !props.init &&
-    (props.pageLinkSection === "pageLink"
-      ? seeWelcomSection
-      : hideWelcomeSection)}
+      !props.init &&
+      (props.pageLinkSection === "pageLink"
+        ? seeWelcomSection
+        : hideWelcomeSection)}
     1s ease forwards;
   display: grid;
   row-gap: 20px;
@@ -46,7 +46,7 @@ const MoveIcon = styled.div`
 
 const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit }) => {
   const [myPageLink, setMyPageLink] = useState([]);
-  const [none, setNone] = useState(true);
+  const [none, setNone] = useState();
   const pageLinkFolder = useReactiveVar(pageLinkFolderVar);
 
   const { data, loading } = useQuery(SEE_MY_PAGE_LINK_QUERY, {
@@ -66,6 +66,27 @@ const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit }) => {
     }
   }, [data]);
 
+  const found = myPageLink.filter((item) =>
+    item.folder.includes(pageLinkFolder)
+  );
+  const allNotFound = pageLinkFolder === undefined && myPageLink.length === 0;
+  const folderNotFound = pageLinkFolder && found.length === 0;
+
+  useEffect(() => {
+    {
+      if (allNotFound) {
+        setNone(true);
+      } else {
+        setNone(false);
+      }
+    }
+    {
+      if (folderNotFound) {
+        setNone(true);
+      }
+    }
+  });
+
   return (
     <MoveContainer pageLinkSection={pageLinkSection} init={init}>
       <MoveIcon onClick={onClickMoveIcon}>
@@ -77,7 +98,7 @@ const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit }) => {
         <PageLinkList none={none}>
           {!pageLinkFolder &&
             (myPageLink.length === 0 ? (
-              <div>등록된 즐겨찾기 페이지가 없습니다.</div>
+              <div>등록된 즐겨찾기 페이지가 없습니다.이용 설명 추가하기 </div>
             ) : (
               myPageLink.map((item, index) => {
                 return <MyPageLink key={index} item={item} />;
