@@ -13,7 +13,6 @@ import PageLinkList from "./Styled/PageLinkList";
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { SEE_MY_PAGE_LINK_QUERY } from "../../Graphql/PageLink/query";
 import MyPageLink from "./MyPageLink";
-import { linkPickFolderVar } from "../../apollo";
 
 const MoveContainer = styled.div`
   position: absolute;

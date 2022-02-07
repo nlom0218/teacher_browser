@@ -40,7 +40,7 @@ const Container = styled.div`
 `;
 const SFolderList = styled.div`
   display: grid;
-  grid-template-rows: repeat(8, auto) 1fr;
+  grid-template-rows: repeat(17, auto) 1fr;
   row-gap: 10px;
   row-gap: 0.625rem;
   min-height: 100%;
@@ -90,12 +90,20 @@ const FolderList = ({ right }) => {
   const pageLinkFolderName = [
     "전체보기",
     "교육청",
-    "영어",
-    "미술",
-    "과학",
     "연수원",
-    "체육",
+    "학급경영",
     "국어",
+    "영어",
+    "수학",
+    "사회",
+    "과학",
+    "음악",
+    "미술",
+    "체육",
+    "실과",
+    "창체",
+    "안전",
+    "다문화",
   ];
 
   const processSelected = (item) => {
