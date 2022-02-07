@@ -4,7 +4,7 @@ const PopupForm = styled.form`
   padding : 20px 0px;
   padding : 1.25rem 0rem;
   display : grid;
-  grid-template-rows : auto auto 1fr auto auto auto; 
+  grid-template-rows: ${props => !props.create ? "auto auto auto 1fr auto auto auto auto" : "auto auto 1fr auto auto auto"};
   row-gap : 20px;
   row-gap : 1.25rem;
   min-height : 100%;

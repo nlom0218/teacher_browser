@@ -78,7 +78,7 @@ const TodoCreate = ({ setErrMsg, userEmail }) => {
 
     return (
         <PopupContainer maxHeight={true}>
-            <PopupForm onSubmit={handleSubmit(onSubmit)}>
+            <PopupForm onSubmit={handleSubmit(onSubmit)} create={true}>
                 <PopupTitle>할 일 작성</PopupTitle>
                 <PopupInputLayout>
                     <PopupInput
@@ -93,7 +93,9 @@ const TodoCreate = ({ setErrMsg, userEmail }) => {
                 <PopupTextarea>
                     <TextareaAutosize
                         {...register('contents')}
-                        placeholder="세부내용을 입력하세요">
+                        placeholder="세부내용을 입력하세요"
+                        minRows={3}
+                    >
                     </TextareaAutosize>
                 </PopupTextarea>
                 <PopupDate startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} />

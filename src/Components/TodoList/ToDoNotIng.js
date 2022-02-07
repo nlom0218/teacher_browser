@@ -63,8 +63,6 @@ const NoToDo = styled.div`
 `
 
 const ToDoNotIng = ({ notToDos, inComingToDos }) => {
-  console.log(notToDos.length);
-  console.log(inComingToDos);
   return (<Container>
     <ToDoListLayout>
       <Title>

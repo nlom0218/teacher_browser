@@ -69,7 +69,7 @@ const SetStar = styled.div`
     grid-template-columns: repeat(5, auto);
     column-gap: 20px;
     column-gap: 1.25rem;
-   background-color: ${props => props.theme.originBgColor};
+    background-color: ${props => props.theme.originBgColor};
     padding: 0px 40px;
     padding: 0rem 2.5rem;
     border-radius: 40px;
