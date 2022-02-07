@@ -13,6 +13,7 @@ import Loading from '../Shared/Loading';
 import { DELETE_TO_DO_LIST_MUTATION, EDIT_TO_DO_LIST_MUTATION } from '../../Graphql/ToDoList/mutation';
 import { useNavigate } from 'react-router-dom';
 import routes from '../../routes';
+import { IoArrowBackSharp } from "react-icons/io5";
 
 const Form = styled.form`
   padding : 20px;
@@ -44,6 +45,20 @@ const Form = styled.form`
 }
 }
 `;
+
+const Top = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr;
+`
+
+const BackIcon = styled.div`
+  font-size: 1.5em;
+  font-size: 1.5rem;
+  cursor: pointer;
+  svg {
+    display: flex;
+  }
+`
 
 const Title = styled.div`
     justify-self: flex-end;
@@ -186,6 +201,10 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
 
   const navigate = useNavigate()
 
+  const onClickBackIcon = () => {
+    navigate(-1)
+  }
+
   const { data, loading } = useQuery(SEE_TO_DO_LIST_QUERY, {
     variables: {
       isComplete: false,
@@ -288,7 +307,10 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
   }
 
   return (<Form onSubmit={handleSubmit(onSubmit)}>
-    <Title>할 일 정보</Title>
+    <Top>
+      <BackIcon onClick={onClickBackIcon}><IoArrowBackSharp /></BackIcon>
+      <Title>할 일 정보</Title>
+    </Top>
     <Layout>
       <Icon><BsFillPencilFill /></Icon>
       <Input
