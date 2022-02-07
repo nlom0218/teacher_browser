@@ -8,6 +8,7 @@ import WelcomeSection from '../Components/Welcome/WelcomeSection';
 import useMe from '../Hooks/useMe';
 
 const Container = styled.div`
+  min-height: 100%;
 `
 
 const Welcome = () => {
