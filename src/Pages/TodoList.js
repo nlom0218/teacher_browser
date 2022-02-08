@@ -152,6 +152,7 @@ const TodoList = () => {
         {/* <DoList todos={todos} onCheckToggle={onCheckToggle}/> */}
       </Container>
       {isPopup === "todoCreate" && <TodoCreate setErrMsg={setErrMsg} userEmail={me?.email} />}
+      {isPopup === "toDoComplete" && <TodoCreate setErrMsg={setErrMsg} userEmail={me?.email} />}
       {isPopup === "detailToDo" && <DetailToDo setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} />}
       <AlertMessage msg={errMsg} time={3000} setMsg={setErrMsg} type="error" />
       <AlertMessage msg={msg} time={3000} setMsg={setMsg} type="success" />

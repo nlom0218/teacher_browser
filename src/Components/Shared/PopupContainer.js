@@ -13,7 +13,7 @@ const Background = styled.div`
 `;
 
 const SRegisterContainer = styled.div`
-  width: 80%;
+  width: 90%;
   overflow: auto;
   -ms-overflow-style: none; // IE and Edge
   scrollbar-width: none; // Firefox
