@@ -168,9 +168,9 @@ const AddSchedule = () => {
   const [color, setColor] = useState(undefined)
   const [isRegisterTodo, setIsRegisterTodo] = useState(false)
   const bgColorArr = [
-    "#F44336", "#E91E62", "#9C27B0", "#673AB6", "#3F50B5", "#2096F3",
-    "#00A8F4", "#00BCD4", "#009688", "#4CAF4F", "#8BC24A", "#CDDC39",
-    "#FFEB3A", "#FFC007", "#FF9800", "#FF5721", "#795548"
+    "rgba(244, 67, 53, 0.5)", "rgba(233, 29, 98, 0.5)", "rgba(156, 39, 176, 0.5)", "rgba(103, 58, 182, 0.5)", "rgba(63, 80, 181, 0.5)", "rgba(53, 150, 243, 0.5)",
+    "rgba(58, 168, 244, 0.5)", "rgba(63, 188, 212, 0.5)", "rgba(47, 150, 136, 0.5)", "rgba(76, 175, 79, 0.5)", "rgba(139, 194, 74, 0.5)", "rgba(205, 220, 56, 0.5)",
+    "rgba(252, 235, 58, 0.5)", "rgba(249, 192, 11, 0.5)", "rgb(247, 152, 2, 0.5)", "rgba(245, 87, 34, 0.5)", "rgba(121, 85, 71, 0.5)", "rgba(96, 125, 138, 0.5)"
   ]
   const { register, handleSubmit } = useForm({
     mode: "onChange"
@@ -249,9 +249,6 @@ const AddSchedule = () => {
                 {color === item && <CheckBox><BsCheckLg /></CheckBox>}
               </ColorItem>
             })}
-            <ColorItem className="delete_color" onClick={() => setColor(undefined)}>
-              삭제
-            </ColorItem>
           </ColorContainer>
         </InputLayout>
         <SubmitInput
