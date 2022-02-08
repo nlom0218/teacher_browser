@@ -58,12 +58,28 @@ const Btn = styled.div`
   }
 `
 
+const BottomContainerLayout = styled.div`
+  position: relative;
+`
+
 const BottomContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   display: grid;
+  min-height: 100%;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: auto 1fr;
   padding: 20px;
   padding: 1.25rem;
+  overflow: ${props => props.notScroll ? "scroll" : "scroll"};
+  -ms-overflow-style: none; // IE and Edge
+  scrollbar-width: none; // Firefox
+  ::-webkit-scrollbar {
+    display: none; // Chrome, Safari, Opera
+  }
 `
 
 const Day = styled.div`
@@ -78,6 +94,7 @@ const CalendarList = styled.div`
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: ${props => `repeat(${props.weekLength}, minmax(80px, auto))`};
   background-color: ${props => props.theme.girdBorderColor};
   border: 1px solid ${props => props.theme.girdBorderColor};
   transition: background-color 1s ease, border 1s ease;
@@ -91,6 +108,7 @@ const Calendar = () => {
   const me = useMe()
 
   const [date, setDate] = useState(new Date())
+  const [weekLength, setWeekLength] = useState(1)
   const [dateArr, setDateArr] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
 
@@ -140,7 +158,12 @@ const Calendar = () => {
       }
     }
     setDateArr(newDateArr)
+    setWeekLength(weekLength)
   }, [date])
+
+  if (!weekLength) {
+    return <div></div>
+  }
 
   return (<BasicContainer>
     <Container>
@@ -151,18 +174,20 @@ const Calendar = () => {
         <Btn className="calendar_btn" onClick={onClickBtn}><IoIosArrowForward /></Btn>
         <Btn className="calendar_btn" onClick={onClickPlusBtn}><AiOutlinePlus /></Btn>
       </TopContainer>
-      <BottomContainer>
-        {["일", "월", "화", "수", "목", "금", "토"].map((item, index) => {
-          return <Day key={index} sun={item === "일"}>
-            {item}
-          </Day>
-        })}
-        <CalendarList>
-          {dateArr && dateArr.map((item, index) => {
-            return <CalendarItem key={index} item={item} />
+      <BottomContainerLayout>
+        <BottomContainer>
+          {["일", "월", "화", "수", "목", "금", "토"].map((item, index) => {
+            return <Day key={index} sun={item === "일"}>
+              {item}
+            </Day>
           })}
-        </CalendarList>
-      </BottomContainer>
+          <CalendarList weekLength={weekLength}>
+            {dateArr && dateArr.map((item, index) => {
+              return <CalendarItem key={index} item={item} />
+            })}
+          </CalendarList>
+        </BottomContainer>
+      </BottomContainerLayout>
       {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} />}
     </Container>
     {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}

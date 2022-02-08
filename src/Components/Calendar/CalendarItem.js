@@ -11,6 +11,7 @@ const Container = styled.div`
   grid-template-rows: auto 1fr;
   row-gap: 5px;
   row-gap: 0.3125rem;
+  padding-bottom: 20px;
 `
 
 const Day = styled.div`
