@@ -1,8 +1,6 @@
 import React, { useMemo, useState } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
-import { DivideLeftContents } from "../Components/Shared/styled/DivideContents";
-import { customMedia } from "../styles";
 import { inputLine } from "../Animations/InputLine";
 import { BtnFadeIn } from "../Animations/Fade";
 import { inPopup, isPopupVar } from "../apollo";
@@ -73,7 +71,7 @@ for (var i = 0; i < 6 - basicTime[4] - 1; i++) {
   timePush();
 }
 
-//시간설정 완료 눌렀을 때 outPopup이 안 됨. 콘솔창에 예전에는 값이 나왔는데 왜 안 나오지?
+//콘솔창에 예전에는 값이 나왔는데 왜 안 나오지?
 //수업정보를 어떻게 받아서 전달????
 //태그랑 태그 관리
 //음영한 뒤 다크모드에서 글씨 안 보임.
@@ -89,8 +87,6 @@ const Container = styled.div`
   row-gap: 20px;
   row-gap: 1.25rem;
   align-items: flex-start;
-  ${customMedia.greaterThan("desktop")`
-   padding:0`}
 `;
 const TopContents = styled.div`
   display: grid;
@@ -120,7 +116,6 @@ const Input = styled.input`
   font-size: 2rem;
   padding: 10px 0px;
   padding: 0.625rem 0rem;
-  //text-align:center;
 `;
 const InputLayout = styled.div``;
 
@@ -180,11 +175,6 @@ const TypeBtn = styled.div`
   }
 `;
 
-const TimeTableHeight = styled.div`
-  height: 100%;
-  width: 100%;
-`;
-
 const Schedule = () => {
   const isPopup = useReactiveVar(isPopupVar);
   const media = useMedia();
@@ -225,71 +215,68 @@ const Schedule = () => {
 
   return (
     <BasicContainer menuItem={true}>
-      <DivideLeftContents>
-        <Container>
-          <TopContents>
-            <Title onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
-              <InputLayout>
-                <h1>
-                  {processSetDate()} {processSetDay()}
-                </h1>
-                <Input
-                  {...register("title", {
-                    required: true,
-                    onChange: () => setIsEdit(true),
-                  })}
-                  type="text"
-                  placeholder="제목을 입력하세요"
-                  autoComplete="off"
-                  onClick={onClickInput}
-                />
-                {isEdit && (
-                  <LineBox>
-                    <Line></Line>
-                  </LineBox>
-                )}
-              </InputLayout>
-              {isEdit && <SubmitInput type="submit" value="저장" />}
-            </Title>
-            {media === "Desktop" && <PrintSchedule />}
-          </TopContents>
-          <OptionContents>
-            <OptionBtn onClick={onClickTimeSetBtn}> 시간설정 </OptionBtn>
-            <TypeBtn onClick={onClickTimeviewBtn}>
-              {" "}
-              {viewTime === true ? (
-                <RiCheckboxLine />
-              ) : (
-                <RiCheckboxBlankLine />
-              )}{" "}
-              <div> 시간 보기 </div>{" "}
-            </TypeBtn>
-
+      <Container>
+        <TopContents>
+          <Title onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
+            <InputLayout>
+              <h1>
+                {processSetDate()} {processSetDay()}
+              </h1>
+              <Input
+                {...register("title", {
+                  required: true,
+                  onChange: () => setIsEdit(true),
+                })}
+                type="text"
+                placeholder="제목을 입력하세요"
+                autoComplete="off"
+                onClick={onClickInput}
+              />
+              {isEdit && (
+                <LineBox>
+                  <Line></Line>
+                </LineBox>
+              )}
+            </InputLayout>
+            {isEdit && <SubmitInput type="submit" value="저장" />}
+          </Title>
+          {media === "Desktop" && <PrintSchedule />}
+        </TopContents>
+        <OptionContents>
+          <OptionBtn onClick={onClickTimeSetBtn}> 시간설정 </OptionBtn>
+          <TypeBtn onClick={onClickTimeviewBtn}>
+            {" "}
+            {viewTime === true ? (
+              <RiCheckboxLine />
+            ) : (
+              <RiCheckboxBlankLine />
+            )}{" "}
+            <div> 시간 보기 </div>
+          </TypeBtn>
+          {media !== "Mobile" && (
             <TimeTableFont fontSize={fontSize} setFontSize={setFontSize} />
-          </OptionContents>
-          <TimeTableHeight>
-            <TimeTableGrid
-              timeResult={timeResult}
-              fontSize={fontSize}
-              setFontSize={setFontSize}
-              viewTime={viewTime}
-              setViewTime={setViewTime}
-            />
-          </TimeTableHeight>
-        </Container>
-        {isPopup === "registerClass" && <ClassRegisterPage />}
-        {isPopup === "registerTimeSet" && (
-          <ClassTimeSet timeSet={timeSet} setTimeSet={setTimeSet} />
-        )}
-        {isPopup === "print" && (
-          <PrintScheduleContents
-            printRef={componentRef}
-            title={title}
-            viewTime={viewTime}
-            timeResult={timeResult}
-          />
-        )}
-      </DivideLeftContents>
+          )}
+        </OptionContents>
+        <TimeTableGrid
+          timeResult={timeResult}
+          fontSize={fontSize}
+          setFontSize={setFontSize}
+          viewTime={viewTime}
+          setViewTime={setViewTime}
+        />
+      </Container>
+      {isPopup === "registerClass" && <ClassRegisterPage />}
+      {isPopup === "registerTimeSet" && (
+        <ClassTimeSet timeSet={timeSet} setTimeSet={setTimeSet} />
+      )}
+      {isPopup === "print" && (
+        <PrintScheduleContents
+          printRef={componentRef}
+          title={title}
+          viewTime={viewTime}
+          timeResult={timeResult}
+        />
+      )}
     </BasicContainer>
   );
 };
