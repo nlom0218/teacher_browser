@@ -208,7 +208,6 @@ const AddSchedule = ({ userEmail, setErrMsg }) => {
         ...(contents && { contents })
       }
     })
-    outPopup()
   }
 
   return (<PopupContainer maxHeight={true}>
