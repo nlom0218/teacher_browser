@@ -13,6 +13,8 @@ import DatePicker from 'react-datepicker';
 import { ko } from "date-fns/esm/locale";
 import { outPopup } from '../../../apollo';
 import { customMedia } from '../../../styles';
+import { useMutation } from '@apollo/client';
+import { CREATE_SCHEDULE_MUTATION } from '../../../Graphql/Schedule/mutation';
 
 const Container = styled.div`
   padding: 20px 10px;
@@ -162,11 +164,10 @@ const SubmitInput = styled.input`
   `}
 `
 
-const AddSchedule = () => {
+const AddSchedule = ({ userEmail, setErrMsg }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(undefined);
   const [color, setColor] = useState(undefined)
-  const [isRegisterTodo, setIsRegisterTodo] = useState(false)
   const bgColorArr = [
     "rgba(244, 67, 53, 0.5)", "rgba(233, 29, 98, 0.5)", "rgba(156, 39, 176, 0.5)", "rgba(103, 58, 182, 0.5)", "rgba(63, 80, 181, 0.5)", "rgba(53, 150, 243, 0.5)",
     "rgba(58, 168, 244, 0.5)", "rgba(63, 188, 212, 0.5)", "rgba(47, 150, 136, 0.5)", "rgba(76, 175, 79, 0.5)", "rgba(139, 194, 74, 0.5)", "rgba(205, 220, 56, 0.5)",
@@ -176,17 +177,37 @@ const AddSchedule = () => {
     mode: "onChange"
   })
 
-  const onSubmit = (data) => {
-    const { title, detail } = data
-    const newSchedule = {
-      id: Date.now(),
-      title,
-      detail,
-      startDate,
-      endDate,
-      color,
-      isRegisterTodo
+  const onCompleted = (result) => {
+    const { createSchedule: { ok } } = result
+    if (ok) {
+      outPopup()
     }
+  }
+
+  const [createSchedule, { loading }] = useMutation(CREATE_SCHEDULE_MUTATION, {
+    onCompleted
+  })
+
+  const onSubmit = (data) => {
+    const { schedule, contents } = data
+    if (!endDate) {
+      setErrMsg("종료일을 설정해주세요. 🥲")
+      return
+    }
+    if (!color) {
+      setErrMsg("배경색을 설정해주세요. 🥲")
+      return
+    }
+    createSchedule({
+      variables: {
+        userEmail,
+        schedule,
+        startDate,
+        endDate,
+        color,
+        ...(contents && { contents })
+      }
+    })
     outPopup()
   }
 
@@ -197,15 +218,16 @@ const AddSchedule = () => {
         <InputLayout>
           <Icon><BsFillPencilFill /></Icon>
           <Input
-            {...register("title")}
+            {...register("schedule", { required: true })}
             type="text"
             placeholder="제목을 입력하세요."
+            autoComplete="off"
           />
         </InputLayout>
         <InputLayout>
           <Icon><CgNotes /></Icon>
           <TextareaAutosize
-            {...register("detail")}
+            {...register("contents")}
             minRows={5}
             placeholder="세부내용을 입력하세요."
           />

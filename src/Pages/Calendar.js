@@ -8,6 +8,8 @@ import CalendarItem from '../Components/Calendar/CalendarItem';
 import AddSchedule from '../Components/Calendar/Popup/AddSchedule';
 import { inPopup, isPopupVar } from '../apollo';
 import BasicContainer from '../Components/Shared/BasicContainer';
+import useMe from '../Hooks/useMe';
+import AlertMessage from '../Components/Shared/AlertMessage';
 
 const Container = styled.div`
   display: grid;
@@ -86,8 +88,11 @@ const CalendarList = styled.div`
 const Calendar = () => {
   const isPopup = useReactiveVar(isPopupVar)
 
+  const me = useMe()
+
   const [date, setDate] = useState(new Date())
   const [dateArr, setDateArr] = useState(undefined)
+  const [errMsg, setErrMsg] = useState(undefined)
 
   const onClickTodayBtn = () => {
     const newDate = new Date()
@@ -158,8 +163,9 @@ const Calendar = () => {
           })}
         </CalendarList>
       </BottomContainer>
-      {isPopup === "addSchedule" && <AddSchedule />}
+      {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} />}
     </Container>
+    {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
   </BasicContainer>);
 }
 
