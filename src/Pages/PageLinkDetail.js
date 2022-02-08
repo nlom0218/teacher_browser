@@ -145,12 +145,15 @@ const PageLinkDetail = () => {
       pageTitle
     }
   })
+
   const folder = [
     "교육청", "연수원", "학급경영", "국어", "영어", "수학", "사회", "과학", "음악", "미술", "체육", "실과", "제2외국어", "창체"
   ]
   const pageType = ["블로그", "유튜브"]
   const [submitFolder, setSubmitFolder] = useState([])
   const [submitType, setSubmitType] = useState(undefined)
+
+  console.log(submitFolder);
 
   const { register, handleSubmit, setValue } = useForm({
     mode: 'onChange'
