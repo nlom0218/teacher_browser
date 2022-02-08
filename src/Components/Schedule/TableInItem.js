@@ -23,8 +23,7 @@ const SubjectName = styled.div`
   align-self: center;
   overflow: hidden;
   line-height: 250%;
-  font-size: 0.6rem;
-  font-size: 0.6em;
+  font-size: 73%;
   ${customMedia.greaterThan("tablet")`
    font-size: ${(props) => props.fontSize}em;
   font-size: ${(props) => props.fontSize}rem;
