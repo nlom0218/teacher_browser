@@ -16,6 +16,7 @@ import ToDoNotIng from '../Components/TodoList/ToDoNotIng';
 import { compare } from '../shared';
 import DetailToDo from '../Components/TodoList/Popup/DetailToDo';
 import { customMedia } from '../styles';
+import CompleteToDo from '../Components/TodoList/Popup/CompleteToDo';
 
 // const ListContainer = styled.div`
 //   margin-left : auto;
@@ -152,7 +153,7 @@ const TodoList = () => {
         {/* <DoList todos={todos} onCheckToggle={onCheckToggle}/> */}
       </Container>
       {isPopup === "todoCreate" && <TodoCreate setErrMsg={setErrMsg} userEmail={me?.email} />}
-      {isPopup === "toDoComplete" && <TodoCreate setErrMsg={setErrMsg} userEmail={me?.email} />}
+      {isPopup === "toDoComplete" && <CompleteToDo setErrMsg={setErrMsg} userEmail={me?.email} />}
       {isPopup === "detailToDo" && <DetailToDo setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} />}
       <AlertMessage msg={errMsg} time={3000} setMsg={setErrMsg} type="error" />
       <AlertMessage msg={msg} time={3000} setMsg={setMsg} type="success" />
