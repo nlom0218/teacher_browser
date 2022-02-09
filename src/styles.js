@@ -67,6 +67,7 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 1rem;
     background: ${({ bgTheme, theme }) =>
     bgTheme ? (bgTheme.substr(0, 1) === "#" ? bgTheme : `url("https://source.unsplash.com/random/1920x1080?${bgTheme}")`) : theme.bgColor};
+    background: ${props => !props.isLoggedIn && `url("https://source.unsplash.com/random/1920x1080?nature")`};
     background-size: cover;
     background-position: center;
     font-family: 'Nanum Gothic', sans-serif;
