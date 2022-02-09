@@ -7,6 +7,7 @@ import { AiOutlineBgColors } from 'react-icons/ai';
 import { BsCalendarDate } from 'react-icons/bs';
 import DatePicker from 'react-datepicker';
 import { ko } from "date-fns/esm/locale";
+import bgColorArr from "./ScheduleBgColorArr";
 
 export const CalenderPopupContainer = styled.div`
   padding: 20px 10px;
@@ -197,7 +198,7 @@ export const CalenderPopupDateLayout = ({ startDate, setStartDate, endDate, setE
   </InputLayout>)
 }
 
-export const CalenderPopupColorLayout = ({ bgColorArr, color, setColor }) => {
+export const CalenderPopupColorLayout = ({ color, setColor }) => {
   return (<InputLayout>
     <Icon notPaddingTop={true}><AiOutlineBgColors /></Icon>
     <ColorContainer>

@@ -28,11 +28,6 @@ const AddSchedule = ({ userEmail, setErrMsg, setCreate }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(undefined);
   const [color, setColor] = useState(undefined)
-  const bgColorArr = [
-    "rgba(244, 67, 53, 0.5)", "rgba(233, 29, 98, 0.5)", "rgba(156, 39, 176, 0.5)", "rgba(103, 58, 182, 0.5)", "rgba(63, 80, 181, 0.5)", "rgba(53, 150, 243, 0.5)",
-    "rgba(58, 168, 244, 0.5)", "rgba(63, 188, 212, 0.5)", "rgba(47, 150, 136, 0.5)", "rgba(76, 175, 79, 0.5)", "rgba(139, 194, 74, 0.5)", "rgba(205, 220, 56, 0.5)",
-    "rgba(252, 235, 58, 0.5)", "rgba(249, 192, 11, 0.5)", "rgb(247, 152, 2, 0.5)", "rgba(245, 87, 34, 0.5)", "rgba(121, 85, 71, 0.5)", "rgba(96, 125, 138, 0.5)"
-  ]
   const { register, handleSubmit } = useForm({
     mode: "onChange"
   })
@@ -78,7 +73,7 @@ const AddSchedule = ({ userEmail, setErrMsg, setCreate }) => {
         <CalenderPopupInputLayout register={register} />
         <CalenderPopupTextareaLayout register={register} />
         <CalenderPopupDateLayout startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} />
-        <CalenderPopupColorLayout bgColorArr={bgColorArr} color={color} setColor={setColor} />
+        <CalenderPopupColorLayout color={color} setColor={setColor} />
         <SubmitInput
           type="submit"
           value="등록하기"
