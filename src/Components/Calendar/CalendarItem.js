@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { SEE_SCHEDULE_QUERY } from '../../Graphql/Schedule/query';
 import { SEE_TO_DO_LIST_ONLY_LENGTH_QUERY } from '../../Graphql/ToDoList/query';
 import IcToDoList from '../../icons/ToDoList/IcToDoList';
+import Loading from '../Shared/Loading';
 
 const Container = styled.div`
   background-color: ${props => props.theme.bgColor};
@@ -209,7 +210,7 @@ const CalendarItem = ({ item, create, userEmail }) => {
       })}
     </ScheduleList>
     <Summary>
-      {toDoLoading ? <div></div> : toDoLength?.seeToDoListOnlyLength !== 0 && <ToDoLength>
+      {!toDoLength?.seeToDoListOnlyLength ? <div></div> : toDoLength?.seeToDoListOnlyLength !== 0 && <ToDoLength>
         <ToDoIcon><IcToDoList /></ToDoIcon>
         <ToDoText>{toDoLength?.seeToDoListOnlyLength}개</ToDoText>
       </ToDoLength>}

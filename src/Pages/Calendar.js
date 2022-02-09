@@ -10,6 +10,7 @@ import { inPopup, isPopupVar } from '../apollo';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import useMe from '../Hooks/useMe';
 import AlertMessage from '../Components/Shared/AlertMessage';
+import Loading from '../Components/Shared/Loading';
 
 const Container = styled.div`
   display: grid;
@@ -184,7 +185,7 @@ const Calendar = () => {
             </Day>
           })}
           <CalendarList weekLength={weekLength}>
-            {dateArr && dateArr.map((item, index) => {
+            {dateArr && dateArr?.map((item, index) => {
               return <CalendarItem key={index} item={item} create={create} userEmail={me?.email} />
             })}
           </CalendarList>
