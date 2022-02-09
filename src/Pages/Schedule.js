@@ -224,7 +224,7 @@ const Schedule = () => {
   };
 
   return (
-    <BasicContainer menuItem={true}>
+    <BasicContainer menuItem={true} screen="small">
       <DivideLeftContents>
         <Container>
           <TopContents>

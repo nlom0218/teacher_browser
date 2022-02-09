@@ -140,7 +140,7 @@ const TodoList = () => {
   }
 
   return (
-    <BasicContainer>
+    <BasicContainer screen="small">
       <Container>
         <TodoHead />
         <TodoBody>

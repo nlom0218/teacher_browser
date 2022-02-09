@@ -121,7 +121,7 @@ const List = () => {
     return <Loading page="mainPage" />
   }
 
-  return (<BasicContainer menuItem={true} notScroll={true}>
+  return (<BasicContainer menuItem={true} notScroll={true} screen="small">
     <Container>
       <DivideLeftContents isSeeList={isSeeList}>
         {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} setErrorMsg={setErrorMsg} selectedTag={selectedTag} selectedSort={selectedSort} setDragType={setDragType} dragType={dragType} />}

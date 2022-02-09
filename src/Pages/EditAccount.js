@@ -70,7 +70,7 @@ const EditAccount = () => {
   const me = useMe();
   const { data } = useQuery(CHECK_PASSWORD_QUERY, { variables: { userEmail: me?.email } });
   return (
-    <BasicContainer menuItem={true}>
+    <BasicContainer menuItem={true} screen="small">
       <Title>회원정보</Title>
       <Container>
         <Changes>

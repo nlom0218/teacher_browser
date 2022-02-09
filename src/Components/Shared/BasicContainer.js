@@ -33,7 +33,7 @@ const ContentLayout = styled.div`
   margin: 0 auto;
   max-width: ${props => props.screen === "small" && "1200px"};
   max-width: ${props => props.screen === "small" && "75rem"};
-  width: 90%;
+  width: ${props => props.screen === "small" ? "90%" : "96%"};
   border-radius: 10px;
   border-radius: 0.625rem;
   background: ${props => props.theme.blurColor};
