@@ -33,7 +33,7 @@ const DelBtn = styled.div`
 
 const EditSchedule = ({ userEmail, setErrMsg, setCreate }) => {
   const id = localStorage.getItem("editSchedule")
-  console.log(id);
+
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(undefined);
   const [color, setColor] = useState(undefined)
@@ -69,6 +69,10 @@ const EditSchedule = ({ userEmail, setErrMsg, setCreate }) => {
     }
     if (!color) {
       setErrMsg("배경색을 설정해주세요. 🥲")
+      return
+    }
+    if (startDate > endDate) {
+      setErrMsg("시작일과 종료일을 다시 확인해주세요. 🥲")
       return
     }
     editSchedule({
