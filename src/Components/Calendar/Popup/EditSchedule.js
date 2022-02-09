@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { SEE_SCHEDULE_QUERY } from '../../../Graphql/Schedule/query';
+import Loading from '../../Shared/Loading';
 import PopupContainer from '../../Shared/PopupContainer';
 import { CalenderPopupColorLayout, CalenderPopupDateLayout, CalenderPopupFormContainer, CalenderPopupInputLayout, CalenderPopupTextareaLayout, CalenderPopupTitle } from './PopupLayout';
 
@@ -82,8 +83,16 @@ const EditSchedule = ({ userEmail, setErrMsg, setCreate }) => {
   useEffect(() => {
     if (data) {
       setValue("schedule", data?.seeSchedule[0].schedule)
+      setValue("contents", data?.seeSchedule[0].contents)
+      setStartDate(new Date(parseInt(data?.seeSchedule[0].startDate)))
+      setEndDate(new Date(parseInt(data?.seeSchedule[0].endDate)))
+      setColor(data?.seeSchedule[0].color)
     }
   }, [data])
+
+  if (loading) {
+    return <Loading page="popupPage" />
+  }
 
   return (<PopupContainer maxHeight={true}>
     <CalenderPopupFormContainer onSubmit={handleSubmit(onSubmit)}>

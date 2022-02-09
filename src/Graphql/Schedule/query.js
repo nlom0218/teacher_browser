@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const SEE_SCHEDULE_QUERY = gql`
-  query Query($seeScheduleId: String, $date: String) {
-    seeSchedule(scheduleId: $seeScheduleId, date: $date) {
+  query Query($scheduleId: String, $date: String) {
+    seeSchedule(scheduleId: $scheduleId, date: $date) {
       _id
       schedule
       userEmail
