@@ -48,10 +48,12 @@ const EditSchedule = ({ userEmail, setErrMsg, setCreate }) => {
   })
 
   const onCompleted = (result) => {
-    const { editSchedule: { ok } } = result
+    const { editSchedule: { ok, error } } = result
     if (ok) {
       outPopup()
       setCreate(prev => prev + 1)
+    } else {
+      setErrMsg(error)
     }
   }
 
