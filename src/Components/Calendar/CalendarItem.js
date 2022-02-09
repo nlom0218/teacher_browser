@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import { getDate, getDay, isToday } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { inPopup } from '../../apollo';
 import { SEE_SCHEDULE_QUERY } from '../../Graphql/Schedule/query';
 import { SEE_TO_DO_LIST_ONLY_LENGTH_QUERY } from '../../Graphql/ToDoList/query';
 import IcToDoList from '../../icons/ToDoList/IcToDoList';
@@ -79,14 +80,17 @@ const StartDate = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  cursor: pointer;
 `
 
 const EndDate = styled.div`
   opacity: 0;
+  cursor: pointer;
 `
 
 const TermDate = styled.div`
   opacity: 0;
+  cursor: pointer;
 `
 
 const Summary = styled.div`
@@ -162,6 +166,11 @@ const CalendarItem = ({ item, create, userEmail }) => {
     }
   }
 
+  const onClickSchedule = (id) => {
+    inPopup("editSchedule")
+    localStorage.setItem("editSchedule", id)
+  }
+
   useEffect(() => {
     setSchedule([])
     if (data) {
@@ -202,7 +211,7 @@ const CalendarItem = ({ item, create, userEmail }) => {
             <div></div>
           </ScheduleItem>
         } else {
-          return <ScheduleItem key={index} color={schedule.color} dateType={processDateType(schedule.startDate, schedule.endDate)} isEndDate={isEndDate(schedule.endDate)}>
+          return <ScheduleItem onClick={() => onClickSchedule(schedule._id)} key={index} color={schedule.color} dateType={processDateType(schedule.startDate, schedule.endDate)} isEndDate={isEndDate(schedule.endDate)}>
             {processDateType(schedule.startDate, schedule.endDate) === "start" && <StartDate className="schedule_date" >{schedule.schedule}</StartDate>}
             {processDateType(schedule.startDate, schedule.endDate) === "end" && <EndDate className="schedule_date" >end</EndDate>}
             {processTerm(schedule.term) && <TermDate className="schedule_date" >term</TermDate>}

@@ -11,6 +11,7 @@ import BasicContainer from '../Components/Shared/BasicContainer';
 import useMe from '../Hooks/useMe';
 import AlertMessage from '../Components/Shared/AlertMessage';
 import { BiExitFullscreen, BiFullscreen } from "react-icons/bi"
+import EditSchedule from '../Components/Calendar/Popup/EditSchedule';
 
 const Container = styled.div`
   display: grid;
@@ -202,6 +203,7 @@ const Calendar = () => {
         </BottomContainer>
       </BottomContainerLayout>
       {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} setCreate={setCreate} />}
+      {isPopup === "editSchedule" && <EditSchedule setErrMsg={setErrMsg} userEmail={me?.email} setCreate={setCreate} />}
     </Container>
     {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
   </BasicContainer>);
