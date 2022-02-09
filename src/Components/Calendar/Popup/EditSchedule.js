@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { SEE_SCHEDULE_QUERY } from '../../../Graphql/Schedule/query';
 import PopupContainer from '../../Shared/PopupContainer';
-import { CalenderPopupColorLayout, CalenderPopupContainer, CalenderPopupDateLayout, CalenderPopupFormContainer, CalenderPopupInputLayout, CalenderPopupTextareaLayout, CalenderPopupTitle } from './PopupLayout';
+import { CalenderPopupColorLayout, CalenderPopupDateLayout, CalenderPopupFormContainer, CalenderPopupInputLayout, CalenderPopupTextareaLayout, CalenderPopupTitle } from './PopupLayout';
 
 const SubmitInput = styled.input`
   background-color: ${props => props.theme.btnBgColor};
@@ -25,8 +25,6 @@ const DelBtn = styled.div`
   border-radius: 5px;
   border-radius: 0.3125rem;
   text-align: center;
-  margin-bottom: 20px;
-  margin-bottom: 1.25rem;
   cursor: pointer;
 `
 
@@ -88,22 +86,20 @@ const EditSchedule = ({ userEmail, setErrMsg, setCreate }) => {
   }, [data])
 
   return (<PopupContainer maxHeight={true}>
-    <CalenderPopupContainer>
+    <CalenderPopupFormContainer onSubmit={handleSubmit(onSubmit)}>
       <CalenderPopupTitle>일정수정</CalenderPopupTitle>
-      <CalenderPopupFormContainer onSubmit={handleSubmit(onSubmit)}>
-        <CalenderPopupInputLayout register={register} />
-        <CalenderPopupTextareaLayout register={register} />
-        <CalenderPopupDateLayout startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} />
-        <CalenderPopupColorLayout color={color} setColor={setColor} />
-        <SubmitInput
-          type="submit"
-          value="수정하기"
-        />
-        <DelBtn>
-          삭제하기
+      <CalenderPopupInputLayout register={register} />
+      <CalenderPopupTextareaLayout register={register} />
+      <CalenderPopupDateLayout startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} />
+      <CalenderPopupColorLayout color={color} setColor={setColor} />
+      <SubmitInput
+        type="submit"
+        value="수정하기"
+      />
+      <DelBtn>
+        삭제하기
         </DelBtn>
-      </CalenderPopupFormContainer>
-    </CalenderPopupContainer>
+    </CalenderPopupFormContainer>
   </PopupContainer>);
 }
 

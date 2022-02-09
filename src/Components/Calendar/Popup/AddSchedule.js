@@ -16,12 +16,7 @@ const SubmitInput = styled.input`
   border-radius: 5px;
   border-radius: 0.3125rem;
   text-align: center;
-  margin-bottom: 20px;
-  margin-bottom: 1.25rem;
   cursor: pointer;
-  ${customMedia.greaterThan("tablet")`
-     margin-bottom: 0;
-  `}
 `
 
 const AddSchedule = ({ userEmail, setErrMsg, setCreate }) => {
@@ -67,19 +62,17 @@ const AddSchedule = ({ userEmail, setErrMsg, setCreate }) => {
   }
 
   return (<PopupContainer maxHeight={true}>
-    <CalenderPopupContainer>
+    <CalenderPopupFormContainer onSubmit={handleSubmit(onSubmit)}>
       <CalenderPopupTitle>일정등록</CalenderPopupTitle>
-      <CalenderPopupFormContainer onSubmit={handleSubmit(onSubmit)}>
-        <CalenderPopupInputLayout register={register} />
-        <CalenderPopupTextareaLayout register={register} />
-        <CalenderPopupDateLayout startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} />
-        <CalenderPopupColorLayout color={color} setColor={setColor} />
-        <SubmitInput
-          type="submit"
-          value="등록하기"
-        />
-      </CalenderPopupFormContainer>
-    </CalenderPopupContainer>
+      <CalenderPopupInputLayout register={register} />
+      <CalenderPopupTextareaLayout register={register} />
+      <CalenderPopupDateLayout startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} />
+      <CalenderPopupColorLayout color={color} setColor={setColor} />
+      <SubmitInput
+        type="submit"
+        value="등록하기"
+      />
+    </CalenderPopupFormContainer>
   </PopupContainer>);
 }
 

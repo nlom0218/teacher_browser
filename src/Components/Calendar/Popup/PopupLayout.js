@@ -9,17 +9,6 @@ import DatePicker from 'react-datepicker';
 import { ko } from "date-fns/esm/locale";
 import bgColorArr from "./ScheduleBgColorArr";
 
-export const CalenderPopupContainer = styled.div`
-  padding: 20px 10px;
-  padding: 1.25rem 0.625rem;
-  display: grid;
-  row-gap: 20px;
-  row-gap: 1.25rem;
-  grid-template-rows: auto 1fr;
-  min-height: 100%;
-  max-height: 100%;
-`
-
 export const CalenderPopupTitle = styled.div`
   justify-self: flex-end;
   font-size: 1.25em;
@@ -27,10 +16,13 @@ export const CalenderPopupTitle = styled.div`
 `
 
 export const CalenderPopupFormContainer = styled.form`
+  padding : 20px 0px;
+  padding : 1.25rem 0rem;
   display: grid;
   row-gap: 20px;
   row-gap: 1.25rem;
-  grid-template-rows: auto 1fr auto auto auto;
+  grid-template-rows: auto auto 1fr auto auto auto;
+  min-height: 100%;
   textarea {
     all: unset;
     min-height: 100%;
