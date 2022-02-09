@@ -120,7 +120,8 @@ const CalendarItem = ({ item, create, userEmail }) => {
   const { data, loading, refetch } = useQuery(SEE_SCHEDULE_QUERY, {
     variables: {
       date: item.date
-    }
+    },
+    skip: !userEmail
   })
 
   const { data: toDoLength, loading: toDoLoading } = useQuery(SEE_TO_DO_LIST_ONLY_LENGTH_QUERY, {

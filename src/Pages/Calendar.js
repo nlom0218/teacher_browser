@@ -10,7 +10,7 @@ import { inPopup, isPopupVar } from '../apollo';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import useMe from '../Hooks/useMe';
 import AlertMessage from '../Components/Shared/AlertMessage';
-import Loading from '../Components/Shared/Loading';
+import { BiExitFullscreen, BiFullscreen } from "react-icons/bi"
 
 const Container = styled.div`
   display: grid;
@@ -20,7 +20,7 @@ const Container = styled.div`
 
 const TopContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr auto auto auto auto;
+  grid-template-columns: 1fr auto auto auto auto auto;
   padding: 20px;
   padding: 1.25rem;
   align-items: center;
@@ -114,6 +114,7 @@ const Calendar = () => {
   const [weekLength, setWeekLength] = useState(1)
   const [dateArr, setDateArr] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
+  const [screen, setScreen] = useState("small")
 
   const onClickTodayBtn = () => {
     const newDate = new Date()
@@ -131,6 +132,14 @@ const Calendar = () => {
 
   const onClickPlusBtn = () => {
     inPopup("addSchedule")
+  }
+
+  const onClickFull = () => {
+    if (screen === "small") {
+      setScreen("full")
+    } else {
+      setScreen("small")
+    }
   }
 
   useEffect(() => {
@@ -168,13 +177,14 @@ const Calendar = () => {
     return <div></div>
   }
 
-  return (<BasicContainer>
+  return (<BasicContainer screen={screen}>
     <Container>
       <TopContainer>
         <Title>{format(date, "yyyy년 MM월")}</Title>
         <TodayBtn className="calendar_btn" onClick={onClickTodayBtn}>TODAY</TodayBtn>
         <Btn className="calendar_btn" onClick={onClickBtnMinus}><IoIosArrowBack /></Btn>
         <Btn className="calendar_btn" onClick={onClickBtn}><IoIosArrowForward /></Btn>
+        <Btn className="calendar_btn" onClick={onClickFull}>{screen === "small" ? <BiFullscreen /> : <BiExitFullscreen />}</Btn>
         <Btn className="calendar_btn" onClick={onClickPlusBtn}><AiOutlinePlus /></Btn>
       </TopContainer>
       <BottomContainerLayout>
