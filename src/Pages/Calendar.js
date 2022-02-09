@@ -115,6 +115,7 @@ const Calendar = () => {
   const [weekLength, setWeekLength] = useState(1)
   const [dateArr, setDateArr] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
+  const [msg, setMsg] = useState(undefined)
   const [screen, setScreen] = useState("small")
 
   const onClickTodayBtn = () => {
@@ -203,9 +204,10 @@ const Calendar = () => {
         </BottomContainer>
       </BottomContainerLayout>
       {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} setCreate={setCreate} />}
-      {isPopup === "editSchedule" && <EditSchedule setErrMsg={setErrMsg} userEmail={me?.email} setCreate={setCreate} />}
+      {isPopup === "editSchedule" && <EditSchedule setErrMsg={setErrMsg} userEmail={me?.email} setCreate={setCreate} setMsg={setMsg} />}
     </Container>
     {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
+    {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
   </BasicContainer>);
 }
 

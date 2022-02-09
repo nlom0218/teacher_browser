@@ -13,6 +13,7 @@ export const SEE_SCHEDULE_QUERY = gql`
       term
       allDate
       sort
+      isSort
     }
   }
 `

@@ -1,13 +1,20 @@
 import { useMutation, useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { BiSortUp } from 'react-icons/bi';
 import styled from 'styled-components';
 import { outPopup } from '../../../apollo';
-import { DELETE_SCHEDULE_MUTATION, EDIT_SCHEDULE_MUTATION } from '../../../Graphql/Schedule/mutation';
+import { DELETE_SCHEDULE_MUTATION, EDIT_SCHEDULE_MUTATION, UPDATE_SCHEDULE_SORT_MUTATION } from '../../../Graphql/Schedule/mutation';
 import { SEE_SCHEDULE_QUERY } from '../../../Graphql/Schedule/query';
 import Loading from '../../Shared/Loading';
 import PopupContainer from '../../Shared/PopupContainer';
 import { CalenderPopupColorLayout, CalenderPopupDateLayout, CalenderPopupFormContainer, CalenderPopupInputLayout, CalenderPopupTextareaLayout, CalenderPopupTitle } from './PopupLayout';
+
+const TopContainer = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: flex-end;
+`
 
 const SubmitInput = styled.input`
   background-color: ${props => props.theme.btnBgColor};
@@ -18,6 +25,20 @@ const SubmitInput = styled.input`
   border-radius: 0.3125rem;
   text-align: center;
   cursor: pointer;
+`
+
+const SortBtn = styled.div`
+  cursor: pointer;  
+  background-color: ${props => props.theme.btnBgColor};
+  color: ${props => props.theme.bgColor};
+  padding: 5px;
+  padding: 0.3125rem;
+  border-radius: 50%;
+  font-size: 1.25em;
+  font-size: 1.25rem;
+  svg {
+    display: flex;
+  }
 `
 
 const DelBtn = styled.div`
@@ -31,7 +52,7 @@ const DelBtn = styled.div`
   cursor: pointer;
 `
 
-const EditSchedule = ({ userEmail, setErrMsg, setCreate }) => {
+const EditSchedule = ({ userEmail, setErrMsg, setCreate, setMsg }) => {
   const id = localStorage.getItem("editSchedule")
 
   const [startDate, setStartDate] = useState(new Date());
@@ -47,6 +68,7 @@ const EditSchedule = ({ userEmail, setErrMsg, setCreate }) => {
     }
   })
 
+
   const onCompleted = (result) => {
     const { editSchedule: { ok, error } } = result
     if (ok) {
@@ -58,11 +80,19 @@ const EditSchedule = ({ userEmail, setErrMsg, setCreate }) => {
   }
 
   const delOnCompleted = (result) => {
-    console.log(result);
     const { deleteSchedule: { ok } } = result
     if (ok) {
       outPopup()
       setCreate(prev => prev + 1)
+    }
+  }
+
+  const updateCompleted = (result) => {
+    const { updateScheduleSort: { ok } } = result
+    if (ok) {
+      outPopup()
+      setCreate(prev => prev + 1)
+      setMsg("일정이 정렬 되었습니다. 😀")
     }
   }
 
@@ -72,6 +102,10 @@ const EditSchedule = ({ userEmail, setErrMsg, setCreate }) => {
 
   const [deleteSchedule, { loading: deieteLoading }] = useMutation(DELETE_SCHEDULE_MUTATION, {
     onCompleted: delOnCompleted
+  })
+
+  const [updateScheduleSort, { loading: updateLoading }] = useMutation(UPDATE_SCHEDULE_SORT_MUTATION, {
+    onCompleted: updateCompleted
   })
 
   const onSubmit = (data) => {
@@ -110,6 +144,16 @@ const EditSchedule = ({ userEmail, setErrMsg, setCreate }) => {
     })
   }
 
+  const onClickUpdateBtn = () => {
+    updateScheduleSort({
+      variables: {
+        scheduleId: id,
+        userEmail,
+        sort: data?.seeSchedule[0].isSort
+      }
+    })
+  }
+
   useEffect(() => {
     if (data) {
       setValue("schedule", data?.seeSchedule[0].schedule)
@@ -126,7 +170,15 @@ const EditSchedule = ({ userEmail, setErrMsg, setCreate }) => {
 
   return (<PopupContainer maxHeight={true}>
     <CalenderPopupFormContainer onSubmit={handleSubmit(onSubmit)}>
-      <CalenderPopupTitle>일정수정</CalenderPopupTitle>
+      {data?.seeSchedule[0].isSort ?
+        <TopContainer>
+          <SortBtn onClick={onClickUpdateBtn}>
+            <BiSortUp />
+          </SortBtn>
+          <CalenderPopupTitle>일정수정</CalenderPopupTitle>
+        </TopContainer> :
+        <CalenderPopupTitle>일정수정</CalenderPopupTitle>
+      }
       <CalenderPopupInputLayout register={register} />
       <CalenderPopupTextareaLayout register={register} />
       <CalenderPopupDateLayout startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} />

@@ -26,3 +26,12 @@ export const DELETE_SCHEDULE_MUTATION = gql`
     }
   }
 `
+
+export const UPDATE_SCHEDULE_SORT_MUTATION = gql`
+  mutation UpdateScheduleSort($userEmail: String!, $scheduleId: ID!, $sort: Int!) {
+    updateScheduleSort(userEmail: $userEmail, scheduleId: $scheduleId, sort: $sort) {
+      ok
+      error
+    }
+  }
+`
