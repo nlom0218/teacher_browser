@@ -14,3 +14,9 @@ export const SEE_TO_DO_LIST_QUERY = gql`
     }
   }
 `
+
+export const SEE_TO_DO_LIST_ONLY_LENGTH_QUERY = gql`
+  query SeeToDoListOnlyLength($userEmail: String!, $date: String) {
+    seeToDoListOnlyLength(userEmail: $userEmail, date: $date)
+  }
+`

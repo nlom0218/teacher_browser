@@ -15,6 +15,7 @@ import { outPopup } from '../../../apollo';
 import { customMedia } from '../../../styles';
 import { useMutation } from '@apollo/client';
 import { CREATE_SCHEDULE_MUTATION } from '../../../Graphql/Schedule/mutation';
+import { SEE_SCHEDULE_QUERY } from '../../../Graphql/Schedule/query';
 
 const Container = styled.div`
   padding: 20px 10px;
@@ -164,7 +165,7 @@ const SubmitInput = styled.input`
   `}
 `
 
-const AddSchedule = ({ userEmail, setErrMsg }) => {
+const AddSchedule = ({ userEmail, setErrMsg, setCreate }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(undefined);
   const [color, setColor] = useState(undefined)
@@ -181,6 +182,7 @@ const AddSchedule = ({ userEmail, setErrMsg }) => {
     const { createSchedule: { ok } } = result
     if (ok) {
       outPopup()
+      setCreate(prev => prev + 1)
     }
   }
 

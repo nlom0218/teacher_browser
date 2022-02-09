@@ -94,7 +94,8 @@ const CalendarList = styled.div`
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: ${props => `repeat(${props.weekLength}, minmax(80px, auto))`};
+  grid-template-rows: ${props => `repeat(${props.weekLength}, minmax(100px, auto))`};
+  grid-template-rows: ${props => `repeat(${props.weekLength}, minmax(6.25rem, auto))`};
   background-color: ${props => props.theme.girdBorderColor};
   border: 1px solid ${props => props.theme.girdBorderColor};
   transition: background-color 1s ease, border 1s ease;
@@ -108,6 +109,7 @@ const Calendar = () => {
   const me = useMe()
 
   const [date, setDate] = useState(new Date())
+  const [create, setCreate] = useState(1)
   const [weekLength, setWeekLength] = useState(1)
   const [dateArr, setDateArr] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
@@ -183,12 +185,12 @@ const Calendar = () => {
           })}
           <CalendarList weekLength={weekLength}>
             {dateArr && dateArr.map((item, index) => {
-              return <CalendarItem key={index} item={item} />
+              return <CalendarItem key={index} item={item} create={create} userEmail={me?.email} />
             })}
           </CalendarList>
         </BottomContainer>
       </BottomContainerLayout>
-      {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} />}
+      {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} setCreate={setCreate} />}
     </Container>
     {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
   </BasicContainer>);

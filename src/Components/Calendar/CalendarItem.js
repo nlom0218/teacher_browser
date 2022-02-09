@@ -3,15 +3,16 @@ import { getDate, getDay, isToday } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { SEE_SCHEDULE_QUERY } from '../../Graphql/Schedule/query';
+import { SEE_TO_DO_LIST_ONLY_LENGTH_QUERY } from '../../Graphql/ToDoList/query';
+import IcToDoList from '../../icons/ToDoList/IcToDoList';
 
 const Container = styled.div`
   background-color: ${props => props.theme.bgColor};
   transition: background-color 1s ease;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr auto;
   row-gap: 5px;
   row-gap: 0.3125rem;
-  padding-bottom: 20px;
 `
 
 const Day = styled.div`
@@ -60,6 +61,12 @@ const ScheduleItem = styled.div`
   border-top-right-radius: ${props => props.dateType === "end" && "0.625rem"};
   border-bottom-right-radius: ${props => props.dateType === "end" && "10px"};
   border-bottom-right-radius: ${props => props.dateType === "end" && "0.625rem"};
+  border-top-right-radius: ${props => props.isEndDate && "10px"};
+  border-top-right-radius: ${props => props.isEndDate && "0.625rem"};
+  border-bottom-right-radius: ${props => props.isEndDate && "10px"};
+  border-bottom-right-radius: ${props => props.isEndDate && "0.625rem"};
+  margin-right: ${props => props.isEndDate && "5px"};
+  margin-right: ${props => props.isEndDate && "0.3125rem"};
   background-color: ${props => props.color};
   .schedule_date {
     padding: 5px;
@@ -81,15 +88,47 @@ const TermDate = styled.div`
   opacity: 0;
 `
 
-const CalendarItem = ({ item }) => {
+const Summary = styled.div`
+  padding: 10px;
+  padding: 0.625rem;
+`
+
+const ToDoLength = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 5px;
+  column-gap: 0.625rem;
+  align-items: center;
+`
+
+const ToDoIcon = styled.div`
+  svg {
+    display: flex;
+  }
+`
+
+const ToDoText = styled.div`
+  font-size: 0.875em;
+  font-size: 0.875rem;
+  opacity: 0.8;
+`
+
+const CalendarItem = ({ item, create, userEmail }) => {
   const [schedule, setSchedule] = useState([])
   const [row, setRow] = useState(1)
-  const { data, loading } = useQuery(SEE_SCHEDULE_QUERY, {
+  const { data, loading, refetch } = useQuery(SEE_SCHEDULE_QUERY, {
     variables: {
       date: item.date
     }
   })
 
+  const { data: toDoLength, loading: toDoLoading } = useQuery(SEE_TO_DO_LIST_ONLY_LENGTH_QUERY, {
+    variables: {
+      userEmail,
+      date: item.date
+    },
+    skip: !userEmail
+  })
   const processNumberDate = () => {
     return new window.Date(item.date).setHours(0, 0, 0, 0)
   }
@@ -110,6 +149,14 @@ const CalendarItem = ({ item }) => {
       return "end"
     } else {
       return "term"
+    }
+  }
+
+  const isEndDate = (endDate) => {
+    if (parseInt(endDate) === processNumberDate()) {
+      return true
+    } else {
+      return false
     }
   }
 
@@ -135,7 +182,9 @@ const CalendarItem = ({ item }) => {
     }
   }, [data])
 
-
+  useEffect(() => {
+    refetch()
+  }, [create])
 
   return (<Container>
     <Day
@@ -151,7 +200,7 @@ const CalendarItem = ({ item }) => {
             <div></div>
           </ScheduleItem>
         } else {
-          return <ScheduleItem key={index} color={schedule.color} dateType={processDateType(schedule.startDate, schedule.endDate)}>
+          return <ScheduleItem key={index} color={schedule.color} dateType={processDateType(schedule.startDate, schedule.endDate)} isEndDate={isEndDate(schedule.endDate)}>
             {processDateType(schedule.startDate, schedule.endDate) === "start" && <StartDate className="schedule_date" >{schedule.schedule}</StartDate>}
             {processDateType(schedule.startDate, schedule.endDate) === "end" && <EndDate className="schedule_date" >end</EndDate>}
             {processTerm(schedule.term) && <TermDate className="schedule_date" >term</TermDate>}
@@ -159,6 +208,12 @@ const CalendarItem = ({ item }) => {
         }
       })}
     </ScheduleList>
+    <Summary>
+      {toDoLoading ? <div></div> : toDoLength?.seeToDoListOnlyLength !== 0 && <ToDoLength>
+        <ToDoIcon><IcToDoList /></ToDoIcon>
+        <ToDoText>{toDoLength?.seeToDoListOnlyLength}개</ToDoText>
+      </ToDoLength>}
+    </Summary>
   </Container>);
 }
 
