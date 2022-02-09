@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { outPopup } from '../../../apollo';
-import { EDIT_SCHEDULE_MUTATION } from '../../../Graphql/Schedule/mutation';
+import { DELETE_SCHEDULE_MUTATION, EDIT_SCHEDULE_MUTATION } from '../../../Graphql/Schedule/mutation';
 import { SEE_SCHEDULE_QUERY } from '../../../Graphql/Schedule/query';
 import Loading from '../../Shared/Loading';
 import PopupContainer from '../../Shared/PopupContainer';
@@ -57,8 +57,21 @@ const EditSchedule = ({ userEmail, setErrMsg, setCreate }) => {
     }
   }
 
+  const delOnCompleted = (result) => {
+    console.log(result);
+    const { deleteSchedule: { ok } } = result
+    if (ok) {
+      outPopup()
+      setCreate(prev => prev + 1)
+    }
+  }
+
   const [editSchedule, { loading: editLoading }] = useMutation(EDIT_SCHEDULE_MUTATION, {
     onCompleted
+  })
+
+  const [deleteSchedule, { loading: deieteLoading }] = useMutation(DELETE_SCHEDULE_MUTATION, {
+    onCompleted: delOnCompleted
   })
 
   const onSubmit = (data) => {
@@ -87,6 +100,16 @@ const EditSchedule = ({ userEmail, setErrMsg, setCreate }) => {
       }
     })
   }
+
+  const onClickDleBtn = () => {
+    deleteSchedule({
+      variables: {
+        scheduleId: id,
+        userEmail
+      }
+    })
+  }
+
   useEffect(() => {
     if (data) {
       setValue("schedule", data?.seeSchedule[0].schedule)
@@ -112,9 +135,9 @@ const EditSchedule = ({ userEmail, setErrMsg, setCreate }) => {
         type="submit"
         value="수정하기"
       />
-      <DelBtn>
+      <DelBtn onClick={onClickDleBtn}>
         삭제하기
-        </DelBtn>
+      </DelBtn>
     </CalenderPopupFormContainer>
   </PopupContainer>);
 }

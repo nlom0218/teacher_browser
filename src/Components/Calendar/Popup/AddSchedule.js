@@ -51,7 +51,7 @@ const AddSchedule = ({ userEmail, setErrMsg, setCreate }) => {
       setErrMsg("배경색을 설정해주세요. 🥲")
       return
     }
-    if (startDate > endDate) {
+    if (new Date(startDate).setHours(0, 0, 0, 0) > endDate) {
       setErrMsg("시작일과 종료일을 다시 확인해주세요. 🥲")
       return
     }

@@ -17,3 +17,12 @@ export const EDIT_SCHEDULE_MUTATION = gql`
     } 
   }
 `
+
+export const DELETE_SCHEDULE_MUTATION = gql`
+  mutation DeleteSchedule($userEmail: String!, $scheduleId: ID!) {
+    deleteSchedule(userEmail: $userEmail, scheduleId: $scheduleId) {
+      ok
+      error
+    }
+  }
+`
