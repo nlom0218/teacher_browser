@@ -8,3 +8,12 @@ export const CREATE_SCHEDULE_MUTATION = gql`
     }
   }
 `
+
+export const EDIT_SCHEDULE_MUTATION = gql`
+  mutation EditSchedule($scheduleId: ID!, $schedule: String!, $userEmail: String!, $startDate: String!, $endDate: String!, $color: String!, $contents: String) {
+    editSchedule(scheduleId: $scheduleId, schedule: $schedule, userEmail: $userEmail, startDate: $startDate, endDate: $endDate, color: $color, contents: $contents) {
+      ok
+      error
+    } 
+  }
+`

@@ -1,7 +1,9 @@
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
+import { outPopup } from '../../../apollo';
+import { EDIT_SCHEDULE_MUTATION } from '../../../Graphql/Schedule/mutation';
 import { SEE_SCHEDULE_QUERY } from '../../../Graphql/Schedule/query';
 import Loading from '../../Shared/Loading';
 import PopupContainer from '../../Shared/PopupContainer';
@@ -45,19 +47,17 @@ const EditSchedule = ({ userEmail, setErrMsg, setCreate }) => {
     }
   })
 
-  console.log(data);
+  const onCompleted = (result) => {
+    const { editSchedule: { ok } } = result
+    if (ok) {
+      outPopup()
+      setCreate(prev => prev + 1)
+    }
+  }
 
-  // const onCompleted = (result) => {
-  //   const { createSchedule: { ok } } = result
-  //   if (ok) {
-  //     outPopup()
-  //     setCreate(prev => prev + 1)
-  //   }
-  // }
-
-  // const [createSchedule, { loading }] = useMutation(CREATE_SCHEDULE_MUTATION, {
-  //   onCompleted
-  // })
+  const [editSchedule, { loading: editLoading }] = useMutation(EDIT_SCHEDULE_MUTATION, {
+    onCompleted
+  })
 
   const onSubmit = (data) => {
     const { schedule, contents } = data
@@ -69,16 +69,17 @@ const EditSchedule = ({ userEmail, setErrMsg, setCreate }) => {
       setErrMsg("배경색을 설정해주세요. 🥲")
       return
     }
-    // createSchedule({
-    //   variables: {
-    //     userEmail,
-    //     schedule,
-    //     startDate,
-    //     endDate,
-    //     color,
-    //     ...(contents && { contents })
-    //   }
-    // })
+    editSchedule({
+      variables: {
+        scheduleId: id,
+        userEmail,
+        schedule,
+        startDate,
+        endDate,
+        color,
+        ...(contents && { contents })
+      }
+    })
   }
   useEffect(() => {
     if (data) {
