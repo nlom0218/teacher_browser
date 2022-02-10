@@ -1,11 +1,13 @@
 import { useQuery } from '@apollo/client';
 import { getDate, getDay, isToday } from 'date-fns';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { inPopup } from '../../apollo';
 import { SEE_SCHEDULE_QUERY } from '../../Graphql/Schedule/query';
 import { SEE_TO_DO_LIST_ONLY_LENGTH_QUERY } from '../../Graphql/ToDoList/query';
 import IcToDoList from '../../icons/ToDoList/IcToDoList';
+import routes from '../../routes';
 import Loading from '../Shared/Loading';
 
 const Container = styled.div`
@@ -37,6 +39,11 @@ const Date = styled.div`
   border-radius: 20px;
   border-radius: 1.25rem;
   transition: ${props => props.isToday && "background-color 1s ease, color 1s ease"};
+  cursor: pointer;
+  :hover {
+    background-color: ${props => !props.isToday ? props.theme.hoverColor : props.theme.redColor};
+    transition: ${props => !props.isToday && "background-color 0.4s ease"};
+  }
 `
 
 const ScheduleList = styled.div`
@@ -119,6 +126,8 @@ const ToDoText = styled.div`
 `
 
 const CalendarItem = ({ item, create, userEmail }) => {
+  const navigate = useNavigate()
+
   const [schedule, setSchedule] = useState([])
   const [row, setRow] = useState(1)
   const { data, loading, refetch } = useQuery(SEE_SCHEDULE_QUERY, {
@@ -171,6 +180,11 @@ const CalendarItem = ({ item, create, userEmail }) => {
     localStorage.setItem("editSchedule", id)
   }
 
+  const onClickDay = () => {
+    const date = new window.Date(item.date).setHours(0, 0, 0, 0)
+    navigate(`${routes.calendar}/${date}`)
+  }
+
   useEffect(() => {
     setSchedule([])
     if (data) {
@@ -202,7 +216,7 @@ const CalendarItem = ({ item, create, userEmail }) => {
       sun={getDay(item.date) === 0}
       curMonth={item.month === "cur"}
     >
-      <Date isToday={isToday(item.date)}>{getDate(item.date)}일</Date>
+      <Date isToday={isToday(item.date)} onClick={onClickDay}>{getDate(item.date)}일</Date>
     </Day>
     <ScheduleList row={row}>
       {schedule.length !== 0 && schedule.map((schedule, index) => {

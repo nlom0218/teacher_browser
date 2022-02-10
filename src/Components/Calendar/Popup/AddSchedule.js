@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import PopupContainer from '../../Shared/PopupContainer';
 import { outPopup } from '../../../apollo';
-import { customMedia } from '../../../styles';
 import { useMutation } from '@apollo/client';
 import { CREATE_SCHEDULE_MUTATION } from '../../../Graphql/Schedule/mutation';
 import { CalenderPopupColorLayout, CalenderPopupContainer, CalenderPopupDateLayout, CalenderPopupFormContainer, CalenderPopupInputLayout, CalenderPopupTextareaLayout, CalenderPopupTitle } from './PopupLayout';
@@ -20,6 +19,7 @@ const SubmitInput = styled.input`
 `
 
 const AddSchedule = ({ userEmail, setErrMsg, setCreate }) => {
+
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(undefined);
   const [color, setColor] = useState(undefined)

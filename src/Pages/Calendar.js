@@ -12,6 +12,7 @@ import useMe from '../Hooks/useMe';
 import AlertMessage from '../Components/Shared/AlertMessage';
 import { BiExitFullscreen, BiFullscreen } from "react-icons/bi"
 import EditSchedule from '../Components/Calendar/Popup/EditSchedule';
+import { useParams } from 'react-router';
 
 const Container = styled.div`
   display: grid;
@@ -106,6 +107,8 @@ const CalendarList = styled.div`
 `
 
 const Calendar = () => {
+  const { date: urlDate } = useParams()
+
   const isPopup = useReactiveVar(isPopupVar)
 
   const me = useMe()
