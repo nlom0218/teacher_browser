@@ -13,6 +13,8 @@ import AlertMessage from '../Components/Shared/AlertMessage';
 import { BiExitFullscreen, BiFullscreen } from "react-icons/bi"
 import EditSchedule from '../Components/Calendar/Popup/EditSchedule';
 import { useParams } from 'react-router';
+import useMedia from '../Hooks/useMedia';
+import { customMedia } from '../styles';
 
 const Container = styled.div`
   display: grid;
@@ -22,12 +24,14 @@ const Container = styled.div`
 
 const TopContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr auto auto auto auto auto;
+  grid-template-columns: 1fr auto;
   padding: 20px;
   padding: 1.25rem;
   align-items: center;
   column-gap: 20px;
   column-gap: 1.25rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
   .calendar_btn {
     cursor: pointer;
     color: ${props => props.theme.bgColor};
@@ -37,8 +41,30 @@ const TopContainer = styled.div`
 `
 
 const Title = styled.div`
-  font-size: 2em;
-  font-size: 2rem;
+  font-size : 1.25em;
+  font-size : 1.25rem;
+  grid-column: 1 / 3;
+  ${customMedia.greaterThan("tablet")`
+    grid-column: 1 / 2;
+    font-size: 2em;
+    font-size: 2rem;
+  `}
+`
+
+const BtnContainer = styled.div`
+  grid-template-columns: repeat(4, auto);
+  display: grid;
+  align-items: center;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+  ${customMedia.greaterThan("tablet")`
+    grid-row: 1 / 2
+  `}
+  ${customMedia.greaterThan("desktop")`
+    grid-template-columns: repeat(5, auto);
+  `}
 `
 
 const TodayBtn = styled.div`
@@ -77,12 +103,18 @@ const BottomContainer = styled.div`
   grid-template-rows: auto 1fr;
   padding: 20px;
   padding: 1.25rem;
+  padding-top: 0px;
+  padding-top: 0rem;
   overflow: ${props => props.notScroll ? "scroll" : "scroll"};
   -ms-overflow-style: none; // IE and Edge
   scrollbar-width: none; // Firefox
   ::-webkit-scrollbar {
     display: none; // Chrome, Safari, Opera
   }
+  ${customMedia.greaterThan("tablet")`
+    padding-top: 20px;
+    padding-top: 1.25rem;
+  `}
 `
 
 const Day = styled.div`
@@ -97,19 +129,23 @@ const CalendarList = styled.div`
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: ${props => `repeat(${props.weekLength}, minmax(100px, auto))`};
-  grid-template-rows: ${props => `repeat(${props.weekLength}, minmax(6.25rem, auto))`};
+  grid-template-rows: ${props => `repeat(${props.weekLength}, 1fr)`};
   background-color: ${props => props.theme.girdBorderColor};
   border: 1px solid ${props => props.theme.girdBorderColor};
   transition: background-color 1s ease, border 1s ease;
   row-gap: 1px;
   column-gap: 1px;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-rows: ${props => `repeat(${props.weekLength}, minmax(100px, auto))`};
+    grid-template-rows: ${props => `repeat(${props.weekLength}, minmax(6.25rem, auto))`};
+  `}
 `
 
 const Calendar = () => {
   const { date: urlDate } = useParams()
 
   const isPopup = useReactiveVar(isPopupVar)
+  const media = useMedia()
 
   const me = useMe()
 
@@ -178,6 +214,12 @@ const Calendar = () => {
     setWeekLength(weekLength)
   }, [date])
 
+  useEffect(() => {
+    if (screen === "full") {
+      setScreen("small")
+    }
+  }, [media])
+
   if (!weekLength) {
     return <div></div>
   }
@@ -186,11 +228,13 @@ const Calendar = () => {
     <Container>
       <TopContainer>
         <Title>{format(date, "yyyy년 MM월")}</Title>
-        <TodayBtn className="calendar_btn" onClick={onClickTodayBtn}>TODAY</TodayBtn>
-        <Btn className="calendar_btn" onClick={onClickBtnMinus}><IoIosArrowBack /></Btn>
-        <Btn className="calendar_btn" onClick={onClickBtn}><IoIosArrowForward /></Btn>
-        <Btn className="calendar_btn" onClick={onClickFull}>{screen === "small" ? <BiFullscreen /> : <BiExitFullscreen />}</Btn>
-        <Btn className="calendar_btn" onClick={onClickPlusBtn}><AiOutlinePlus /></Btn>
+        <BtnContainer>
+          <TodayBtn className="calendar_btn" onClick={onClickTodayBtn}>TODAY</TodayBtn>
+          <Btn className="calendar_btn" onClick={onClickBtnMinus}><IoIosArrowBack /></Btn>
+          <Btn className="calendar_btn" onClick={onClickBtn}><IoIosArrowForward /></Btn>
+          {media === "Desktop" && <Btn className="calendar_btn" onClick={onClickFull}>{screen === "small" ? <BiFullscreen /> : <BiExitFullscreen />}</Btn>}
+          <Btn className="calendar_btn" onClick={onClickPlusBtn}><AiOutlinePlus /></Btn>
+        </BtnContainer>
       </TopContainer>
       <BottomContainerLayout>
         <BottomContainer>
@@ -201,7 +245,7 @@ const Calendar = () => {
           })}
           <CalendarList weekLength={weekLength}>
             {dateArr && dateArr?.map((item, index) => {
-              return <CalendarItem key={index} item={item} create={create} userEmail={me?.email} />
+              return <CalendarItem media={media} key={index} item={item} create={create} userEmail={me?.email} />
             })}
           </CalendarList>
         </BottomContainer>

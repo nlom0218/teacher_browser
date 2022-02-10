@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import { getDate, getDay, isToday } from 'date-fns';
 import React, { useEffect, useState } from 'react';
+import { BsDot } from 'react-icons/bs';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { inPopup } from '../../apollo';
@@ -125,7 +126,21 @@ const ToDoText = styled.div`
   opacity: 0.8;
 `
 
-const CalendarItem = ({ item, create, userEmail }) => {
+const DotIcon = styled.div`
+  background: ${props => props.theme.fontColor};
+  transition: background 1s ease;
+  opacity: 0.4;
+  justify-self: center;
+  align-self: center;
+  width: 12px;
+  width: 0.75rem;
+  height: 12px;
+  height: 0.75rem;
+  border-radius: 50%;
+
+`
+
+const CalendarItem = ({ item, create, userEmail, media }) => {
   const navigate = useNavigate()
 
   const [schedule, setSchedule] = useState([])
@@ -216,29 +231,35 @@ const CalendarItem = ({ item, create, userEmail }) => {
       sun={getDay(item.date) === 0}
       curMonth={item.month === "cur"}
     >
-      <Date isToday={isToday(item.date)} onClick={onClickDay}>{getDate(item.date)}일</Date>
+      <Date isToday={isToday(item.date)} onClick={onClickDay}>{getDate(item.date)}{media !== "Mobile" && "일"}</Date>
     </Day>
-    <ScheduleList row={row}>
-      {schedule.length !== 0 && schedule.map((schedule, index) => {
-        if (!schedule) {
-          return <ScheduleItem key={index}>
-            <div></div>
-          </ScheduleItem>
-        } else {
-          return <ScheduleItem onClick={() => onClickSchedule(schedule._id)} key={index} color={schedule.color} dateType={processDateType(schedule.startDate, schedule.endDate)} isEndDate={isEndDate(schedule.endDate)}>
-            {processDateType(schedule.startDate, schedule.endDate) === "start" && <StartDate className="schedule_date" >{schedule.schedule}</StartDate>}
-            {processDateType(schedule.startDate, schedule.endDate) === "end" && <EndDate className="schedule_date" >end</EndDate>}
-            {processTerm(schedule.term) && <TermDate className="schedule_date" >term</TermDate>}
-          </ScheduleItem>
-        }
-      })}
-    </ScheduleList>
-    <Summary>
-      {!toDoLength?.seeToDoListOnlyLength ? <div></div> : toDoLength?.seeToDoListOnlyLength !== 0 && <ToDoLength>
-        <ToDoIcon><IcToDoList /></ToDoIcon>
-        <ToDoText>{toDoLength?.seeToDoListOnlyLength}개</ToDoText>
-      </ToDoLength>}
-    </Summary>
+    {media !== "Mobile" ? <React.Fragment>
+      <ScheduleList row={row}>
+        {schedule.length !== 0 && schedule.map((schedule, index) => {
+          if (!schedule) {
+            return <ScheduleItem key={index}>
+              <div></div>
+            </ScheduleItem>
+          } else {
+            return <ScheduleItem onClick={() => onClickSchedule(schedule._id)} key={index} color={schedule.color} dateType={processDateType(schedule.startDate, schedule.endDate)} isEndDate={isEndDate(schedule.endDate)}>
+              {processDateType(schedule.startDate, schedule.endDate) === "start" && <StartDate className="schedule_date" >{schedule.schedule}</StartDate>}
+              {processDateType(schedule.startDate, schedule.endDate) === "end" && <EndDate className="schedule_date" >end</EndDate>}
+              {processTerm(schedule.term) && <TermDate className="schedule_date" >term</TermDate>}
+            </ScheduleItem>
+          }
+        })}
+      </ScheduleList>
+      <Summary>
+        {!toDoLength?.seeToDoListOnlyLength ? <div></div> : toDoLength?.seeToDoListOnlyLength !== 0 && <ToDoLength>
+          <ToDoIcon><IcToDoList /></ToDoIcon>
+          <ToDoText>{toDoLength?.seeToDoListOnlyLength}개</ToDoText>
+        </ToDoLength>}
+      </Summary></React.Fragment>
+      :
+      <React.Fragment>
+        {schedule.length !== 0 && <DotIcon></DotIcon>}
+      </React.Fragment>
+    }
   </Container>);
 }
 
