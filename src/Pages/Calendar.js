@@ -227,7 +227,7 @@ const Calendar = () => {
 
   return (<BasicContainer screen={screen}>
     {urlDate ?
-      <CalendarDetail setScreen={setScreen} urlDate={urlDate} />
+      <CalendarDetail userEmail={me?.email} urlDate={urlDate} setScreen={setScreen} screen={screen} />
       :
       <Container>
         <TopContainer>
