@@ -268,7 +268,7 @@ const Draw = () => {
           </React.Fragment>
         )}
       </Container>
-      {isPopup === "seeStudentList" && <StudentList />}
+      {isPopup === "seeStudentList" && <StudentList setIsShuffle={setIsShuffle} />}
       {isShuffle === "ing" &&
         <Shuffling
           pickNum={pickNum}
@@ -284,16 +284,3 @@ const Draw = () => {
 };
 
 export default Draw;
-
-{/* <div style={style}>
-      <input
-        type="text"
-        name="name"
-        placeholder="이름입력"
-        style={{width: "500px"}}
-        onChange={onDataChange}
-        value={name}
-      />
-      &nbsp;&nbsp;
-      <button onClick={onCreate}>추가</button>
-    </div> */}

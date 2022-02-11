@@ -50,7 +50,7 @@ const TitleLine = styled.div`
   height: 0.625rem;
   background-color: ${props => props.not ? props.theme.redColor : props.theme.green};
   opacity: 0.2;
-  transition: background-color 1s ease, opacity 1s ease;
+  transition: background-color 1s ease;
 `
 
 const ToDoList = styled.div`

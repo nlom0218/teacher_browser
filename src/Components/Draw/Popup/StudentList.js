@@ -18,15 +18,12 @@ const Container = styled.div`
   justify-items : center;
 `
 
-const StudentList = () => {
-  const { id } = useParams()
-  console.log(id);
+const StudentList = ({ setIsShuffle }) => {
   const { data, loading } = useQuery(SEE_ALL_STUDENT_LIST_QUERY)
-  console.log(data);
   return (<PopupContainer>
     <Container>
       {data?.seeStudentList.map((item, index) => {
-        return <StudentListItem key={index} item={item} />
+        return <StudentListItem key={index} item={item} setIsShuffle={setIsShuffle} />
       })}
     </Container>
   </PopupContainer>
