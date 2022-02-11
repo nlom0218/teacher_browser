@@ -15,6 +15,7 @@ import EditSchedule from '../Components/Calendar/Popup/EditSchedule';
 import { useParams } from 'react-router';
 import useMedia from '../Hooks/useMedia';
 import { customMedia } from '../styles';
+import CalendarDetail from '../Components/Calendar/CalendarDetail';
 
 const Container = styled.div`
   display: grid;
@@ -225,34 +226,38 @@ const Calendar = () => {
   }
 
   return (<BasicContainer screen={screen}>
-    <Container>
-      <TopContainer>
-        <Title>{format(date, "yyyy년 MM월")}</Title>
-        <BtnContainer>
-          <TodayBtn className="calendar_btn" onClick={onClickTodayBtn}>TODAY</TodayBtn>
-          <Btn className="calendar_btn" onClick={onClickBtnMinus}><IoIosArrowBack /></Btn>
-          <Btn className="calendar_btn" onClick={onClickBtn}><IoIosArrowForward /></Btn>
-          {media === "Desktop" && <Btn className="calendar_btn" onClick={onClickFull}>{screen === "small" ? <BiFullscreen /> : <BiExitFullscreen />}</Btn>}
-          <Btn className="calendar_btn" onClick={onClickPlusBtn}><AiOutlinePlus /></Btn>
-        </BtnContainer>
-      </TopContainer>
-      <BottomContainerLayout>
-        <BottomContainer>
-          {["일", "월", "화", "수", "목", "금", "토"].map((item, index) => {
-            return <Day key={index} sun={item === "일"}>
-              {item}
-            </Day>
-          })}
-          <CalendarList weekLength={weekLength}>
-            {dateArr && dateArr?.map((item, index) => {
-              return <CalendarItem media={media} key={index} item={item} create={create} userEmail={me?.email} />
+    {urlDate ?
+      <CalendarDetail setScreen={setScreen} urlDate={urlDate} />
+      :
+      <Container>
+        <TopContainer>
+          <Title>{format(date, "yyyy년 MM월")}</Title>
+          <BtnContainer>
+            <TodayBtn className="calendar_btn" onClick={onClickTodayBtn}>TODAY</TodayBtn>
+            <Btn className="calendar_btn" onClick={onClickBtnMinus}><IoIosArrowBack /></Btn>
+            <Btn className="calendar_btn" onClick={onClickBtn}><IoIosArrowForward /></Btn>
+            {media === "Desktop" && <Btn className="calendar_btn" onClick={onClickFull}>{screen === "small" ? <BiFullscreen /> : <BiExitFullscreen />}</Btn>}
+            <Btn className="calendar_btn" onClick={onClickPlusBtn}><AiOutlinePlus /></Btn>
+          </BtnContainer>
+        </TopContainer>
+        <BottomContainerLayout>
+          <BottomContainer>
+            {["일", "월", "화", "수", "목", "금", "토"].map((item, index) => {
+              return <Day key={index} sun={item === "일"}>
+                {item}
+              </Day>
             })}
-          </CalendarList>
-        </BottomContainer>
-      </BottomContainerLayout>
-      {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} setCreate={setCreate} />}
-      {isPopup === "editSchedule" && <EditSchedule setErrMsg={setErrMsg} userEmail={me?.email} setCreate={setCreate} setMsg={setMsg} />}
-    </Container>
+            <CalendarList weekLength={weekLength}>
+              {dateArr && dateArr?.map((item, index) => {
+                return <CalendarItem media={media} key={index} item={item} create={create} userEmail={me?.email} />
+              })}
+            </CalendarList>
+          </BottomContainer>
+        </BottomContainerLayout>
+      </Container>
+    }
+    {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} setCreate={setCreate} />}
+    {isPopup === "editSchedule" && <EditSchedule setErrMsg={setErrMsg} userEmail={me?.email} setCreate={setCreate} setMsg={setMsg} />}
     {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
     {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
   </BasicContainer>);
