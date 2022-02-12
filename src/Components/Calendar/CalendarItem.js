@@ -55,6 +55,12 @@ const ScheduleList = styled.div`
   row-gap: 0.3125rem;
 `
 
+const EmptyBox = styled.div`
+  padding: 5px;
+  padding: 0.3125rem;
+  opacity: 0;
+`
+
 const ScheduleItem = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
@@ -140,17 +146,12 @@ const DotIcon = styled.div`
 
 `
 
-const CalendarItem = ({ item, create, userEmail, media }) => {
+const CalendarItem = ({ item, create, media, userEmail, schedule }) => {
   const navigate = useNavigate()
 
-  const [schedule, setSchedule] = useState([])
+  const [dateSchedule, setDateSchedule] = useState([])
   const [row, setRow] = useState(1)
-  const { data, loading, refetch } = useQuery(SEE_SCHEDULE_QUERY, {
-    variables: {
-      date: item.date
-    },
-    skip: !userEmail
-  })
+  console.log(dateSchedule);
 
   const { data: toDoLength, loading: toDoLoading } = useQuery(SEE_TO_DO_LIST_ONLY_LENGTH_QUERY, {
     variables: {
@@ -159,6 +160,7 @@ const CalendarItem = ({ item, create, userEmail, media }) => {
     },
     skip: !userEmail
   })
+
   const processNumberDate = () => {
     return new window.Date(item.date).setHours(0, 0, 0, 0)
   }
@@ -201,30 +203,28 @@ const CalendarItem = ({ item, create, userEmail, media }) => {
   }
 
   useEffect(() => {
-    setSchedule([])
-    if (data) {
-      const lastIndex = data.seeSchedule.length - 1
+    if (schedule) {
+      const lastIndex = schedule?.length - 1
       if (lastIndex < 0) {
         return
       }
-      const lastIndexSort = data?.seeSchedule[lastIndex].sort
-      setRow(lastIndexSort)
-      const newSchedule = []
-      for (let i = 0; i < lastIndexSort; i++) {
-        const schedule = data?.seeSchedule.filter((item) => item.sort === i + 1)
-        if (schedule.length === 0) {
-          newSchedule.push(undefined)
+      const newDateSchedule = schedule?.filter(scheduleItem => scheduleItem.allDate.includes(new window.Date(item.date).setHours(0, 0, 0, 0) + ""))
+      const lastSort = Math.max(...newDateSchedule?.map(item => item.sort))
+      if (!lastSort === -Infinity) {
+        setRow(lastSort)
+      }
+      const reallyDateSchedule = []
+      for (let i = 0; i < lastSort; i++) {
+        const sortSchedule = newDateSchedule.filter((item) => item.sort === i + 1)
+        if (sortSchedule.length === 0) {
+          reallyDateSchedule.push(undefined)
         } else {
-          newSchedule.push(schedule[0])
+          reallyDateSchedule.push(sortSchedule[0])
         }
       }
-      setSchedule(newSchedule)
+      setDateSchedule(reallyDateSchedule)
     }
-  }, [data])
-
-  useEffect(() => {
-    refetch()
-  }, [create])
+  }, [schedule])
 
   return (<Container>
     <Day
@@ -235,16 +235,16 @@ const CalendarItem = ({ item, create, userEmail, media }) => {
     </Day>
     {media !== "Mobile" ? <React.Fragment>
       <ScheduleList row={row}>
-        {schedule.length !== 0 && schedule.map((schedule, index) => {
-          if (!schedule) {
+        {dateSchedule.length !== 0 && dateSchedule?.map((scheduleItem, index) => {
+          if (!scheduleItem) {
             return <ScheduleItem key={index}>
-              <div></div>
+              <EmptyBox>e</EmptyBox>
             </ScheduleItem>
           } else {
-            return <ScheduleItem onClick={() => onClickSchedule(schedule._id)} key={index} color={schedule.color} dateType={processDateType(schedule.startDate, schedule.endDate)} isEndDate={isEndDate(schedule.endDate)}>
-              {processDateType(schedule.startDate, schedule.endDate) === "start" && <StartDate className="schedule_date" >{schedule.schedule}</StartDate>}
-              {processDateType(schedule.startDate, schedule.endDate) === "end" && <EndDate className="schedule_date" >end</EndDate>}
-              {processTerm(schedule.term) && <TermDate className="schedule_date" >term</TermDate>}
+            return <ScheduleItem onClick={() => onClickSchedule(scheduleItem._id)} key={index} color={scheduleItem.color} dateType={processDateType(scheduleItem.startDate, scheduleItem.endDate)} isEndDate={isEndDate(scheduleItem.endDate)}>
+              {processDateType(scheduleItem.startDate, scheduleItem.endDate) === "start" && <StartDate className="schedule_date" >{scheduleItem.schedule}</StartDate>}
+              {processDateType(scheduleItem.startDate, scheduleItem.endDate) === "end" && <EndDate className="schedule_date" >end</EndDate>}
+              {processTerm(scheduleItem.term) && <TermDate className="schedule_date" >term</TermDate>}
             </ScheduleItem>
           }
         })}
@@ -257,7 +257,7 @@ const CalendarItem = ({ item, create, userEmail, media }) => {
       </Summary></React.Fragment>
       :
       <React.Fragment>
-        {schedule.length !== 0 && <DotIcon></DotIcon>}
+        {dateSchedule.length !== 0 && <DotIcon></DotIcon>}
       </React.Fragment>
     }
   </Container>);

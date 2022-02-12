@@ -162,7 +162,6 @@ const Calendar = () => {
   const [screen, setScreen] = useState("small")
 
   const [seeSchedule, { data, loading, refetch }] = useLazyQuery(SEE_SCHEDULE_QUERY)
-  console.log(schedule);
 
   const onClickTodayBtn = () => {
     const newDate = new Date()
@@ -268,7 +267,7 @@ const Calendar = () => {
             })}
             <CalendarList weekLength={weekLength}>
               {dateArr && dateArr?.map((item, index) => {
-                return <CalendarItem media={media} key={index} item={item} create={create} userEmail={me?.email} />
+                return <CalendarItem media={media} key={index} item={item} create={create} userEmail={me?.email} schedule={schedule?.seeSchedule} />
               })}
             </CalendarList>
           </BottomContainer>
