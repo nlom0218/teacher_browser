@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const SEE_TO_DO_LIST_QUERY = gql`
-  query SeeToDoList($isComplete: Boolean, $id: String) {
-    seeToDoList(isComplete: $isComplete, id: $id) {
+  query SeeToDoList($isComplete: Boolean, $id: String, $date: String) {
+    seeToDoList(isComplete: $isComplete, id: $id, date: $date) {
       _id
       toDo
       userEmail
