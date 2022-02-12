@@ -6,6 +6,7 @@ import { outPopup } from '../../../apollo';
 import { useMutation } from '@apollo/client';
 import { CREATE_SCHEDULE_MUTATION } from '../../../Graphql/Schedule/mutation';
 import { CalenderPopupColorLayout, CalenderPopupContainer, CalenderPopupDateLayout, CalenderPopupFormContainer, CalenderPopupInputLayout, CalenderPopupTextareaLayout, CalenderPopupTitle } from './PopupLayout';
+import { SEE_SCHEDULE_QUERY } from '../../../Graphql/Schedule/query';
 
 const SubmitInput = styled.input`
   background-color: ${props => props.theme.btnBgColor};
@@ -18,7 +19,7 @@ const SubmitInput = styled.input`
   cursor: pointer;
 `
 
-const AddSchedule = ({ userEmail, setErrMsg, setCreate }) => {
+const AddSchedule = ({ userEmail, setErrMsg, refetch, setMsg }) => {
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(undefined);
@@ -30,15 +31,16 @@ const AddSchedule = ({ userEmail, setErrMsg, setCreate }) => {
   const onCompleted = (result) => {
     const { createSchedule: { ok, error } } = result
     if (ok) {
+      setMsg("새로운 일정이 추가되었습니다. 😀")
       outPopup()
-      setCreate(prev => prev + 1)
+      refetch()
     } else {
       setErrMsg(error)
     }
   }
 
   const [createSchedule, { loading }] = useMutation(CREATE_SCHEDULE_MUTATION, {
-    onCompleted
+    onCompleted,
   })
 
   const onSubmit = (data) => {

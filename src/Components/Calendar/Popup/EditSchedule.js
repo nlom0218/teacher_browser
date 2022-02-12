@@ -52,7 +52,7 @@ const DelBtn = styled.div`
   cursor: pointer;
 `
 
-const EditSchedule = ({ userEmail, setErrMsg, setCreate, setMsg }) => {
+const EditSchedule = ({ userEmail, setErrMsg, setCreate, setMsg, refetch }) => {
   const id = localStorage.getItem("editSchedule")
 
   const [startDate, setStartDate] = useState(new Date());
@@ -72,8 +72,9 @@ const EditSchedule = ({ userEmail, setErrMsg, setCreate, setMsg }) => {
   const onCompleted = (result) => {
     const { editSchedule: { ok, error } } = result
     if (ok) {
+      setMsg("일정이 수정되었습니다. 😀")
       outPopup()
-      setCreate(prev => prev + 1)
+      refetch()
     } else {
       setErrMsg(error)
     }
@@ -82,8 +83,9 @@ const EditSchedule = ({ userEmail, setErrMsg, setCreate, setMsg }) => {
   const delOnCompleted = (result) => {
     const { deleteSchedule: { ok } } = result
     if (ok) {
+      setMsg("일정이 삭제되었습니다. 😀")
       outPopup()
-      setCreate(prev => prev + 1)
+      refetch()
     }
   }
 
@@ -91,7 +93,7 @@ const EditSchedule = ({ userEmail, setErrMsg, setCreate, setMsg }) => {
     const { updateScheduleSort: { ok } } = result
     if (ok) {
       outPopup()
-      setCreate(prev => prev + 1)
+      refetch()
       setMsg("일정이 정렬 되었습니다. 😀")
     }
   }

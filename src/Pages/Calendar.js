@@ -153,7 +153,6 @@ const Calendar = () => {
   const me = useMe()
 
   const [date, setDate] = useState(new Date())
-  const [create, setCreate] = useState(1)
   const [weekLength, setWeekLength] = useState(1)
   const [dateArr, setDateArr] = useState(undefined)
   const [schedule, setSchedule] = useState(undefined)
@@ -267,15 +266,15 @@ const Calendar = () => {
             })}
             <CalendarList weekLength={weekLength}>
               {dateArr && dateArr?.map((item, index) => {
-                return <CalendarItem media={media} key={index} item={item} create={create} userEmail={me?.email} schedule={schedule?.seeSchedule} />
+                return <CalendarItem media={media} key={index} item={item} userEmail={me?.email} schedule={schedule?.seeSchedule} />
               })}
             </CalendarList>
           </BottomContainer>
         </BottomContainerLayout>}
       </Container>
     }
-    {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} setCreate={setCreate} />}
-    {isPopup === "editSchedule" && <EditSchedule setErrMsg={setErrMsg} userEmail={me?.email} setCreate={setCreate} setMsg={setMsg} />}
+    {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} />}
+    {isPopup === "editSchedule" && <EditSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} />}
     {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
     {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
   </BasicContainer>);

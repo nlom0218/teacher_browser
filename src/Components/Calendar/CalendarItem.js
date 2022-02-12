@@ -151,7 +151,6 @@ const CalendarItem = ({ item, create, media, userEmail, schedule }) => {
 
   const [dateSchedule, setDateSchedule] = useState([])
   const [row, setRow] = useState(1)
-  console.log(dateSchedule);
 
   const { data: toDoLength, loading: toDoLoading } = useQuery(SEE_TO_DO_LIST_ONLY_LENGTH_QUERY, {
     variables: {
