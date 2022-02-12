@@ -3,7 +3,7 @@ import { format, startOfWeek, getWeeksInMonth, addMonths, startOfMonth, addDays,
 import styled from 'styled-components';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
 import { AiOutlinePlus } from "react-icons/ai"
-import { useReactiveVar } from '@apollo/client';
+import { useLazyQuery, useQuery, useReactiveVar } from '@apollo/client';
 import CalendarItem from '../Components/Calendar/CalendarItem';
 import AddSchedule from '../Components/Calendar/Popup/AddSchedule';
 import { inPopup, isPopupVar } from '../apollo';
@@ -16,6 +16,8 @@ import { useParams } from 'react-router';
 import useMedia from '../Hooks/useMedia';
 import { customMedia } from '../styles';
 import CalendarDetail from '../Components/Calendar/CalendarDetail';
+import { SEE_SCHEDULE_QUERY } from '../Graphql/Schedule/query';
+import Loading from '../Components/Shared/Loading';
 
 const Container = styled.div`
   display: grid;
@@ -154,9 +156,13 @@ const Calendar = () => {
   const [create, setCreate] = useState(1)
   const [weekLength, setWeekLength] = useState(1)
   const [dateArr, setDateArr] = useState(undefined)
+  const [schedule, setSchedule] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
   const [msg, setMsg] = useState(undefined)
   const [screen, setScreen] = useState("small")
+
+  const [seeSchedule, { data, loading, refetch }] = useLazyQuery(SEE_SCHEDULE_QUERY)
+  console.log(schedule);
 
   const onClickTodayBtn = () => {
     const newDate = new Date()
@@ -216,14 +222,27 @@ const Calendar = () => {
   }, [date])
 
   useEffect(() => {
+    if (dateArr) {
+      const sendDate = dateArr.map(item => new window.Date(item.date).setHours(0, 0, 0, 0))
+      seeSchedule({
+        variables: {
+          dateArr: sendDate
+        }
+      })
+    }
+  }, [dateArr])
+
+  useEffect(() => {
+    if (data) {
+      setSchedule(data)
+    }
+  }, [data])
+
+  useEffect(() => {
     if (screen === "full") {
       setScreen("small")
     }
   }, [media])
-
-  if (!weekLength) {
-    return <div></div>
-  }
 
   return (<BasicContainer screen={screen}>
     {urlDate ?
@@ -240,7 +259,7 @@ const Calendar = () => {
             <Btn className="calendar_btn" onClick={onClickPlusBtn}><AiOutlinePlus /></Btn>
           </BtnContainer>
         </TopContainer>
-        <BottomContainerLayout>
+        {loading ? <Loading page="subPage" /> : <BottomContainerLayout>
           <BottomContainer>
             {["일", "월", "화", "수", "목", "금", "토"].map((item, index) => {
               return <Day key={index} sun={item === "일"}>
@@ -253,7 +272,7 @@ const Calendar = () => {
               })}
             </CalendarList>
           </BottomContainer>
-        </BottomContainerLayout>
+        </BottomContainerLayout>}
       </Container>
     }
     {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} setCreate={setCreate} />}
