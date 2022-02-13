@@ -4,7 +4,6 @@ import { customMedia } from "../../styles";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useState } from "react/cjs/react.development";
 import { TiDelete } from "react-icons/ti";
-import SeeSelectedStudent from "./SeeSelectedStudent";
 
 const RealContainer = styled.div`
 
@@ -43,7 +42,7 @@ const Container = styled.div`
     column-gap : 10px;
     column-gap : 0.625rem;
     ${customMedia.greaterThan("tablet")`
-    grid-template-columns : ${props => props.seeResultType === "ALL" && "repeat(4,1fr)"};
+    grid-template-columns : ${props => props.seeResultType === "ALL" && "repeat(6,1fr)"};
     `}
     ${customMedia.greaterThan("desktop")`
     grid-template-columns : ${props => props.seeResultType === "ALL" && "repeat(6,1fr)"};
@@ -138,11 +137,7 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, seeResultType, font
                     </Item>
                 );
             }) :
-            <SeeSelectedStudent
-            selectedStudent={selectedStudent}
-            pickNum={pickNum}
-            pickType={pickType}
-            fontSizeAll={fontSizeAll}
+            <div
         />
             }
         </Container>
