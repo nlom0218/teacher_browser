@@ -77,6 +77,7 @@ const BottomContainer = styled.div`
   min-height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  align-items: flex-start;
   column-gap: 20px;
   column-gap: 1.25rem;
 `
@@ -91,7 +92,8 @@ const LeftSection = styled.div`
 
 const RightSection = styled.div`
   display: grid;
-  grid-template-rows: 2fr 1fr 1fr;
+  grid-template-rows: minmax(120px, auto) repeat(2, minmax(120px, auto));
+  grid-template-rows: minmax(120px, auto) repeat(2, minmax(7.5rem, auto));
   row-gap: 20px;
   row-gap: 1.25rem;
 `

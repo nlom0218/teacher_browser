@@ -10,6 +10,7 @@ const SectionTitle = styled.div`
   align-items: center;
   font-size: 1.25em;
   font-size: 1.25rem;
+  font-weight: 600;
   svg {
     display: flex;
   }
