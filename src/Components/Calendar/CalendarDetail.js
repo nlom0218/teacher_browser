@@ -14,6 +14,7 @@ import ToDoListSection from './ToDoListSection';
 import LunchmenuSection from './LunchmenuSection';
 import JournalSection from './JournalSection';
 import AttendSection from './AttendSection';
+import { processSetDay } from '../../shared';
 
 const Container = styled.div`
   display: grid;
@@ -119,7 +120,7 @@ const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery })
 
   return (<Container>
     <TopContents>
-      <Title>{format(new Date(parseInt(urlDate)), "yyyy년 MM월 dd일 EEE")}</Title>
+      <Title>{format(new Date(parseInt(urlDate)), "yyyy년 MM월 dd일")} {processSetDay(new Date(parseInt(urlDate)))}요일</Title>
       <TodayBtn className="calendar_btn" onClick={onClickTodayBtn}>TODAY</TodayBtn>
       <Btn className="calendar_btn" onClick={onClickBtnMinus}><IoIosArrowBack /></Btn>
       <Btn className="calendar_btn" onClick={onClickBtn}><IoIosArrowForward /></Btn>
