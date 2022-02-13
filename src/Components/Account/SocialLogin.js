@@ -79,7 +79,7 @@ const SocialLogin = () => {
   const inItNaverLogin = () => {
     const naverLogin = new window.naver.LoginWithNaverId({
       clientId: "Gf04qU_FzIfDWz4a9_6Z",
-      callbackUrl: "http://localhost:3000/naverLogin",
+      callbackUrl: `${window.location.protocol}//${window.location.host}/naverLogin`,
       isPopup: false,
       loginButton: { color: "green", type: 1, height: "50" },
       callbackHandle: true,
