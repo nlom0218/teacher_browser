@@ -2,12 +2,10 @@ import BasicContainer from '../Components/Shared/BasicContainer';
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from 'styled-components';
-import { inPopup, isPopupVar, isSeeStudentListVar } from '../apollo';
+import { inPopup, isPopupVar } from '../apollo';
 import { useQuery, useReactiveVar } from '@apollo/client';
 import StudentList from '../Components/Draw/Popup/StudentList';
-import { FcContacts } from "react-icons/fc";
 import { useParams } from 'react-router-dom';
-import useMedia from '../Hooks/useMedia';
 import { customMedia } from '../styles';
 import { inputLine } from '../Animations/InputLine';
 import { BtnFadeIn } from '../Animations/Fade';
@@ -17,6 +15,7 @@ import FontSizeBtn from '../Components/Draw/FontSizeBtn';
 import Shuffling from '../Components/Draw/Popup/Shuffling';
 import IcNameTableClick from '../icons/NameTable/IcNameTableClick';
 import IcNameTable from '../icons/NameTable/IcNameTable';
+import AlertMessage from '../Components/Shared/AlertMessage';
 
 const Container = styled.div`
   min-height : ${props => props.seeResultType === "ONE" && "100%"};
@@ -146,9 +145,7 @@ const ListName = styled.div`
 
 const Draw = () => {
   const { id } = useParams()
-  const media = useMedia()
   const isPopup = useReactiveVar(isPopupVar);
-  const isSeeList = useReactiveVar(isSeeStudentListVar);
 
   const [IconsLIstisHover, setIconListIsHover] = useState(false)
   const [studentListName, setStudentListName] = useState(null);
@@ -207,7 +204,7 @@ const Draw = () => {
   }, [data])
 
   return (
-    <BasicContainer menuItem={true}>
+    <BasicContainer menuItem={true} screen="small">
       <Container isShuffle={isShuffle} seeResultType={seeResultType} pickNum={pickNum}>
         <TopContents>
           <Title onBlur={onBlurForm} onSubmit={handleSubmit(onSubmit)}>
@@ -268,7 +265,7 @@ const Draw = () => {
           </React.Fragment>
         )}
       </Container>
-      {isPopup === "seeStudentList" && <StudentList />}
+      {isPopup === "seeStudentList" && <StudentList setIsShuffle={setIsShuffle} />}
       {isShuffle === "ing" &&
         <Shuffling
           pickNum={pickNum}
@@ -284,16 +281,3 @@ const Draw = () => {
 };
 
 export default Draw;
-
-{/* <div style={style}>
-      <input
-        type="text"
-        name="name"
-        placeholder="이름입력"
-        style={{width: "500px"}}
-        onChange={onDataChange}
-        value={name}
-      />
-      &nbsp;&nbsp;
-      <button onClick={onCreate}>추가</button>
-    </div> */}

@@ -6,28 +6,6 @@ import { BsStarFill } from "react-icons/bs"
 import FavoriteNewsList from './FavoriteNewsList';
 import { customMedia } from '../../styles';
 
-const SSearchContainer = styled.div`
-  ${customMedia.greaterThan("desktop")`
-    top: 0;
-    left: 0;
-    width: 40%;
-    padding: 20px;
-    padding: 1.25rem;
-    position: absolute;
-    min-height: 100%;
-    max-height: 100%;
-    overflow: scroll;
-    -ms-overflow-style: none; // IE and Edge
-    scrollbar-width: none; // Firefox
-    ::-webkit-scrollbar {
-      display: none; // Chrome, Safari, Opera
-    }
-    display: grid;
-    grid-template-rows: 1fr;
-    align-items: flex-start;
-  `}
-`
-
 const SearchBox = styled.div`
   min-height: 100%;
   max-height: 100%;
@@ -44,6 +22,23 @@ const SearchBox = styled.div`
   align-items: flex-start;
   row-gap: 30px;
   row-gap: 1.875rem;
+  ${customMedia.greaterThan("desktop")`
+    top: 4%;
+    bottom: 4%;
+    left: 2%;
+    width: 36%;
+    padding: 20px;
+    padding: 1.25rem;
+    position: absolute;
+    min-height: 92%;
+    max-height: 92%;
+    overflow: scroll;
+    -ms-overflow-style: none; // IE and Edge
+    scrollbar-width: none; // Firefox
+    ::-webkit-scrollbar {
+      display: none; // Chrome, Safari, Opera
+    }
+  `}
 `
 
 const Form = styled.form`
@@ -136,38 +131,36 @@ const SearchContainer = ({ search, setSeacrh, sort, setSort, favoriteNews, setSt
     setValue("search", search)
   }, [search])
 
-  return (<SSearchContainer>
-    <SearchBox>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <Input
-          {...register("search", {
-            required: true
-          })}
-          type="text"
-          autoComplete="off"
-          placeholder="검색어를 입력하세요."
-        />
-        <SubmitInput
-          type="submit"
-          value="검색"
-        />
-      </Form>
-      <SeeType>
-        <SeeTypeIcon onClick={() => onClickSeeType("sim")}>
-          {sort === "sim" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
-          <div>정확순</div>
-        </SeeTypeIcon>
-        <SeeTypeIcon onClick={() => onClickSeeType("date")}>
-          {sort === "date" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
-          <div>최신순</div>
-        </SeeTypeIcon>
-      </SeeType>
-      <FavoriteNews>
-        <Title><BsStarFill /><div>즐겨찾기</div></Title>
-        <FavoriteNewsList favoriteNews={favoriteNews} setSeacrh={setSeacrh} setStart={setStart} />
-      </FavoriteNews>
-    </SearchBox>
-  </SSearchContainer>);
+  return (<SearchBox>
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <Input
+        {...register("search", {
+          required: true
+        })}
+        type="text"
+        autoComplete="off"
+        placeholder="검색어를 입력하세요."
+      />
+      <SubmitInput
+        type="submit"
+        value="검색"
+      />
+    </Form>
+    <SeeType>
+      <SeeTypeIcon onClick={() => onClickSeeType("sim")}>
+        {sort === "sim" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
+        <div>정확순</div>
+      </SeeTypeIcon>
+      <SeeTypeIcon onClick={() => onClickSeeType("date")}>
+        {sort === "date" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
+        <div>최신순</div>
+      </SeeTypeIcon>
+    </SeeType>
+    <FavoriteNews>
+      <Title><BsStarFill /><div>즐겨찾기</div></Title>
+      <FavoriteNewsList favoriteNews={favoriteNews} setSeacrh={setSeacrh} setStart={setStart} />
+    </FavoriteNews>
+  </SearchBox>);
 }
 
 export default SearchContainer;

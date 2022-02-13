@@ -8,6 +8,7 @@ import WelcomeSection from '../Components/Welcome/WelcomeSection';
 import useMe from '../Hooks/useMe';
 
 const Container = styled.div`
+  min-height: 100%;
 `
 
 const Welcome = () => {
@@ -16,7 +17,7 @@ const Welcome = () => {
 
   const [init, setInit] = useState(true)
 
-  return (<BasicContainer>
+  return (<BasicContainer screen="small">
     <Container>
       <WelcomeSection
         init={init}

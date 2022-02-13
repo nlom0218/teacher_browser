@@ -30,11 +30,10 @@ const ClassTimeSet = ({ timeSet, setTimeSet }) => {
     setPreventSubmit(true);
     outPopup();
   };
-
   return (
     <PopupContainer>
       <RegisterForm onSubmit={handleSubmit(onSubmit)}>
-        <DetailStartTime />
+        <DetailStartTime timeSet={timeSet} setTimeSet={setTimeSet} />
       </RegisterForm>
     </PopupContainer>
   );

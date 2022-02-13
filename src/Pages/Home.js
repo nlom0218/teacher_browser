@@ -17,19 +17,19 @@ const TopContents = styled.div`
 `
 
 const NewsContents = styled.div`
-` 
+`
 const Home = () => {
-  return (<BasicContainer>
-<Container>
-<TopContents>
-<h2> 오늘 할일 </h2>
-<h2> 식단표 </h2>
-<h2> 오늘의 시간표 </h2>
+  return (<BasicContainer screen="small">
+    <Container>
+      <TopContents>
+        <h2> 오늘 할일 </h2>
+        <h2> 식단표 </h2>
+        <h2> 오늘의 시간표 </h2>
 
-</TopContents>
- 
- <NewsContents><NewsList/></NewsContents>
-</Container>
+      </TopContents>
+
+      <NewsContents><NewsList /></NewsContents>
+    </Container>
   </BasicContainer>);
 }
 

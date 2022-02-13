@@ -17,7 +17,7 @@ const Container = styled.div`
 const Loading = ({ page }) => {
   return (<React.Fragment>
     {page === "mainPage" &&
-      <BasicContainer>
+      <BasicContainer screen="small">
         <Container>
           <RandomCircle />
         </Container>

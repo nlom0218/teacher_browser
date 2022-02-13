@@ -14,6 +14,8 @@ import IcChangingSeatsClick from '../../icons/ChangingSeats/IcChangingSeatsClick
 import IcChangingSeats from '../../icons/ChangingSeats/IcChangingSeats';
 import IcNameTableClick from '../../icons/NameTable/IcNameTableClick';
 import IcNameTable from '../../icons/NameTable/IcNameTable';
+import IcOrderClick from '../../icons/Order/IcOrderClick';
+import IcOrder from '../../icons/Order/IcOrder';
 
 const SMenu = styled.div`
   display: grid;
@@ -73,11 +75,11 @@ export const SwapLink = () => {
 }
 
 export const OrderLink = () => {
+  const [isHover, setIsHover] = useState(false)
   return (<Link to={routes.order}>
-    <SMenu>
-      {/* <FcNumericalSorting12 /> */}
+    <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+      {isHover ? <IcOrderClick /> : <IcOrder />}
       <Title>순서정하기</Title>
-      {/* 급식순서 -> 순서정하기 */}
     </SMenu>
   </Link>);
 }

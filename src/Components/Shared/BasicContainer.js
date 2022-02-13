@@ -21,8 +21,8 @@ const opacityContainerAni = keyframes`
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: auto 1fr 60px;
-  grid-template-rows: auto 1fr 3.75rem;
+  grid-template-rows: ${props => props.screen === "small" ? "auto 1fr 60px" : "20px 1fr 20px"};
+  grid-template-rows: ${props => props.screen === "small" ? "auto 1fr 3.75rem" : "1.25rem 1fr 1.25rem"};
   min-height: 100vh;
   height: 100vh;
   z-index: 0;
@@ -31,9 +31,9 @@ const Container = styled.div`
 
 const ContentLayout = styled.div`
   margin: 0 auto;
-  max-width: 1200px;
-  max-width: 75rem;
-  width: 90%;
+  max-width: ${props => props.screen === "small" && "1200px"};
+  max-width: ${props => props.screen === "small" && "75rem"};
+  width: ${props => props.screen === "small" ? "90%" : "96%"};
   border-radius: 10px;
   border-radius: 0.625rem;
   background: ${props => props.theme.blurColor};
@@ -46,11 +46,11 @@ const ContentLayout = styled.div`
     display: none; // Chrome, Safari, Opera
   }
   ${customMedia.greaterThan("desktop")`
-    width: 100%;
+    width: ${props => props.screen === "small" ? "100%" : "98%"};
   `}
 `
 
-const BasicContainer = ({ children, menuItem, notScroll }) => {
+const BasicContainer = ({ children, menuItem, notScroll, screen }) => {
   const bgThemeAni = useReactiveVar(bgThemeAniVar)
   const [seeSideMenu, setSeeSideMenu] = useState(false)
   const onClickBackground = () => {
@@ -58,10 +58,10 @@ const BasicContainer = ({ children, menuItem, notScroll }) => {
       setSeeSideMenu(false)
     }
   }
-  return (<Container onClick={onClickBackground} bgThemeAni={bgThemeAni}>
+  return (<Container onClick={onClickBackground} bgThemeAni={bgThemeAni} screen={screen}>
     <Theme />
-    <Header seeSideMenu={seeSideMenu} setSeeSideMenu={setSeeSideMenu} />
-    <ContentLayout notScroll={notScroll}>
+    {screen === "small" ? <Header seeSideMenu={seeSideMenu} setSeeSideMenu={setSeeSideMenu} /> : <div></div>}
+    <ContentLayout notScroll={notScroll} screen={screen}>
       {menuItem && <PreviousPageBtn />}
       {children}
     </ContentLayout>
