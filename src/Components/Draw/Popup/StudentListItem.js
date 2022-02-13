@@ -27,27 +27,28 @@ const ListName = styled.div`
 `
 
 
-const StudentListItem = ({item}) => {
-    const navigate = useNavigate()
-    const [isEnterIcon, setIsEnterIcon] = useState(false)
-    const onMouseEnterIcon = () => setIsEnterIcon(true)
-    const onMouseLeaveIcon = () => setIsEnterIcon(false)
-    const onClickItem = () => {
-        navigate(`${routes.draw}/${item.listId}`)
-        outPopup()
-    }
-    return( <ListItem 
-    onMouseEnter={onMouseEnterIcon} 
+const StudentListItem = ({ item, setIsShuffle }) => {
+  const navigate = useNavigate()
+  const [isEnterIcon, setIsEnterIcon] = useState(false)
+  const onMouseEnterIcon = () => setIsEnterIcon(true)
+  const onMouseLeaveIcon = () => setIsEnterIcon(false)
+  const onClickItem = () => {
+    setIsShuffle("init")
+    navigate(`${routes.draw}/${item.listId}`)
+    outPopup()
+  }
+  return (<ListItem
+    onMouseEnter={onMouseEnterIcon}
     onMouseLeave={onMouseLeaveIcon}
     onClick={onClickItem}
-    >
-        <ListIcon>{item.listIcon ? item.listIcon 
-        :
-         (isEnterIcon ? <FcOpenedFolder/> : <FcFolder/> )
-         }
-         </ListIcon>
-        <ListName>{item.listName}</ListName>
-      </ListItem>);
+  >
+    <ListIcon>{item.listIcon ? item.listIcon
+      :
+      (isEnterIcon ? <FcOpenedFolder /> : <FcFolder />)
+    }
+    </ListIcon>
+    <ListName>{item.listName}</ListName>
+  </ListItem>);
 }
 
 export default StudentListItem;

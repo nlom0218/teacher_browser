@@ -12,7 +12,11 @@ import useMe from '../Hooks/useMe';
 import { useParams } from 'react-router';
 import ToDoDetail from '../Components/TodoList/ToDoDetail';
 import Loading from '../Components/Shared/Loading';
-import ToDoNot from '../Components/TodoList/ToDoNot';
+import ToDoNotIng from '../Components/TodoList/ToDoNotIng';
+import { compare } from '../shared';
+import DetailToDo from '../Components/TodoList/Popup/DetailToDo';
+import { customMedia } from '../styles';
+import CompleteToDo from '../Components/TodoList/Popup/CompleteToDo';
 
 // const ListContainer = styled.div`
 //   margin-left : auto;
@@ -21,48 +25,69 @@ import ToDoNot from '../Components/TodoList/ToDoNot';
 // `
 
 const Container = styled.div`
-  padding : 40px;
-  padding : 2.5rem;
+  padding : 20px;
+  padding : 1.25rem;
   display : grid;
   grid-template-rows : auto 1fr;
   row-gap : 30px;
   row-gap : 1.875rem;
   min-height : 100%;
   max-height : 100%;
+  ${customMedia.greaterThan("tablet")`
+    padding : 40px;
+    padding : 2.5rem;
+  `}
 `;
 
 const TodoBody = styled.div`
-  position : relative;
-  .todo_body {
-    position : absolute;
+   position : relative;
+   display: grid;
+   row-gap: 40px;
+   row-gap: 2.5rem;
+   ${customMedia.greaterThan("desktop")`
+      display: block;
+      row-gap: 0px;
+      row-gap: 0rem;
+   `}
+  .todo_container {
     background-color : ${props => props.theme.cardBg};
     transition : background-color 1s ease;
     border-radius : 5px;
     border-radius : 0.3125rem;
-    overflow: scroll;
-    -ms-overflow-style: none; // IE and Edge
-    scrollbar-width: none; // Firefox
-    ::-webkit-scrollbar {
-      display: none; // Chrome, Safari, Opera
-    }
-  }  
-  .ing_todo {
+    ${customMedia.greaterThan("desktop")`
+      position : absolute;
+      overflow: scroll;
+      -ms-overflow-style: none; // IE and Edge
+      scrollbar-width: none; // Firefox
+      ::-webkit-scrollbar {
+        display: none; // Chrome, Safari, Opera
+      }
+    `}
+  }   
+`;
+
+const IngToDoContainer = styled.div`
+  ${customMedia.greaterThan("desktop")`
     top : 0;
     bottom : 0;
     left : 0;
     width : 55%;
-  }
-  .not_ing_todo {
+  `}
+`
+
+const NotIngToDoContainer = styled.div`
+  margin-bottom: 40px;
+  margin-bottom: 2.5rem;
+  ${customMedia.greaterThan("desktop")`
     top : 0;
     bottom : 0;
     right : 0;
     width : 40%;
-  }
-`;
-
-const ToDoSortBtn = styled.div`
-  position: relative;
+    margin-bottom: 0px;
+    margin-bottom: 0rem;
+  `}
 `
+
 
 const TodoList = () => {
   // 1. 기간 내에 있는 할 일 목록 & 완료가 되지 않는 목록 => 진행중인 목록 ing
@@ -90,9 +115,23 @@ const TodoList = () => {
 
   useEffect(() => {
     if (data) {
-      setIngToDos(data?.seeToDoList?.filter(item => item.ingToDo === true))
-      setNotToDos(data?.seeToDoList?.filter(item => item.notToDo === true))
-      setInComingToDos(data?.seeToDoList?.filter(item => item.inComingToDo === true))
+      const newIngToDo = []
+      const newNotToDo = []
+      const newInComintToDo = []
+      data?.seeToDoList?.forEach(item => {
+        if (!item.startDate) {
+          newIngToDo.push({ ...item, type: "ing" })
+        } else if (new Date(parseInt(item.startDate)) > new Date().setHours(0, 0, 0, 0)) {
+          newInComintToDo.push({ ...item, type: "inComing" })
+        } else if (new Date(parseInt(item.endDate)) < new Date().setHours(0, 0, 0, 0)) {
+          newNotToDo.push({ ...item, type: "not" })
+        } else {
+          newIngToDo.push({ ...item, type: "ing" })
+        }
+      });
+      setIngToDos(newIngToDo.sort(compare("endDate")))
+      setNotToDos(newNotToDo.sort(compare("endDate")))
+      setInComingToDos(newInComintToDo.sort(compare("startDate")))
     }
   }, [data])
 
@@ -101,20 +140,21 @@ const TodoList = () => {
   }
 
   return (
-    <BasicContainer>
+    <BasicContainer screen="small">
       <Container>
-        <TodoHead ingToDosLength={ingToDos.length} />
+        <TodoHead />
         <TodoBody>
-          <ToDoSortBtn></ToDoSortBtn>
-          {ingToDos.length !== 0 && <div className="ing_todo todo_body"><TodoIng ingToDos={ingToDos} /></div>}
-          <div className="not_ing_todo todo_body">
+          <IngToDoContainer className="todo_container"><TodoIng ingToDos={ingToDos} /></IngToDoContainer>
+          <NotIngToDoContainer className="todo_container">
             {id && <ToDoDetail id={id} userEmail={me?.email} setErrMsg={setErrMsg} setMsg={setMsg} />}
-            {!id && <ToDoNot notToDos={notToDos} />}
-          </div>
+            {!id && <ToDoNotIng notToDos={notToDos} inComingToDos={inComingToDos} />}
+          </NotIngToDoContainer>
         </TodoBody>
         {/* <DoList todos={todos} onCheckToggle={onCheckToggle}/> */}
       </Container>
       {isPopup === "todoCreate" && <TodoCreate setErrMsg={setErrMsg} userEmail={me?.email} />}
+      {isPopup === "toDoComplete" && <CompleteToDo setErrMsg={setErrMsg} userEmail={me?.email} />}
+      {isPopup === "detailToDo" && <DetailToDo setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} />}
       <AlertMessage msg={errMsg} time={3000} setMsg={setErrMsg} type="error" />
       <AlertMessage msg={msg} time={3000} setMsg={setMsg} type="success" />
     </BasicContainer>

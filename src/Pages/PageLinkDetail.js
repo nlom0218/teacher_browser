@@ -170,6 +170,8 @@ const PageLinkDetail = () => {
   const [submitFolder, setSubmitFolder] = useState([]);
   const [submitType, setSubmitType] = useState(undefined);
 
+  console.log(submitFolder);
+
   const { register, handleSubmit, setValue } = useForm({
     mode: "onChange",
   });

@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { color } from '../../styles';
 
-const Container = styled.div``
+const Container = styled.div`
+`
 
 const List = styled.div`
   display: flex;
@@ -31,7 +32,7 @@ const FavoriteNewsList = ({ favoriteNews, setSeacrh, setStart }) => {
     setStart(1)
   }
   return (<Container>
-    {favoriteNews?.length === 0 ? <div>즐겨찾기 검색어가 없습니다.😭</div>
+    {favoriteNews?.length === 0 ? <div>즐겨찾기 검색어가 없습니다. 😭</div>
       : <List>
         {favoriteNews?.map((item, index) => {
           return <Items key={index} onClick={() => onClickFavoiteItem(item)}>

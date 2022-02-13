@@ -36,7 +36,8 @@ export const ligthTheme = {
   purple: "#ecbdfc",
   textAniColor: "linear-gradient(92deg, #1c5b8e, #db3a1e)",
   green: "#007f4c",
-  originBgColor: "#ffffff"
+  originBgColor: "#ffffff",
+  girdBorderColor: "rgb(181, 181, 181)"
 };
 export const darkTheme = {
   originBgColor: "#222222",
@@ -54,7 +55,8 @@ export const darkTheme = {
   purple: "#6b018c",
   textAniColor: "linear-gradient(92deg, #7CC6FF, #fc8876)",
   green: "#20c997",
-  originBgColor: "#000000"
+  originBgColor: "#000000",
+  girdBorderColor: color.maroon
 };
 
 export const GlobalStyle = createGlobalStyle`
@@ -65,6 +67,7 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 1rem;
     background: ${({ bgTheme, theme }) =>
     bgTheme ? (bgTheme.substr(0, 1) === "#" ? bgTheme : `url("https://source.unsplash.com/random/1920x1080?${bgTheme}")`) : theme.bgColor};
+    background: ${props => !props.isLoggedIn && `url("https://source.unsplash.com/random/1920x1080?nature")`};
     background-size: cover;
     background-position: center;
     font-family: 'Nanum Gothic', sans-serif;

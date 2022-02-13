@@ -209,8 +209,7 @@ const DetailPageLink = ({ link, userEmail }) => {
             <TextareaAutosize
               minRows={5}
               maxRows={5}
-              readOnly={true}
-              value={data?.seePageLink[0]?.pageDescription}
+              value={data?.seePageLink[0].pageDescription}
             ></TextareaAutosize>
           </Layout>
           <PageURLLayout>

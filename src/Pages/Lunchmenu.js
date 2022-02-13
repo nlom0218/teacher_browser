@@ -14,25 +14,31 @@ import { customMedia } from "../styles";
 import SeeAllergy from "../Components/Lunchmenu/Popup/SeeAllergy";
 import LunchmenuItem from "../Components/Lunchmenu/LunchmenuItem";
 import IcSchoolYellow from "../icons/School/IcSchoolYellow";
+import { useLocation } from "react-router";
+import Loading from "../Components/Shared/Loading";
 dotenv.config();
 
 const LunchmenuContainer = styled.div`
   min-height: 100%;
-  padding: 40px;
-  padding: 2.5rem;
+  padding: 20px;
+  padding: 1.25rem;
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-rows: auto 1fr;
   align-items: flex-start;
   row-gap: 20px;
   row-gap: 1.25rem;
+  margin-top: 30px;
+  margin-top: 1.875rem;
   ${customMedia.greaterThan("tablet")`
-    padding: 60px;
-    padding: 3.75rem;
+    padding: 40px;
+    padding: 2.5rem;
     grid-template-columns: 1fr auto;
     grid-template-rows: auto 1fr;
     row-gap: 40px;
     row-gap: 2.5rem;
+    margin-top: 0px;
+    margin-top: 0rem;
   `}
 `
 
@@ -94,7 +100,6 @@ const SchoolIcon = styled.div`
 `
 
 const LunchmenuInfo = styled.div`
-  height: 100%;
   grid-column: 1 / -1;
   display: grid;
   row-gap: 20px;
@@ -103,10 +108,13 @@ const LunchmenuInfo = styled.div`
     grid-template-columns: 1fr 1.5fr;
     grid-template-rows: auto 1fr;
     column-gap: 30px;
+    min-height: 100%;
+    max-height: 100%;
   `}
 `
 
 const SLunchmenus = styled.div`
+  position: relative;
   background-color: ${props => props.theme.bgColor};
   transition: background-color 1s ease;
   border-radius: 5px;
@@ -185,6 +193,8 @@ const LunchmenuOrigin = styled.div``
 const Lunchmenu = () => {
   // 반응형
   const media = useMedia()
+
+  const { state } = useLocation();
 
   // localStorage에서 값 불러오기
   const {
@@ -301,6 +311,8 @@ const Lunchmenu = () => {
     }
   }
 
+  const onClickSchoolIcon = () => inPopup("lmSearchSchool")
+
   //로그인 정보 있으면 반영
   useEffect(() => {
     getMenu()
@@ -308,12 +320,16 @@ const Lunchmenu = () => {
   //맨처음 제외하고 state값 변경 시 rerender
   // useDidMountEffect(getMenu, [date, schoolCode]);
 
-  // 팝업창으로 이동하기
-  const onClickSchoolIcon = () => inPopup("lmSearchSchool")
+  useEffect(() => {
+    if (state) {
+      const newDate = new window.Date(parseInt(state?.urlDate))
+      setDate(newDate)
+    }
+  }, [])
 
   //리턴
   return (
-    <BasicContainer menuItem={true}>
+    <BasicContainer menuItem={true} screen="small">
       <LunchmenuContainer isPopup={isPopup}>
         <Title>
           <SchoolName>{schoolName ? `${schoolName} 식단표` : "학교를 검색해주세요."}</SchoolName>
@@ -330,7 +346,7 @@ const Lunchmenu = () => {
         <LunchmenuInfo>
           <SLunchmenus>
             {menu === "loading" ?
-              <div className="lunch_loading lunch_subMsg">급식 정보 불러오는 중... 😁</div>
+              <Loading page="subPage" />
               :
               (menu ?
                 menu.map((item, index) => (
@@ -338,7 +354,7 @@ const Lunchmenu = () => {
                   </LunchmenuItem>
                 ))
                 :
-                <div className="lunch_errMsg lunch_subMsg">급식 정보가 없습니다 😢</div>
+                <div className="lunch_errMsg lunch_subMsg">급식 정보가 없습니다. 😢</div>
               )
             }
           </SLunchmenus>

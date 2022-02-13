@@ -111,7 +111,7 @@ const SearchSchool = ({ setSchoolCode, setSchoolName, setAreaCode }) => {
           })}
           type="text"
           autoComplete="off"
-          placeholder="학교이름을 입력해주세요. ex) 다목초 또는 다목초등학교"
+          placeholder="학교이름을 입력해주세요."
           autoFocus
         />
         <FcSearch onClick={handleSubmit(onSubmit)} />
