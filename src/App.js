@@ -86,6 +86,7 @@ function App() {
         <Route path={routes.draw} element={<Draw />} />
         <Route path={`${routes.draw}/:id`} element={<Draw />} />
         <Route path={routes.swap} element={<Swap />} />
+        <Route path={`${routes.swap}/:id`} element={<Swap />} />
         <Route path={routes.order} element={<Order />} />
         <Route path={`${routes.order}/:id`} element={<Order />} />
         <Route path={routes.lunchmenu} element={<Lunchmenu />} />

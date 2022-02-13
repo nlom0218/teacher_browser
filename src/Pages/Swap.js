@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import styled from 'styled-components';
 import { customMedia } from '../styles';
@@ -12,6 +12,8 @@ import { useQuery, useReactiveVar } from '@apollo/client';
 import { SEE_ONE_STUDENT_LIST_QUERY } from '../Graphql/StudentList/query';
 import { useParams } from 'react-router-dom';
 import StudentList from '../Components/Swap/Popup/StudentList';
+import StudentOrder from '../Components/Swap/StudentOrder';
+import Shuffling from "../Components/Swap/Popup/Shuffling";
 
 const Container = styled.div`
   display : grid;
@@ -109,6 +111,30 @@ const ListIcon = styled.div`
   }
 `
 
+const OptionContents = styled.div`
+  width: 100%;
+  display: grid;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  text-align: center;
+  ${customMedia.greaterThan("tablet")`
+   grid-template-columns : auto auto 1fr auto;
+   column-gap:20px;
+   column-gap:1.25rem;
+  `}
+`;
+
+const OptionBtn = styled.div`
+  background-color: ${props => props.theme.btnBgColor};
+  color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
+  padding: 10px 40px;
+  padding: 0.625rem 2.5rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+`
+
 const Swap = () => {
   const { id } = useParams()
   const isPopup = useReactiveVar(isPopupVar);
@@ -116,6 +142,8 @@ const Swap = () => {
   const [title, setTitle] = useState(undefined);
   const [studentListName, setStudentListName] = useState(null);
   const [IconsLIstisHover, setIconListIsHover] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState([]);
+  const [isShuffle, setIsShuffle] = useState("init");
 
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: {
@@ -142,9 +170,21 @@ const Swap = () => {
   const onBlurForm = () => {
     const title = getValues("title")
     onSubmit({ title })
-  }
+  };
+
+  const onClickShuffleBtn = (type) => {
+    setIsShuffle(type);
+  };
 
   const onClickListIcon = () => inPopup("seeStudentList")
+
+  useEffect(() => {
+    if (data) {
+      setStudentListName(data?.seeStudentList[0]?.listName);
+      //휴지통에 있는 학생은 filter로 거르기 
+      setSelectedStudent(data?.seeStudentList[0]?.students.filter(item => !item.trash).map((item) => item.studentName));
+    }
+  }, [data]);
 
   return (<BasicContainer menuItem={true}>
     <Container>
@@ -177,9 +217,36 @@ const Swap = () => {
             </div>
         </ListIcon>
       </TopContents>
+      {id && (
+        <React.Fragment>
+          <OptionContents>
+            <OptionBtn> 자리 설정 </OptionBtn> 
+              {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
+
+              {isShuffle === "ing" && (
+            <OptionBtn onClick={() => onClickShuffleBtn("finish")} isShuffling={true}>
+                섞는 중
+            </OptionBtn>
+              )}
+              {isShuffle === "finish" && (
+            <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
+                 다시 섞기
+            </OptionBtn>
+              )}
+          </OptionContents>
+      <StudentOrder 
+      // fontSizeOne={fontSizeOne} 
+      // fontSizeAll={fontSizeAll} 
+      selectedStudent={selectedStudent} 
+      setSelectedStudent={setSelectedStudent} 
+      isShuffle={isShuffle}
+      />
+      </React.Fragment>
+    )}
     </Container>
     {isPopup === "seeStudentList" && <StudentList />}
+    {isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
   </BasicContainer>);
-}
+};
 
-export default Swap;
+export default Swap;  
