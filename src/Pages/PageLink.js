@@ -14,7 +14,7 @@ import DetailPageLink from "../Components/PageLink/Popup/DetailPageLink";
 //추천사이트 목록 정리하기
 //즐겨찾기 없을 경우 설명하는 페이지 추가
 //반응형 화면 구성
-// 즐겨찾기 페이지 없을 경우 문구가 줄이 나눠서 나옴.
+// 즐겨찾기 삭제 시 바로 안 됨
 
 const Container = styled.div``;
 

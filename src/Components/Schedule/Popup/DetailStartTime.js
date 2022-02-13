@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { outPopup } from "../../../apollo";
@@ -6,20 +6,6 @@ import {
   DetailStudentLayout,
   DetailTitle,
 } from "../../List/styled/DetailStudent";
-import PopupContainer from "../../Shared/PopupContainer";
-
-const PopupTitle = styled.div``;
-
-const Container = styled.div`
-  min-height: 100%;
-  max-height: 100%;
-  display: grid;
-  padding: 20px 0px;
-  padding: 1.25rem 0rem;
-  row-gap: 20px;
-  row-gap: 1.25rem;
-  grid-template-rows: auto 1fr auto;
-`;
 
 const Form = styled.form`
   display: grid;
@@ -52,11 +38,21 @@ const AddTagBtn = styled.div`
   border-radius: 0.3125rem;
   cursor: pointer;
 `;
-const DetailStartTime = () => {
+const DetailStartTime = (timeSet, setTimeSet) => {
+  const basic = {
+    breakminutes: "0",
+    breaktime: "0",
+    classtime: "40",
+    hour: "9",
+    lunchhour: "4",
+    lunchminutes: "50",
+    minutes: "10",
+    resttime: "10",
+  };
+  const [time, setTime] = useState(basic);
   const { register, handleSubmit, getValues } = useForm({
     mode: "onChange",
   });
-
   const onSubmit = (data) => {
     const {
       hour,
@@ -68,8 +64,9 @@ const DetailStartTime = () => {
       breaktime,
       breakminutes,
     } = data;
+    setTime(data);
   };
-
+  // console.log(time);
   const onBlurTimeSet = () => {
     const hour = getValues("hour");
     const minutes = getValues("minutes");
@@ -93,15 +90,11 @@ const DetailStartTime = () => {
 
   const onCompleted = () => {
     outPopup();
+    setTime(time);
   };
 
   return (
     <DetailStudentLayout>
-      {/* <PopupContainer maxHeight={true}>
-      <Container>
-        <PopupTitle>수업 시작</PopupTitle>
-      </Container>     </PopupContainer>
-*/}
       <DetailTitle>수업 시작</DetailTitle>
       <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurTimeSet}>
         <Input
@@ -111,7 +104,7 @@ const DetailStartTime = () => {
           type="number"
           min="1"
           max="24"
-          defaultValue={9}
+          defaultValue={time.hour}
         />{" "}
         <Font>시 </Font>
         <Input
