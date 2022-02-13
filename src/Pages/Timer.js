@@ -73,26 +73,21 @@ const Timer = () => {
   let [millisecondsLeft, setMillisecondsLeft] = useState(0);
   let [secondsLeft, setSecondsLeft] = useState(10);
   let [minutesLeft, setMinutesLeft] = useState(1);
-  let newMillisecondsLeft = millisecondsLeft;
+  let newMillisecondsLeft = 100;
   let newSecondsLeft = secondsLeft;
   let newMinutesLeft = minutesLeft;
 
   useEffect(() => {
     if (isCountdownTimer && isRunning) {
       const id = setInterval(() => {
-        if (millisecondsLeft > 0) {
-          newMillisecondsLeft = millisecondsLeft--;
-          setMillisecondsLeft(millisecondsLeft => newMillisecondsLeft);
-        } else {
-          setMillisecondsLeft(millisecondsLeft => 100);
+        if (millisecondsLeft === 0) {
+          newMillisecondsLeft = 99;
+          setMillisecondsLeft(newMillisecondsLeft);
+
           newSecondsLeft = secondsLeft--;
-          setMillisecondsLeft(millisecondsLeft => newSecondsLeft);
-          setSeconds(secondsLeft => newSecondsLeft);
-        }
-        if (secondsLeft <= 0) {
-          newMinutesLeft = minutesLeft--;
-          setSecondsLeft(() => newMinutesLeft);
-          setMinutesLeft(minutesLeft => newMinutesLeft);
+          setSecondsLeft(newSecondsLeft);
+        } else {
+          setMillisecondsLeft(millisecondsLeft--);
         }
       }, 10);
       setIntervalId(id);
