@@ -1,12 +1,8 @@
-import { useQuery } from '@apollo/client';
 import { format } from 'date-fns';
-import React, { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import React from 'react';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-import { SEE_SCHEDULE_QUERY } from '../../Graphql/Schedule/query';
-import { SEE_TO_DO_LIST_QUERY } from '../../Graphql/ToDoList/query';
 import { customMedia } from '../../styles';
-import Loading from '../Shared/Loading';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
 import routes from '../../routes';
 import ScheduleSection from './ScheduleSection';
@@ -17,6 +13,7 @@ import AttendSection from './AttendSection';
 import { processSetDay } from '../../shared';
 import { BiExitFullscreen, BiFullscreen } from 'react-icons/bi';
 import useMedia from '../../Hooks/useMedia';
+import { BsCalendarDate } from 'react-icons/bs';
 
 const Container = styled.div`
   display: grid;
@@ -30,7 +27,7 @@ const Container = styled.div`
 
 const TopContents = styled.div`
   display: grid;
-  grid-template-columns: 1fr auto auto auto auto;
+  grid-template-columns: 1fr auto auto auto auto auto;
   column-gap: 20px;
   column-gap: 1.25rem;
 `
@@ -125,6 +122,10 @@ const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery, m
     }
   }
 
+  const onClickCalendar = () => {
+    navigate(routes.calendar)
+  }
+
   return (<Container>
     <TopContents>
       <Title>{format(new Date(parseInt(urlDate)), "yyyy년 MM월 dd일")} {processSetDay(new Date(parseInt(urlDate)))}요일</Title>
@@ -132,6 +133,7 @@ const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery, m
       <Btn className="calendar_btn" onClick={onClickBtnMinus}><IoIosArrowBack /></Btn>
       <Btn className="calendar_btn" onClick={onClickBtn}><IoIosArrowForward /></Btn>
       {media === "Desktop" && <Btn className="calendar_btn" onClick={onClickFull}>{screen === "small" ? <BiFullscreen /> : <BiExitFullscreen />}</Btn>}
+      <Btn className="calendar_btn" onClick={onClickCalendar}><BsCalendarDate /></Btn>
     </TopContents>
     <BottomContainer>
       <LeftSection>
