@@ -38,6 +38,20 @@ const SLunchmenus = styled.div`
   }
 `
 
+const SeeMoreBtn = styled.div`
+  font-size: 1em;
+  font-size: 1rem;
+  padding: 5px 10px;
+  padding: 0.3125rem 0.625rem;
+  background-color: ${props => props.theme.btnBgColor};
+  color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
+  border-radius: 20px;
+  border-radius: 1.25rem;
+  font-weight: 400;
+  cursor: pointer;
+`
+
 const NoSchoolContainer = styled.div`
   padding: 20px;
   padding: 1.25rem;
@@ -54,7 +68,8 @@ const NoSchoolText = styled.div`
 `
 
 const SchoolLinkBtn = styled.div`
-  padding: 10px;
+  padding: 10px 40px;
+  padding: 0.625rem 2.5rem;
   background-color: ${props => props.theme.btnBgColor};
   color: ${props => props.theme.bgColor};
   transition: background-color 1s ease, color 1s ease;
@@ -71,6 +86,12 @@ const LunchmenuSection = ({ urlDate, me }) => {
 
   const onClickAccountBtn = () => {
     navigate(routes.editAccount)
+  }
+
+  const onClickMoreBtn = () => {
+    navigate(routes.lunchmenu, {
+      state: { urlDate }
+    })
   }
 
   const getMenu = () => {
@@ -115,7 +136,7 @@ const LunchmenuSection = ({ urlDate, me }) => {
     <SectionTitle>
       <div><IcLunchmenuClick /></div>
       <div>식단표</div>
-      {/* <PlusScheduleBtn onClick={onClickPlusBtn}><AiOutlinePlus /></PlusScheduleBtn> */}
+      <SeeMoreBtn onClick={onClickMoreBtn}>더보기</SeeMoreBtn>
     </SectionTitle>
     <SectionContents>
       {!me?.schoolCode ?

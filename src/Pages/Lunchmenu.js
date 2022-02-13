@@ -14,6 +14,8 @@ import { customMedia } from "../styles";
 import SeeAllergy from "../Components/Lunchmenu/Popup/SeeAllergy";
 import LunchmenuItem from "../Components/Lunchmenu/LunchmenuItem";
 import IcSchoolYellow from "../icons/School/IcSchoolYellow";
+import { useLocation } from "react-router";
+import Loading from "../Components/Shared/Loading";
 dotenv.config();
 
 const LunchmenuContainer = styled.div`
@@ -112,6 +114,7 @@ const LunchmenuInfo = styled.div`
 `
 
 const SLunchmenus = styled.div`
+  position: relative;
   background-color: ${props => props.theme.bgColor};
   transition: background-color 1s ease;
   border-radius: 5px;
@@ -190,6 +193,8 @@ const LunchmenuOrigin = styled.div``
 const Lunchmenu = () => {
   // 반응형
   const media = useMedia()
+
+  const { state } = useLocation();
 
   // localStorage에서 값 불러오기
   const {
@@ -306,6 +311,8 @@ const Lunchmenu = () => {
     }
   }
 
+  const onClickSchoolIcon = () => inPopup("lmSearchSchool")
+
   //로그인 정보 있으면 반영
   useEffect(() => {
     getMenu()
@@ -313,8 +320,12 @@ const Lunchmenu = () => {
   //맨처음 제외하고 state값 변경 시 rerender
   // useDidMountEffect(getMenu, [date, schoolCode]);
 
-  // 팝업창으로 이동하기
-  const onClickSchoolIcon = () => inPopup("lmSearchSchool")
+  useEffect(() => {
+    if (state) {
+      const newDate = new window.Date(parseInt(state?.urlDate))
+      setDate(newDate)
+    }
+  }, [])
 
   //리턴
   return (
@@ -335,7 +346,7 @@ const Lunchmenu = () => {
         <LunchmenuInfo>
           <SLunchmenus>
             {menu === "loading" ?
-              <div className="lunch_loading lunch_subMsg">급식 정보 불러오는 중... 😁</div>
+              <Loading page="subPage" />
               :
               (menu ?
                 menu.map((item, index) => (
