@@ -7,25 +7,11 @@ import { SEE_SCHEDULE_QUERY } from '../../Graphql/Schedule/query';
 import IcCalender from '../../icons/Calender/IcCalender';
 import Loading from '../Shared/Loading';
 import ScheduleSectionItem from './ScheduleSectionItem';
-
-const SectionContainer = styled.div`
-  display: grid;
-  grid-template-rows: auto 1fr;
-  row-gap: 10px;
-  row-gap: 0.625rem;
-`
-
-const Title = styled.div`
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  column-gap: 10px;
-  column-gap: 0.625rem;
-  row-gap: 20px;
-  row-gap: 1.25rem;
-  align-items: center;
-  font-size: 1.25em;
-  font-size: 1.25rem;
-`
+import SectionContainer from './styled/SectionContainer';
+import SectionContents from './styled/SectionContents';
+import SectionList from './styled/SectionList';
+import SectionNoDateText from './styled/SectionNoDateText';
+import SectionTitle from './styled/SectionTitle';
 
 const PlusScheduleBtn = styled.div`
   padding: 5px;
@@ -40,38 +26,6 @@ const PlusScheduleBtn = styled.div`
     font-size: 1.25rem;
     display: flex;
   }
-`
-
-const TitleIcon = styled.div`
-  svg {
-    display: flex;
-  }
-`
-
-const SectionContents = styled.div`
-  background-color : ${props => props.theme.cardBg};
-  transition: background-color 1s ease;
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  position: relative;
-`
-
-const SectionList = styled.div`
-  display: grid;
-  row-gap: 10px;
-  row-gap: 0.625rem;
-  padding: 20px;
-  padding: 1.25rem;
-  font-size: 1.2em;
-  font-size: 1.2rem;
-`
-
-const NoDateText = styled.div`
-  justify-self: center;
-  color: ${props => props.theme.redColor};
-  transition: color 1s ease;
-  font-size: 1em;
-  font-size: 1rem;
 `
 
 const ScheduleSection = ({ urlDate, refetchQuery }) => {
@@ -90,16 +44,16 @@ const ScheduleSection = ({ urlDate, refetchQuery }) => {
   }, [refetchQuery])
 
   return (<SectionContainer>
-    <Title>
-      <TitleIcon><IcCalender /></TitleIcon>
+    <SectionTitle>
+      <div><IcCalender /></div>
       <div>일정</div>
       <PlusScheduleBtn onClick={onClickPlusBtn}><AiOutlinePlus /></PlusScheduleBtn>
-    </Title>
+    </SectionTitle>
     <SectionContents>
       {loading ? <Loading page="subPage" />
         :
         <SectionList>
-          {data?.seeSchedule.length === 0 ? <NoDateText>생성된 일정이 없습니다. 😁</NoDateText>
+          {data?.seeSchedule.length === 0 ? <SectionNoDateText>생성된 일정이 없습니다. 😁</SectionNoDateText>
             :
             data?.seeSchedule?.map((item, index) => {
               return <ScheduleSectionItem key={index} item={item} />

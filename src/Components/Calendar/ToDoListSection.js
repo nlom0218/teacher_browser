@@ -3,8 +3,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { SEE_TO_DO_LIST_QUERY } from '../../Graphql/ToDoList/query';
 import IcToDoList from '../../icons/ToDoList/IcToDoList';
-
-const SectionContainer = styled.div``
+import SectionContainer from './styled/SectionContainer';
+import SectionTitle from './styled/SectionTitle';
 
 const Title = styled.div`
   display: grid;
@@ -30,10 +30,10 @@ const ToDoListSection = ({ urlDate }) => {
     }
   })
   return (<SectionContainer>
-    <Title>
+    <SectionTitle>
       <TitleIcon><IcToDoList /></TitleIcon>
       <div>할 일</div>
-    </Title>
+    </SectionTitle>
   </SectionContainer>);
 }
 
