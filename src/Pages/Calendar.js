@@ -154,7 +154,7 @@ const Calendar = () => {
 
   const me = useMe()
 
-  const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState(new Date(localStorage.getItem("calendarDate")))
   const [weekLength, setWeekLength] = useState(1)
   const [dateArr, setDateArr] = useState(undefined)
   const [schedule, setSchedule] = useState(undefined)
@@ -172,10 +172,12 @@ const Calendar = () => {
 
   const onClickBtn = () => {
     const newDate = addMonths(date, 1)
+    localStorage.setItem("calendarDate", newDate)
     setDate(newDate)
   }
   const onClickBtnMinus = () => {
     const newDate = addMonths(date, -1)
+    localStorage.setItem("calendarDate", newDate)
     setDate(newDate)
   }
 

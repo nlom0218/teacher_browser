@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { moveWelcome ,movePageLink} from '../../apollo';
+import { moveWelcome, movePageLink } from '../../apollo';
 import IcBookMark from '../../icons/Bookmark/IcBookMark';
 import IcBookMarkClick from '../../icons/Bookmark/IcBookMarkClick';
 import IcCalender from '../../icons/Calender/IcCalender';
@@ -63,13 +63,16 @@ export const HeaderBookMark = () => {
 };
 
 export const HedaerCalender = () => {
-
   const [isHover, setIsHover] = useState(false);
+  const onClickCalendar = () => {
+    localStorage.setItem("calendarDate", new Date())
+  }
   return (
     <Link
       to={routes.calendar}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
+      onClick={onClickCalendar}
     >
       {isHover ? <IcCalenderClick /> : <IcCalender />}
     </Link>
