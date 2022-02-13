@@ -92,7 +92,7 @@ const Schedule = () => {
   };
   console.log(TimeSetCal);
   return (
-    <BasicContainer menuItem={true}>
+    <BasicContainer menuItem={true} screen="small">
       <Container>
         <TimeTableTitle title={title} setTitle={setTitle} />
         <OptionContents>
@@ -128,7 +128,7 @@ const Schedule = () => {
           printRef={componentRef}
           title={title}
           viewTime={viewTime}
-          // timeResult={timeResult}
+        // timeResult={timeResult}
         />
       )}
     </BasicContainer>
