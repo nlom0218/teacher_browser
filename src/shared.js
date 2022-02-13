@@ -1,4 +1,4 @@
-import { IcStudent1, IcStudent10, IcStudent11, IcStudent12, IcStudent13, IcStudent14, IcStudent15, IcStudent16, IcStudent17, IcStudent18, IcStudent19, IcStudent2, IcStudent20, IcStudent21, IcStudent22, IcStudent23, IcStudent24, IcStudent26, IcStudent27, IcStudent28, IcStudent29, IcStudent3, IcStudent30, IcStudent31, IcStudent32, IcStudent33, IcStudent34, IcStudent35, IcStudent38, IcStudent39, IcStudent4, IcStudent40, IcStudent41, IcStudent42, IcStudent43, IcStudent44, IcStudent46, IcStudent47, IcStudent48, IcStudent49, IcStudent5, IcStudent50, IcStudent6, IcStudent7, IcStudent8, IcStudent9 } from './icons/Students/IcStudents';
+import { IcStudent1, IcStudent10, IcStudent11, IcStudent12, IcStudent13, IcStudent14, IcStudent15, IcStudent16, IcStudent17, IcStudent18, IcStudent19, IcStudent2, IcStudent20, IcStudent21, IcStudent22, IcStudent23, IcStudent24, IcStudent25, IcStudent26, IcStudent27, IcStudent28, IcStudent29, IcStudent3, IcStudent30, IcStudent31, IcStudent32, IcStudent33, IcStudent34, IcStudent35, IcStudent36, IcStudent37, IcStudent38, IcStudent39, IcStudent4, IcStudent40, IcStudent41, IcStudent42, IcStudent43, IcStudent44, IcStudent45, IcStudent46, IcStudent47, IcStudent48, IcStudent49, IcStudent5, IcStudent50, IcStudent6, IcStudent7, IcStudent8, IcStudent9 } from './icons/Students/IcStudents';
 
 export const processStudentIcon = (number) => {
   if (number === 1) {
@@ -49,6 +49,8 @@ export const processStudentIcon = (number) => {
     return <IcStudent23 />
   } else if (number === 24) {
     return <IcStudent24 />
+  } else if (number === 25) {
+    return <IcStudent25 />
   } else if (number === 26) {
     return <IcStudent26 />
   } else if (number === 27) {
@@ -69,6 +71,10 @@ export const processStudentIcon = (number) => {
     return <IcStudent34 />
   } else if (number === 35) {
     return <IcStudent35 />
+  } else if (number === 36) {
+    return <IcStudent36 />
+  } else if (number === 37) {
+    return <IcStudent37 />
   } else if (number === 38) {
     return <IcStudent38 />
   } else if (number === 39) {
@@ -83,6 +89,8 @@ export const processStudentIcon = (number) => {
     return <IcStudent43 />
   } else if (number === 44) {
     return <IcStudent44 />
+  } else if (number === 45) {
+    return <IcStudent45 />
   } else if (number === 46) {
     return <IcStudent46 />
   } else if (number === 47) {
