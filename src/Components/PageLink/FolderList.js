@@ -40,7 +40,8 @@ const Container = styled.div`
 `;
 const SFolderList = styled.div`
   display: grid;
-  grid-template-rows: repeat(17, auto) 1fr;
+  grid-template-columns: auto;
+  /* grid-template-rows: repeat(19, auto) 1fr; //folder list 수 변경되면 같이 수정 꼭! */
   row-gap: 10px;
   row-gap: 0.625rem;
   min-height: 100%;
@@ -103,7 +104,9 @@ const FolderList = ({ right }) => {
     "실과",
     "창체",
     "안전",
+    "기초학력",
     "다문화",
+    "출판사",
   ];
 
   const processSelected = (item) => {

@@ -163,6 +163,8 @@ const PageLinkDetail = () => {
     "창체",
     "다문화",
     "안전",
+    "기초학력",
+    "출판사",
   ];
   const pageType = ["블로그", "유튜브"];
   const [submitFolder, setSubmitFolder] = useState([]);
