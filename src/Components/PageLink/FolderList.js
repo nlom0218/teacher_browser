@@ -107,6 +107,8 @@ const FolderList = ({ right }) => {
     "기초학력",
     "다문화",
     "출판사",
+    "학년밴드",
+    "교권/복지",
   ];
 
   const processSelected = (item) => {

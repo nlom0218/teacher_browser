@@ -14,7 +14,7 @@ import { useRef } from "react";
 import TimeTableTitle from "../Components/Schedule/TimeTableTitle";
 import ClassTimeSet from "../Components/Schedule/Popup/ClassTimeSet";
 import { timeSetData } from "../Components/Schedule/ScheduleData";
-import { TimeSetCal } from "../Components/Schedule/TimeSetCal";
+import { timeSetCal } from "../Components/Schedule/TimeSetCal";
 
 // const basicTime = [];
 const basic = timeSetData;
@@ -90,7 +90,6 @@ const Schedule = () => {
   const onClickTimeviewBtn = () => {
     setViewTime(!viewTime);
   };
-  console.log(TimeSetCal);
   return (
     <BasicContainer menuItem={true} screen="small">
       <Container>
@@ -111,7 +110,7 @@ const Schedule = () => {
           )}
         </OptionContents>
         <TimeTableGrid
-          // timeResult={timeResult}
+          timeResult={timeSetCal}
           fontSize={fontSize}
           setFontSize={setFontSize}
           viewTime={viewTime}
@@ -128,7 +127,7 @@ const Schedule = () => {
           printRef={componentRef}
           title={title}
           viewTime={viewTime}
-        // timeResult={timeResult}
+          timeResult={timeSetCal}
         />
       )}
     </BasicContainer>

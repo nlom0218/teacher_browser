@@ -66,7 +66,6 @@ const DetailStartTime = (timeSet, setTimeSet) => {
     } = data;
     setTime(data);
   };
-  // console.log(time);
   const onBlurTimeSet = () => {
     const hour = getValues("hour");
     const minutes = getValues("minutes");
