@@ -33,32 +33,180 @@ export const class1 = [
   },
 ];
 
-const classMon2 = ["미술", "", ["운동장", "체육관"]];
-const classTue2 = ["체육", "#FFFF00", []];
-const classWed2 = ["실과", "#98FB98", ["운동장", "체육관"]];
-const classThu2 = ["영어", "", []];
-const classFri2 = ["창체", "", []];
+export const class2 = [
+  {
+    time: "M2",
+    subjectname: "미술",
+    color: "#FFFF00",
+    tag: ["운동장", "체육관"],
+  },
+  {
+    time: "T2",
+    subjectname: "실과",
+    color: "#87CDDB",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+  {
+    time: "W2",
+    subjectname: "체육",
+    color: "#FFB6C1",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+  {
+    time: "TH2",
+    subjectname: "영어",
+    color: "#98FB98",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+  {
+    time: "F2",
+    subjectname: "창체",
+    color: "#DA70D6",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+];
 
-const classMon3 = ["국어", "#DA70D6", ["운동장", "체육관"]];
-const classTue3 = ["수학", "", []];
-const classWed3 = ["사회", "", []];
-const classThu3 = ["과학", "", ["운동장", "체육관"]];
-const classFri3 = ["음악", "", ["운동장", "체육관"]];
+export const class3 = [
+  {
+    time: "M3",
+    subjectname: "음악",
+    color: "",
+    tag: ["운동장", "체육관"],
+  },
+  {
+    time: "T3",
+    subjectname: "과학",
+    color: "#87CDDB",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+  {
+    time: "W3",
+    subjectname: "사회",
+    color: "#FFB6C1",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+  {
+    time: "TH3",
+    subjectname: "수학",
+    color: "",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+  {
+    time: "F3",
+    subjectname: "국어",
+    color: "#FFB6C1",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+];
 
-const classMon4 = ["미술", "#F4A460", []];
-const classTue4 = ["체육", "", ["운동장", "체육관"]];
-const classWed4 = ["실과", "#98FB98", []];
-const classThu4 = ["영어", "", ["운동장", "체육관"]];
-const classFri4 = ["창체", "#FFFF00", ["운동장", "체육관"]];
+export const class4 = [
+  {
+    time: "M4",
+    subjectname: "미술",
+    color: "#FFFF00",
+    tag: ["운동장", "체육관"],
+  },
+  {
+    time: "T4",
+    subjectname: "실과",
+    color: "#87CDDB",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+  {
+    time: "W4",
+    subjectname: "체육",
+    color: "#FFB6C1",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+  {
+    time: "TH4",
+    subjectname: "영어",
+    color: "#98FB98",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+  {
+    time: "F4",
+    subjectname: "창체",
+    color: "#DA70D6",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+];
 
-const classMon5 = ["국어", "", ["운동장", "체육관"]];
-const classTue5 = ["수학", "", []];
-const classWed5 = ["사회", "", ["운동장", "체육관"]];
-const classThu5 = ["과학", "#DA70D6", []];
-const classFri5 = ["음악", "", ["운동장", "체육관"]];
+export const class5 = [
+  {
+    time: "M5",
+    subjectname: "음악",
+    color: "",
+    tag: ["운동장", "체육관"],
+  },
+  {
+    time: "T5",
+    subjectname: "과학",
+    color: "#87CDDB",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+  {
+    time: "W5",
+    subjectname: "사회",
+    color: "#FFB6C1",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+  {
+    time: "TH5",
+    subjectname: "수학",
+    color: "",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+  {
+    time: "F5",
+    subjectname: "국어",
+    color: "#FFB6C1",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+];
 
-const classMon6 = ["미술", "", ["운동장", "체육관"]];
-const classTue6 = ["체육", "", []];
-const classWed6 = ["실과", "#98FB98", []];
-const classThu6 = ["영어", "", ["운동장", "체육관"]];
-const classFri6 = ["창체", "#87CDDB", ["운동장", "체육관"]];
+export const class6 = [
+  {
+    time: "M6",
+    subjectname: "미술",
+    color: "#FFFF00",
+    tag: ["운동장", "체육관"],
+  },
+  {
+    time: "T6",
+    subjectname: "실과",
+    color: "#87CDDB",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+  {
+    time: "W6",
+    subjectname: "체육",
+    color: "#FFB6C1",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+  {
+    time: "TH6",
+    subjectname: "영어",
+    color: "#98FB98",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+  {
+    time: "F6",
+    subjectname: "창체",
+    color: "#DA70D6",
+    tag: ["운동장", "체육관", "배드민턴"],
+  },
+];
+
+export const timeSetData = [
+  {
+    breakminutes: "0",
+    breaktime: "0",
+    classtime: "40",
+    hour: "9",
+    lunchhour: "4",
+    lunchminutes: "50",
+    minutes: "10",
+    resttime: "10",
+  },
+];

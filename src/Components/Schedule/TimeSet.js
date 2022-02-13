@@ -1,18 +1,11 @@
 import React from "react";
+import { timeSetData } from "./ScheduleData";
 
 export const TimeSet = () => {
-  const basicTime = [];
-  const basic = {
-    breakminutes: "0",
-    breaktime: "0",
-    classtime: "40",
-    hour: "9",
-    lunchhour: "4",
-    lunchminutes: "50",
-    minutes: "10",
-    resttime: "10",
-  };
+  const basicTime = [...timeSetData];
+
   const timeResult = [];
+
   function timePush() {
     timeResult.push(tDate.toTimeString().slice(0, 5));
   }

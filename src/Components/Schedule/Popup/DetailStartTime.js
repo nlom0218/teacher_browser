@@ -6,20 +6,6 @@ import {
   DetailStudentLayout,
   DetailTitle,
 } from "../../List/styled/DetailStudent";
-import PopupContainer from "../../Shared/PopupContainer";
-
-const PopupTitle = styled.div``;
-
-const Container = styled.div`
-  min-height: 100%;
-  max-height: 100%;
-  display: grid;
-  padding: 20px 0px;
-  padding: 1.25rem 0rem;
-  row-gap: 20px;
-  row-gap: 1.25rem;
-  grid-template-rows: auto 1fr auto;
-`;
 
 const Form = styled.form`
   display: grid;
@@ -80,7 +66,7 @@ const DetailStartTime = (timeSet, setTimeSet) => {
     } = data;
     setTime(data);
   };
-  // console.log(time.hour);
+  // console.log(time);
   const onBlurTimeSet = () => {
     const hour = getValues("hour");
     const minutes = getValues("minutes");
@@ -104,6 +90,7 @@ const DetailStartTime = (timeSet, setTimeSet) => {
 
   const onCompleted = () => {
     outPopup();
+    setTime(time);
   };
 
   return (

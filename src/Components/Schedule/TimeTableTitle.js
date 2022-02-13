@@ -4,7 +4,7 @@ import { inputLine } from "../../Animations/InputLine";
 import { BtnFadeIn } from "../../Animations/Fade";
 import useMedia from "../../Hooks/useMedia";
 import { useForm } from "react-hook-form";
-import { processSetDate, processSetDay } from "../../shared";
+import { processSetDay } from "../../shared";
 import PrintSchedule from "../../Components/Schedule/PrintSchedule";
 
 const TopContents = styled.div`
@@ -70,7 +70,11 @@ const SubmitInput = styled.input`
 const TimeTableTitle = ({ title, setTitle }) => {
   const media = useMedia();
   const date = new Date();
-
+  const processSetDate = () => {
+    return `${date.getFullYear()}년 ${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, 0)}월 ${date.getDate().toString().padStart(2, 0)}일`;
+  };
   const [isEdit, setIsEdit] = useState(false);
 
   const { register, handleSubmit, getValues } = useForm({

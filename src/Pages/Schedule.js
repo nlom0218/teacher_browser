@@ -13,19 +13,11 @@ import PrintScheduleContents from "../Components/Schedule/Popup/PrintScheduleCon
 import { useRef } from "react";
 import TimeTableTitle from "../Components/Schedule/TimeTableTitle";
 import ClassTimeSet from "../Components/Schedule/Popup/ClassTimeSet";
+import { timeSetData } from "../Components/Schedule/ScheduleData";
 
 //시간 설정 계산하기
 // const basicTime = [];
-const basic = {
-  breakminutes: "0",
-  breaktime: "0",
-  classtime: "40",
-  hour: "9",
-  lunchhour: "4",
-  lunchminutes: "50",
-  minutes: "10",
-  resttime: "10",
-};
+const basic = timeSetData;
 
 //콘솔창에 예전에는 값이 나왔는데 왜 안 나오지?
 //수업정보를 어떻게 받아서 전달????
@@ -99,12 +91,11 @@ const Schedule = () => {
   const onClickTimeviewBtn = () => {
     setViewTime(!viewTime);
   };
-
+  // console.log(timeSet);
   return (
     <BasicContainer menuItem={true}>
       <Container>
         <TimeTableTitle title={title} setTitle={setTitle} />
-
         <OptionContents>
           <OptionBtn onClick={onClickTimeSetBtn}> 시간설정 </OptionBtn>
           <TypeBtn onClick={onClickTimeviewBtn}>
