@@ -24,6 +24,8 @@ const Schedule = styled.div`
   margin: 0.3125rem;
   border-radius: 5px;
   border-radius: 0.3125rem;
+  font-size: 1em;
+  font-size: 1rem;
   cursor: pointer;
   :hover {
     background-color: ${props => props.theme.contentBgColor};

@@ -31,7 +31,7 @@ const SubmitBtn = styled.input`
 
 const BottomBtn = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: ${props => props.type === "complete" ? "1fr" : "1fr 1fr"};
   column-gap: 20px;
   column-gap: 1.25rem;
   .bottom_btn {
@@ -54,7 +54,7 @@ const CompleteBtn = styled.div`
   color : ${props => props.theme.bgColor};
 `
 
-const DetailToDo = ({ setMsg, setErrMsg, userEmail }) => {
+const DetailToDo = ({ setMsg, setErrMsg, userEmail, setRefetchQuery }) => {
   const id = localStorage.getItem("detailToDo")
 
   const [startDate, setStartDate] = useState(null)
@@ -68,7 +68,6 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail }) => {
 
   const { data, loading, refetch } = useQuery(SEE_TO_DO_LIST_QUERY, {
     variables: {
-      isComplete: false,
       id
     }
   })
@@ -77,6 +76,9 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail }) => {
     const { editToDoList: { ok } } = result
     if (ok) {
       setMsg("할 일 정보가 수정되었습니다. 😄")
+      if (setRefetchQuery) {
+        setRefetchQuery(prev => prev + 1)
+      }
     }
   }
 
@@ -85,6 +87,9 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail }) => {
     if (ok) {
       outPopup()
       setMsg("할 일이 삭제되었습니다. 😄")
+      if (setRefetchQuery) {
+        setRefetchQuery(prev => prev + 1)
+      }
     }
   }
 
@@ -93,22 +98,34 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail }) => {
     if (ok) {
       outPopup()
       setMsg("할 일이 완료되었습니다. 😄")
+      if (setRefetchQuery) {
+        setRefetchQuery(prev => prev + 1)
+      }
     }
   }
 
   const [editToDoList, { loading: editLoading }] = useMutation(EDIT_TO_DO_LIST_MUTATION, {
     onCompleted,
-    refetchQueries: [{ query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: false } }]
+    refetchQueries: [
+      { query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: false } },
+      { query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: true } },
+    ]
   })
 
   const [deleteToDoList, { loading: delLoading }] = useMutation(DELETE_TO_DO_LIST_MUTATION, {
     onCompleted: delOnCompleted,
-    refetchQueries: [{ query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: false } }]
+    refetchQueries: [
+      { query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: false } },
+      { query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: true } },
+    ]
   })
 
   const [completeToDoList, { loading: completeLoading }] = useMutation(COMPLETE_TO_DO_LIST_MUTATION, {
     onCompleted: completeOnCompleted,
-    refetchQueries: [{ query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: false } }]
+    refetchQueries: [
+      { query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: false } },
+      { query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: true } },
+    ]
   })
 
   useEffect(() => {
@@ -126,6 +143,9 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail }) => {
         setType("not")
       } else {
         setType("ing")
+      }
+      if (data?.seeToDoList[0].isComplete) {
+        setType("complete")
       }
     }
   }, [data])
@@ -190,6 +210,7 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail }) => {
         {type === "not" && "미완료된 할 일"}
         {type === "inComing" && "다가오는 할 일"}
         {type === "ing" && "진행중인 할 일"}
+        {type === "complete" && "완료된 할 일"}
       </Type>
       <PopupInputLayout>
         <PopupInput
@@ -214,8 +235,8 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail }) => {
         type="submit"
         value="수정하기"
       />
-      <BottomBtn>
-        <CompleteBtn onClick={onClickCompleteBtn} className="bottom_btn">완료하기</CompleteBtn>
+      <BottomBtn type={type}>
+        {type !== "complete" && <CompleteBtn onClick={onClickCompleteBtn} className="bottom_btn">완료하기</CompleteBtn>}
         <DelBtn onClick={onClickDelBtn} className="bottom_btn">삭제하기</DelBtn>
       </BottomBtn>
     </PopupForm>

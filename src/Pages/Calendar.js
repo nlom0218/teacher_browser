@@ -18,6 +18,7 @@ import { customMedia } from '../styles';
 import CalendarDetail from '../Components/Calendar/CalendarDetail';
 import { SEE_SCHEDULE_QUERY } from '../Graphql/Schedule/query';
 import Loading from '../Components/Shared/Loading';
+import DetailToDo from '../Components/TodoList/Popup/DetailToDo';
 
 const Container = styled.div`
   display: grid;
@@ -276,6 +277,7 @@ const Calendar = () => {
     }
     {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} setRefetchQuery={setRefetchQuery} />}
     {isPopup === "editSchedule" && <EditSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} setRefetchQuery={setRefetchQuery} />}
+    {isPopup === "detailToDo" && <DetailToDo setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} />}
     {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
     {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
   </BasicContainer>);

@@ -52,14 +52,13 @@ const ScheduleSection = ({ urlDate, refetchQuery }) => {
     <SectionContents>
       {loading ? <Loading page="subPage" />
         :
-        <SectionList>
-          {data?.seeSchedule.length === 0 ? <SectionNoDateText>생성된 일정이 없습니다. 😁</SectionNoDateText>
-            :
-            data?.seeSchedule?.map((item, index) => {
+        data?.seeSchedule.length === 0 ? <SectionNoDateText>생성된 일정이 없습니다. 😁</SectionNoDateText>
+          :
+          <SectionList>
+            {data?.seeSchedule?.map((item, index) => {
               return <ScheduleSectionItem key={index} item={item} />
-            })
-          }
-        </SectionList>
+            })}
+          </SectionList>
       }
     </SectionContents>
   </SectionContainer>);

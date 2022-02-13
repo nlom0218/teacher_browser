@@ -18,7 +18,7 @@ import AttendSection from './AttendSection';
 const Container = styled.div`
   display: grid;
   grid-template-rows: auto 1fr;
-  min-height: 100%;
+  align-items: flex-start;
   padding: 20px;
   padding: 1.25rem;
   row-gap: 40px;
@@ -80,7 +80,8 @@ const BottomContainer = styled.div`
 
 const LeftSection = styled.div`
   display: grid;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: repeat(2, minmax(120px, auto));
+  grid-template-rows: repeat(2, minmax(7.5rem, auto));
   row-gap: 20px;
   row-gap: 1.25rem;
 `
@@ -126,7 +127,7 @@ const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery })
     <BottomContainer>
       <LeftSection>
         <ScheduleSection urlDate={urlDate} refetchQuery={refetchQuery}></ScheduleSection>
-        <ToDoListSection urlDate={urlDate}></ToDoListSection>
+        <ToDoListSection urlDate={urlDate} refetchQuery={refetchQuery}></ToDoListSection>
       </LeftSection>
       <RightSection>
         <LunchmenuSection urlDate={urlDate}></LunchmenuSection>
