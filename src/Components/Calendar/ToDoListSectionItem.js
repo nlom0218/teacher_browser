@@ -135,7 +135,7 @@ const CompleteLine = styled.div`
   animation: ${completeToDoAni} 1s ease;
 `
 
-const ToDoListSectionItem = ({ item }) => {
+const ToDoListSectionItem = ({ item, urlDate }) => {
   const { id } = useParams()
 
   const [endDate, setEndDate] = useState(undefined)
@@ -150,7 +150,7 @@ const ToDoListSectionItem = ({ item }) => {
 
   const [completeToDoList, { loading }] = useMutation(COMPLETE_TO_DO_LIST_MUTATION, {
     onCompleted,
-    refetchQueries: [{ query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: false } }]
+    refetchQueries: [{ query: SEE_TO_DO_LIST_QUERY, variables: { date: new window.Date(parseInt(urlDate)) } }]
   })
 
   const onClickCheck = () => {

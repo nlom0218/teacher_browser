@@ -118,7 +118,7 @@ const ToDoListSection = ({ urlDate, refetchQuery }) => {
               </SectionListTitle>
               {unCompleteToDos.length === 0 ? <NoToDoText>할 일이 없습니다. 😁</NoToDoText> :
                 unCompleteToDos.map((item, index) => {
-                  return <ToDoListSectionItem key={index} item={item} />
+                  return <ToDoListSectionItem key={index} item={item} urlDate={urlDate} />
                 })
               }
             </SectionListLayout>
