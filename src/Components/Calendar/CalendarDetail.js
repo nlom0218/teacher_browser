@@ -9,6 +9,11 @@ import { customMedia } from '../../styles';
 import Loading from '../Shared/Loading';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
 import routes from '../../routes';
+import ScheduleSection from './ScheduleSection';
+import ToDoListSection from './ToDoListSection';
+import LunchmenuSection from './LunchmenuSection';
+import JournalSection from './JournalSection';
+import AttendSection from './AttendSection';
 
 const Container = styled.div`
   display: grid;
@@ -65,6 +70,22 @@ const Btn = styled.div`
   }
 `
 
+const BottomContainer = styled.div`
+  min-height: 100%;
+  max-height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+`
+
+const LeftSection = styled.div``
+
+const RightSection = styled.div``
+
 const CalendarDetail = ({ userEmail, urlDate, setScreen, screen }) => {
   const navigate = useNavigate()
 
@@ -78,6 +99,7 @@ const CalendarDetail = ({ userEmail, urlDate, setScreen, screen }) => {
       date: new Date(parseInt(urlDate))
     }
   })
+  console.log(data, toDoData);
 
   const onClickTodayBtn = () => {
     const newDate = new Date().setHours(0, 0, 0, 0)
@@ -114,6 +136,17 @@ const CalendarDetail = ({ userEmail, urlDate, setScreen, screen }) => {
       <Btn className="calendar_btn" onClick={onClickBtnMinus}><IoIosArrowBack /></Btn>
       <Btn className="calendar_btn" onClick={onClickBtn}><IoIosArrowForward /></Btn>
     </TopContents>
+    <BottomContainer>
+      <LeftSection>
+        <ScheduleSection></ScheduleSection>
+        <ToDoListSection></ToDoListSection>
+      </LeftSection>
+      <RightSection>
+        <LunchmenuSection></LunchmenuSection>
+        <JournalSection></JournalSection>
+        <AttendSection></AttendSection>
+      </RightSection>
+    </BottomContainer>
   </Container>);
 }
 
