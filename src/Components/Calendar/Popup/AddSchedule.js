@@ -19,7 +19,7 @@ const SubmitInput = styled.input`
   cursor: pointer;
 `
 
-const AddSchedule = ({ userEmail, setErrMsg, refetch, setMsg }) => {
+const AddSchedule = ({ userEmail, setErrMsg, refetch, setMsg, setRefetchQuery }) => {
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(undefined);
@@ -34,6 +34,7 @@ const AddSchedule = ({ userEmail, setErrMsg, refetch, setMsg }) => {
       setMsg("새로운 일정이 추가되었습니다. 😀")
       outPopup()
       refetch()
+      setRefetchQuery(prev => prev + 1)
     } else {
       setErrMsg(error)
     }

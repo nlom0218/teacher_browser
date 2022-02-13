@@ -72,34 +72,28 @@ const Btn = styled.div`
 
 const BottomContainer = styled.div`
   min-height: 100%;
-  max-height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
   column-gap: 20px;
   column-gap: 1.25rem;
+`
+
+const LeftSection = styled.div`
+  display: grid;
+  grid-template-rows: 1fr 1fr;
   row-gap: 20px;
   row-gap: 1.25rem;
 `
 
-const LeftSection = styled.div``
+const RightSection = styled.div`
+  display: grid;
+  grid-template-rows: 2fr 1fr 1fr;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+`
 
-const RightSection = styled.div``
-
-const CalendarDetail = ({ userEmail, urlDate, setScreen, screen }) => {
+const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery }) => {
   const navigate = useNavigate()
-
-  const { data, loading, refetch } = useQuery(SEE_SCHEDULE_QUERY, {
-    variables: {
-      date: new Date(parseInt(urlDate))
-    }
-  })
-  const { data: toDoData, loading: toDoLoading } = useQuery(SEE_TO_DO_LIST_QUERY, {
-    variables: {
-      date: new Date(parseInt(urlDate))
-    }
-  })
-  console.log(data, toDoData);
 
   const onClickTodayBtn = () => {
     const newDate = new Date().setHours(0, 0, 0, 0)
@@ -122,13 +116,6 @@ const CalendarDetail = ({ userEmail, urlDate, setScreen, screen }) => {
     }
   }, [])
 
-  if (loading) {
-    return <Loading page="subPage" />
-  }
-  if (toDoLoading) {
-    return <Loading page="subPage" />
-  }
-
   return (<Container>
     <TopContents>
       <Title>{format(new Date(parseInt(urlDate)), "yyyy년 MM월 dd일 EEE")}</Title>
@@ -138,13 +125,13 @@ const CalendarDetail = ({ userEmail, urlDate, setScreen, screen }) => {
     </TopContents>
     <BottomContainer>
       <LeftSection>
-        <ScheduleSection></ScheduleSection>
-        <ToDoListSection></ToDoListSection>
+        <ScheduleSection urlDate={urlDate} refetchQuery={refetchQuery}></ScheduleSection>
+        <ToDoListSection urlDate={urlDate}></ToDoListSection>
       </LeftSection>
       <RightSection>
-        <LunchmenuSection></LunchmenuSection>
-        <JournalSection></JournalSection>
-        <AttendSection></AttendSection>
+        <LunchmenuSection urlDate={urlDate}></LunchmenuSection>
+        <JournalSection urlDate={urlDate}></JournalSection>
+        <AttendSection urlDate={urlDate}></AttendSection>
       </RightSection>
     </BottomContainer>
   </Container>);

@@ -159,6 +159,7 @@ const Calendar = () => {
   const [errMsg, setErrMsg] = useState(undefined)
   const [msg, setMsg] = useState(undefined)
   const [screen, setScreen] = useState("small")
+  const [refetchQuery, setRefetchQuery] = useState(1)
 
   const [seeSchedule, { data, loading, refetch }] = useLazyQuery(SEE_SCHEDULE_QUERY)
 
@@ -244,7 +245,7 @@ const Calendar = () => {
 
   return (<BasicContainer screen={screen}>
     {urlDate ?
-      <CalendarDetail userEmail={me?.email} urlDate={urlDate} setScreen={setScreen} screen={screen} />
+      <CalendarDetail userEmail={me?.email} urlDate={urlDate} setScreen={setScreen} screen={screen} refetchQuery={refetchQuery} />
       :
       <Container>
         <TopContainer>
@@ -273,8 +274,8 @@ const Calendar = () => {
         </BottomContainerLayout>}
       </Container>
     }
-    {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} />}
-    {isPopup === "editSchedule" && <EditSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} />}
+    {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} setRefetchQuery={setRefetchQuery} />}
+    {isPopup === "editSchedule" && <EditSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} setRefetchQuery={setRefetchQuery} />}
     {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
     {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
   </BasicContainer>);
