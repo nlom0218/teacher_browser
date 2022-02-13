@@ -153,10 +153,10 @@ const Swap = () => {
   });
 
   const { register, handleSubmit, getValues } = useForm({
-    mode : "onChange",
-    defaultValues : { title : "자리바꾸기 제목" },
+    mode: "onChange",
+    defaultValues: { title: "자리바꾸기 제목" },
   });
-   
+
   const onClickInput = () => {
     setIsEdit(true)
   }
@@ -186,67 +186,67 @@ const Swap = () => {
     }
   }, [data]);
 
-  return (<BasicContainer menuItem={true}>
+  return (<BasicContainer menuItem={true} screen="small">
     <Container>
       <TopContents>
         <Title onBlur={onBlurForm} onSubmit={handleSubmit(onSubmit)}>
           <InputLayout>
             <Input
-                {...register("title", {
-                  required: true,
-                  onChange: () => setIsEdit(true)
-                })}
-                type="text"
-                placeholder="제목을 입력하세요."
-                autocomplete="off"
-                onClick={onClickInput}            
+              {...register("title", {
+                required: true,
+                onChange: () => setIsEdit(true)
+              })}
+              type="text"
+              placeholder="제목을 입력하세요."
+              autocomplete="off"
+              onClick={onClickInput}
             />
             {isEdit && <LineBox>
               <Line></Line>
             </LineBox>}
           </InputLayout>
           {isEdit && <SubmitInput
-              type="submit"
-              value="저장"
-            />}          
+            type="submit"
+            value="저장"
+          />}
         </Title>
         <ListIcon>
           <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다."}</ListName>
           <div onClick={onClickListIcon} onMouseEnter={() => setIconListIsHover(true)} onMouseLeave={() => setIconListIsHover(false)}>
-              {IconsLIstisHover ? <IcNameTableClick /> : <IcNameTable />}
-            </div>
+            {IconsLIstisHover ? <IcNameTableClick /> : <IcNameTable />}
+          </div>
         </ListIcon>
       </TopContents>
       {id && (
         <React.Fragment>
           <OptionContents>
-            <OptionBtn> 자리 설정 </OptionBtn> 
-              {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
+            <OptionBtn> 자리 설정 </OptionBtn>
+            {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
 
-              {isShuffle === "ing" && (
-            <OptionBtn onClick={() => onClickShuffleBtn("finish")} isShuffling={true}>
+            {isShuffle === "ing" && (
+              <OptionBtn onClick={() => onClickShuffleBtn("finish")} isShuffling={true}>
                 섞는 중
-            </OptionBtn>
-              )}
-              {isShuffle === "finish" && (
-            <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
-                 다시 섞기
-            </OptionBtn>
-              )}
+              </OptionBtn>
+            )}
+            {isShuffle === "finish" && (
+              <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
+                다시 섞기
+              </OptionBtn>
+            )}
           </OptionContents>
-      <StudentOrder 
-      // fontSizeOne={fontSizeOne} 
-      // fontSizeAll={fontSizeAll} 
-      selectedStudent={selectedStudent} 
-      setSelectedStudent={setSelectedStudent} 
-      isShuffle={isShuffle}
-      />
-      </React.Fragment>
-    )}
+          <StudentOrder
+            // fontSizeOne={fontSizeOne} 
+            // fontSizeAll={fontSizeAll} 
+            selectedStudent={selectedStudent}
+            setSelectedStudent={setSelectedStudent}
+            isShuffle={isShuffle}
+          />
+        </React.Fragment>
+      )}
     </Container>
     {isPopup === "seeStudentList" && <StudentList />}
     {isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
   </BasicContainer>);
 };
 
-export default Swap;  
+export default Swap;
