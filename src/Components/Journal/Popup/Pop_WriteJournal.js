@@ -161,7 +161,7 @@ const Pop_WriteJournal = ({ me }) => {
   function onSubmit(data) {
     if (data.text.trim() === "") return;
     if (loading) return;
-    writeJournal({ variables: { userEmail: me.email, ownerId: studentObj.studentId, contents: { date: processSetDate(), text: data.text } } });
+    writeJournal({ variables: { userEmail: me.email, ownerId: studentObj.studentId, date, text: data.text } });
     outPopup();
   }
 
