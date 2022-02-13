@@ -65,7 +65,10 @@ const DeleteJournal = () => {
     refetchQueries: [{ query: SEE_ONE_STUDENT_QUERY, variables: { studentId: variables?.ownerId } }],
   });
 
-  const onClickDelBtn = () => deleteJournal({ variables });
+  const onClickDelBtn = () => {
+    console.log(variables);
+    deleteJournal({ variables });
+  };
   return (
     <BtnPopupContainer>
       <Container>

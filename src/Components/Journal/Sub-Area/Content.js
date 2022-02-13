@@ -182,7 +182,7 @@ const Content = ({ me, studentId, journal }) => {
     refetchQueries: [{ query: SEE_ONE_STUDENT_QUERY, variables: { studentId } }],
   });
 
-  const processSetDate = () => {
+  const processSetDate = (date) => {
     return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, 0)}-${date.getDate().toString().padStart(2, 0)}`;
   };
 
@@ -192,15 +192,16 @@ const Content = ({ me, studentId, journal }) => {
     editJournal({
       variables: {
         userEmail: me.email,
-        ownerId: studentId,
-        contents: { ...(date ? { date: processSetDate() } : { date: journal.date }), text: data.text },
         journalId: journal._id,
+        ...(date ? { date } : { date: journal.date }),
+        text: data.text,
       },
     });
+    setDate(null);
   }
 
   function delBtnHandle() {
-    const variables = { userEmail: me.email, ownerId: studentId, journalId: journal._id };
+    const variables = { userEmail: me.email, journalId: journal._id };
     inPopup("deleteJournal");
     localStorage.setItem("selectedStudent", JSON.stringify(variables));
     setIsEditing(false);
@@ -233,7 +234,7 @@ const Content = ({ me, studentId, journal }) => {
   return (
     <Container onSubmit={handleSubmit(onSubmit)}>
       <RightContainer>
-        <div>{date ? processSetDate() : journal.date}</div>
+        <div>{date ? processSetDate(date) : processSetDate(new Date(parseInt(journal.date)))}</div>
         {isEditing && (
           <DatePickers
             dateFormat="yyyy/MM/dd"
