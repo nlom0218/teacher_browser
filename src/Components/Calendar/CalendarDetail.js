@@ -27,16 +27,27 @@ const Container = styled.div`
 
 const TopContents = styled.div`
   display: grid;
-  grid-template-columns: 1fr auto auto auto auto auto;
+  grid-template-columns: 1fr auto auto auto auto;
   column-gap: 20px;
   column-gap: 1.25rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  align-items: center;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: 1fr auto auto auto auto;
+  `}
+    ${customMedia.greaterThan("desktop")`
+    grid-template-columns: 1fr auto auto auto auto auto;
+  `}
 `
 
 const Title = styled.div`
+  grid-column: 1 / -1;
   font-size : 1.25em;
   font-size : 1.25rem;
   text-transform: uppercase;
   ${customMedia.greaterThan("tablet")`
+    grid-column: 1 / 2;
     font-size: 2em;
     font-size: 2rem;
   `}
@@ -56,6 +67,7 @@ const TodayBtn = styled.div`
 `
 
 const Btn = styled.div`
+  justify-self: flex-end;
   padding: 5px;
   padding: 0.3125rem;
   border-radius: 50%;
@@ -73,10 +85,14 @@ const Btn = styled.div`
 const BottomContainer = styled.div`
   min-height: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
   align-items: flex-start;
   column-gap: 20px;
   column-gap: 1.25rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  ${customMedia.greaterThan("desktop")`
+    grid-template-columns: 1fr 1fr;
+  `}
 `
 
 const LeftSection = styled.div`
@@ -129,6 +145,7 @@ const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery, m
   return (<Container>
     <TopContents>
       <Title>{format(new Date(parseInt(urlDate)), "yyyy년 MM월 dd일")} {processSetDay(new Date(parseInt(urlDate)))}요일</Title>
+      {media === "Mobile" && <div></div>}
       <TodayBtn className="calendar_btn" onClick={onClickTodayBtn}>TODAY</TodayBtn>
       <Btn className="calendar_btn" onClick={onClickBtnMinus}><IoIosArrowBack /></Btn>
       <Btn className="calendar_btn" onClick={onClickBtn}><IoIosArrowForward /></Btn>
