@@ -159,7 +159,7 @@ const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery, m
       </LeftSection>
       <RightSection>
         <LunchmenuSection urlDate={urlDate} me={me}></LunchmenuSection>
-        <JournalSection urlDate={urlDate}></JournalSection>
+        <JournalSection urlDate={urlDate} teacherEmail={me?.email}></JournalSection>
         <AttendSection urlDate={urlDate}></AttendSection>
       </RightSection>
     </BottomContainer>
