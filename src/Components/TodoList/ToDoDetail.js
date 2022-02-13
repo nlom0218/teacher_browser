@@ -5,14 +5,14 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
-import { GrPowerReset } from "react-icons/gr"
-import { BsCalendarDate, BsFillPencilFill, BsStar, BsStarFill } from "react-icons/bs"
+import { BsCalendarDate, BsFillPencilFill, BsStar, BsStarFill, BsArrowCounterclockwise } from "react-icons/bs"
 import { CgNotes } from "react-icons/cg"
 import TextareaAutosize from 'react-textarea-autosize';
 import Loading from '../Shared/Loading';
 import { DELETE_TO_DO_LIST_MUTATION, EDIT_TO_DO_LIST_MUTATION } from '../../Graphql/ToDoList/mutation';
 import { useNavigate } from 'react-router-dom';
 import routes from '../../routes';
+import { IoArrowBackSharp } from "react-icons/io5";
 
 const Form = styled.form`
   padding : 20px;
@@ -44,6 +44,20 @@ const Form = styled.form`
 }
 }
 `;
+
+const Top = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr;
+`
+
+const BackIcon = styled.div`
+  font-size: 1.5em;
+  font-size: 1.5rem;
+  cursor: pointer;
+  svg {
+    display: flex;
+  }
+`
 
 const Title = styled.div`
     justify-self: flex-end;
@@ -186,6 +200,10 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
 
   const navigate = useNavigate()
 
+  const onClickBackIcon = () => {
+    navigate(routes.todo)
+  }
+
   const { data, loading } = useQuery(SEE_TO_DO_LIST_QUERY, {
     variables: {
       isComplete: false,
@@ -200,7 +218,7 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
   const onCompleted = (result) => {
     const { editToDoList: { ok } } = result
     if (ok) {
-      setMsg("할 일 정보가 수정되었습니다.")
+      setMsg("할 일 정보가 수정되었습니다. 😄")
     }
   }
 
@@ -208,7 +226,7 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
     const { deleteToDoList: { ok } } = result
     if (ok) {
       navigate(routes.todo)
-      setMsg("할 일이 삭제되었습니다.")
+      setMsg("할 일이 삭제되었습니다. 😄")
     }
   }
 
@@ -230,17 +248,17 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
   const onSubmit = (data) => {
     if (startDate) {
       if (!endDate) {
-        setErrMsg("종료일을 설정해주세요.")
+        setErrMsg("종료일을 설정해주세요. 🥲")
         return
       }
       if (startDate > endDate) {
-        setErrMsg("시작일과 종료일을 다시 확인해주세요.")
+        setErrMsg("시작일과 종료일을 다시 확인해주세요. 🥲")
         return
       }
     }
     if (endDate) {
       if (!startDate) {
-        setErrMsg("시작일을 설정해주세요.")
+        setErrMsg("시작일을 설정해주세요. 🥲")
         return
       }
     }
@@ -288,7 +306,10 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
   }
 
   return (<Form onSubmit={handleSubmit(onSubmit)}>
-    <Title>할 일 정보</Title>
+    <Top>
+      <BackIcon onClick={onClickBackIcon}><IoArrowBackSharp /></BackIcon>
+      <Title>할 일 정보</Title>
+    </Top>
     <Layout>
       <Icon><BsFillPencilFill /></Icon>
       <Input
@@ -323,6 +344,7 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
             dateFormat="yyyy/MM/dd"
             locale={ko}
             placeholderText="시작일 설정"
+            todayButton="오늘"
           />
         </StartDate>
         <div>~</div>
@@ -339,7 +361,7 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
             placeholderText="종료일 설정"
           />
         </EndDate>
-        <ResetBtn onClick={onClickResetDateBtn}><GrPowerReset /></ResetBtn>
+        <ResetBtn onClick={onClickResetDateBtn}><BsArrowCounterclockwise /></ResetBtn>
       </SetDate>
     </Layout>
     <Layout>

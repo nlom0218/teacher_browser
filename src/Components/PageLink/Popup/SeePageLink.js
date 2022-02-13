@@ -96,7 +96,6 @@ const SeePageLink = () => {
             </Icon>
             <TextareaAutosize
               value={data?.seePageLink[0].pageDescription}
-              readOnly={true}
             ></TextareaAutosize>
           </Description>
           <PageURLLayout>

@@ -7,8 +7,12 @@ import { customMedia } from '../../styles';
 const TodoHeadBlock = styled.div`
   display : grid;
   grid-template-columns : 1fr auto;
-  column-gap : 40px;
-  column-gap : 2.5rem;
+  column-gap : 20px;
+  column-gap : 1.25rem;
+  ${customMedia.greaterThan("tablet")`
+    column-gap : 40px;
+    column-gap : 2.5rem;
+  `}
 `;
 
 const HeadLayout = styled.div`
@@ -16,39 +20,77 @@ const HeadLayout = styled.div`
   row-gap: 10px;
   row-gap: 0.625rem;
   h1 {
-      font-size : 1.5em;
-      font-size : 1.5rem;
+      font-size : 1.25em;
+      font-size : 1.25rem;
       ${customMedia.greaterThan("tablet")`
       font-size : 2em;
       font-size : 2rem;
       `}
   }
   .day {
-      font-size : 1.25em;
-      font-size : 1.25rem;
+      font-size : 1em;
+      font-size : 1rem;
       opacity : 0.7;
-  }
-  .tasks-left {
-    color : ${props => props.theme.green};
-    transition: color 1s ease;
-    font-size : 1.25em;
-    font-size : 1.25rem;
-    font-weight : bold;
+      ${customMedia.greaterThan("tablet")`
+      font-size : 1.25em;
+      font-size : 1.25rem
+      `}
   }
 `;
 
 const ButtonContent = styled.div`
-  cursor : pointer;
-  font-size : 2.5rem;
-  font-size : 2.5em;
+  display: grid;
+  column-gap: 20px;
+  row-gap: 10px;
+  row-gap: 0.625rem;
+  align-self: flex-start;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: 1fr auto;
+  `}
+`;
+
+const ComleteToDo = styled.div`
+  cursor: pointer;
+  font-size : 1rem;
+  font-size : 1em;
+  align-self: center;
+  background-color : ${props => props.theme.btnBgColor};
+  color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
+  padding: 10px;
+  padding: 0.625rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  font-size : 0.875rem;
+  font-size : 0.875em;
+  grid-row: 2 / 3;
+  ${customMedia.greaterThan("tablet")`
+    grid-row: 1 / 2;
+    padding: 10px 20px;
+    padding: 0.625rem 1.25rem;
+    font-size : 1rem;
+    font-size : 1em;
+  `}
+`
+
+const AddIcon = styled.div`
+  cursor: pointer;
   color : ${props => props.theme.btnBgColor};
   transition : color 1s ease;
+  font-size : 2rem;
+  font-size : 2em;
+  grid-row: 1 / 2;
+  justify-self: flex-end;
   svg {
       display : flex;
   }
-`;
+  ${customMedia.greaterThan("tablet")`
+    font-size : 2.5rem;
+    font-size : 2.5em;
+  `}
+`
 
-const TodoHead = ({ ingToDosLength }) => {
+const TodoHead = () => {
   const date = new Date()
   const processSetDay = () => {
     const day = date.getDay()
@@ -78,15 +120,19 @@ const TodoHead = ({ ingToDosLength }) => {
     inPopup("todoCreate")
   }
 
+  const onClickCompleteBtn = () => {
+    inPopup("toDoComplete")
+  }
+
   return (
     <TodoHeadBlock>
       <HeadLayout>
         <h1>{processSetDate()}</h1>
         <div className="day">{processSetDay()}</div>
-        <div className="tasks-left">할 일 {ingToDosLength}개 남음</div>
       </HeadLayout>
       <ButtonContent>
-        <MdAddCircle onClick={onClickCreateBtn} />
+        <ComleteToDo onClick={onClickCompleteBtn}>완료된 할 일</ComleteToDo>
+        <AddIcon onClick={onClickCreateBtn}><MdAddCircle /></AddIcon>
       </ButtonContent>
     </TodoHeadBlock>
   );

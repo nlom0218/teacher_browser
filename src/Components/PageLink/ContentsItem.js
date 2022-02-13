@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { IoArrowRedo } from "react-icons/io5";
 import { BsBookmarkPlus, BsFillBookFill } from "react-icons/bs";
@@ -7,7 +7,6 @@ import IcBookMarkClick from "../../icons/Bookmark/IcBookMarkClick";
 import { useMutation } from "@apollo/client";
 import { ME_QUERY } from "../../Hooks/useMe";
 import { SETTING_LINK_MUTATION } from "../../Graphql/User/mutation";
-import { useState } from "react/cjs/react.development";
 import ContentsItemLayout from "./Styled/ContentsItemLayout";
 import SiteType from "./SiteType";
 

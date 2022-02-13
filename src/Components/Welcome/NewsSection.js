@@ -38,8 +38,11 @@ const Container = styled.div`
   row-gap: 1.25rem;
   padding: 20px;
   padding: 1.25rem;
+  ${customMedia.greaterThan("tablet")`
+    padding: 40px;
+    padding: 2.5rem;
+  `}
   ${customMedia.greaterThan("desktop")`
-    position: relative;
     min-height: 100%;
     max-height: 100%;
   `}

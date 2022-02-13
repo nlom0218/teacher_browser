@@ -101,7 +101,7 @@ const Menu = () => {
     setMenuType(type)
   }
 
-  return (<BasicContainer>
+  return (<BasicContainer screen="small">
     <Container>
       <SeeType>
         <Type>

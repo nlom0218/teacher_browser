@@ -1,9 +1,16 @@
 import React from 'react';
-import { useState } from 'react/cjs/react.development';
+import { useEffect, useState } from 'react/cjs/react.development';
 import styled, { keyframes } from 'styled-components';
+import useMe from '../../Hooks/useMe';
+import { customMedia } from '../../styles';
+import bg1 from "../../image/DrawRandomImg/drawImage1.png"
+import bg2 from "../../image/DrawRandomImg/drawImage2.png"
+import bg3 from "../../image/DrawRandomImg/drawImage3.png"
+import bg4 from "../../image/DrawRandomImg/drawImage4.png"
+import bg5 from "../../image/DrawRandomImg/drawImage5.png"
+import bg6 from "../../image/DrawRandomImg/drawImage6.png"
 
 const StudentItem = styled.div`
-  grid-column : ${props => props.pickNum === 1 && "2 / 3"};
   min-height : 160px;
   min-height : 10rem;
   display : flex;
@@ -18,6 +25,10 @@ const StudentItem = styled.div`
   font-size : ${props => props.fontSize + 1}em;
   font-size : ${props => props.fontSize + 1}rem;
   position : relative;
+  text-align: center;
+  ${customMedia.greaterThan("desktop")`
+    grid-column : ${props => props.pickNum === 1 && "2 / 3"};
+  `}
 `
 
 const hideBoxHoverAni = keyframes`
@@ -59,7 +70,7 @@ const HideBox = styled.div`
   font-size : 1.25rem;
   position : absolute;
   color : ${props => props.theme.bgColor};
-  background-color : ${props => props.theme.btnBgColor};
+  background: ${props => `url(${props.randomImg})`};
   transition : background-color 1s ease, color 1s ease;
   top : 0;
   bottom : 0;
@@ -72,17 +83,39 @@ const HideBox = styled.div`
 `
 
 const SeeSelectedStudentItem = ({ item, fontSize, pickNum, pickType }) => {
+  const [randomImg, setRandomImg] = useState(bg1)
+  const me = useMe()
+  console.log(me);
+
   const [seeHideBox, setSeeHideBox] = useState(true)
 
   const onClickHideBox = () => setSeeHideBox(false)
 
-  return (<StudentItem pickNum={pickNum} fontSize={fontSize}>
+  useEffect(() => {
+    const randomNum = Math.floor(Math.random() * 6) + 1
+    if (randomNum === 1) {
+      setRandomImg(bg1)
+    } else if (randomNum === 2) {
+      setRandomImg(bg2)
+    } else if (randomNum === 3) {
+      setRandomImg(bg3)
+    } else if (randomNum === 4) {
+      setRandomImg(bg4)
+    } else if (randomNum === 5) {
+      setRandomImg(bg5)
+    } else if (randomNum === 6) {
+      setRandomImg(bg6)
+    }
+  }, [])
+
+  return (<StudentItem pickNum={pickNum} fontSize={fontSize} bgTheme={me?.bgTheme}>
     {item}
     {pickType === "hide" &&
       <HideBox
+        randomImg={randomImg}
         seeHideBox={seeHideBox}
         onClick={onClickHideBox}
-      >클릭하여 확인</HideBox>
+      ></HideBox>
     }
   </StudentItem>);
 }

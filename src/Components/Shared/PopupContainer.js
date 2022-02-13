@@ -13,7 +13,7 @@ const Background = styled.div`
 `;
 
 const SRegisterContainer = styled.div`
-  width: 80%;
+  width: 90%;
   overflow: auto;
   -ms-overflow-style: none; // IE and Edge
   scrollbar-width: none; // Firefox
@@ -41,8 +41,8 @@ const SRegisterContainer = styled.div`
 
 const RegisterPage = styled.div`
   height: ${props => props.maxHeight && "100%"};
-  padding: 10px 30px;
-  padding: 0.625rem 1.875rem;
+  padding: 0px 20px;
+  padding: 0rem 1.25rem;
   padding: ${props => props.emojiPopup && 0};
   display: grid;
   align-items: flex-start;
@@ -57,6 +57,10 @@ const RegisterPage = styled.div`
   .active-category-indicator-wrapper {
     display: none;
   }
+  ${customMedia.greaterThan(`tablet`)`
+    padding: 10px 30px;
+    padding: 0.625rem 1.875rem;
+  `}
 `
 
 const PopupContainer = ({ children, emojiPopup, maxHeight }) => {

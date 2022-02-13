@@ -15,6 +15,7 @@ const Container = styled.div`
   row-gap: 20px;
   row-gap: 1.25rem;
   justify-items: center;
+  text-align: center;
 `;
 
 const StudentList = () => {
