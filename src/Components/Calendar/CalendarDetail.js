@@ -15,6 +15,8 @@ import LunchmenuSection from './LunchmenuSection';
 import JournalSection from './JournalSection';
 import AttendSection from './AttendSection';
 import { processSetDay } from '../../shared';
+import { BiExitFullscreen, BiFullscreen } from 'react-icons/bi';
+import useMedia from '../../Hooks/useMedia';
 
 const Container = styled.div`
   display: grid;
@@ -28,7 +30,7 @@ const Container = styled.div`
 
 const TopContents = styled.div`
   display: grid;
-  grid-template-columns: 1fr auto auto auto;
+  grid-template-columns: 1fr auto auto auto auto;
   column-gap: 20px;
   column-gap: 1.25rem;
 `
@@ -96,6 +98,7 @@ const RightSection = styled.div`
 
 const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery }) => {
   const navigate = useNavigate()
+  const media = useMedia()
 
   const onClickTodayBtn = () => {
     const newDate = new Date().setHours(0, 0, 0, 0)
@@ -112,11 +115,13 @@ const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery })
     navigate(`${routes.calendar}/${newDate}`)
   }
 
-  useEffect(() => {
-    if (screen === "full") {
+  const onClickFull = () => {
+    if (screen === "small") {
+      setScreen("full")
+    } else {
       setScreen("small")
     }
-  }, [])
+  }
 
   return (<Container>
     <TopContents>
@@ -124,6 +129,7 @@ const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery })
       <TodayBtn className="calendar_btn" onClick={onClickTodayBtn}>TODAY</TodayBtn>
       <Btn className="calendar_btn" onClick={onClickBtnMinus}><IoIosArrowBack /></Btn>
       <Btn className="calendar_btn" onClick={onClickBtn}><IoIosArrowForward /></Btn>
+      {media === "Desktop" && <Btn className="calendar_btn" onClick={onClickFull}>{screen === "small" ? <BiFullscreen /> : <BiExitFullscreen />}</Btn>}
     </TopContents>
     <BottomContainer>
       <LeftSection>
