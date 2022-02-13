@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { BtnFadeIn } from "../../../Animations/Fade";
-import { inPopup, isPopupVar } from "../../../apollo";
 import {
   DetailStudentLayout,
   DetailTitle,
 } from "../../List/styled/DetailStudent";
 import useMedia from "../../../Hooks/useMedia";
-import { ImRadioUnchecked } from "react-icons/im";
 import { BsCheck } from "react-icons/bs";
 import {
   class1,
@@ -41,10 +38,7 @@ const TimeTable = styled.div`
 `;
 
 const DetailClassAdd = ({}) => {
-  const media = useMedia();
-
-  const [isEdit, setIsEdit] = useState(false);
-  const [pick, setPick] = useState();
+  const [pick, setPick] = useState(false);
   const [viewTimeDay, setViewTimeDay] = useState(false);
 
   const onClickBtn = (item) => {
@@ -58,12 +52,7 @@ const DetailClassAdd = ({}) => {
   //useEffect
 
   const timeday = ["", "월", "화", "수", "목", "금"];
-  //  "1교시","","","","","",
-  //  "2교시","","","","","",
-  //  "3교시","","","","","",
-  //  "4교시","","","","","",
-  //  "5교시","","","","","",
-  //  "6교시","","","","","",]
+
   console.log(pick);
   return (
     <DetailStudentLayout>

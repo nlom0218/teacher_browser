@@ -14,16 +14,15 @@ import { useRef } from "react";
 import TimeTableTitle from "../Components/Schedule/TimeTableTitle";
 import ClassTimeSet from "../Components/Schedule/Popup/ClassTimeSet";
 import { timeSetData } from "../Components/Schedule/ScheduleData";
+import { TimeSetCal } from "../Components/Schedule/TimeSetCal";
 
-//시간 설정 계산하기
 // const basicTime = [];
 const basic = timeSetData;
 
-//콘솔창에 예전에는 값이 나왔는데 왜 안 나오지?
 //수업정보를 어떻게 받아서 전달????
 //태그랑 태그 관리
 //음영한 뒤 다크모드에서 글씨 안 보임.
-// 인쇄기능에 과목명이랑 색상 보내기
+// 인쇄기능에 과목명보내기
 //수업추가 어떻게?
 
 const Container = styled.div`
@@ -91,7 +90,7 @@ const Schedule = () => {
   const onClickTimeviewBtn = () => {
     setViewTime(!viewTime);
   };
-  // console.log(timeSet);
+  console.log(TimeSetCal);
   return (
     <BasicContainer menuItem={true}>
       <Container>
