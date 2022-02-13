@@ -19,6 +19,7 @@ import CalendarDetail from '../Components/Calendar/CalendarDetail';
 import { SEE_SCHEDULE_QUERY } from '../Graphql/Schedule/query';
 import Loading from '../Components/Shared/Loading';
 import DetailToDo from '../Components/TodoList/Popup/DetailToDo';
+import SeeAllergy from '../Components/Lunchmenu/Popup/SeeAllergy';
 
 const Container = styled.div`
   display: grid;
@@ -246,7 +247,14 @@ const Calendar = () => {
 
   return (<BasicContainer screen={screen}>
     {urlDate ?
-      <CalendarDetail userEmail={me?.email} urlDate={urlDate} setScreen={setScreen} screen={screen} refetchQuery={refetchQuery} />
+      <CalendarDetail
+        userEmail={me?.email}
+        urlDate={urlDate}
+        setScreen={setScreen}
+        screen={screen}
+        refetchQuery={refetchQuery}
+        me={me}
+      />
       :
       <Container>
         <TopContainer>
@@ -278,6 +286,7 @@ const Calendar = () => {
     {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} setRefetchQuery={setRefetchQuery} />}
     {isPopup === "editSchedule" && <EditSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} setRefetchQuery={setRefetchQuery} />}
     {isPopup === "detailToDo" && <DetailToDo setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} />}
+    {isPopup == "seeAllergy" && <SeeAllergy />}
     {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
     {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
   </BasicContainer>);

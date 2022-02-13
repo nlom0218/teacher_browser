@@ -343,7 +343,7 @@ const Lunchmenu = () => {
                   </LunchmenuItem>
                 ))
                 :
-                <div className="lunch_errMsg lunch_subMsg">급식 정보가 없습니다 😢</div>
+                <div className="lunch_errMsg lunch_subMsg">급식 정보가 없습니다. 😢</div>
               )
             }
           </SLunchmenus>

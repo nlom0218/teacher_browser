@@ -98,7 +98,7 @@ const RightSection = styled.div`
   row-gap: 1.25rem;
 `
 
-const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery }) => {
+const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery, me }) => {
   const navigate = useNavigate()
   const media = useMedia()
 
@@ -139,7 +139,7 @@ const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery })
         <ToDoListSection urlDate={urlDate} refetchQuery={refetchQuery}></ToDoListSection>
       </LeftSection>
       <RightSection>
-        <LunchmenuSection urlDate={urlDate}></LunchmenuSection>
+        <LunchmenuSection urlDate={urlDate} me={me}></LunchmenuSection>
         <JournalSection urlDate={urlDate}></JournalSection>
         <AttendSection urlDate={urlDate}></AttendSection>
       </RightSection>
