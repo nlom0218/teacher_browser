@@ -129,16 +129,14 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, seeResultType, font
         <RealContainer>
           <Table>교탁</Table>
         <Container>
-            {isShuffle != "finish" ?  selectedStudent.map((item, index) => {
+            { selectedStudent.map((item, index) => {
                 return (
                     <Item key={item}>
                         <Name fontSize={fontSizeAll}>{item}</Name>
                         <RemoveBtn onClick={() => onClickRemoveBtn(item)}><TiDelete /></RemoveBtn>
                     </Item>
                 );
-            }) :
-            <div
-        />
+            }) 
             }
         </Container>
         </RealContainer>
