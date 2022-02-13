@@ -28,17 +28,10 @@ const EditSchool = ({ userEmail, schoolName, schoolAdress }) => {
     refetchQueries: [{ query: ME_QUERY }]
   })
   const onClickDelBtn = () => {
-    if (loading) {
-      return
-    }
     if (schoolName) {
-      if (window.confirm("등록된 학교정보를 삭제하시겠습니까?")) {
-        deleteSchoolInfo({
-          variables: { userEmail }
-        })
-      } else {
-        return
-      }
+      deleteSchoolInfo({
+        variables: { userEmail }
+      })
     }
   }
   return (<Container>

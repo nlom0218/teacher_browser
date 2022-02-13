@@ -68,9 +68,12 @@ const Item = styled.div`
 const EditAccount = () => {
   const isPopup = useReactiveVar(isPopupVar);
   const me = useMe();
-  const { data } = useQuery(CHECK_PASSWORD_QUERY, { variables: { userEmail: me?.email } });
+  const { data } = useQuery(CHECK_PASSWORD_QUERY, {
+    variables: { userEmail: me?.email },
+    skip: !me
+  });
   return (
-    <BasicContainer menuItem={true}>
+    <BasicContainer menuItem={true} screen="small">
       <Title>회원정보</Title>
       <Container>
         <Changes>
@@ -83,7 +86,7 @@ const EditAccount = () => {
         <Changes>
           <List>학교정보</List>
           <Item>
-            <EditSchool schoolName={me?.schoolName} schoolAdress={me?.schoolAdress} />
+            <EditSchool schoolName={me?.schoolName} schoolAdress={me?.schoolAdress} userEmail={me?.email} />
           </Item>
         </Changes>
         <Changes>

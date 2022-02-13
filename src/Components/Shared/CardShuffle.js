@@ -80,7 +80,6 @@ const CardShuffle = () => {
     }, [1500])
     return () => {
       clearTimeout(setShuffle)
-
     }
   }, [])
 

@@ -18,13 +18,13 @@ const SNewsListContainer = styled.div`
       text-align: center;
     }
   ${customMedia.greaterThan("desktop")`
-    padding: 20px;
-    top: 0;
-    right: 0;
-    width: 60%;
+    top: 4%;
+    bottom: 4%;
+    right: 2%;
+    width: 58%;
     position: absolute;
-    min-height: 100%;
-    max-height: 100%;
+    min-height: 92%;
+    max-height: 92%;
     overflow: scroll;
     -ms-overflow-style: none; // IE and Edge
     scrollbar-width: none; // Firefox
@@ -142,10 +142,10 @@ const NewsListContainer = ({ search, data, userEmail, favoriteNews, start, setSt
           </PageBtn>
         </BottomContents>
       </React.Fragment>
-        : <div className="empty_news_list">검색 결과가 없습니다.😅</div>
+        : <div className="empty_news_list">검색 결과가 없습니다. 😅</div>
       }
     </React.Fragment>
-      : <div className="empty_news_list">검색을 통해 원하는 뉴스를 찾아보세요!😀</div>
+      : <div className="empty_news_list">검색을 통해 원하는 뉴스를 찾아보세요! 😀</div>
     }
   </SNewsListContainer>);
 }

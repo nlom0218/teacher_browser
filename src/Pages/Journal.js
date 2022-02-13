@@ -45,7 +45,7 @@ const Journal = ({ me }) => {
   }, [data]);
 
   return (
-    <BasicContainer menuItem={true}>
+    <BasicContainer menuItem={true} screen="small">
       <TitleArea studentListName={studentListName} />
       {id ? <MainArea me={me} students={students} loading={loading} error={error} setSort={setSort} sort={sort} /> : <div>학급일지를 설명하는 ? 포스터?</div>}
       {isPopup === "writeJournal" && <Pop_WriteJournal me={me} />}

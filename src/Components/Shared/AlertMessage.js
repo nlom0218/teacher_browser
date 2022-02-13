@@ -21,6 +21,8 @@ const Container = styled.div`
   column-gap: 10px;
   column-gap: 0.625rem;
   z-index: 10;
+  text-align: center;
+  line-height: 120%;
 `
 
 const CloseIcon = styled.div`
