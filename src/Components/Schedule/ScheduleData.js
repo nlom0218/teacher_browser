@@ -200,13 +200,13 @@ export const class6 = [
 
 export const timeSetData = [
   {
-    breakminutes: "0",
-    breaktime: "0",
+    breakminutes: "30",
+    breaktime: "2",
     classtime: "40",
     hour: "9",
     lunchhour: "4",
     lunchminutes: "50",
-    minutes: "10",
-    resttime: "10",
+    minutes: "0",
+    resttime: "5",
   },
 ];

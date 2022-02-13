@@ -1,5 +1,6 @@
 import React from "react";
 import { timeSetData } from "./ScheduleData";
+//데이터베이스에 있는거 가져오자.
 const basicTime = timeSetData[0];
 const hour = parseInt(basicTime.hour);
 const minutes = parseInt(basicTime.minutes);
@@ -39,5 +40,3 @@ for (var i = 0; i < 6 - lunchhour - 1; i++) {
 }
 
 export const timeSetCal = timeResult;
-
-// export default TimeSetCal;

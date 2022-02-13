@@ -16,7 +16,7 @@ import ClassTimeSet from "../Components/Schedule/Popup/ClassTimeSet";
 import { timeSetData } from "../Components/Schedule/ScheduleData";
 import { timeSetCal } from "../Components/Schedule/TimeSetCal";
 
-// const basicTime = [];
+// 시간 설정해야 하는 기초값 데이터베이스에 있는거 연결하기
 const basic = timeSetData;
 
 //수업정보를 어떻게 받아서 전달????
@@ -119,9 +119,7 @@ const Schedule = () => {
       </Container>
 
       {isPopup === "registerClass" && <ClassRegisterPage />}
-      {isPopup === "registerTimeSet" && (
-        <ClassTimeSet timeSet={timeSet} setTimeSet={setTimeSet} />
-      )}
+      {isPopup === "registerTimeSet" && <ClassTimeSet />}
       {isPopup === "print" && (
         <PrintScheduleContents
           printRef={componentRef}
