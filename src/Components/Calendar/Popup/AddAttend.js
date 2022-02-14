@@ -120,7 +120,7 @@ const SubmitInput = styled.input`
 const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) => {
 
   const [type, setType] = useState(undefined)
-  const [date, setDate] = useState(new window.Date(parseInt(urlDate)));
+  const [date, setDate] = useState(undefined);
   const [studentName, setStudentName] = useState(undefined)
   const [studentId, setStudentId] = useState(undefined)
   const { register, handleSubmit } = useForm({
@@ -195,6 +195,12 @@ const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) =
   useEffect(() => {
     setStudentName(localStorage.getItem("attendStudentName"))
     setStudentId(localStorage.getItem("attendStudentId"))
+  }, [])
+
+  useEffect(() => {
+    if (urlDate) {
+      setDate(new window.Date(parseInt(urlDate)))
+    }
   }, [])
 
   return (<PopupContainer maxHeight={true}>

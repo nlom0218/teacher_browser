@@ -158,6 +158,7 @@ const Calendar = () => {
   const me = useMe()
 
   const [date, setDate] = useState(new Date(localStorage.getItem("calendarDate")))
+
   const [weekLength, setWeekLength] = useState(1)
   const [dateArr, setDateArr] = useState(undefined)
   const [schedule, setSchedule] = useState(undefined)
