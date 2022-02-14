@@ -1,8 +1,6 @@
 import { useQuery } from '@apollo/client';
 import React from 'react';
-import TextareaAutosize from 'react-textarea-autosize';
 import styled from 'styled-components';
-import { inPopup } from '../../apollo';
 import { SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
 import { processStudentIcon } from '../../shared';
 import { color } from '../../styles';
@@ -11,10 +9,6 @@ const Container = styled.div`
   display: grid;
   row-gap: 10px;
   row-gap: 0.625rem;
-  /* :not(:last-child) {
-    padding-bottom: 20px;
-    padding-bottom: 1.25rem;
-  } */
 `
 
 const StudentInfo = styled.div`
@@ -41,50 +35,33 @@ const StudentNumber = styled.div`
 `
 
 const StudentJournal = styled.div`
-  textarea {
-    all: unset;
-    background-color: rgba(255, 252, 86, 0.2);
+    background-color: rgba(104, 255, 122, 0.2);
     box-shadow: ${color.boxShadow};
-    min-height: 100%;
-    max-height: 100%;
-    width: 100%;
-    resize: none;
-    padding: 15px 20px;
-    padding: 0.9375rem 1.25rem;
-    box-sizing: border-box;
+    padding: 20px;
+    padding: 1.25rem;
     border-radius: 5px;
     border-radius: 0.3125rem;
     border: ${props => props.isEdit && `${props.theme.fontColor} 1px solid`};
-    /* background-color: ${props => props.theme.originBgColor}; */
-    line-height: 160%;
-  }
 `
 
-const JournalSectionItem = ({ item }) => {
+const AttendSectionItem = ({ item }) => {
   const { data, loading } = useQuery(SEE_ONE_STUDENT_QUERY, {
     variables: {
-      studentId: item.ownerId
+      studentId: item.studentId
     },
     skip: !item
   })
 
-  const onClickStudentInfo = () => {
-    inPopup("summaryJournal")
-    localStorage.setItem("summaryStudentId", item.ownerId)
-  }
-
   return (<Container>
-    <StudentInfo onClick={onClickStudentInfo}>
+    <StudentInfo>
       {data?.seeAllStudent[0]?.icon && <StudnetIcon>{processStudentIcon(data?.seeAllStudent[0]?.icon)}</StudnetIcon>}
       <StudentName>{data?.seeAllStudent[0]?.studentName}</StudentName>
       {data?.seeAllStudent[0]?.studentNumber && <StudentNumber>{data?.seeAllStudent[0]?.studentNumber}번</StudentNumber>}
     </StudentInfo>
     <StudentJournal>
-      <TextareaAutosize
-        value={item.text}
-      />
+      {item.type}
     </StudentJournal>
   </Container>);
 }
 
-export default JournalSectionItem;
+export default AttendSectionItem;
