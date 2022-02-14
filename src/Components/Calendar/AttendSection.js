@@ -5,6 +5,7 @@ import SectionContents from './styled/SectionContents';
 import SectionTitle from './styled/SectionTitle';
 import { AiOutlinePlus } from "react-icons/ai"
 import styled from 'styled-components';
+import IcAttendanceClick from '../../icons/Attendance/IcAttendanceClick';
 
 const PlusScheduleBtn = styled.div`
   padding: 5px;
@@ -29,7 +30,7 @@ const AttendSection = () => {
 
   return (<SectionContainer>
     <SectionTitle>
-      <div><IcLunchmenuClick /></div>
+      <div><IcAttendanceClick /></div>
       <div>출석</div>
       <PlusScheduleBtn onClick={onClickPlusBtn}><AiOutlinePlus /></PlusScheduleBtn>
     </SectionTitle>
