@@ -106,27 +106,37 @@ const ColorItem = styled.div`
 `
 
 const DateContainer = styled.div`
-  display: grid;
-  align-items: center;
-  column-gap: 20px;
-  column-gap: 1.25rem;
-  row-gap: 10px;
-  row-gap: 0.625rem;
-  text-align: center;
-  .start_date,
-  .end_date {
-    padding: 15px 20px;
-    padding: 0.9375rem 1.25rem;
-    background-color: ${props => props.theme.originBgColor};
+    display : grid;
+    align-items: center;
+    column-gap : 20px;
+    column-gap : 1.25rem;
+    row-gap : 10px;
+    row-gap : 0.625rem;
     text-align: center;
-    border-radius: 20px;
-    border-radius: 1.25rem;
-  }
-  ${customMedia.greaterThan("tablet")`
-     grid-template-columns : 1fr auto 1fr;
-  `}
+    input {
+        width : 100%;
+        background-color: ${props => props.theme.originBgColor};
+        padding : 20px 10px;
+        padding : 1.25rem 0.625rem;
+        border-radius : 40px;
+        border-radius : 2.5rem;
+        cursor : pointer;
+        text-align: center;
+    }
+    ${customMedia.greaterThan("tablet")`
+       grid-template-columns : 1fr auto 1fr;
+    `}
 `
 
+const StartDate = styled.div`
+  display : grid;
+  align-items : center;
+`
+
+const EndDate = styled.div`
+  display : grid;
+  align-items : center;
+`;
 const CheckBox = styled.div`
   svg {
     display: flex;
@@ -160,7 +170,7 @@ export const CalenderPopupDateLayout = ({ startDate, setStartDate, endDate, setE
   return (<InputLayout>
     <Icon><BsCalendarDate /></Icon>
     <DateContainer>
-      <div className="start_date">
+      <StartDate>
         <DatePicker
           dateFormat="yyyy/MM/dd"
           selected={startDate}
@@ -171,9 +181,9 @@ export const CalenderPopupDateLayout = ({ startDate, setStartDate, endDate, setE
           endDate={endDate}
           locale={ko}
         />
-      </div>
+      </StartDate>
       <div>~</div>
-      <div className="end_date">
+      <EndDate>
         <DatePicker
           dateFormat="yyyy/MM/dd"
           selected={endDate}
@@ -185,7 +195,7 @@ export const CalenderPopupDateLayout = ({ startDate, setStartDate, endDate, setE
           locale={ko}
           placeholderText="종료일 설정"
         />
-      </div>
+      </EndDate>
     </DateContainer>
   </InputLayout>)
 }

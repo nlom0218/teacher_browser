@@ -11,8 +11,8 @@ import { SEE_SCHEDULE_QUERY } from '../../../Graphql/Schedule/query';
 const SubmitInput = styled.input`
   background-color: ${props => props.theme.btnBgColor};
   color: ${props => props.theme.bgColor};
-  padding: 10px;
-  padding: 0.625rem;
+  padding: 10px 0px;
+  padding: 0.625rem 0rem;
   border-radius: 5px;
   border-radius: 0.3125rem;
   text-align: center;

@@ -28,7 +28,7 @@ const JournalSection = ({ teacherEmail, urlDate }) => {
       {/* <PlusScheduleBtn onClick={onClickPlusBtn}><AiOutlinePlus /></PlusScheduleBtn> */}
     </SectionTitle>
     <SectionContents>
-      {loading ? <Loading page="subpage" /> :
+      {loading ? <Loading page="subPage" /> :
         data?.seeJournal?.length === 0 ? <SectionNoDateText>생성된 학급일지가 없습니다. 😁</SectionNoDateText> :
           <SectionList>
             {data?.seeJournal?.map((item, index) => {
