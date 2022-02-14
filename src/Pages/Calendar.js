@@ -293,7 +293,7 @@ const Calendar = () => {
     {isPopup === "detailToDo" && <DetailToDo setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} />}
     {isPopup === "seeAllergy" && <SeeAllergy />}
     {isPopup === "summaryJournal" && <MoveStudentPage setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} setRefetchQuery={setRefetchQuery} />}
-    {isPopup === "addAttend" && <AddAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} />}
+    {isPopup === "addAttend" && <AddAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
     {isPopup === "attendSelectedStudent" && <AttendSelectedStudent />}
     {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
     {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}

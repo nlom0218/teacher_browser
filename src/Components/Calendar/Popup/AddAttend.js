@@ -117,10 +117,10 @@ const SubmitInput = styled.input`
   cursor: pointer;
 `
 
-const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery }) => {
+const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) => {
 
   const [type, setType] = useState(undefined)
-  const [date, setDate] = useState(new window.Date());
+  const [date, setDate] = useState(new window.Date(parseInt(urlDate)));
   const [studentName, setStudentName] = useState(undefined)
   const [studentId, setStudentId] = useState(undefined)
   const { register, handleSubmit } = useForm({

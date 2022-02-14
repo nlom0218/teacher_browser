@@ -51,8 +51,6 @@ const AttendSection = ({ urlDate, refetchQuery }) => {
     }
   })
 
-  console.log(data);
-
   const onClickPlusBtn = () => {
     inPopup("addAttend")
   }
