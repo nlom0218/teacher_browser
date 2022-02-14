@@ -63,7 +63,7 @@ const JournalSectionItem = ({ item }) => {
     },
     skip: !item
   })
-  console.log(data);
+
   return (<Container>
     <StudentInfo>
       {data?.seeAllStudent[0]?.icon && <StudnetIcon>{processStudentIcon(data?.seeAllStudent[0]?.icon)}</StudnetIcon>}

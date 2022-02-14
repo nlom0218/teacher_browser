@@ -20,7 +20,7 @@ const JournalSection = ({ teacherEmail, urlDate }) => {
     },
     skip: !teacherEmail
   })
-  console.log(data);
+
   return (<SectionContainer>
     <SectionTitle>
       <div><IcLunchmenuClick /></div>
