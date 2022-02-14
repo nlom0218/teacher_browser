@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import styled from 'styled-components';
+import { inPopup } from '../../apollo';
 import { SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
 import { processStudentIcon } from '../../shared';
 import { color } from '../../styles';
@@ -17,11 +18,13 @@ const Container = styled.div`
 `
 
 const StudentInfo = styled.div`
+  justify-self: flex-start;
   display: grid;
-  grid-template-columns: auto auto auto 1fr;
+  grid-template-columns: auto auto auto;
   align-items: center;
   column-gap: 5px;
   column-gap: 0.3125rem;
+  cursor: pointer;
 `
 
 const StudnetIcon = styled.div`
@@ -30,7 +33,8 @@ const StudnetIcon = styled.div`
   }
 `
 
-const StudentName = styled.div``
+const StudentName = styled.div`
+`
 
 const StudentNumber = styled.div`
   opacity: 0.6;
@@ -64,8 +68,13 @@ const JournalSectionItem = ({ item }) => {
     skip: !item
   })
 
+  const onClickStudentInfo = () => {
+    inPopup("summaryJournal")
+    localStorage.setItem("summaryStudentId", item.ownerId)
+  }
+
   return (<Container>
-    <StudentInfo>
+    <StudentInfo onClick={onClickStudentInfo}>
       {data?.seeAllStudent[0]?.icon && <StudnetIcon>{processStudentIcon(data?.seeAllStudent[0]?.icon)}</StudnetIcon>}
       <StudentName>{data?.seeAllStudent[0]?.studentName}</StudentName>
       {data?.seeAllStudent[0]?.studentNumber && <StudentNumber>{data?.seeAllStudent[0]?.studentNumber}번</StudentNumber>}
