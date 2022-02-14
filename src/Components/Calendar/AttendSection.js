@@ -1,11 +1,11 @@
 import React from 'react';
-import IcLunchmenuClick from '../../icons/Lunchmenu/IcLunchmenuClick';
 import SectionContainer from './styled/SectionContainer';
 import SectionContents from './styled/SectionContents';
 import SectionTitle from './styled/SectionTitle';
 import { AiOutlinePlus } from "react-icons/ai"
 import styled from 'styled-components';
 import IcAttendanceClick from '../../icons/Attendance/IcAttendanceClick';
+import { inPopup } from '../../apollo';
 
 const PlusScheduleBtn = styled.div`
   padding: 5px;
@@ -25,7 +25,7 @@ const PlusScheduleBtn = styled.div`
 const AttendSection = () => {
 
   const onClickPlusBtn = () => {
-
+    inPopup("addAttend")
   }
 
   return (<SectionContainer>

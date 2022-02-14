@@ -45,14 +45,14 @@ export const CalenderPopupFormContainer = styled.form`
 }
 `
 
-const InputLayout = styled.div`
+export const InputLayout = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
   column-gap: 20px;
   column-gap: 1.25rem;
 `
 
-const Icon = styled.div`
+export const Icon = styled.div`
   padding: ${props => props.notPaddingTop ? "0px" : "15px"} 0px;
   padding: ${props => props.notPaddingTop ? "0px" : "0.9375rem"} 0rem;
   font-size: 1.25em;
@@ -105,7 +105,7 @@ const ColorItem = styled.div`
   border-radius: 0.3125rem;
 `
 
-const DateContainer = styled.div`
+export const DateContainer = styled.div`
     display : grid;
     align-items: center;
     column-gap : 20px;
