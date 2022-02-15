@@ -17,3 +17,12 @@ export const EDIT_ATTENDANCE_MUTATION = gql`
     }
   }
 `
+
+export const DELETE_ATTENDANCE_MUTATION = gql`
+  mutation DeleteAttendance($userEmail: String!, $attendId: String!) {
+    deleteAttendance(userEmail: $userEmail, attendId: $attendId) {
+      ok
+      error
+    }
+  }
+`

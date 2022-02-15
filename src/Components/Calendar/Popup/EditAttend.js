@@ -10,7 +10,7 @@ import { customMedia } from '../../../styles';
 import { ko } from "date-fns/esm/locale";
 import DatePicker from 'react-datepicker';
 import IcNameTableClick from '../../../icons/NameTable/IcNameTableClick';
-import { EDIT_ATTENDANCE_MUTATION } from '../../../Graphql/Attendance/mutation';
+import { DELETE_ATTENDANCE_MUTATION, EDIT_ATTENDANCE_MUTATION } from '../../../Graphql/Attendance/mutation';
 import { SEE_ATTENDANCE_QUERY } from "../../../Graphql/Attendance/query"
 
 const CalenderPopupFormContainer = styled.form`
@@ -152,8 +152,29 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) 
     }
   }
 
+  const deleteOnCompleted = (result) => {
+    const { deleteAttendance: { ok, error } } = result
+    if (ok) {
+      setMsg("출결이 삭제 되었습니다. 😀")
+      outPopup()
+      localStorage.removeItem("attendStudentName")
+      localStorage.removeItem("attendStudentId")
+      localStorage.removeItem("summaryAttendId")
+      localStorage.removeItem("summaryAttendName")
+      setRefetchQuery(prev => prev + 1)
+    } else {
+      setErrMsg(error)
+    }
+  }
+
+
+
   const [editAttendance, { loading: editLoading }] = useMutation(EDIT_ATTENDANCE_MUTATION, {
     onCompleted,
+  })
+
+  const [deleteAttendance, { loading: deleteLoading }] = useMutation(DELETE_ATTENDANCE_MUTATION, {
+    onCompleted: deleteOnCompleted
   })
 
   const onSubmit = (data) => {
@@ -178,6 +199,15 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) 
         type,
         date,
         ...(contents && { contents })
+      }
+    })
+  }
+
+  const onClickDelBtn = () => {
+    deleteAttendance({
+      variables: {
+        userEmail,
+        attendId
       }
     })
   }
@@ -242,7 +272,7 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) 
         type="submit"
         value="수정하기"
       />
-      <DelBtn>삭제하기</DelBtn>
+      <DelBtn onClick={onClickDelBtn}>삭제하기</DelBtn>
     </CalenderPopupFormContainer>
   </PopupContainer>);
 }
