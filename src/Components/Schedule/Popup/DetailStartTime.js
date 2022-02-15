@@ -6,6 +6,7 @@ import {
   DetailStudentLayout,
   DetailTitle,
 } from "../../List/styled/DetailStudent";
+import { timeSetData } from "../ScheduleData";
 
 const Form = styled.form`
   display: grid;
@@ -38,18 +39,8 @@ const AddTagBtn = styled.div`
   border-radius: 0.3125rem;
   cursor: pointer;
 `;
-const DetailStartTime = (timeSet, setTimeSet) => {
-  const basic = {
-    breakminutes: "0",
-    breaktime: "0",
-    classtime: "40",
-    hour: "9",
-    lunchhour: "4",
-    lunchminutes: "50",
-    minutes: "10",
-    resttime: "10",
-  };
-  const [time, setTime] = useState(basic);
+const DetailStartTime = () => {
+  const [time, setTime] = useState(timeSetData[0]);
   const { register, handleSubmit, getValues } = useForm({
     mode: "onChange",
   });
@@ -66,7 +57,6 @@ const DetailStartTime = (timeSet, setTimeSet) => {
     } = data;
     setTime(data);
   };
-  // console.log(time);
   const onBlurTimeSet = () => {
     const hour = getValues("hour");
     const minutes = getValues("minutes");
@@ -90,7 +80,7 @@ const DetailStartTime = (timeSet, setTimeSet) => {
 
   const onCompleted = () => {
     outPopup();
-    setTime(time);
+    setTime(time); //변경된 값 어떻게 받아오나..
   };
 
   return (
@@ -115,7 +105,7 @@ const DetailStartTime = (timeSet, setTimeSet) => {
           min="00"
           max="59"
           step="5"
-          defaultValue={0}
+          defaultValue={time.minutes}
         />
         <Font>분 </Font>
       </Form>
@@ -129,7 +119,7 @@ const DetailStartTime = (timeSet, setTimeSet) => {
           min="00"
           max="59"
           step="5"
-          defaultValue={40}
+          defaultValue={time.classtime}
         />
         <Font>분 </Font>
       </Form>
@@ -143,7 +133,7 @@ const DetailStartTime = (timeSet, setTimeSet) => {
           min="00"
           max="59"
           step="5"
-          defaultValue={10}
+          defaultValue={time.resttime}
         />
         <Font>분 </Font>
       </Form>
@@ -156,7 +146,7 @@ const DetailStartTime = (timeSet, setTimeSet) => {
           type="number"
           max="6"
           min="1"
-          defaultValue={4}
+          defaultValue={time.lunchhour}
         />{" "}
         <Font>교시 후 </Font>
         <Input
@@ -167,7 +157,7 @@ const DetailStartTime = (timeSet, setTimeSet) => {
           min="00"
           max="80"
           step="5"
-          defaultValue={50}
+          defaultValue={time.lunchminutes}
         />
         <Font>분 </Font>
       </Form>
@@ -180,7 +170,7 @@ const DetailStartTime = (timeSet, setTimeSet) => {
           type="number"
           max="6"
           min="1"
-          defaultValue={0}
+          defaultValue={time.breaktime}
         />{" "}
         <Font>교시 후 </Font>
         <Input
@@ -191,7 +181,7 @@ const DetailStartTime = (timeSet, setTimeSet) => {
           min="00"
           max="80"
           step="5"
-          defaultValue={0}
+          defaultValue={time.breakminutes}
         />
         <Font>분 </Font>
       </Form>

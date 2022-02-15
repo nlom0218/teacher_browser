@@ -41,7 +41,7 @@ const Container = styled.div`
 const SFolderList = styled.div`
   display: grid;
   grid-template-columns: auto;
-  /* grid-template-rows: repeat(19, auto) 1fr; //folder list 수 변경되면 같이 수정 꼭! */
+  grid-template-rows: repeat(${(props) => props.listnum + 1}, auto) 1fr;
   row-gap: 10px;
   row-gap: 0.625rem;
   min-height: 100%;
@@ -107,8 +107,10 @@ const FolderList = ({ right }) => {
     "기초학력",
     "다문화",
     "출판사",
+    "학년밴드",
+    "교권/복지",
   ];
-
+  const listnum = pageLinkFolderName.length;
   const processSelected = (item) => {
     if (right) {
       //pageLink
@@ -145,7 +147,7 @@ const FolderList = ({ right }) => {
 
   return (
     <Container right={right}>
-      <SFolderList>
+      <SFolderList listnum={listnum}>
         {pageLinkFolderName.map((item, index) => {
           return (
             <Folder

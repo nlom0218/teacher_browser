@@ -138,6 +138,8 @@ const PageLinkRegister = () => {
     "안전",
     "기초학력",
     "출판사",
+    "학년밴드",
+    "교권/복지",
   ];
   const pageType = ["블로그", "유튜브"];
   const [submitFolder, setSubmitFolder] = useState([]);

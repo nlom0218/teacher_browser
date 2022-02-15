@@ -14,19 +14,19 @@ import { useRef } from "react";
 import TimeTableTitle from "../Components/Schedule/TimeTableTitle";
 import ClassTimeSet from "../Components/Schedule/Popup/ClassTimeSet";
 import { timeSetData } from "../Components/Schedule/ScheduleData";
-import { TimeSetCal } from "../Components/Schedule/TimeSetCal";
+import { timeSetCal } from "../Components/Schedule/TimeSetCal";
+import ScheduleForm from "../Components/Schedule/ScheduleForm";
 
-// const basicTime = [];
+// 시간 설정해야 하는 기초값 데이터베이스에 있는거 연결하기
 const basic = timeSetData;
 
 //수업정보를 어떻게 받아서 전달????
-//태그랑 태그 관리
 //음영한 뒤 다크모드에서 글씨 안 보임.
 // 인쇄기능에 과목명보내기
 //수업추가 어떻게?
 
 const Container = styled.div`
-  min-height: "100%";
+  min-height: 100%;
   display: grid;
   grid-template-rows: auto auto 1fr;
   padding: 20px;
@@ -90,7 +90,6 @@ const Schedule = () => {
   const onClickTimeviewBtn = () => {
     setViewTime(!viewTime);
   };
-  console.log(TimeSetCal);
   return (
     <BasicContainer menuItem={true} screen="small">
       <Container>
@@ -110,8 +109,15 @@ const Schedule = () => {
             <TimeTableFont fontSize={fontSize} setFontSize={setFontSize} />
           )}
         </OptionContents>
-        <TimeTableGrid
-          // timeResult={timeResult}
+        {/* <TimeTableGrid
+          timeResult={timeSetCal}
+          fontSize={fontSize}
+          setFontSize={setFontSize}
+          viewTime={viewTime}
+          setViewTime={setViewTime}
+        /> */}
+        <ScheduleForm
+          timeResult={timeSetCal}
           fontSize={fontSize}
           setFontSize={setFontSize}
           viewTime={viewTime}
@@ -120,15 +126,13 @@ const Schedule = () => {
       </Container>
 
       {isPopup === "registerClass" && <ClassRegisterPage />}
-      {isPopup === "registerTimeSet" && (
-        <ClassTimeSet timeSet={timeSet} setTimeSet={setTimeSet} />
-      )}
+      {isPopup === "registerTimeSet" && <ClassTimeSet />}
       {isPopup === "print" && (
         <PrintScheduleContents
           printRef={componentRef}
           title={title}
           viewTime={viewTime}
-        // timeResult={timeResult}
+          timeResult={timeSetCal}
         />
       )}
     </BasicContainer>

@@ -42,19 +42,12 @@ const TimeTableGrid = ({
   setViewTime,
   timeResult,
 }) => {
-  // const classtime1 = ["1", "", [timeResult[0], timeResult[1]]];
-  // const classtime2 = ["2", "", [timeResult[2], timeResult[3]]];
-  // const classtime3 = ["3", "", [timeResult[4], timeResult[5]]];
-  // const classtime4 = ["4", "", [timeResult[6], timeResult[7]]];
-  // const classtime5 = ["5", "", [timeResult[8], timeResult[9]]];
-  // const classtime6 = ["6", "", [timeResult[10], timeResult[11]]];
-
-  const classtime1 = ["1", "", []];
-  const classtime2 = ["2", "", []];
-  const classtime3 = ["3", "", []];
-  const classtime4 = ["4", "", []];
-  const classtime5 = ["5", "", []];
-  const classtime6 = ["6", "", []];
+  const classtime1 = ["1", "", [timeResult[0], timeResult[1]]];
+  const classtime2 = ["2", "", [timeResult[2], timeResult[3]]];
+  const classtime3 = ["3", "", [timeResult[4], timeResult[5]]];
+  const classtime4 = ["4", "", [timeResult[6], timeResult[7]]];
+  const classtime5 = ["5", "", [timeResult[8], timeResult[9]]];
+  const classtime6 = ["6", "", [timeResult[10], timeResult[11]]];
 
   return (
     <Container>
