@@ -23,6 +23,7 @@ import SeeAllergy from '../Components/Lunchmenu/Popup/SeeAllergy';
 import MoveStudentPage from '../Components/Calendar/Popup/MoveStudentPage';
 import AddAttend from '../Components/Calendar/Popup/AddAttend';
 import AttendSelectedStudent from '../Components/Calendar/Popup/AttendSelectedStudent';
+import EditAttend from "../Components/Calendar/Popup/EditAttend"
 
 const Container = styled.div`
   display: grid;
@@ -296,6 +297,7 @@ const Calendar = () => {
     {isPopup === "summaryJournal" && <MoveStudentPage setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} setRefetchQuery={setRefetchQuery} />}
     {isPopup === "addAttend" && <AddAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
     {isPopup === "attendSelectedStudent" && <AttendSelectedStudent />}
+    {isPopup === "summaryAttend" && <EditAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
     {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
     {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
   </BasicContainer>);

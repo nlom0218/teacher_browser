@@ -3,14 +3,15 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import PopupContainer from '../../Shared/PopupContainer';
 import { inPopup, outPopup } from '../../../apollo';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { Icon, CalenderPopupTextareaLayout, CalenderPopupTitle, InputLayout, DateContainer } from './PopupLayout';
 import { BsCalendarDate, BsFillPersonCheckFill, BsFillPersonFill } from 'react-icons/bs';
 import { customMedia } from '../../../styles';
 import { ko } from "date-fns/esm/locale";
 import DatePicker from 'react-datepicker';
 import IcNameTableClick from '../../../icons/NameTable/IcNameTableClick';
-import { CREATE_ATTENDANCE_MUTATION } from '../../../Graphql/Attendance/mutation';
+import { EDIT_ATTENDANCE_MUTATION } from '../../../Graphql/Attendance/mutation';
+import { SEE_ATTENDANCE_QUERY } from "../../../Graphql/Attendance/query"
 
 const CalenderPopupFormContainer = styled.form`
   padding : 20px 0px;
@@ -18,7 +19,7 @@ const CalenderPopupFormContainer = styled.form`
   display: grid;
   row-gap: 20px;
   row-gap: 1.25rem;
-  grid-template-rows: auto auto auto 1fr auto auto;
+  grid-template-rows: auto auto auto 1fr auto auto auto;
   min-height: 100%;
   textarea {
     all: unset;
@@ -54,16 +55,6 @@ const SelectedStudent = styled.div`
 `
 
 const StudentName = styled.div`
-  opacity: ${props => props.selected ? 1 : 0.6};
-`
-
-const SelectBtn = styled.div`
-  font-size: 2em;
-  font-size: 2rem;
-  cursor: pointer;
-  svg {
-    display: flex;
-  }
 `
 
 const AttendType = styled.div`
@@ -117,30 +108,51 @@ const SubmitInput = styled.input`
   cursor: pointer;
 `
 
-const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) => {
+const DelBtn = styled.div`
+  background-color: ${props => props.theme.redColor};
+  color: ${props => props.theme.bgColor};
+  padding: 10px 0px;
+  padding: 0.625rem 0rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  text-align: center;
+  cursor: pointer;
+`
+
+const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) => {
+
+  const attendId = localStorage.getItem("summaryAttendId")
+  const attendName = localStorage.getItem("summaryAttendName")
 
   const [type, setType] = useState(undefined)
   const [date, setDate] = useState(undefined);
-  const [studentName, setStudentName] = useState(undefined)
   const [studentId, setStudentId] = useState(undefined)
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, setValue } = useForm({
     mode: "onChange"
   })
 
+  const { data, loading } = useQuery(SEE_ATTENDANCE_QUERY, {
+    variables: {
+      attendId
+    }
+  })
+
   const onCompleted = (result) => {
-    const { createAttendance: { ok, error } } = result
+    const { editAttendance: { ok, error } } = result
     if (ok) {
-      setMsg("새로운 출결이 등록되었습니다. 😀")
+      setMsg("출결이 수정 되었습니다. 😀")
       outPopup()
       localStorage.removeItem("attendStudentName")
       localStorage.removeItem("attendStudentId")
+      localStorage.removeItem("summaryAttendId")
+      localStorage.removeItem("summaryAttendName")
       setRefetchQuery(prev => prev + 1)
     } else {
       setErrMsg(error)
     }
   }
 
-  const [createAttendance, { loading }] = useMutation(CREATE_ATTENDANCE_MUTATION, {
+  const [editAttendance, { loading: editLoading }] = useMutation(EDIT_ATTENDANCE_MUTATION, {
     onCompleted,
   })
 
@@ -159,10 +171,10 @@ const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) =
       return
     }
 
-    createAttendance({
+    editAttendance({
       variables: {
+        attendId,
         userEmail,
-        studentId,
         type,
         date,
         ...(contents && { contents })
@@ -170,12 +182,7 @@ const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) =
     })
   }
 
-  const onClickSelectBtn = () => {
-    inPopup("attendSelectedStudent")
-  }
-
   useEffect(() => {
-    setStudentName(localStorage.getItem("attendStudentName"))
     setStudentId(localStorage.getItem("attendStudentId"))
   }, [])
 
@@ -185,14 +192,21 @@ const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) =
     }
   }, [])
 
+  useEffect(() => {
+    if (data) {
+      setStudentId(data?.seeAttendance[0]?.studentId)
+      setType(data?.seeAttendance[0]?.type)
+      setValue("contents", data?.seeAttendance[0]?.contents)
+    }
+  }, [data])
+
   return (<PopupContainer maxHeight={true}>
     <CalenderPopupFormContainer onSubmit={handleSubmit(onSubmit)}>
-      <CalenderPopupTitle>출결등록</CalenderPopupTitle>
+      <CalenderPopupTitle>출결수정</CalenderPopupTitle>
       <InputLayout>
         <Icon><BsFillPersonFill /></Icon>
         <SelectedStudent>
-          <StudentName selected={studentName}>{studentName ? studentName : "선택된 학생이 없습니다."}</StudentName>
-          <SelectBtn onClick={onClickSelectBtn}><IcNameTableClick /></SelectBtn>
+          <StudentName>{attendName}</StudentName>
         </SelectedStudent>
       </InputLayout>
       <InputLayout>
@@ -226,10 +240,11 @@ const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) =
       </InputLayout>
       <SubmitInput
         type="submit"
-        value="등록하기"
+        value="수정하기"
       />
+      <DelBtn>삭제하기</DelBtn>
     </CalenderPopupFormContainer>
   </PopupContainer>);
 }
 
-export default AddAttend;
+export default EditAttend;

@@ -8,3 +8,12 @@ export const CREATE_ATTENDANCE_MUTATION = gql`
     }
   }
 `
+
+export const EDIT_ATTENDANCE_MUTATION = gql`
+  mutation EditAttendance($userEmail:String! $type: String!, $date: String!, $attendId: String!, $contents: String) {
+    editAttendance(userEmail: $userEmail, type: $type, date: $date, attendId: $attendId, contents: $contents) {
+      ok
+      error
+    }
+  }
+`

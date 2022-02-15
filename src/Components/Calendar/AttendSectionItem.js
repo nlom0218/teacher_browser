@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import React from 'react';
 import styled from 'styled-components';
+import { inPopup } from '../../apollo';
 import { SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
 import { processStudentIcon } from '../../shared';
 import { color } from '../../styles';
@@ -34,7 +35,7 @@ const StudentNumber = styled.div`
   opacity: 0.6;
 `
 
-const StudentJournal = styled.div`
+const StudentAttend = styled.div`
     background-color: rgba(104, 255, 122, 0.2);
     box-shadow: ${color.boxShadow};
     padding: 20px;
@@ -42,6 +43,7 @@ const StudentJournal = styled.div`
     border-radius: 5px;
     border-radius: 0.3125rem;
     border: ${props => props.isEdit && `${props.theme.fontColor} 1px solid`};
+    cursor: pointer;
 `
 
 const AttendSectionItem = ({ item }) => {
@@ -52,15 +54,21 @@ const AttendSectionItem = ({ item }) => {
     skip: !item
   })
 
+  const onClickStudentAttend = () => {
+    inPopup("summaryAttend")
+    localStorage.setItem("summaryAttendId", item._id)
+    localStorage.setItem("summaryAttendName", data?.seeAllStudent[0]?.studentName)
+  }
+
   return (<Container>
     <StudentInfo>
       {data?.seeAllStudent[0]?.icon && <StudnetIcon>{processStudentIcon(data?.seeAllStudent[0]?.icon)}</StudnetIcon>}
       <StudentName>{data?.seeAllStudent[0]?.studentName}</StudentName>
       {data?.seeAllStudent[0]?.studentNumber && <StudentNumber>{data?.seeAllStudent[0]?.studentNumber}번</StudentNumber>}
     </StudentInfo>
-    <StudentJournal>
+    <StudentAttend onClick={onClickStudentAttend}>
       {item.type}
-    </StudentJournal>
+    </StudentAttend>
   </Container>);
 }
 
