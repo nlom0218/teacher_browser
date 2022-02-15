@@ -169,7 +169,12 @@ const Calendar = () => {
   const [screen, setScreen] = useState("small")
   const [refetchQuery, setRefetchQuery] = useState(1)
 
-  const [seeSchedule, { data, loading, refetch }] = useLazyQuery(SEE_SCHEDULE_QUERY)
+  const { data, loading, refetch } = useQuery(SEE_SCHEDULE_QUERY, {
+    variables: {
+      dateArr: dateArr?.map(item => new window.Date(item.date).setHours(0, 0, 0, 0))
+    },
+    skip: !dateArr
+  })
 
   const onClickTodayBtn = () => {
     const newDate = new Date()
@@ -230,16 +235,16 @@ const Calendar = () => {
     setWeekLength(weekLength)
   }, [date])
 
-  useEffect(() => {
-    if (dateArr) {
-      const sendDate = dateArr.map(item => new window.Date(item.date).setHours(0, 0, 0, 0))
-      seeSchedule({
-        variables: {
-          dateArr: sendDate
-        }
-      })
-    }
-  }, [dateArr])
+  // useEffect(() => {
+  //   if (dateArr) {
+  //     const sendDate = dateArr.map(item => new window.Date(item.date).setHours(0, 0, 0, 0))
+  //     seeSchedule({
+  //       variables: {
+  //         dateArr: sendDate
+  //       }
+  //     })
+  //   }
+  // }, [dateArr])
 
   useEffect(() => {
     if (data) {
@@ -284,7 +289,7 @@ const Calendar = () => {
             })}
             <CalendarList weekLength={weekLength}>
               {dateArr && dateArr?.map((item, index) => {
-                return <CalendarItem media={media} key={index} item={item} userEmail={me?.email} schedule={schedule?.seeSchedule} />
+                return <CalendarItem media={media} key={index} item={item} userEmail={me?.email} schedule={schedule?.seeSchedule} refetchQuery={refetchQuery} />
               })}
             </CalendarList>
           </BottomContainer>
