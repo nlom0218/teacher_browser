@@ -4,6 +4,7 @@ import { customMedia } from "../../styles";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useState } from "react/cjs/react.development";
 import { TiDelete } from "react-icons/ti";
+import SeeSelectedStudent from "./SeeSelectedStudent";
 
 const RealContainer = styled.div`
 
@@ -133,10 +134,19 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, seeResultType, font
                 return (
                     <Item key={item}>
                         <Name fontSize={fontSizeAll}>{item}</Name>
-                        <RemoveBtn onClick={() => onClickRemoveBtn(item)}><TiDelete /></RemoveBtn>
+                        {/* <RemoveBtn onClick={() => onClickRemoveBtn(item)}><TiDelete /></RemoveBtn> */}
                     </Item>
+                
+                    
                 );
-            }) 
+            })
+        //     &&
+        //     <SeeSelectedStudent
+        //     selectedStudent={selectedStudent}
+        //     pickNum={pickNum}
+        //     pickType={pickType}
+        //     fontSizeAll={fontSizeAll}
+        // /> 
             }
         </Container>
         </RealContainer>
