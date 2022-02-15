@@ -87,6 +87,7 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail, setRefetchQuery }) => {
     if (ok) {
       outPopup()
       setMsg("할 일이 삭제되었습니다. 😄")
+      localStorage.removeItem("detailToDo")
       if (setRefetchQuery) {
         setRefetchQuery(prev => prev + 1)
       }
@@ -98,6 +99,7 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail, setRefetchQuery }) => {
     if (ok) {
       outPopup()
       setMsg("할 일이 완료되었습니다. 😄")
+      localStorage.removeItem("detailToDo")
       if (setRefetchQuery) {
         setRefetchQuery(prev => prev + 1)
       }

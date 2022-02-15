@@ -74,6 +74,10 @@ const PopupContainer = ({ children, emojiPopup, maxHeight }) => {
     localStorage.removeItem("seletedStudentType")
     localStorage.removeItem("summaryJournalId")
     localStorage.removeItem("summaryJournalName")
+    localStorage.removeItem("addBookmark")
+    localStorage.removeItem("AllergyNum")
+    localStorage.removeItem("detailToDo")
+    localStorage.removeItem("editSchedule")
   }
   return (<Background onClick={onClickBackground}>
     {/* e.stopPropagation 이벤트가 부모로 전달되는 것을 막는다. 즉, outPopup이 실행이 안된다. */}

@@ -87,6 +87,7 @@ const AddBookmark = ({ userEmail }) => {
     } = result;
     if (ok) {
       outPopup();
+      localStorage.removeItem("addBookmark")
     }
   };
 
