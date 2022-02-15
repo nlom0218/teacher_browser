@@ -151,6 +151,9 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail, setRefetchQuery }) => {
   }, [data])
 
   const onSubmit = (data) => {
+    if (type === "complete") {
+      return
+    }
     if (startDate) {
       if (!endDate) {
         setErrMsg("종료일을 설정해주세요. 🥲")
@@ -204,7 +207,7 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail, setRefetchQuery }) => {
   }
 
   return (<PopupContainer maxHeight={true}>
-    <PopupForm create={false} onSubmit={handleSubmit(onSubmit)}>
+    <PopupForm create={false} onSubmit={handleSubmit(onSubmit)} type={type}>
       <PopupTitle>할 일 세부정보 및 수정하기</PopupTitle>
       <Type not={type === "not"}>
         {type === "not" && "미완료된 할 일"}
@@ -231,10 +234,10 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail, setRefetchQuery }) => {
       </PopupTextarea>
       <PopupDate startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} />
       <PopupStar star={star} setStar={setStar} />
-      <SubmitBtn
+      {type !== "complete" && <SubmitBtn
         type="submit"
         value="수정하기"
-      />
+      />}
       <BottomBtn type={type}>
         {type !== "complete" && <CompleteBtn onClick={onClickCompleteBtn} className="bottom_btn">완료하기</CompleteBtn>}
         <DelBtn onClick={onClickDelBtn} className="bottom_btn">삭제하기</DelBtn>

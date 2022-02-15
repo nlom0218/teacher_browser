@@ -5,6 +5,7 @@ const PopupForm = styled.form`
   padding : 1.25rem 0rem;
   display : grid;
   grid-template-rows: ${props => !props.create ? "auto auto auto 1fr auto auto auto auto" : "auto auto 1fr auto auto auto"};
+  grid-template-rows: ${props => props.type === "complete" && "auto auto auto 1fr auto auto auto"};
   row-gap : 20px;
   row-gap : 1.25rem;
   min-height : 100%;
