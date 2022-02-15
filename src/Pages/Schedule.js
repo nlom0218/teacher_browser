@@ -6,7 +6,6 @@ import useMedia from "../Hooks/useMedia";
 import { useForm } from "react-hook-form";
 import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
 import TimeTableFont from "../Components/Schedule/TimeTableFont";
-import TimeTableGrid from "../Components/Schedule/TimeTableGrid";
 import { useReactiveVar } from "@apollo/client";
 import ClassRegisterPage from "../Components/Schedule/Popup/ClassRegisterPage";
 import PrintScheduleContents from "../Components/Schedule/Popup/PrintScheduleContents";

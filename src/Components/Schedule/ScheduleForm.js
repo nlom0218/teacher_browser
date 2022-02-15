@@ -25,8 +25,8 @@ const Container = styled.div`
 const DayTop = styled.div`
   height: 100%;
   display: grid;
-  font-size: 1.2rem;
-  font-size: 1.2 em;
+  font-size: 1rem;
+  font-size: 1em;
 
   text-align: center;
   column-gap: 5px;
