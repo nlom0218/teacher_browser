@@ -24,6 +24,7 @@ import MoveStudentPage from '../Components/Calendar/Popup/MoveStudentPage';
 import AddAttend from '../Components/Calendar/Popup/AddAttend';
 import AttendSelectedStudent from '../Components/Calendar/Popup/AttendSelectedStudent';
 import EditAttend from "../Components/Calendar/Popup/EditAttend"
+import TodoCreate from '../Components/TodoList/Popup/TodoCreate';
 
 const Container = styled.div`
   display: grid;
@@ -292,6 +293,7 @@ const Calendar = () => {
     }
     {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} setRefetchQuery={setRefetchQuery} />}
     {isPopup === "editSchedule" && <EditSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} setRefetchQuery={setRefetchQuery} />}
+    {isPopup === "createToDo" && <TodoCreate setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
     {isPopup === "detailToDo" && <DetailToDo setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} />}
     {isPopup === "seeAllergy" && <SeeAllergy />}
     {isPopup === "summaryJournal" && <MoveStudentPage setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} setRefetchQuery={setRefetchQuery} />}

@@ -11,6 +11,24 @@ import SectionNoDateText from './styled/SectionNoDateText';
 import SectionTitle from './styled/SectionTitle';
 import { compare } from "../../shared"
 import ToDoListSectionItem from './ToDoListSectionItem';
+import { AiOutlinePlus } from 'react-icons/ai';
+import { inPopup } from '../../apollo';
+
+
+const PlusToDoBtn = styled.div`
+  padding: 5px;
+  padding: 0.3125rem;
+  border-radius: 50%;
+  cursor: pointer;
+  color: ${props => props.theme.bgColor};
+  background-color: ${props => props.theme.btnBgColor};
+  transition: color 1s ease, background-color 1s ease;
+  svg {
+    font-size: 1.25em;
+    font-size: 1.25rem;
+    display: flex;
+  }
+`
 
 const TitleIcon = styled.div`
   svg {
@@ -72,6 +90,10 @@ const ToDoListSection = ({ urlDate, refetchQuery }) => {
     }
   })
 
+  const onClickPlusBtn = () => {
+    inPopup("createToDo")
+  }
+
 
   useEffect(() => {
     if (data) {
@@ -103,6 +125,7 @@ const ToDoListSection = ({ urlDate, refetchQuery }) => {
     <SectionTitle>
       <TitleIcon><IcToDoList /></TitleIcon>
       <div>할 일</div>
+      <PlusToDoBtn onClick={onClickPlusBtn}><AiOutlinePlus /></PlusToDoBtn>
     </SectionTitle>
     <SectionContents>
       {loading ? <Loading page="subPage" />
@@ -110,7 +133,6 @@ const ToDoListSection = ({ urlDate, refetchQuery }) => {
         data?.seeToDoList.length === 0 ? <SectionNoDateText>생성된 할 일이 없습니다. 😁</SectionNoDateText>
           :
           <SectionList>
-            {/* <ToDay>오늘({format(toDay, "yy-MM-dd")} {processSetDay(new Date(toDay))}) 기준</ToDay> */}
             <SectionListLayout>
               <SectionListTitle>
                 <TitleText>할 일</TitleText>
