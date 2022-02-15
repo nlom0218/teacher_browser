@@ -23,6 +23,7 @@ import { ReactComponent as Student21 } from "../../image/icons/students/Student 
 import { ReactComponent as Student22 } from "../../image/icons/students/Student 22.svg"
 import { ReactComponent as Student23 } from "../../image/icons/students/Student 23.svg"
 import { ReactComponent as Student24 } from "../../image/icons/students/Student 24.svg"
+import { ReactComponent as Student25 } from "../../image/icons/students/Student 25.svg"
 import { ReactComponent as Student26 } from "../../image/icons/students/Student 26.svg"
 import { ReactComponent as Student27 } from "../../image/icons/students/Student 27.svg"
 import { ReactComponent as Student28 } from "../../image/icons/students/Student 28.svg"
@@ -33,6 +34,8 @@ import { ReactComponent as Student32 } from "../../image/icons/students/Student 
 import { ReactComponent as Student33 } from "../../image/icons/students/Student 33.svg"
 import { ReactComponent as Student34 } from "../../image/icons/students/Student 34.svg"
 import { ReactComponent as Student35 } from "../../image/icons/students/Student 35.svg"
+import { ReactComponent as Student36 } from "../../image/icons/students/Student 36.svg"
+import { ReactComponent as Student37 } from "../../image/icons/students/Student 37.svg"
 import { ReactComponent as Student38 } from "../../image/icons/students/Student 38.svg"
 import { ReactComponent as Student39 } from "../../image/icons/students/Student 39.svg"
 import { ReactComponent as Student40 } from "../../image/icons/students/Student 40.svg"
@@ -40,6 +43,7 @@ import { ReactComponent as Student41 } from "../../image/icons/students/Student 
 import { ReactComponent as Student42 } from "../../image/icons/students/Student 42.svg"
 import { ReactComponent as Student43 } from "../../image/icons/students/Student 43.svg"
 import { ReactComponent as Student44 } from "../../image/icons/students/Student 44.svg"
+import { ReactComponent as Student45 } from "../../image/icons/students/Student 45.svg"
 import { ReactComponent as Student46 } from "../../image/icons/students/Student 46.svg"
 import { ReactComponent as Student47 } from "../../image/icons/students/Student 47.svg"
 import { ReactComponent as Student48 } from "../../image/icons/students/Student 48.svg"
@@ -166,6 +170,11 @@ export const IcStudent24 = () => {
   );
 }
 
+export const IcStudent25 = () => {
+  return (<Student25 />
+  );
+}
+
 export const IcStudent26 = () => {
   return (<Student26 />
   );
@@ -216,6 +225,16 @@ export const IcStudent35 = () => {
   );
 }
 
+export const IcStudent36 = () => {
+  return (<Student36 />
+  );
+}
+
+export const IcStudent37 = () => {
+  return (<Student37 />
+  );
+}
+
 export const IcStudent38 = () => {
   return (<Student38 />
   );
@@ -248,6 +267,11 @@ export const IcStudent43 = () => {
 
 export const IcStudent44 = () => {
   return (<Student44 />
+  );
+}
+
+export const IcStudent45 = () => {
+  return (<Student45 />
   );
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { outPopup } from '../../../apollo';
@@ -24,7 +24,7 @@ const SubmitBtn = styled.input`
 `;
 
 
-const TodoCreate = ({ setErrMsg, userEmail }) => {
+const TodoCreate = ({ setErrMsg, userEmail, setRefetchQuery, urlDate, setMsg }) => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [star, setStar] = useState(3)
@@ -33,6 +33,10 @@ const TodoCreate = ({ setErrMsg, userEmail }) => {
         const { createToDoList: { ok } } = result
         if (ok) {
             outPopup()
+            setMsg("할 일이 추가되었습니다. 😄")
+            if (setRefetchQuery) {
+                setRefetchQuery(prev => prev + 1)
+            }
         }
     }
 
@@ -76,16 +80,23 @@ const TodoCreate = ({ setErrMsg, userEmail }) => {
         })
     }
 
+    useEffect(() => {
+        if (urlDate) {
+            setStartDate(new window.Date(parseInt(urlDate)))
+            setEndDate(new window.Date(parseInt(urlDate)))
+        }
+    }, [])
+
     return (
         <PopupContainer maxHeight={true}>
             <PopupForm onSubmit={handleSubmit(onSubmit)} create={true}>
-                <PopupTitle>할 일 작성</PopupTitle>
+                <PopupTitle>할 일 등록</PopupTitle>
                 <PopupInputLayout>
                     <PopupInput
                         {...register("toDo", {
                             required: true
                         })}
-                        placeholder="내용을 입력하세요"
+                        placeholder="내용을 입력하세요."
                         autoComplete="off"
                     >
                     </PopupInput>
@@ -93,7 +104,7 @@ const TodoCreate = ({ setErrMsg, userEmail }) => {
                 <PopupTextarea>
                     <TextareaAutosize
                         {...register('contents')}
-                        placeholder="세부내용을 입력하세요"
+                        placeholder="세부내용을 입력하세요."
                         minRows={3}
                     >
                     </TextareaAutosize>

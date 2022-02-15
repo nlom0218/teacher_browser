@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/client';
 import React from 'react';
 import styled from 'styled-components';
+import { inPopup } from '../../../apollo';
 import { SEE_TO_DO_LIST_QUERY } from '../../../Graphql/ToDoList/query';
 import { compare } from '../../../shared';
 import { customMedia } from '../../../styles';
@@ -33,6 +34,7 @@ const DelAllBtn = styled.div`
   color: ${props => props.theme.bgColor};
   border-radius: 5px;
   border-radius: 0.3125rem;
+  cursor: pointer;
 `
 
 const CompletToDoList = styled.div`
@@ -46,7 +48,11 @@ const CompletToDoList = styled.div`
   `}
 `
 
-const CompleteToDo = () => {
+const NoDateText = styled.div`
+
+`
+
+const CompleteToDo = ({ setErrMsg }) => {
 
   const { data, loading } = useQuery(SEE_TO_DO_LIST_QUERY, {
     variables: {
@@ -54,7 +60,14 @@ const CompleteToDo = () => {
     }
   })
 
-  console.log(data);
+
+  const onClickDelALlBtn = () => {
+    if (data?.seeToDoList.length !== 0) {
+      inPopup("confirmDelAll")
+    } else {
+      setErrMsg("완료된 할 일이 없습니다. 😭")
+    }
+  }
 
   if (loading) {
     return (<Loading page="popupPage" />)
@@ -64,14 +77,17 @@ const CompleteToDo = () => {
     <Container>
       <Top>
         <Title>완료된 할 일 {data?.seeToDoList.length}개</Title>
-        <DelAllBtn>모두 삭제하기</DelAllBtn>
+        <DelAllBtn onClick={onClickDelALlBtn}>모두 삭제하기</DelAllBtn>
       </Top>
-      <CompletToDoList>
+      {data?.seeToDoList.length !== 0 ? <CompletToDoList>
         {[...data?.seeToDoList].sort(compare("startDate")).map((item, index) => {
           return <CompleteToDoItem key={index} item={item} />
         })}
         {data?.seeToDoList.length % 2 === 1 && <CompleteToDoItem item={{ toDo: undefined, startDate: undefined, endDate: undefined }} />}
       </CompletToDoList>
+        :
+        <NoDateText>완료된 할 일이 없습니다.</NoDateText>
+      }
     </Container>
   </PopupContainer>);
 }

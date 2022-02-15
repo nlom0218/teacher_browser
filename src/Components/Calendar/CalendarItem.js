@@ -146,13 +146,13 @@ const DotIcon = styled.div`
 
 `
 
-const CalendarItem = ({ item, create, media, userEmail, schedule }) => {
+const CalendarItem = ({ item, create, media, userEmail, schedule, refetchQuery }) => {
   const navigate = useNavigate()
 
   const [dateSchedule, setDateSchedule] = useState([])
   const [row, setRow] = useState(1)
 
-  const { data: toDoLength, loading: toDoLoading } = useQuery(SEE_TO_DO_LIST_ONLY_LENGTH_QUERY, {
+  const { data: toDoLength, loading: toDoLoading, refetch } = useQuery(SEE_TO_DO_LIST_ONLY_LENGTH_QUERY, {
     variables: {
       userEmail,
       date: item.date
@@ -224,6 +224,10 @@ const CalendarItem = ({ item, create, media, userEmail, schedule }) => {
       setDateSchedule(reallyDateSchedule)
     }
   }, [schedule])
+
+  useEffect(() => {
+    refetch()
+  }, [refetchQuery])
 
   return (<Container>
     <Day

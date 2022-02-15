@@ -70,34 +70,43 @@ const EditSchedule = ({ userEmail, setErrMsg, setRefetchQuery, setMsg, refetch }
 
 
   const onCompleted = (result) => {
-    const { editSchedule: { ok, error } } = result
-    if (ok) {
-      setMsg("일정이 수정되었습니다. 😀")
-      outPopup()
-      refetch()
-      setRefetchQuery(prev => prev + 1)
-    } else {
-      setErrMsg(error)
+    if (!editLoading) {
+      const { editSchedule: { ok, error } } = result
+      if (ok) {
+        setMsg("일정이 수정되었습니다. 수정 사항은 잠시 뒤 반영됩니다. 조금만 기다려주세요! 😀")
+        outPopup()
+        refetch()
+        setRefetchQuery(prev => prev + 1)
+        localStorage.removeItem("editSchedule")
+      } else {
+        setErrMsg(error)
+      }
     }
   }
 
   const delOnCompleted = (result) => {
-    const { deleteSchedule: { ok } } = result
-    if (ok) {
-      setMsg("일정이 삭제되었습니다. 😀")
-      outPopup()
-      refetch()
-      setRefetchQuery(prev => prev + 1)
+    if (!deleteLoading) {
+      const { deleteSchedule: { ok } } = result
+      if (ok) {
+        setMsg("일정이 삭제되었습니다. 수정 사항은 잠시 뒤 반영됩니다. 조금만 기다려주세요! 😀")
+        outPopup()
+        refetch()
+        setRefetchQuery(prev => prev + 1)
+        localStorage.removeItem("editSchedule")
+      }
     }
   }
 
   const updateCompleted = (result) => {
-    const { updateScheduleSort: { ok } } = result
-    if (ok) {
-      outPopup()
-      refetch()
-      setMsg("일정이 정렬 되었습니다. 😀")
-      setRefetchQuery(prev => prev + 1)
+    if (!updateLoading) {
+      const { updateScheduleSort: { ok } } = result
+      if (ok) {
+        outPopup()
+        refetch()
+        setMsg("일정이 정렬 되었습니다. 수정 사항은 잠시 뒤 반영됩니다. 조금만 기다려주세요! 😀")
+        setRefetchQuery(prev => prev + 1)
+        localStorage.removeItem("editSchedule")
+      }
     }
   }
 
@@ -105,7 +114,7 @@ const EditSchedule = ({ userEmail, setErrMsg, setRefetchQuery, setMsg, refetch }
     onCompleted
   })
 
-  const [deleteSchedule, { loading: deieteLoading }] = useMutation(DELETE_SCHEDULE_MUTATION, {
+  const [deleteSchedule, { loading: deleteLoading }] = useMutation(DELETE_SCHEDULE_MUTATION, {
     onCompleted: delOnCompleted
   })
 
@@ -170,6 +179,15 @@ const EditSchedule = ({ userEmail, setErrMsg, setRefetchQuery, setMsg, refetch }
   }, [data])
 
   if (loading) {
+    return <Loading page="popupPage" />
+  }
+  if (editLoading) {
+    return <Loading page="popupPage" />
+  }
+  if (deleteLoading) {
+    return <Loading page="popupPage" />
+  }
+  if (updateLoading) {
     return <Loading page="popupPage" />
   }
 

@@ -45,14 +45,14 @@ export const CalenderPopupFormContainer = styled.form`
 }
 `
 
-const InputLayout = styled.div`
+export const InputLayout = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
   column-gap: 20px;
   column-gap: 1.25rem;
 `
 
-const Icon = styled.div`
+export const Icon = styled.div`
   padding: ${props => props.notPaddingTop ? "0px" : "15px"} 0px;
   padding: ${props => props.notPaddingTop ? "0px" : "0.9375rem"} 0rem;
   font-size: 1.25em;
@@ -105,28 +105,38 @@ const ColorItem = styled.div`
   border-radius: 0.3125rem;
 `
 
-const DateContainer = styled.div`
-  display: grid;
-  align-items: center;
-  column-gap: 20px;
-  column-gap: 1.25rem;
-  row-gap: 10px;
-  row-gap: 0.625rem;
-  text-align: center;
-  .start_date,
-  .end_date {
-    padding: 15px 20px;
-    padding: 0.9375rem 1.25rem;
-    background-color: ${props => props.theme.originBgColor};
+export const DateContainer = styled.div`
+    display : grid;
+    align-items: center;
+    column-gap : 20px;
+    column-gap : 1.25rem;
+    row-gap : 10px;
+    row-gap : 0.625rem;
     text-align: center;
-    border-radius: 20px;
-    border-radius: 1.25rem;
-  }
-  ${customMedia.greaterThan("tablet")`
-     grid-template-columns : 1fr auto 1fr;
-  `}
+    input {
+        width : 100%;
+        background-color: ${props => props.theme.originBgColor};
+        padding : 20px 10px;
+        padding : 1.25rem 0.625rem;
+        border-radius : 40px;
+        border-radius : 2.5rem;
+        cursor : pointer;
+        text-align: center;
+    }
+    ${customMedia.greaterThan("tablet")`
+       grid-template-columns : 1fr auto 1fr;
+    `}
 `
 
+const StartDate = styled.div`
+  display : grid;
+  align-items : center;
+`
+
+const EndDate = styled.div`
+  display : grid;
+  align-items : center;
+`;
 const CheckBox = styled.div`
   svg {
     display: flex;
@@ -145,13 +155,20 @@ export const CalenderPopupInputLayout = ({ register }) => {
   </InputLayout>);
 }
 
-export const CalenderPopupTextareaLayout = ({ register }) => {
+export const CalenderPopupTextareaLayout = ({ register, type }) => {
+  const processPlaceholder = () => {
+    if (type === "journal") {
+      return "기록을 적어주세요."
+    } else {
+      return "세부내용을 입력하세요."
+    }
+  }
   return (<InputLayout>
     <Icon><CgNotes /></Icon>
     <TextareaAutosize
       {...register("contents")}
       minRows={5}
-      placeholder="세부내용을 입력하세요."
+      placeholder={processPlaceholder()}
     />
   </InputLayout>);
 }
@@ -160,7 +177,7 @@ export const CalenderPopupDateLayout = ({ startDate, setStartDate, endDate, setE
   return (<InputLayout>
     <Icon><BsCalendarDate /></Icon>
     <DateContainer>
-      <div className="start_date">
+      <StartDate>
         <DatePicker
           dateFormat="yyyy/MM/dd"
           selected={startDate}
@@ -171,9 +188,9 @@ export const CalenderPopupDateLayout = ({ startDate, setStartDate, endDate, setE
           endDate={endDate}
           locale={ko}
         />
-      </div>
+      </StartDate>
       <div>~</div>
-      <div className="end_date">
+      <EndDate>
         <DatePicker
           dateFormat="yyyy/MM/dd"
           selected={endDate}
@@ -185,7 +202,7 @@ export const CalenderPopupDateLayout = ({ startDate, setStartDate, endDate, setE
           locale={ko}
           placeholderText="종료일 설정"
         />
-      </div>
+      </EndDate>
     </DateContainer>
   </InputLayout>)
 }

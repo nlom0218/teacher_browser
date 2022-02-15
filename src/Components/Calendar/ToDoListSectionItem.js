@@ -150,7 +150,11 @@ const ToDoListSectionItem = ({ item, urlDate }) => {
 
   const [completeToDoList, { loading }] = useMutation(COMPLETE_TO_DO_LIST_MUTATION, {
     onCompleted,
-    refetchQueries: [{ query: SEE_TO_DO_LIST_QUERY, variables: { date: new window.Date(parseInt(urlDate)) } }]
+    refetchQueries: [
+      { query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: false } },
+      { query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: true } },
+      { query: SEE_TO_DO_LIST_QUERY, variables: { date: new window.Date(parseInt(urlDate)) } }
+    ]
   })
 
   const onClickCheck = () => {
@@ -181,7 +185,6 @@ const ToDoListSectionItem = ({ item, urlDate }) => {
     }
   }, [item])
   return (<ToDoItem notComplete={item.type === "complete" ? false : true} complete={complete} ing={true}>
-    {/* <Line></Line> */}
     {item.type !== "complete" && <CheckIcon onClick={onClickCheck}>{complete ? <RiCheckboxCircleLine /> : <RiCheckboxBlankCircleLine />}</CheckIcon>}
     <ToDo onClick={onClickToDo} isSeleted={id === item._id}>{item.toDo}
       {complete && <CompleteLine></CompleteLine>}

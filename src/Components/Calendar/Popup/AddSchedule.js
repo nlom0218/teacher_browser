@@ -5,14 +5,13 @@ import PopupContainer from '../../Shared/PopupContainer';
 import { outPopup } from '../../../apollo';
 import { useMutation } from '@apollo/client';
 import { CREATE_SCHEDULE_MUTATION } from '../../../Graphql/Schedule/mutation';
-import { CalenderPopupColorLayout, CalenderPopupContainer, CalenderPopupDateLayout, CalenderPopupFormContainer, CalenderPopupInputLayout, CalenderPopupTextareaLayout, CalenderPopupTitle } from './PopupLayout';
-import { SEE_SCHEDULE_QUERY } from '../../../Graphql/Schedule/query';
+import { CalenderPopupColorLayout, CalenderPopupDateLayout, CalenderPopupFormContainer, CalenderPopupInputLayout, CalenderPopupTextareaLayout, CalenderPopupTitle } from './PopupLayout';
 
 const SubmitInput = styled.input`
   background-color: ${props => props.theme.btnBgColor};
   color: ${props => props.theme.bgColor};
-  padding: 10px;
-  padding: 0.625rem;
+  padding: 10px 0px;
+  padding: 0.625rem 0rem;
   border-radius: 5px;
   border-radius: 0.3125rem;
   text-align: center;
@@ -21,7 +20,7 @@ const SubmitInput = styled.input`
 
 const AddSchedule = ({ userEmail, setErrMsg, refetch, setMsg, setRefetchQuery }) => {
 
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(new window.Date());
   const [endDate, setEndDate] = useState(undefined);
   const [color, setColor] = useState(undefined)
   const { register, handleSubmit } = useForm({
@@ -58,6 +57,7 @@ const AddSchedule = ({ userEmail, setErrMsg, refetch, setMsg, setRefetchQuery })
       setErrMsg("시작일과 종료일을 다시 확인해주세요. 🥲")
       return
     }
+
     createSchedule({
       variables: {
         userEmail,

@@ -20,6 +20,13 @@ import { SEE_SCHEDULE_QUERY } from '../Graphql/Schedule/query';
 import Loading from '../Components/Shared/Loading';
 import DetailToDo from '../Components/TodoList/Popup/DetailToDo';
 import SeeAllergy from '../Components/Lunchmenu/Popup/SeeAllergy';
+import MoveStudentPage from '../Components/Calendar/Popup/MoveStudentPage';
+import AddAttend from '../Components/Calendar/Popup/AddAttend';
+import AttendSelectedStudent from '../Components/Calendar/Popup/AttendSelectedStudent';
+import EditAttend from "../Components/Calendar/Popup/EditAttend"
+import TodoCreate from '../Components/TodoList/Popup/TodoCreate';
+import AddJournal from '../Components/Calendar/Popup/AddJournal';
+import EditJournal from '../Components/Calendar/Popup/EditJournal';
 
 const Container = styled.div`
   display: grid;
@@ -155,6 +162,7 @@ const Calendar = () => {
   const me = useMe()
 
   const [date, setDate] = useState(new Date(localStorage.getItem("calendarDate")))
+
   const [weekLength, setWeekLength] = useState(1)
   const [dateArr, setDateArr] = useState(undefined)
   const [schedule, setSchedule] = useState(undefined)
@@ -163,7 +171,12 @@ const Calendar = () => {
   const [screen, setScreen] = useState("small")
   const [refetchQuery, setRefetchQuery] = useState(1)
 
-  const [seeSchedule, { data, loading, refetch }] = useLazyQuery(SEE_SCHEDULE_QUERY)
+  const { data, loading, refetch } = useQuery(SEE_SCHEDULE_QUERY, {
+    variables: {
+      dateArr: dateArr?.map(item => new window.Date(item.date).setHours(0, 0, 0, 0))
+    },
+    skip: !dateArr
+  })
 
   const onClickTodayBtn = () => {
     const newDate = new Date()
@@ -225,17 +238,6 @@ const Calendar = () => {
   }, [date])
 
   useEffect(() => {
-    if (dateArr) {
-      const sendDate = dateArr.map(item => new window.Date(item.date).setHours(0, 0, 0, 0))
-      seeSchedule({
-        variables: {
-          dateArr: sendDate
-        }
-      })
-    }
-  }, [dateArr])
-
-  useEffect(() => {
     if (data) {
       setSchedule(data)
     }
@@ -278,7 +280,7 @@ const Calendar = () => {
             })}
             <CalendarList weekLength={weekLength}>
               {dateArr && dateArr?.map((item, index) => {
-                return <CalendarItem media={media} key={index} item={item} userEmail={me?.email} schedule={schedule?.seeSchedule} />
+                return <CalendarItem media={media} key={index} item={item} userEmail={me?.email} schedule={schedule?.seeSchedule} refetchQuery={refetchQuery} />
               })}
             </CalendarList>
           </BottomContainer>
@@ -287,8 +289,15 @@ const Calendar = () => {
     }
     {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} setRefetchQuery={setRefetchQuery} />}
     {isPopup === "editSchedule" && <EditSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} setRefetchQuery={setRefetchQuery} />}
+    {isPopup === "createToDo" && <TodoCreate setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
     {isPopup === "detailToDo" && <DetailToDo setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} />}
-    {isPopup == "seeAllergy" && <SeeAllergy />}
+    {isPopup === "seeAllergy" && <SeeAllergy />}
+    {isPopup === "moveToStudentPage" && <MoveStudentPage setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} setRefetchQuery={setRefetchQuery} />}
+    {isPopup === "addJournal" && <AddJournal setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
+    {isPopup === "editJournal" && <EditJournal setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
+    {isPopup === "addAttend" && <AddAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
+    {isPopup === "eidtAttend" && <EditAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
+    {isPopup === "selectedStudent" && <AttendSelectedStudent />}
     {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
     {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
   </BasicContainer>);

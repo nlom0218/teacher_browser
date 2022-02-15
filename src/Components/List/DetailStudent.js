@@ -143,8 +143,6 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
     }
   })
 
-  console.log(data);
-
   const onMouseEnterName = () => setSeeSettingBtn(true)
   const onMouseLeaveName = () => setSeeSettingBtn(false)
 

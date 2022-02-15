@@ -136,6 +136,7 @@ const DetailPageLink = ({ link, userEmail }) => {
     } = result;
     if (ok) {
       outPopup();
+      localStorage.removeItem("addBookmark")
     }
   };
 
