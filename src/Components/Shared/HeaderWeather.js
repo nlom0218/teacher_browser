@@ -95,7 +95,7 @@ const HeaderWeather = () => {
       }
     }`;
 
-    fetch(`http://localhost:4000/graphql`, {
+    fetch(`https://teachercan.herokuapp.com/graphql`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ query }),
