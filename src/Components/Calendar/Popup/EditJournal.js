@@ -9,9 +9,8 @@ import { BsCalendarDate, BsFillPersonFill } from 'react-icons/bs';
 import { customMedia } from '../../../styles';
 import { ko } from "date-fns/esm/locale";
 import DatePicker from 'react-datepicker';
-import { EDIT_JOURNAL_MUTATION } from '../../../Graphql/Journal/mutation';
+import { DELETE_JOURNAL_MUTATION, EDIT_JOURNAL_MUTATION } from '../../../Graphql/Journal/mutation';
 import { SEE_JOURNAL_QUERY } from '../../../Graphql/Journal/query';
-import getOverlappingDaysInIntervals from 'date-fns/esm/fp/getOverlappingDaysInIntervals/index.js';
 import Loading from '../../Shared/Loading';
 
 const CalenderPopupFormContainer = styled.form`
@@ -118,6 +117,17 @@ const SubmitInput = styled.input`
   cursor: pointer;
 `
 
+const DelBtn = styled.div`
+  background-color: ${props => props.theme.redColor};
+  color: ${props => props.theme.bgColor};
+  padding: 10px 0px;
+  padding: 0.625rem 0rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  text-align: center;
+  cursor: pointer;
+`
+
 const EditJournal = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) => {
 
   const journalId = localStorage.getItem("summaryJournalId")
@@ -134,7 +144,6 @@ const EditJournal = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate })
       journalId
     }
   })
-  console.log(data);
 
   const onCompleted = (result) => {
     const { editJournal: { ok, error } } = result
@@ -149,8 +158,25 @@ const EditJournal = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate })
     }
   }
 
+  const deleteOnCompleted = (result) => {
+    const { deleteJournal: { ok, error } } = result
+    if (ok) {
+      setMsg("학급일지가 삭제되었습니다. 😀")
+      outPopup()
+      localStorage.removeItem("summaryJournalId")
+      localStorage.removeItem("summaryJournalName")
+      setRefetchQuery(prev => prev + 1)
+    } else {
+      setErrMsg(error)
+    }
+  }
+
   const [editJournal, { loading: editLoading }] = useMutation(EDIT_JOURNAL_MUTATION, {
     onCompleted
+  });
+
+  const [deleteJournal, { loading: deleteLoading }] = useMutation(DELETE_JOURNAL_MUTATION, {
+    onCompleted: deleteOnCompleted
   });
 
   const onSubmit = (data) => {
@@ -170,6 +196,15 @@ const EditJournal = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate })
         journalId,
         date,
         text: contents
+      }
+    })
+  }
+
+  const onClickDelBtn = () => {
+    deleteJournal({
+      variables: {
+        userEmail,
+        journalId
       }
     })
   }
@@ -220,6 +255,7 @@ const EditJournal = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate })
         type="submit"
         value="수정하기"
       />
+      <DelBtn onClick={onClickDelBtn}>삭제하기</DelBtn>
     </CalenderPopupFormContainer>
   </PopupContainer>);
 }
