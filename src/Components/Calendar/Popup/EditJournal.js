@@ -2,16 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import PopupContainer from '../../Shared/PopupContainer';
-import { inPopup, outPopup } from '../../../apollo';
+import { outPopup } from '../../../apollo';
 import { useMutation, useQuery } from '@apollo/client';
 import { Icon, CalenderPopupTextareaLayout, CalenderPopupTitle, InputLayout, DateContainer } from './PopupLayout';
-import { BsCalendarDate, BsFillPersonCheckFill, BsFillPersonFill } from 'react-icons/bs';
+import { BsCalendarDate, BsFillPersonFill } from 'react-icons/bs';
 import { customMedia } from '../../../styles';
 import { ko } from "date-fns/esm/locale";
 import DatePicker from 'react-datepicker';
-import IcNameTableClick from '../../../icons/NameTable/IcNameTableClick';
-import { DELETE_ATTENDANCE_MUTATION, EDIT_ATTENDANCE_MUTATION } from '../../../Graphql/Attendance/mutation';
-import { SEE_ATTENDANCE_QUERY } from "../../../Graphql/Attendance/query"
+import { EDIT_JOURNAL_MUTATION } from '../../../Graphql/Journal/mutation';
+import { SEE_JOURNAL_QUERY } from '../../../Graphql/Journal/query';
+import getOverlappingDaysInIntervals from 'date-fns/esm/fp/getOverlappingDaysInIntervals/index.js';
 import Loading from '../../Shared/Loading';
 
 const CalenderPopupFormContainer = styled.form`
@@ -20,7 +20,7 @@ const CalenderPopupFormContainer = styled.form`
   display: grid;
   row-gap: 20px;
   row-gap: 1.25rem;
-  grid-template-rows: auto auto auto 1fr auto auto auto;
+  grid-template-rows: auto auto 1fr auto auto;
   min-height: 100%;
   textarea {
     all: unset;
@@ -56,6 +56,15 @@ const SelectedStudent = styled.div`
 `
 
 const StudentName = styled.div`
+`
+
+const SelectBtn = styled.div`
+  font-size: 2em;
+  font-size: 2rem;
+  cursor: pointer;
+  svg {
+    display: flex;
+  }
 `
 
 const AttendType = styled.div`
@@ -109,83 +118,45 @@ const SubmitInput = styled.input`
   cursor: pointer;
 `
 
-const DelBtn = styled.div`
-  background-color: ${props => props.theme.redColor};
-  color: ${props => props.theme.bgColor};
-  padding: 10px 0px;
-  padding: 0.625rem 0rem;
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  text-align: center;
-  cursor: pointer;
-`
+const EditJournal = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) => {
 
-const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) => {
+  const journalId = localStorage.getItem("summaryJournalId")
+  const journalStudentName = localStorage.getItem("summaryJournalName")
 
-  const attendId = localStorage.getItem("summaryAttendId")
-  const attendName = localStorage.getItem("summaryAttendName")
-
-  const [type, setType] = useState(undefined)
   const [date, setDate] = useState(undefined);
-  const [studentId, setStudentId] = useState(undefined)
   const { register, handleSubmit, setValue } = useForm({
     mode: "onChange"
   })
 
-  const { data, loading } = useQuery(SEE_ATTENDANCE_QUERY, {
+  const { data, loading } = useQuery(SEE_JOURNAL_QUERY, {
     variables: {
-      attendId
+      teacherEmail: userEmail,
+      journalId
     }
   })
+  console.log(data);
 
   const onCompleted = (result) => {
-    const { editAttendance: { ok, error } } = result
+    const { editJournal: { ok, error } } = result
     if (ok) {
-      setMsg("출결이 수정 되었습니다. 😀")
+      setMsg("학급일지가 수정되었습니다. 😀")
       outPopup()
-      localStorage.removeItem("attendStudentName")
-      localStorage.removeItem("attendStudentId")
-      localStorage.removeItem("summaryAttendId")
-      localStorage.removeItem("summaryAttendName")
+      localStorage.removeItem("summaryJournalId")
+      localStorage.removeItem("summaryJournalName")
       setRefetchQuery(prev => prev + 1)
     } else {
       setErrMsg(error)
     }
   }
 
-  const deleteOnCompleted = (result) => {
-    const { deleteAttendance: { ok, error } } = result
-    if (ok) {
-      setMsg("출결이 삭제 되었습니다. 😀")
-      outPopup()
-      localStorage.removeItem("attendStudentName")
-      localStorage.removeItem("attendStudentId")
-      localStorage.removeItem("summaryAttendId")
-      localStorage.removeItem("summaryAttendName")
-      setRefetchQuery(prev => prev + 1)
-    } else {
-      setErrMsg(error)
-    }
-  }
-
-
-
-  const [editAttendance, { loading: editLoading }] = useMutation(EDIT_ATTENDANCE_MUTATION, {
-    onCompleted,
-  })
-
-  const [deleteAttendance, { loading: deleteLoading }] = useMutation(DELETE_ATTENDANCE_MUTATION, {
-    onCompleted: deleteOnCompleted
-  })
+  const [editJournal, { loading: editLoading }] = useMutation(EDIT_JOURNAL_MUTATION, {
+    onCompleted
+  });
 
   const onSubmit = (data) => {
     const { contents } = data
-    if (!studentId) {
-      setErrMsg("학생을 선택해주세요. 🥲")
-      return
-    }
-    if (!type) {
-      setErrMsg("출결 종류를 선택해주세요. 🥲")
+    if (!contents) {
+      setErrMsg("세부사항을 적어주세요. 🥲")
       return
     }
     if (!date) {
@@ -193,22 +164,12 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) 
       return
     }
 
-    editAttendance({
+    editJournal({
       variables: {
-        attendId,
         userEmail,
-        type,
+        journalId,
         date,
-        ...(contents && { contents })
-      }
-    })
-  }
-
-  const onClickDelBtn = () => {
-    deleteAttendance({
-      variables: {
-        userEmail,
-        attendId
+        text: contents
       }
     })
   }
@@ -221,12 +182,9 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) 
 
   useEffect(() => {
     if (data) {
-      setStudentId(data?.seeAttendance[0]?.studentId)
-      setType(data?.seeAttendance[0]?.type)
-      setValue("contents", data?.seeAttendance[0]?.contents)
+      setValue("contents", data?.seeJournal[0]?.text)
     }
   }, [data])
-
 
   if (loading) {
     return <Loading page="popupPage" />
@@ -234,26 +192,14 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) 
 
   return (<PopupContainer maxHeight={true}>
     <CalenderPopupFormContainer onSubmit={handleSubmit(onSubmit)}>
-      <CalenderPopupTitle>출결수정</CalenderPopupTitle>
+      <CalenderPopupTitle>학급일지 수정</CalenderPopupTitle>
       <InputLayout>
         <Icon><BsFillPersonFill /></Icon>
         <SelectedStudent>
-          <StudentName>{attendName}</StudentName>
+          <StudentName>{journalStudentName}</StudentName>
         </SelectedStudent>
       </InputLayout>
-      <InputLayout>
-        <Icon><BsFillPersonCheckFill /></Icon>
-        <AttendType>
-          <Type onClick={() => setType("인정 결석")} selected={type === "인정 결석"}>인정 결석</Type>
-          <Type onClick={() => setType("질병 결석")} selected={type === "질병 결석"}>질병 결석</Type>
-          <Type onClick={() => setType("미인정 결석")} selected={type === "미인정 결석"}>미인정 결석</Type>
-          <Type onClick={() => setType("기타 결석")} selected={type === "기타 결석"}>기타 결석</Type>
-          <Type onClick={() => setType("지각")} selected={type === "지각"}>지각</Type>
-          <Type onClick={() => setType("조퇴")} selected={type === "조퇴"}>조퇴</Type>
-          <Type onClick={() => setType("결과")} selected={type === "결과"}>결과</Type>
-        </AttendType>
-      </InputLayout>
-      <CalenderPopupTextareaLayout register={register} />
+      <CalenderPopupTextareaLayout register={register} type="journal" />
       <InputLayout>
         <Icon><BsCalendarDate /></Icon>
         <DateContainer>
@@ -274,9 +220,8 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) 
         type="submit"
         value="수정하기"
       />
-      <DelBtn onClick={onClickDelBtn}>삭제하기</DelBtn>
     </CalenderPopupFormContainer>
   </PopupContainer>);
 }
 
-export default EditAttend;
+export default EditJournal;

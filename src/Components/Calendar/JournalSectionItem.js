@@ -41,6 +41,7 @@ const StudentNumber = styled.div`
 `
 
 const StudentJournal = styled.div`
+  cursor: pointer;
   textarea {
     all: unset;
     background-color: rgba(255, 252, 86, 0.2);
@@ -69,8 +70,14 @@ const JournalSectionItem = ({ item }) => {
   })
 
   const onClickStudentInfo = () => {
-    inPopup("summaryJournal")
+    inPopup("moveToStudentPage")
     localStorage.setItem("summaryStudentId", item.ownerId)
+  }
+
+  const onClickStudentJournal = () => {
+    inPopup("editJournal")
+    localStorage.setItem("summaryJournalId", item._id)
+    localStorage.setItem("summaryJournalName", data?.seeAllStudent[0]?.studentName)
   }
 
   return (<Container>
@@ -79,7 +86,7 @@ const JournalSectionItem = ({ item }) => {
       <StudentName>{data?.seeAllStudent[0]?.studentName}</StudentName>
       {data?.seeAllStudent[0]?.studentNumber && <StudentNumber>{data?.seeAllStudent[0]?.studentNumber}번</StudentNumber>}
     </StudentInfo>
-    <StudentJournal>
+    <StudentJournal onClick={onClickStudentJournal}>
       <TextareaAutosize
         value={item.text}
       />

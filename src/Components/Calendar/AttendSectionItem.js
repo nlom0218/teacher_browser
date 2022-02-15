@@ -55,13 +55,13 @@ const AttendSectionItem = ({ item }) => {
   })
 
   const onClickStudentAttend = () => {
-    inPopup("summaryAttend")
+    inPopup("eidtAttend")
     localStorage.setItem("summaryAttendId", item._id)
     localStorage.setItem("summaryAttendName", data?.seeAllStudent[0]?.studentName)
   }
 
   const onClickStudentInfo = () => {
-    inPopup("summaryJournal")
+    inPopup("moveToStudentPage")
     localStorage.setItem("summaryStudentId", item.ownerId)
   }
 
