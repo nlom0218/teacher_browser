@@ -14,6 +14,8 @@ import { useParams } from 'react-router-dom';
 import StudentList from '../Components/Swap/Popup/StudentList';
 import StudentOrder from '../Components/Swap/StudentOrder';
 import Shuffling from "../Components/Swap/Popup/Shuffling";
+import StudentNumber from '../Components/Swap/Popup/StudentNumber';
+import FontSizeBtn from '../Components/Swap/FontSizeBtn';
 
 const Container = styled.div`
   display : grid;
@@ -144,6 +146,10 @@ const Swap = () => {
   const [IconsLIstisHover, setIconListIsHover] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState([]);
   const [isShuffle, setIsShuffle] = useState("init");
+  const [pickNum, setPickNum] = useState(1);
+  const [pickType, setPickType] = useState("see");
+  const [fontSizeAll, setFontSizeAll] = useState(1.5);
+  const [studentNum, setStudentNum] = useState("init");
 
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: {
@@ -172,6 +178,8 @@ const Swap = () => {
     onSubmit({ title })
   };
 
+  const onClickListBtn = () => inPopup("seeStudentNumber")
+
   const onClickShuffleBtn = (type) => {
     setIsShuffle(type);
   };
@@ -187,7 +195,7 @@ const Swap = () => {
   }, [data]);
 
   return (<BasicContainer menuItem={true} screen="small">
-    <Container>
+    <Container pickNum={pickNum}>
       <TopContents>
         <Title onBlur={onBlurForm} onSubmit={handleSubmit(onSubmit)}>
           <InputLayout>
@@ -220,7 +228,7 @@ const Swap = () => {
       {id && (
         <React.Fragment>
           <OptionContents>
-            <OptionBtn> 자리 설정 </OptionBtn>
+            <OptionBtn onClick = {() => onClickListBtn()}> 자리 설정 </OptionBtn>
             {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
 
             {isShuffle === "ing" && (
@@ -233,6 +241,10 @@ const Swap = () => {
                 다시 섞기
               </OptionBtn>
             )}
+              <FontSizeBtn
+                setFontSizeAll={setFontSizeAll}
+                fontSizeAll={fontSizeAll}
+              />
           </OptionContents>
           <StudentOrder
             // fontSizeOne={fontSizeOne} 
@@ -240,11 +252,22 @@ const Swap = () => {
             selectedStudent={selectedStudent}
             setSelectedStudent={setSelectedStudent}
             isShuffle={isShuffle}
+            setFontSizeAll={setFontSizeAll}
+            fontSizeAll={fontSizeAll}
+            pickNum = {pickNum}
+            setPickNum = {setPickNum}
+            studentNum={selectedStudent.length}
           />
         </React.Fragment>
       )}
     </Container>
     {isPopup === "seeStudentList" && <StudentList />}
+    {isPopup === "seeStudentNumber" && <StudentNumber
+    pickNum = {pickNum}
+    setPickNum = {setPickNum}
+    studentNum={selectedStudent.length}
+    setStudentNum={setStudentNum}
+     />}
     {isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
   </BasicContainer>);
 };
