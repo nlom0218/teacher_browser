@@ -25,6 +25,7 @@ import AddAttend from '../Components/Calendar/Popup/AddAttend';
 import AttendSelectedStudent from '../Components/Calendar/Popup/AttendSelectedStudent';
 import EditAttend from "../Components/Calendar/Popup/EditAttend"
 import TodoCreate from '../Components/TodoList/Popup/TodoCreate';
+import AddJournal from '../Components/Calendar/Popup/AddJournal';
 
 const Container = styled.div`
   display: grid;
@@ -235,17 +236,6 @@ const Calendar = () => {
     setWeekLength(weekLength)
   }, [date])
 
-  // useEffect(() => {
-  //   if (dateArr) {
-  //     const sendDate = dateArr.map(item => new window.Date(item.date).setHours(0, 0, 0, 0))
-  //     seeSchedule({
-  //       variables: {
-  //         dateArr: sendDate
-  //       }
-  //     })
-  //   }
-  // }, [dateArr])
-
   useEffect(() => {
     if (data) {
       setSchedule(data)
@@ -302,9 +292,10 @@ const Calendar = () => {
     {isPopup === "detailToDo" && <DetailToDo setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} />}
     {isPopup === "seeAllergy" && <SeeAllergy />}
     {isPopup === "summaryJournal" && <MoveStudentPage setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} setRefetchQuery={setRefetchQuery} />}
+    {isPopup === "addJournal" && <AddJournal setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
     {isPopup === "addAttend" && <AddAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
-    {isPopup === "attendSelectedStudent" && <AttendSelectedStudent />}
     {isPopup === "summaryAttend" && <EditAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
+    {isPopup === "selectedStudent" && <AttendSelectedStudent />}
     {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
     {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
   </BasicContainer>);

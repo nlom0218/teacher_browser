@@ -90,7 +90,7 @@ const TodoCreate = ({ setErrMsg, userEmail, setRefetchQuery, urlDate, setMsg }) 
     return (
         <PopupContainer maxHeight={true}>
             <PopupForm onSubmit={handleSubmit(onSubmit)} create={true}>
-                <PopupTitle>할 일 작성</PopupTitle>
+                <PopupTitle>할 일 등록</PopupTitle>
                 <PopupInputLayout>
                     <PopupInput
                         {...register("toDo", {

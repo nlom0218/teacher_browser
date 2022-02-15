@@ -155,13 +155,20 @@ export const CalenderPopupInputLayout = ({ register }) => {
   </InputLayout>);
 }
 
-export const CalenderPopupTextareaLayout = ({ register }) => {
+export const CalenderPopupTextareaLayout = ({ register, type }) => {
+  const processPlaceholder = () => {
+    if (type === "journal") {
+      return "기록을 적어주세요."
+    } else {
+      return "세부내용을 입력하세요."
+    }
+  }
   return (<InputLayout>
     <Icon><CgNotes /></Icon>
     <TextareaAutosize
       {...register("contents")}
       minRows={5}
-      placeholder="세부내용을 입력하세요."
+      placeholder={processPlaceholder()}
     />
   </InputLayout>);
 }

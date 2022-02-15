@@ -1,6 +1,8 @@
 import { useQuery } from '@apollo/client';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { AiOutlinePlus } from 'react-icons/ai';
 import styled from 'styled-components';
+import { inPopup } from '../../apollo';
 import { SEE_JOURNAL_QUERY } from '../../Graphql/Journal/query';
 import IcLunchmenuClick from '../../icons/Lunchmenu/IcLunchmenuClick';
 import { customMedia } from '../../styles';
@@ -24,9 +26,24 @@ const JournalList = styled.div`
   `}
 `
 
-const JournalSection = ({ teacherEmail, urlDate }) => {
+const PlusJournalBtn = styled.div`
+  padding: 5px;
+  padding: 0.3125rem;
+  border-radius: 50%;
+  cursor: pointer;
+  color: ${props => props.theme.bgColor};
+  background-color: ${props => props.theme.btnBgColor};
+  transition: color 1s ease, background-color 1s ease;
+  svg {
+    font-size: 1.25em;
+    font-size: 1.25rem;
+    display: flex;
+  }
+`
 
-  const { data, loading } = useQuery(SEE_JOURNAL_QUERY, {
+const JournalSection = ({ teacherEmail, urlDate, refetchQuery }) => {
+
+  const { data, loading, refetch } = useQuery(SEE_JOURNAL_QUERY, {
     variables: {
       date: new Date(parseInt(urlDate)),
       teacherEmail
@@ -34,11 +51,19 @@ const JournalSection = ({ teacherEmail, urlDate }) => {
     skip: !teacherEmail
   })
 
+  const onClickPlusBtn = () => {
+    inPopup("addJournal")
+  }
+
+  useEffect(() => {
+    refetch()
+  }, [refetchQuery])
+
   return (<SectionContainer>
     <SectionTitle>
       <div><IcLunchmenuClick /></div>
       <div>학급일지</div>
-      {/* <PlusScheduleBtn onClick={onClickPlusBtn}><AiOutlinePlus /></PlusScheduleBtn> */}
+      <PlusJournalBtn onClick={onClickPlusBtn}><AiOutlinePlus /></PlusJournalBtn>
     </SectionTitle>
     <SectionContents>
       {loading ? <Loading page="subPage" /> :

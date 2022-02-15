@@ -37,11 +37,16 @@ const StudentNumber = styled.div`
 `
 
 const AttendSelectedStudentItem = ({ item }) => {
+  const selectedStudentType = localStorage.getItem("seletedStudentType")
 
   const onClickStudent = () => {
+    if (selectedStudentType === "journal") {
+      inPopup("addJournal")
+    } else {
+      inPopup("addAttend")
+    }
     localStorage.setItem("attendStudentName", item.studentName)
     localStorage.setItem("attendStudentId", item._id)
-    inPopup("addAttend")
   }
 
   if (!item) {
