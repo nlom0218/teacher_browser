@@ -96,7 +96,7 @@ const TodoCreate = ({ setErrMsg, userEmail, setRefetchQuery, urlDate, setMsg }) 
                         {...register("toDo", {
                             required: true
                         })}
-                        placeholder="내용을 입력하세요"
+                        placeholder="내용을 입력하세요."
                         autoComplete="off"
                     >
                     </PopupInput>
@@ -104,7 +104,7 @@ const TodoCreate = ({ setErrMsg, userEmail, setRefetchQuery, urlDate, setMsg }) 
                 <PopupTextarea>
                     <TextareaAutosize
                         {...register('contents')}
-                        placeholder="세부내용을 입력하세요"
+                        placeholder="세부내용을 입력하세요."
                         minRows={3}
                     >
                     </TextareaAutosize>

@@ -10,11 +10,6 @@ const Container = styled.div`
   row-gap: 10px;
   row-gap: 0.3125rem;
   box-sizing: border-box;
-  cursor: pointer;
-  :hover {
-    background-color: ${props => props.theme.hoverColor};
-    transition: background-color 0.4s ease;
-  }
 `
 
 const ToDo = styled.div`
@@ -36,8 +31,6 @@ const CompleteToDoItem = ({ item }) => {
 
   const startDate = new window.Date(parseInt(item.startDate))
   const endDate = new window.Date(parseInt(item.endDate))
-
-  console.log(startDate, endDate);
 
   return (<Container>
     <ToDo>{item.toDo}</ToDo>

@@ -17,6 +17,7 @@ import { compare } from '../shared';
 import DetailToDo from '../Components/TodoList/Popup/DetailToDo';
 import { customMedia } from '../styles';
 import CompleteToDo from '../Components/TodoList/Popup/CompleteToDo';
+import DelAllToDos from '../Components/TodoList/Popup/DelAllToDos';
 
 // const ListContainer = styled.div`
 //   margin-left : auto;
@@ -155,6 +156,7 @@ const TodoList = () => {
       {isPopup === "todoCreate" && <TodoCreate setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} />}
       {isPopup === "toDoComplete" && <CompleteToDo setErrMsg={setErrMsg} userEmail={me?.email} />}
       {isPopup === "detailToDo" && <DetailToDo setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} />}
+      {isPopup === "confirmDelAll" && <DelAllToDos setMsg={setMsg} userEmail={me?.email} />}
       <AlertMessage msg={errMsg} time={3000} setMsg={setErrMsg} type="error" />
       <AlertMessage msg={msg} time={3000} setMsg={setMsg} type="success" />
     </BasicContainer>

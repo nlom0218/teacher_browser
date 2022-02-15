@@ -35,3 +35,12 @@ export const DELETE_TO_DO_LIST_MUTATION = gql`
     }
   }
 `
+
+export const DELETE_ALL_TO_DO_LIST_MUTATION = gql`
+  mutation DeleteAllToDoList($userEmail: String!) {
+    deleteAllToDoList(userEmail: $userEmail) {
+      ok
+      error
+    }
+  }
+`

@@ -316,7 +316,7 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
         {...register("toDo", {
           required: true
         })}
-        placeholder="내용을 입력하세요"
+        placeholder="내용을 입력하세요."
         autoComplete="off"
       >
       </Input>
@@ -325,7 +325,7 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
       <Icon><CgNotes /></Icon>
       <TextareaAutosize
         {...register('contents')}
-        placeholder="세부내용을 입력하세요"
+        placeholder="세부내용을 입력하세요."
         minRows={5}
         maxRows={5}
       >

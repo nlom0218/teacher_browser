@@ -130,7 +130,10 @@ const ToDoIngItem = ({ item }) => {
 
   const [completeToDoList, { loading }] = useMutation(COMPLETE_TO_DO_LIST_MUTATION, {
     onCompleted,
-    refetchQueries: [{ query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: false } }]
+    refetchQueries: [
+      { query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: false } },
+      { query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: true } },
+    ]
   })
 
   const onClickCheck = () => {
