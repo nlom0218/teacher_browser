@@ -1,15 +1,12 @@
 import { useQuery } from '@apollo/client';
 import { getDate, getDay, isToday } from 'date-fns';
 import React, { useEffect, useState } from 'react';
-import { BsDot } from 'react-icons/bs';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { inPopup } from '../../apollo';
-import { SEE_SCHEDULE_QUERY } from '../../Graphql/Schedule/query';
 import { SEE_TO_DO_LIST_ONLY_LENGTH_QUERY } from '../../Graphql/ToDoList/query';
 import IcToDoList from '../../icons/ToDoList/IcToDoList';
 import routes from '../../routes';
-import Loading from '../Shared/Loading';
 
 const Container = styled.div`
   background-color: ${props => props.theme.bgColor};

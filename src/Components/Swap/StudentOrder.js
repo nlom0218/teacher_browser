@@ -1,10 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { customMedia } from "../../styles";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { useState } from "react/cjs/react.development";
-import { TiDelete } from "react-icons/ti";
-import SeeSelectedStudent from "./SeeSelectedStudent";
 
 const RealContainer = styled.div`
 
@@ -35,7 +31,7 @@ const Table = styled.div`
 const Container = styled.div`
     // min-height : 100%;
     display : grid;
-    grid-template-columns : repeat(6,1fr)};
+    grid-template-columns : repeat(6,1fr);
     padding : 10px 5px;
     padding : 1.25rem 0.625rem;
     row-gap : 10px;
@@ -128,27 +124,27 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, seeResultType, font
 
     return (
         <RealContainer>
-          <Table>교탁</Table>
-        <Container>
-            { selectedStudent.map((item, index) => {
-                return (
-                    <Item key={item}>
-                        <Name fontSize={fontSizeAll}>{item}</Name>
-                        {/* <RemoveBtn onClick={() => onClickRemoveBtn(item)}><TiDelete /></RemoveBtn> */}
-                    </Item>
-                
-                    
-                );
-            })
-        //     &&
-        //     <SeeSelectedStudent
-        //     selectedStudent={selectedStudent}
-        //     pickNum={pickNum}
-        //     pickType={pickType}
-        //     fontSizeAll={fontSizeAll}
-        // /> 
-            }
-        </Container>
+            <Table>교탁</Table>
+            <Container>
+                {selectedStudent.map((item, index) => {
+                    return (
+                        <Item key={item}>
+                            <Name fontSize={fontSizeAll}>{item}</Name>
+                            {/* <RemoveBtn onClick={() => onClickRemoveBtn(item)}><TiDelete /></RemoveBtn> */}
+                        </Item>
+
+
+                    );
+                })
+                    //     &&
+                    //     <SeeSelectedStudent
+                    //     selectedStudent={selectedStudent}
+                    //     pickNum={pickNum}
+                    //     pickType={pickType}
+                    //     fontSizeAll={fontSizeAll}
+                    // /> 
+                }
+            </Container>
         </RealContainer>
     );
 };

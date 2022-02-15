@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react/cjs/react.development';
+import React, { useState } from 'react';
 import styled from "styled-components";
 import { FcFolder, FcOpenedFolder } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';

@@ -10,7 +10,6 @@ import Loading from '../Shared/Loading';
 import JournalSectionItem from './JournalSectionItem';
 import SectionContainer from './styled/SectionContainer';
 import SectionContents from './styled/SectionContents';
-import SectionList from './styled/SectionList';
 import SectionNoDateText from './styled/SectionNoDateText';
 import SectionTitle from './styled/SectionTitle';
 

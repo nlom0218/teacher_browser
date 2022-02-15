@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useState } from 'react/cjs/react.development';
+import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import useMe from '../../Hooks/useMe';
 import { customMedia } from '../../styles';

@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import IcPrint from '../../../icons/Print/IcPrint';
 import PopupPrintContainer from '../../Shared/PopupPrintContainer';
 import { useReactToPrint } from 'react-to-print';
-import { RiCheckboxBlankLine, RiCheckboxLine } from 'react-icons/ri';
-import { useState } from 'react/cjs/react.development';
 import { color } from '../../../styles';
 
 const PrintTopContents = styled.div`
@@ -150,7 +148,7 @@ const TableOutItem = styled.div`
 
 `
 
-const TimeUp=styled.div`
+const TimeUp = styled.div`
 position: absolute;
 left: 5%;
 bottom: 5%;
@@ -160,7 +158,7 @@ font-size: 0.6rem;
 font-size: 0.6em;
 opacity: 0.6;
 `
-const TimeDown=styled.div`
+const TimeDown = styled.div`
 position: absolute;
 right: 5%;
 top: 5%;
@@ -184,7 +182,7 @@ const GridItem = styled.div`
 
 `
 
-const PrintScheduleContents = ({ printRef, title,viewTime,timeResult }) => {
+const PrintScheduleContents = ({ printRef, title, viewTime, timeResult }) => {
 
   const handlePrint = useReactToPrint({
     content: () => printRef.current,
@@ -194,81 +192,81 @@ const PrintScheduleContents = ({ printRef, title,viewTime,timeResult }) => {
     handlePrint()
   }
 
- const dayList = ["" , "월", "화", "수", "목", "금"]
- const table1st= ["","","","",""]
- const table2nd= ["","","","",""]
- const table3rd= ["","","","",""]
- const table4th= ["","","","",""]
- const table5th= ["","","","",""]
- const table6th= ["","","","",""]
+  const dayList = ["", "월", "화", "수", "목", "금"]
+  const table1st = ["", "", "", "", ""]
+  const table2nd = ["", "", "", "", ""]
+  const table3rd = ["", "", "", "", ""]
+  const table4th = ["", "", "", "", ""]
+  const table5th = ["", "", "", "", ""]
+  const table6th = ["", "", "", "", ""]
 
 
 
   return (<PopupPrintContainer printRef={printRef}>
     <PrintTopContents>
-   
+
       <PrintIcon onClick={onClickPrint}><div>인쇄하기</div><IcPrint /></PrintIcon>
     </PrintTopContents>
     <PrintContainer ref={printRef}>
       <PageTitle>시간표</PageTitle>
       <Title>{title}</Title>
-    
-        <GridList>
-           { dayList.map((item,index)=>{
-               return(<TableOutItem>{item}</TableOutItem>)
-           })}
-    
-        {viewTime===true
-        ? <TableOutItem>1 
+
+      <GridList>
+        {dayList.map((item, index) => {
+          return (<TableOutItem>{item}</TableOutItem>)
+        })}
+
+        {viewTime === true
+          ? <TableOutItem>1
         <TimeUp>{timeResult[0]}</TimeUp>
             <TimeDown>{timeResult[1]}</TimeDown></TableOutItem>
-        :<TableOutItem>1</TableOutItem>
+          : <TableOutItem>1</TableOutItem>
         }
-    { table1st.map((item,index)=>{
-               return(<TableItem>{item}</TableItem>)
-           })}
-         {viewTime===true
-        ? <TableOutItem>2 
+        {table1st.map((item, index) => {
+          return (<TableItem>{item}</TableItem>)
+        })}
+        {viewTime === true
+          ? <TableOutItem>2
         <TimeUp>{timeResult[2]}</TimeUp>
             <TimeDown>{timeResult[3]}</TimeDown></TableOutItem>
-        :<TableOutItem>2</TableOutItem>
+          : <TableOutItem>2</TableOutItem>
         }
-    { table2nd.map((item,index)=>{
-               return(<TableItem>{item}</TableItem>)
-           })}
-      {viewTime===true
-        ? <TableOutItem>3
+        {table2nd.map((item, index) => {
+          return (<TableItem>{item}</TableItem>)
+        })}
+        {viewTime === true
+          ? <TableOutItem>3
         <TimeUp>{timeResult[4]}</TimeUp>
             <TimeDown>{timeResult[5]}</TimeDown></TableOutItem>
-        :<TableOutItem>3</TableOutItem>
-        }    { table3rd.map((item,index)=>{
-               return(<TableItem>{item}</TableItem>)
-           })}
-      {viewTime===true
-        ? <TableOutItem>4
+          : <TableOutItem>3</TableOutItem>
+        }    {table3rd.map((item, index) => {
+          return (<TableItem>{item}</TableItem>)
+        })}
+        {viewTime === true
+          ? <TableOutItem>4
         <TimeUp>{timeResult[6]}</TimeUp>
             <TimeDown>{timeResult[7]}</TimeDown></TableOutItem>
-        :<TableOutItem>4</TableOutItem>
-        }    { table4th.map((item,index)=>{
-               return(<TableItem>{item}</TableItem>)
-           })}
-      {viewTime===true
-        ? <TableOutItem>5 
+          : <TableOutItem>4</TableOutItem>
+        }    {table4th.map((item, index) => {
+          return (<TableItem>{item}</TableItem>)
+        })}
+        {viewTime === true
+          ? <TableOutItem>5
         <TimeUp>{timeResult[8]}</TimeUp>
             <TimeDown>{timeResult[9]}</TimeDown></TableOutItem>
-        :<TableOutItem>5</TableOutItem>
-        }    { table5th.map((item,index)=>{
-               return(<TableItem>{item}</TableItem>)
-           })}
-      {viewTime===true
-        ? <TableOutItem>6 
+          : <TableOutItem>5</TableOutItem>
+        }    {table5th.map((item, index) => {
+          return (<TableItem>{item}</TableItem>)
+        })}
+        {viewTime === true
+          ? <TableOutItem>6
         <TimeUp>{timeResult[10]}</TimeUp>
             <TimeDown>{timeResult[11]}</TimeDown></TableOutItem>
-        :<TableOutItem>6</TableOutItem>
-        }    { table6th.map((item,index)=>{
-               return(<TableItem>{item}</TableItem>)
-           })}
-   </GridList>
+          : <TableOutItem>6</TableOutItem>
+        }    {table6th.map((item, index) => {
+          return (<TableItem>{item}</TableItem>)
+        })}
+      </GridList>
     </PrintContainer>
   </PopupPrintContainer >);
 }

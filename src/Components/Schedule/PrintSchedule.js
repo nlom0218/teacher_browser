@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { inPopup} from "../../apollo";
+import { inPopup } from "../../apollo";
 import IcPrint from '../../icons/Print/IcPrint';
 
 const Container = styled.div`

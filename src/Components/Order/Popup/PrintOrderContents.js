@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import IcPrint from '../../../icons/Print/IcPrint';
 import PopupPrintContainer from '../../Shared/PopupPrintContainer';
 import { useReactToPrint } from 'react-to-print';
 import { RiCheckboxBlankLine, RiCheckboxLine } from 'react-icons/ri';
-import { useState } from 'react/cjs/react.development';
 import { color } from '../../../styles';
 
 const PrintTopContents = styled.div`
