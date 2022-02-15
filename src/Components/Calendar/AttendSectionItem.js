@@ -60,8 +60,13 @@ const AttendSectionItem = ({ item }) => {
     localStorage.setItem("summaryAttendName", data?.seeAllStudent[0]?.studentName)
   }
 
+  const onClickStudentInfo = () => {
+    inPopup("summaryJournal")
+    localStorage.setItem("summaryStudentId", item.ownerId)
+  }
+
   return (<Container>
-    <StudentInfo>
+    <StudentInfo onClick={onClickStudentInfo}>
       {data?.seeAllStudent[0]?.icon && <StudnetIcon>{processStudentIcon(data?.seeAllStudent[0]?.icon)}</StudnetIcon>}
       <StudentName>{data?.seeAllStudent[0]?.studentName}</StudentName>
       {data?.seeAllStudent[0]?.studentNumber && <StudentNumber>{data?.seeAllStudent[0]?.studentNumber}번</StudentNumber>}
