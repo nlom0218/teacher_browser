@@ -5,6 +5,18 @@ export const CREATE_SCHEDULE_MUTATION = gql`
     createSchedule(schedule: $schedule, userEmail: $userEmail, startDate: $startDate, endDate: $endDate, contents: $contents, color: $color) {
       ok
       error
+      schedule{
+        _id
+        schedule
+        userEmail
+        contents
+        startDate
+        endDate
+        color
+        term
+        sort
+        allDate
+      }
     }
   }
 `
@@ -14,6 +26,21 @@ export const EDIT_SCHEDULE_MUTATION = gql`
     editSchedule(scheduleId: $scheduleId, schedule: $schedule, userEmail: $userEmail, startDate: $startDate, endDate: $endDate, color: $color, contents: $contents) {
       ok
       error
+      schedule{
+        _id
+        schedule
+        userEmail
+        contents
+        startDate
+        endDate
+        color
+        term
+        sort
+        allDate
+      }
+      delSchedule{
+        _id
+      }
     } 
   }
 `
@@ -23,6 +50,18 @@ export const DELETE_SCHEDULE_MUTATION = gql`
     deleteSchedule(userEmail: $userEmail, scheduleId: $scheduleId) {
       ok
       error
+      schedule{
+        _id
+        schedule
+        userEmail
+        contents
+        startDate
+        endDate
+        color
+        term
+        sort
+        allDate
+      }
     }
   }
 `
