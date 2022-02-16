@@ -156,7 +156,7 @@ const CalendarItem = ({ item, create, media, userEmail, schedule, refetchQuery }
   const { data: toDoLength, loading: toDoLoading, refetch } = useQuery(SEE_TO_DO_LIST_ONLY_LENGTH_QUERY, {
     variables: {
       userEmail,
-      date: item.date
+      date: new window.Date(item.date).setHours(0, 0, 0, 0)
     },
     skip: !userEmail
   })

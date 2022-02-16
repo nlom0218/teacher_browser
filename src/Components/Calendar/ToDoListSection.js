@@ -86,7 +86,7 @@ const ToDoListSection = ({ urlDate, refetchQuery }) => {
 
   const { data, loading, refetch } = useQuery(SEE_TO_DO_LIST_QUERY, {
     variables: {
-      date: new Date(parseInt(urlDate))
+      date: parseInt(urlDate)
     }
   })
 

@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export const SEE_TO_DO_LIST_QUERY = gql`
-  query SeeToDoList($isComplete: Boolean, $id: String, $date: String) {
+  query SeeToDoList($isComplete: Boolean, $id: String, $date: Float) {
     seeToDoList(isComplete: $isComplete, id: $id, date: $date) {
       _id
       toDo
@@ -16,7 +16,7 @@ export const SEE_TO_DO_LIST_QUERY = gql`
 `
 
 export const SEE_TO_DO_LIST_ONLY_LENGTH_QUERY = gql`
-  query SeeToDoListOnlyLength($userEmail: String!, $date: String) {
+  query Query($userEmail: String!, $date: Float) {
     seeToDoListOnlyLength(userEmail: $userEmail, date: $date)
-  }
+  } 
 `
