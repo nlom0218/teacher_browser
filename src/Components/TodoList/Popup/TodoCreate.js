@@ -11,7 +11,6 @@ import PopupTitle from "../styled/PopupTitle"
 import PopupInput from "../styled/PopupInput"
 import { PopupDate, PopupInputLayout, PopupStar, PopupTextarea } from './PopupLayout';
 import TextareaAutosize from 'react-textarea-autosize';
-import { setKrTime } from "../../../shared"
 
 const SubmitBtn = styled.input`
   cursor : pointer;
@@ -75,8 +74,8 @@ const TodoCreate = ({ setErrMsg, userEmail, setRefetchQuery, urlDate, setMsg }) 
                 toDo,
                 star,
                 ...(contents && { contents }),
-                ...(startDate && { startDate: setKrTime(startDate) + "" }),
-                ...(endDate && { endDate: setKrTime(endDate) + "" }),
+                ...(startDate && { startDate: new Date(startDate) }),
+                ...(endDate && { endDate: new Date(endDate) }),
             }
         })
     }
