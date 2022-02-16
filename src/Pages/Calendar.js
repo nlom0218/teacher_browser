@@ -178,10 +178,6 @@ const Calendar = () => {
     skip: !dateArr
   })
 
-  console.log(dateArr?.map(item => new window.Date(item.date).setHours(0, 0, 0, 0)));
-
-  console.log(data);
-
   const onClickTodayBtn = () => {
     const newDate = new Date()
     setDate(newDate)
@@ -303,7 +299,7 @@ const Calendar = () => {
     {isPopup === "eidtAttend" && <EditAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
     {isPopup === "selectedStudent" && <AttendSelectedStudent />}
     {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
-    {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
+    {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={5000} />}
   </BasicContainer>);
 }
 

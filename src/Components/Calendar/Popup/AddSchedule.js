@@ -30,7 +30,7 @@ const AddSchedule = ({ userEmail, setErrMsg, refetch, setMsg, setRefetchQuery })
   const onCompleted = (result) => {
     const { createSchedule: { ok, error } } = result
     if (ok) {
-      setMsg("새로운 일정이 추가되었습니다. 😀")
+      setMsg("새로운 일정이 추가되었습니다. 추가된 일정은 잠시 뒤 반영됩니다. 잠시만 기다려주세요!😀")
       outPopup()
       refetch()
       setRefetchQuery(prev => prev + 1)
