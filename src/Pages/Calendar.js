@@ -299,7 +299,7 @@ const Calendar = () => {
     {isPopup === "eidtAttend" && <EditAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
     {isPopup === "selectedStudent" && <AttendSelectedStudent />}
     {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
-    {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={5000} />}
+    {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
   </BasicContainer>);
 }
 

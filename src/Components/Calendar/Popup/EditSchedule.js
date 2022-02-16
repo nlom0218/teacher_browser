@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@apollo/client';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BiSortUp } from 'react-icons/bi';
@@ -8,6 +8,7 @@ import { DELETE_SCHEDULE_MUTATION, EDIT_SCHEDULE_MUTATION, UPDATE_SCHEDULE_SORT_
 import { SEE_SCHEDULE_QUERY } from '../../../Graphql/Schedule/query';
 import Loading from '../../Shared/Loading';
 import PopupContainer from '../../Shared/PopupContainer';
+import { ENABLE_SORT_NUM_QUERY } from "../../../Graphql/Schedule/query"
 import { CalenderPopupColorLayout, CalenderPopupDateLayout, CalenderPopupFormContainer, CalenderPopupInputLayout, CalenderPopupTextareaLayout, CalenderPopupTitle } from './PopupLayout';
 
 const TopContainer = styled.div`
@@ -58,44 +59,16 @@ const EditSchedule = ({ userEmail, setErrMsg, setRefetchQuery, setMsg, refetch }
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(undefined);
   const [color, setColor] = useState(undefined)
-  const { register, handleSubmit, setValue } = useForm({
+  const [updateSort, setUpdateSort] = useState(0)
+  const { register, handleSubmit, setValue, getValues } = useForm({
     mode: "onChange"
   })
 
-  const { data, loading } = useQuery(SEE_SCHEDULE_QUERY, {
+  const { data, loading, refetch: seeRefetch } = useQuery(SEE_SCHEDULE_QUERY, {
     variables: {
       scheduleId: id
     }
   })
-
-
-  const onCompleted = (result) => {
-    if (!editLoading) {
-      const { editSchedule: { ok, error } } = result
-      if (ok) {
-        setMsg("일정이 수정되었습니다. 수정 사항은 잠시 뒤 반영됩니다. 조금만 기다려주세요! 😀")
-        outPopup()
-        refetch()
-        setRefetchQuery(prev => prev + 1)
-        localStorage.removeItem("editSchedule")
-      } else {
-        setErrMsg(error)
-      }
-    }
-  }
-
-  const delOnCompleted = (result) => {
-    if (!deleteLoading) {
-      const { deleteSchedule: { ok } } = result
-      if (ok) {
-        setMsg("일정이 삭제되었습니다. 수정 사항은 잠시 뒤 반영됩니다. 조금만 기다려주세요! 😀")
-        outPopup()
-        refetch()
-        setRefetchQuery(prev => prev + 1)
-        localStorage.removeItem("editSchedule")
-      }
-    }
-  }
 
   const updateCompleted = (result) => {
     if (!updateLoading) {
@@ -103,7 +76,7 @@ const EditSchedule = ({ userEmail, setErrMsg, setRefetchQuery, setMsg, refetch }
       if (ok) {
         outPopup()
         refetch()
-        setMsg("일정이 정렬 되었습니다. 수정 사항은 잠시 뒤 반영됩니다. 조금만 기다려주세요! 😀")
+        setMsg("일정이 정렬 되었습니다. 조금만 기다려주세요! 😀")
         setRefetchQuery(prev => prev + 1)
         localStorage.removeItem("editSchedule")
       }
@@ -111,16 +84,68 @@ const EditSchedule = ({ userEmail, setErrMsg, setRefetchQuery, setMsg, refetch }
   }
 
   const [editSchedule, { loading: editLoading }] = useMutation(EDIT_SCHEDULE_MUTATION, {
-    onCompleted
+    update(cache, { data: { editSchedule: { ok, schedule, delSchedule } } }) {
+      if (ok) {
+        cache.modify({
+          id: "ROOT_QUERY",
+          fields: {
+            seeSchedule(prev) {
+              const delRef = `Schedule:${delSchedule._id}`
+              const newRef = `Schedule:${schedule._id}`
+              const newSchedule = prev.filter(item => item.__ref !== delRef)
+              return [...newSchedule, { __ref: newRef }]
+            }
+          }
+        })
+        setMsg("일정이 수정되었습니다. 😀")
+        outPopup()
+        setRefetchQuery(prev => prev + 1)
+        localStorage.removeItem("editSchedule")
+      }
+    }
   })
 
   const [deleteSchedule, { loading: deleteLoading }] = useMutation(DELETE_SCHEDULE_MUTATION, {
-    onCompleted: delOnCompleted
+    update(cache, { data: { deleteSchedule: { ok, schedule } } }) {
+      if (ok) {
+        cache.modify({
+          id: "ROOT_QUERY",
+          fields: {
+            seeSchedule(prev) {
+              const delRef = `Schedule:${schedule._id}`
+              const newSchedule = prev.filter(item => item.__ref !== delRef)
+              return newSchedule
+            }
+          }
+        })
+        setMsg("일정이 삭제되었습니다. 😀")
+        outPopup()
+        setRefetchQuery(prev => prev + 1)
+        localStorage.removeItem("editSchedule")
+      }
+    }
   })
 
   const [updateScheduleSort, { loading: updateLoading }] = useMutation(UPDATE_SCHEDULE_SORT_MUTATION, {
-    onCompleted: updateCompleted
+    update(cache, { data: { updateScheduleSort: { ok } } }) {
+      if (ok) {
+        cache.modify({
+          id: `Schedule:${id}`,
+          fields: {
+            sort() {
+              return enableSortNumData?.enableSortNum
+            }
+          }
+        })
+        outPopup()
+        setMsg("일정이 정렬 되었습니다. 😀")
+        setRefetchQuery(prev => prev + 1)
+        localStorage.removeItem("editSchedule")
+      }
+    }
   })
+
+  const [enableSortNum, { data: enableSortNumData, loading: enableLoading }] = useLazyQuery(ENABLE_SORT_NUM_QUERY)
 
   const onSubmit = (data) => {
     const { schedule, contents } = data
@@ -159,11 +184,20 @@ const EditSchedule = ({ userEmail, setErrMsg, setRefetchQuery, setMsg, refetch }
   }
 
   const onClickUpdateBtn = () => {
+    enableSortNum({
+      variables: {
+        scheduleId: id,
+        userEmail
+      }
+    })
+  }
+
+  const updateSortFn = () => {
     updateScheduleSort({
       variables: {
         scheduleId: id,
         userEmail,
-        sort: data?.seeSchedule[0].isSort
+        sort: enableSortNumData?.enableSortNum
       }
     })
   }
@@ -177,6 +211,18 @@ const EditSchedule = ({ userEmail, setErrMsg, setRefetchQuery, setMsg, refetch }
       setColor(data?.seeSchedule[0].color)
     }
   }, [data])
+
+  useEffect(() => {
+    if (enableSortNumData) {
+      if (enableSortNumData?.enableSortNum === 0) {
+        setErrMsg("현재 정렬은 불가능합니다. 🥲")
+      } else {
+        updateSortFn()
+      }
+    }
+  }, [enableSortNumData])
+
+  console.log(enableSortNumData?.enableSortNum);
 
   if (loading) {
     return <Loading page="popupPage" />
@@ -193,15 +239,12 @@ const EditSchedule = ({ userEmail, setErrMsg, setRefetchQuery, setMsg, refetch }
 
   return (<PopupContainer maxHeight={true}>
     <CalenderPopupFormContainer onSubmit={handleSubmit(onSubmit)}>
-      {data?.seeSchedule[0]?.isSort ?
-        <TopContainer>
-          <SortBtn onClick={onClickUpdateBtn}>
-            <BiSortUp />
-          </SortBtn>
-          <CalenderPopupTitle>일정수정</CalenderPopupTitle>
-        </TopContainer> :
+      <TopContainer>
+        <SortBtn onClick={onClickUpdateBtn}>
+          <BiSortUp />
+        </SortBtn>
         <CalenderPopupTitle>일정수정</CalenderPopupTitle>
-      }
+      </TopContainer>
       <CalenderPopupInputLayout register={register} />
       <CalenderPopupTextareaLayout register={register} />
       <CalenderPopupDateLayout startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} />
