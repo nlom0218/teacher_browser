@@ -97,16 +97,16 @@ const BottomContainer = styled.div`
 
 const LeftSection = styled.div`
   display: grid;
-  grid-template-rows: repeat(2, minmax(120px, auto));
-  grid-template-rows: repeat(2, minmax(7.5rem, auto));
+  grid-template-rows: repeat(2, minmax(160px, auto));
+  grid-template-rows: repeat(2, minmax(10rem, auto));
   row-gap: 20px;
   row-gap: 1.25rem;
 `
 
 const RightSection = styled.div`
   display: grid;
-  grid-template-rows: minmax(120px, auto) repeat(2, minmax(120px, auto));
-  grid-template-rows: minmax(120px, auto) repeat(2, minmax(7.5rem, auto));
+  grid-template-rows: minmax(160px, auto) repeat(2, minmax(160px, auto));
+  grid-template-rows: minmax(10rem, auto) repeat(2, minmax(10rem, auto));
   row-gap: 20px;
   row-gap: 1.25rem;
 `

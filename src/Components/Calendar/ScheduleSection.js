@@ -50,7 +50,7 @@ const ScheduleSection = ({ urlDate, refetchQuery }) => {
       <PlusScheduleBtn onClick={onClickPlusBtn}><AiOutlinePlus /></PlusScheduleBtn>
     </SectionTitle>
     <SectionContents>
-      {loading ? <Loading page="subPage" />
+      {!loading ? <Loading page="subPage" />
         :
         data?.seeSchedule.length === 0 ? <SectionNoDateText>생성된 일정이 없습니다. 😁</SectionNoDateText>
           :
