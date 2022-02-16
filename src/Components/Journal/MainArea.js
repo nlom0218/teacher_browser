@@ -7,6 +7,7 @@ import { customMedia } from "../../styles";
 import Loading from "../Shared/Loading";
 
 const Container = styled.div`
+  align-self: flex-start;
   padding-top: 0;
   display: grid;
   row-gap: 40px;
@@ -19,6 +20,7 @@ const SortContainer = styled.div`
   column-gap: 20px;
   column-gap: 1.25rem;
 `;
+
 const SortBtn = styled.div`
   display: grid;
   grid-template-columns: auto auto;

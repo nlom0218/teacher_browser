@@ -8,6 +8,7 @@ import JournalSectionItem from '../Calendar/JournalSectionItem';
 import Loading from '../Shared/Loading';
 
 const Container = styled.div`
+  align-self: flex-start;
   display: grid;
   row-gap: 40px;
   row-gap: 2.5rem;
