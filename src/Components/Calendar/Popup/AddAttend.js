@@ -171,7 +171,7 @@ const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) =
   }
 
   const onClickSelectBtn = () => {
-    inPopup("attendSelectedStudent")
+    inPopup("selectedStudent")
   }
 
   useEffect(() => {

@@ -91,12 +91,6 @@ const NotIngToDoContainer = styled.div`
 
 
 const TodoList = () => {
-  // 1. 기간 내에 있는 할 일 목록 & 완료가 되지 않는 목록 => 진행중인 목록 ing
-  // 2. 기간 내에 있는 할 일 목록 & 완료된 목록이면 => 진행중인 목록 맨 아래에 체크된 표시로 있어야 함 ing, complete
-  // 3. 기간 내에 없는 할 일 목록 & 완료가 되지 않는 목록 => 미완료된 목록 notcompleted
-  // 4. 기간 내에 없는 할 일 목록 & 완료된 목록이면 => 완료된 공간에 두기(팝업) complete
-  // 5. 기간이 설정되지 않은 목록 => 진행중인 목록 ing
-  // 6. 기간이 설정되지 않은 목록 => 팝업창 complete
 
   const me = useMe()
   const { id } = useParams()

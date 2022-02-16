@@ -13,6 +13,7 @@ import { DELETE_TO_DO_LIST_MUTATION, EDIT_TO_DO_LIST_MUTATION } from '../../Grap
 import { useNavigate } from 'react-router-dom';
 import routes from '../../routes';
 import { IoArrowBackSharp } from "react-icons/io5";
+import { setKrTime } from '../../shared';
 
 const Form = styled.form`
   padding : 20px;
@@ -269,8 +270,8 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
         userEmail,
         toDo,
         contents,
-        ...(startDate && { startDate: new Date(startDate) }),
-        ...(endDate && { endDate: new Date(endDate) }),
+        ...(startDate && { startDate: setKrTime(startDate) + "" }),
+        ...(endDate && { endDate: setKrTime(endDate) + "" }),
         star
       }
     })
