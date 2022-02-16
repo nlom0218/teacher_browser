@@ -71,7 +71,7 @@ function App() {
     <ThemeProvider theme={darkMode ? darkTheme : ligthTheme}>
       <GlobalStyle bgTheme={userBgTheme ? userBgTheme : me?.bgTheme} isLoggedIn={isLoggedIn} />
       <ChangBackground />
-      {/* {media !== "Mobile" && <HeaderWeather />} */}
+      {media !== "Mobile" && <HeaderWeather />}
       <Routes>
         {/* <Route path={routes.home} element={<Home />} /> */}
         <Route path={routes.home} element={<Welcome />} />
