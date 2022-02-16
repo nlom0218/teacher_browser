@@ -24,14 +24,14 @@ const Student = styled.div`
   border-radius: 5px;
   border-radius: 0.3125rem;
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: ${props => props.page === "journal" ? "1fr 1fr 1fr 1fr" : "1fr 1fr 1fr"};
   padding: 10px;
   padding: 0.625rem;
   opacity: ${(props) => (props.hoverContainer ? 0.6 : 1)};
   ${customMedia.greaterThan("tablet")`
   `}
   ${customMedia.greaterThan("desktop")`
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: ${props => props.page === "journal" ? "1fr 1fr 1fr" : "1fr 1fr"};
   `}
 `;
 
@@ -41,6 +41,12 @@ const StudentName = styled.div`
   overflow: hidden;
   line-height: 120%;
 `;
+
+const StudentJournal = styled.div`
+  align-self: center;
+  text-align: center;
+  font-size: 0.875rem;
+`
 
 const HoverContainer = styled.div`
   display: grid;
@@ -63,18 +69,10 @@ const HoverContainer = styled.div`
   `}
 `;
 
-const BasicInfo = styled.div`
-  display: grid;
-  justify-items: center;
-  align-items: center;
-  row-gap: 10px;
-  row-gap: 0.625rem;
-`;
-
 const FnBtn = styled.div`
   justify-self: stretch;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: ${props => props.page === "journal" ? "1fr 1fr" : "1fr 1fr 1fr"};
   justify-items: center;
   padding: 0px 10px;
   padding: 0rem 0.625rem;
@@ -101,7 +99,8 @@ const StudentNumber = styled.div`
   }
 `;
 
-const StudentInItem = ({ item, listId }) => {
+const StudentInItem = ({ item, listId, page }) => {
+  console.log(item.journalNum);
   const me = useMe();
 
   const media = useMedia();
@@ -129,9 +128,8 @@ const StudentInItem = ({ item, listId }) => {
   const onClickProfile = () => {
     navigate(`${routes.list}/student/${item._id}`);
   };
-  const onClickEdit = () => {
-    localStorage.setItem("focusStudent", item._id);
-    navigate(`${routes.journal}/list/${listId}`);
+  const onClickJournal = () => {
+    navigate(`${routes.journal}/student/${item._id}`);
   };
   const onClickDel = () => {
     deleteStudent({
@@ -144,36 +142,37 @@ const StudentInItem = ({ item, listId }) => {
     });
   };
   return (
-    <Student onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <Student onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} page={page}>
       <StudentName>{item.studentName}</StudentName>
+      {page === "journal" && <StudentJournal>{item.journalNum}개의 학급일지</StudentJournal>}
       <StudentNumber>{item.studentNumber ? item.studentNumber : <div>번호가 없습니다.</div>}</StudentNumber>
       {media !== "Desktop" ? (
         <HoverContainer>
-          <FnBtn>
-            <div className="fnBtn_icon" onClick={onClickEdit}>
+          <FnBtn page={page}>
+            <div className="fnBtn_icon" onClick={onClickJournal}>
               <AiOutlineEdit />
             </div>
             <div className="fnBtn_icon" onClick={onClickProfile}>
               <BsPerson />
             </div>
-            <div className="fnBtn_icon" onClick={onClickDel}>
+            {page !== "journal" && <div className="fnBtn_icon" onClick={onClickDel}>
               <BsPersonDash />
-            </div>
+            </div>}
           </FnBtn>
         </HoverContainer>
       ) : (
         hoverContainer && (
           <HoverContainer>
-            <FnBtn>
-              <div className="fnBtn_icon" onClick={onClickEdit}>
+            <FnBtn page={page}>
+              <div className="fnBtn_icon" onClick={onClickJournal}>
                 <AiOutlineEdit />
               </div>
               <div className="fnBtn_icon" onClick={onClickProfile}>
                 <BsPerson />
               </div>
-              <div className="fnBtn_icon" onClick={onClickDel}>
+              {page !== "journal" && <div className="fnBtn_icon" onClick={onClickDel}>
                 <BsPersonDash />
-              </div>
+              </div>}
             </FnBtn>
           </HoverContainer>
         )
