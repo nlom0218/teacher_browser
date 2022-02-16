@@ -60,6 +60,7 @@ const RegisterPage = styled.div`
   ${customMedia.greaterThan(`tablet`)`
     padding: 10px 30px;
     padding: 0.625rem 1.875rem;
+    padding: ${props => props.emojiPopup && 0};
   `}
 `
 
