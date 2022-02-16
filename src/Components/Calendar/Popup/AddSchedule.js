@@ -62,8 +62,8 @@ const AddSchedule = ({ userEmail, setErrMsg, refetch, setMsg, setRefetchQuery })
       variables: {
         userEmail,
         schedule,
-        startDate,
-        endDate,
+        startDate: new Date(startDate).setHours(0, 0, 0, 0),
+        endDate: new Date(endDate).setHours(0, 0, 0, 0),
         color,
         ...(contents && { contents })
       }
