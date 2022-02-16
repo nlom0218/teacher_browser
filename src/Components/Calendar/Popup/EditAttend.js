@@ -197,7 +197,7 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) 
         attendId,
         userEmail,
         type,
-        date,
+        date: new window.Date(date).setHours(0, 0, 0, 0),
         ...(contents && { contents })
       }
     })

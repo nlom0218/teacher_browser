@@ -47,7 +47,7 @@ const AttendSection = ({ urlDate, refetchQuery }) => {
 
   const { data, loading, refetch } = useQuery(SEE_ATTENDANCE_QUERY, {
     variables: {
-      date: new window.Date(parseInt(urlDate))
+      date: parseInt(urlDate)
     }
   })
 
