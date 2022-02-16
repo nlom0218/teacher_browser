@@ -193,7 +193,7 @@ const EditSchedule = ({ userEmail, setErrMsg, setRefetchQuery, setMsg, refetch }
 
   return (<PopupContainer maxHeight={true}>
     <CalenderPopupFormContainer onSubmit={handleSubmit(onSubmit)}>
-      {data?.seeSchedule[0].isSort ?
+      {data?.seeSchedule[0]?.isSort ?
         <TopContainer>
           <SortBtn onClick={onClickUpdateBtn}>
             <BiSortUp />
