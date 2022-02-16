@@ -93,14 +93,11 @@ const FnBtn = styled.div`
 const StudentNumber = styled.div`
   align-self: center;
   text-align: center;
-  div {
-    font-size: 0.875rem;
-    opacity: 0.6;
-  }
+  font-size: 0.875rem;
+  opacity: 0.6;
 `;
 
 const StudentInItem = ({ item, listId, page }) => {
-  console.log(item.journalNum);
   const me = useMe();
 
   const media = useMedia();
@@ -126,10 +123,10 @@ const StudentInItem = ({ item, listId, page }) => {
   };
 
   const onClickProfile = () => {
-    navigate(`${routes.list}/student/${item._id}`);
+    navigate(`${routes.list}/student/${item._id}`)
   };
   const onClickJournal = () => {
-    navigate(`${routes.journal}/student/${item._id}`);
+    navigate(`${routes.journal}/student/${item._id}`)
   };
   const onClickDel = () => {
     deleteStudent({
@@ -145,7 +142,7 @@ const StudentInItem = ({ item, listId, page }) => {
     <Student onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} page={page}>
       <StudentName>{item.studentName}</StudentName>
       {page === "journal" && <StudentJournal>{item.journalNum}개의 학급일지</StudentJournal>}
-      <StudentNumber>{item.studentNumber ? item.studentNumber : <div>번호가 없습니다.</div>}</StudentNumber>
+      <StudentNumber>{item.studentNumber ? `${item.studentNumber}번` : <div>번호가 없습니다.</div>}</StudentNumber>
       {media !== "Desktop" ? (
         <HoverContainer>
           <FnBtn page={page}>

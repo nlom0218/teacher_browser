@@ -7,8 +7,6 @@ import { customMedia } from "../../styles";
 import Loading from "../Shared/Loading";
 
 const Container = styled.div`
-  padding: 40px;
-  padding: 2.5rem;
   padding-top: 0;
   display: grid;
   row-gap: 40px;
@@ -43,13 +41,12 @@ const StudentList = styled.div`
     grid-template-columns: repeat(2, 1fr);
   `}
   ${customMedia.greaterThan("desktop")`
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   `}
 `;
 
 //
 const MainArea = ({ me, students, loading, error, sort, setSort, listId }) => {
-  const focusStudent = localStorage.getItem("focusStudent");
 
   if (loading) return <Loading page="subPage" />;
   if (error)

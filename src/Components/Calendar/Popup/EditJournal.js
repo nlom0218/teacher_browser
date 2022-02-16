@@ -6,7 +6,6 @@ import { outPopup } from '../../../apollo';
 import { useMutation, useQuery } from '@apollo/client';
 import { Icon, CalenderPopupTextareaLayout, CalenderPopupTitle, InputLayout, DateContainer } from './PopupLayout';
 import { BsCalendarDate, BsFillPersonFill } from 'react-icons/bs';
-import { customMedia } from '../../../styles';
 import { ko } from "date-fns/esm/locale";
 import DatePicker from 'react-datepicker';
 import { DELETE_JOURNAL_MUTATION, EDIT_JOURNAL_MUTATION } from '../../../Graphql/Journal/mutation';
@@ -57,49 +56,6 @@ const SelectedStudent = styled.div`
 const StudentName = styled.div`
 `
 
-const SelectBtn = styled.div`
-  font-size: 2em;
-  font-size: 2rem;
-  cursor: pointer;
-  svg {
-    display: flex;
-  }
-`
-
-const AttendType = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  padding: 10px;
-  padding: 0.625rem;
-  row-gap: 10px;
-  row-gap: 0.625rem;
-  background-color: ${props => props.theme.originBgColor};
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  justify-items: flex-start;
-  ${customMedia.greaterThan("desktop")`
-    grid-template-columns: repeat(4, 1fr);
-  `}
-`
-
-const Type = styled.div`
-  padding: 5px 10px;
-  padding: 0.3125rem 0.625rem;
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  cursor: pointer;
-  background-color: ${props => props.selected && props.theme.btnBgColor};
-  color: ${props => props.selected && props.theme.bgColor};
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  :hover {
-    background-color: ${props => props.theme.btnBgColor};
-    color: ${props => props.theme.bgColor};
-    transition: background-color 0.6s ease, color 0.6s ease;
-  }
-`
-
 const Date = styled.div`
   grid-column: 1 / -1;
   display : grid;
@@ -130,8 +86,8 @@ const DelBtn = styled.div`
 
 const EditJournal = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) => {
 
-  const journalId = localStorage.getItem("summaryJournalId")
-  const journalStudentName = localStorage.getItem("summaryJournalName")
+  const journalId = localStorage.getItem("JournalId")
+  const journalStudentName = localStorage.getItem("JournalStudentName")
 
   const [date, setDate] = useState(undefined);
   const { register, handleSubmit, setValue } = useForm({
@@ -194,7 +150,7 @@ const EditJournal = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate })
       variables: {
         userEmail,
         journalId,
-        date,
+        date: new window.Date(date).setHours(0, 0, 0, 0),
         text: contents
       }
     })
@@ -218,6 +174,9 @@ const EditJournal = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate })
   useEffect(() => {
     if (data) {
       setValue("contents", data?.seeJournal[0]?.text)
+      if (!urlDate) {
+        setDate(new window.Date(data?.seeJournal[0]?.date))
+      }
     }
   }, [data])
 

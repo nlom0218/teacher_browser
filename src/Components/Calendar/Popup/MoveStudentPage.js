@@ -33,17 +33,25 @@ const Btn = styled.div`
 const MoveStudentPage = () => {
   const studentId = localStorage.getItem("summaryStudentId")
 
-  const navigate = useNavigate()
+  const navigate = useNavigate(
+  )
 
   const onClickDetail = () => {
     navigate(`${routes.list}/student/${studentId}`)
+    localStorage.removeItem("summaryStudentId")
+    outPopup()
+  }
+
+  const onClickJournal = () => {
+    navigate(`${routes.journal}/student/${studentId}`)
+    localStorage.removeItem("summaryStudentId")
     outPopup()
   }
 
   return (<BtnPopupContainer>
     <Container>
       <Text>학급일지 또는 학생정보 페이지로 이동합니다.</Text>
-      <Btn>학급일지로 이동</Btn>
+      <Btn onClick={onClickJournal}>학급일지로 이동</Btn>
       <Btn onClick={onClickDetail}>학생정보로 이동</Btn>
     </Container>
   </BtnPopupContainer>);

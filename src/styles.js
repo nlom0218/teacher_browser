@@ -18,6 +18,7 @@ export const color = {
   red: "#db3a1e",
   ligthRed: "#fc8876",
   boxShadow: "0px 17px 6px -14px rgba(0,0,0,0.6)",
+  blurYelloColor: "rgba(255, 252, 86, 0.2)"
 };
 
 export const ligthTheme = {
@@ -37,7 +38,8 @@ export const ligthTheme = {
   textAniColor: "linear-gradient(92deg, #1c5b8e, #db3a1e)",
   green: "#007f4c",
   originBgColor: "#ffffff",
-  girdBorderColor: "rgb(181, 181, 181)"
+  girdBorderColor: "rgb(181, 181, 181)",
+  yelloColor: "rgba(244, 242, 90, 0.8)"
 };
 export const darkTheme = {
   originBgColor: "#222222",
@@ -56,7 +58,8 @@ export const darkTheme = {
   textAniColor: "linear-gradient(92deg, #7CC6FF, #fc8876)",
   green: "#20c997",
   originBgColor: "#000000",
-  girdBorderColor: color.maroon
+  girdBorderColor: color.maroon,
+  yelloColor: "rgba(112, 108, 0, 0.8)"
 };
 
 export const GlobalStyle = createGlobalStyle`
