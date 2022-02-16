@@ -144,10 +144,14 @@ const DotIcon = styled.div`
 `
 
 const CalendarItem = ({ item, create, media, userEmail, schedule, refetchQuery }) => {
+
   const navigate = useNavigate()
 
   const [dateSchedule, setDateSchedule] = useState([])
   const [row, setRow] = useState(1)
+  console.log(getDate(item.date), new window.Date(item.date).setHours(0, 0, 0, 0) + "");
+  console.log(schedule);
+  console.log(dateSchedule);
 
   const { data: toDoLength, loading: toDoLoading, refetch } = useQuery(SEE_TO_DO_LIST_ONLY_LENGTH_QUERY, {
     variables: {

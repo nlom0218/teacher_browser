@@ -180,6 +180,8 @@ const Calendar = () => {
 
   console.log(dateArr?.map(item => new window.Date(item.date).setHours(0, 0, 0, 0)));
 
+  console.log(data);
+
   const onClickTodayBtn = () => {
     const newDate = new Date()
     setDate(newDate)
