@@ -8,10 +8,7 @@ import { inPopup, isPopupVar } from '../../apollo';
 import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
 import { SEE_ALL_STUDENT_QUERY, SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
 import useMedia from '../../Hooks/useMedia';
-import IcBookMark from '../../icons/Bookmark/IcBookMark';
 import IcNameTable from '../../icons/NameTable/IcNameTable';
-import IcNameTableClick from '../../icons/NameTable/IcNameTableClick';
-import { IcStudent1 } from '../../icons/Students/IcStudents';
 import routes from '../../routes';
 import { processStudentIcon } from '../../shared';
 import { customMedia } from '../../styles';
@@ -41,6 +38,18 @@ const Container = styled.div`
   }
 `
 
+const LinkContainer = styled.div`
+  justify-self: flex-start;
+  display: grid;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: auto auto;
+  `} 
+`
+
 const ListIcon = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
@@ -56,26 +65,6 @@ const ListIcon = styled.div`
     font-size: 2rem;
     filter: drop-shadow(1px 1px 1px rgb(0, 0, 0))
   }
-`
-
-const Form = styled.form`
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
-  column-gap: 5px;
-  column-gap: 0.3125rem;
-  row-gap: 10px;
-  row-gap: 0.625rem;
-  ${customMedia.greaterThan("tablet")`
-    grid-template-columns: 1fr auto;
-    column-gap: 10px;
-    column-gap: 0.625rem;
-    margin-top: 20px;
-    margin-top: 1.25rem;
-  `}
-  ${customMedia.greaterThan("desktop")`
-    margin-top: 0;
-  `}
 `
 
 const Name = styled.input`
@@ -229,11 +218,20 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
   }
 
   return (<Container>
-    <Link to={routes.list} onMouseEnter={() => setIconListIsHover(true)} onMouseLeave={() => setIconListIsHover(false)}>
-      <ListIcon>{IconsLIstisHover ? <IcNameTableClick /> : <IcNameTable />}
-        <div>명렬표로 이동</div>
-      </ListIcon>
-    </Link>
+    <LinkContainer>
+      <Link to={routes.list}>
+        <ListIcon>
+          <IcNameTable />
+          <div>명렬표로 이동</div>
+        </ListIcon>
+      </Link>
+      <Link to={`${routes.journal}/student/${studentId}`}>
+        <ListIcon>
+          <IcNameTable />
+          <div>학급일지로 이동</div>
+        </ListIcon>
+      </Link>
+    </LinkContainer>
     <DetailNameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName}>
       <form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
         {studentIcon && <DetailEomjiIcon onClick={onClickStudentIconBtn}>
