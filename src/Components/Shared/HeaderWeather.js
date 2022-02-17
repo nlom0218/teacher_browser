@@ -95,7 +95,11 @@ const HeaderWeather = () => {
       }
     }`;
 
-    fetch(`https://teachercan.herokuapp.com/graphql`, {
+    const apiUrl = process.env.NODE_ENV === "production"
+      ? "https://teachercan.herokuapp.com/graphql"
+      : "http://localhost:4000/graphql"
+
+    fetch(apiUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
