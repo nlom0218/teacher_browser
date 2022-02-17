@@ -30,8 +30,8 @@ const MoveContainer = styled.div`
   right: ${(props) => (props.pageLinkSection === "pageLink" ? "-100%" : 0)};
   left: ${(props) => (props.pageLinkSection === "pageLink" ? "100%" : 0)};
   animation: ${(props) =>
-      !props.init &&
-      (props.pageLinkSection === "pageLink" ? hideNewsSection : seeNewsSection)}
+    !props.init &&
+    (props.pageLinkSection === "pageLink" ? hideNewsSection : seeNewsSection)}
     1s ease forwards;
 `;
 const MoveIcon = styled.div`

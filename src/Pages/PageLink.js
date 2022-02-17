@@ -46,7 +46,7 @@ const PageLink = () => {
       {isPopup === "addBookmark" && <AddBookmark userEmail={me?.email} />}
       {isPopup === "seePageLink" && <SeePageLink />}
       {isPopup === "detailPageLink" && (
-        <DetailPageLink memo={me?.link} userEmail={me?.email} />
+        <DetailPageLink link={me?.link} userEmail={me?.email} />
       )}
     </BasicContainer>
   );

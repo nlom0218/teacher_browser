@@ -21,10 +21,10 @@ const MoveContainer = styled.div`
   right: ${(props) => (props.pageLinkSection === "pageLink" ? 0 : "100%")};
   left: ${(props) => (props.pageLinkSection === "pageLink" ? 0 : "-100%")};
   animation: ${(props) =>
-      !props.init &&
-      (props.pageLinkSection === "pageLink"
-        ? seeWelcomSection
-        : hideWelcomeSection)}
+    !props.init &&
+    (props.pageLinkSection === "pageLink"
+      ? seeWelcomSection
+      : hideWelcomeSection)}
     1s ease forwards;
   display: grid;
   row-gap: 20px;
@@ -97,7 +97,7 @@ const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit }) => {
         <PageLinkList none={none}>
           {!pageLinkFolder &&
             (myPageLink.length === 0 ? (
-              <div>등록된 즐겨찾기 페이지가 없습니다.이용 설명 추가하기 </div>
+              <div>등록된 즐겨찾기 페이지가 없습니다.</div>
             ) : (
               myPageLink.map((item, index) => {
                 return <MyPageLink key={index} item={item} />;
