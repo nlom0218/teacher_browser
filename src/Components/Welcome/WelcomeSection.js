@@ -7,6 +7,7 @@ import { moveNews } from '../../apollo';
 import AlertMessage from '../Shared/AlertMessage';
 import useMedia from '../../Hooks/useMedia';
 import { customMedia } from '../../styles';
+import useTitle from '../../Hooks/useTitle';
 
 const MoveContainer = styled.div`
   position: absolute;

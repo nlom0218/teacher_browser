@@ -15,7 +15,7 @@ import FontSizeBtn from '../Components/Draw/FontSizeBtn';
 import Shuffling from '../Components/Draw/Popup/Shuffling';
 import IcNameTableClick from '../icons/NameTable/IcNameTableClick';
 import IcNameTable from '../icons/NameTable/IcNameTable';
-import AlertMessage from '../Components/Shared/AlertMessage';
+import useTitle from '../Hooks/useTitle';
 
 const Container = styled.div`
   min-height : ${props => props.seeResultType === "ONE" && "100%"};
@@ -144,6 +144,7 @@ const ListName = styled.div`
 
 
 const Draw = () => {
+  const titleUpdataer = useTitle("티처캔 | 랜덤뽑기")
   const { id } = useParams()
   const isPopup = useReactiveVar(isPopupVar);
 

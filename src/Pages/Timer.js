@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import { Btn, BtnContainer, BtnSpan } from '../Components/Timer/Btn';
 import { TimerContainer, TimerInnerFrame, TimerOuterFrame } from '../Components/Timer/TimeDisplay';
+import useTitle from '../Hooks/useTitle';
 
 const Timer = () => {
+  const titleUpdataer = useTitle("티처캔 | 타이머")
   // Basic Setting
   let [isRunning, setIsRunning] = useState(false);
   let [isCountdownTimer, setIsCountdownTimer] = useState(false);

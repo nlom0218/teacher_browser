@@ -18,6 +18,7 @@ import DetailToDo from '../Components/TodoList/Popup/DetailToDo';
 import { customMedia } from '../styles';
 import CompleteToDo from '../Components/TodoList/Popup/CompleteToDo';
 import DelAllToDos from '../Components/TodoList/Popup/DelAllToDos';
+import useTitle from '../Hooks/useTitle';
 
 // const ListContainer = styled.div`
 //   margin-left : auto;
@@ -91,6 +92,7 @@ const NotIngToDoContainer = styled.div`
 
 
 const TodoList = () => {
+  const titleUpdataer = useTitle("티처캔 | 할 일")
 
   const me = useMe()
   const { id } = useParams()

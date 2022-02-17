@@ -17,6 +17,7 @@ import EditJournal from "../Components/Calendar/Popup/EditJournal";
 import AddJournal from "../Components/Calendar/Popup/AddJournal";
 import AlertMessage from "../Components/Shared/AlertMessage";
 import AttendSelectedStudent from "../Components/Calendar/Popup/AttendSelectedStudent";
+import useTitle from "../Hooks/useTitle";
 
 const Container = styled.div`
   min-height: 100%;
@@ -33,6 +34,7 @@ const Container = styled.div`
 `
 
 const Journal = ({ me }) => {
+  const titleUpdataer = useTitle("티처캔 | 학급일지")
   const { type, id } = useParams();
 
   const isPopup = useReactiveVar(isPopupVar);

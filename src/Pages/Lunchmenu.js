@@ -16,6 +16,7 @@ import LunchmenuItem from "../Components/Lunchmenu/LunchmenuItem";
 import IcSchoolYellow from "../icons/School/IcSchoolYellow";
 import { useLocation } from "react-router";
 import Loading from "../Components/Shared/Loading";
+import useTitle from "../Hooks/useTitle";
 dotenv.config();
 
 const LunchmenuContainer = styled.div`
@@ -191,6 +192,7 @@ const LunchmenuDetail = styled.div`
 const LunchmenuOrigin = styled.div``
 
 const Lunchmenu = () => {
+  const titleUpdataer = useTitle("티처캔 | 식단표")
   // 반응형
   const media = useMedia()
 

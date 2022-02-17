@@ -13,11 +13,13 @@ import { useReactiveVar } from "@apollo/client";
 import Pop_ChangePw from "../Components/Account/Popup/Pop_ChangePw";
 import { CHECK_PASSWORD_QUERY } from "../Graphql/User/query";
 import { useQuery } from "@apollo/client";
+import useTitle from "../Hooks/useTitle";
 
 const Title = styled.div`
   font-size: 1.5em;
   font-size: 1.5rem;
   padding: 60px 0px 60px 60px;
+  padding: 3.75rem 0rem 3.75rem 3.75rem;
 `;
 
 const Container = styled.div`
@@ -66,6 +68,7 @@ const Item = styled.div`
 `;
 
 const EditAccount = () => {
+  const titleUpdataer = useTitle("티처캔 | 회원정보")
   const isPopup = useReactiveVar(isPopupVar);
   const me = useMe();
   const { data } = useQuery(CHECK_PASSWORD_QUERY, {

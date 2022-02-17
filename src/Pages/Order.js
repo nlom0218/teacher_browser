@@ -20,6 +20,7 @@ import PrintOrderContents from "../Components/Order/Popup/PrintOrderContents";
 import useMedia from "../Hooks/useMedia";
 import IcNameTableClick from "../icons/NameTable/IcNameTableClick";
 import IcNameTable from "../icons/NameTable/IcNameTable";
+import useTitle from "../Hooks/useTitle";
 
 
 // 전체 틀
@@ -157,6 +158,7 @@ const ListName = styled.div``;
 //추가 기능 (프린트)
 
 const Order = () => {
+  const titleUpdataer = useTitle("티처캔 | 순서정하기")
   const { id } = useParams();
   const isPopup = useReactiveVar(isPopupVar);
   const media = useMedia()
