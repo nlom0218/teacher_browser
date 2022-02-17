@@ -32,6 +32,7 @@ import ChangBackground from "./Components/Shared/ChangBackground";
 import PageLinkRegister from "./Pages/PageLinkRegister";
 import PageLinkAllList from "./Pages/PageLinkAllList";
 import PageLinkDetail from "./Pages/PageLinkDetail";
+import TimerSecond from "./Pages/TimerSecond";
 
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
@@ -85,7 +86,7 @@ function App() {
         <Route path={`${routes.calendar}/:date`} element={<Calendar />} />
         <Route path={routes.pageLink} element={<PageLink />} />
         <Route path={routes.menu} element={<Menu />} />
-        <Route path={routes.timer} element={<Timer />} />
+        <Route path={routes.timer} element={<TimerSecond />} />
         <Route path={routes.draw} element={<Draw />} />
         <Route path={`${routes.draw}/:id`} element={<Draw />} />
         <Route path={routes.swap} element={<Swap />} />
