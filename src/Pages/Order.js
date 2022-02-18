@@ -20,6 +20,7 @@ import IcNameTableClick from "../icons/NameTable/IcNameTableClick";
 import IcNameTable from "../icons/NameTable/IcNameTable";
 import useTitle from "../Hooks/useTitle";
 import StudentList from "../Components/Shared/popup/StudentList";
+import Loading from "../Components/Shared/Loading";
 
 
 // 전체 틀
@@ -263,7 +264,14 @@ const Order = () => {
               {media === "Desktop" && <PrintOrder />}
               <FontSizeBtn seeResultType={seeResultType} setFontSizeAll={setFontSizeAll} fontSizeAll={fontSizeAll} fontSizeOne={fontSizeOne} setFontSizeOne={setFontSizeOne} />
             </OptionContents>
-            <StudentOrder fontSizeOne={fontSizeOne} fontSizeAll={fontSizeAll} seeResultType={seeResultType} selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} isShuffle={isShuffle} />
+            {loading ? <Loading page="subPage" /> : <StudentOrder
+              fontSizeOne={fontSizeOne}
+              fontSizeAll={fontSizeAll}
+              seeResultType={seeResultType}
+              selectedStudent={selectedStudent}
+              setSelectedStudent={setSelectedStudent}
+              isShuffle={isShuffle}
+            />}
           </React.Fragment>
         )}
       </Container>

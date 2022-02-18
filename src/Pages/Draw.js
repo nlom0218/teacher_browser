@@ -16,6 +16,7 @@ import IcNameTableClick from '../icons/NameTable/IcNameTableClick';
 import IcNameTable from '../icons/NameTable/IcNameTable';
 import useTitle from '../Hooks/useTitle';
 import StudentList from '../Components/Shared/popup/StudentList';
+import Loading from '../Components/Shared/Loading';
 
 const Container = styled.div`
   min-height : ${props => props.seeResultType === "ONE" && "100%"};
@@ -254,7 +255,7 @@ const Draw = () => {
                 seeResultType={seeResultType}
               />
             </OptionContents>
-            <StudentOrder
+            {loading ? <Loading page="subPage" /> : <StudentOrder
               isShuffle={isShuffle}
               selectedStudent={selectedStudent}
               setSelectedStudent={setSelectedStudent}
@@ -262,7 +263,7 @@ const Draw = () => {
               fontSizeAll={fontSizeAll}
               fontSizeOne={fontSizeOne}
               pickNum={pickNum}
-              pickType={pickType} />
+              pickType={pickType} />}
           </React.Fragment>
         )}
       </Container>

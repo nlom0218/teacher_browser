@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import BtnPopupContainer from '../../Shared/BtnPopupContainer';
 import { useForm } from 'react-hook-form';
-import CardShuffle from '../../Shared/CardShuffle';
-import { outPopup } from '../../../apollo';
 
 const Container = styled.div`
   display: grid;
@@ -49,11 +47,6 @@ const SubmitInput = styled.input`
     border-radius : 5px;
     border-radius : 0.3125rem;
     cursor : pointer;
-`
-
-const ErrMsg = styled.div`
-    text-align : center;
-    color : #db3a1e;
 `
 
 const StudentNumber = ({ pickNum, setPickNum, onClickShuffleBtn, setErrMsg }) => {
