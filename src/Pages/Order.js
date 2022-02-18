@@ -28,11 +28,15 @@ const Container = styled.div`
   min-height: ${props => props.seeResultType === "ONE" && "100%"};
   display: grid;
   grid-template-rows: auto auto 1fr;
-  padding: 40px;
-  padding: 2.5rem;
+  padding: 20px;
+  padding: 1.25rem;
   row-gap: 20px;
   row-gap: 1.25rem;
   align-items: flex-start;
+  ${customMedia.greaterThan("tablet")`
+    padding: 40px;
+    padding: 2.5rem;
+  `}
 `;
 // 상단
 const TopContents = styled.div`
