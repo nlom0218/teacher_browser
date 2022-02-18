@@ -36,9 +36,15 @@ const StopBtn = styled.div`
 `
 
 
-const TimerBtnContainer = ({ timerStatus, setTimerStatus, setReset }) => {
+const TimerBtnContainer = ({ timerStatus, setTimerStatus, setReset, setErrMsg, localHours, localMinutes, localSeconds, mode }) => {
 
   const onClickBtn = () => {
+    if (mode === "countdown") {
+      if (localHours === 0 && localMinutes === 0 && localSeconds === 0) {
+        setErrMsg("설정에서 카운트 다운 시간을 설정해주세요. 😂")
+        return
+      }
+    }
     if (timerStatus === "pause") {
       setTimerStatus("play")
     } else {

@@ -15,9 +15,9 @@ const TimeBox = styled.div`
   -ms-user-select:none;
   user-select:none;
   font-size: ${props => props.screen === "full" ?
-    (props.isHours ? "20vw" : "28vw")
+    (props.isHours ? "20vw" : "26vw")
     :
-    (props.isHours ? "12vw" : "20vw")
+    (props.isHours ? "12vw" : "18vw")
   };
   text-align: center;
   transition: font-size 0.4s ease;

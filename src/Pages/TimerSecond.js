@@ -5,6 +5,7 @@ import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../apollo';
+import AlertMessage from '../Components/Shared/AlertMessage';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import TimerSetting from '../Components/TimerSecond/Popup/TimerSetting';
 import TimerBtnContainer from '../Components/TimerSecond/TimerBtnContainer';
@@ -44,6 +45,7 @@ const Title = styled.form`
   column-gap : 1.25rem;
   font-size : 1.5em;
   font-size : 1.5rem;
+  opacity: ${props => props.isFull ? 0 : 1};
 `
 
 const SettingIcon = styled.div`
@@ -60,8 +62,8 @@ const SettingIcon = styled.div`
   background-color: ${props => props.screen === "full" && color.white};
   padding: ${props => props.screen === "full" && "5px"};
   padding: ${props => props.screen === "full" && "0.3125rem"};
-  border-radius: ${props => props.screen === "full" && "5px"};;
-  border-radius: ${props => props.screen === "full" && "0.3125rem"};;
+  border-radius: ${props => props.screen === "full" && "5px"};
+  border-radius: ${props => props.screen === "full" && "0.3125rem"};
 `
 
 const SetModeContainer = styled.div`
@@ -71,9 +73,11 @@ const SetModeContainer = styled.div`
   column-gap: 1.25rem;
   row-gap: 20px;
   row-gap: 1.25rem;
+  /* padding-top: 20px; */
   ${customMedia.greaterThan("tablet")`
     justify-self: flex-start;
     grid-template-columns: auto auto;
+    padding-top: 0px;
   `}
 `
 
@@ -86,6 +90,7 @@ const ModeBtn = styled.div`
   border-radius: 0.3125rem;
   cursor: pointer;
   opacity: ${props => props.selected ? 1 : 0.4};
+  transition: background-color 1s ease, color 1s ease;
   :hover {
     opacity: 1;
     transition: opacity 0.6s ease;
@@ -100,10 +105,16 @@ const TimerSecond = () => {
 
   const { mode } = useParams()
 
+  const localHours = parseInt(localStorage.getItem("countdownHours")) ? parseInt(localStorage.getItem("countdownHours")) : 0
+  const localMinutes = parseInt(localStorage.getItem("countdownMinutes")) ? parseInt(localStorage.getItem("countdownMinutes")) : 0
+  const localSeconds = parseInt(localStorage.getItem("countdownSeconds")) ? parseInt(localStorage.getItem("countdownSeconds")) : 0
+
   const [hours, setHours] = useState(0)
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] = useState(0)
   const [timerStatus, setTimerStatus] = useState("pause")
+
+  const [errMsg, setErrMsg] = useState(undefined)
 
   const [reset, setReset] = useState(1)
 
@@ -155,7 +166,7 @@ const TimerSecond = () => {
         return () => clearInterval(countdown)
       }
     }
-  }, [timerStatus, minutes, seconds])
+  }, [timerStatus, hours, minutes, seconds])
 
   useEffect(() => {
     if (mode === "countup") {
@@ -167,9 +178,9 @@ const TimerSecond = () => {
       }
     }
     if (mode === "countdown") {
-      setHours(0)
-      setMinutes(3)
-      setSeconds(0)
+      setHours(localHours)
+      setMinutes(localMinutes)
+      setSeconds(localSeconds)
       if (timerStatus === "play") {
         setTimerStatus("pause")
       }
@@ -178,9 +189,9 @@ const TimerSecond = () => {
 
   useEffect(() => {
     if (mode === "countdown") {
-      setHours(0)
-      setMinutes(3)
-      setSeconds(0)
+      setHours(localHours)
+      setMinutes(localMinutes)
+      setSeconds(localSeconds)
     } else {
       setHours(0)
       setMinutes(0)
@@ -193,8 +204,8 @@ const TimerSecond = () => {
     <BasicContainer menuItem={true} screen={screen} page="timer">
       <Container>
         <TopContaner>
-          <Title>{screen === "small" && "타이머"}</Title>
-          {mode === "countdown" && <SettingIcon screen={screen} onClick={onClickSettingBtn}><FcSettings /></SettingIcon>}
+          <Title isFull={screen === "full"}>{screen === "small" ? "타이머" : "11"}</Title>
+          {timerStatus === "pause" && <SettingIcon screen={screen} onClick={onClickSettingBtn}><FcSettings /></SettingIcon>}
         </TopContaner>
         <SetModeContainer>
           <Link to={`${routes.timer}/countup`}>
@@ -205,13 +216,27 @@ const TimerSecond = () => {
           </Link>
         </SetModeContainer>
         <TimerContainer hours={hours} minutes={minutes} seconds={seconds} setScreen={setScreen} screen={screen} />
-        <TimerBtnContainer timerStatus={timerStatus} setTimerStatus={setTimerStatus} setReset={setReset} />
+        <TimerBtnContainer
+          timerStatus={timerStatus}
+          setTimerStatus={setTimerStatus}
+          setReset={setReset}
+          setErrMsg={setErrMsg}
+          localHours={localHours}
+          localMinutes={localMinutes}
+          localSeconds={localSeconds}
+          mode={mode}
+        />
       </Container>
       {isPopup === "timerSetting" && <TimerSetting
+        mode={mode}
+        hours={hours}
         setHours={setHours}
-        setMinutes={setHours}
+        minutes={minutes}
+        setMinutes={setMinutes}
+        seconds={seconds}
         setSeconds={setSeconds}
       />}
+      {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} time={3000} type="error" />}
     </BasicContainer>
   );
 }
