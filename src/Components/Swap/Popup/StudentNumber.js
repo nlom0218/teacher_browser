@@ -60,8 +60,8 @@ const StudentNumber = ({ pickNum, setPickNum, onClickShuffleBtn, setErrMsg }) =>
     const onSubmit = (data) => {
         const { num: stringNum } = data
         const num = parseInt(stringNum)
-        if (num <= 0 || num >= 11) {
-            setErrMsg("1~11사이의 숫자를 입력해주세요. 😂")
+        if (num <= 1 || num >= 11) {
+            setErrMsg("2~11사이의 숫자를 입력해주세요. 😂")
             return
         }
         setPickNum(num)
@@ -83,7 +83,7 @@ const StudentNumber = ({ pickNum, setPickNum, onClickShuffleBtn, setErrMsg }) =>
                 </TypeLayout>
                 <SubmitInput
                     type="submit"
-                    value="뽑기"
+                    value="선택"
                 />
             </Form>
         </Container>

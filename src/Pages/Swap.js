@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import styled from 'styled-components';
 import { customMedia } from '../styles';
@@ -19,6 +19,9 @@ import useTitle from '../Hooks/useTitle';
 import StudentList from '../Components/Shared/popup/StudentList';
 import Loading from '../Components/Shared/Loading';
 import AlertMessage from '../Components/Shared/AlertMessage';
+import PrintOrder from '../Components/Order/PrintOrder';
+import useMedia from '../Hooks/useMedia';
+import PrintSwapContents from '../Components/Swap/Popup/PrintSwapContents';
 
 const Container = styled.div`
   display : grid;
@@ -142,10 +145,16 @@ const OptionBtn = styled.div`
 
 const Swap = () => {
   const titleUpdataer = useTitle("티처캔 | 자리바꾸기")
+
   const { id } = useParams()
+  const media = useMedia()
+
   const isPopup = useReactiveVar(isPopupVar);
+
+  const componentRef = useRef(null);
+
   const [isEdit, setIsEdit] = useState(false);
-  const [title, setTitle] = useState(undefined);
+  const [title, setTitle] = useState("자리바꾸기 제목");
   const [studentListName, setStudentListName] = useState(null);
   const [IconsLIstisHover, setIconListIsHover] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState([]);
@@ -232,7 +241,7 @@ const Swap = () => {
           <OptionContents>
             <OptionBtn onClick={() => onClickShuffleBtn("pickNum")}> 자리 설정 </OptionBtn>
             {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
-
+            {isShuffle === "pickNum" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
             {isShuffle === "ing" && (
               <OptionBtn onClick={() => onClickShuffleBtn("finish")} isShuffling={true}>
                 섞는 중
@@ -243,6 +252,7 @@ const Swap = () => {
                 다시 섞기
               </OptionBtn>
             )}
+            {media === "Desktop" && <PrintOrder />}
             <FontSizeBtn
               setFontSizeAll={setFontSizeAll}
               fontSizeAll={fontSizeAll}
@@ -262,6 +272,7 @@ const Swap = () => {
       )}
     </Container>
     {isPopup === "seeStudentList" && <StudentList page="swap" setIsShuffle={setIsShuffle} />}
+    {isPopup === "print" && <PrintSwapContents printRef={componentRef} title={title} selectedStudent={selectedStudent} pickNum={pickNum} />}
     {isShuffle === "pickNum" && <StudentNumber
       pickNum={pickNum}
       setPickNum={setPickNum}
