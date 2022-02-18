@@ -36,7 +36,7 @@ const StopBtn = styled.div`
 `
 
 
-const TimerBtnContainer = ({ timerStatus, setTimerStatus }) => {
+const TimerBtnContainer = ({ timerStatus, setTimerStatus, setReset }) => {
 
   const onClickBtn = () => {
     if (timerStatus === "pause") {
@@ -46,13 +46,17 @@ const TimerBtnContainer = ({ timerStatus, setTimerStatus }) => {
     }
   }
 
+  const onClickStopBtn = () => {
+    setReset(prev => prev + 1)
+  }
+
   return (<Container timerStatus={timerStatus}>
     {timerStatus === "pause" ?
       <PlayBtn onClick={onClickBtn}><FaPlay /></PlayBtn>
       :
       <PauseBtn onClick={onClickBtn}><FaPause /></PauseBtn>
     }
-    <StopBtn><FaStop /></StopBtn>
+    <StopBtn onClick={onClickStopBtn}><FaStop /></StopBtn>
   </Container>);
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FcSettings } from 'react-icons/fc';
 import styled from 'styled-components';
 import BasicContainer from '../Components/Shared/BasicContainer';
@@ -61,11 +61,45 @@ const TimerSecond = () => {
 
   const [isTimer, setIsTimer] = useState(true)
   const [hours, setHours] = useState(0)
-  const [minutes, setMinutes] = useState(0)
-  const [seconds, setSeconds] = useState(0)
+  const [minutes, setMinutes] = useState(59)
+  const [seconds, setSeconds] = useState(55)
   const [timerStatus, setTimerStatus] = useState("pause")
 
+  const [reset, setReset] = useState(1)
+
   const [screen, setScreen] = useState("small")
+
+  useEffect(() => {
+    if (timerStatus === "play") {
+      const timer = setInterval(() => {
+        if (seconds < 60) {
+          setSeconds(prev => prev + 1)
+        }
+        if (seconds === 59) {
+          setSeconds(0)
+          if (minutes === 59) {
+            setMinutes(0)
+            setHours(prev => prev + 1)
+          } else {
+            setMinutes(prev => prev + 1)
+          }
+        }
+      }, [1000])
+
+      return () => clearInterval(timer)
+    }
+  }, [timerStatus, minutes, seconds])
+
+  useEffect(() => {
+    if (isTimer) {
+      setHours(0)
+      setMinutes(0)
+      setSeconds(55)
+      if (timerStatus === "play") {
+        setTimerStatus("pause")
+      }
+    }
+  }, [reset])
 
   return (
     <BasicContainer menuItem={true} screen={screen} page="timer">
@@ -75,7 +109,7 @@ const TimerSecond = () => {
           <SettingIcon screen={screen}><FcSettings /></SettingIcon>
         </TopContaner>
         <TimerContainer hours={hours} minutes={minutes} seconds={seconds} setScreen={setScreen} screen={screen} />
-        <TimerBtnContainer timerStatus={timerStatus} setTimerStatus={setTimerStatus} />
+        <TimerBtnContainer timerStatus={timerStatus} setTimerStatus={setTimerStatus} setReset={setReset} />
       </Container>
     </BasicContainer>
   );
