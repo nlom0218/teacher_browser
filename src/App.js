@@ -86,7 +86,7 @@ function App() {
         <Route path={`${routes.calendar}/:date`} element={<Calendar />} />
         <Route path={routes.pageLink} element={<PageLink />} />
         <Route path={routes.menu} element={<Menu />} />
-        <Route path={routes.timer} element={<TimerSecond />} />
+        <Route path={`${routes.timer}/:mode`} element={<TimerSecond />} />
         <Route path={routes.draw} element={<Draw />} />
         <Route path={`${routes.draw}/:id`} element={<Draw />} />
         <Route path={routes.swap} element={<Swap />} />

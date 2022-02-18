@@ -7,21 +7,17 @@ const RealContainer = styled.div`
 `
 
 const Table = styled.div`
-    display : grid;
-    min-height : 100px;
+    width: 60%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
     padding : 20px 10px;
     padding : 1.25rem 0.625rem;
     transition : border 1s ease;
     border-radius : 5px;
     border-radius : 0.3125rem;
-    justify-items : center;
-    align-items : center;
-    row-gap : 10px;
-    width : 300px;
-    font-size : 25px;
-    font-size : 1.563rem;
-    margin-left : auto;
-    margin-right : auto;
+    font-size : 30px;
+    font-size : 1.875rem;
     position : relative;
     border: 2px solid ${props => props.theme.cardBorder};
     background-color: ${props => props.theme.cardBg};
@@ -29,9 +25,8 @@ const Table = styled.div`
 `
 
 const Container = styled.div`
-    // min-height : 100%;
     display : grid;
-    grid-template-columns : repeat(6,1fr);
+    grid-template-columns: ${props => `repeat(${props.pickNum}, 1fr)`};
     padding : 10px 5px;
     padding : 1.25rem 0.625rem;
     row-gap : 10px;
@@ -64,21 +59,11 @@ const Item = styled.div`
     transition: border 1s ease, background-color 1s ease;
 `
 
-const RemoveBtn = styled.div`
-    position: absolute;
-    top:3%;
-    right:3%;
-    font-size: 1.75em;
-    font-size: 1.75rem;
-    opacity:0.3;
-    cursor: pointer;
-`
-
 const Name = styled.div`
     width : 100%;
-    overflow : hidden;
+    /* overflow : hidden;
     text-overflow : clip;
-    white-space : nowrap;
+    white-space : nowrap; */
     text-align : center;
     font-size : ${props => props.fontSize}em;
     font-size : ${props => props.fontSize}rem;
@@ -86,21 +71,6 @@ const Name = styled.div`
 
 
 const StudentOrder = ({ selectedStudent, setSelectedStudent, seeResultType, fontSizeAll, fontSizeOne, isShuffle, pickNum, pickType }) => {
-    const [order, setOrder] = useState(1)
-
-    const onClickArrow = (type) => {
-        if (type === "back" && order !== 1) {
-            setOrder(prev => prev - 1)
-        }
-        if (type === "forward" && order !== selectedStudent.length) {
-            setOrder(prev => prev + 1)
-        }
-    }
-
-    const onClickRemoveBtn = (name) => {
-        const newSelectedStudent = selectedStudent.filter((item) => item !== name)
-        setSelectedStudent(newSelectedStudent)
-    }
 
     useEffect(() => {
         const shuffledStudent = () => {
@@ -124,25 +94,15 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, seeResultType, font
 
     return (
         <RealContainer>
-            <Table>교탁</Table>
-            <Container>
+            <Table>칠판</Table>
+            <Container pickNum={pickNum}>
                 {selectedStudent.map((item, index) => {
                     return (
                         <Item key={item}>
                             <Name fontSize={fontSizeAll}>{item}</Name>
-                            {/* <RemoveBtn onClick={() => onClickRemoveBtn(item)}><TiDelete /></RemoveBtn> */}
                         </Item>
-
-
                     );
                 })
-                    //     &&
-                    //     <SeeSelectedStudent
-                    //     selectedStudent={selectedStudent}
-                    //     pickNum={pickNum}
-                    //     pickType={pickType}
-                    //     fontSizeAll={fontSizeAll}
-                    // /> 
                 }
             </Container>
         </RealContainer>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import styled from 'styled-components';
 import { customMedia } from '../styles';
@@ -11,21 +11,30 @@ import { inPopup, isPopupVar } from '../apollo';
 import { useQuery, useReactiveVar } from '@apollo/client';
 import { SEE_ONE_STUDENT_LIST_QUERY } from '../Graphql/StudentList/query';
 import { useParams } from 'react-router-dom';
-import StudentList from '../Components/Swap/Popup/StudentList';
 import StudentOrder from '../Components/Swap/StudentOrder';
 import Shuffling from "../Components/Swap/Popup/Shuffling";
 import StudentNumber from '../Components/Swap/Popup/StudentNumber';
 import FontSizeBtn from '../Components/Swap/FontSizeBtn';
 import useTitle from '../Hooks/useTitle';
+import StudentList from '../Components/Shared/popup/StudentList';
+import Loading from '../Components/Shared/Loading';
+import AlertMessage from '../Components/Shared/AlertMessage';
+import PrintOrder from '../Components/Order/PrintOrder';
+import useMedia from '../Hooks/useMedia';
+import PrintSwapContents from '../Components/Swap/Popup/PrintSwapContents';
 
 const Container = styled.div`
   display : grid;
   grid-template-rows : auto auto 1fr;
-  padding: 40px;
-  padding: 2.5rem;
+  padding: 20px;
+  padding: 1.25rem;
   row-gap : 20px;
   row-gap : 1.25rem;
   align-items : flex-start;
+  ${customMedia.greaterThan("tablet")`
+    padding: 40px;
+    padding: 2.5rem;
+  `}
 `
 
 const TopContents = styled.div`
@@ -140,18 +149,23 @@ const OptionBtn = styled.div`
 
 const Swap = () => {
   const titleUpdataer = useTitle("티처캔 | 자리바꾸기")
+
   const { id } = useParams()
+  const media = useMedia()
+
   const isPopup = useReactiveVar(isPopupVar);
+
+  const componentRef = useRef(null);
+
   const [isEdit, setIsEdit] = useState(false);
-  const [title, setTitle] = useState(undefined);
+  const [title, setTitle] = useState("자리바꾸기 제목");
   const [studentListName, setStudentListName] = useState(null);
   const [IconsLIstisHover, setIconListIsHover] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState([]);
   const [isShuffle, setIsShuffle] = useState("init");
-  const [pickNum, setPickNum] = useState(1);
-  const [pickType, setPickType] = useState("see");
+  const [pickNum, setPickNum] = useState(6);
   const [fontSizeAll, setFontSizeAll] = useState(1.5);
-  const [studentNum, setStudentNum] = useState("init");
+  const [errMsg, setErrMsg] = useState(undefined)
 
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: {
@@ -180,7 +194,6 @@ const Swap = () => {
     onSubmit({ title })
   };
 
-  const onClickListBtn = () => inPopup("seeStudentNumber")
 
   const onClickShuffleBtn = (type) => {
     setIsShuffle(type);
@@ -230,9 +243,9 @@ const Swap = () => {
       {id && (
         <React.Fragment>
           <OptionContents>
-            <OptionBtn onClick={() => onClickListBtn()}> 자리 설정 </OptionBtn>
+            <OptionBtn onClick={() => onClickShuffleBtn("pickNum")}> 자리 설정 </OptionBtn>
             {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
-
+            {isShuffle === "pickNum" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
             {isShuffle === "ing" && (
               <OptionBtn onClick={() => onClickShuffleBtn("finish")} isShuffling={true}>
                 섞는 중
@@ -243,14 +256,13 @@ const Swap = () => {
                 다시 섞기
               </OptionBtn>
             )}
+            {media === "Desktop" && <PrintOrder />}
             <FontSizeBtn
               setFontSizeAll={setFontSizeAll}
               fontSizeAll={fontSizeAll}
             />
           </OptionContents>
-          <StudentOrder
-            // fontSizeOne={fontSizeOne} 
-            // fontSizeAll={fontSizeAll} 
+          {loading ? <Loading page="subPage" /> : <StudentOrder
             selectedStudent={selectedStudent}
             setSelectedStudent={setSelectedStudent}
             isShuffle={isShuffle}
@@ -259,18 +271,20 @@ const Swap = () => {
             pickNum={pickNum}
             setPickNum={setPickNum}
             studentNum={selectedStudent.length}
-          />
+          />}
         </React.Fragment>
       )}
     </Container>
-    {isPopup === "seeStudentList" && <StudentList />}
-    {isPopup === "seeStudentNumber" && <StudentNumber
+    {isPopup === "seeStudentList" && <StudentList page="swap" setIsShuffle={setIsShuffle} />}
+    {isPopup === "print" && <PrintSwapContents printRef={componentRef} title={title} selectedStudent={selectedStudent} pickNum={pickNum} />}
+    {isShuffle === "pickNum" && <StudentNumber
       pickNum={pickNum}
       setPickNum={setPickNum}
-      studentNum={selectedStudent.length}
-      setStudentNum={setStudentNum}
+      onClickShuffleBtn={onClickShuffleBtn}
+      setErrMsg={setErrMsg}
     />}
     {isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
+    {errMsg && <AlertMessage msg={errMsg} type="error" setMsg={setErrMsg} time={3000} />}
   </BasicContainer>);
 };
 

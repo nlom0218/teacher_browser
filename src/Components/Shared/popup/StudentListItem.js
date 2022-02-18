@@ -26,14 +26,16 @@ const ListName = styled.div`
 `
 
 
-const StudentListItem = ({ item, setIsShuffle }) => {
+const StudentListItem = ({ item, setIsShuffle, page }) => {
   const navigate = useNavigate()
   const [isEnterIcon, setIsEnterIcon] = useState(false)
   const onMouseEnterIcon = () => setIsEnterIcon(true)
   const onMouseLeaveIcon = () => setIsEnterIcon(false)
   const onClickItem = () => {
-    setIsShuffle("init")
-    navigate(`${routes.draw}/${item.listId}`)
+    if (setIsShuffle) {
+      setIsShuffle("init")
+    }
+    navigate(`/${page}/${item.listId}`)
     outPopup()
   }
   return (<ListItem

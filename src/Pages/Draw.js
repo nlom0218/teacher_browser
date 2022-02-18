@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../apollo';
 import { useQuery, useReactiveVar } from '@apollo/client';
-import StudentList from '../Components/Draw/Popup/StudentList';
 import { useParams } from 'react-router-dom';
 import { customMedia } from '../styles';
 import { inputLine } from '../Animations/InputLine';
@@ -16,17 +15,23 @@ import Shuffling from '../Components/Draw/Popup/Shuffling';
 import IcNameTableClick from '../icons/NameTable/IcNameTableClick';
 import IcNameTable from '../icons/NameTable/IcNameTable';
 import useTitle from '../Hooks/useTitle';
+import StudentList from '../Components/Shared/popup/StudentList';
+import Loading from '../Components/Shared/Loading';
 
 const Container = styled.div`
   min-height : ${props => props.seeResultType === "ONE" && "100%"};
   min-height : ${props => props.isShuffle === "finish" && (props.pickNum < 4 && "100%")};
   display : grid;
   grid-template-rows : auto auto 1fr;
-  padding: 40px;
-  padding: 2.5rem;
+  padding: 20px;
+  padding: 1.25rem;
   row-gap : 20px;
   row-gap : 1.25rem;
   align-items : flex-start;
+  ${customMedia.greaterThan("tablet")`
+    padding: 40px;
+    padding: 2.5rem;
+  `}
 `
 
 
@@ -254,7 +259,7 @@ const Draw = () => {
                 seeResultType={seeResultType}
               />
             </OptionContents>
-            <StudentOrder
+            {loading ? <Loading page="subPage" /> : <StudentOrder
               isShuffle={isShuffle}
               selectedStudent={selectedStudent}
               setSelectedStudent={setSelectedStudent}
@@ -262,11 +267,11 @@ const Draw = () => {
               fontSizeAll={fontSizeAll}
               fontSizeOne={fontSizeOne}
               pickNum={pickNum}
-              pickType={pickType} />
+              pickType={pickType} />}
           </React.Fragment>
         )}
       </Container>
-      {isPopup === "seeStudentList" && <StudentList setIsShuffle={setIsShuffle} />}
+      {isPopup === "seeStudentList" && <StudentList setIsShuffle={setIsShuffle} page="draw" />}
       {isShuffle === "ing" &&
         <Shuffling
           pickNum={pickNum}

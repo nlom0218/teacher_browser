@@ -21,8 +21,6 @@ cursor : pointer;
 
 const Shuffling = ({ onClickShuffleBtn }) => {
 
-
-
   return (<BtnPopupContainer>
     <Container>
       <RandomCircle />
