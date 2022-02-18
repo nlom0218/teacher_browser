@@ -1,16 +1,22 @@
+import { useReactiveVar } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { FcSettings } from 'react-icons/fc';
+import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { inPopup, isPopupVar } from '../apollo';
 import BasicContainer from '../Components/Shared/BasicContainer';
+import TimerSetting from '../Components/TimerSecond/Popup/TimerSetting';
 import TimerBtnContainer from '../Components/TimerSecond/TimerBtnContainer';
 import TimerContainer from '../Components/TimerSecond/TimerContainer';
 import useTitle from '../Hooks/useTitle';
+import routes from '../routes';
 import { color, customMedia } from '../styles';
 
 const Container = styled.div`
   min-height: 100%;
   display : grid;
-  grid-template-rows : auto 1fr auto;
+  grid-template-rows : auto auto 1fr auto;
   padding: 20px;
   padding: 1.25rem;
   row-gap : 20px;
@@ -23,12 +29,14 @@ const Container = styled.div`
 `
 
 const TopContaner = styled.div`
-  display: grid;
-  grid-template-columns: 1fr auto;
+  position: relative;
+  padding-top: 20px;
+  ${customMedia.greaterThan("tablet")`
+    padding-top: 0px;
+  `}
 `
 
 const Title = styled.form`
-  grid-row : 2 / 3;
   display : grid;
   grid-template-columns : 1fr auto;
   align-items : center;
@@ -36,18 +44,19 @@ const Title = styled.form`
   column-gap : 1.25rem;
   font-size : 1.5em;
   font-size : 1.5rem;
-  ${customMedia.greaterThan("tablet")`
-  grid-row: 1 / 2;
-  `}
 `
 
 const SettingIcon = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
   svg {
     display : flex;
     font-size : 2.5em;
     font-size : 2.5rem;
     cursor : pointer;
   }
+  justify-self: flex-end;
   background-color: ${props => props.screen === "full" && color.white};
   padding: ${props => props.screen === "full" && "5px"};
   padding: ${props => props.screen === "full" && "0.3125rem"};
@@ -55,62 +64,154 @@ const SettingIcon = styled.div`
   border-radius: ${props => props.screen === "full" && "0.3125rem"};;
 `
 
+const SetModeContainer = styled.div`
+  text-align: center;
+  display: grid;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  ${customMedia.greaterThan("tablet")`
+    justify-self: flex-start;
+    grid-template-columns: auto auto;
+  `}
+`
+
+const ModeBtn = styled.div`
+  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
+  background-color: ${props => props.theme.green};
+  color: ${props => props.theme.bgColor};
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  opacity: ${props => props.selected ? 1 : 0.4};
+  :hover {
+    opacity: 1;
+    transition: opacity 0.6s ease;
+  }
+`
+
 
 const TimerSecond = () => {
   const titleUpdataer = useTitle("티처캔 | 타이머")
 
-  const [isTimer, setIsTimer] = useState(true)
+  const isPopup = useReactiveVar(isPopupVar)
+
+  const { mode } = useParams()
+
   const [hours, setHours] = useState(0)
-  const [minutes, setMinutes] = useState(59)
-  const [seconds, setSeconds] = useState(55)
+  const [minutes, setMinutes] = useState(0)
+  const [seconds, setSeconds] = useState(0)
   const [timerStatus, setTimerStatus] = useState("pause")
 
   const [reset, setReset] = useState(1)
 
   const [screen, setScreen] = useState("small")
 
+  const onClickSettingBtn = () => {
+    inPopup("timerSetting")
+  }
+
   useEffect(() => {
     if (timerStatus === "play") {
-      const timer = setInterval(() => {
-        if (seconds < 60) {
-          setSeconds(prev => prev + 1)
-        }
-        if (seconds === 59) {
-          setSeconds(0)
-          if (minutes === 59) {
-            setMinutes(0)
-            setHours(prev => prev + 1)
-          } else {
-            setMinutes(prev => prev + 1)
+      if (mode === "countup") {
+        const countup = setInterval(() => {
+          if (seconds < 60) {
+            setSeconds(prev => prev + 1)
           }
-        }
-      }, [1000])
+          if (seconds === 59) {
+            setSeconds(0)
+            if (minutes === 59) {
+              setMinutes(0)
+              setHours(prev => prev + 1)
+            } else {
+              setMinutes(prev => prev + 1)
+            }
+          }
+        }, [1000])
 
-      return () => clearInterval(timer)
+        return () => clearInterval(countup)
+      } else if (mode === 'countdown') {
+        const countdown = setInterval(() => {
+          if (seconds > 0) {
+            setSeconds(prev => prev - 1)
+          }
+          if (seconds === 0) {
+            setSeconds(59)
+            if (minutes === 0) {
+              setMinutes(59)
+              setHours(prev => prev - 1)
+            } else {
+              setMinutes(prev => prev - 1)
+            }
+          }
+        }, [1000])
+        if (hours === 0 && minutes === 0 && seconds === 0) {
+          clearInterval(countdown)
+          setReset(prev => prev + 1)
+        }
+
+        return () => clearInterval(countdown)
+      }
     }
   }, [timerStatus, minutes, seconds])
 
   useEffect(() => {
-    if (isTimer) {
+    if (mode === "countup") {
       setHours(0)
       setMinutes(0)
-      setSeconds(55)
+      setSeconds(0)
+      if (timerStatus === "play") {
+        setTimerStatus("pause")
+      }
+    }
+    if (mode === "countdown") {
+      setHours(0)
+      setMinutes(0)
+      setSeconds(10)
       if (timerStatus === "play") {
         setTimerStatus("pause")
       }
     }
   }, [reset])
 
+  useEffect(() => {
+    if (mode === "countdown") {
+      setHours(0)
+      setMinutes(0)
+      setSeconds(10)
+    } else {
+      setHours(0)
+      setMinutes(0)
+      setSeconds(0)
+    }
+    setTimerStatus("pause")
+  }, [mode])
+
   return (
     <BasicContainer menuItem={true} screen={screen} page="timer">
       <Container>
         <TopContaner>
           <Title>{screen === "small" && "타이머"}</Title>
-          <SettingIcon screen={screen}><FcSettings /></SettingIcon>
+          {mode === "countdown" && <SettingIcon screen={screen} onClick={onClickSettingBtn}><FcSettings /></SettingIcon>}
         </TopContaner>
+        <SetModeContainer>
+          <Link to={`${routes.timer}/countup`}>
+            <ModeBtn selected={mode === "countup"}>COUNT UP</ModeBtn>
+          </Link>
+          <Link to={`${routes.timer}/countdown`}>
+            <ModeBtn selected={mode === "countdown"}>COUNT DOWN</ModeBtn>
+          </Link>
+        </SetModeContainer>
         <TimerContainer hours={hours} minutes={minutes} seconds={seconds} setScreen={setScreen} screen={screen} />
         <TimerBtnContainer timerStatus={timerStatus} setTimerStatus={setTimerStatus} setReset={setReset} />
       </Container>
+      {isPopup === "timerSetting" && <TimerSetting
+        setHours={setHours}
+        setMinutes={setHours}
+        setSeconds={setSeconds}
+      />}
     </BasicContainer>
   );
 }
