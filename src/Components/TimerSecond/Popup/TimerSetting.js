@@ -71,14 +71,18 @@ const TimerSetting = ({ mode, hours, setHours, minutes, setMinutes, seconds, set
   })
 
   const onSubmit = (data) => {
-    const { hours, minutes, seconds } = data
-    localStorage.setItem("countdownHours", hours)
-    localStorage.setItem("countdownMinutes", minutes)
-    localStorage.setItem("countdownSeconds", seconds)
-    setHours(parseInt(hours))
-    setMinutes(parseInt(minutes))
-    setSeconds(parseInt(seconds))
-    outPopup()
+    if (mode === "countdown") {
+      const { hours, minutes, seconds } = data
+      localStorage.setItem("countdownHours", hours)
+      localStorage.setItem("countdownMinutes", minutes)
+      localStorage.setItem("countdownSeconds", seconds)
+      setHours(parseInt(hours))
+      setMinutes(parseInt(minutes))
+      setSeconds(parseInt(seconds))
+      outPopup()
+    } else {
+      alert("ㅋㅋㅋㄴㄴ")
+    }
   }
 
   useEffect(() => {
