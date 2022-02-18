@@ -30,24 +30,6 @@ const StudentItem = styled.div`
   `}
 `
 
-const hideBoxHoverAni = keyframes`
-  0% {
-    top : 0;
-    bottom : 0;
-  }
-  50% {
-    top : -20px;
-    top : -1.25rem;
-    bottom : 20px;
-    bottom : 1.25rem;
-  }
-  100% {
-    top : 0;
-    bottom : 0;
-  }
-
-`
-
 const hideBoxClickAni = keyframes`
   from { 
     top : 0;
@@ -84,7 +66,6 @@ const HideBox = styled.div`
 const SeeSelectedStudentItem = ({ item, fontSize, pickNum, pickType }) => {
   const [randomImg, setRandomImg] = useState(bg1)
   const me = useMe()
-  console.log(me);
 
   const [seeHideBox, setSeeHideBox] = useState(true)
 

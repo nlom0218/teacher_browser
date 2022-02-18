@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
-import StudentList from "../Components/Order/Popup/StudentList";
-import { FcContacts } from "react-icons/fc";
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { inPopup, isPopupVar } from "../apollo";
 import { useParams } from "react-router-dom";
@@ -21,6 +19,7 @@ import useMedia from "../Hooks/useMedia";
 import IcNameTableClick from "../icons/NameTable/IcNameTableClick";
 import IcNameTable from "../icons/NameTable/IcNameTable";
 import useTitle from "../Hooks/useTitle";
+import StudentList from "../Components/Shared/popup/StudentList";
 
 
 // 전체 틀
@@ -268,7 +267,7 @@ const Order = () => {
           </React.Fragment>
         )}
       </Container>
-      { isPopup === "seeStudentList" && <StudentList />}
+      { isPopup === "seeStudentList" && <StudentList page="order" setIsShuffle={setIsShuffle} />}
       { isPopup === "print" && <PrintOrderContents printRef={componentRef} title={title} selectedStudent={selectedStudent} />}
       { isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
     </BasicContainer >

@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../apollo';
 import { useQuery, useReactiveVar } from '@apollo/client';
-import StudentList from '../Components/Draw/Popup/StudentList';
 import { useParams } from 'react-router-dom';
 import { customMedia } from '../styles';
 import { inputLine } from '../Animations/InputLine';
@@ -16,6 +15,7 @@ import Shuffling from '../Components/Draw/Popup/Shuffling';
 import IcNameTableClick from '../icons/NameTable/IcNameTableClick';
 import IcNameTable from '../icons/NameTable/IcNameTable';
 import useTitle from '../Hooks/useTitle';
+import StudentList from '../Components/Shared/popup/StudentList';
 
 const Container = styled.div`
   min-height : ${props => props.seeResultType === "ONE" && "100%"};
@@ -266,7 +266,7 @@ const Draw = () => {
           </React.Fragment>
         )}
       </Container>
-      {isPopup === "seeStudentList" && <StudentList setIsShuffle={setIsShuffle} />}
+      {isPopup === "seeStudentList" && <StudentList setIsShuffle={setIsShuffle} page="draw" />}
       {isShuffle === "ing" &&
         <Shuffling
           pickNum={pickNum}

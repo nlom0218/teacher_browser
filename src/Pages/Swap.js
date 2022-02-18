@@ -11,12 +11,12 @@ import { inPopup, isPopupVar } from '../apollo';
 import { useQuery, useReactiveVar } from '@apollo/client';
 import { SEE_ONE_STUDENT_LIST_QUERY } from '../Graphql/StudentList/query';
 import { useParams } from 'react-router-dom';
-import StudentList from '../Components/Swap/Popup/StudentList';
 import StudentOrder from '../Components/Swap/StudentOrder';
 import Shuffling from "../Components/Swap/Popup/Shuffling";
 import StudentNumber from '../Components/Swap/Popup/StudentNumber';
 import FontSizeBtn from '../Components/Swap/FontSizeBtn';
 import useTitle from '../Hooks/useTitle';
+import StudentList from '../Components/Shared/popup/StudentList';
 
 const Container = styled.div`
   display : grid;
@@ -263,7 +263,7 @@ const Swap = () => {
         </React.Fragment>
       )}
     </Container>
-    {isPopup === "seeStudentList" && <StudentList />}
+    {isPopup === "seeStudentList" && <StudentList page="swap" setIsShuffle={setIsShuffle} />}
     {isPopup === "seeStudentNumber" && <StudentNumber
       pickNum={pickNum}
       setPickNum={setPickNum}
