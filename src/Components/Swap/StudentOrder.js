@@ -29,9 +29,9 @@ const Table = styled.div`
 `
 
 const Container = styled.div`
-    // min-height : 100%;
     display : grid;
     grid-template-columns : repeat(6,1fr);
+    grid-template-columns: ${props => `repeat(${props.pickNum}, 1fr)`};
     padding : 10px 5px;
     padding : 1.25rem 0.625rem;
     row-gap : 10px;
@@ -86,21 +86,6 @@ const Name = styled.div`
 
 
 const StudentOrder = ({ selectedStudent, setSelectedStudent, seeResultType, fontSizeAll, fontSizeOne, isShuffle, pickNum, pickType }) => {
-    const [order, setOrder] = useState(1)
-
-    const onClickArrow = (type) => {
-        if (type === "back" && order !== 1) {
-            setOrder(prev => prev - 1)
-        }
-        if (type === "forward" && order !== selectedStudent.length) {
-            setOrder(prev => prev + 1)
-        }
-    }
-
-    const onClickRemoveBtn = (name) => {
-        const newSelectedStudent = selectedStudent.filter((item) => item !== name)
-        setSelectedStudent(newSelectedStudent)
-    }
 
     useEffect(() => {
         const shuffledStudent = () => {
@@ -125,24 +110,14 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, seeResultType, font
     return (
         <RealContainer>
             <Table>교탁</Table>
-            <Container>
+            <Container pickNum={pickNum}>
                 {selectedStudent.map((item, index) => {
                     return (
                         <Item key={item}>
                             <Name fontSize={fontSizeAll}>{item}</Name>
-                            {/* <RemoveBtn onClick={() => onClickRemoveBtn(item)}><TiDelete /></RemoveBtn> */}
                         </Item>
-
-
                     );
                 })
-                    //     &&
-                    //     <SeeSelectedStudent
-                    //     selectedStudent={selectedStudent}
-                    //     pickNum={pickNum}
-                    //     pickType={pickType}
-                    //     fontSizeAll={fontSizeAll}
-                    // /> 
                 }
             </Container>
         </RealContainer>

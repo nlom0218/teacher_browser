@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import BtnPopupContainer from '../../Shared/BtnPopupContainer';
 import { useForm } from 'react-hook-form';
 import CardShuffle from '../../Shared/CardShuffle';
+import { outPopup } from '../../../apollo';
 
 const Container = styled.div`
   display: grid;
@@ -12,8 +13,6 @@ const Container = styled.div`
 
 
 const Form = styled.form`
-    width : 240px;
-    width : 15rem;
     display : grid;
     grid-gap : 20px;
     grid-gap : 1.25rem;
@@ -30,7 +29,6 @@ const Input = styled.input`
 
 const TypeLayout = styled.div`
     display : grid;
-    // grid-template-columns : 1fr 1fr;
     column-gap : 20px;
     column-gap : 1.25rem;
     cursor : pointer;
@@ -38,12 +36,9 @@ const TypeLayout = styled.div`
 
 const Type = styled.div`
     display : grid;
-    // grid-template-columns : auto 1fr;
     column-gap : 10px;
     column-gap : 0.625rem;
     align-items : center;
-    font-size : 14px;
-    font-size : 0.875rem;
 `
 
 const SubmitInput = styled.input`
@@ -61,8 +56,7 @@ const ErrMsg = styled.div`
     color : #db3a1e;
 `
 
-const StudentNumber = ({ pickNum, setPickNum, studentNum, setStudentNum }) => {
-    const [errMsg, setErrMsg] = useState(undefined)
+const StudentNumber = ({ pickNum, setPickNum, onClickShuffleBtn, setErrMsg }) => {
     const { register, handleSubmit, getValues } = useForm({
         mode: "onChange",
         defaultValues: {
@@ -73,18 +67,16 @@ const StudentNumber = ({ pickNum, setPickNum, studentNum, setStudentNum }) => {
     const onSubmit = (data) => {
         const { num: stringNum } = data
         const num = parseInt(stringNum)
-        if (num <= 0 || num >= studentNum) {
-            setErrMsg("입력값을 다시 확인하세요.")
+        if (num <= 0 || num >= 11) {
+            setErrMsg("1~11사이의 숫자를 입력해주세요. 😂")
             return
         }
         setPickNum(num)
-        setStudentNum("finish")
+        onClickShuffleBtn("init")
     }
 
     return (<BtnPopupContainer>
         <Container>
-            <CardShuffle />
-            {/* <RandomCircle /> */}
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Input
                     {...register("num", {
@@ -100,7 +92,6 @@ const StudentNumber = ({ pickNum, setPickNum, studentNum, setStudentNum }) => {
                     type="submit"
                     value="뽑기"
                 />
-                {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
             </Form>
         </Container>
     </BtnPopupContainer>);
