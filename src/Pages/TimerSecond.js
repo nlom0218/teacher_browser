@@ -168,8 +168,8 @@ const TimerSecond = () => {
     }
     if (mode === "countdown") {
       setHours(0)
-      setMinutes(0)
-      setSeconds(10)
+      setMinutes(3)
+      setSeconds(0)
       if (timerStatus === "play") {
         setTimerStatus("pause")
       }
@@ -179,8 +179,8 @@ const TimerSecond = () => {
   useEffect(() => {
     if (mode === "countdown") {
       setHours(0)
-      setMinutes(0)
-      setSeconds(10)
+      setMinutes(3)
+      setSeconds(0)
     } else {
       setHours(0)
       setMinutes(0)

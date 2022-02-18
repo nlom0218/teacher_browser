@@ -14,7 +14,11 @@ const TimeBox = styled.div`
   -moz-user-select:none;
   -ms-user-select:none;
   user-select:none;
-  font-size: ${props => props.screen === "full" ? "20vw" : "10vw"};
+  font-size: ${props => props.screen === "full" ?
+    (props.isHours ? "20vw" : "28vw")
+    :
+    (props.isHours ? "12vw" : "20vw")
+  };
   text-align: center;
   transition: font-size 0.4s ease;
   cursor: pointer;
@@ -32,8 +36,8 @@ const TimerContainer = ({ hours, minutes, seconds, setScreen, screen }) => {
     }
   }
   return (<Container>
-    <TimeBox onClick={onClickTiemBox} screen={screen}>
-      {hours < 10 ? `0${hours}` : hours}:
+    <TimeBox onClick={onClickTiemBox} screen={screen} isHours={hours !== 0}>
+      {hours !== 0 && (hours < 10 ? `0${hours}:` : `${hours}:`)}
       {minutes < 10 ? `0${minutes}` : minutes}:
       {seconds < 10 ? `0${seconds}` : seconds}
     </TimeBox>
