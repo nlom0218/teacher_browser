@@ -15,15 +15,14 @@ import ClassTimeSet from "../Components/Schedule/Popup/ClassTimeSet";
 import { scheduleTime, timeSetData } from "../Components/Schedule/ScheduleData";
 import { timeSetCal } from "../Components/Schedule/TimeSetCal";
 import ScheduleForm from "../Components/Schedule/ScheduleForm";
+import TimeRegisterPage from "../Components/Schedule/Popup/TimeRegisterPage";
 
 // 시간 설정해야 하는 기초값 데이터베이스에 있는거 연결하기
 const basic = timeSetData;
-
 const timeList = scheduleTime[0];
 
 //수업정보를 어떻게 받아서 전달????
 //음영한 뒤 다크모드에서 글씨 안 보임.
-// 인쇄기능에 과목명보내기
 //수업추가 어떻게?
 
 const Container = styled.div`
@@ -85,7 +84,6 @@ const Schedule = () => {
   });
 
   const onClickTimeSetBtn = () => {
-    window.localStorage.setItem("timeSet", JSON.stringify(timeSet));
     inPopup("registerTimeSet");
   };
 
@@ -121,6 +119,7 @@ const Schedule = () => {
       </Container>
 
       {isPopup === "registerClass" && <ClassRegisterPage />}
+      {isPopup === "registerTime" && <TimeRegisterPage />}
       {isPopup === "registerTimeSet" && (
         <ClassTimeSet timeSet={timeSet} setTimeSet={setTimeSet} />
       )}

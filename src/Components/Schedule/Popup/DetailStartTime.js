@@ -29,7 +29,7 @@ const Font = styled.div`
   padding: 20px 0px;
   padding: 1.25rem 0rem;
 `;
-const AddTagBtn = styled.div`
+const AddTagBtn = styled.button`
   text-align: center;
   padding: 10px 20px;
   padding: 0.625rem 1.25rem;
@@ -45,39 +45,21 @@ const DetailStartTime = (setTimeSet, timeSet) => {
     mode: "onChange",
   });
   const onSubmit = (data) => {
-    const {
-      hour,
-      minutes,
-      classtime,
-      resttime,
-      lunchhour,
-      lunchminutes,
-      breaktime,
-      breakminutes,
-    } = data;
-    setTime(data);
-    setTimeSet(data);
+    console.log(data);
+    // const {
+    //   hour,
+    //   minutes,
+    //   classtime,
+    //   resttime,
+    //   lunchhour,
+    //   lunchminutes,
+    //   breaktime,
+    //   breakminutes,
+    // } = data;
+    // setTime(data);
+    // setTimeSet(data);
   };
-  const onBlurTimeSet = () => {
-    const hour = getValues("hour");
-    const minutes = getValues("minutes");
-    const classtime = getValues("classtime");
-    const resttime = getValues("resttime");
-    const lunchhour = getValues("lunchhour");
-    const lunchminutes = getValues("lunchminutes");
-    const breaktime = getValues("breaktime");
-    const breakminutes = getValues("breakminutes");
-    onSubmit({
-      hour,
-      minutes,
-      classtime,
-      resttime,
-      lunchhour,
-      lunchminutes,
-      breaktime,
-      breakminutes,
-    });
-  };
+
   const onCompleted = () => {
     outPopup();
     setTime(time); //변경된 값 어떻게 받아오나..
@@ -86,8 +68,8 @@ const DetailStartTime = (setTimeSet, timeSet) => {
 
   return (
     <DetailStudentLayout>
-      <DetailTitle>수업 시작</DetailTitle>
-      <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurTimeSet}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div>수업 시작</div>
         <Input
           {...register("hour", {
             required: true,
@@ -109,9 +91,7 @@ const DetailStartTime = (setTimeSet, timeSet) => {
           defaultValue="00"
         />
         <Font>분 </Font>
-      </Form>
-      <DetailTitle>수업 시간</DetailTitle>
-      <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurTimeSet}>
+        <DetailTitle>수업 시간</DetailTitle>
         <Input
           {...register("classtime", {
             required: true,
@@ -123,9 +103,7 @@ const DetailStartTime = (setTimeSet, timeSet) => {
           defaultValue="40"
         />
         <Font>분 </Font>
-      </Form>
-      <DetailTitle>쉬는 시간</DetailTitle>
-      <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurTimeSet}>
+        <DetailTitle>쉬는 시간</DetailTitle>
         <Input
           {...register("resttime", {
             required: true,
@@ -137,9 +115,7 @@ const DetailStartTime = (setTimeSet, timeSet) => {
           defaultValue="10"
         />
         <Font>분 </Font>
-      </Form>
-      <DetailTitle>점심 시간</DetailTitle>
-      <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurTimeSet}>
+        <DetailTitle>점심 시간</DetailTitle>
         <Input
           {...register("lunchhour", {
             required: true,
@@ -161,8 +137,7 @@ const DetailStartTime = (setTimeSet, timeSet) => {
           defaultValue="50"
         />
         <Font>분 </Font>
-      </Form>
-      <DetailTitle>중간 놀이</DetailTitle>
+        {/* <DetailTitle>중간 놀이</DetailTitle>
       <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurTimeSet}>
         <Input
           {...register("breaktime", {
@@ -185,9 +160,10 @@ const DetailStartTime = (setTimeSet, timeSet) => {
           defaultValue="20"
         />
         <Font>분 </Font>
-      </Form>
-      <div />
-      <AddTagBtn onClick={onCompleted}>완료</AddTagBtn>
+      </Form> */}
+        <div />
+        <AddTagBtn type="submit">완료</AddTagBtn>
+      </form>
     </DetailStudentLayout>
   );
 };

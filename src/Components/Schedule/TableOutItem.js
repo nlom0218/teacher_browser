@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { CardFadeIn } from "../../Animations/Fade";
+import { inPopup } from "../../apollo";
 
 const TableItem = styled.div`
   position: relative;
@@ -42,6 +43,7 @@ const SubjectName = styled.div`
   line-height: 300%;
   font-size: ${(props) => props.fontSize}em;
   font-size: ${(props) => props.fontSize}rem;
+  cursor: pointer;
 `;
 
 const HoverContainer = styled.div`
@@ -83,7 +85,9 @@ const TableOutItem = ({
   const onMouseLeave = () => {
     setHoverContainer(false);
   };
-
+  const onClickRegisterClassTime = () => {
+    inPopup("registerTime");
+  };
   return (
     <TableItem
       onMouseEnter={onMouseEnter}
@@ -99,6 +103,7 @@ const TableOutItem = ({
       ) : null}
 
       <SubjectName
+        onClick={onClickRegisterClassTime}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         fontSize={fontSize}

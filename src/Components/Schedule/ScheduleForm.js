@@ -10,6 +10,8 @@ import {
   classTue,
   classWed,
 } from "./ScheduleData";
+import { useQuery } from "@apollo/client";
+import { GET_TIMETABLE_TIME_QUERY } from "../../Graphql/TimeTable/query";
 
 const Container = styled.div`
   height: 100%;
@@ -90,6 +92,11 @@ const ScheduleForm = ({
     ["5", "", [timeResult.start5, timeResult.end5]],
     ["6", "", [timeResult.start6, timeResult.end6]],
   ];
+
+  const { data, loading, error } = useQuery(GET_TIMETABLE_TIME_QUERY);
+  console.log("data:", data);
+  console.log("loading:", loading);
+  console.log("error:", error);
 
   return (
     <Container>
