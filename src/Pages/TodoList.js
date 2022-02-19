@@ -20,12 +20,6 @@ import CompleteToDo from '../Components/TodoList/Popup/CompleteToDo';
 import DelAllToDos from '../Components/TodoList/Popup/DelAllToDos';
 import useTitle from '../Hooks/useTitle';
 
-// const ListContainer = styled.div`
-//   margin-left : auto;
-//   margin-right : auto;
-//   padding-bottom : 20px;
-// `
-
 const Container = styled.div`
   padding : 20px;
   padding : 1.25rem;

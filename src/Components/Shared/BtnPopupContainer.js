@@ -19,9 +19,12 @@ const Container = styled.div`
 `
 
 
-const BtnPopupContainer = ({ children }) => {
+const BtnPopupContainer = ({ children, preventOutPoup }) => {
   // 팝업창의 배경을 클릭하게 되면 팝업창에서 벗어나게 된다.
   const onClickBackground = () => {
+    if (preventOutPoup) {
+      return
+    }
     outPopup()
     localStorage.removeItem("summaryStudentId")
   }

@@ -12,10 +12,12 @@ import IcRandom from '../../icons/Random/IcRandom';
 import IcRandomClick from '../../icons/Random/IcRandomClick';
 import IcChangingSeatsClick from '../../icons/ChangingSeats/IcChangingSeatsClick';
 import IcChangingSeats from '../../icons/ChangingSeats/IcChangingSeats';
-import IcNameTableClick from '../../icons/NameTable/IcNameTableClick';
 import IcNameTable from '../../icons/NameTable/IcNameTable';
 import IcOrderClick from '../../icons/Order/IcOrderClick';
 import IcOrder from '../../icons/Order/IcOrder';
+import IcJournal from '../../icons/Journal/IcJournal';
+import IcJournalClick from "../../icons/Journal/IcJournalClick"
+import IcNameTableOpened from '../../icons/NameTable/IcNameTableOpened';
 
 const SMenu = styled.div`
   display: grid;
@@ -105,20 +107,20 @@ export const ScheduleLink = () => {
 }
 
 export const JournalLink = () => {
-  return (
-    <Link to={routes.journal}>
-      <SMenu>
-        {/* <FcDocument /> */}
-        <Title>학급일지</Title>
-      </SMenu>
-    </Link>);
+  const [isHover, setIsHover] = useState(false)
+  return (<Link to={routes.journal}>
+    <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+      {isHover ? <IcJournalClick /> : <IcJournal />}
+      <Title>학급일지</Title>
+    </SMenu>
+  </Link>);
 }
 
 export const ListLink = () => {
   const [isHover, setIsHover] = useState(false)
   return (<Link to={routes.list}>
     <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
-      {isHover ? <IcNameTableClick /> : <IcNameTable />}
+      {isHover ? <IcNameTableOpened /> : <IcNameTable />}
       <Title>명렬표</Title>
     </SMenu>
   </Link>);

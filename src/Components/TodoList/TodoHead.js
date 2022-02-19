@@ -2,6 +2,7 @@ import React from 'react';
 import { MdAddCircle } from 'react-icons/md';
 import styled from 'styled-components';
 import { inPopup } from '../../apollo';
+import IcHelper from '../../icons/Helper/IcHelper';
 import { customMedia } from '../../styles';
 
 const TodoHeadBlock = styled.div`
@@ -40,19 +41,22 @@ const HeadLayout = styled.div`
 
 const ButtonContent = styled.div`
   display: grid;
+  grid-template-columns: auto auto;
   column-gap: 20px;
+  column-gap: 1.5rem;
   row-gap: 10px;
   row-gap: 0.625rem;
   align-self: flex-start;
+  align-items: center;
   ${customMedia.greaterThan("tablet")`
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr auto auto;
   `}
 `;
 
 const ComleteToDo = styled.div`
   cursor: pointer;
-  font-size : 1rem;
-  font-size : 1em;
+  grid-column: 1 / -1;
+  grid-row: 2 / 3;
   align-self: center;
   background-color : ${props => props.theme.btnBgColor};
   color: ${props => props.theme.bgColor};
@@ -63,7 +67,6 @@ const ComleteToDo = styled.div`
   border-radius: 0.3125rem;
   font-size : 0.875rem;
   font-size : 0.875em;
-  grid-row: 2 / 3;
   ${customMedia.greaterThan("tablet")`
     grid-row: 1 / 2;
     padding: 10px 20px;
@@ -87,6 +90,21 @@ const AddIcon = styled.div`
   ${customMedia.greaterThan("tablet")`
     font-size : 2.5rem;
     font-size : 2.5em;
+  `}
+`
+
+const HelpIcon = styled.div`
+  cursor: pointer;
+  font-size : 2.5rem;
+  font-size : 2.5em;
+  grid-row: 1 / 2;
+  justify-self: flex-end;
+  svg {
+      display : flex;
+  }
+  ${customMedia.greaterThan("tablet")`
+    font-size : 3rem;
+    font-size : 3em;
   `}
 `
 
@@ -133,6 +151,7 @@ const TodoHead = () => {
       <ButtonContent>
         <ComleteToDo onClick={onClickCompleteBtn}>완료된 할 일</ComleteToDo>
         <AddIcon onClick={onClickCreateBtn}><MdAddCircle /></AddIcon>
+        <HelpIcon><IcHelper /></HelpIcon>
       </ButtonContent>
     </TodoHeadBlock>
   );

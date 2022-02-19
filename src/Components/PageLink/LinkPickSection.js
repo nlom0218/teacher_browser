@@ -17,6 +17,8 @@ import ContentsList from "./Styled/ContentsList";
 import PageLinkTitle from "./Styled/PageLinkTitle";
 import { SEE_PAGE_LINK_QUERY } from "../../Graphql/PageLink/query";
 import PageLinkList from "./Styled/PageLinkList";
+import HelpIcon from "./Styled/HelpIcon";
+import IcHelper from "../../icons/Helper/IcHelper";
 
 //페이지 추천에 구글 폼 연결
 
@@ -95,7 +97,10 @@ const LinkPickSection = ({
       </MoveIcon>
       <FolderList />
       <ContentsList>
-        <PageLinkTitle>추천 페이지</PageLinkTitle>
+        <PageLinkTitle>
+          <HelpIcon><IcHelper /></HelpIcon>
+          <div>추천 페이지</div>
+        </PageLinkTitle>
         <PageLinkList>
           {data &&
             data?.seePageLink.map((item, index) => {

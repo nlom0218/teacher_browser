@@ -13,6 +13,9 @@ import TimerContainer from '../Components/TimerSecond/TimerContainer';
 import useTitle from '../Hooks/useTitle';
 import routes from '../routes';
 import { color, customMedia } from '../styles';
+import { stopMusicFn, playMusicFn, pauseMusicFn } from "../audio/BackgroundMusic/BackgroundMusic"
+import { alermAudiocArr } from "../audio/AlermAudio/AlermAudio"
+import FinishCountdonw from '../Components/TimerSecond/Popup/FinishCountdonw';
 
 const Container = styled.div`
   min-height: 100%;
@@ -23,6 +26,7 @@ const Container = styled.div`
   row-gap : 20px;
   row-gap : 1.25rem;
   align-items : flex-start;
+  position: relative;
   ${customMedia.greaterThan("tablet")`
     padding: 40px;
     padding: 2.5rem;
@@ -98,7 +102,7 @@ const ModeBtn = styled.div`
 `
 
 
-const TimerSecond = () => {
+const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
   const titleUpdataer = useTitle("티처캔 | 타이머")
 
   const isPopup = useReactiveVar(isPopupVar)
@@ -114,6 +118,10 @@ const TimerSecond = () => {
   const [seconds, setSeconds] = useState(0)
   const [timerStatus, setTimerStatus] = useState("pause")
 
+  const [bgMusic, setBgMusic] = useState(undefined)
+  const [alarmAudio, setAlarmAudio] = useState(undefined)
+  const [alremMp3, setAlremMp3] = useState(undefined)
+
   const [errMsg, setErrMsg] = useState(undefined)
 
   const [reset, setReset] = useState(1)
@@ -126,6 +134,9 @@ const TimerSecond = () => {
 
   useEffect(() => {
     if (timerStatus === "play") {
+      if (bgMusicMp3) {
+        playMusicFn(bgMusicMp3)
+      }
       if (mode === "countup") {
         const countup = setInterval(() => {
           if (seconds < 60) {
@@ -159,16 +170,30 @@ const TimerSecond = () => {
           }
         }, [1000])
         if (hours === 0 && minutes === 0 && seconds === 0) {
+          if (bgMusicMp3) {
+            stopMusicFn(bgMusicMp3)
+          }
+          if (alremMp3) {
+            playMusicFn(alremMp3)
+          }
+          inPopup("finishCountdown")
           clearInterval(countdown)
           setReset(prev => prev + 1)
         }
 
         return () => clearInterval(countdown)
       }
+    } else {
+      if (bgMusicMp3) {
+        pauseMusicFn(bgMusicMp3)
+      }
     }
   }, [timerStatus, hours, minutes, seconds])
 
   useEffect(() => {
+    if (bgMusicMp3) {
+      stopMusicFn(bgMusicMp3)
+    }
     if (mode === "countup") {
       setHours(0)
       setMinutes(0)
@@ -188,6 +213,11 @@ const TimerSecond = () => {
   }, [reset])
 
   useEffect(() => {
+    setBgMusic(undefined)
+    setBgMusicMp3(undefined)
+    if (bgMusicMp3) {
+      stopMusicFn(bgMusicMp3)
+    }
     if (mode === "countdown") {
       setHours(localHours)
       setMinutes(localMinutes)
@@ -199,6 +229,22 @@ const TimerSecond = () => {
     }
     setTimerStatus("pause")
   }, [mode])
+
+  useEffect(() => {
+    if (bgMusic) {
+      setBgMusicMp3(new Audio(bgMusic.audio))
+    } else {
+      setBgMusicMp3(undefined)
+    }
+  }, [bgMusic])
+
+  useEffect(() => {
+    if (alarmAudio) {
+      setAlremMp3(new Audio(alarmAudio.audio))
+    } else {
+      setAlremMp3(undefined)
+    }
+  }, [alarmAudio])
 
   return (
     <BasicContainer menuItem={true} screen={screen} page="timer">
@@ -225,6 +271,9 @@ const TimerSecond = () => {
           localMinutes={localMinutes}
           localSeconds={localSeconds}
           mode={mode}
+          screen={screen}
+          bgMusic={bgMusic}
+          alarmAudio={alarmAudio}
         />
       </Container>
       {isPopup === "timerSetting" && <TimerSetting
@@ -235,7 +284,16 @@ const TimerSecond = () => {
         setMinutes={setMinutes}
         seconds={seconds}
         setSeconds={setSeconds}
+        setErrMsg={setErrMsg}
+        setBgMusic={setBgMusic}
+        bgMusic={bgMusic}
+        alarmAudio={alarmAudio}
+        setAlarmAudio={setAlarmAudio}
       />}
+      {isPopup === "finishCountdown" &&
+        <FinishCountdonw
+          alremMp3={alremMp3}
+        />}
       {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} time={3000} type="error" />}
     </BasicContainer>
   );
