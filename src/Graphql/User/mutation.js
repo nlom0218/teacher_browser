@@ -20,10 +20,29 @@ export const LOGIN_USER_MUTATION = gql`
 `;
 
 export const NAVER_LOGIN_MUTATION = gql`
-  mutation NaverLogin($email: String!) {
-    naverLogin(email: $email) {
+  mutation NaverLogin($code: String, $state: String) {
+    naverLogin(code: $code, state: $state) {
       ok
       token
+      error
+    }
+  }
+`;
+export const KAKAO_LOGIN_MUTATION = gql`
+  mutation KakaoLogin($email: String!) {
+    kakaoLogin(email: $email) {
+      ok
+      token
+      error
+    }
+  }
+`;
+export const GOOGLE_LOGIN_MUTATION = gql`
+  mutation GoogleLogin($email: String!) {
+    googleLogin(email: $email) {
+      ok
+      token
+      error
     }
   }
 `;
@@ -101,8 +120,9 @@ export const NEW_PASSWORD_MUTATION = gql`
 `;
 
 export const SETTING_LINK_MUTATION = gql`
-mutation SettingLink($userEmail: String!, $siteName: String!, $memo: String) {
-  settingLink(userEmail: $userEmail, siteName: $siteName, memo: $memo) {
-    ok
+  mutation SettingLink($userEmail: String!, $siteName: String!, $memo: String) {
+    settingLink(userEmail: $userEmail, siteName: $siteName, memo: $memo) {
+      ok
+    }
   }
-}`
+`;
