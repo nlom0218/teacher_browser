@@ -18,25 +18,29 @@ const Container = styled.div`
     border-radius: 50%;
     background-color: ${props => props.theme.btnBgColor};
     color: ${props => props.theme.bgColor};
-    transition: background-color 1s ease, color 1s ease;
+    transition: background-color 1s ease, color 1s ease, font-size 0.6s ease;
   }
   svg {
     display: flex;
-    font-size: 2em;
-    font-size: 2rem;
   }
 `
 
 const PlayBtn = styled.div`
   cursor: pointer;
+  font-size: ${props => props.screen === "full" ? "1.25em" : "2em"};
+  font-size: ${props => props.screen === "full" ? "1.25rem" : "2rem"};
 `
 
 const PauseBtn = styled.div`
   cursor: pointer;
+  font-size: ${props => props.screen === "full" ? "1.25em" : "2em"};
+  font-size: ${props => props.screen === "full" ? "1.25rem" : "2rem"};
 `
 
 const StopBtn = styled.div`
   cursor: pointer;
+  font-size: ${props => props.screen === "full" ? "1.25em" : "2em"};
+  font-size: ${props => props.screen === "full" ? "1.25rem" : "2rem"};
 `
 
 const BgMusic = styled.div`
@@ -59,7 +63,7 @@ const BgMusic = styled.div`
 
 
 const TimerBtnContainer = ({ alarmAudio, timerStatus, setTimerStatus, setReset, setErrMsg, localHours, localMinutes, localSeconds, mode, bgMusic, screen }) => {
-
+  console.log(screen);
   const onClickBtn = () => {
     if (mode === "countdown") {
       if (localHours === 0 && localMinutes === 0 && localSeconds === 0) {
@@ -78,13 +82,13 @@ const TimerBtnContainer = ({ alarmAudio, timerStatus, setTimerStatus, setReset, 
     setReset(prev => prev + 1)
   }
 
-  return (<Container timerStatus={timerStatus}>
+  return (<Container timerStatus={timerStatus} >
     {timerStatus === "pause" ?
-      <PlayBtn className="timerBtn" onClick={onClickBtn}><FaPlay /></PlayBtn>
+      <PlayBtn screen={screen} className="timerBtn" onClick={onClickBtn}><FaPlay /></PlayBtn>
       :
-      <PauseBtn className="timerBtn" onClick={onClickBtn}><FaPause /></PauseBtn>
+      <PauseBtn screen={screen} className="timerBtn" onClick={onClickBtn}><FaPause /></PauseBtn>
     }
-    <StopBtn className="timerBtn" onClick={onClickStopBtn}><FaStop /></StopBtn>
+    <StopBtn screen={screen} className="timerBtn" onClick={onClickStopBtn}><FaStop /></StopBtn>
     {bgMusic && <BgMusic screen={screen}>
       <MdAudiotrack />
       <div>{bgMusic.name}</div>
