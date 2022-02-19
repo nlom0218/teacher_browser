@@ -13,6 +13,7 @@ import TimerContainer from '../Components/TimerSecond/TimerContainer';
 import useTitle from '../Hooks/useTitle';
 import routes from '../routes';
 import { color, customMedia } from '../styles';
+import { backgroundMusicArr } from "../audio/BackgroundMusic/BackgroundMusic"
 
 const Container = styled.div`
   min-height: 100%;
@@ -113,6 +114,9 @@ const TimerSecond = () => {
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] = useState(0)
   const [timerStatus, setTimerStatus] = useState("pause")
+
+  const [bgMusic, setBgMusic] = useState(undefined)
+  console.log(bgMusic);
 
   const [errMsg, setErrMsg] = useState(undefined)
 
@@ -235,6 +239,10 @@ const TimerSecond = () => {
         setMinutes={setMinutes}
         seconds={seconds}
         setSeconds={setSeconds}
+        backgroundMusicArr={backgroundMusicArr}
+        setErrMsg={setErrMsg}
+        setBgMusic={setBgMusic}
+        bgMusic={bgMusic}
       />}
       {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} time={3000} type="error" />}
     </BasicContainer>
