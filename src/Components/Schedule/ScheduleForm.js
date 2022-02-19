@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import TableInItem from "./TableInItem";
 import TableOutItem from "./TableOutItem";
@@ -77,26 +77,20 @@ const dayValue = [
   ["금", , result[4]],
 ];
 
-const ScheduleForm = ({
-  fontSize,
-  setFontSize,
-  viewTime,
-  setViewTime,
-  timeResult,
-}) => {
-  const timeValue = [
-    ["1", "", [timeResult.start1, timeResult.end1]],
-    ["2", "", [timeResult.start2, timeResult.end2]],
-    ["3", "", [timeResult.start3, timeResult.end3]],
-    ["4", "", [timeResult.start4, timeResult.end4]],
-    ["5", "", [timeResult.start5, timeResult.end5]],
-    ["6", "", [timeResult.start6, timeResult.end6]],
-  ];
-
-  const { data, loading, error } = useQuery(GET_TIMETABLE_TIME_QUERY);
-  console.log("data:", data);
-  console.log("loading:", loading);
-  console.log("error:", error);
+const ScheduleForm = ({ fontSize, setFontSize, viewTime, setViewTime }) => {
+  const [timetableTime, setTimetableTime] = useState([]);
+  const { data, loading, error } = useQuery(GET_TIMETABLE_TIME_QUERY, {
+    onCompleted: ({ getTimetableTime: data }) => {
+      setTimetableTime([
+        ["1", [data.start1, data.end1]],
+        ["2", [data.start2, data.end2]],
+        ["3", [data.start3, data.end3]],
+        ["4", [data.start4, data.end4]],
+        ["5", [data.start5, data.end5]],
+        ["6", [data.start6, data.end6]],
+      ]);
+    },
+  });
 
   return (
     <Container>
@@ -114,15 +108,14 @@ const ScheduleForm = ({
       </DayTop>
       <DayDown>
         <DayOne>
-          {timeValue.map((item, index) => {
+          {timetableTime.map((item, index) => {
             return (
               <TableOutItem
                 viewTime={viewTime}
                 setViewTime={setViewTime}
                 item={item[0]}
                 index={index}
-                color={item[1]}
-                tag={item[2]}
+                tag={item[1]}
               />
             );
           })}

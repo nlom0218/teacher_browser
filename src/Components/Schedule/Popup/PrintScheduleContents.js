@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import IcPrint from "../../../icons/Print/IcPrint";
 import PopupPrintContainer from "../../Shared/PopupPrintContainer";
 import { useReactToPrint } from "react-to-print";
 import { color } from "../../../styles";
+import { useQuery } from "@apollo/client";
+import { GET_TIMETABLE_TIME_QUERY } from "../../../Graphql/TimeTable/query";
 
 const PrintTopContents = styled.div`
   display: grid;
@@ -178,7 +180,27 @@ const GridItem = styled.div`
   border-radius: 0.3125rem;
 `;
 
-const PrintScheduleContents = ({ printRef, title, viewTime, timeResult }) => {
+const PrintScheduleContents = ({ printRef, title, viewTime }) => {
+  const [timeResult, setTimeResult] = useState([]);
+  const { data, loading, error } = useQuery(GET_TIMETABLE_TIME_QUERY, {
+    onCompleted: ({ getTimetableTime: data }) => {
+      setTimeResult([
+        data.start1,
+        data.end1,
+        data.start2,
+        data.end2,
+        data.start3,
+        data.end3,
+        data.start4,
+        data.end4,
+        data.start5,
+        data.end5,
+        data.start6,
+        data.end6,
+      ]);
+    },
+  });
+
   const handlePrint = useReactToPrint({
     content: () => printRef.current,
   });

@@ -12,17 +12,11 @@ import PrintScheduleContents from "../Components/Schedule/Popup/PrintScheduleCon
 import { useRef } from "react";
 import TimeTableTitle from "../Components/Schedule/TimeTableTitle";
 import ClassTimeSet from "../Components/Schedule/Popup/ClassTimeSet";
-import { scheduleTime, timeSetData } from "../Components/Schedule/ScheduleData";
-import { timeSetCal } from "../Components/Schedule/TimeSetCal";
-import ScheduleForm from "../Components/Schedule/ScheduleForm";
 import TimeRegisterPage from "../Components/Schedule/Popup/TimeRegisterPage";
 import useTitle from "../Hooks/useTitle";
+import useMe from "../Hooks/useMe";
+import ScheduleForm from "../Components/Schedule/ScheduleForm";
 
-// 시간 설정해야 하는 기초값 데이터베이스에 있는거 연결하기
-const basic = timeSetData;
-const timeList = scheduleTime[0];
-
-//수업정보를 어떻게 받아서 전달????
 //음영한 뒤 다크모드에서 글씨 안 보임.
 //수업추가 어떻게?
 
@@ -74,12 +68,12 @@ const Schedule = () => {
   const isPopup = useReactiveVar(isPopupVar);
   const media = useMedia();
   const componentRef = useRef(null);
+  const me = useMe();
 
   const [isEdit, setIsEdit] = useState(false);
   const [title, setTitle] = useState("우리반 시간표");
   const [fontSize, setFontSize] = useState(1.25);
   const [viewTime, setViewTime] = useState(false);
-  const [timeSet, setTimeSet] = useState(basic);
 
   const { register, handleSubmit, getValues } = useForm({
     mode: "onChange",
@@ -112,7 +106,6 @@ const Schedule = () => {
           )}
         </OptionContents>
         <ScheduleForm
-          timeResult={timeList}
           fontSize={fontSize}
           setFontSize={setFontSize}
           viewTime={viewTime}
@@ -122,15 +115,12 @@ const Schedule = () => {
 
       {isPopup === "registerClass" && <ClassRegisterPage />}
       {isPopup === "registerTime" && <TimeRegisterPage />}
-      {isPopup === "registerTimeSet" && (
-        <ClassTimeSet timeSet={timeSet} setTimeSet={setTimeSet} />
-      )}
+      {isPopup === "registerTimeSet" && <ClassTimeSet userEmail={me?.email} />}
       {isPopup === "print" && (
         <PrintScheduleContents
           printRef={componentRef}
           title={title}
           viewTime={viewTime}
-          timeResult={timeList}
         />
       )}
     </BasicContainer>
