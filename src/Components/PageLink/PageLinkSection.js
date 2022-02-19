@@ -97,7 +97,10 @@ const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit }) => {
         <PageLinkList none={none}>
           {!pageLinkFolder &&
             (myPageLink.length === 0 ? (
-              <div>등록된 즐겨찾기 페이지가 없습니다.이용 설명 추가하기 </div>
+              <div>
+                등록된 즐겨찾기 페이지가 없습니다.이용 설명 추가하기 추가하기
+                추가하기 추가하기 추가하기 추가하기 추가하기 추가하기{" "}
+              </div>
             ) : (
               myPageLink.map((item, index) => {
                 return <MyPageLink key={index} item={item} />;
