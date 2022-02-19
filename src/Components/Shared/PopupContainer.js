@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { outPopup } from "../../apollo";
+import { stopMusicFn } from "../../audio/BackgroundMusic/BackgroundMusic";
 import { customMedia } from "../../styles";
 
 const Background = styled.div`
@@ -64,7 +65,7 @@ const RegisterPage = styled.div`
   `}
 `
 
-const PopupContainer = ({ children, emojiPopup, maxHeight }) => {
+const PopupContainer = ({ children, emojiPopup, maxHeight, sound1, sound2 }) => {
   // 팝업창의 배경을 클릭하게 되면 팝업창에서 벗어나게 된다.
   const onClickBackground = () => {
     outPopup()
@@ -79,6 +80,12 @@ const PopupContainer = ({ children, emojiPopup, maxHeight }) => {
     localStorage.removeItem("AllergyNum")
     localStorage.removeItem("detailToDo")
     localStorage.removeItem("editSchedule")
+    if (sound1) {
+      stopMusicFn(sound1)
+    }
+    if (sound2) {
+      stopMusicFn(sound2)
+    }
   }
   return (<Background onClick={onClickBackground}>
     {/* e.stopPropagation 이벤트가 부모로 전달되는 것을 막는다. 즉, outPopup이 실행이 안된다. */}

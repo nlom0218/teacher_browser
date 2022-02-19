@@ -13,7 +13,9 @@ import TimerContainer from '../Components/TimerSecond/TimerContainer';
 import useTitle from '../Hooks/useTitle';
 import routes from '../routes';
 import { color, customMedia } from '../styles';
-import { backgroundMusicArr, stopMusicFn, playMusicFn, pauseMusicFn } from "../audio/BackgroundMusic/BackgroundMusic"
+import { stopMusicFn, playMusicFn, pauseMusicFn } from "../audio/BackgroundMusic/BackgroundMusic"
+import { alermAudiocArr } from "../audio/AlermAudio/AlermAudio"
+import FinishCountdonw from '../Components/TimerSecond/Popup/FinishCountdonw';
 
 const Container = styled.div`
   min-height: 100%;
@@ -117,6 +119,8 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
   const [timerStatus, setTimerStatus] = useState("pause")
 
   const [bgMusic, setBgMusic] = useState(undefined)
+  const [alarmAudio, setAlarmAudio] = useState(undefined)
+  const [alremMp3, setAlremMp3] = useState(undefined)
 
   const [errMsg, setErrMsg] = useState(undefined)
 
@@ -169,6 +173,10 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
           if (bgMusicMp3) {
             stopMusicFn(bgMusicMp3)
           }
+          if (alremMp3) {
+            playMusicFn(alremMp3)
+          }
+          inPopup("finishCountdown")
           clearInterval(countdown)
           setReset(prev => prev + 1)
         }
@@ -230,6 +238,14 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
     }
   }, [bgMusic])
 
+  useEffect(() => {
+    if (alarmAudio) {
+      setAlremMp3(new Audio(alarmAudio.audio))
+    } else {
+      setAlremMp3(undefined)
+    }
+  }, [alarmAudio])
+
   return (
     <BasicContainer menuItem={true} screen={screen} page="timer">
       <Container>
@@ -257,6 +273,7 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
           mode={mode}
           screen={screen}
           bgMusic={bgMusic}
+          alarmAudio={alarmAudio}
         />
       </Container>
       {isPopup === "timerSetting" && <TimerSetting
@@ -267,11 +284,16 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
         setMinutes={setMinutes}
         seconds={seconds}
         setSeconds={setSeconds}
-        backgroundMusicArr={backgroundMusicArr}
         setErrMsg={setErrMsg}
         setBgMusic={setBgMusic}
         bgMusic={bgMusic}
+        alarmAudio={alarmAudio}
+        setAlarmAudio={setAlarmAudio}
       />}
+      {isPopup === "finishCountdown" &&
+        <FinishCountdonw
+          alremMp3={alremMp3}
+        />}
       {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} time={3000} type="error" />}
     </BasicContainer>
   );

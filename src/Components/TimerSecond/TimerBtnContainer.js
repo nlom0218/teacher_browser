@@ -58,7 +58,7 @@ const BgMusic = styled.div`
 `
 
 
-const TimerBtnContainer = ({ timerStatus, setTimerStatus, setReset, setErrMsg, localHours, localMinutes, localSeconds, mode, bgMusic, screen }) => {
+const TimerBtnContainer = ({ alarmAudio, timerStatus, setTimerStatus, setReset, setErrMsg, localHours, localMinutes, localSeconds, mode, bgMusic, screen }) => {
 
   const onClickBtn = () => {
     if (mode === "countdown") {
