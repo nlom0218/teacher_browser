@@ -161,7 +161,6 @@ const TimerSetting = ({ mode, hours, setHours, minutes, setMinutes, seconds, set
       setSeconds(parseInt(seconds))
       outPopup()
     } else {
-      alert("ㅋㅋㅋㄴㄴ")
     }
     if (selectedBgMusic) {
       setBgMusic(selectedBgMusic)

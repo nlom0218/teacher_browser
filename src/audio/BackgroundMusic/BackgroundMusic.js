@@ -20,11 +20,23 @@ export const backgroundMusicArr = [
 
 export const playMusicFn = (music, setPlayMusic) => {
   music.play()
-  setPlayMusic(true)
+  music.loop = true
+  if (setPlayMusic) {
+    setPlayMusic(true)
+  }
 }
 
 export const stopMusicFn = (music, setPlayMusic) => {
   music.pause()
   music.currentTime = 0
-  setPlayMusic(false)
+  if (setPlayMusic) {
+    setPlayMusic(false)
+  }
+}
+
+export const pauseMusicFn = (music, setPlayMusic) => {
+  music.pause()
+  if (setPlayMusic) {
+    setPlayMusic(false)
+  }
 }

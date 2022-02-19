@@ -51,7 +51,7 @@ const BgMusic = styled.div`
   ${customMedia.greaterThan("desktop")`
     position: absolute;
     bottom: 2%;
-    left: 2%;
+    left: 0%;
     font-size: 1.25em;
     font-size: 1.25rem;
   `}

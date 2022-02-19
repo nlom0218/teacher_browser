@@ -33,6 +33,7 @@ import PageLinkRegister from "./Pages/PageLinkRegister";
 import PageLinkAllList from "./Pages/PageLinkAllList";
 import PageLinkDetail from "./Pages/PageLinkDetail";
 import TimerSecond from "./Pages/TimerSecond";
+import { stopMusicFn } from "./audio/BackgroundMusic/BackgroundMusic";
 
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
@@ -45,6 +46,10 @@ function App() {
   // useMe() 값을 다 불러온 뒤에 return할 수 있을까?
   const me = useMe();
   const [userBgTheme, setUserBgTheme] = useState(undefined);
+
+  // timer 오디오 없애기 위함...
+  const pathname = window.location.pathname
+  const [bgMusicMp3, setBgMusicMp3] = useState(undefined)
 
   const isLoggedIn = useReactiveVar(isLoggedInVar)
 
@@ -68,6 +73,20 @@ function App() {
     disableBgThemeAni();
   }, []);
 
+
+  useEffect(() => {
+    if (pathname !== "/timer/countup") {
+      if (bgMusicMp3) {
+        stopMusicFn(bgMusicMp3)
+      }
+    }
+    if (pathname !== "/timer/countdown") {
+      if (bgMusicMp3) {
+        stopMusicFn(bgMusicMp3)
+      }
+    }
+  }, [pathname])
+
   return (
     <ThemeProvider theme={darkMode ? darkTheme : ligthTheme}>
       <GlobalStyle bgTheme={userBgTheme ? userBgTheme : me?.bgTheme} isLoggedIn={isLoggedIn} />
@@ -86,7 +105,7 @@ function App() {
         <Route path={`${routes.calendar}/:date`} element={<Calendar />} />
         <Route path={routes.pageLink} element={<PageLink />} />
         <Route path={routes.menu} element={<Menu />} />
-        <Route path={`${routes.timer}/:mode`} element={<TimerSecond />} />
+        <Route path={`${routes.timer}/:mode`} element={<TimerSecond bgMusicMp3={bgMusicMp3} setBgMusicMp3={setBgMusicMp3} />} />
         <Route path={routes.draw} element={<Draw />} />
         <Route path={`${routes.draw}/:id`} element={<Draw />} />
         <Route path={routes.swap} element={<Swap />} />

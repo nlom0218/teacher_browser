@@ -13,7 +13,7 @@ import TimerContainer from '../Components/TimerSecond/TimerContainer';
 import useTitle from '../Hooks/useTitle';
 import routes from '../routes';
 import { color, customMedia } from '../styles';
-import { backgroundMusicArr } from "../audio/BackgroundMusic/BackgroundMusic"
+import { backgroundMusicArr, stopMusicFn, playMusicFn, pauseMusicFn } from "../audio/BackgroundMusic/BackgroundMusic"
 
 const Container = styled.div`
   min-height: 100%;
@@ -100,7 +100,7 @@ const ModeBtn = styled.div`
 `
 
 
-const TimerSecond = () => {
+const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
   const titleUpdataer = useTitle("티처캔 | 타이머")
 
   const isPopup = useReactiveVar(isPopupVar)
@@ -117,8 +117,6 @@ const TimerSecond = () => {
   const [timerStatus, setTimerStatus] = useState("pause")
 
   const [bgMusic, setBgMusic] = useState(undefined)
-  const [bgMusicMp3, setBgMusicMp3] = useState(undefined)
-  console.log(bgMusicMp3);
 
   const [errMsg, setErrMsg] = useState(undefined)
 
@@ -132,6 +130,9 @@ const TimerSecond = () => {
 
   useEffect(() => {
     if (timerStatus === "play") {
+      if (bgMusicMp3) {
+        playMusicFn(bgMusicMp3)
+      }
       if (mode === "countup") {
         const countup = setInterval(() => {
           if (seconds < 60) {
@@ -165,16 +166,26 @@ const TimerSecond = () => {
           }
         }, [1000])
         if (hours === 0 && minutes === 0 && seconds === 0) {
+          if (bgMusicMp3) {
+            stopMusicFn(bgMusicMp3)
+          }
           clearInterval(countdown)
           setReset(prev => prev + 1)
         }
 
         return () => clearInterval(countdown)
       }
+    } else {
+      if (bgMusicMp3) {
+        pauseMusicFn(bgMusicMp3)
+      }
     }
   }, [timerStatus, hours, minutes, seconds])
 
   useEffect(() => {
+    if (bgMusicMp3) {
+      stopMusicFn(bgMusicMp3)
+    }
     if (mode === "countup") {
       setHours(0)
       setMinutes(0)
@@ -194,6 +205,11 @@ const TimerSecond = () => {
   }, [reset])
 
   useEffect(() => {
+    setBgMusic(undefined)
+    setBgMusicMp3(undefined)
+    if (bgMusicMp3) {
+      stopMusicFn(bgMusicMp3)
+    }
     if (mode === "countdown") {
       setHours(localHours)
       setMinutes(localMinutes)
