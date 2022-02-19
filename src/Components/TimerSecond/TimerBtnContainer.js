@@ -1,6 +1,8 @@
 import React from 'react';
 import { FaPause, FaPlay, FaStop } from 'react-icons/fa';
 import styled from 'styled-components';
+import { MdAudiotrack } from "react-icons/md"
+import { color, customMedia } from '../../styles';
 
 const Container = styled.div`
   display: grid;
@@ -8,7 +10,9 @@ const Container = styled.div`
   justify-self: center;
   column-gap: 60px;
   column-gap: 3.75rem;
-  div {
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  .timerBtn {
     padding: 20px;
     padding: 1.25rem;
     border-radius: 50%;
@@ -35,8 +39,26 @@ const StopBtn = styled.div`
   cursor: pointer;
 `
 
+const BgMusic = styled.div`
+  grid-column: 1 / -1;
+  display: grid;
+  justify-self: center;
+  grid-template-columns: auto auto;
+  align-items: center;
+  color: ${props => props.screen === "full" && color.white};
+  text-shadow: ${props => props.screen === "full" && "rgb(0, 0, 0) 5px 5px 5px"};;
+  text-shadow: ${props => props.screen === "full" && "rgb(0, 0, 0) 0.3125rem 0.3125rem 0.3125rem"};
+  ${customMedia.greaterThan("desktop")`
+    position: absolute;
+    bottom: 2%;
+    left: 2%;
+    font-size: 1.25em;
+    font-size: 1.25rem;
+  `}
+`
 
-const TimerBtnContainer = ({ timerStatus, setTimerStatus, setReset, setErrMsg, localHours, localMinutes, localSeconds, mode }) => {
+
+const TimerBtnContainer = ({ timerStatus, setTimerStatus, setReset, setErrMsg, localHours, localMinutes, localSeconds, mode, bgMusic, screen }) => {
 
   const onClickBtn = () => {
     if (mode === "countdown") {
@@ -58,11 +80,15 @@ const TimerBtnContainer = ({ timerStatus, setTimerStatus, setReset, setErrMsg, l
 
   return (<Container timerStatus={timerStatus}>
     {timerStatus === "pause" ?
-      <PlayBtn onClick={onClickBtn}><FaPlay /></PlayBtn>
+      <PlayBtn className="timerBtn" onClick={onClickBtn}><FaPlay /></PlayBtn>
       :
-      <PauseBtn onClick={onClickBtn}><FaPause /></PauseBtn>
+      <PauseBtn className="timerBtn" onClick={onClickBtn}><FaPause /></PauseBtn>
     }
-    <StopBtn onClick={onClickStopBtn}><FaStop /></StopBtn>
+    <StopBtn className="timerBtn" onClick={onClickStopBtn}><FaStop /></StopBtn>
+    {bgMusic && <BgMusic screen={screen}>
+      <MdAudiotrack />
+      <div>{bgMusic.name}</div>
+    </BgMusic>}
   </Container>);
 }
 

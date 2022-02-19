@@ -24,6 +24,7 @@ const Container = styled.div`
   row-gap : 20px;
   row-gap : 1.25rem;
   align-items : flex-start;
+  position: relative;
   ${customMedia.greaterThan("tablet")`
     padding: 40px;
     padding: 2.5rem;
@@ -116,7 +117,8 @@ const TimerSecond = () => {
   const [timerStatus, setTimerStatus] = useState("pause")
 
   const [bgMusic, setBgMusic] = useState(undefined)
-  console.log(bgMusic);
+  const [bgMusicMp3, setBgMusicMp3] = useState(undefined)
+  console.log(bgMusicMp3);
 
   const [errMsg, setErrMsg] = useState(undefined)
 
@@ -204,6 +206,14 @@ const TimerSecond = () => {
     setTimerStatus("pause")
   }, [mode])
 
+  useEffect(() => {
+    if (bgMusic) {
+      setBgMusicMp3(new Audio(bgMusic.audio))
+    } else {
+      setBgMusicMp3(undefined)
+    }
+  }, [bgMusic])
+
   return (
     <BasicContainer menuItem={true} screen={screen} page="timer">
       <Container>
@@ -229,6 +239,8 @@ const TimerSecond = () => {
           localMinutes={localMinutes}
           localSeconds={localSeconds}
           mode={mode}
+          screen={screen}
+          bgMusic={bgMusic}
         />
       </Container>
       {isPopup === "timerSetting" && <TimerSetting

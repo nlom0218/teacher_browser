@@ -85,12 +85,14 @@ const BgMusicList = styled.div`
   border-radius: 5px;
   border-radius: 0.3125rem;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   row-gap: 10px;
   row-gap: 0.625rem;
   column-gap: 10px;
   column-gap: 0.625rem;
   background-color: ${props => props.theme.originBgColor};
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: repeat(2, 1fr);
+  `}
 `
 
 const BgMusicItem = styled.div`
@@ -163,6 +165,8 @@ const TimerSetting = ({ mode, hours, setHours, minutes, setMinutes, seconds, set
     }
     if (selectedBgMusic) {
       setBgMusic(selectedBgMusic)
+    } else {
+      setBgMusic(undefined)
     }
     outPopup()
   }
