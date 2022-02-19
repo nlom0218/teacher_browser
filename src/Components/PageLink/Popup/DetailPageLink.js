@@ -70,6 +70,7 @@ const SubmitInput = styled.input`
   color: ${(props) => props.theme.bgColor};
   border-radius: 5px;
   border-radius: 0.3125rem;
+  cursor: pointer;
 `;
 
 const PageURLLayout = styled.div`
@@ -123,11 +124,12 @@ const DetailPageLink = ({ link, userEmail }) => {
     }
   };
 
-  const [editPageLINKMemo, { loading: editLoading }] = useMutation(
-    EDIT_PAGE_LINK_MEMO_MUTATION,
-    {
-      onCompleted,
-    }
+  const [editPageLINKMemo, { loading: editLoading }] = useMutation(EDIT_PAGE_LINK_MEMO_MUTATION, {
+    onCompleted,
+    refetchQueries: [
+      { query: ME_QUERY },
+    ],
+  }
   );
 
   const onCompletedDel = (result) => {
@@ -202,7 +204,7 @@ const DetailPageLink = ({ link, userEmail }) => {
               placeholder={`${pageTitle}에 대한 메모를 남겨주세요.`}
             ></TextareaAutosize>
           </Layout>
-          {isEdit && <SubmitInput type="submit" valuse="수정하기" />}
+          {isEdit && <SubmitInput type="submit" value="수정하기" />}
           <Layout>
             <Icon>
               <MdOutlineDescription />

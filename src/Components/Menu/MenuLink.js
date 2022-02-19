@@ -46,7 +46,7 @@ const Title = styled.div`
 
 export const TimerLink = () => {
   const [isHover, setIsHover] = useState(false)
-  return (<Link to={routes.timer}>
+  return (<Link to={`${routes.timer}/countup`}>
     <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
       {isHover ? <IcPressedStopwatch /> : <IcStopwatch />}
       <Title>타이머</Title>

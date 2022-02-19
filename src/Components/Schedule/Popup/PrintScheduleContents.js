@@ -3,8 +3,6 @@ import styled from "styled-components";
 import IcPrint from "../../../icons/Print/IcPrint";
 import PopupPrintContainer from "../../Shared/PopupPrintContainer";
 import { useReactToPrint } from "react-to-print";
-import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
-import { useState } from "react/cjs/react.development";
 import { color } from "../../../styles";
 
 const PrintTopContents = styled.div`
@@ -215,8 +213,8 @@ const PrintScheduleContents = ({ printRef, title, viewTime, timeResult }) => {
           })}
           {viewTime === true ? (
             <TableOutItem>
-              1<TimeUp>{timeResult.start1}</TimeUp>
-              <TimeDown>{timeResult.end1}</TimeDown>
+              1<TimeUp>{timeResult[0]}</TimeUp>
+              <TimeDown>{timeResult[1]}</TimeDown>
             </TableOutItem>
           ) : (
             <TableOutItem>1</TableOutItem>
@@ -226,8 +224,8 @@ const PrintScheduleContents = ({ printRef, title, viewTime, timeResult }) => {
           })}
           {viewTime === true ? (
             <TableOutItem>
-              2<TimeUp>{timeResult.start2}</TimeUp>
-              <TimeDown>{timeResult.end2}</TimeDown>
+              2<TimeUp>{timeResult[2]}</TimeUp>
+              <TimeDown>{timeResult[3]}</TimeDown>
             </TableOutItem>
           ) : (
             <TableOutItem>2</TableOutItem>
@@ -237,8 +235,8 @@ const PrintScheduleContents = ({ printRef, title, viewTime, timeResult }) => {
           })}
           {viewTime === true ? (
             <TableOutItem>
-              3<TimeUp>{timeResult.start3}</TimeUp>
-              <TimeDown>{timeResult.end3}</TimeDown>
+              3<TimeUp>{timeResult[4]}</TimeUp>
+              <TimeDown>{timeResult[5]}</TimeDown>
             </TableOutItem>
           ) : (
             <TableOutItem>3</TableOutItem>
@@ -248,8 +246,8 @@ const PrintScheduleContents = ({ printRef, title, viewTime, timeResult }) => {
           })}
           {viewTime === true ? (
             <TableOutItem>
-              4<TimeUp>{timeResult.start4}</TimeUp>
-              <TimeDown>{timeResult.end4}</TimeDown>
+              4<TimeUp>{timeResult[6]}</TimeUp>
+              <TimeDown>{timeResult[7]}</TimeDown>
             </TableOutItem>
           ) : (
             <TableOutItem>4</TableOutItem>
@@ -259,8 +257,8 @@ const PrintScheduleContents = ({ printRef, title, viewTime, timeResult }) => {
           })}
           {viewTime === true ? (
             <TableOutItem>
-              5<TimeUp>{timeResult.start5}</TimeUp>
-              <TimeDown>{timeResult.end5}</TimeDown>
+              5<TimeUp>{timeResult[8]}</TimeUp>
+              <TimeDown>{timeResult[9]}</TimeDown>
             </TableOutItem>
           ) : (
             <TableOutItem>5</TableOutItem>
@@ -270,8 +268,8 @@ const PrintScheduleContents = ({ printRef, title, viewTime, timeResult }) => {
           })}
           {viewTime === true ? (
             <TableOutItem>
-              6<TimeUp>{timeResult.start6}</TimeUp>
-              <TimeDown>{timeResult.end6}</TimeDown>
+              6<TimeUp>{timeResult[10]}</TimeUp>
+              <TimeDown>{timeResult[11]}</TimeDown>
             </TableOutItem>
           ) : (
             <TableOutItem>6</TableOutItem>

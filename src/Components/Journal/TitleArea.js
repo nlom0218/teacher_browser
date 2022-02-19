@@ -13,8 +13,6 @@ import { inPopup } from "../../apollo";
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;
-  padding: 40px;
-  padding: 2.5rem;
   row-gap: 20px;
   row-gap: 1.25rem;
   align-items: center;
@@ -49,7 +47,7 @@ const ListIcon = styled.div`
 
 const ListName = styled.div``;
 
-const TitleArea = ({ studentListName }) => {
+const TitleArea = ({ studentListName, type, studentName }) => {
   const [IconListIsHover, setIconListIsHover] = useState(false);
   const onClickListIcon = () => {
     inPopup("seeStudentList");
@@ -57,13 +55,13 @@ const TitleArea = ({ studentListName }) => {
 
   return (
     <Container>
-      <Title>학급일지</Title>
-      <ListIcon>
+      <Title>{studentName && studentName} 학급일지</Title>
+      {type !== "student" && <ListIcon>
         <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다."}</ListName>
         <div onClick={onClickListIcon} onMouseEnter={() => setIconListIsHover(true)} onMouseLeave={() => setIconListIsHover(false)}>
           {IconListIsHover ? <IcNameTableClick /> : <IcNameTable />}
         </div>
-      </ListIcon>
+      </ListIcon>}
     </Container>
   );
 };

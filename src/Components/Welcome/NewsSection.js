@@ -8,6 +8,7 @@ import { customMedia } from '../../styles';
 import { hideNewsSection, seeNewsSection } from '../../Animations/WelcomeSectionAni';
 import { FaArrowCircleLeft } from 'react-icons/fa';
 import { moveWelcome } from '../../apollo';
+import useTitle from '../../Hooks/useTitle';
 
 const MoveContainer = styled.div`
   display: ${props => props.isSeeDisplay};

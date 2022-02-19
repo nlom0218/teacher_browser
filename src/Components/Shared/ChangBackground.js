@@ -1,6 +1,6 @@
 import { useReactiveVar } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
-import { bgThemeAniVar, disableBgThemeAni } from '../../apollo';
+import { bgThemeAniVar } from '../../apollo';
 import useMe from '../../Hooks/useMe';
 import ChangBackgroundItem from './ChangBackgroundItem';
 

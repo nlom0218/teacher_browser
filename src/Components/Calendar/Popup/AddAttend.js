@@ -164,14 +164,14 @@ const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) =
         userEmail,
         studentId,
         type,
-        date,
+        date: new window.Date(date).setHours(0, 0, 0, 0),
         ...(contents && { contents })
       }
     })
   }
 
   const onClickSelectBtn = () => {
-    inPopup("attendSelectedStudent")
+    inPopup("selectedStudent")
   }
 
   useEffect(() => {

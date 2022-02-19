@@ -27,6 +27,7 @@ import EditAttend from "../Components/Calendar/Popup/EditAttend"
 import TodoCreate from '../Components/TodoList/Popup/TodoCreate';
 import AddJournal from '../Components/Calendar/Popup/AddJournal';
 import EditJournal from '../Components/Calendar/Popup/EditJournal';
+import useTitle from '../Hooks/useTitle';
 
 const Container = styled.div`
   display: grid;
@@ -154,6 +155,7 @@ const CalendarList = styled.div`
 `
 
 const Calendar = () => {
+  const titleUpdataer = useTitle("티처캔 | 달력")
   const { date: urlDate } = useParams()
 
   const isPopup = useReactiveVar(isPopupVar)

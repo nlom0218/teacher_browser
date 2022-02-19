@@ -37,6 +37,7 @@ const ContentLayout = styled.div`
   border-radius: 10px;
   border-radius: 0.625rem;
   background: ${props => props.theme.blurColor};
+  background: ${props => props.screen !== "small" && (props.page === "timer" && "none")};
   transition: background 1s ease;
   position: relative;
   overflow: ${props => props.notScroll ? "scroll" : "scroll"};
@@ -50,7 +51,7 @@ const ContentLayout = styled.div`
   `}
 `
 
-const BasicContainer = ({ children, menuItem, notScroll, screen }) => {
+const BasicContainer = ({ children, menuItem, notScroll, screen, page }) => {
   const bgThemeAni = useReactiveVar(bgThemeAniVar)
   const [seeSideMenu, setSeeSideMenu] = useState(false)
   const onClickBackground = () => {
@@ -61,8 +62,8 @@ const BasicContainer = ({ children, menuItem, notScroll, screen }) => {
   return (<Container onClick={onClickBackground} bgThemeAni={bgThemeAni} screen={screen}>
     <Theme />
     {screen === "small" ? <Header seeSideMenu={seeSideMenu} setSeeSideMenu={setSeeSideMenu} /> : <div></div>}
-    <ContentLayout notScroll={notScroll} screen={screen}>
-      {menuItem && <PreviousPageBtn />}
+    <ContentLayout notScroll={notScroll} screen={screen} page={page}>
+      {menuItem && (screen === "small" && <PreviousPageBtn />)}
       {children}
     </ContentLayout>
   </Container>);

@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useState } from 'react/cjs/react.development';
+import React, { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import useMe from '../../Hooks/useMe';
 import { customMedia } from '../../styles';
@@ -29,24 +28,6 @@ const StudentItem = styled.div`
   ${customMedia.greaterThan("desktop")`
     grid-column : ${props => props.pickNum === 1 && "2 / 3"};
   `}
-`
-
-const hideBoxHoverAni = keyframes`
-  0% {
-    top : 0;
-    bottom : 0;
-  }
-  50% {
-    top : -20px;
-    top : -1.25rem;
-    bottom : 20px;
-    bottom : 1.25rem;
-  }
-  100% {
-    top : 0;
-    bottom : 0;
-  }
-
 `
 
 const hideBoxClickAni = keyframes`
@@ -85,7 +66,6 @@ const HideBox = styled.div`
 const SeeSelectedStudentItem = ({ item, fontSize, pickNum, pickType }) => {
   const [randomImg, setRandomImg] = useState(bg1)
   const me = useMe()
-  console.log(me);
 
   const [seeHideBox, setSeeHideBox] = useState(true)
 

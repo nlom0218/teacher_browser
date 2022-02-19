@@ -8,6 +8,7 @@ import GridType from '../Components/Menu/GridType';
 import ListType from '../Components/Menu/ListType';
 import { useReactiveVar } from '@apollo/client';
 import { menuTypeVar, setMenuType } from '../apollo';
+import useTitle from '../Hooks/useTitle';
 
 const Container = styled.div`
   display: grid;
@@ -70,6 +71,7 @@ const GridTypeIcon = styled.div`
 `
 
 const Menu = () => {
+  const titleUpdataer = useTitle("티처캔 | 메뉴")
   const menuType = useReactiveVar(menuTypeVar)
 
   const [seeType, setSeeType] = useState("list")

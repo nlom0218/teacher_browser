@@ -1,3 +1,4 @@
+import React from 'react';
 import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
 import { customMedia } from "../../../styles";

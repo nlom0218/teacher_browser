@@ -9,6 +9,7 @@ import { ME_QUERY } from "../../Hooks/useMe";
 import { SETTING_LINK_MUTATION } from "../../Graphql/User/mutation";
 import ContentsItemLayout from "./Styled/ContentsItemLayout";
 import SiteType from "./SiteType";
+import { SEE_MY_PAGE_LINK_QUERY } from "../../Graphql/PageLink/query";
 
 const SiteName = styled.div`
   line-height: 160%;
@@ -39,10 +40,12 @@ const BookMarkBtn = styled.div`
 const BookmarkIcon = styled.div``;
 
 const ContentsItem = ({ item, userEmail, userLinkTitleArr }) => {
-  const [isHover, setIsHover] = useState(false);
 
   const [settingLink, { loading }] = useMutation(SETTING_LINK_MUTATION, {
-    refetchQueries: [{ query: ME_QUERY }],
+    refetchQueries: [
+      { query: ME_QUERY },
+      { query: SEE_MY_PAGE_LINK_QUERY, variables: { userEmail } },
+    ],
   });
 
   const onClickLinkBtn = () => {
@@ -90,9 +93,6 @@ const ContentsItem = ({ item, userEmail, userLinkTitleArr }) => {
             ))}
         </BookMarkBtn>
       </SiteBtn>
-      {/* {isHover &&  <SiteInfo>{item.pageDescription.length <27 ? item.pageDescription
-            :${item.pageDescription.substr(0,27)}...더보기</SiteInfo>
-            } */}
       {item.type && <SiteType type={item.type} />}
     </ContentsItemLayout>
   );

@@ -16,6 +16,7 @@ import { scheduleTime, timeSetData } from "../Components/Schedule/ScheduleData";
 import { timeSetCal } from "../Components/Schedule/TimeSetCal";
 import ScheduleForm from "../Components/Schedule/ScheduleForm";
 import TimeRegisterPage from "../Components/Schedule/Popup/TimeRegisterPage";
+import useTitle from "../Hooks/useTitle";
 
 // 시간 설정해야 하는 기초값 데이터베이스에 있는거 연결하기
 const basic = timeSetData;
@@ -69,6 +70,7 @@ const TypeBtn = styled.div`
 `;
 
 const Schedule = () => {
+  const titleUpdataer = useTitle("티처캔 | 시간표");
   const isPopup = useReactiveVar(isPopupVar);
   const media = useMedia();
   const componentRef = useRef(null);

@@ -1,15 +1,12 @@
 import { useQuery } from '@apollo/client';
 import { getDate, getDay, isToday } from 'date-fns';
 import React, { useEffect, useState } from 'react';
-import { BsDot } from 'react-icons/bs';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { inPopup } from '../../apollo';
-import { SEE_SCHEDULE_QUERY } from '../../Graphql/Schedule/query';
 import { SEE_TO_DO_LIST_ONLY_LENGTH_QUERY } from '../../Graphql/ToDoList/query';
 import IcToDoList from '../../icons/ToDoList/IcToDoList';
 import routes from '../../routes';
-import Loading from '../Shared/Loading';
 
 const Container = styled.div`
   background-color: ${props => props.theme.bgColor};
@@ -147,6 +144,7 @@ const DotIcon = styled.div`
 `
 
 const CalendarItem = ({ item, create, media, userEmail, schedule, refetchQuery }) => {
+
   const navigate = useNavigate()
 
   const [dateSchedule, setDateSchedule] = useState([])
@@ -155,7 +153,7 @@ const CalendarItem = ({ item, create, media, userEmail, schedule, refetchQuery }
   const { data: toDoLength, loading: toDoLoading, refetch } = useQuery(SEE_TO_DO_LIST_ONLY_LENGTH_QUERY, {
     variables: {
       userEmail,
-      date: item.date
+      date: new window.Date(item.date).setHours(0, 0, 0, 0)
     },
     skip: !userEmail
   })
@@ -207,7 +205,7 @@ const CalendarItem = ({ item, create, media, userEmail, schedule, refetchQuery }
       if (lastIndex < 0) {
         return
       }
-      const newDateSchedule = schedule?.filter(scheduleItem => scheduleItem.allDate.includes(new window.Date(item.date).setHours(0, 0, 0, 0) + ""))
+      const newDateSchedule = schedule?.filter(scheduleItem => scheduleItem.allDate.includes(new window.Date(item.date).setHours(0, 0, 0, 0)))
       const lastSort = Math.max(...newDateSchedule?.map(item => item.sort))
       if (!lastSort === -Infinity) {
         setRow(lastSort)

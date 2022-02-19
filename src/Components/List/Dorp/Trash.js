@@ -97,7 +97,6 @@ const Trash = ({ someDragging, setSuccessMsg, selectedTag, selectedSort, dragTyp
     // drop을 하게 되면 아래의 로직이 실행된다.
     drop: (item) => {
       const { studentId } = item
-      console.log(studentId);
       moveTrashStudent({
         variables: {
           teacherEmail: me?.email,

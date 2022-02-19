@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import BtnPopupContainer from '../../Shared/BtnPopupContainer';
 import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
 import { useForm } from 'react-hook-form';
-import { useState } from 'react/cjs/react.development';
-import RandomCircle from '../../Shared/RandomCircle';
 import CardShuffle from '../../Shared/CardShuffle';
 
 const Container = styled.div`

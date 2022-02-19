@@ -23,6 +23,7 @@ const BtnPopupContainer = ({ children }) => {
   // 팝업창의 배경을 클릭하게 되면 팝업창에서 벗어나게 된다.
   const onClickBackground = () => {
     outPopup()
+    localStorage.removeItem("summaryStudentId")
   }
   return (<Background onClick={onClickBackground}>
     <Container onClick={e => e.stopPropagation()}>

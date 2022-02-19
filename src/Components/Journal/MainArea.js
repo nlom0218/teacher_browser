@@ -1,15 +1,13 @@
-// 리액트
 import React from "react";
-
-// 컴포넌트
 import styled from "styled-components";
 import InputArea from "./Sub-Area/InputArea";
-
 import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
+import StudentInItem from "../List/StudentInItem"
+import { customMedia } from "../../styles";
+import Loading from "../Shared/Loading";
 
 const Container = styled.div`
-  padding: 40px;
-  padding: 2.5rem;
+  align-self: flex-start;
   padding-top: 0;
   display: grid;
   row-gap: 40px;
@@ -22,6 +20,7 @@ const SortContainer = styled.div`
   column-gap: 20px;
   column-gap: 1.25rem;
 `;
+
 const SortBtn = styled.div`
   display: grid;
   grid-template-columns: auto auto;
@@ -36,15 +35,22 @@ const SortBtn = styled.div`
 
 const StudentList = styled.div`
   display: grid;
+  column-gap: 40px;
+  column-gap: 2.5rem;
   row-gap: 40px;
   row-gap: 2.5rem;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: repeat(2, 1fr);
+  `}
+  ${customMedia.greaterThan("desktop")`
+    grid-template-columns: repeat(4, 1fr);
+  `}
 `;
 
 //
-const MainArea = ({ me, students, loading, error, sort, setSort }) => {
-  const focusStudent = localStorage.getItem("focusStudent");
+const MainArea = ({ me, students, loading, error, sort, setSort, listId }) => {
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loading page="subPage" />;
   if (error)
     return (
       <div>
@@ -70,11 +76,14 @@ const MainArea = ({ me, students, loading, error, sort, setSort }) => {
         </SortBtn>
       </SortContainer>
       <StudentList>
-        {students.map((student, index) => {
+        {students?.length !== 0 && students?.map((item, index) => {
+          return <StudentInItem key={index} item={item} listId={listId} page="journal" />
+        })}
+        {/* {students.map((student, index) => {
           if (student._id === focusStudent) return <InputArea key={index} me={me} student={student} opened={true}></InputArea>;
 
           return <InputArea key={index} me={me} student={student}></InputArea>;
-        })}
+        })} */}
       </StudentList>
     </Container>
   );

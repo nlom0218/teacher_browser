@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { customMedia } from "../../styles";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { useState } from "react/cjs/react.development";
 import { TiDelete } from "react-icons/ti";
 import SeeSelectedStudent from "./SeeSelectedStudent";
 

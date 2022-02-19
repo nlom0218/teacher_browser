@@ -1,10 +1,8 @@
 import { useMutation, useQuery } from "@apollo/client";
-import getOverlappingDaysInIntervals from "date-fns/esm/fp/getOverlappingDaysInIntervals/index.js";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import TextareaAutosize from "react-textarea-autosize";
-import { useEffect, useState } from "react/cjs/react.development";
 import styled from "styled-components";
 import FolderItem from "../Components/PageLinkRegister/FolderItem";
 import TypeItem from "../Components/PageLinkRegister/TypeItem";

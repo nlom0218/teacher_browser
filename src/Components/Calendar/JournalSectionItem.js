@@ -1,10 +1,11 @@
 import { useQuery } from '@apollo/client';
+import { format } from 'date-fns';
 import React from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import styled from 'styled-components';
 import { inPopup } from '../../apollo';
 import { SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
-import { processStudentIcon } from '../../shared';
+import { processSetDay, processStudentIcon } from '../../shared';
 import { color } from '../../styles';
 
 const Container = styled.div`
@@ -34,6 +35,7 @@ const StudnetIcon = styled.div`
 `
 
 const StudentName = styled.div`
+  font-weight: ${props => props.page === "journal" && 600};
 `
 
 const StudentNumber = styled.div`
@@ -44,14 +46,15 @@ const StudentJournal = styled.div`
   cursor: pointer;
   textarea {
     all: unset;
-    background-color: rgba(255, 252, 86, 0.2);
+    background-color: ${props => props.page === "journal" ? props.theme.yelloColor : color.blurYelloColor};
+    transition: background-color 1s ease;
     box-shadow: ${color.boxShadow};
     min-height: 100%;
     max-height: 100%;
     width: 100%;
     resize: none;
-    padding: 15px 20px;
-    padding: 0.9375rem 1.25rem;
+    padding: 20px;
+    padding: 1.25rem;
     box-sizing: border-box;
     border-radius: 5px;
     border-radius: 0.3125rem;
@@ -61,7 +64,7 @@ const StudentJournal = styled.div`
   }
 `
 
-const JournalSectionItem = ({ item }) => {
+const JournalSectionItem = ({ item, page }) => {
   const { data, loading } = useQuery(SEE_ONE_STUDENT_QUERY, {
     variables: {
       studentId: item.ownerId
@@ -76,17 +79,17 @@ const JournalSectionItem = ({ item }) => {
 
   const onClickStudentJournal = () => {
     inPopup("editJournal")
-    localStorage.setItem("summaryJournalId", item._id)
-    localStorage.setItem("summaryJournalName", data?.seeAllStudent[0]?.studentName)
+    localStorage.setItem("JournalId", item._id)
+    localStorage.setItem("JournalStudentName", data?.seeAllStudent[0]?.studentName)
   }
 
   return (<Container>
     <StudentInfo onClick={onClickStudentInfo}>
       {data?.seeAllStudent[0]?.icon && <StudnetIcon>{processStudentIcon(data?.seeAllStudent[0]?.icon)}</StudnetIcon>}
-      <StudentName>{data?.seeAllStudent[0]?.studentName}</StudentName>
+      <StudentName page={page}>{page === "journal" ? `${format(item.date, "yy-MM-dd")} ${processSetDay(new window.Date(item.date))}요일` : data?.seeAllStudent[0]?.studentName}</StudentName>
       {data?.seeAllStudent[0]?.studentNumber && <StudentNumber>{data?.seeAllStudent[0]?.studentNumber}번</StudentNumber>}
     </StudentInfo>
-    <StudentJournal onClick={onClickStudentJournal}>
+    <StudentJournal onClick={onClickStudentJournal} page={page}>
       <TextareaAutosize
         value={item.text}
       />

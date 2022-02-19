@@ -32,7 +32,6 @@ const AddSchedule = ({ userEmail, setErrMsg, refetch, setMsg, setRefetchQuery })
     if (ok) {
       setMsg("새로운 일정이 추가되었습니다. 😀")
       outPopup()
-      refetch()
       setRefetchQuery(prev => prev + 1)
     } else {
       setErrMsg(error)
@@ -41,6 +40,19 @@ const AddSchedule = ({ userEmail, setErrMsg, refetch, setMsg, setRefetchQuery })
 
   const [createSchedule, { loading }] = useMutation(CREATE_SCHEDULE_MUTATION, {
     onCompleted,
+    update(cache, { data: { createSchedule: { ok, schedule } } }) {
+      if (ok) {
+        cache.modify({
+          id: "ROOT_QUERY",
+          fields: {
+            seeSchedule(prev) {
+              const newRef = `Schedule:${schedule._id}`
+              return [...prev, { __ref: newRef }]
+            }
+          }
+        })
+      }
+    }
   })
 
   const onSubmit = (data) => {
@@ -62,8 +74,8 @@ const AddSchedule = ({ userEmail, setErrMsg, refetch, setMsg, setRefetchQuery })
       variables: {
         userEmail,
         schedule,
-        startDate,
-        endDate,
+        startDate: new Date(startDate).setHours(0, 0, 0, 0),
+        endDate: new Date(endDate).setHours(0, 0, 0, 0),
         color,
         ...(contents && { contents })
       }

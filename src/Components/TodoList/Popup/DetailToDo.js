@@ -179,8 +179,8 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail, setRefetchQuery }) => {
         userEmail,
         toDo,
         contents,
-        ...(startDate && { startDate: new Date(startDate) }),
-        ...(endDate && { endDate: new Date(endDate) }),
+        ...(startDate && { startDate: new Date(startDate).setHours(0, 0, 0, 0) }),
+        ...(endDate && { endDate: new Date(endDate).setHours(0, 0, 0, 0) }),
         star
       }
     })

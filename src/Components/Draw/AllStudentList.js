@@ -1,13 +1,12 @@
 import { useQuery, useReactiveVar } from '@apollo/client';
-import React from 'react';
+import React, { useState } from 'react';
 import { FcNext, FcPrevious } from 'react-icons/fc';
-import { useState } from 'react/cjs/react.development';
 import { disableSeeStudentList, enableSeeStudentList, isSeeStudentListVar } from '../../apollo';
 import { SEE_ALL_STUDENT_LIST_QUERY } from '../../Graphql/StudentList/query';
 import { DivideRightContents, SeeRightContentsBtn } from '../Shared/styled/DivideContents';
 import styled from 'styled-components';
 import routes from '../../routes';
-import { Link, Route, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ListContents = styled.div`
     max-height: 100%;

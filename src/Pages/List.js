@@ -15,10 +15,10 @@ import AlertMessage from '../Components/Shared/AlertMessage';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import Loading from '../Components/Shared/Loading';
 import { DivideLeftContents } from '../Components/Shared/styled/DivideContents';
-import { SuccessMsg } from '../Components/Shared/styled/SuccessMsg';
 import { SEE_ALL_STUDENT_QUERY } from '../Graphql/Student/query';
 import useMe from '../Hooks/useMe';
 import useMedia from '../Hooks/useMedia';
+import useTitle from '../Hooks/useTitle';
 import { customMedia } from '../styles';
 
 const Container = styled.div`
@@ -47,6 +47,7 @@ const StudentIcon = styled.div`
 `
 
 const List = () => {
+  const titleUpdataer = useTitle("티처캔 | 명렬표")
   const me = useMe()
   const isSeeList = useReactiveVar(isSeeStudentVar)
   const isPopup = useReactiveVar(isPopupVar)

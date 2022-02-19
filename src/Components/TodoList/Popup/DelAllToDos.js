@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { inPopup, outPopup } from '../../../apollo';
 import { DELETE_ALL_TO_DO_LIST_MUTATION } from '../../../Graphql/ToDoList/mutation';
+import { SEE_TO_DO_LIST_QUERY } from '../../../Graphql/ToDoList/query';
 import BtnPopupContainer from '../../Shared/BtnPopupContainer';
 
 const Container = styled.div`
@@ -49,7 +50,8 @@ const DelAllToDos = ({ userEmail, setMsg }) => {
   }
 
   const [deleteAllToDoList, { loading: delLoading }] = useMutation(DELETE_ALL_TO_DO_LIST_MUTATION, {
-    onCompleted
+    onCompleted,
+    refetchQueries: [{ query: SEE_TO_DO_LIST_QUERY, variables: { isComplete: true } }]
   })
 
   const onClickDelALlBtn = () => {

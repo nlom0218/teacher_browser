@@ -60,6 +60,7 @@ const RegisterPage = styled.div`
   ${customMedia.greaterThan(`tablet`)`
     padding: 10px 30px;
     padding: 0.625rem 1.875rem;
+    padding: ${props => props.emojiPopup && 0};
   `}
 `
 
@@ -72,8 +73,8 @@ const PopupContainer = ({ children, emojiPopup, maxHeight }) => {
     localStorage.removeItem("summaryAttendId")
     localStorage.removeItem("summaryAttendName")
     localStorage.removeItem("seletedStudentType")
-    localStorage.removeItem("summaryJournalId")
-    localStorage.removeItem("summaryJournalName")
+    localStorage.removeItem("JournalId")
+    localStorage.removeItem("JournalStudentName")
     localStorage.removeItem("addBookmark")
     localStorage.removeItem("AllergyNum")
     localStorage.removeItem("detailToDo")

@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react/cjs/react.development';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { customMedia } from '../../styles';
 
@@ -35,7 +34,7 @@ const SeeSelectedStudent = ({ selectedStudent, pickNum, pickType, fontSizeAll })
         pickType={pickType}
         item={item}
         pickNum={pickNum}
-      div/>
+        div />
     })}
   </Container>);
 }

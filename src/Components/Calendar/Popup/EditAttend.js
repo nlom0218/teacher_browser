@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import PopupContainer from '../../Shared/PopupContainer';
-import { inPopup, outPopup } from '../../../apollo';
+import { outPopup } from '../../../apollo';
 import { useMutation, useQuery } from '@apollo/client';
 import { Icon, CalenderPopupTextareaLayout, CalenderPopupTitle, InputLayout, DateContainer } from './PopupLayout';
 import { BsCalendarDate, BsFillPersonCheckFill, BsFillPersonFill } from 'react-icons/bs';
 import { customMedia } from '../../../styles';
 import { ko } from "date-fns/esm/locale";
 import DatePicker from 'react-datepicker';
-import IcNameTableClick from '../../../icons/NameTable/IcNameTableClick';
 import { DELETE_ATTENDANCE_MUTATION, EDIT_ATTENDANCE_MUTATION } from '../../../Graphql/Attendance/mutation';
 import { SEE_ATTENDANCE_QUERY } from "../../../Graphql/Attendance/query"
 import Loading from '../../Shared/Loading';
@@ -198,7 +197,7 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) 
         attendId,
         userEmail,
         type,
-        date,
+        date: new window.Date(date).setHours(0, 0, 0, 0),
         ...(contents && { contents })
       }
     })

@@ -13,11 +13,15 @@ import useMe from '../Hooks/useMe';
 import { customMedia } from '../styles';
 
 const Container = styled.div`
-  padding: 60px;
-  padding: 3.75rem;
+  padding: 20px;
+  padding: 1.25rem;
   display: grid;
   row-gap: 40px;
   row-gap: 2.5rem;
+  ${customMedia.greaterThan("tablet")`
+    padding: 40px;
+    padding: 2.5rem;
+  `}
 `
 
 const TopLayout = styled.div`
@@ -54,7 +58,9 @@ const Title = styled.div`
   font-size: 1.5em;
   font-size: 1.5rem;
   grid-column: 1 / -1;
+  justify-self: flex-end;
   ${customMedia.greaterThan("tablet")`
+    justify-self: flex-start;
     grid-column: 1 / 2;
   `}
 `

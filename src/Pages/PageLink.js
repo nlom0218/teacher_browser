@@ -10,6 +10,7 @@ import AddBookmark from "../Components/PageLink/Popup/AddBookmark";
 import { isPopupVar } from "../apollo";
 import SeePageLink from "../Components/PageLink/Popup/SeePageLink";
 import DetailPageLink from "../Components/PageLink/Popup/DetailPageLink";
+import useTitle from "../Hooks/useTitle";
 
 //추천사이트 목록 정리하기
 //즐겨찾기 없을 경우 설명하는 페이지 추가
@@ -19,6 +20,7 @@ import DetailPageLink from "../Components/PageLink/Popup/DetailPageLink";
 const Container = styled.div``;
 
 const PageLink = () => {
+  const titleUpdataer = useTitle("티처캔 | 즐겨찾기")
   const me = useMe();
   const isPopup = useReactiveVar(isPopupVar);
   const pageLinkSection = useReactiveVar(pageLinkSectionVar);
@@ -44,7 +46,7 @@ const PageLink = () => {
       {isPopup === "addBookmark" && <AddBookmark userEmail={me?.email} />}
       {isPopup === "seePageLink" && <SeePageLink />}
       {isPopup === "detailPageLink" && (
-        <DetailPageLink memo={me?.link} userEmail={me?.email} />
+        <DetailPageLink link={me?.link} userEmail={me?.email} />
       )}
     </BasicContainer>
   );

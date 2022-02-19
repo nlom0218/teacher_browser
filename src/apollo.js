@@ -132,8 +132,10 @@ export const removeLinkPickFolder = () => {
 };
 
 const httpLink = createHttpLink({
-  // uri: "https://teachercan.herokuapp.com/graphql",
-  uri: "http://localhost:4000/graphql",
+  uri:
+    process.env.NODE_ENV === "production"
+      ? "https://teachercan.herokuapp.com/graphql"
+      : "http://localhost:4000/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {

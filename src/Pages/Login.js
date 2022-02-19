@@ -17,8 +17,10 @@ import { useMutation } from "@apollo/client";
 import { logInUser } from "../apollo";
 import ErrMsg from "../Components/Account/styled/ErrMsg";
 import { LOGIN_USER_MUTATION } from "../Graphql/User/mutation";
+import useTitle from "../Hooks/useTitle";
 
 const Login = () => {
+  const titleUpdataer = useTitle("티처캔 | 로그인")
   const [errMsg, setErrMsg] = useState(undefined);
   const { state } = useLocation();
   const navigate = useNavigate();

@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { inPopup } from "../../apollo";
-import BtnContainer from "./styled/BtnContainer";
-import RegisterBtn from "./styled/RegisterBtn";
 
 const Container = styled.div`
   display: grid;

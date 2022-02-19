@@ -74,8 +74,8 @@ const TodoCreate = ({ setErrMsg, userEmail, setRefetchQuery, urlDate, setMsg }) 
                 toDo,
                 star,
                 ...(contents && { contents }),
-                ...(startDate && { startDate }),
-                ...(endDate && { endDate })
+                ...(startDate && { startDate: new Date(startDate).setHours(0, 0, 0, 0) }),
+                ...(endDate && { endDate: new Date(endDate).setHours(0, 0, 0, 0) }),
             }
         })
     }

@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
-import StudentList from "../Components/Order/Popup/StudentList";
-import { FcContacts } from "react-icons/fc";
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { inPopup, isPopupVar } from "../apollo";
 import { useParams } from "react-router-dom";
@@ -20,6 +18,9 @@ import PrintOrderContents from "../Components/Order/Popup/PrintOrderContents";
 import useMedia from "../Hooks/useMedia";
 import IcNameTableClick from "../icons/NameTable/IcNameTableClick";
 import IcNameTable from "../icons/NameTable/IcNameTable";
+import useTitle from "../Hooks/useTitle";
+import StudentList from "../Components/Shared/popup/StudentList";
+import Loading from "../Components/Shared/Loading";
 
 
 // 전체 틀
@@ -27,11 +28,15 @@ const Container = styled.div`
   min-height: ${props => props.seeResultType === "ONE" && "100%"};
   display: grid;
   grid-template-rows: auto auto 1fr;
-  padding: 40px;
-  padding: 2.5rem;
+  padding: 20px;
+  padding: 1.25rem;
   row-gap: 20px;
   row-gap: 1.25rem;
   align-items: flex-start;
+  ${customMedia.greaterThan("tablet")`
+    padding: 40px;
+    padding: 2.5rem;
+  `}
 `;
 // 상단
 const TopContents = styled.div`
@@ -157,6 +162,7 @@ const ListName = styled.div``;
 //추가 기능 (프린트)
 
 const Order = () => {
+  const titleUpdataer = useTitle("티처캔 | 순서정하기")
   const { id } = useParams();
   const isPopup = useReactiveVar(isPopupVar);
   const media = useMedia()
@@ -262,11 +268,18 @@ const Order = () => {
               {media === "Desktop" && <PrintOrder />}
               <FontSizeBtn seeResultType={seeResultType} setFontSizeAll={setFontSizeAll} fontSizeAll={fontSizeAll} fontSizeOne={fontSizeOne} setFontSizeOne={setFontSizeOne} />
             </OptionContents>
-            <StudentOrder fontSizeOne={fontSizeOne} fontSizeAll={fontSizeAll} seeResultType={seeResultType} selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} isShuffle={isShuffle} />
+            {loading ? <Loading page="subPage" /> : <StudentOrder
+              fontSizeOne={fontSizeOne}
+              fontSizeAll={fontSizeAll}
+              seeResultType={seeResultType}
+              selectedStudent={selectedStudent}
+              setSelectedStudent={setSelectedStudent}
+              isShuffle={isShuffle}
+            />}
           </React.Fragment>
         )}
       </Container>
-      { isPopup === "seeStudentList" && <StudentList />}
+      { isPopup === "seeStudentList" && <StudentList page="order" setIsShuffle={setIsShuffle} />}
       { isPopup === "print" && <PrintOrderContents printRef={componentRef} title={title} selectedStudent={selectedStudent} />}
       { isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
     </BasicContainer >

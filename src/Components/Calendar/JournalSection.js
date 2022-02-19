@@ -10,7 +10,6 @@ import Loading from '../Shared/Loading';
 import JournalSectionItem from './JournalSectionItem';
 import SectionContainer from './styled/SectionContainer';
 import SectionContents from './styled/SectionContents';
-import SectionList from './styled/SectionList';
 import SectionNoDateText from './styled/SectionNoDateText';
 import SectionTitle from './styled/SectionTitle';
 
@@ -45,7 +44,7 @@ const JournalSection = ({ teacherEmail, urlDate, refetchQuery }) => {
 
   const { data, loading, refetch } = useQuery(SEE_JOURNAL_QUERY, {
     variables: {
-      date: new Date(parseInt(urlDate)),
+      date: parseInt(urlDate),
       teacherEmail
     },
     skip: !teacherEmail

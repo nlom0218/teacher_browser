@@ -10,8 +10,8 @@ import { customMedia } from '../../../styles';
 import { ko } from "date-fns/esm/locale";
 import DatePicker from 'react-datepicker';
 import IcNameTableClick from '../../../icons/NameTable/IcNameTableClick';
-import { CREATE_ATTENDANCE_MUTATION } from '../../../Graphql/Attendance/mutation';
 import { WRITE_JOURNAL_MUTATION } from '../../../Graphql/Journal/mutation';
+import { SEE_JOURNAL_QUERY } from '../../../Graphql/Journal/query';
 
 const CalenderPopupFormContainer = styled.form`
   padding : 20px 0px;
@@ -120,6 +120,9 @@ const SubmitInput = styled.input`
 
 const AddJournal = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) => {
 
+  const journalStudentName = localStorage.getItem("JournalStudentName")
+  const journalStudentId = localStorage.getItem("JournalStudentId")
+
   const [date, setDate] = useState(undefined);
   const [studentName, setStudentName] = useState(undefined)
   const [studentId, setStudentId] = useState(undefined)
@@ -142,7 +145,14 @@ const AddJournal = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) 
   }
 
   const [writeJournal, { loading }] = useMutation(WRITE_JOURNAL_MUTATION, {
-    onCompleted
+    onCompleted,
+    refetchQueries: [{
+      query: SEE_JOURNAL_QUERY,
+      variables: {
+        studentId,
+        teacherEmail: userEmail
+      }
+    }]
   });
 
   const onSubmit = (data) => {
@@ -164,7 +174,7 @@ const AddJournal = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) 
       variables: {
         userEmail,
         ownerId: studentId,
-        date,
+        date: new window.Date(date).setHours(0, 0, 0, 0),
         text: contents
       }
     })
@@ -183,6 +193,12 @@ const AddJournal = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) 
   useEffect(() => {
     if (urlDate) {
       setDate(new window.Date(parseInt(urlDate)))
+    } else {
+      setDate(new window.Date())
+    }
+    if (journalStudentName) {
+      setStudentName(journalStudentName)
+      setStudentId(journalStudentId)
     }
   }, [])
 
@@ -193,7 +209,7 @@ const AddJournal = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) 
         <Icon><BsFillPersonFill /></Icon>
         <SelectedStudent>
           <StudentName selected={studentName}>{studentName ? studentName : "선택된 학생이 없습니다."}</StudentName>
-          <SelectBtn onClick={onClickSelectBtn}><IcNameTableClick /></SelectBtn>
+          {!journalStudentName && <SelectBtn onClick={onClickSelectBtn}><IcNameTableClick /></SelectBtn>}
         </SelectedStudent>
       </InputLayout>
       <CalenderPopupTextareaLayout register={register} type="journal" />

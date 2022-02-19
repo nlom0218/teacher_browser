@@ -3,8 +3,8 @@ import PopupContainer from "../../Shared/PopupContainer";
 import styled from "styled-components";
 import { useQuery } from "@apollo/client";
 import StudentListItem from "./StudentListItem";
-import { useParams } from "react-router-dom";
 import { SEE_ALL_STUDENT_LIST_QUERY } from "../../../Graphql/StudentList/query";
+import Loading from "../Loading";
 
 const Container = styled.div`
   padding : 20px 0px;
@@ -19,12 +19,17 @@ const Container = styled.div`
   text-align: center;
 `
 
-const StudentList = ({ setIsShuffle }) => {
+const StudentList = ({ setIsShuffle, page }) => {
   const { data, loading } = useQuery(SEE_ALL_STUDENT_LIST_QUERY)
+
+  if (loading) {
+    return <Loading page="popupPage" />
+  }
+
   return (<PopupContainer>
     <Container>
       {data?.seeStudentList.map((item, index) => {
-        return <StudentListItem key={index} item={item} setIsShuffle={setIsShuffle} />
+        return <StudentListItem key={index} item={item} setIsShuffle={setIsShuffle} page={page} />
       })}
     </Container>
   </PopupContainer>
