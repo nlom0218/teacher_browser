@@ -23,10 +23,10 @@ const MoveContainer = styled.div`
   right: ${(props) => (props.pageLinkSection === "pageLink" ? 0 : "100%")};
   left: ${(props) => (props.pageLinkSection === "pageLink" ? 0 : "-100%")};
   animation: ${(props) =>
-    !props.init &&
-    (props.pageLinkSection === "pageLink"
-      ? seeWelcomSection
-      : hideWelcomeSection)}
+      !props.init &&
+      (props.pageLinkSection === "pageLink"
+        ? seeWelcomSection
+        : hideWelcomeSection)}
     1s ease forwards;
   display: grid;
   row-gap: 20px;

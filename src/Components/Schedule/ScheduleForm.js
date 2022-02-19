@@ -10,6 +10,8 @@ import {
   classTue,
   classWed,
 } from "./ScheduleData";
+import { useQuery } from "@apollo/client";
+import { GET_TIMETABLE_TIME_QUERY } from "../../Graphql/TimeTable/query";
 
 const Container = styled.div`
   height: 100%;
@@ -25,8 +27,8 @@ const Container = styled.div`
 const DayTop = styled.div`
   height: 100%;
   display: grid;
-  font-size: 1.2rem;
-  font-size: 1.2 em;
+  font-size: 1rem;
+  font-size: 1em;
 
   text-align: center;
   column-gap: 5px;
@@ -82,21 +84,19 @@ const ScheduleForm = ({
   setViewTime,
   timeResult,
 }) => {
-  const classtime1 = ["1", "", [timeResult[0], timeResult[1]]];
-  const classtime2 = ["2", "", [timeResult[2], timeResult[3]]];
-  const classtime3 = ["3", "", [timeResult[4], timeResult[5]]];
-  const classtime4 = ["4", "", [timeResult[6], timeResult[7]]];
-  const classtime5 = ["5", "", [timeResult[8], timeResult[9]]];
-  const classtime6 = ["6", "", [timeResult[10], timeResult[11]]];
-
   const timeValue = [
-    ["1", "", [timeResult[0], timeResult[1]]],
-    ["2", "", [timeResult[2], timeResult[3]]],
-    ["3", "", [timeResult[4], timeResult[5]]],
-    ["4", "", [timeResult[6], timeResult[7]]],
-    ["5", "", [timeResult[8], timeResult[9]]],
-    ["6", "", [timeResult[10], timeResult[11]]],
+    ["1", "", [timeResult.start1, timeResult.end1]],
+    ["2", "", [timeResult.start2, timeResult.end2]],
+    ["3", "", [timeResult.start3, timeResult.end3]],
+    ["4", "", [timeResult.start4, timeResult.end4]],
+    ["5", "", [timeResult.start5, timeResult.end5]],
+    ["6", "", [timeResult.start6, timeResult.end6]],
   ];
+
+  const { data, loading, error } = useQuery(GET_TIMETABLE_TIME_QUERY);
+  console.log("data:", data);
+  console.log("loading:", loading);
+  console.log("error:", error);
 
   return (
     <Container>

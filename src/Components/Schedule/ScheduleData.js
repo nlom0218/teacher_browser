@@ -211,6 +211,23 @@ export const timeSetData = [
   },
 ];
 
+export const scheduleTime = [
+  {
+    start1: "9:00",
+    end1: "9:40",
+    start2: "9:50",
+    end2: "10:30",
+    start3: "10:40",
+    end3: "11:20",
+    start4: "11:30",
+    end4: "12:10",
+    start5: "13:00",
+    end5: "13:40",
+    start6: "13:50",
+    end6: "14:30",
+  },
+];
+
 export const classMon = [
   {
     time: "M1",

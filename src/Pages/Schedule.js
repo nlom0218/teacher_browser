@@ -6,24 +6,24 @@ import useMedia from "../Hooks/useMedia";
 import { useForm } from "react-hook-form";
 import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
 import TimeTableFont from "../Components/Schedule/TimeTableFont";
-import TimeTableGrid from "../Components/Schedule/TimeTableGrid";
 import { useReactiveVar } from "@apollo/client";
 import ClassRegisterPage from "../Components/Schedule/Popup/ClassRegisterPage";
 import PrintScheduleContents from "../Components/Schedule/Popup/PrintScheduleContents";
 import { useRef } from "react";
 import TimeTableTitle from "../Components/Schedule/TimeTableTitle";
 import ClassTimeSet from "../Components/Schedule/Popup/ClassTimeSet";
-import { timeSetData } from "../Components/Schedule/ScheduleData";
+import { scheduleTime, timeSetData } from "../Components/Schedule/ScheduleData";
 import { timeSetCal } from "../Components/Schedule/TimeSetCal";
 import ScheduleForm from "../Components/Schedule/ScheduleForm";
+import TimeRegisterPage from "../Components/Schedule/Popup/TimeRegisterPage";
 import useTitle from "../Hooks/useTitle";
 
 // 시간 설정해야 하는 기초값 데이터베이스에 있는거 연결하기
 const basic = timeSetData;
+const timeList = scheduleTime[0];
 
 //수업정보를 어떻게 받아서 전달????
 //음영한 뒤 다크모드에서 글씨 안 보임.
-// 인쇄기능에 과목명보내기
 //수업추가 어떻게?
 
 const Container = styled.div`
@@ -70,7 +70,7 @@ const TypeBtn = styled.div`
 `;
 
 const Schedule = () => {
-  const titleUpdataer = useTitle("티처캔 | 시간표")
+  const titleUpdataer = useTitle("티처캔 | 시간표");
   const isPopup = useReactiveVar(isPopupVar);
   const media = useMedia();
   const componentRef = useRef(null);
@@ -111,15 +111,8 @@ const Schedule = () => {
             <TimeTableFont fontSize={fontSize} setFontSize={setFontSize} />
           )}
         </OptionContents>
-        {/* <TimeTableGrid
-          timeResult={timeSetCal}
-          fontSize={fontSize}
-          setFontSize={setFontSize}
-          viewTime={viewTime}
-          setViewTime={setViewTime}
-        /> */}
         <ScheduleForm
-          timeResult={timeSetCal}
+          timeResult={timeList}
           fontSize={fontSize}
           setFontSize={setFontSize}
           viewTime={viewTime}
@@ -128,13 +121,16 @@ const Schedule = () => {
       </Container>
 
       {isPopup === "registerClass" && <ClassRegisterPage />}
-      {isPopup === "registerTimeSet" && <ClassTimeSet />}
+      {isPopup === "registerTime" && <TimeRegisterPage />}
+      {isPopup === "registerTimeSet" && (
+        <ClassTimeSet timeSet={timeSet} setTimeSet={setTimeSet} />
+      )}
       {isPopup === "print" && (
         <PrintScheduleContents
           printRef={componentRef}
           title={title}
           viewTime={viewTime}
-          timeResult={timeSetCal}
+          timeResult={timeList}
         />
       )}
     </BasicContainer>

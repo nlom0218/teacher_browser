@@ -29,7 +29,7 @@ const Font = styled.div`
   padding: 20px 0px;
   padding: 1.25rem 0rem;
 `;
-const AddTagBtn = styled.div`
+const AddTagBtn = styled.button`
   text-align: center;
   padding: 10px 20px;
   padding: 0.625rem 1.25rem;
@@ -39,54 +39,37 @@ const AddTagBtn = styled.div`
   border-radius: 0.3125rem;
   cursor: pointer;
 `;
-const DetailStartTime = () => {
-  const [time, setTime] = useState(timeSetData[0]);
+const DetailStartTime = (setTimeSet, timeSet) => {
+  const [time, setTime] = useState(timeSet);
   const { register, handleSubmit, getValues } = useForm({
     mode: "onChange",
   });
   const onSubmit = (data) => {
-    const {
-      hour,
-      minutes,
-      classtime,
-      resttime,
-      lunchhour,
-      lunchminutes,
-      breaktime,
-      breakminutes,
-    } = data;
-    setTime(data);
-  };
-  const onBlurTimeSet = () => {
-    const hour = getValues("hour");
-    const minutes = getValues("minutes");
-    const classtime = getValues("classtime");
-    const resttime = getValues("resttime");
-    const lunchhour = getValues("lunchhour");
-    const lunchminutes = getValues("lunchminutes");
-    const breaktime = getValues("breaktime");
-    const breakminutes = getValues("breakminutes");
-    onSubmit({
-      hour,
-      minutes,
-      classtime,
-      resttime,
-      lunchhour,
-      lunchminutes,
-      breaktime,
-      breakminutes,
-    });
+    console.log(data);
+    // const {
+    //   hour,
+    //   minutes,
+    //   classtime,
+    //   resttime,
+    //   lunchhour,
+    //   lunchminutes,
+    //   breaktime,
+    //   breakminutes,
+    // } = data;
+    // setTime(data);
+    // setTimeSet(data);
   };
 
   const onCompleted = () => {
     outPopup();
     setTime(time); //변경된 값 어떻게 받아오나..
+    setTimeSet(time);
   };
 
   return (
     <DetailStudentLayout>
-      <DetailTitle>수업 시작</DetailTitle>
-      <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurTimeSet}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div>수업 시작</div>
         <Input
           {...register("hour", {
             required: true,
@@ -94,7 +77,7 @@ const DetailStartTime = () => {
           type="number"
           min="1"
           max="24"
-          defaultValue={time.hour}
+          defaultValue="9"
         />{" "}
         <Font>시 </Font>
         <Input
@@ -105,12 +88,10 @@ const DetailStartTime = () => {
           min="00"
           max="59"
           step="5"
-          defaultValue={time.minutes}
+          defaultValue="00"
         />
         <Font>분 </Font>
-      </Form>
-      <DetailTitle>수업 시간</DetailTitle>
-      <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurTimeSet}>
+        <DetailTitle>수업 시간</DetailTitle>
         <Input
           {...register("classtime", {
             required: true,
@@ -119,12 +100,10 @@ const DetailStartTime = () => {
           min="00"
           max="59"
           step="5"
-          defaultValue={time.classtime}
+          defaultValue="40"
         />
         <Font>분 </Font>
-      </Form>
-      <DetailTitle>쉬는 시간</DetailTitle>
-      <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurTimeSet}>
+        <DetailTitle>쉬는 시간</DetailTitle>
         <Input
           {...register("resttime", {
             required: true,
@@ -133,12 +112,10 @@ const DetailStartTime = () => {
           min="00"
           max="59"
           step="5"
-          defaultValue={time.resttime}
+          defaultValue="10"
         />
         <Font>분 </Font>
-      </Form>
-      <DetailTitle>점심 시간</DetailTitle>
-      <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurTimeSet}>
+        <DetailTitle>점심 시간</DetailTitle>
         <Input
           {...register("lunchhour", {
             required: true,
@@ -146,7 +123,7 @@ const DetailStartTime = () => {
           type="number"
           max="6"
           min="1"
-          defaultValue={time.lunchhour}
+          defaultValue="4"
         />{" "}
         <Font>교시 후 </Font>
         <Input
@@ -157,11 +134,10 @@ const DetailStartTime = () => {
           min="00"
           max="80"
           step="5"
-          defaultValue={time.lunchminutes}
+          defaultValue="50"
         />
         <Font>분 </Font>
-      </Form>
-      <DetailTitle>중간 놀이</DetailTitle>
+        {/* <DetailTitle>중간 놀이</DetailTitle>
       <Form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurTimeSet}>
         <Input
           {...register("breaktime", {
@@ -170,7 +146,7 @@ const DetailStartTime = () => {
           type="number"
           max="6"
           min="1"
-          defaultValue={time.breaktime}
+          defaultValue="0"
         />{" "}
         <Font>교시 후 </Font>
         <Input
@@ -181,12 +157,13 @@ const DetailStartTime = () => {
           min="00"
           max="80"
           step="5"
-          defaultValue={time.breakminutes}
+          defaultValue="20"
         />
         <Font>분 </Font>
-      </Form>
-      <div />
-      <AddTagBtn onClick={onCompleted}>완료</AddTagBtn>
+      </Form> */}
+        <div />
+        <AddTagBtn type="submit">완료</AddTagBtn>
+      </form>
     </DetailStudentLayout>
   );
 };

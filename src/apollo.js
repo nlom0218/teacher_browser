@@ -45,7 +45,8 @@ export const logOutUser = (callback) => {
   localStorage.removeItem("com.naver.nid.access_token");
 
   // 카카오 로그인 시 로그아웃
-  if (window.Kakao.Auth.getAccessToken()) window.Kakao.Auth.logout(() => callback());
+  if (window.Kakao.Auth.getAccessToken())
+    window.Kakao.Auth.logout(() => callback());
   else callback();
 };
 
@@ -71,7 +72,9 @@ export const disableSeeStudent = () => {
   isSeeStudentVar(false);
 };
 
-export const isSeeStudentListVar = makeVar(localStorage.getItem(IS_SEE_STUDENT_LIST));
+export const isSeeStudentListVar = makeVar(
+  localStorage.getItem(IS_SEE_STUDENT_LIST)
+);
 export const enableSeeStudentList = () => {
   localStorage.setItem(IS_SEE_STUDENT_LIST, "true");
   isSeeStudentListVar(true);
@@ -81,7 +84,11 @@ export const disableSeeStudentList = () => {
   isSeeStudentListVar(false);
 };
 
-export const welcomeSectionVar = makeVar(localStorage.getItem(WELCOME_SECTION) ? localStorage.getItem(WELCOME_SECTION) : "welcome");
+export const welcomeSectionVar = makeVar(
+  localStorage.getItem(WELCOME_SECTION)
+    ? localStorage.getItem(WELCOME_SECTION)
+    : "welcome"
+);
 export const moveWelcome = () => {
   localStorage.setItem(WELCOME_SECTION, "welcome");
   welcomeSectionVar("welcome");
@@ -101,7 +108,9 @@ export const disableBgThemeAni = () => {
   bgThemeAniVar(false);
 };
 
-export const pageLinkFolderVar = makeVar(localStorage.getItem(PAGE_LINK_FOLDER));
+export const pageLinkFolderVar = makeVar(
+  localStorage.getItem(PAGE_LINK_FOLDER)
+);
 export const movePageLinkFolder = (folder) => {
   localStorage.setItem(PAGE_LINK_FOLDER, folder);
   pageLinkFolderVar(folder);
@@ -110,7 +119,9 @@ export const removePageLinkFolder = () => {
   localStorage.removeItem(PAGE_LINK_FOLDER);
   pageLinkFolderVar(undefined);
 };
-export const linkPickFolderVar = makeVar(localStorage.getItem(LINK_PICK_FOLDER));
+export const linkPickFolderVar = makeVar(
+  localStorage.getItem(LINK_PICK_FOLDER)
+);
 export const moveLinkPickFolder = (folder) => {
   localStorage.setItem(LINK_PICK_FOLDER, folder);
   linkPickFolderVar(folder);
@@ -121,9 +132,10 @@ export const removeLinkPickFolder = () => {
 };
 
 const httpLink = createHttpLink({
-  uri: process.env.NODE_ENV === "production"
-    ? "https://teachercan.herokuapp.com/graphql"
-    : "http://localhost:4000/graphql"
+  uri:
+    process.env.NODE_ENV === "production"
+      ? "https://teachercan.herokuapp.com/graphql"
+      : "http://localhost:4000/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -142,7 +154,11 @@ export const client = new ApolloClient({
   }),
 });
 
-export const pageLinkSectionVar = makeVar(localStorage.getItem(PAGELINK_SECTION) ? localStorage.getItem(PAGELINK_SECTION) : "pageLink");
+export const pageLinkSectionVar = makeVar(
+  localStorage.getItem(PAGELINK_SECTION)
+    ? localStorage.getItem(PAGELINK_SECTION)
+    : "pageLink"
+);
 export const movePageLink = () => {
   localStorage.setItem(PAGELINK_SECTION, "pageLink");
   pageLinkSectionVar("pageLink");
