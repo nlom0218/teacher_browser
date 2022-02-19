@@ -13,6 +13,8 @@ import PageLinkList from "./Styled/PageLinkList";
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { SEE_MY_PAGE_LINK_QUERY } from "../../Graphql/PageLink/query";
 import MyPageLink from "./MyPageLink";
+import IcHelper from "../../icons/Helper/IcHelper";
+import HelpIcon from "./Styled/HelpIcon";
 
 const MoveContainer = styled.div`
   position: absolute;
@@ -93,7 +95,10 @@ const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit }) => {
       </MoveIcon>
       <FolderList right={true} />
       <ContentsList right={true}>
-        <PageLinkTitle left={true}>나의 즐겨찾기 페이지</PageLinkTitle>
+        <PageLinkTitle left={true}>
+          <div>나의 즐겨찾기 페이지</div>
+          <HelpIcon><IcHelper /></HelpIcon>
+        </PageLinkTitle>
         <PageLinkList none={none}>
           {!pageLinkFolder &&
             (myPageLink.length === 0 ? (

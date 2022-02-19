@@ -28,6 +28,7 @@ import TodoCreate from '../Components/TodoList/Popup/TodoCreate';
 import AddJournal from '../Components/Calendar/Popup/AddJournal';
 import EditJournal from '../Components/Calendar/Popup/EditJournal';
 import useTitle from '../Hooks/useTitle';
+import IcHelper from '../icons/Helper/IcHelper';
 
 const Container = styled.div`
   display: grid;
@@ -65,7 +66,7 @@ const Title = styled.div`
 `
 
 const BtnContainer = styled.div`
-  grid-template-columns: repeat(4, auto);
+  grid-template-columns: repeat(5, auto);
   display: grid;
   align-items: center;
   column-gap: 20px;
@@ -76,7 +77,7 @@ const BtnContainer = styled.div`
     grid-row: 1 / 2
   `}
   ${customMedia.greaterThan("desktop")`
-    grid-template-columns: repeat(5, auto);
+    grid-template-columns: repeat(6, auto);
   `}
 `
 
@@ -96,6 +97,14 @@ const Btn = styled.div`
   svg {
     font-size: 1.25em;
     font-size: 1.25rem;
+    display: flex;
+  }
+`
+
+const HelpIcon = styled.div`
+  svg {
+    font-size: 2.5em;
+    font-size: 2.5rem;
     display: flex;
   }
 `
@@ -153,6 +162,7 @@ const CalendarList = styled.div`
     grid-template-rows: ${props => `repeat(${props.weekLength}, minmax(6.25rem, auto))`};
   `}
 `
+
 
 const Calendar = () => {
   const titleUpdataer = useTitle("티처캔 | 달력")
@@ -271,6 +281,7 @@ const Calendar = () => {
             <Btn className="calendar_btn" onClick={onClickBtn}><IoIosArrowForward /></Btn>
             {media === "Desktop" && <Btn className="calendar_btn" onClick={onClickFull}>{screen === "small" ? <BiFullscreen /> : <BiExitFullscreen />}</Btn>}
             <Btn className="calendar_btn" onClick={onClickPlusBtn}><AiOutlinePlus /></Btn>
+            <HelpIcon><IcHelper /></HelpIcon>
           </BtnContainer>
         </TopContainer>
         {loading ? <Loading page="subPage" /> : <BottomContainerLayout>

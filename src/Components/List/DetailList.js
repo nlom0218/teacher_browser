@@ -2,7 +2,6 @@ import { useMutation, useQuery, useReactiveVar } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { FadeIn } from '../../Animations/Fade';
 import { inPopup, isPopupVar } from '../../apollo';
 import SetEmoji from './Popup/SetEmoji';
 import StudentInList from './StudentInList';
@@ -13,7 +12,6 @@ import InputUnderLine from './InputUnderLine';
 import { SEE_ALL_STUDENT_LIST_QUERY, SEE_ONE_STUDENT_LIST_QUERY } from '../../Graphql/StudentList/query';
 import { EDIT_STUDENT_LIST } from "../../Graphql/StudentList/mutation"
 import useMedia from '../../Hooks/useMedia';
-import BtnPopupContainer from "../Shared/BtnPopupContainer"
 import DeleteList from './Popup/DeleteList';
 import { DelBtn } from './styled/DelBtn';
 import DetailNameContainer from './styled/DetailNameContainer';

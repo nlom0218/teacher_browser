@@ -4,6 +4,7 @@ import { FcPlus } from 'react-icons/fc';
 import styled from 'styled-components';
 import { inPopup, isPopupVar } from '../../apollo';
 import { SEE_ALL_STUDENT_LIST_QUERY } from '../../Graphql/StudentList/query';
+import IcHelper from '../../icons/Helper/IcHelper';
 import { customMedia } from '../../styles';
 import Loading from '../Shared/Loading';
 import EmptyItem from './Dorp/EmptyItem';
@@ -42,6 +43,16 @@ const AddIcon = styled.div`
   }
 `
 
+const HelpIcon = styled.div`
+  align-self: center;
+  justify-self: center;
+  cursor: pointer;
+  svg {
+    font-size: 3em;
+    font-size: 3rem;
+  }
+`
+
 const AllList = ({ someDragging, setSuccessMsg, setErrorMsg, setSomeDragging, selectedTag, selectedSort, setDragType, dragType }) => {
   // 학생 리스트가 아니라 명렬표임!!!
   const [studentList, setSudentList] = useState(undefined)
@@ -59,7 +70,7 @@ const AllList = ({ someDragging, setSuccessMsg, setErrorMsg, setSomeDragging, se
   useEffect(() => {
     if (data) {
       const initStudentList = []
-      for (let order = 1; order < 15; order++) {
+      for (let order = 1; order < 14; order++) {
         const existStudentList = data?.seeStudentList.filter(item => item.listOrder === order)[0]
         if (existStudentList) {
           initStudentList.push(existStudentList)
@@ -101,6 +112,7 @@ const AllList = ({ someDragging, setSuccessMsg, setErrorMsg, setSomeDragging, se
         />
       }
     })}
+    <HelpIcon><IcHelper /></HelpIcon>
     <AddIcon onClick={onClickAddIcon}><FcPlus /></AddIcon>
     <Trash someDragging={someDragging} setSuccessMsg={setSuccessMsg} selectedTag={selectedTag} selectedSort={selectedSort} dragType={dragType} />
     {isPopup === "createList" && <PopupCreateList />}
