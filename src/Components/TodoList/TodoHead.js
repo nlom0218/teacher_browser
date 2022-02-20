@@ -142,6 +142,10 @@ const TodoHead = () => {
     inPopup("toDoComplete")
   }
 
+  const onClickHelper = () => {
+    inPopup("toDoHelper")
+  }
+
   return (
     <TodoHeadBlock>
       <HeadLayout>
@@ -151,7 +155,7 @@ const TodoHead = () => {
       <ButtonContent>
         <ComleteToDo onClick={onClickCompleteBtn}>완료된 할 일</ComleteToDo>
         <AddIcon onClick={onClickCreateBtn}><MdAddCircle /></AddIcon>
-        <HelpIcon><IcHelper /></HelpIcon>
+        <HelpIcon onClick={onClickHelper}><IcHelper /></HelpIcon>
       </ButtonContent>
     </TodoHeadBlock>
   );

@@ -19,6 +19,7 @@ import { customMedia } from '../styles';
 import CompleteToDo from '../Components/TodoList/Popup/CompleteToDo';
 import DelAllToDos from '../Components/TodoList/Popup/DelAllToDos';
 import useTitle from '../Hooks/useTitle';
+import ToDoHelper from '../Components/TodoList/Popup/ToDoHelper';
 
 const Container = styled.div`
   padding : 20px;
@@ -147,6 +148,7 @@ const TodoList = () => {
       {isPopup === "toDoComplete" && <CompleteToDo setErrMsg={setErrMsg} userEmail={me?.email} />}
       {isPopup === "detailToDo" && <DetailToDo setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} />}
       {isPopup === "confirmDelAll" && <DelAllToDos setMsg={setMsg} userEmail={me?.email} />}
+      {isPopup === "toDoHelper" && <ToDoHelper />}
       <AlertMessage msg={errMsg} time={3000} setMsg={setErrMsg} type="error" />
       <AlertMessage msg={msg} time={3000} setMsg={setMsg} type="success" />
     </BasicContainer>
