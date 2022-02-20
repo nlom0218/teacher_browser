@@ -41,6 +41,7 @@ const HoverContainer = styled.div`
   display: grid;
   justify-items: center;
   align-self: center;
+  align-items: center;
   font-size: 0.8rem;
   font-size: 0.8em;
   position: absolute;
@@ -62,10 +63,8 @@ const HoverContainer = styled.div`
 const TableInItem = ({ item, index, color, tag, fontSize }) => {
   const [hoverContainer, setHoverContainer] = useState(false);
   const [timetableData, setTimetableData] = useState([]);
-
+  console.log(item);
   const { data, loading, error } = useQuery(GET_TIMETABLE_DATA_QUERY);
-
-  console.log(data);
 
   const onMouseEnter = () => {
     setHoverContainer(true);

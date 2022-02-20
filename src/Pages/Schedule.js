@@ -1,9 +1,8 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
 import { inPopup, isPopupVar } from "../apollo";
 import useMedia from "../Hooks/useMedia";
-import { useForm } from "react-hook-form";
 import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
 import TimeTableFont from "../Components/Schedule/TimeTableFont";
 import { useReactiveVar } from "@apollo/client";
@@ -66,6 +65,8 @@ const TypeBtn = styled.div`
 
 const Schedule = () => {
   const [timeResult, setTimeResult] = useState([]);
+  const [timetableTime, setTimetableTime] = useState([]);
+
   const { data, loading, error } = useQuery(GET_TIMETABLE_TIME_QUERY, {
     onCompleted: ({ getTimetableTime: data }) => {
       setTimeResult([
@@ -81,6 +82,14 @@ const Schedule = () => {
         data.end5,
         data.start6,
         data.end6,
+      ]);
+      setTimetableTime([
+        ["1", [data.start1, data.end1]],
+        ["2", [data.start2, data.end2]],
+        ["3", [data.start3, data.end3]],
+        ["4", [data.start4, data.end4]],
+        ["5", [data.start5, data.end5]],
+        ["6", [data.start6, data.end6]],
       ]);
     },
   });
@@ -127,6 +136,8 @@ const Schedule = () => {
           setFontSize={setFontSize}
           viewTime={viewTime}
           setViewTime={setViewTime}
+          timetableTime={timetableTime}
+          setTimetableTime={setTimetableTime}
         />
       </Container>
 

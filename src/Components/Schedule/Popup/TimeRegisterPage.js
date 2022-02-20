@@ -31,8 +31,8 @@ const LayOut = styled.div`
   padding-bottom: 1.25rem;
   row-gap: 5px;
   row-gap: 0.3125rem;
-  font-size: 1.2em;
-  font-size: 1.2rem;
+  font-size: 1em;
+  font-size: 1rem;
   text-align: center;
   justify-items: center;
 `;
