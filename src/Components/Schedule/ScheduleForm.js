@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import TableInItem from "./TableInItem";
 import TableOutItem from "./TableOutItem";
 import TableOutDay from "./TableOutDay";
+import { useQuery } from "@apollo/client";
+import { GET_TIMETABLE_DATA_QUERY } from "../../Graphql/TimeTable/query";
+import { monthsToQuarters } from "date-fns";
 import {
-  classFri,
   classMon,
-  classThur,
   classTue,
   classWed,
-} from "./ScheduleData";
-import { useQuery } from "@apollo/client";
-import { GET_TIMETABLE_TIME_QUERY } from "../../Graphql/TimeTable/query";
+  classThur,
+  classFri,
+} from "../../Components/Schedule/ScheduleData";
 
 const Container = styled.div`
   height: 100%;
@@ -78,25 +79,19 @@ const dayValue = [
 ];
 
 const ScheduleForm = ({
+  timetableTime,
   fontSize,
   setFontSize,
   viewTime,
   setViewTime,
-  timeResult,
 }) => {
-  const timeValue = [
-    ["1", "", [timeResult.start1, timeResult.end1]],
-    ["2", "", [timeResult.start2, timeResult.end2]],
-    ["3", "", [timeResult.start3, timeResult.end3]],
-    ["4", "", [timeResult.start4, timeResult.end4]],
-    ["5", "", [timeResult.start5, timeResult.end5]],
-    ["6", "", [timeResult.start6, timeResult.end6]],
-  ];
+  const { data, loading, error } = useQuery(GET_TIMETABLE_DATA_QUERY);
+  console.log(data);
 
-  const { data, loading, error } = useQuery(GET_TIMETABLE_TIME_QUERY);
-  console.log("data:", data);
-  console.log("loading:", loading);
-  console.log("error:", error);
+  useEffect(() => {
+    if (data) {
+    }
+  }, [data]);
 
   return (
     <Container>
@@ -114,32 +109,31 @@ const ScheduleForm = ({
       </DayTop>
       <DayDown>
         <DayOne>
-          {timeValue.map((item, index) => {
+          {timetableTime.map((item, index) => {
             return (
               <TableOutItem
                 viewTime={viewTime}
                 setViewTime={setViewTime}
                 item={item[0]}
                 index={index}
-                color={item[1]}
-                tag={item[2]}
+                tag={item[1]}
               />
             );
           })}
         </DayOne>
         <DayOne>
-          {classMon.map((name, index) => {
+          {/* {MonArr.map((name, index) => {
             return (
               <TableInItem
                 key={index}
-                item={name.subjectname}
+                item={name.subName}
                 color={name.color}
-                tag={name.tag}
+                tag={name.memo}
                 fontSize={fontSize}
                 setFontSize={setFontSize}
               />
             );
-          })}
+          })} */}
         </DayOne>
         <DayOne>
           {classTue.map((name, index) => {
@@ -156,7 +150,7 @@ const ScheduleForm = ({
           })}
         </DayOne>
         <DayOne>
-          {classWed.map((name, index) => {
+          {/* {classWed.map((name, index) => {
             return (
               <TableInItem
                 key={index}
@@ -167,10 +161,10 @@ const ScheduleForm = ({
                 setFontSize={setFontSize}
               />
             );
-          })}
+          })} */}
         </DayOne>
         <DayOne>
-          {classThur.map((name, index) => {
+          {/* {classThur.map((name, index) => {
             return (
               <TableInItem
                 key={index}
@@ -181,10 +175,10 @@ const ScheduleForm = ({
                 setFontSize={setFontSize}
               />
             );
-          })}
+          })} */}
         </DayOne>
         <DayOne>
-          {classFri.map((name, index) => {
+          {/* {classFri.map((name, index) => {
             return (
               <TableInItem
                 key={index}
@@ -195,7 +189,7 @@ const ScheduleForm = ({
                 setFontSize={setFontSize}
               />
             );
-          })}
+          })} */}
         </DayOne>
       </DayDown>
     </Container>

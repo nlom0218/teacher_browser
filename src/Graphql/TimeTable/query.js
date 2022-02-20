@@ -22,7 +22,7 @@ export const GET_TIMETABLE_TIME_QUERY = gql`
 `;
 
 export const GET_TIMETABLE_DATA_QUERY = gql`
-  query GetTimetableData($day: String) {
+  query GetTimetableData($day: Int) {
     getTimetableData(day: $day) {
       _id
       color

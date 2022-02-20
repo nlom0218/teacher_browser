@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import IcPrint from "../../../icons/Print/IcPrint";
 import PopupPrintContainer from "../../Shared/PopupPrintContainer";
 import { useReactToPrint } from "react-to-print";
 import { color } from "../../../styles";
+import { useQuery } from "@apollo/client";
+import { GET_TIMETABLE_TIME_QUERY } from "../../../Graphql/TimeTable/query";
 
 const PrintTopContents = styled.div`
   display: grid;

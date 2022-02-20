@@ -1,20 +1,16 @@
-import { useMutation } from "@apollo/client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { BtnFadeIn } from "../../../Animations/Fade";
-import {} from "../../../Graphql/Student/mutation";
-import {} from "../../../Graphql/Student/query";
 import useMedia from "../../../Hooks/useMedia";
-import { customMedia } from "../../../styles";
 import {
   DetailStudentLayout,
   DetailTitle,
 } from "../../List/styled/DetailStudent";
 import InputUnderLine from "../../List/InputUnderLine";
-import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
-import { AiTwotoneDownSquare } from "react-icons/ai";
 import { BsCheck } from "react-icons/bs";
+import { useMutation } from "@apollo/client";
+import { SET_TIMETABLE_DATA_MUTATION } from "../../../Graphql/TimeTable/mutation";
 
 const DetailClassNameForm = styled.form`
   padding: 10px 0px;
@@ -85,9 +81,20 @@ const Submit = styled.input`
   animation: ${BtnFadeIn} 1s ease;
 `;
 
-const DetailClassName = () => {
+const DetailClassName = (userEmail) => {
   const [isEdit, setIsEdit] = useState(false);
   const [pickType, setPickType] = useState(false);
+  const [classData, setClassData] = useState([]);
+
+  const [setTimetableData, { data, loading, error }] = useMutation(
+    SET_TIMETABLE_DATA_MUTATION,
+    {
+      variables: {
+        teacherEmail: userEmail,
+        timetableData: classData,
+      },
+    }
+  );
 
   const media = useMedia();
   const { register, setValue, handleSubmit, getValues } = useForm({
