@@ -29,8 +29,8 @@ export const NAVER_LOGIN_MUTATION = gql`
   }
 `;
 export const KAKAO_LOGIN_MUTATION = gql`
-  mutation KakaoLogin($email: String!) {
-    kakaoLogin(email: $email) {
+  mutation KakaoLogin($uri: String!, $code: String!) {
+    kakaoLogin(uri: $uri, code: $code) {
       ok
       token
       error

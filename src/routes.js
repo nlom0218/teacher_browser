@@ -20,6 +20,7 @@ const CREATEACCOUNT = "/create-account";
 const EDITACCOUNT = "/edit-account";
 const NAVERLOGINCALLBACK = "/naverLogin";
 const GOOGLELOGINCALLBACK = "/googleLogin";
+const KAKAOLOGINCALLBACK = "/kakaoLogin";
 const FINDPASSWORD = "/find-password";
 
 const TRASH = "/trash";
@@ -50,6 +51,7 @@ const routes = {
   editAccount: EDITACCOUNT,
   naverLoginCallBack: NAVERLOGINCALLBACK,
   googleLoginCallBack: GOOGLELOGINCALLBACK,
+  kakaoLoginCallBack: KAKAOLOGINCALLBACK,
   findPassword: FINDPASSWORD,
 
   trash: TRASH,
