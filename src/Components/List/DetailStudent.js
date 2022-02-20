@@ -8,6 +8,7 @@ import { inPopup, isPopupVar } from '../../apollo';
 import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
 import { SEE_ALL_STUDENT_QUERY, SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
 import useMedia from '../../Hooks/useMedia';
+import IcJournal from '../../icons/Journal/IcJournal';
 import IcNameTable from '../../icons/NameTable/IcNameTable';
 import routes from '../../routes';
 import { processStudentIcon } from '../../shared';
@@ -58,6 +59,11 @@ const ListIcon = styled.div`
   column-gap: 0.3125rem;
   div {
     opacity: 0.6;
+    :hover {
+      opacity: 1;
+      font-weight: 600;
+      transition: opacity 0.6s ease;
+    }
   }
   svg {
     display: flex;
@@ -229,7 +235,7 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag, setSuccessMsg, se
       </Link>
       <Link to={`${routes.journal}/student/${studentId}`}>
         <ListIcon>
-          <IcNameTable />
+          <IcJournal />
           <div>학급일지로 이동</div>
         </ListIcon>
       </Link>
