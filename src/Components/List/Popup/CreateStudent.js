@@ -31,8 +31,8 @@ const CreationType = styled.div`
   column-gap: 1.25rem;
   row-gap: 20px;
   row-gap: 1.25rem;
-  padding: 10px 0px;
-  padding: 0.625rem 0px;
+  padding-bottom: 20px;
+  padding-bottom: 1.25rem;
   .creationTypeBtn {
     cursor: pointer;
     padding: 16px 40px;
@@ -44,6 +44,10 @@ const CreationType = styled.div`
       transition: background-color 0.6s ease, color 0.6s ease;
     }
   }
+  ${customMedia.greaterThan("desktop")`
+    padding: 20px 0px;
+    padding: 1.25rem 0px;
+  `}
   ${customMedia.greaterThan("tablet")`
     grid-template-columns: 1fr 1fr;
   `}
