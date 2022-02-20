@@ -11,6 +11,7 @@ import { SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
 import { CREATE_STUDENT_MUTATION } from '../../../Graphql/Student/mutation';
 import { IoArrowBackSharp } from 'react-icons/io5';
 import useMedia from '../../../Hooks/useMedia';
+import Loading from '../../Shared/Loading';
 
 const BackBtn = styled.div`
   font-size: 1.5em;
@@ -58,17 +59,20 @@ const ManyTypeBtn = styled.div`
   color: ${props => props.creationType === "many" && props.theme.bgColor};
 `
 
-const CreateStudent = ({ existStudentArray, selectedTag, selectedSort }) => {
+const CreateStudent = ({ existStudentArray, selectedTag, selectedSort, setErrorMsg }) => {
   // 단일 생성, 복수 생성을 위한 state값
   const [creationType, setCreationType] = useState(undefined)
 
   const me = useMe()
   const media = useMedia()
   const onCompleted = (result) => {
-    const { createStudent: { ok } } = result
+    const { createStudent: { ok, error } } = result
     if (ok) {
       // 성공적으로 생성을 하였으면 팝업창 닫기
       outPopup()
+    }
+    if (error) {
+      setErrorMsg(error)
     }
   }
   const [createStudent, { loading }] = useMutation(CREATE_STUDENT_MUTATION, {
@@ -82,6 +86,11 @@ const CreateStudent = ({ existStudentArray, selectedTag, selectedSort }) => {
       }
     }]
   })
+
+  if (loading) {
+    return <Loading page="subPage" />
+  }
+
   const onClickCreationType = (type) => setCreationType(type)
   const onClickBackAddTagBtn = () => inPopup("students")
   return (<PopupContainer>
@@ -96,6 +105,7 @@ const CreateStudent = ({ existStudentArray, selectedTag, selectedSort }) => {
         createStudent={createStudent}
         loading={loading}
         email={me?.email}
+        setErrorMsg={setErrorMsg}
       />
     }
     {creationType === "many" &&
@@ -103,6 +113,7 @@ const CreateStudent = ({ existStudentArray, selectedTag, selectedSort }) => {
         existStudentArray={existStudentArray}
         createStudent={createStudent}
         loading={loading}
+        setErrorMsg={setErrorMsg}
         email={me?.email}
       />}
   </PopupContainer>);

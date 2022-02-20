@@ -173,6 +173,7 @@ const List = () => {
         existStudentArray={existStudentArray}
         selectedTag={selectedTag}
         selectedSort={selectedSort}
+        setErrorMsg={setErrorMsg}
       />}
   </BasicContainer>);
 }

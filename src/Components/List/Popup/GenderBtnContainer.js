@@ -32,10 +32,9 @@ const GengerBtn = styled.div`
   `}
 `
 
-const GenderBtnContainer = ({ gender, setGender, setErrMsg }) => {
+const GenderBtnContainer = ({ gender, setGender }) => {
   const onClickGender = (type) => {
     setGender(type)
-    setErrMsg(undefined)
   }
   return (<SGengerBtnContainer>
     <GengerBtn gender={gender} onClick={() => onClickGender("male")}>

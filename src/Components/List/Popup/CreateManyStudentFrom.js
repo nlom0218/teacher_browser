@@ -25,10 +25,7 @@ const SubmitInput = styled.input`
   transition: opacity 0.6s ease;
 `
 
-const CreateManyStudentFrom = ({ existStudentArray, studentString, setStudentString, createStudent, email, loading }) => {
-  // 성별 체크 에러메시지
-  const [errMsg, setErrMsg] = useState(undefined)
-
+const CreateManyStudentFrom = ({ existStudentArray, studentString, setStudentString, createStudent, email, loading, setErrorMsg }) => {
   const { register, handleSubmit, formState: { isValid } } = useForm({
     mode: "onChange"
   })
@@ -36,7 +33,7 @@ const CreateManyStudentFrom = ({ existStudentArray, studentString, setStudentStr
     // 성별이 모두 체크가 안 될 경우 에러메시지 만들기
     const isUndefinedGender = studentString.map(item => item.gender).includes(undefined)
     if (isUndefinedGender) {
-      setErrMsg("성별 선택을 완료해 주세요.");
+      setErrorMsg("성별 선택을 완료해 주세요. 😅");
       return
     }
 
@@ -74,7 +71,6 @@ const CreateManyStudentFrom = ({ existStudentArray, studentString, setStudentStr
       value="생성"
       disabled={!isValid}
     />
-    {errMsg && <ErrMsg errMsg={errMsg} />}
   </Form>);
 }
 
