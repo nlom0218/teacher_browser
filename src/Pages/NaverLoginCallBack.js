@@ -7,56 +7,37 @@ import routes from "../routes";
 
 const NaverLoginCallBack = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState(undefined);
+  const [errMsg, setErrMsg] = useState();
+
   const onCompleted = (result) => {
     const {
       naverLogin: { ok, error, token },
     } = result;
     if (error) {
-      // setErrMsg(error)
+      setErrMsg(error);
     }
     if (ok) {
       logInUser(token);
       navigate(routes.home);
     }
   };
+
   const [naverLoginMutation, { loading }] = useMutation(NAVER_LOGIN_MUTATION, {
     onCompleted,
   });
-  const inItNaverLogin = () => {
-    const naverLogin = new window.naver.LoginWithNaverId({
-      clientId: "Gf04qU_FzIfDWz4a9_6Z",
-      callbackUrl: `${window.location.protocol}//${window.location.host}/naverLogin`,
-      isPopup: false,
-      loginButton: { color: "green", type: 1, height: "50" },
-      callbackHandle: true,
-    });
-    naverLogin.init();
-    naverLogin.getLoginStatus((status) => {
-      if (status) {
-        const { email } = naverLogin.user;
-        setEmail(email);
-      }
-    });
-    if (email) {
-      if (loading) {
-        return;
-      }
-      naverLoginMutation({
-        variables: {
-          email,
-        },
-      });
-    }
-  };
+
   useEffect(() => {
-    inItNaverLogin();
-  }, [email]);
-  return (
-    <div>
-      <div id="naverIdLogin" style={{ position: "absolute", top: "-10000000000px" }}></div>
-    </div>
-  );
+    const query = new URLSearchParams(window.location.search);
+    const code = query.get("code");
+    const state = query.get("state");
+    const error = query.get("error");
+    const errorDescription = query.get("error_description");
+    naverLoginMutation({ variables: { code, state, error, errorDescription } });
+  }, [naverLoginMutation]);
+
+  if (loading) return <>로딩중입니다...</>;
+
+  return <>{errMsg}</>;
 };
 
 export default NaverLoginCallBack;
