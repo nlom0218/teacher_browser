@@ -17,7 +17,6 @@ import {
 import { useMutation } from "@apollo/client";
 import { SET_TIMETABLE_DATA_MUTATION } from "../../../Graphql/TimeTable/mutation";
 import { GET_TIMETABLE_DATA_QUERY } from "../../../Graphql/TimeTable/query";
-import { monthsToQuarters } from "date-fns";
 
 const RegisterForm = styled.form`
   padding: 20px 0px;
@@ -150,11 +149,10 @@ const bgColorArr = [
 ];
 const timeday = ["", "월", "화", "수", "목", "금"];
 
-const ClassRegisterPage = ({ userEmail }) => {
+const ClassRegisterPage = ({ userEmail, num, item, color, tag }) => {
   const [pickType, setPickType] = useState(false);
   const [isEditMemo, setIsEditMemo] = useState(false);
   const [isEditName, setIsEditName] = useState(false);
-
   const onCompleted = (result) => {
     const {
       setTimetableData: { ok },
@@ -190,7 +188,7 @@ const ClassRegisterPage = ({ userEmail }) => {
   };
   const onSubmit = (data) => {
     const { subName } = data;
-
+    outPopup();
     setTimetableData({
       variables: {
         teacherEmail: userEmail,
@@ -203,7 +201,7 @@ const ClassRegisterPage = ({ userEmail }) => {
     <PopupContainer>
       <RegisterForm onSubmit={handleSubmit(onSubmit)}>
         <LayOut>
-          <DetailTitle>수업명</DetailTitle>
+          <DetailTitle>{num} 수업명</DetailTitle>
           <InputUnderLine isEdit={isEditName}>
             <Input
               {...register("className", {
@@ -255,7 +253,7 @@ const ClassRegisterPage = ({ userEmail }) => {
               max={999999999}
             />{" "}
           </InputUnderLine>
-          <DetailTitle>수업추가</DetailTitle>
+          {/* <DetailTitle>수업추가</DetailTitle>
           <AddClassContainer>
             {timeday.map((item, index) => {
               return (
@@ -265,17 +263,46 @@ const ClassRegisterPage = ({ userEmail }) => {
               );
             })}{" "}
             <TimeTable>1교시</TimeTable>
-            {/* {timeDayData
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            {timeDayData
               .filter((item) => item.time.includes("1"))
               .map((item, index) => {
                 return <TimeTable key={index} item={item} />;
-              })} */}
+              })}
             <TimeTable>2교시</TimeTable>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
             <TimeTable>3교시</TimeTable>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
             <TimeTable>4교시</TimeTable>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
             <TimeTable>5교시</TimeTable>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
             <TimeTable>6교시</TimeTable>
-          </AddClassContainer>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>    </AddClassContainer>*/}
         </LayOut>
 
         {/* <DetailClassName userEmail={userEmail} />

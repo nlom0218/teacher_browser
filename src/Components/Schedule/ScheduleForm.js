@@ -5,14 +5,6 @@ import TableOutItem from "./TableOutItem";
 import TableOutDay from "./TableOutDay";
 import { useQuery } from "@apollo/client";
 import { GET_TIMETABLE_DATA_QUERY } from "../../Graphql/TimeTable/query";
-import { monthsToQuarters } from "date-fns";
-import {
-  classMon,
-  classTue,
-  classWed,
-  classThur,
-  classFri,
-} from "../../Components/Schedule/ScheduleData";
 
 const Container = styled.div`
   height: 100%;
@@ -30,7 +22,6 @@ const DayTop = styled.div`
   display: grid;
   font-size: 1rem;
   font-size: 1em;
-
   text-align: center;
   column-gap: 5px;
   column-gap: 0.3125rem;
@@ -47,8 +38,9 @@ const DayDown = styled.div`
   column-gap: 0.3125rem;
   row-gap: 5px;
   row-gap: 0.3125rem;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: 1fr 5fr;
 `;
+
 const DayOne = styled.div`
   height: 100%;
   display: grid;
@@ -61,6 +53,20 @@ const DayOne = styled.div`
   row-gap: 0.3125rem;
   grid-template-rows: repeat(7, 1fr);
 `;
+const DayAll = styled.div`
+  height: 100%;
+  display: grid;
+  font-size: 1rem;
+  font-size: 1 em;
+  text-align: center;
+  column-gap: 5px;
+  column-gap: 0.3125rem;
+  row-gap: 5px;
+  row-gap: 0.3125rem;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+`;
+
 const result = [];
 let myDate = new Date();
 const nowDay = myDate.getDay();
@@ -86,8 +92,6 @@ const ScheduleForm = ({
   setViewTime,
 }) => {
   const { data, loading, error } = useQuery(GET_TIMETABLE_DATA_QUERY);
-  console.log(data);
-
   useEffect(() => {
     if (data) {
     }
@@ -121,11 +125,12 @@ const ScheduleForm = ({
             );
           })}
         </DayOne>
-        <DayOne>
-          {/* {MonArr.map((name, index) => {
+        <DayAll>
+          {data?.getTimetableData.map((name, index) => {
             return (
               <TableInItem
                 key={index}
+                num={name.index}
                 item={name.subName}
                 color={name.color}
                 tag={name.memo}
@@ -133,64 +138,8 @@ const ScheduleForm = ({
                 setFontSize={setFontSize}
               />
             );
-          })} */}
-        </DayOne>
-        <DayOne>
-          {classTue.map((name, index) => {
-            return (
-              <TableInItem
-                key={index}
-                item={name.subjectname}
-                color={name.color}
-                tag={name.tag}
-                fontSize={fontSize}
-                setFontSize={setFontSize}
-              />
-            );
           })}
-        </DayOne>
-        <DayOne>
-          {/* {classWed.map((name, index) => {
-            return (
-              <TableInItem
-                key={index}
-                item={name.subjectname}
-                color={name.color}
-                tag={name.tag}
-                fontSize={fontSize}
-                setFontSize={setFontSize}
-              />
-            );
-          })} */}
-        </DayOne>
-        <DayOne>
-          {/* {classThur.map((name, index) => {
-            return (
-              <TableInItem
-                key={index}
-                item={name.subjectname}
-                color={name.color}
-                tag={name.tag}
-                fontSize={fontSize}
-                setFontSize={setFontSize}
-              />
-            );
-          })} */}
-        </DayOne>
-        <DayOne>
-          {/* {classFri.map((name, index) => {
-            return (
-              <TableInItem
-                key={index}
-                item={name.subjectname}
-                color={name.color}
-                tag={name.tag}
-                fontSize={fontSize}
-                setFontSize={setFontSize}
-              />
-            );
-          })} */}
-        </DayOne>
+        </DayAll>
       </DayDown>
     </Container>
   );

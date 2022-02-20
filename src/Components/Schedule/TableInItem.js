@@ -3,8 +3,6 @@ import styled from "styled-components";
 import { CardFadeIn } from "../../Animations/Fade";
 import RegisterScheduleOne from "./RegisterScheduleOne";
 import { customMedia } from "../../styles";
-import { useQuery } from "@apollo/client";
-import { GET_TIMETABLE_DATA_QUERY } from "../../Graphql/TimeTable/query";
 
 const TableItem = styled.div`
   position: relative;
@@ -60,11 +58,8 @@ const HoverContainer = styled.div`
   overflow: hidden;
 `;
 
-const TableInItem = ({ item, index, color, tag, fontSize }) => {
+const TableInItem = ({ num, item, index, color, tag, fontSize }) => {
   const [hoverContainer, setHoverContainer] = useState(false);
-  const [timetableData, setTimetableData] = useState([]);
-  console.log(item);
-  const { data, loading, error } = useQuery(GET_TIMETABLE_DATA_QUERY);
 
   const onMouseEnter = () => {
     setHoverContainer(true);
@@ -92,7 +87,12 @@ const TableInItem = ({ item, index, color, tag, fontSize }) => {
         {hoverContainer === true ? (
           <HoverContainer>
             {tag}
-            <RegisterScheduleOne item={item} color={color} tag={tag} />
+            <RegisterScheduleOne
+              num={num}
+              item={item}
+              color={color}
+              tag={tag}
+            />
           </HoverContainer>
         ) : null}
       </SubjectName>
