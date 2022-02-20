@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { SiNaver } from "react-icons/si";
 import { ImBubble } from "react-icons/im";
 import { FcGoogle } from "react-icons/fc";
-import { KAKAO_LOGIN_MUTATION, GOOGLE_LOGIN_MUTATION } from "../../Graphql/User/mutation";
+import { KAKAO_LOGIN_MUTATION } from "../../Graphql/User/mutation";
 import { logInUser } from "../../apollo";
 import { useNavigate } from "react-router";
 import routes from "../../routes";
@@ -74,52 +74,11 @@ const GoogleLoginBtn = styled.div`
 `;
 
 const SocialLogin = () => {
+  const navigate = useNavigate();
+
   //
   // 카카오 로그인
   const kakao = window.Kakao;
-
-  //
-  // 구글 로그인
-  const google = window.gapi;
-  google.load("auth2", function () {
-    google.auth2.init();
-    const options = new google.auth2.SigninOptionsBuilder();
-    // options.setPrompt("select_account");
-    // 추가는 Oauth 승인 권한 추가 후 띄어쓰기 기준으로 추가
-    // options.setScope("email");
-    // 인스턴스의 함수 호출 - element에 로그인 기능 추가
-    // GgCustomLogin은 li태그안에 있는 ID, 위에 설정한 options와 아래 성공,실패시 실행하는 함수들
-    google.auth2.getAuthInstance().attachClickHandler("GoogleLogin", options, onSignIn, onSignInFailure);
-  });
-
-  function onSignIn(googleUser) {
-    if (googleUser?.Ju?.zv) {
-      if (googleLoginLoading) return;
-      googleLoginMutation({ variables: { email: googleUser.Ju.zv } });
-    }
-
-    // $.ajax({
-    //     // people api를 이용하여 프로필 및 생년월일에 대한 선택동의후 가져온다.
-    //   url: 'https://people.googleapis.com/v1/people/me'
-    //       // key에 자신의 API 키를 넣습니다.
-    //   , data: {personFields:'birthdays', key:'AIzaSyBOdmeC4SOSzXmPGLEM2vZueqiBSWKg3wk', 'access_token': access_token}
-    //   , method:'GET'
-    // })
-    // .done(function(e){
-    //       //프로필을 가져온다.
-    //   var profile = googleUser.getBasicProfile();
-    //   console.log(profile)
-    // })
-    // .fail(function(e){
-    //   console.log(e);
-    // })
-  }
-
-  function onSignInFailure(t) {
-    console.log(t);
-  }
-
-  const navigate = useNavigate();
 
   //
   // 뮤테이션 complete 실행 함수
@@ -135,7 +94,7 @@ const SocialLogin = () => {
       token = result.googleLogin.token;
     }
     if (error) {
-      // setErrMsg(error)
+      return <>{error.message}</>;
     }
     if (ok) {
       logInUser(token);
@@ -144,9 +103,6 @@ const SocialLogin = () => {
   };
 
   const [kakaoLoginMutation, { loading: kakaoLoginLoading }] = useMutation(KAKAO_LOGIN_MUTATION, {
-    onCompleted,
-  });
-  const [googleLoginMutation, { loading: googleLoginLoading }] = useMutation(GOOGLE_LOGIN_MUTATION, {
     onCompleted,
   });
 
@@ -183,11 +139,15 @@ const SocialLogin = () => {
   };
 
   // 구글 버튼 클릭 핸들
-  const onClickGoogleLoginBtn = () => {};
+  const onClickGoogleLoginBtn = () => {
+    const protocol = window.location.protocol;
+    const host = window.location.host;
+    const scope = "https://www.googleapis.com/auth/userinfo.email";
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${protocol}//${host}/googleLogin&response_type=token&scope=${scope}`;
+  };
 
   return (
     <SSocialLogin>
-      <div id="naverIdLogin" style={{ position: "absolute", top: "-10000000000px" }}></div>
       <NaverLoginBtn onClick={onClickNaverLoginBtn}>
         <SiNaver />
         네이버 로그인
@@ -196,7 +156,7 @@ const SocialLogin = () => {
         <ImBubble />
         카카오 로그인
       </KakaoLoginBtn>
-      <GoogleLoginBtn onClick={onClickGoogleLoginBtn} id="GoogleLogin">
+      <GoogleLoginBtn onClick={onClickGoogleLoginBtn}>
         <FcGoogle />
         구글 로그인
       </GoogleLoginBtn>

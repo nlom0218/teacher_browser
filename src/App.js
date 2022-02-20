@@ -21,6 +21,7 @@ import EditAccount from "./Pages/EditAccount";
 import Login from "./Pages/Login";
 import CreateAccount from "./Pages/CreateAccount";
 import NaverLoginCallBack from "./Pages/NaverLoginCallBack";
+import GoogleLoginCallBack from "./Pages/GoogleLoginCallBack";
 import useMe from "./Hooks/useMe";
 import HeaderWeather from "./Components/Shared/HeaderWeather";
 import useMedia from "./Hooks/useMedia";
@@ -48,10 +49,10 @@ function App() {
   const [userBgTheme, setUserBgTheme] = useState(undefined);
 
   // timer 오디오 없애기 위함...
-  const pathname = window.location.pathname
-  const [bgMusicMp3, setBgMusicMp3] = useState(undefined)
+  const pathname = window.location.pathname;
+  const [bgMusicMp3, setBgMusicMp3] = useState(undefined);
 
-  const isLoggedIn = useReactiveVar(isLoggedInVar)
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
 
   useEffect(() => {
     if (me) {
@@ -73,19 +74,18 @@ function App() {
     disableBgThemeAni();
   }, []);
 
-
   useEffect(() => {
     if (pathname !== "/timer/countup") {
       if (bgMusicMp3) {
-        stopMusicFn(bgMusicMp3)
+        stopMusicFn(bgMusicMp3);
       }
     }
     if (pathname !== "/timer/countdown") {
       if (bgMusicMp3) {
-        stopMusicFn(bgMusicMp3)
+        stopMusicFn(bgMusicMp3);
       }
     }
-  }, [pathname])
+  }, [pathname]);
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : ligthTheme}>
@@ -98,6 +98,7 @@ function App() {
         <Route path={routes.login} element={<Login />} />
         <Route path={routes.createAccount} element={<CreateAccount />} />
         <Route path={routes.naverLoginCallBack} element={<NaverLoginCallBack />} />
+        <Route path={routes.googleLoginCallBack} element={<GoogleLoginCallBack />} />
         <Route path={routes.editAccount} element={<EditAccount />} />
         <Route path={routes.todo} element={<TodoList />} />
         <Route path={`${routes.todo}/:id`} element={<TodoList />} />

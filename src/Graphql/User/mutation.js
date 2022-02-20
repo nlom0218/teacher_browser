@@ -38,11 +38,11 @@ export const KAKAO_LOGIN_MUTATION = gql`
   }
 `;
 export const GOOGLE_LOGIN_MUTATION = gql`
-  mutation GoogleLogin($email: String!) {
-    googleLogin(email: $email) {
+  mutation GoogleLogin($accessToken: String!) {
+    googleLogin(access_token: $accessToken) {
       ok
-      token
       error
+      token
     }
   }
 `;

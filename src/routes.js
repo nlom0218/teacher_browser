@@ -19,12 +19,13 @@ const LOGIN = "/login";
 const CREATEACCOUNT = "/create-account";
 const EDITACCOUNT = "/edit-account";
 const NAVERLOGINCALLBACK = "/naverLogin";
+const GOOGLELOGINCALLBACK = "/googleLogin";
 const FINDPASSWORD = "/find-password";
 
 const TRASH = "/trash";
 
-const PAGE_LINK_REGISTER = "/pageLink-register"
-const PAGE_LINK_ALLLIST = "/pageLink-allList"
+const PAGE_LINK_REGISTER = "/pageLink-register";
+const PAGE_LINK_ALLLIST = "/pageLink-allList";
 
 const routes = {
   home: HOME,
@@ -48,12 +49,13 @@ const routes = {
   createAccount: CREATEACCOUNT,
   editAccount: EDITACCOUNT,
   naverLoginCallBack: NAVERLOGINCALLBACK,
+  googleLoginCallBack: GOOGLELOGINCALLBACK,
   findPassword: FINDPASSWORD,
 
   trash: TRASH,
 
   pageLinkRegister: PAGE_LINK_REGISTER,
-  pageLinkAllList: PAGE_LINK_ALLLIST
+  pageLinkAllList: PAGE_LINK_ALLLIST,
 };
 
 export default routes;
