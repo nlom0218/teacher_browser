@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { CardFadeIn } from "../../Animations/Fade";
 import RegisterScheduleOne from "./RegisterScheduleOne";
 import { customMedia } from "../../styles";
+import { useQuery } from "@apollo/client";
+import { GET_TIMETABLE_DATA_QUERY } from "../../Graphql/TimeTable/query";
 
 const TableItem = styled.div`
   position: relative;
@@ -59,6 +61,11 @@ const HoverContainer = styled.div`
 
 const TableInItem = ({ item, index, color, tag, fontSize }) => {
   const [hoverContainer, setHoverContainer] = useState(false);
+  const [timetableData, setTimetableData] = useState([]);
+
+  const { data, loading, error } = useQuery(GET_TIMETABLE_DATA_QUERY);
+
+  console.log(data);
 
   const onMouseEnter = () => {
     setHoverContainer(true);

@@ -3,13 +3,6 @@ import styled from "styled-components";
 import TableInItem from "./TableInItem";
 import TableOutItem from "./TableOutItem";
 import TableOutDay from "./TableOutDay";
-import {
-  classFri,
-  classMon,
-  classThur,
-  classTue,
-  classWed,
-} from "./ScheduleData";
 import { useQuery } from "@apollo/client";
 import { GET_TIMETABLE_TIME_QUERY } from "../../Graphql/TimeTable/query";
 
@@ -79,6 +72,7 @@ const dayValue = [
 
 const ScheduleForm = ({ fontSize, setFontSize, viewTime, setViewTime }) => {
   const [timetableTime, setTimetableTime] = useState([]);
+
   const { data, loading, error } = useQuery(GET_TIMETABLE_TIME_QUERY, {
     onCompleted: ({ getTimetableTime: data }) => {
       setTimetableTime([
@@ -121,7 +115,7 @@ const ScheduleForm = ({ fontSize, setFontSize, viewTime, setViewTime }) => {
           })}
         </DayOne>
         <DayOne>
-          {classMon.map((name, index) => {
+          {/* {classMon.map((name, index) => {
             return (
               <TableInItem
                 key={index}
@@ -132,10 +126,10 @@ const ScheduleForm = ({ fontSize, setFontSize, viewTime, setViewTime }) => {
                 setFontSize={setFontSize}
               />
             );
-          })}
+          })} */}
         </DayOne>
         <DayOne>
-          {classTue.map((name, index) => {
+          {/* {classTue.map((name, index) => {
             return (
               <TableInItem
                 key={index}
@@ -146,10 +140,10 @@ const ScheduleForm = ({ fontSize, setFontSize, viewTime, setViewTime }) => {
                 setFontSize={setFontSize}
               />
             );
-          })}
+          })} */}
         </DayOne>
         <DayOne>
-          {classWed.map((name, index) => {
+          {/* {classWed.map((name, index) => {
             return (
               <TableInItem
                 key={index}
@@ -160,10 +154,10 @@ const ScheduleForm = ({ fontSize, setFontSize, viewTime, setViewTime }) => {
                 setFontSize={setFontSize}
               />
             );
-          })}
+          })} */}
         </DayOne>
         <DayOne>
-          {classThur.map((name, index) => {
+          {/* {classThur.map((name, index) => {
             return (
               <TableInItem
                 key={index}
@@ -174,10 +168,10 @@ const ScheduleForm = ({ fontSize, setFontSize, viewTime, setViewTime }) => {
                 setFontSize={setFontSize}
               />
             );
-          })}
+          })} */}
         </DayOne>
         <DayOne>
-          {classFri.map((name, index) => {
+          {/* {classFri.map((name, index) => {
             return (
               <TableInItem
                 key={index}
@@ -188,7 +182,7 @@ const ScheduleForm = ({ fontSize, setFontSize, viewTime, setViewTime }) => {
                 setFontSize={setFontSize}
               />
             );
-          })}
+          })} */}
         </DayOne>
       </DayDown>
     </Container>

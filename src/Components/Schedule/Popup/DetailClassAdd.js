@@ -6,14 +6,6 @@ import {
 } from "../../List/styled/DetailStudent";
 import useMedia from "../../../Hooks/useMedia";
 import { BsCheck } from "react-icons/bs";
-import {
-  class1,
-  class2,
-  class3,
-  class4,
-  class5,
-  class6,
-} from "../ScheduleData";
 
 const AddClassContainer = styled.div`
   padding: 10px;
@@ -59,7 +51,7 @@ const DetailClassAdd = ({}) => {
       <DetailTitle style={{ marginTop: "15px", marginTop: "0.9375rem" }}>
         수업 추가
       </DetailTitle>
-      <AddClassContainer>
+      {/* <AddClassContainer>
         {}
         {timeday.map((item, index) => {
           return (
@@ -69,7 +61,7 @@ const DetailClassAdd = ({}) => {
           );
         })}
         <TimeTable>1교시</TimeTable>
-        {class1.map((name, index) => {
+        {classMon.map((name, index) => {
           return (
             <TimeTable
               key={index}
@@ -140,7 +132,7 @@ const DetailClassAdd = ({}) => {
             </TimeTable>
           );
         })}
-      </AddClassContainer>
+      </AddClassContainer> */}
     </DetailStudentLayout>
   );
 };

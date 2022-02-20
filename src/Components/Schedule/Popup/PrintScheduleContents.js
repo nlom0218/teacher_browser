@@ -180,27 +180,7 @@ const GridItem = styled.div`
   border-radius: 0.3125rem;
 `;
 
-const PrintScheduleContents = ({ printRef, title, viewTime }) => {
-  const [timeResult, setTimeResult] = useState([]);
-  const { data, loading, error } = useQuery(GET_TIMETABLE_TIME_QUERY, {
-    onCompleted: ({ getTimetableTime: data }) => {
-      setTimeResult([
-        data.start1,
-        data.end1,
-        data.start2,
-        data.end2,
-        data.start3,
-        data.end3,
-        data.start4,
-        data.end4,
-        data.start5,
-        data.end5,
-        data.start6,
-        data.end6,
-      ]);
-    },
-  });
-
+const PrintScheduleContents = ({ printRef, title, viewTime, timeResult }) => {
   const handlePrint = useReactToPrint({
     content: () => printRef.current,
   });

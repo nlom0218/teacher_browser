@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { inPopup } from "../../apollo";
-import { TiDelete } from "react-icons/ti";
 import { AiOutlineEdit } from "react-icons/ai";
 
 const Container = styled.div`

@@ -16,7 +16,8 @@ import TimeRegisterPage from "../Components/Schedule/Popup/TimeRegisterPage";
 import useTitle from "../Hooks/useTitle";
 import useMe from "../Hooks/useMe";
 import ScheduleForm from "../Components/Schedule/ScheduleForm";
-
+import { useQuery } from "@apollo/client";
+import { GET_TIMETABLE_TIME_QUERY } from "../Graphql/TimeTable/query";
 //음영한 뒤 다크모드에서 글씨 안 보임.
 //수업추가 어떻게?
 
@@ -64,6 +65,26 @@ const TypeBtn = styled.div`
 `;
 
 const Schedule = () => {
+  const [timeResult, setTimeResult] = useState([]);
+  const { data, loading, error } = useQuery(GET_TIMETABLE_TIME_QUERY, {
+    onCompleted: ({ getTimetableTime: data }) => {
+      setTimeResult([
+        data.start1,
+        data.end1,
+        data.start2,
+        data.end2,
+        data.start3,
+        data.end3,
+        data.start4,
+        data.end4,
+        data.start5,
+        data.end5,
+        data.start6,
+        data.end6,
+      ]);
+    },
+  });
+
   const titleUpdataer = useTitle("티처캔 | 시간표");
   const isPopup = useReactiveVar(isPopupVar);
   const media = useMedia();
@@ -74,10 +95,6 @@ const Schedule = () => {
   const [title, setTitle] = useState("우리반 시간표");
   const [fontSize, setFontSize] = useState(1.25);
   const [viewTime, setViewTime] = useState(false);
-
-  const { register, handleSubmit, getValues } = useForm({
-    mode: "onChange",
-  });
 
   const onClickTimeSetBtn = () => {
     inPopup("registerTimeSet");
@@ -113,14 +130,19 @@ const Schedule = () => {
         />
       </Container>
 
-      {isPopup === "registerClass" && <ClassRegisterPage />}
-      {isPopup === "registerTime" && <TimeRegisterPage />}
+      {isPopup === "registerClass" && (
+        <ClassRegisterPage userEmail={me?.email} />
+      )}
+      {isPopup === "registerTime" && (
+        <TimeRegisterPage timeResult={timeResult} userEmail={me?.email} />
+      )}
       {isPopup === "registerTimeSet" && <ClassTimeSet userEmail={me?.email} />}
       {isPopup === "print" && (
         <PrintScheduleContents
           printRef={componentRef}
           title={title}
           viewTime={viewTime}
+          timeResult={timeResult}
         />
       )}
     </BasicContainer>
