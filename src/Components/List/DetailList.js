@@ -243,6 +243,8 @@ const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
         listId={listId}
         setSort={setSort}
         sort={sort}
+        setSuccessMsg={setSuccessMsg}
+        listName={listName}
       />}
     {!loading && <AddStudentBox
       listId={listId}

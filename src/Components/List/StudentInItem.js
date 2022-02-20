@@ -11,6 +11,7 @@ import { useMutation } from "@apollo/client";
 import useMe from "../../Hooks/useMe";
 import { SEE_ONE_STUDENT_LIST_QUERY } from "../../Graphql/StudentList/query";
 import { DELETE_STUDENT_MUTATION } from "../../Graphql/Student/mutation";
+import Loading from "../Shared/Loading";
 
 const Student = styled.div`
   position: relative;
@@ -97,7 +98,7 @@ const StudentNumber = styled.div`
   opacity: 0.6;
 `;
 
-const StudentInItem = ({ item, listId, page }) => {
+const StudentInItem = ({ item, listId, page, setSuccessMsg, listName }) => {
   const me = useMe();
 
   const media = useMedia();
@@ -105,7 +106,15 @@ const StudentInItem = ({ item, listId, page }) => {
 
   const [hoverContainer, setHoverContainer] = useState(false);
 
+  const onCompleted = (result) => {
+    const { deleteStudent: { ok } } = result
+    if (ok) {
+      setSuccessMsg(`${item.studentName}이 ${listName}에서 제거되었습니다. 😀`)
+    }
+  }
+
   const [deleteStudent, { loading }] = useMutation(DELETE_STUDENT_MUTATION, {
+    onCompleted,
     refetchQueries: [{ query: SEE_ONE_STUDENT_LIST_QUERY, variables: { listId } }],
   });
 
@@ -138,6 +147,11 @@ const StudentInItem = ({ item, listId, page }) => {
       },
     });
   };
+
+  if (loading) {
+    return <Loading page="subPage" />
+  }
+
   return (
     <Student onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} page={page}>
       <StudentName>{item.studentName}</StudentName>
