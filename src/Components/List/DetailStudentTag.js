@@ -91,7 +91,7 @@ const AddTagBtn = styled.div`
   cursor: pointer;
 `
 
-const DetailStudentTag = ({ studentInfo, selectedSort, selectedTag }) => {
+const DetailStudentTag = ({ studentInfo, selectedSort, selectedTag, setSuccessMsg }) => {
   const isPopup = useReactiveVar(isPopupVar)
 
   const me = useMe()
@@ -101,7 +101,15 @@ const DetailStudentTag = ({ studentInfo, selectedSort, selectedTag }) => {
   const [studentTatArr, setStudentTagArr] = useState(undefined)
   const [isEdit, setIsEdit] = useState(false)
 
+  const onCompleted = (result) => {
+    const { editStudent: { ok } } = result
+    if (ok) {
+      setSuccessMsg("학생 태그가 수정되었습니다. 😀")
+    }
+  }
+
   const [editStudent, { loading }] = useMutation(EDIT_STUDENT_MUTATION, {
+    onCompleted,
     refetchQueries: [
       { query: SEE_ONE_STUDENT_QUERY, variables: { studentId: studentInfo?._id } },
       {

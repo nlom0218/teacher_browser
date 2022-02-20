@@ -50,12 +50,13 @@ const SubmitInput = styled.input`
   `}
 `
 
-const DetailStudentMemo = ({ studentMemo, studentId, teacherEmail }) => {
+const DetailStudentMemo = ({ studentMemo, studentId, teacherEmail, setSuccessMsg }) => {
   const [isEdit, setIsEdit] = useState(false)
 
   const onCompleted = (result) => {
     const { editStudent: { ok } } = result
     if (ok) {
+      setSuccessMsg("학생메모가 수정되었습니다. 😀")
       setIsEdit(false)
     }
   }

@@ -8,6 +8,7 @@ import { SEE_ALL_STUDENT_IN_TRASH_QUERY, SEE_ALL_STUDENT_QUERY } from '../../../
 import useMe from '../../../Hooks/useMe';
 import { customMedia } from '../../../styles';
 import BtnPopupContainer from '../../Shared/BtnPopupContainer';
+import Loading from '../../Shared/Loading';
 
 const Container = styled.div`
   display: grid;
@@ -86,6 +87,11 @@ const DeleteStudent = ({ selectedTag, selectedSort, studentId }) => {
       }
     })
   }
+
+  if (studentLoading) {
+    return <Loading page="btnPopupPage" />
+  }
+
   return (<BtnPopupContainer>
     <Container>
       <Btn>

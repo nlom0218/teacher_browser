@@ -126,8 +126,23 @@ const List = () => {
   return (<BasicContainer menuItem={true} notScroll={true} screen="small">
     <Container>
       <DivideLeftContents isSeeList={isSeeList}>
-        {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} setErrorMsg={setErrorMsg} selectedTag={selectedTag} selectedSort={selectedSort} setDragType={setDragType} dragType={dragType} />}
-        {type === "student" && <DetailStudent studentId={id} selectedTag={selectedTag} selectedSort={selectedSort} />}
+        {!type && <AllList
+          setSomeDragging={setSomeDragging}
+          someDragging={someDragging}
+          setSuccessMsg={setSuccessMsg}
+          setErrorMsg={setErrorMsg}
+          selectedTag={selectedTag}
+          selectedSort={selectedSort}
+          setDragType={setDragType}
+          dragType={dragType}
+        />}
+        {type === "student" && <DetailStudent
+          studentId={id}
+          selectedTag={selectedTag}
+          selectedSort={selectedSort}
+          setSuccessMsg={setSuccessMsg}
+          setErrorMsg={setErrorMsg}
+        />}
         {type === "detail" && <DetailList listId={id} someDragging={someDragging} setSuccessMsg={setSuccessMsg} setErrorMsg={setErrorMsg} />}
       </DivideLeftContents>
       {media === "Desktop" ?

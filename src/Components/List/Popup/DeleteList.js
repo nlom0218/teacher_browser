@@ -9,6 +9,7 @@ import useMe from '../../../Hooks/useMe';
 import routes from '../../../routes';
 import { customMedia } from '../../../styles';
 import BtnPopupContainer from '../../Shared/BtnPopupContainer';
+import Loading from '../../Shared/Loading';
 
 const Container = styled.div`
   display: grid;
@@ -81,6 +82,9 @@ const DeleteList = ({ listId }) => {
         teacherEmail: me?.email
       }
     })
+  }
+  if (loading) {
+    return <Loading page="btnPopupPage" />
   }
   return (<BtnPopupContainer>
     <Container>
