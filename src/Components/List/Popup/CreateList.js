@@ -7,6 +7,7 @@ import { CREATE_STUDENT_LIST_MUTATION } from '../../../Graphql/StudentList/mutat
 import { SEE_ALL_STUDENT_LIST_QUERY } from '../../../Graphql/StudentList/query';
 import useMe from '../../../Hooks/useMe';
 import { customMedia } from '../../../styles';
+import Loading from '../../Shared/Loading';
 import PopupContainer from '../../Shared/PopupContainer';
 
 const Form = styled.form`
@@ -53,7 +54,7 @@ const ErrMsg = styled.div`
   text-align: center;
 `
 
-const CreateList = () => {
+const CreateList = ({ setErrorMsg, setSuccessMsg }) => {
   const [errMsg, setErrMsg] = useState(undefined)
   const me = useMe()
   const { register, handleSubmit, formState: { isValid } } = useForm({
@@ -62,10 +63,13 @@ const CreateList = () => {
   const onCompleted = (result) => {
     const { createStudentList: { ok, error } } = result
     if (!ok) {
-      setErrMsg(error)
+      setErrorMsg(error)
+      outPopup()
       return
+    } else {
+      setSuccessMsg("명렬표가 생성되었습니다. 😀")
+      outPopup()
     }
-    outPopup()
   }
   const [createStudentList, { loading }] = useMutation(CREATE_STUDENT_LIST_MUTATION, {
     onCompleted,
@@ -87,6 +91,11 @@ const CreateList = () => {
       }
     })
   }
+
+  if (loading) {
+    return <Loading page="subPage" />
+  }
+
   return (<PopupContainer>
     <Form onSubmit={handleSubmit(onSubmit)}>
       <NameInput

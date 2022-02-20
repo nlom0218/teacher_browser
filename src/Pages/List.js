@@ -19,6 +19,7 @@ import { SEE_ALL_STUDENT_QUERY } from '../Graphql/Student/query';
 import useMe from '../Hooks/useMe';
 import useMedia from '../Hooks/useMedia';
 import useTitle from '../Hooks/useTitle';
+import CreateList from "../Components/List/Popup/CreateList"
 import { customMedia } from '../styles';
 
 const Container = styled.div`
@@ -168,6 +169,7 @@ const List = () => {
         seeStudentIcon={seeStudentIcon}
         setSeeStudentIcon={setSeeStudentIcon}
       />}
+    {isPopup === "createList" && <CreateList setErrorMsg={setErrorMsg} setSuccessMsg={setSuccessMsg} />}
     {isPopup === "createStudent" &&
       <CreateStudent
         existStudentArray={existStudentArray}
