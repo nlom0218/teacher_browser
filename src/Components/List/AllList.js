@@ -10,7 +10,6 @@ import Loading from '../Shared/Loading';
 import EmptyItem from './Dorp/EmptyItem';
 import Trash from './Dorp/Trash';
 import ListItem from './ListItem';
-import PopupCreateList from './Popup/CreateList';
 
 const Container = styled.div`
   min-height: 100%;
@@ -115,8 +114,6 @@ const AllList = ({ someDragging, setSuccessMsg, setErrorMsg, setSomeDragging, se
     <HelpIcon><IcHelper /></HelpIcon>
     <AddIcon onClick={onClickAddIcon}><FcPlus /></AddIcon>
     <Trash someDragging={someDragging} setSuccessMsg={setSuccessMsg} selectedTag={selectedTag} selectedSort={selectedSort} dragType={dragType} />
-    {isPopup === "createList" && <PopupCreateList />}
-
   </Container>);
 }
 

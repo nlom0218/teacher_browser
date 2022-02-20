@@ -8,6 +8,7 @@ import { inPopup, isPopupVar } from '../../apollo';
 import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
 import { SEE_ALL_STUDENT_QUERY, SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
 import useMedia from '../../Hooks/useMedia';
+import IcJournal from '../../icons/Journal/IcJournal';
 import IcNameTable from '../../icons/NameTable/IcNameTable';
 import routes from '../../routes';
 import { processStudentIcon } from '../../shared';
@@ -58,6 +59,11 @@ const ListIcon = styled.div`
   column-gap: 0.3125rem;
   div {
     opacity: 0.6;
+    :hover {
+      opacity: 1;
+      font-weight: 600;
+      transition: opacity 0.6s ease;
+    }
   }
   svg {
     display: flex;
@@ -114,17 +120,20 @@ const ErrMsg = styled.div`
   font-weight: 600;
 `
 
-const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
+const DetailStudent = ({ studentId, selectedSort, selectedTag, setSuccessMsg, setErrorMsg }) => {
   const isPopup = useReactiveVar(isPopupVar)
   const media = useMedia()
 
-  const [IconsLIstisHover, setIconListIsHover] = useState(false)
   const [studentInfo, setStudentInfo] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
   const [isEdit, setIsEdit] = useState(false)
   const [studentIcon, setStudentIcon] = useState(null)
 
   const [seeSettingBtn, setSeeSettingBtn] = useState(false)
+
+  const { register, setValue, handleSubmit, getValues } = useForm({
+    mode: "onChange"
+  })
 
   const { data, loading } = useQuery(SEE_ONE_STUDENT_QUERY, {
     variables: {
@@ -138,10 +147,13 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
   const onCompleted = (result) => {
     const { editStudent: { ok, error } } = result
     if (error) {
-      setErrMsg(error)
+      setErrorMsg(error)
+      setIsEdit(false)
+      setValue("newStudentName", data?.seeAllStudent[0]?.studentName)
       return
     }
     if (ok) {
+      setSuccessMsg("학생의 이름 또는 아이콘이 수정되었습니다. 😀")
       setIsEdit(false)
     }
   }
@@ -155,10 +167,6 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
         trash: false
       }
     }]
-  })
-
-  const { register, setValue, handleSubmit, getValues } = useForm({
-    mode: "onChange"
   })
 
   const onClickStudentIconBtn = () => {
@@ -227,7 +235,7 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
       </Link>
       <Link to={`${routes.journal}/student/${studentId}`}>
         <ListIcon>
-          <IcNameTable />
+          <IcJournal />
           <div>학급일지로 이동</div>
         </ListIcon>
       </Link>
@@ -271,10 +279,10 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag }) => {
           <div onClick={onClickStudentIconBtn}>아이콘 추가</div>}
       </SettingEmojiIconBtn>}
     </DetailNameContainer>
-    <DetailStudentNumber studentInfo={studentInfo} selectedTag={selectedTag} selectedSort={selectedSort} />
-    <DetailStudentTag studentInfo={studentInfo} selectedSort={selectedSort} selectedTag={selectedTag} />
-    <DetailStudentAllergy studentInfo={studentInfo} />
-    <DetailStudentMemo studentMemo={studentInfo?.memo} studentId={studentInfo?._id} teacherEmail={studentInfo?.teacherEmail} />
+    <DetailStudentNumber studentInfo={studentInfo} selectedTag={selectedTag} selectedSort={selectedSort} setSuccessMsg={setSuccessMsg} />
+    <DetailStudentTag studentInfo={studentInfo} selectedSort={selectedSort} selectedTag={selectedTag} setSuccessMsg={setSuccessMsg} />
+    <DetailStudentAllergy studentInfo={studentInfo} setSuccessMsg={setSuccessMsg} />
+    <DetailStudentMemo studentMemo={studentInfo?.memo} studentId={studentInfo?._id} teacherEmail={studentInfo?.teacherEmail} setSuccessMsg={setSuccessMsg} />
     <DelBtn onClick={onClicketeBtn}>휴지통으로 이동</DelBtn>
     {isPopup === "studentIcon" &&
       <StudentIcon

@@ -7,6 +7,7 @@ import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
 import { SEE_ALL_STUDENT_QUERY, SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
 import useMedia from '../../Hooks/useMedia';
 import { customMedia } from '../../styles';
+import Loading from '../Shared/Loading';
 import InputUnderLine from './InputUnderLine';
 import { DetailStudentLayout, DetailTitle } from "./styled/DetailStudent"
 
@@ -55,7 +56,7 @@ const Submit = styled.input`
   `}
 `
 
-const DetailStudentNumber = ({ studentInfo, selectedSort, selectedTag }) => {
+const DetailStudentNumber = ({ studentInfo, selectedSort, selectedTag, setSuccessMsg }) => {
   const [isEdit, setIsEdit] = useState(false)
 
   const media = useMedia()
@@ -64,6 +65,7 @@ const DetailStudentNumber = ({ studentInfo, selectedSort, selectedTag }) => {
     const { editStudent: { ok } } = result
     if (ok) {
       setIsEdit(false)
+      setSuccessMsg("학생 번호가 수정되었습니다. 😀")
     }
   }
 
@@ -117,6 +119,7 @@ const DetailStudentNumber = ({ studentInfo, selectedSort, selectedTag }) => {
       setValue("studentNum", "")
     }
   }, [studentInfo])
+
   return (<DetailStudentLayout>
     <DetailTitle>번호</DetailTitle>
     <DetailNumberForm onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>

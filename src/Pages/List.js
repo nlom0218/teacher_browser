@@ -19,6 +19,7 @@ import { SEE_ALL_STUDENT_QUERY } from '../Graphql/Student/query';
 import useMe from '../Hooks/useMe';
 import useMedia from '../Hooks/useMedia';
 import useTitle from '../Hooks/useTitle';
+import CreateList from "../Components/List/Popup/CreateList"
 import { customMedia } from '../styles';
 
 const Container = styled.div`
@@ -125,8 +126,23 @@ const List = () => {
   return (<BasicContainer menuItem={true} notScroll={true} screen="small">
     <Container>
       <DivideLeftContents isSeeList={isSeeList}>
-        {!type && <AllList setSomeDragging={setSomeDragging} someDragging={someDragging} setSuccessMsg={setSuccessMsg} setErrorMsg={setErrorMsg} selectedTag={selectedTag} selectedSort={selectedSort} setDragType={setDragType} dragType={dragType} />}
-        {type === "student" && <DetailStudent studentId={id} selectedTag={selectedTag} selectedSort={selectedSort} />}
+        {!type && <AllList
+          setSomeDragging={setSomeDragging}
+          someDragging={someDragging}
+          setSuccessMsg={setSuccessMsg}
+          setErrorMsg={setErrorMsg}
+          selectedTag={selectedTag}
+          selectedSort={selectedSort}
+          setDragType={setDragType}
+          dragType={dragType}
+        />}
+        {type === "student" && <DetailStudent
+          studentId={id}
+          selectedTag={selectedTag}
+          selectedSort={selectedSort}
+          setSuccessMsg={setSuccessMsg}
+          setErrorMsg={setErrorMsg}
+        />}
         {type === "detail" && <DetailList listId={id} someDragging={someDragging} setSuccessMsg={setSuccessMsg} setErrorMsg={setErrorMsg} />}
       </DivideLeftContents>
       {media === "Desktop" ?
@@ -168,11 +184,13 @@ const List = () => {
         seeStudentIcon={seeStudentIcon}
         setSeeStudentIcon={setSeeStudentIcon}
       />}
+    {isPopup === "createList" && <CreateList setErrorMsg={setErrorMsg} setSuccessMsg={setSuccessMsg} />}
     {isPopup === "createStudent" &&
       <CreateStudent
         existStudentArray={existStudentArray}
         selectedTag={selectedTag}
         selectedSort={selectedSort}
+        setErrorMsg={setErrorMsg}
       />}
   </BasicContainer>);
 }

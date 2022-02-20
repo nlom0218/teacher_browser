@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const CREATE_SCHEDULE_MUTATION = gql`
-  mutation Mutation($schedule: String!, $userEmail: String!, $startDate: Float!, $endDate: Float!, $contents: String, $color: String!) {
-    createSchedule(schedule: $schedule, userEmail: $userEmail, startDate: $startDate, endDate: $endDate, contents: $contents, color: $color) {
+  mutation Mutation($schedule: String!, $userEmail: String!, $startDate: Float!, $endDate: Float!, $contents: String, $color: String!, $months:[Int]!) {
+    createSchedule(schedule: $schedule, userEmail: $userEmail, startDate: $startDate, endDate: $endDate, contents: $contents, color: $color, months: $months) {
       ok
       error
       schedule{
@@ -16,14 +16,15 @@ export const CREATE_SCHEDULE_MUTATION = gql`
         term
         sort
         allDate
+        months
       }
     }
   }
 `
 
 export const EDIT_SCHEDULE_MUTATION = gql`
-  mutation EditSchedule($scheduleId: ID!, $schedule: String!, $userEmail: String!, $startDate: Float!, $endDate: Float!, $color: String!, $contents: String) {
-    editSchedule(scheduleId: $scheduleId, schedule: $schedule, userEmail: $userEmail, startDate: $startDate, endDate: $endDate, color: $color, contents: $contents) {
+  mutation EditSchedule($scheduleId: ID!, $schedule: String!, $userEmail: String!, $startDate: Float!, $endDate: Float!, $color: String!, $contents: String, $months:[Int]!) {
+    editSchedule(scheduleId: $scheduleId, schedule: $schedule, userEmail: $userEmail, startDate: $startDate, endDate: $endDate, color: $color, contents: $contents, months: $months) {
       ok
       error
       schedule{
@@ -37,6 +38,7 @@ export const EDIT_SCHEDULE_MUTATION = gql`
         term
         sort
         allDate
+        months
       }
       delSchedule{
         _id
@@ -61,6 +63,7 @@ export const DELETE_SCHEDULE_MUTATION = gql`
         term
         sort
         allDate
+        months
       }
     }
   }

@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const SEE_SCHEDULE_QUERY = gql`
-  query Query($scheduleId: String, $dateArr: [Float], $date: Float) {
-    seeSchedule(scheduleId: $scheduleId, dateArr: $dateArr, date: $date) {
+  query Query($scheduleId: String, $month: Int, $date: Float) {
+    seeSchedule(scheduleId: $scheduleId, month: $month, date: $date) {
       _id
       schedule
       userEmail
@@ -13,6 +13,7 @@ export const SEE_SCHEDULE_QUERY = gql`
       term
       allDate
       sort
+      months
     }
   }
 `

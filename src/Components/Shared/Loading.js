@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import BasicContainer from './BasicContainer';
+import BtnPopupContainer from './BtnPopupContainer';
 import PopupContainer from './PopupContainer';
 import RandomCircle from './RandomCircle';
 
@@ -32,6 +33,12 @@ const Loading = ({ page }) => {
           <RandomCircle />
         </Container>
       </PopupContainer>}
+    {page === "btnPopupPage" &&
+      <BtnPopupContainer>
+        <Container>
+          <RandomCircle />
+        </Container>
+      </BtnPopupContainer>}
   </React.Fragment>);
 }
 

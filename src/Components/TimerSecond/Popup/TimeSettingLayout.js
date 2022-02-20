@@ -30,6 +30,7 @@ const TimeSettingLayout = ({ register }) => {
         {...register("hours", { required: true })}
         type="number"
         min="0"
+        max="24"
       />
       <div>시간</div>
     </Layout>

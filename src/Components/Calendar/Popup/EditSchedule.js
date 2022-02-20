@@ -10,6 +10,7 @@ import Loading from '../../Shared/Loading';
 import PopupContainer from '../../Shared/PopupContainer';
 import { ENABLE_SORT_NUM_QUERY } from "../../../Graphql/Schedule/query"
 import { CalenderPopupColorLayout, CalenderPopupDateLayout, CalenderPopupFormContainer, CalenderPopupInputLayout, CalenderPopupTextareaLayout, CalenderPopupTitle } from './PopupLayout';
+import format from 'date-fns/format';
 
 const TopContainer = styled.div`
   display: grid;
@@ -53,13 +54,12 @@ const DelBtn = styled.div`
   cursor: pointer;
 `
 
-const EditSchedule = ({ userEmail, setErrMsg, setRefetchQuery, setMsg, refetch }) => {
+const EditSchedule = ({ userEmail, setErrMsg, setMsg }) => {
   const id = localStorage.getItem("editSchedule")
 
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(undefined);
   const [color, setColor] = useState(undefined)
-  const [updateSort, setUpdateSort] = useState(0)
   const { register, handleSubmit, setValue, getValues } = useForm({
     mode: "onChange"
   })
@@ -69,19 +69,6 @@ const EditSchedule = ({ userEmail, setErrMsg, setRefetchQuery, setMsg, refetch }
       scheduleId: id
     }
   })
-
-  const updateCompleted = (result) => {
-    if (!updateLoading) {
-      const { updateScheduleSort: { ok } } = result
-      if (ok) {
-        outPopup()
-        refetch()
-        setMsg("일정이 정렬 되었습니다. 조금만 기다려주세요! 😀")
-        setRefetchQuery(prev => prev + 1)
-        localStorage.removeItem("editSchedule")
-      }
-    }
-  }
 
   const [editSchedule, { loading: editLoading }] = useMutation(EDIT_SCHEDULE_MUTATION, {
     update(cache, { data: { editSchedule: { ok, schedule, delSchedule } } }) {
@@ -98,9 +85,8 @@ const EditSchedule = ({ userEmail, setErrMsg, setRefetchQuery, setMsg, refetch }
           }
         })
         setMsg("일정이 수정되었습니다. 😀")
-        outPopup()
-        setRefetchQuery(prev => prev + 1)
         localStorage.removeItem("editSchedule")
+        outPopup()
       }
     }
   })
@@ -119,9 +105,8 @@ const EditSchedule = ({ userEmail, setErrMsg, setRefetchQuery, setMsg, refetch }
           }
         })
         setMsg("일정이 삭제되었습니다. 😀")
-        outPopup()
-        setRefetchQuery(prev => prev + 1)
         localStorage.removeItem("editSchedule")
+        outPopup()
       }
     }
   })
@@ -137,10 +122,9 @@ const EditSchedule = ({ userEmail, setErrMsg, setRefetchQuery, setMsg, refetch }
             }
           }
         })
-        outPopup()
         setMsg("일정이 정렬 되었습니다. 😀")
-        setRefetchQuery(prev => prev + 1)
         localStorage.removeItem("editSchedule")
+        outPopup()
       }
     }
   })
@@ -161,6 +145,22 @@ const EditSchedule = ({ userEmail, setErrMsg, setRefetchQuery, setMsg, refetch }
       setErrMsg("시작일과 종료일을 다시 확인해주세요. 🥲")
       return
     }
+    const startMonths = parseInt(format(new Date(startDate), "yyMM"))
+    const endMonths = parseInt(format(new Date(endDate), "yyMM"))
+
+    let months = undefined
+    if (startMonths === endMonths) {
+      months = [startMonths]
+    } else if (endMonths - startMonths === 1) {
+      months = [startMonths, endMonths]
+    } else {
+      const newMonths = []
+      for (let i = 1; i < endMonths - startMonths; i++) {
+        newMonths.push(startMonths + i)
+      }
+      months = [startMonths, ...newMonths, endMonths]
+    }
+
     editSchedule({
       variables: {
         scheduleId: id,
@@ -169,6 +169,7 @@ const EditSchedule = ({ userEmail, setErrMsg, setRefetchQuery, setMsg, refetch }
         startDate: new Date(startDate).setHours(0, 0, 0, 0),
         endDate: new Date(endDate).setHours(0, 0, 0, 0),
         color,
+        months,
         ...(contents && { contents })
       }
     })
@@ -221,8 +222,6 @@ const EditSchedule = ({ userEmail, setErrMsg, setRefetchQuery, setMsg, refetch }
       }
     }
   }, [enableSortNumData])
-
-  console.log(enableSortNumData?.enableSortNum);
 
   if (loading) {
     return <Loading page="popupPage" />

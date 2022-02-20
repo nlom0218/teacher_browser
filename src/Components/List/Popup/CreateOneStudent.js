@@ -46,15 +46,15 @@ const SubmitInput = styled.input`
   `}
 `
 
-const CreateOneStudent = ({ createStudent, loading, email, existStudentArray }) => {
-  const [errMsg, setErrMsg] = useState(undefined)
+const CreateOneStudent = ({ createStudent, loading, email, existStudentArray, setErrorMsg }) => {
+  const [errNameMsg, setErrNameMsg] = useState(undefined)
   const [gender, setGender] = useState(undefined)
   const { register, handleSubmit, formState: { isValid } } = useForm({
     mode: "onChange"
   })
   const onSubmit = (data) => {
     if (!gender) {
-      setErrMsg("성별을 선택하지 않았습니다.")
+      setErrorMsg("성별 선택을 완료해 주세요. 😅")
       return
     }
     if (loading) {
@@ -72,13 +72,13 @@ const CreateOneStudent = ({ createStudent, loading, email, existStudentArray }) 
     <NameInput
       {...register("name", {
         required: true,
-        onChange: () => setErrMsg(undefined),
+        onChange: () => setErrNameMsg(undefined),
 
         // 기존 생성된 학생들의 이름과 중복되면 errMsg생성
         validate: (name) => {
           const isExistName = existStudentArray.includes(name)
           if (isExistName) {
-            setErrMsg(`${name}의 이름이 이미 존재합니다.`)
+            setErrNameMsg(`${name}의 이름이 이미 존재합니다.`)
             return false
           } else {
             return true
@@ -93,14 +93,13 @@ const CreateOneStudent = ({ createStudent, loading, email, existStudentArray }) 
     <GenderBtnContainer
       gender={gender}
       setGender={setGender}
-      setErrMsg={setErrMsg}
     />
     <SubmitInput
       type="submit"
       value="생성"
       disabled={!isValid}
     />
-    {errMsg && <ErrMsg errMsg={errMsg} />}
+    {errNameMsg && <ErrMsg errMsg={errNameMsg} />}
   </Form>);
 }
 

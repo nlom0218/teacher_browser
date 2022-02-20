@@ -41,7 +41,7 @@ const NumForm = styled.form`
   `}
 `
 
-const CreateManyStudent = ({ existStudentArray, createStudent, loading, email }) => {
+const CreateManyStudent = ({ existStudentArray, createStudent, loading, email, setErrorMsg }) => {
   // back-end로 전달되는 학생들의 이름, 성별 정보가 담겨진 배열 => back-end로는 문자열로 변환하여 전달
   const [studentString, setStudentString] = useState([])
 
@@ -84,6 +84,7 @@ const CreateManyStudent = ({ existStudentArray, createStudent, loading, email })
         studentString={studentString}
         setStudentString={setStudentString}
         createStudent={createStudent}
+        setErrorMsg={setErrorMsg}
         loading={loading}
         email={email}
       />
