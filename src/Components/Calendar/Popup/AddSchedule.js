@@ -6,6 +6,7 @@ import { outPopup } from '../../../apollo';
 import { useMutation } from '@apollo/client';
 import { CREATE_SCHEDULE_MUTATION } from '../../../Graphql/Schedule/mutation';
 import { CalenderPopupColorLayout, CalenderPopupDateLayout, CalenderPopupFormContainer, CalenderPopupInputLayout, CalenderPopupTextareaLayout, CalenderPopupTitle } from './PopupLayout';
+import { format } from 'date-fns';
 
 const SubmitInput = styled.input`
   background-color: ${props => props.theme.btnBgColor};
@@ -18,7 +19,7 @@ const SubmitInput = styled.input`
   cursor: pointer;
 `
 
-const AddSchedule = ({ userEmail, setErrMsg, refetch, setMsg, setRefetchQuery }) => {
+const AddSchedule = ({ userEmail, setErrMsg, setMsg }) => {
 
   const [startDate, setStartDate] = useState(new window.Date());
   const [endDate, setEndDate] = useState(undefined);
@@ -32,7 +33,6 @@ const AddSchedule = ({ userEmail, setErrMsg, refetch, setMsg, setRefetchQuery })
     if (ok) {
       setMsg("새로운 일정이 추가되었습니다. 😀")
       outPopup()
-      setRefetchQuery(prev => prev + 1)
     } else {
       setErrMsg(error)
     }
@@ -69,7 +69,22 @@ const AddSchedule = ({ userEmail, setErrMsg, refetch, setMsg, setRefetchQuery })
       setErrMsg("시작일과 종료일을 다시 확인해주세요. 🥲")
       return
     }
+    const startMonths = parseInt(format(new Date(startDate), "yyMM"))
+    const endMonths = parseInt(format(new Date(endDate), "yyMM"))
 
+    let months = undefined
+    if (startMonths === endMonths) {
+      months = [startMonths]
+    } else if (endMonths - startMonths === 1) {
+      months = [startMonths, endMonths]
+    } else {
+      const newMonths = []
+      for (let i = 1; i < endMonths - startMonths; i++) {
+        newMonths.push(startMonths + i)
+      }
+      months = [startMonths, ...newMonths, endMonths]
+    }
+    console.log(months);
     createSchedule({
       variables: {
         userEmail,
@@ -77,6 +92,7 @@ const AddSchedule = ({ userEmail, setErrMsg, refetch, setMsg, setRefetchQuery })
         startDate: new Date(startDate).setHours(0, 0, 0, 0),
         endDate: new Date(endDate).setHours(0, 0, 0, 0),
         color,
+        months,
         ...(contents && { contents })
       }
     })

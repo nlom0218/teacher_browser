@@ -183,11 +183,10 @@ const Calendar = () => {
   const [screen, setScreen] = useState("small")
   const [refetchQuery, setRefetchQuery] = useState(1)
 
-  const { data, loading, refetch } = useQuery(SEE_SCHEDULE_QUERY, {
+  const { data, loading } = useQuery(SEE_SCHEDULE_QUERY, {
     variables: {
-      dateArr: dateArr?.map(item => new window.Date(item.date).setHours(0, 0, 0, 0))
-    },
-    skip: !dateArr
+      month: parseInt(format(date, "yyMM"))
+    }
   })
 
   const onClickTodayBtn = () => {
@@ -300,12 +299,12 @@ const Calendar = () => {
         </BottomContainerLayout>}
       </Container>
     }
-    {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} setRefetchQuery={setRefetchQuery} />}
-    {isPopup === "editSchedule" && <EditSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} setRefetchQuery={setRefetchQuery} />}
+    {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} />}
+    {isPopup === "editSchedule" && <EditSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} />}
     {isPopup === "createToDo" && <TodoCreate setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
     {isPopup === "detailToDo" && <DetailToDo setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} />}
     {isPopup === "seeAllergy" && <SeeAllergy />}
-    {isPopup === "moveToStudentPage" && <MoveStudentPage setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} refetch={refetch} setRefetchQuery={setRefetchQuery} />}
+    {isPopup === "moveToStudentPage" && <MoveStudentPage setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} />}
     {isPopup === "addJournal" && <AddJournal setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
     {isPopup === "editJournal" && <EditJournal setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
     {isPopup === "addAttend" && <AddAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}

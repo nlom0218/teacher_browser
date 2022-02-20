@@ -223,9 +223,9 @@ const CalendarItem = ({ item, create, media, userEmail, schedule, refetchQuery }
     }
   }, [schedule])
 
-  useEffect(() => {
-    refetch()
-  }, [refetchQuery])
+  // useEffect(() => {
+  //   refetch()
+  // }, [refetchQuery])
 
   return (<Container>
     <Day
@@ -234,28 +234,30 @@ const CalendarItem = ({ item, create, media, userEmail, schedule, refetchQuery }
     >
       <Date isToday={isToday(item.date)} onClick={onClickDay}>{getDate(item.date)}{media !== "Mobile" && "일"}</Date>
     </Day>
-    {media !== "Mobile" ? <React.Fragment>
-      <ScheduleList row={row}>
-        {dateSchedule.length !== 0 && dateSchedule?.map((scheduleItem, index) => {
-          if (!scheduleItem) {
-            return <ScheduleItem key={index}>
-              <EmptyBox>e</EmptyBox>
-            </ScheduleItem>
-          } else {
-            return <ScheduleItem onClick={() => onClickSchedule(scheduleItem._id)} key={index} color={scheduleItem.color} dateType={processDateType(scheduleItem.startDate, scheduleItem.endDate)} isEndDate={isEndDate(scheduleItem.endDate)}>
-              {processDateType(scheduleItem.startDate, scheduleItem.endDate) === "start" && <StartDate className="schedule_date" >{scheduleItem.schedule}</StartDate>}
-              {processDateType(scheduleItem.startDate, scheduleItem.endDate) === "end" && <EndDate className="schedule_date" >end</EndDate>}
-              {processTerm(scheduleItem.term) && <TermDate className="schedule_date" >term</TermDate>}
-            </ScheduleItem>
-          }
-        })}
-      </ScheduleList>
-      <Summary>
-        {!toDoLength?.seeToDoListOnlyLength ? <div></div> : toDoLength?.seeToDoListOnlyLength !== 0 && <ToDoLength>
-          <ToDoIcon><IcToDoList /></ToDoIcon>
-          <ToDoText>{toDoLength?.seeToDoListOnlyLength}개</ToDoText>
-        </ToDoLength>}
-      </Summary></React.Fragment>
+    {media !== "Mobile" ?
+      <React.Fragment>
+        <ScheduleList row={row}>
+          {dateSchedule.length !== 0 && dateSchedule?.map((scheduleItem, index) => {
+            if (!scheduleItem) {
+              return <ScheduleItem key={index}>
+                <EmptyBox>e</EmptyBox>
+              </ScheduleItem>
+            } else {
+              return <ScheduleItem onClick={() => onClickSchedule(scheduleItem._id)} key={index} color={scheduleItem.color} dateType={processDateType(scheduleItem.startDate, scheduleItem.endDate)} isEndDate={isEndDate(scheduleItem.endDate)}>
+                {processDateType(scheduleItem.startDate, scheduleItem.endDate) === "start" && <StartDate className="schedule_date" >{scheduleItem.schedule}</StartDate>}
+                {processDateType(scheduleItem.startDate, scheduleItem.endDate) === "end" && <EndDate className="schedule_date" >end</EndDate>}
+                {processTerm(scheduleItem.term) && <TermDate className="schedule_date" >term</TermDate>}
+              </ScheduleItem>
+            }
+          })}
+        </ScheduleList>
+        <Summary>
+          {!toDoLength?.seeToDoListOnlyLength ? <div></div> : toDoLength?.seeToDoListOnlyLength !== 0 && <ToDoLength>
+            <ToDoIcon><IcToDoList /></ToDoIcon>
+            <ToDoText>{toDoLength?.seeToDoListOnlyLength}개</ToDoText>
+          </ToDoLength>}
+        </Summary>
+      </React.Fragment>
       :
       <React.Fragment>
         {dateSchedule.length !== 0 && <DotIcon></DotIcon>}
