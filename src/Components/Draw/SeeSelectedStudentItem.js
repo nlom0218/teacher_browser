@@ -44,6 +44,20 @@ const hideBoxClickAni = keyframes`
   }
 `
 
+const seeNameAni = keyframes`
+  from { 
+    opacity : 0;
+  }
+  to {
+    opacity : 1;
+  }
+`
+
+const Name = styled.div`
+  opacity: ${props => props.pickType === "hide" && 0};
+  animation : ${props => !props.seeHideBox && seeNameAni} 1s ease forwards;
+`
+
 
 const HideBox = styled.div`
   cursor : pointer;
@@ -89,7 +103,7 @@ const SeeSelectedStudentItem = ({ item, fontSize, pickNum, pickType }) => {
   }, [])
 
   return (<StudentItem pickNum={pickNum} fontSize={fontSize} bgTheme={me?.bgTheme}>
-    {item}
+    <Name pickType={pickType} seeHideBox={seeHideBox}>{item}</Name>
     {pickType === "hide" &&
       <HideBox
         randomImg={randomImg}
