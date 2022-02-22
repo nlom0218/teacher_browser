@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import PopupContainer from '../../Shared/PopupContainer';
@@ -7,6 +7,7 @@ import { useMutation } from '@apollo/client';
 import { CREATE_SCHEDULE_MUTATION } from '../../../Graphql/Schedule/mutation';
 import { CalenderPopupColorLayout, CalenderPopupDateLayout, CalenderPopupFormContainer, CalenderPopupInputLayout, CalenderPopupTextareaLayout, CalenderPopupTitle } from './PopupLayout';
 import { format } from 'date-fns';
+import Loading from '../../Shared/Loading';
 
 const SubmitInput = styled.input`
   background-color: ${props => props.theme.btnBgColor};
@@ -19,10 +20,10 @@ const SubmitInput = styled.input`
   cursor: pointer;
 `
 
-const AddSchedule = ({ userEmail, setErrMsg, setMsg }) => {
+const AddSchedule = ({ userEmail, setErrMsg, setMsg, urlDate }) => {
 
   const [startDate, setStartDate] = useState(new window.Date());
-  const [endDate, setEndDate] = useState(undefined);
+  const [endDate, setEndDate] = useState(new window.Date());
   const [color, setColor] = useState(undefined)
   const { register, handleSubmit } = useForm({
     mode: "onChange"
@@ -84,7 +85,6 @@ const AddSchedule = ({ userEmail, setErrMsg, setMsg }) => {
       }
       months = [startMonths, ...newMonths, endMonths]
     }
-    console.log(months);
     createSchedule({
       variables: {
         userEmail,
@@ -96,6 +96,17 @@ const AddSchedule = ({ userEmail, setErrMsg, setMsg }) => {
         ...(contents && { contents })
       }
     })
+  }
+
+  useEffect(() => {
+    if (urlDate) {
+      setStartDate(new window.Date(parseInt(urlDate)))
+      setEndDate(new window.Date(parseInt(urlDate)))
+    }
+  }, [])
+
+  if (loading) {
+    return <Loading page="popupPage" />
   }
 
   return (<PopupContainer maxHeight={true}>
