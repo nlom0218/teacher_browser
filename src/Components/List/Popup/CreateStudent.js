@@ -87,7 +87,13 @@ const CreateStudent = ({ existStudentArray, selectedTag, selectedSort, setErrorM
         ...(selectedTag.length !== 0 && { tag: selectedTag }),
         ...(selectedSort && { sort: selectedSort }),
         trash: false
-      }
+      },
+    }, {
+      query: SEE_ALL_STUDENT_QUERY,
+      variables: {
+        sort: "name",
+        trash: false
+      },
     }]
   })
 
