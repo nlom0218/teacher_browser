@@ -165,7 +165,7 @@ const CalendarList = styled.div`
 `
 
 
-const Calendar = () => {
+const Calendar = ({ screen, setScreen }) => {
   const titleUpdataer = useTitle("티처캔 | 달력")
   const { date: urlDate } = useParams()
 
@@ -181,7 +181,6 @@ const Calendar = () => {
   const [schedule, setSchedule] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
   const [msg, setMsg] = useState(undefined)
-  const [screen, setScreen] = useState("small")
   const [refetchQuery, setRefetchQuery] = useState(1)
 
   const { data, loading } = useQuery(SEE_SCHEDULE_QUERY, {

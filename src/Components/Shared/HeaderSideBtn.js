@@ -105,8 +105,6 @@ const HeaderSideBtn = ({ seeSideMenu, setSeeSideMenu }) => {
               <Content onClick={() => window.open(`https://www.notion.so/18b5b5b23fb84323b5a2a0b71c9980fd`)}>
                 About 팀 초코
               </Content>
-              <Content onClick={onClickLogOut}>이용약관</Content>
-              <Content onClick={onClickLogOut}>개인정보 처리방침</Content>
             </React.Fragment>
           )}
         </SideContents>

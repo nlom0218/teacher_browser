@@ -48,6 +48,8 @@ function App() {
   const me = useMe();
   const [userBgTheme, setUserBgTheme] = useState(undefined);
 
+  const [screen, setScreen] = useState("small")
+
   // timer 오디오 없애기 위함...
   const pathname = window.location.pathname;
   const [bgMusicMp3, setBgMusicMp3] = useState(undefined);
@@ -104,7 +106,7 @@ function App() {
     <ThemeProvider theme={darkMode ? darkTheme : ligthTheme}>
       <GlobalStyle bgTheme={userBgTheme ? userBgTheme : me?.bgTheme} isLoggedIn={isLoggedIn} />
       <ChangBackground />
-      {media !== "Mobile" && <HeaderWeather />}
+      {media !== "Mobile" && (screen === "small" && <HeaderWeather />)}
       <Routes>
         {/* <Route path={routes.home} element={<Home />} /> */}
         <Route path={routes.home} element={<Welcome />} />
@@ -117,11 +119,11 @@ function App() {
         <Route path={routes.editAccount} element={<EditAccount />} />
         <Route path={routes.todo} element={<TodoList />} />
         <Route path={`${routes.todo}/:id`} element={<TodoList />} />
-        <Route path={routes.calendar} element={<Calendar />} />
-        <Route path={`${routes.calendar}/:date`} element={<Calendar />} />
+        <Route path={routes.calendar} element={<Calendar screen={screen} setScreen={setScreen} />} />
+        <Route path={`${routes.calendar}/:date`} element={<Calendar screen={screen} setScreen={setScreen} />} />
         <Route path={routes.pageLink} element={<PageLink />} />
         <Route path={routes.menu} element={<Menu />} />
-        <Route path={`${routes.timer}/:mode`} element={<TimerSecond bgMusicMp3={bgMusicMp3} setBgMusicMp3={setBgMusicMp3} />} />
+        <Route path={`${routes.timer}/:mode`} element={<TimerSecond bgMusicMp3={bgMusicMp3} setBgMusicMp3={setBgMusicMp3} screen={screen} setScreen={setScreen} />} />
         <Route path={routes.draw} element={<Draw />} />
         <Route path={`${routes.draw}/:id`} element={<Draw />} />
         <Route path={routes.swap} element={<Swap />} />
