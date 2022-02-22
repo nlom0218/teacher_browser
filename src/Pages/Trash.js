@@ -134,12 +134,14 @@ const Trash = () => {
     {isPopup === "deleteAllStudent" &&
       <DeleteAllStudent
         teacherEmail={me?.email}
+        setSuccessMsg={setSuccessMsg}
       />}
     {isPopup === "restoreAllStudent" &&
       <RestoreAllStudent
         teacherEmail={me?.email}
         selectedTag={selectedTag}
         selectedSort={selectedSort}
+        setSuccessMsg={setSuccessMsg}
       />}
   </BasicContainer>);
 }

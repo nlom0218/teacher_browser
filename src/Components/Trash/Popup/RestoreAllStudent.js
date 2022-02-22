@@ -6,6 +6,7 @@ import { RESTORE_STUDENT_MUTATION } from '../../../Graphql/Student/mutation';
 import { SEE_ALL_STUDENT_IN_TRASH_QUERY, SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
 import { customMedia } from '../../../styles';
 import BtnPopupContainer from '../../Shared/BtnPopupContainer';
+import Loading from '../../Shared/Loading';
 
 const Container = styled.div`
   display: grid;
@@ -39,11 +40,12 @@ const RestoreBtn = styled.div``
 
 const CancelBtn = styled.div``
 
-const RestoreAllStudent = ({ teacherEmail, selectedSort, selectedTag }) => {
+const RestoreAllStudent = ({ teacherEmail, selectedSort, selectedTag, setSuccessMsg }) => {
   const onCompleted = (result) => {
     const { editStudent: { ok } } = result
     if (ok) {
       outPopup()
+      setSuccessMsg("학생이 모두 복구되었습니다. 😀")
     }
   }
 
@@ -73,6 +75,10 @@ const RestoreAllStudent = ({ teacherEmail, selectedSort, selectedTag }) => {
   }
 
   const onClickCancelBtn = () => outPopup()
+
+  if (loading) {
+    return <Loading page="btnPopupPage" />
+  }
 
   return (<BtnPopupContainer>
     <Container>
