@@ -43,12 +43,16 @@ const Content = styled.div`
   padding: 0.9375rem 3.75rem 0.9375rem 1.25rem;
   font-size: 0.875em;
   font-size: 0.875rem;
-  background-color: ${(props) => props.theme.blurColor};
+  background-color: ${(props) => props.theme.green};
+  color: ${props => props.theme.bgColor};
   transition: 1s ease background-color;
   cursor: pointer;
+  a {
+    color: ${props => props.theme.bgColor};
+  }
   :hover {
-    background-color: ${(props) => props.theme.bgColor};
-    transition: 0.6s ease background-color;
+    font-weight: 600;
+    transition: 0.6s ease font-weight;
   }
   :first-child {
     border-top-left-radius: 5px;
@@ -86,6 +90,11 @@ const HeaderSideBtn = ({ seeSideMenu, setSeeSideMenu }) => {
               <Content onClick={() => navigate(routes.editAccount)}>
                 <Link to={routes.editAccount}>회원정보 변경</Link>
               </Content>
+              <Content onClick={() => window.open(`https://www.notion.so/18b5b5b23fb84323b5a2a0b71c9980fd`)}>
+                About 팀 초코
+              </Content>
+              <Content onClick={onClickLogOut}>이용약관</Content>
+              <Content onClick={onClickLogOut}>개인정보 처리방침</Content>
               <Content onClick={onClickLogOut}>로그아웃</Content>
             </React.Fragment>
           ) : (
@@ -93,6 +102,11 @@ const HeaderSideBtn = ({ seeSideMenu, setSeeSideMenu }) => {
               <Content onClick={() => navigate(routes.login)}>
                 <Link to={routes.login}>로그인</Link>
               </Content>
+              <Content onClick={() => window.open(`https://www.notion.so/18b5b5b23fb84323b5a2a0b71c9980fd`)}>
+                About 팀 초코
+              </Content>
+              <Content onClick={onClickLogOut}>이용약관</Content>
+              <Content onClick={onClickLogOut}>개인정보 처리방침</Content>
             </React.Fragment>
           )}
         </SideContents>

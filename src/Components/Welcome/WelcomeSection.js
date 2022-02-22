@@ -8,6 +8,7 @@ import AlertMessage from '../Shared/AlertMessage';
 import useMedia from '../../Hooks/useMedia';
 import { customMedia } from '../../styles';
 import useTitle from '../../Hooks/useTitle';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const MoveContainer = styled.div`
   position: absolute;

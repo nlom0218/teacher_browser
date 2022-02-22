@@ -22,6 +22,7 @@ const GOOGLELOGINCALLBACK = "/googleLogin";
 const FINDPASSWORD = "/find-password";
 const FAKE_CREATEACCOUNT = "/fake-create-account";
 const FAKE_LOGIN = "/fake-login"
+const AGREE_POLICY = "/agreePolicy"
 
 const TRASH = "/trash";
 
@@ -53,6 +54,7 @@ const routes = {
   googleLoginCallBack: GOOGLELOGINCALLBACK,
   findPassword: FINDPASSWORD,
   fakeLogin: FAKE_LOGIN,
+  agreePolicy: AGREE_POLICY,
 
   trash: TRASH,
 

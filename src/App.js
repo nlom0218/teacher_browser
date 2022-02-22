@@ -34,6 +34,7 @@ import PageLinkAllList from "./Pages/PageLinkAllList";
 import PageLinkDetail from "./Pages/PageLinkDetail";
 import TimerSecond from "./Pages/TimerSecond";
 import { stopMusicFn } from "./audio/BackgroundMusic/BackgroundMusic";
+import AgreePolicy from "./Pages/AgreePolicy";
 
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
@@ -55,17 +56,20 @@ function App() {
 
   useEffect(() => {
     if (me) {
-      if (me.bgTheme.substr(0, 1) === "#") {
+      if (me?.bgTheme.substr(0, 1) === "#") {
         const changBg = setTimeout(() => {
-          setUserBgTheme(me.bgTheme);
+          setUserBgTheme(me?.bgTheme);
         }, [1800]);
         return () => {
           clearTimeout(changBg);
         };
       } else {
-        setUserBgTheme(me.bgTheme);
+        setUserBgTheme(me?.bgTheme);
       }
     }
+    // if (!me?.agreePolicy) {
+    //   navigate(routes.agreePolicy)
+    // }
   }, [me]);
 
   useEffect(() => {
@@ -86,6 +90,16 @@ function App() {
     }
   }, [pathname]);
 
+  useEffect(() => {
+    if (me === undefined) {
+      return
+    } else if (me.agreePolicy === true) {
+      return
+    } else {
+      navigate(routes.agreePolicy)
+    }
+  }, [me])
+
   return (
     <ThemeProvider theme={darkMode ? darkTheme : ligthTheme}>
       <GlobalStyle bgTheme={userBgTheme ? userBgTheme : me?.bgTheme} isLoggedIn={isLoggedIn} />
@@ -96,6 +110,7 @@ function App() {
         <Route path={routes.home} element={<Welcome />} />
         <Route path={routes.login} element={<Login />} />
         <Route path={routes.fakeLogin} element={<FakeLogin />} />
+        <Route path={routes.agreePolicy} element={<AgreePolicy />} />
         <Route path={routes.createAccount} element={<CreateAccount />} />
         <Route path={routes.naverLoginCallBack} element={<NaverLoginCallBack />} />
         <Route path={routes.googleLoginCallBack} element={<GoogleLoginCallBack />} />

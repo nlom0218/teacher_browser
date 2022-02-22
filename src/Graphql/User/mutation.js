@@ -66,8 +66,8 @@ export const DELETE_SCHOOL_INFO_MUTATION = gql`
 `;
 
 export const UPDATE_USER_MUTATION = gql`
-  mutation UpdateUser($userEmail: String!, $schoolName: String, $schoolCode: String, $areaCode: String, $schoolAdress: String) {
-    updateUser(userEmail: $userEmail, schoolName: $schoolName, schoolCode: $schoolCode, areaCode: $areaCode, schoolAdress: $schoolAdress) {
+  mutation UpdateUser($userEmail: String!, $schoolName: String, $schoolCode: String, $areaCode: String, $schoolAdress: String, $agreePolicy: Boolean) {
+    updateUser(userEmail: $userEmail, schoolName: $schoolName, schoolCode: $schoolCode, areaCode: $areaCode, schoolAdress: $schoolAdress, agreePolicy: $agreePolicy) {
       ok
       error
     }
