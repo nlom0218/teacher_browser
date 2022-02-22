@@ -227,7 +227,7 @@ const EditSchedule = ({ userEmail, setErrMsg, setMsg }) => {
     return <Loading page="popupPage" />
   }
 
-  return (<PopupContainer maxHeight={true}>
+  return (<PopupContainer maxHeight={true} needAlert={true}>
     <CalenderPopupFormContainer onSubmit={handleSubmit(onSubmit)}>
       <TopContainer>
         <SortBtn onClick={onClickUpdateBtn}>

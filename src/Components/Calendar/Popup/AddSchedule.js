@@ -109,7 +109,7 @@ const AddSchedule = ({ userEmail, setErrMsg, setMsg, urlDate }) => {
     return <Loading page="popupPage" />
   }
 
-  return (<PopupContainer maxHeight={true}>
+  return (<PopupContainer maxHeight={true} needAlert={true}>
     <CalenderPopupFormContainer onSubmit={handleSubmit(onSubmit)}>
       <CalenderPopupTitle>일정등록</CalenderPopupTitle>
       <CalenderPopupInputLayout register={register} />

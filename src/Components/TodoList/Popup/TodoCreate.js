@@ -88,7 +88,7 @@ const TodoCreate = ({ setErrMsg, userEmail, setRefetchQuery, urlDate, setMsg }) 
     }, [])
 
     return (
-        <PopupContainer maxHeight={true}>
+        <PopupContainer maxHeight={true} needAlert={true}>
             <PopupForm onSubmit={handleSubmit(onSubmit)} create={true}>
                 <PopupTitle>할 일 등록</PopupTitle>
                 <PopupInputLayout>

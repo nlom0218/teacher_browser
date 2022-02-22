@@ -3,7 +3,7 @@ import { format, startOfWeek, getWeeksInMonth, addMonths, startOfMonth, addDays,
 import styled from 'styled-components';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
 import { AiOutlinePlus } from "react-icons/ai"
-import { useLazyQuery, useQuery, useReactiveVar } from '@apollo/client';
+import { useQuery, useReactiveVar } from '@apollo/client';
 import CalendarItem from '../Components/Calendar/CalendarItem';
 import AddSchedule from '../Components/Calendar/Popup/AddSchedule';
 import { inPopup, isPopupVar } from '../apollo';
@@ -25,10 +25,10 @@ import AddAttend from '../Components/Calendar/Popup/AddAttend';
 import AttendSelectedStudent from '../Components/Calendar/Popup/AttendSelectedStudent';
 import EditAttend from "../Components/Calendar/Popup/EditAttend"
 import TodoCreate from '../Components/TodoList/Popup/TodoCreate';
-import AddJournal from '../Components/Calendar/Popup/AddJournal';
-import EditJournal from '../Components/Calendar/Popup/EditJournal';
 import useTitle from '../Hooks/useTitle';
 import IcHelper from '../icons/Helper/IcHelper';
+import AddJournal from '../Components/Journal/Popup/AddJournal';
+import EditJournal from '../Components/Journal/Popup/EditJournal';
 
 const Container = styled.div`
   display: grid;

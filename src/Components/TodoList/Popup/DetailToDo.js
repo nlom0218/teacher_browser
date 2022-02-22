@@ -206,11 +206,11 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail, setRefetchQuery }) => {
     })
   }
 
-  if (loading) {
+  if (loading || editLoading || delLoading || completeLoading) {
     return (<Loading page="popupPage" />)
   }
 
-  return (<PopupContainer maxHeight={true}>
+  return (<PopupContainer maxHeight={true} needAlert={type !== "complete" && true}>
     <PopupForm create={false} onSubmit={handleSubmit(onSubmit)} type={type}>
       <PopupTitle>할 일 세부정보 및 수정하기</PopupTitle>
       <Type not={type === "not"}>

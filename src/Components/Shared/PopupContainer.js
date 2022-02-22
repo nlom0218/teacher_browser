@@ -150,7 +150,7 @@ const PopupContainer = ({ children, emojiPopup, maxHeight, sound1, sound2, needA
     {/* e.stopPropagation 이벤트가 부모로 전달되는 것을 막는다. 즉, outPopup이 실행이 안된다. */}
     {alertPopup ?
       <AlertPopup onClick={e => e.stopPropagation()}>
-        <Msg>파업창을 벗어나면 작성한 글은 사라집니다.</Msg>
+        <Msg>파업창을 벗어나면 새롭게 작성한 글은 사라집니다.</Msg>
         <Msg>파업창을 벗어나시겠습니까?</Msg>
         <Btn>
           <YesBtn onClick={onClickYesBtn}>네</YesBtn>
