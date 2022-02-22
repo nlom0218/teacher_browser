@@ -75,7 +75,9 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail, setRefetchQuery }) => {
   const onCompleted = (result) => {
     const { editToDoList: { ok } } = result
     if (ok) {
+      outPopup()
       setMsg("할 일 정보가 수정되었습니다. 😄")
+      localStorage.removeItem("detailToDo")
       if (setRefetchQuery) {
         setRefetchQuery(prev => prev + 1)
       }
