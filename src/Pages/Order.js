@@ -248,36 +248,37 @@ const Order = () => {
             </div>
           </ListIcon>
         </TopContents>
-        {id && (
-          <React.Fragment>
-            <OptionContents>
-              {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
+        {loading ? <Loading page="subPage" /> :
+          id && (
+            <React.Fragment>
+              <OptionContents>
+                {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
 
-              {isShuffle === "ing" && (
-                <OptionBtn onClick={() => onClickShuffleBtn("finish")} isShuffling={true}>
-                  섞는 중
-                </OptionBtn>
-              )}
+                {isShuffle === "ing" && (
+                  <OptionBtn onClick={() => onClickShuffleBtn("finish")} isShuffling={true}>
+                    섞는 중
+                  </OptionBtn>
+                )}
 
-              {isShuffle === "finish" && (
-                <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
-                  다시 섞기
-                </OptionBtn>
-              )}
-              <SeeResultType seeResultType={seeResultType} setSeeResultType={setSeeResultType} />
-              {media === "Desktop" && <PrintOrder />}
-              <FontSizeBtn seeResultType={seeResultType} setFontSizeAll={setFontSizeAll} fontSizeAll={fontSizeAll} fontSizeOne={fontSizeOne} setFontSizeOne={setFontSizeOne} />
-            </OptionContents>
-            {loading ? <Loading page="subPage" /> : <StudentOrder
-              fontSizeOne={fontSizeOne}
-              fontSizeAll={fontSizeAll}
-              seeResultType={seeResultType}
-              selectedStudent={selectedStudent}
-              setSelectedStudent={setSelectedStudent}
-              isShuffle={isShuffle}
-            />}
-          </React.Fragment>
-        )}
+                {isShuffle === "finish" && (
+                  <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
+                    다시 섞기
+                  </OptionBtn>
+                )}
+                <SeeResultType seeResultType={seeResultType} setSeeResultType={setSeeResultType} />
+                {media === "Desktop" && <PrintOrder />}
+                <FontSizeBtn seeResultType={seeResultType} setFontSizeAll={setFontSizeAll} fontSizeAll={fontSizeAll} fontSizeOne={fontSizeOne} setFontSizeOne={setFontSizeOne} />
+              </OptionContents>
+              <StudentOrder
+                fontSizeOne={fontSizeOne}
+                fontSizeAll={fontSizeAll}
+                seeResultType={seeResultType}
+                selectedStudent={selectedStudent}
+                setSelectedStudent={setSelectedStudent}
+                isShuffle={isShuffle}
+              />
+            </React.Fragment>
+          )}
       </Container>
       { isPopup === "seeStudentList" && <StudentList page="order" setIsShuffle={setIsShuffle} />}
       { isPopup === "print" && <PrintOrderContents printRef={componentRef} title={title} selectedStudent={selectedStudent} />}

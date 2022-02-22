@@ -6,6 +6,7 @@ import { inPopup, isPopupVar } from '../../apollo';
 import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
 import { SEE_ALL_STUDENT_IN_TRASH_QUERY, SEE_ALL_STUDENT_QUERY } from '../../Graphql/Student/query';
 import useMe from '../../Hooks/useMe';
+import Loading from '../Shared/Loading';
 import DeleteOneStudent from './Popup/DeleteOneStudent';
 
 const Container = styled.div`
@@ -84,6 +85,10 @@ const StudentInTrash = ({ item, setSuccessMsg, selectedSort, selectedTag }) => {
     inPopup(`deleteOneStudent${id}`)
   }
 
+  if (editLoadint) {
+    return <Loading page="subPage" />
+  }
+
   return (<Container>
     <StudentName>{item.studentName}</StudentName>
     <StudentBtn>
@@ -94,6 +99,7 @@ const StudentInTrash = ({ item, setSuccessMsg, selectedSort, selectedTag }) => {
       <DeleteOneStudent
         teacherEmail={me?.email}
         studentId={item?._id}
+        setSuccessMsg={setSuccessMsg}
       />}
   </Container>);
 }

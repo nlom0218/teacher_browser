@@ -183,7 +183,12 @@ export const CalenderPopupDateLayout = ({ startDate, setStartDate, endDate, setE
           dateFormat="yyyy/MM/dd"
           selected={startDate}
           todayButton="오늘"
-          onChange={(date) => setStartDate(date)}
+          onChange={(date) => {
+            setStartDate(date)
+            if (endDate < date) {
+              setEndDate(date)
+            }
+          }}
           selectsStart
           startDate={startDate}
           endDate={endDate}

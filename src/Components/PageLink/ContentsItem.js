@@ -10,6 +10,7 @@ import { SETTING_LINK_MUTATION } from "../../Graphql/User/mutation";
 import ContentsItemLayout from "./Styled/ContentsItemLayout";
 import SiteType from "./SiteType";
 import { SEE_MY_PAGE_LINK_QUERY } from "../../Graphql/PageLink/query";
+import Loading from "../Shared/Loading";
 
 const SiteName = styled.div`
   line-height: 160%;
@@ -39,9 +40,17 @@ const BookMarkBtn = styled.div`
 `;
 const BookmarkIcon = styled.div``;
 
-const ContentsItem = ({ item, userEmail, userLinkTitleArr }) => {
+const ContentsItem = ({ item, userEmail, userLinkTitleArr, setMsg }) => {
+
+  const onCompleted = (result) => {
+    const { settingLink: { ok } } = result
+    if (ok) {
+      setMsg(`즐겨찾기에서 제거되었습니다. 😀`)
+    }
+  }
 
   const [settingLink, { loading }] = useMutation(SETTING_LINK_MUTATION, {
+    onCompleted,
     refetchQueries: [
       { query: ME_QUERY },
       { query: SEE_MY_PAGE_LINK_QUERY, variables: { userEmail } },

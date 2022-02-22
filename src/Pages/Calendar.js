@@ -3,7 +3,7 @@ import { format, startOfWeek, getWeeksInMonth, addMonths, startOfMonth, addDays,
 import styled from 'styled-components';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
 import { AiOutlinePlus } from "react-icons/ai"
-import { useLazyQuery, useQuery, useReactiveVar } from '@apollo/client';
+import { useQuery, useReactiveVar } from '@apollo/client';
 import CalendarItem from '../Components/Calendar/CalendarItem';
 import AddSchedule from '../Components/Calendar/Popup/AddSchedule';
 import { inPopup, isPopupVar } from '../apollo';
@@ -25,10 +25,10 @@ import AddAttend from '../Components/Calendar/Popup/AddAttend';
 import AttendSelectedStudent from '../Components/Calendar/Popup/AttendSelectedStudent';
 import EditAttend from "../Components/Calendar/Popup/EditAttend"
 import TodoCreate from '../Components/TodoList/Popup/TodoCreate';
-import AddJournal from '../Components/Calendar/Popup/AddJournal';
-import EditJournal from '../Components/Calendar/Popup/EditJournal';
 import useTitle from '../Hooks/useTitle';
 import IcHelper from '../icons/Helper/IcHelper';
+import AddJournal from '../Components/Journal/Popup/AddJournal';
+import EditJournal from '../Components/Journal/Popup/EditJournal';
 
 const Container = styled.div`
   display: grid;
@@ -102,6 +102,7 @@ const Btn = styled.div`
 `
 
 const HelpIcon = styled.div`
+  cursor: pointer;
   svg {
     font-size: 2.5em;
     font-size: 2.5rem;
@@ -164,7 +165,7 @@ const CalendarList = styled.div`
 `
 
 
-const Calendar = () => {
+const Calendar = ({ screen, setScreen }) => {
   const titleUpdataer = useTitle("티처캔 | 달력")
   const { date: urlDate } = useParams()
 
@@ -180,7 +181,6 @@ const Calendar = () => {
   const [schedule, setSchedule] = useState(undefined)
   const [errMsg, setErrMsg] = useState(undefined)
   const [msg, setMsg] = useState(undefined)
-  const [screen, setScreen] = useState("small")
   const [refetchQuery, setRefetchQuery] = useState(1)
 
   const { data, loading } = useQuery(SEE_SCHEDULE_QUERY, {
@@ -299,7 +299,7 @@ const Calendar = () => {
         </BottomContainerLayout>}
       </Container>
     }
-    {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} />}
+    {isPopup === "addSchedule" && <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} urlDate={urlDate} />}
     {isPopup === "editSchedule" && <EditSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} />}
     {isPopup === "createToDo" && <TodoCreate setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
     {isPopup === "detailToDo" && <DetailToDo setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} />}

@@ -47,7 +47,7 @@ const Container = styled.div`
   `}
 `
 
-const StudentInList = ({ students, listId, setSort, sort }) => {
+const StudentInList = ({ students, listId, setSort, sort, setSuccessMsg, listName }) => {
 
   const onClickSortBtn = (type) => {
     if (type === "none") {
@@ -77,7 +77,13 @@ const StudentInList = ({ students, listId, setSort, sort }) => {
     </SortAndNumContainer>}
     <Container>
       {students?.length !== 0 && students?.map((item, index) => {
-        return <StudentInItem key={index} item={item} listId={listId} />
+        return <StudentInItem
+          key={index}
+          item={item}
+          listId={listId}
+          setSuccessMsg={setSuccessMsg}
+          listName={listName}
+        />
       })}
     </Container>
   </React.Fragment>);

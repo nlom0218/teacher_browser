@@ -16,12 +16,14 @@ const LIST = "/list";
 
 // account link
 const LOGIN = "/login";
-const CREATEACCOUNT = "/create-account";
 const EDITACCOUNT = "/edit-account";
 const NAVERLOGINCALLBACK = "/naverLogin";
 const GOOGLELOGINCALLBACK = "/googleLogin";
 const KAKAOLOGINCALLBACK = "/kakaoLogin";
 const FINDPASSWORD = "/find-password";
+const FAKE_CREATEACCOUNT = "/fake-create-account";
+const FAKE_LOGIN = "/fake-login"
+const AGREE_POLICY = "/agreePolicy"
 
 const TRASH = "/trash";
 
@@ -47,12 +49,14 @@ const routes = {
 
   // account link
   login: LOGIN,
-  createAccount: CREATEACCOUNT,
+  createAccount: FAKE_CREATEACCOUNT,
   editAccount: EDITACCOUNT,
   naverLoginCallBack: NAVERLOGINCALLBACK,
   googleLoginCallBack: GOOGLELOGINCALLBACK,
   kakaoLoginCallBack: KAKAOLOGINCALLBACK,
   findPassword: FINDPASSWORD,
+  fakeLogin: FAKE_LOGIN,
+  agreePolicy: AGREE_POLICY,
 
   trash: TRASH,
 

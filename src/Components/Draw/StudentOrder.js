@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { customMedia } from "../../styles";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { TiDelete } from "react-icons/ti";
 import SeeSelectedStudent from "./SeeSelectedStudent";
 
@@ -60,26 +59,6 @@ const Name = styled.div`
 `
 
 const SeeOneItem = styled.div`
-    .order-student-back-btn,
-    .order-student-forward-btn {
-    align-self : center;
-    font-size : 2rem;
-    font-size : 2em;
-}
-    .order-student-back-btn {
-    opacity : ${props => props.order === 1 && 0};
-    cursor : ${props => props.order !== 1 && "pointer"};
-    grid-column : 1/2;
-    grid-row : 2/3;
-    justify-self : center;
-}
-    .order-student-forward-btn {
-    opacity : ${props => props.order === props.studentLength && 0};
-    cursor : ${props => props.order !== props.studentLength && "pointer"};
-    grid-column : 2/3;
-    grid-row : 2/3;
-    justify-self : center;
-}
     display : grid;
     row-gap : 20px;
     row-gap : 1.25rem;
@@ -160,7 +139,7 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, seeResultType, font
 
     return (
         <Container seeResultType={seeResultType}>
-            {isShuffle != "finish" ? (seeResultType === "ALL" ? selectedStudent.map((item, index) => {
+            {isShuffle !== "finish" ? (seeResultType === "ALL" ? selectedStudent.map((item, index) => {
                 return (
                     <Item key={item}>
                         <Name fontSize={fontSizeAll}>{item}</Name>
@@ -169,12 +148,9 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, seeResultType, font
                 );
             }) :
                 <SeeOneItem order={order} studentLength={selectedStudent.length}>
-                    <div className="order-student-back-btn" onClick={() => onClickArrow("back")}><IoIosArrowBack /></div>
                     <Student>
-
                         <Name fontSize={fontSizeOne}> {selectedStudent[order - 1]}</Name>
                     </Student>
-                    <div className="order-student-forward-btn" onClick={() => onClickArrow("forward")}><IoIosArrowForward /></div>
                 </SeeOneItem>)
                 :
                 <SeeSelectedStudent

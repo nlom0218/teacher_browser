@@ -6,6 +6,7 @@ import { DELETE_STUDENT_MUTATION } from '../../../Graphql/Student/mutation';
 import { SEE_ALL_STUDENT_IN_TRASH_QUERY } from '../../../Graphql/Student/query';
 import { customMedia } from '../../../styles';
 import BtnPopupContainer from '../../Shared/BtnPopupContainer';
+import Loading from '../../Shared/Loading';
 
 const Container = styled.div`
   display: grid;
@@ -42,11 +43,12 @@ const CancelBtn = styled.div`
   background-color: ${props => props.theme.btnBgColor};
 `
 
-const DeleteOneStudent = ({ teacherEmail, studentId }) => {
+const DeleteOneStudent = ({ teacherEmail, studentId, setSuccessMsg }) => {
   const onCompleted = (result) => {
     const { deleteStudent: { ok } } = result
     if (ok) {
       outPopup()
+      setSuccessMsg("해당 학생이 삭제되었습니다. 😀")
     }
   }
 
@@ -65,6 +67,10 @@ const DeleteOneStudent = ({ teacherEmail, studentId }) => {
         disconnectOnly: false
       }
     })
+  }
+
+  if (loading) {
+    return <Loading page="btnPopupPage" />
   }
 
   const onClickCancelBtn = () => outPopup()

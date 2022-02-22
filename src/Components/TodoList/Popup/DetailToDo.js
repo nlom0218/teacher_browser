@@ -75,7 +75,9 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail, setRefetchQuery }) => {
   const onCompleted = (result) => {
     const { editToDoList: { ok } } = result
     if (ok) {
+      outPopup()
       setMsg("할 일 정보가 수정되었습니다. 😄")
+      localStorage.removeItem("detailToDo")
       if (setRefetchQuery) {
         setRefetchQuery(prev => prev + 1)
       }
@@ -204,11 +206,11 @@ const DetailToDo = ({ setMsg, setErrMsg, userEmail, setRefetchQuery }) => {
     })
   }
 
-  if (loading) {
+  if (loading || editLoading || delLoading || completeLoading) {
     return (<Loading page="popupPage" />)
   }
 
-  return (<PopupContainer maxHeight={true}>
+  return (<PopupContainer maxHeight={true} needAlert={type !== "complete" && true}>
     <PopupForm create={false} onSubmit={handleSubmit(onSubmit)} type={type}>
       <PopupTitle>할 일 세부정보 및 수정하기</PopupTitle>
       <Type not={type === "not"}>

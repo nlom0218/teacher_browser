@@ -128,7 +128,12 @@ export const PopupDate = ({ startDate, endDate, setStartDate, setEndDate }) => {
       <StartDate>
         <DatePicker
           selected={startDate}
-          onChange={(date) => setStartDate(date)}
+          onChange={(date) => {
+            setStartDate(date)
+            if (endDate < date) {
+              setEndDate(date)
+            }
+          }}
           selectsStart
           startDate={startDate}
           endDate={endDate}

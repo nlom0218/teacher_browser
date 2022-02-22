@@ -52,6 +52,7 @@ const SubmitInput = styled.input`
 
 const DetailStudentMemo = ({ studentMemo, studentId, teacherEmail, setSuccessMsg }) => {
   const [isEdit, setIsEdit] = useState(false)
+  console.log(studentMemo);
 
   const onCompleted = (result) => {
     const { editStudent: { ok } } = result

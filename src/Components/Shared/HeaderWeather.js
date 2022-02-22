@@ -6,6 +6,10 @@ import styled from "styled-components";
 import { color } from "../../styles";
 import { FcDown, FcUp } from "react-icons/fc";
 import { BsEmojiDizzy, BsEmojiFrown, BsEmojiHeartEyes, BsEmojiLaughing } from "react-icons/bs";
+import IcDustGood from "../../icons/Dust/IcDustGood";
+import IcDustSoso from "../../icons/Dust/IcDustSoso";
+import IcDustBad from "../../icons/Dust/IcDustBad";
+import IcDustVeryBad from "../../icons/Dust/IcDustVeryBad";
 import { weatherBtnDown, weatherBtnUp, weatherDown, weatherUp } from "../../Animations/WeatherAni";
 
 const Weather = styled.div``;
@@ -125,14 +129,14 @@ const HeaderWeather = () => {
             <WeatherIcon src={require(`../../image/icons/weather/${data.weather.icon}.svg`).default} />
             <Dust>미세먼지</Dust>
             <DustIcon>
-              {data.weather.pm10grade === "1" ? (
-                <BsEmojiHeartEyes style={{ color: "#1d35e5" }} />
-              ) : data.weather.pm10grade === "2" ? (
-                <BsEmojiLaughing style={{ color: "#1fc90c" }} />
-              ) : data.weather.pm10grade === "3" ? (
-                <BsEmojiFrown style={{ color: "#ddab16" }} />
-              ) : data.weather.pm10grade === "4" ? (
-                <BsEmojiDizzy style={{ color: "#dd2a16" }} />
+              {weather.pm10grade === "1" ? (
+                <IcDustGood />
+              ) : weather.pm10grade === "2" ? (
+                <IcDustSoso />
+              ) : weather.pm10grade === "3" ? (
+                <IcDustBad />
+              ) : weather.pm10grade === "4" ? (
+                <IcDustVeryBad />
               ) : (
                 ""
               )}

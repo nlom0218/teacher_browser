@@ -3,6 +3,12 @@ import styled from "styled-components";
 import { SiNaver } from "react-icons/si";
 import { ImBubble } from "react-icons/im";
 import { FcGoogle } from "react-icons/fc";
+import { KAKAO_LOGIN_MUTATION } from "../../Graphql/User/mutation";
+import { logInUser } from "../../apollo";
+import { useNavigate } from "react-router";
+import routes from "../../routes";
+import { useMutation } from "@apollo/client";
+import { color } from "../../styles";
 
 const SSocialLogin = styled.div`
   width: 100%;
@@ -47,6 +53,7 @@ const KakaoLoginBtn = styled.div`
     font-size: 1.25em;
     font-size: 1.25rem;
   }
+  color: ${props => color.black};
 `;
 const GoogleLoginBtn = styled.div`
   background-color: white;
@@ -66,6 +73,7 @@ const GoogleLoginBtn = styled.div`
     font-size: 1.25em;
     font-size: 1.25rem;
   }
+  color: ${props => color.black};
 `;
 
 const SocialLogin = () => {

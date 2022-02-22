@@ -11,6 +11,7 @@ import PopupTitle from "../styled/PopupTitle"
 import PopupInput from "../styled/PopupInput"
 import { PopupDate, PopupInputLayout, PopupStar, PopupTextarea } from './PopupLayout';
 import TextareaAutosize from 'react-textarea-autosize';
+import Loading from '../../Shared/Loading';
 
 const SubmitBtn = styled.input`
   cursor : pointer;
@@ -87,8 +88,12 @@ const TodoCreate = ({ setErrMsg, userEmail, setRefetchQuery, urlDate, setMsg }) 
         }
     }, [])
 
+    if (loading) {
+        return <Loading page="popupPage" />
+    }
+
     return (
-        <PopupContainer maxHeight={true}>
+        <PopupContainer maxHeight={true} needAlert={true}>
             <PopupForm onSubmit={handleSubmit(onSubmit)} create={true}>
                 <PopupTitle>할 일 등록</PopupTitle>
                 <PopupInputLayout>

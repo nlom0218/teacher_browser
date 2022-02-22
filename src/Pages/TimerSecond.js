@@ -102,7 +102,7 @@ const ModeBtn = styled.div`
 `
 
 
-const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
+const TimerSecond = ({ bgMusicMp3, setBgMusicMp3, screen, setScreen }) => {
   const titleUpdataer = useTitle("티처캔 | 타이머")
 
   const isPopup = useReactiveVar(isPopupVar)
@@ -125,8 +125,6 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
   const [errMsg, setErrMsg] = useState(undefined)
 
   const [reset, setReset] = useState(1)
-
-  const [screen, setScreen] = useState("small")
 
   const onClickSettingBtn = () => {
     inPopup("timerSetting")

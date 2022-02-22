@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import PopupContainer from '../../Shared/PopupContainer';
 import { inPopup, outPopup } from '../../../apollo';
 import { useMutation } from '@apollo/client';
-import { Icon, CalenderPopupTextareaLayout, CalenderPopupTitle, InputLayout, DateContainer } from './PopupLayout';
+import { Icon, CalenderPopupTextareaLayout, CalenderPopupTitle, InputLayout, DateContainer } from '../../Calendar/Popup/PopupLayout';
 import { BsCalendarDate, BsFillPersonFill } from 'react-icons/bs';
-import { customMedia } from '../../../styles';
 import { ko } from "date-fns/esm/locale";
 import DatePicker from 'react-datepicker';
 import IcNameTableClick from '../../../icons/NameTable/IcNameTableClick';
 import { WRITE_JOURNAL_MUTATION } from '../../../Graphql/Journal/mutation';
 import { SEE_JOURNAL_QUERY } from '../../../Graphql/Journal/query';
+import PopupContainer from '../../Shared/PopupContainer';
 
 const CalenderPopupFormContainer = styled.form`
   padding : 20px 0px;
@@ -64,40 +63,6 @@ const SelectBtn = styled.div`
   cursor: pointer;
   svg {
     display: flex;
-  }
-`
-
-const AttendType = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  padding: 10px;
-  padding: 0.625rem;
-  row-gap: 10px;
-  row-gap: 0.625rem;
-  background-color: ${props => props.theme.originBgColor};
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  justify-items: flex-start;
-  ${customMedia.greaterThan("desktop")`
-    grid-template-columns: repeat(4, 1fr);
-  `}
-`
-
-const Type = styled.div`
-  padding: 5px 10px;
-  padding: 0.3125rem 0.625rem;
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  cursor: pointer;
-  background-color: ${props => props.selected && props.theme.btnBgColor};
-  color: ${props => props.selected && props.theme.bgColor};
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  :hover {
-    background-color: ${props => props.theme.btnBgColor};
-    color: ${props => props.theme.bgColor};
-    transition: background-color 0.6s ease, color 0.6s ease;
   }
 `
 
@@ -202,7 +167,7 @@ const AddJournal = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) 
     }
   }, [])
 
-  return (<PopupContainer maxHeight={true}>
+  return (<PopupContainer maxHeight={true} needAlert={true}>
     <CalenderPopupFormContainer onSubmit={handleSubmit(onSubmit)}>
       <CalenderPopupTitle>학급일지 작성</CalenderPopupTitle>
       <InputLayout>

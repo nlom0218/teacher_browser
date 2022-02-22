@@ -57,7 +57,7 @@ const DelBtn = styled.div`
 const EditSchedule = ({ userEmail, setErrMsg, setMsg }) => {
   const id = localStorage.getItem("editSchedule")
 
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(undefined);
   const [endDate, setEndDate] = useState(undefined);
   const [color, setColor] = useState(undefined)
   const { register, handleSubmit, setValue, getValues } = useForm({
@@ -223,20 +223,11 @@ const EditSchedule = ({ userEmail, setErrMsg, setMsg }) => {
     }
   }, [enableSortNumData])
 
-  if (loading) {
-    return <Loading page="popupPage" />
-  }
-  if (editLoading) {
-    return <Loading page="popupPage" />
-  }
-  if (deleteLoading) {
-    return <Loading page="popupPage" />
-  }
-  if (updateLoading) {
+  if (loading || editLoading || deleteLoading || updateLoading) {
     return <Loading page="popupPage" />
   }
 
-  return (<PopupContainer maxHeight={true}>
+  return (<PopupContainer maxHeight={true} needAlert={true}>
     <CalenderPopupFormContainer onSubmit={handleSubmit(onSubmit)}>
       <TopContainer>
         <SortBtn onClick={onClickUpdateBtn}>

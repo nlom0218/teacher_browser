@@ -63,7 +63,6 @@ const BgMusic = styled.div`
 
 
 const TimerBtnContainer = ({ alarmAudio, timerStatus, setTimerStatus, setReset, setErrMsg, localHours, localMinutes, localSeconds, mode, bgMusic, screen }) => {
-  console.log(screen);
   const onClickBtn = () => {
     if (mode === "countdown") {
       if (localHours === 0 && localMinutes === 0 && localSeconds === 0) {

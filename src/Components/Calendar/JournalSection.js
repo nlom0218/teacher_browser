@@ -4,6 +4,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import styled from 'styled-components';
 import { inPopup } from '../../apollo';
 import { SEE_JOURNAL_QUERY } from '../../Graphql/Journal/query';
+import IcJournal from '../../icons/Journal/IcJournal';
 import IcLunchmenuClick from '../../icons/Lunchmenu/IcLunchmenuClick';
 import { customMedia } from '../../styles';
 import Loading from '../Shared/Loading';
@@ -60,7 +61,7 @@ const JournalSection = ({ teacherEmail, urlDate, refetchQuery }) => {
 
   return (<SectionContainer>
     <SectionTitle>
-      <div><IcLunchmenuClick /></div>
+      <div><IcJournal /></div>
       <div>학급일지</div>
       <PlusJournalBtn onClick={onClickPlusBtn}><AiOutlinePlus /></PlusJournalBtn>
     </SectionTitle>

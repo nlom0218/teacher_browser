@@ -35,6 +35,8 @@ const ToDoItem = styled.div`
   grid-template-columns: ${props => props.notComplete ? "auto 1fr auto" : "1fr auto"};
   column-gap: 5px;
   column-gap: 0.3125rem;
+  row-gap: 5px;
+  row-gap: 0.3125rem;
   align-items: flex-start;
   border-bottom: 1px solid ${props => props.theme.hoverColor};
   transition: border-bottom 1s ease;
@@ -88,8 +90,16 @@ const Star = styled.div`
   }
 `
 
+const BottomContents = styled.div`
+  column-gap: 5px;
+  column-gap: 0.3125rem;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: ${props => props.notComplete && "1fr auto"};
+  align-items: center;
+`
+
 const ToDoType = styled.div`
-  grid-column: 1 / 3;
   justify-self: flex-end;
   align-self: center;
   position: relative;
@@ -110,7 +120,6 @@ const TitleLine = styled.div`
 `
 
 const Date = styled.div`
-  grid-column: -2 / -1;
   padding: 5px;
   padding: 0.3125rem;
   background-color: ${props => props.theme.fontColor};
@@ -196,15 +205,17 @@ const ToDoListSectionItem = ({ item, urlDate }) => {
       {item.star > 3 && <BsStarFill />}
       {item.star > 4 && <BsStarFill />}
     </Star>
-    {item.type !== "complete" &&
-      <ToDoType>
-        <div>{item.type === "ing" && "진행중인 할 일"}</div>
-        <div>{item.type === "not" && "미완료된 할 일"}</div>
-        <div>{item.type === "inComing" && "다가오는 할 일"}</div>
-        <TitleLine type={item.type}></TitleLine>
-      </ToDoType>
-    }
-    {endDate && <Date type={item.type}>{endDate}</Date>}
+    <BottomContents notComplete={item.type === "complete" ? false : true}>
+      {item.type !== "complete" &&
+        <ToDoType>
+          <div>{item.type === "ing" && "진행중인 할 일"}</div>
+          <div>{item.type === "not" && "미완료된 할 일"}</div>
+          <div>{item.type === "inComing" && "다가오는 할 일"}</div>
+          <TitleLine type={item.type}></TitleLine>
+        </ToDoType>
+      }
+      {endDate && <Date type={item.type}>{endDate}</Date>}
+    </BottomContents>
   </ToDoItem>);
 }
 

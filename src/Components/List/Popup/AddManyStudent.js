@@ -10,7 +10,7 @@ import { SEE_ONE_STUDENT_LIST_QUERY } from '../../../Graphql/StudentList/query';
 import { ADD_STUDENT_MUTATION } from '../../../Graphql/StudentList/mutation';
 import Loading from '../../Shared/Loading';
 
-const AddManyStudent = ({ inStudent, listId }) => {
+const AddManyStudent = ({ inStudent, listId, setSuccessMsg, listName }) => {
   const selectedTag = JSON.parse(localStorage.getItem("selectedTag")) ? JSON.parse(localStorage.getItem("selectedTag")) : []
   const selectedSort = localStorage.getItem("selectedSort") ? localStorage.getItem("selectedSort") : undefined
   const me = useMe()
@@ -28,6 +28,7 @@ const AddManyStudent = ({ inStudent, listId }) => {
     const { addStudent: { ok } } = result
     if (ok) {
       outPopup()
+      setSuccessMsg(`${addStudentId.length}명의 학생이 ${listName}에 추가되었습니다. 😅`)
     }
   }
 
@@ -95,7 +96,7 @@ const AddManyStudent = ({ inStudent, listId }) => {
     refetch()
   }, [selectedTag, selectedSort])
 
-  if (loading) {
+  if (addLoading) {
     return <Loading page="popupPage" />
   }
 

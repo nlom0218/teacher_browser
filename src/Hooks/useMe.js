@@ -16,6 +16,7 @@ export const ME_QUERY = gql`
       allergy
       tag
       favoriteNews
+      agreePolicy
       link{
         siteName
         memo

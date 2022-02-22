@@ -301,7 +301,7 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
     }
   }, [data])
 
-  if (loading) {
+  if (loading || editLoading || delLoading) {
     return <Loading page="subPage" />
   }
 
@@ -337,7 +337,12 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
         <StartDate>
           <DatePicker
             selected={startDate}
-            onChange={(date) => setStartDate(date)}
+            onChange={(date) => {
+              setStartDate(date)
+              if (endDate < date) {
+                setEndDate(date)
+              }
+            }}
             selectsStart
             startDate={startDate}
             endDate={endDate}

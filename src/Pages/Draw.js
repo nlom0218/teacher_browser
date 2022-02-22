@@ -241,35 +241,36 @@ const Draw = () => {
             </div>
           </ListIcon>
         </TopContents>
-        {id && (
-          <React.Fragment>
-            <OptionContents>
-              {isShuffle === "init" &&
-                <OptionBtn onClick={() => onClickShuffleBtn("ing")}>뽑기</OptionBtn>}
-              {isShuffle === "ing" &&
-                <OptionBtn onClick={() => onClickShuffleBtn("finish")}>뽑는 중</OptionBtn>}
-              {isShuffle === "finish" &&
-                <OptionBtn onClick={() => onClickShuffleBtn("ing")}>다시 뽑기 </OptionBtn>}
-              {/* <SeeResultType seeResultType={seeResultType} setSeeResultType={setSeeResultType} /> */}
-              <FontSizeBtn
-                setFontSizeAll={setFontSizeAll}
-                fontSizeAll={fontSizeAll}
-                setFontSizeOne={setFontSizeOne}
-                fontSizeOne={fontSizeOne}
+        {loading ? <Loading page="subPage" /> :
+          id && (
+            <React.Fragment>
+              <OptionContents>
+                {isShuffle === "init" &&
+                  <OptionBtn onClick={() => onClickShuffleBtn("ing")}>뽑기</OptionBtn>}
+                {isShuffle === "ing" &&
+                  <OptionBtn onClick={() => onClickShuffleBtn("finish")}>뽑는 중</OptionBtn>}
+                {isShuffle === "finish" &&
+                  <OptionBtn onClick={() => onClickShuffleBtn("ing")}>다시 뽑기 </OptionBtn>}
+                {/* <SeeResultType seeResultType={seeResultType} setSeeResultType={setSeeResultType} /> */}
+                <FontSizeBtn
+                  setFontSizeAll={setFontSizeAll}
+                  fontSizeAll={fontSizeAll}
+                  setFontSizeOne={setFontSizeOne}
+                  fontSizeOne={fontSizeOne}
+                  seeResultType={seeResultType}
+                />
+              </OptionContents>
+              <StudentOrder
+                isShuffle={isShuffle}
+                selectedStudent={selectedStudent}
+                setSelectedStudent={setSelectedStudent}
                 seeResultType={seeResultType}
-              />
-            </OptionContents>
-            {loading ? <Loading page="subPage" /> : <StudentOrder
-              isShuffle={isShuffle}
-              selectedStudent={selectedStudent}
-              setSelectedStudent={setSelectedStudent}
-              seeResultType={seeResultType}
-              fontSizeAll={fontSizeAll}
-              fontSizeOne={fontSizeOne}
-              pickNum={pickNum}
-              pickType={pickType} />}
-          </React.Fragment>
-        )}
+                fontSizeAll={fontSizeAll}
+                fontSizeOne={fontSizeOne}
+                pickNum={pickNum}
+                pickType={pickType} />
+            </React.Fragment>
+          )}
       </Container>
       {isPopup === "seeStudentList" && <StudentList setIsShuffle={setIsShuffle} page="draw" />}
       {isShuffle === "ing" &&

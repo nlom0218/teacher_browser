@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import PopupContainer from '../../Shared/PopupContainer';
 import { outPopup } from '../../../apollo';
 import { useMutation, useQuery } from '@apollo/client';
-import { Icon, CalenderPopupTextareaLayout, CalenderPopupTitle, InputLayout, DateContainer } from './PopupLayout';
 import { BsCalendarDate, BsFillPersonFill } from 'react-icons/bs';
 import { ko } from "date-fns/esm/locale";
 import DatePicker from 'react-datepicker';
 import { DELETE_JOURNAL_MUTATION, EDIT_JOURNAL_MUTATION } from '../../../Graphql/Journal/mutation';
 import { SEE_JOURNAL_QUERY } from '../../../Graphql/Journal/query';
 import Loading from '../../Shared/Loading';
+import PopupContainer from '../../Shared/PopupContainer';
+import { DateContainer, Icon, CalenderPopupTextareaLayout, CalenderPopupTitle, InputLayout } from '../../Calendar/Popup/PopupLayout';
 
 const CalenderPopupFormContainer = styled.form`
   padding : 20px 0px;
@@ -180,11 +180,11 @@ const EditJournal = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate })
     }
   }, [data])
 
-  if (loading) {
+  if (loading || editLoading || deleteLoading) {
     return <Loading page="popupPage" />
   }
 
-  return (<PopupContainer maxHeight={true}>
+  return (<PopupContainer maxHeight={true} needAlert={true}>
     <CalenderPopupFormContainer onSubmit={handleSubmit(onSubmit)}>
       <CalenderPopupTitle>학급일지 수정</CalenderPopupTitle>
       <InputLayout>

@@ -16,10 +16,11 @@ const BasicLayout = styled.div`
   align-self: center;
   grid-row: 2 / 3;
   margin: 0 auto;
-  max-width: 450px;
-  max-width: 28.125rem;
+  max-width: ${props => props.agreePage ? "900px" : "450px"};
+  max-width: ${props => props.agreePage ? "56.25rem" : "28.125rem"};
   width: 90%;
   overflow: scroll;
+  max-height: 90%;
   box-shadow: rgb(0 0 0 / 20%) 0px 17px 6px -14px;
   background: ${props => props.theme.blurColor};
   transition: background 1s ease;
@@ -38,18 +39,18 @@ const BasicLayout = styled.div`
 
 const Layout = styled.div`
   display: grid;
-  row-gap: 60px;
-  row-gap: 3.75rem;
-  justify-items: center;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  justify-items: ${props => !props.agreePage && "center"};
   padding: 40px;
   padding: 2.5rem;
 `
 
-const AccountContainer = ({ children }) => {
+const AccountContainer = ({ children, agreePage }) => {
   return (<SAccountContainer>
     <Theme />
-    <BasicLayout>
-      <Layout>
+    <BasicLayout agreePage={agreePage}>
+      <Layout agreePage={agreePage}>
         {children}
       </Layout>
     </BasicLayout>
