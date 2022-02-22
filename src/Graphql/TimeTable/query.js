@@ -25,12 +25,12 @@ export const GET_TIMETABLE_DATA_QUERY = gql`
   query GetTimetableData($day: Int) {
     getTimetableData(day: $day) {
       _id
-      color
-      day
-      memo
-      subName
       teacherEmail
-      time
+      index
+      day
+      subName
+      color
+      memo
     }
   }
 `;

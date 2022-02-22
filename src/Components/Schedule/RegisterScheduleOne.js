@@ -27,21 +27,15 @@ const RegisterClassOneBtn = styled.div`
   cursor: pointer;
 `;
 
-const RegisterScheduleOne = ({ item, color, tag }) => {
+const RegisterScheduleOne = ({ num, item, color, tag }) => {
   const onClickRegisterClassOne = () => {
     inPopup("registerClass");
   };
 
-  const onClickDelClass = (SubjectName) => {
-    // const newSubjectName = 빈 배열로 보내서 다시 시간표 수정 setSelectedStudent(newSelectedStudent)
-    // deleteSubject ({ subjectvalue})
-  };
-
   return (
     <Container>
-      <RegisterClassOneBtn onClick={onClickRegisterClassOne}>
-        {" "}
-        <AiOutlineEdit />{" "}
+      <RegisterClassOneBtn num={num} onClick={onClickRegisterClassOne}>
+        <AiOutlineEdit />
       </RegisterClassOneBtn>
     </Container>
   );

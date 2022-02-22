@@ -6,18 +6,10 @@ import PopupContainer from "../../Shared/PopupContainer";
 import { outPopup } from "../../../apollo";
 import InputUnderLine from "../../List/InputUnderLine";
 import { BsCheck } from "react-icons/bs";
-
-import DetailClassName from "./DetailClassName";
-import DetailClassTag from "./DetailClasstag";
-import DetailClassAdd from "./DetailClassAdd";
-import {
-  DetailStudentLayout,
-  DetailTitle,
-} from "../../List/styled/DetailStudent";
+import { DetailTitle } from "../../List/styled/DetailStudent";
 import { useMutation } from "@apollo/client";
 import { SET_TIMETABLE_DATA_MUTATION } from "../../../Graphql/TimeTable/mutation";
 import { GET_TIMETABLE_DATA_QUERY } from "../../../Graphql/TimeTable/query";
-import { monthsToQuarters } from "date-fns";
 
 const RegisterForm = styled.form`
   padding: 20px 0px;
@@ -120,7 +112,23 @@ const AddClassContainer = styled.div`
   line-height: 130%;
   border-radius: 5px;
   border-radius: 0.625rem;
+  grid-template-rows: 1fr 6fr;
+`;
+const DayContainer = styled.div`
+  display: grid;
   grid-template-columns: 1.5fr repeat(5, 1fr);
+`;
+const DownContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1.5fr 5fr;
+`;
+const TimeContainer = styled.div`
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+`;
+const ClassContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   grid-template-rows: repeat(6, 1fr);
 `;
 const TimeTable = styled.div`
@@ -133,13 +141,7 @@ const TimeTable = styled.div`
   align-items: center;
   justify-items: center;
 `;
-const M1 = {
-  day: 0,
-  time: 1,
-  subName: "math",
-  color: "",
-  memo: "",
-};
+
 const bgColorArr = [
   "#FFB6C1",
   "#F4A460",
@@ -149,12 +151,19 @@ const bgColorArr = [
   "#DA70D6",
 ];
 const timeday = ["", "월", "화", "수", "목", "금"];
+const timelist = ["1", "2", "3", "4", "5", "6"];
 
-const ClassRegisterPage = ({ userEmail }) => {
+const ClassRegisterPage = ({
+  timetableData,
+  userEmail,
+  num,
+  item,
+  color,
+  tag,
+}) => {
   const [pickType, setPickType] = useState(false);
   const [isEditMemo, setIsEditMemo] = useState(false);
   const [isEditName, setIsEditName] = useState(false);
-
   const onCompleted = (result) => {
     const {
       setTimetableData: { ok },
@@ -190,14 +199,14 @@ const ClassRegisterPage = ({ userEmail }) => {
   };
   const onSubmit = (data) => {
     const { subName } = data;
-
+    outPopup();
     setTimetableData({
-      variables: {
-        teacherEmail: userEmail,
-        timetableData: M1,
-      },
+      variables: {},
     });
   };
+  const pickItem = localStorage.getItem("classPick");
+  const pickNum = parseInt(pickItem);
+  const timetableList = timetableData?.getTimetableData;
 
   return (
     <PopupContainer>
@@ -257,30 +266,45 @@ const ClassRegisterPage = ({ userEmail }) => {
           </InputUnderLine>
           <DetailTitle>수업추가</DetailTitle>
           <AddClassContainer>
-            {timeday.map((item, index) => {
-              return (
-                <TimeTable item={item} index={index}>
-                  {item}
-                </TimeTable>
-              );
-            })}{" "}
-            <TimeTable>1교시</TimeTable>
-            {/* {timeDayData
-              .filter((item) => item.time.includes("1"))
-              .map((item, index) => {
-                return <TimeTable key={index} item={item} />;
-              })} */}
-            <TimeTable>2교시</TimeTable>
-            <TimeTable>3교시</TimeTable>
-            <TimeTable>4교시</TimeTable>
-            <TimeTable>5교시</TimeTable>
-            <TimeTable>6교시</TimeTable>
+            <DayContainer>
+              {timeday.map((item, index) => {
+                return (
+                  <TimeTable item={item} index={index}>
+                    {item}
+                  </TimeTable>
+                );
+              })}
+            </DayContainer>
+            <DownContainer>
+              <TimeContainer>
+                {timelist.map((item, index) => {
+                  return (
+                    <TimeTable item={item} index={index}>
+                      {item}
+                    </TimeTable>
+                  );
+                })}
+              </TimeContainer>
+              <ClassContainer>
+                {timetableList?.map((item, index) => {
+                  return (
+                    <React.Fragment>
+                      {pickNum === index ? (
+                        <TimeTable>
+                          <BsCheck />
+                        </TimeTable>
+                      ) : (
+                        <TimeTable item={item} index={index}>
+                          {index}
+                        </TimeTable>
+                      )}
+                    </React.Fragment>
+                  );
+                })}
+              </ClassContainer>
+            </DownContainer>
           </AddClassContainer>
         </LayOut>
-
-        {/* <DetailClassName userEmail={userEmail} />
-        <DetailClassTag />
-        <DetailClassAdd /> */}
         <BtnFrame>
           {" "}
           <AddTagBtn type="submit" value="완료" />
