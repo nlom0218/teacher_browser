@@ -240,40 +240,41 @@ const Swap = () => {
           </div>
         </ListIcon>
       </TopContents>
-      {id && (
-        <React.Fragment>
-          <OptionContents>
-            <OptionBtn onClick={() => onClickShuffleBtn("pickNum")}> 자리 설정 </OptionBtn>
-            {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
-            {isShuffle === "pickNum" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
-            {isShuffle === "ing" && (
-              <OptionBtn onClick={() => onClickShuffleBtn("finish")} isShuffling={true}>
-                섞는 중
-              </OptionBtn>
-            )}
-            {isShuffle === "finish" && (
-              <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
-                다시 섞기
-              </OptionBtn>
-            )}
-            {media === "Desktop" && <PrintOrder />}
-            <FontSizeBtn
+      {loading ? <Loading page="subPage" /> :
+        id && (
+          <React.Fragment>
+            <OptionContents>
+              <OptionBtn onClick={() => onClickShuffleBtn("pickNum")}> 자리 설정 </OptionBtn>
+              {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
+              {isShuffle === "pickNum" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
+              {isShuffle === "ing" && (
+                <OptionBtn onClick={() => onClickShuffleBtn("finish")} isShuffling={true}>
+                  섞는 중
+                </OptionBtn>
+              )}
+              {isShuffle === "finish" && (
+                <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
+                  다시 섞기
+                </OptionBtn>
+              )}
+              {media === "Desktop" && <PrintOrder />}
+              <FontSizeBtn
+                setFontSizeAll={setFontSizeAll}
+                fontSizeAll={fontSizeAll}
+              />
+            </OptionContents>
+            <StudentOrder
+              selectedStudent={selectedStudent}
+              setSelectedStudent={setSelectedStudent}
+              isShuffle={isShuffle}
               setFontSizeAll={setFontSizeAll}
               fontSizeAll={fontSizeAll}
+              pickNum={pickNum}
+              setPickNum={setPickNum}
+              studentNum={selectedStudent.length}
             />
-          </OptionContents>
-          {loading ? <Loading page="subPage" /> : <StudentOrder
-            selectedStudent={selectedStudent}
-            setSelectedStudent={setSelectedStudent}
-            isShuffle={isShuffle}
-            setFontSizeAll={setFontSizeAll}
-            fontSizeAll={fontSizeAll}
-            pickNum={pickNum}
-            setPickNum={setPickNum}
-            studentNum={selectedStudent.length}
-          />}
-        </React.Fragment>
-      )}
+          </React.Fragment>
+        )}
     </Container>
     {isPopup === "seeStudentList" && <StudentList page="swap" setIsShuffle={setIsShuffle} />}
     {isPopup === "print" && <PrintSwapContents printRef={componentRef} title={title} selectedStudent={selectedStudent} pickNum={pickNum} />}
