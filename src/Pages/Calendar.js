@@ -102,6 +102,7 @@ const Btn = styled.div`
 `
 
 const HelpIcon = styled.div`
+  cursor: pointer;
   svg {
     font-size: 2.5em;
     font-size: 2.5rem;

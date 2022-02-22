@@ -61,7 +61,7 @@ const StudentNumber = ({ pickNum, setPickNum, onClickShuffleBtn, setErrMsg }) =>
         const { num: stringNum } = data
         const num = parseInt(stringNum)
         if (num <= 1 || num >= 11) {
-            setErrMsg("2~11사이의 숫자를 입력해주세요. 😂")
+            setErrMsg("2~10사이의 숫자를 입력해주세요. 😂")
             return
         }
         setPickNum(num)
