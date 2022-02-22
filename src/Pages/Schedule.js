@@ -67,6 +67,11 @@ const TypeBtn = styled.div`
 const Schedule = () => {
   const [timeResult, setTimeResult] = useState([]);
   const [timetableTime, setTimetableTime] = useState([]);
+  const {
+    data: timetableData,
+    loading: timetableLoading,
+    error: timetableError,
+  } = useQuery(GET_TIMETABLE_DATA_QUERY);
 
   const { data, loading, error } = useQuery(GET_TIMETABLE_TIME_QUERY, {
     onCompleted: ({ getTimetableTime: data }) => {
@@ -143,7 +148,10 @@ const Schedule = () => {
       </Container>
 
       {isPopup === "registerClass" && (
-        <ClassRegisterPage userEmail={me?.email} />
+        <ClassRegisterPage
+          userEmail={me?.email}
+          timetableData={timetableData}
+        />
       )}
       {isPopup === "registerTime" && (
         <TimeRegisterPage timeResult={timeResult} userEmail={me?.email} />

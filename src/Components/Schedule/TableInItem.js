@@ -60,12 +60,18 @@ const HoverContainer = styled.div`
 
 const TableInItem = ({ num, item, index, color, tag, fontSize }) => {
   const [hoverContainer, setHoverContainer] = useState(false);
+  const [itemPick, setItemPick] = useState(undefined);
 
   const onMouseEnter = () => {
     setHoverContainer(true);
   };
   const onMouseLeave = () => {
     setHoverContainer(false);
+  };
+
+  const onClickItem = (item) => {
+    setItemPick(item);
+    localStorage.setItem("classPick", item);
   };
 
   return (
@@ -82,6 +88,7 @@ const TableInItem = ({ num, item, index, color, tag, fontSize }) => {
         fontSize={fontSize}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        onClick={() => onClickItem(num)}
       >
         <SPAN color={color}> &nbsp; {item} &nbsp; </SPAN>
         {hoverContainer === true ? (

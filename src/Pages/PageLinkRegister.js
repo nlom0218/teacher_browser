@@ -121,8 +121,7 @@ const SubmitInput = styled.input`
 
 const PageLinkRegister = () => {
   const folder = [
-    "교육청",
-    "연수원",
+    "전체보기",
     "학급경영",
     "국어",
     "영어",
@@ -134,11 +133,14 @@ const PageLinkRegister = () => {
     "체육",
     "실과",
     "창체",
-    "다문화",
     "안전",
     "기초학력",
+    "다문화",
     "출판사",
     "학년밴드",
+    "온라인학습툴",
+    "교육청",
+    "연수원",
     "교권/복지",
   ];
   const pageType = ["블로그", "유튜브"];
