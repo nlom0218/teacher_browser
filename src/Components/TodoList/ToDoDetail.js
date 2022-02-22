@@ -301,7 +301,7 @@ const ToDoDetail = ({ id, userEmail, setErrMsg, setMsg }) => {
     }
   }, [data])
 
-  if (loading) {
+  if (loading || editLoading || delLoading) {
     return <Loading page="subPage" />
   }
 
