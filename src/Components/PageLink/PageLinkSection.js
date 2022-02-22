@@ -15,6 +15,7 @@ import { SEE_MY_PAGE_LINK_QUERY } from "../../Graphql/PageLink/query";
 import MyPageLink from "./MyPageLink";
 import IcHelper from "../../icons/Helper/IcHelper";
 import HelpIcon from "./Styled/HelpIcon";
+import Loading from "../Shared/Loading";
 
 const MoveContainer = styled.div`
   position: absolute;
@@ -23,10 +24,10 @@ const MoveContainer = styled.div`
   right: ${(props) => (props.pageLinkSection === "pageLink" ? 0 : "100%")};
   left: ${(props) => (props.pageLinkSection === "pageLink" ? 0 : "-100%")};
   animation: ${(props) =>
-      !props.init &&
-      (props.pageLinkSection === "pageLink"
-        ? seeWelcomSection
-        : hideWelcomeSection)}
+    !props.init &&
+    (props.pageLinkSection === "pageLink"
+      ? seeWelcomSection
+      : hideWelcomeSection)}
     1s ease forwards;
   display: grid;
   row-gap: 20px;
@@ -87,6 +88,10 @@ const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit }) => {
       }
     }
   });
+
+  if (loading) {
+    return <Loading page="subPage" />
+  }
 
   return (
     <MoveContainer pageLinkSection={pageLinkSection} init={init}>

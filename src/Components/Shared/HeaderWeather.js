@@ -129,13 +129,13 @@ const HeaderWeather = () => {
             <WeatherIcon src={require(`../../image/icons/weather/${data.weather.icon}.svg`).default} />
             <Dust>미세먼지</Dust>
             <DustIcon>
-              {weather.pm10grade === "1" ? (
+              {data.weather.pm10grade === "1" ? (
                 <IcDustGood />
-              ) : weather.pm10grade === "2" ? (
+              ) : data.weather.pm10grade === "2" ? (
                 <IcDustSoso />
-              ) : weather.pm10grade === "3" ? (
+              ) : data.weather.pm10grade === "3" ? (
                 <IcDustBad />
-              ) : weather.pm10grade === "4" ? (
+              ) : data.weather.pm10grade === "4" ? (
                 <IcDustVeryBad />
               ) : (
                 ""

@@ -19,6 +19,7 @@ import { SEE_PAGE_LINK_QUERY } from "../../Graphql/PageLink/query";
 import PageLinkList from "./Styled/PageLinkList";
 import HelpIcon from "./Styled/HelpIcon";
 import IcHelper from "../../icons/Helper/IcHelper";
+import Loading from "../Shared/Loading";
 
 //페이지 추천에 구글 폼 연결
 
@@ -87,6 +88,7 @@ const LinkPickSection = ({
       setUserLinkTitleArr(link.map((item) => item.siteName));
     }
   }, [link]);
+
   return (
     <MoveContainer
       pageLinkSection={pageLinkSection}
@@ -102,7 +104,7 @@ const LinkPickSection = ({
           <HelpIcon><IcHelper /></HelpIcon>
           <div>추천 페이지</div>
         </PageLinkTitle>
-        <PageLinkList>
+        {loading ? <Loading page="subPage" /> : <PageLinkList>
           {data &&
             data?.seePageLink.map((item, index) => {
               return (
@@ -115,7 +117,7 @@ const LinkPickSection = ({
                 />
               );
             })}
-        </PageLinkList>
+        </PageLinkList>}
       </ContentsList>
     </MoveContainer>
   );
