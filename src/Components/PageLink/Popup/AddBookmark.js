@@ -10,6 +10,7 @@ import { ME_QUERY } from "../../../Hooks/useMe";
 import { useForm } from "react-hook-form";
 import { GrHomeRounded } from "react-icons/gr";
 import { SEE_MY_PAGE_LINK_QUERY } from "../../../Graphql/PageLink/query";
+import Loading from "../../Shared/Loading";
 
 const Container = styled.form`
   padding: 20px 0px;
@@ -76,7 +77,7 @@ const SubmitInput = styled.input`
   cursor: pointer;
 `;
 
-const AddBookmark = ({ userEmail }) => {
+const AddBookmark = ({ userEmail, setMsg }) => {
   const title = localStorage.getItem("addBookmark");
   const { register, handleSubmit } = useForm({
     mode: "onChange",
@@ -88,6 +89,7 @@ const AddBookmark = ({ userEmail }) => {
     if (ok) {
       outPopup();
       localStorage.removeItem("addBookmark")
+      setMsg(`즐겨찾기에 등록되었습니다. 😀`)
     }
   };
 
@@ -109,6 +111,11 @@ const AddBookmark = ({ userEmail }) => {
       },
     });
   };
+
+  if (loading) {
+    return <Loading page="popupPage" />
+  }
+
   return (
     <PopupContainer>
       <Container onSubmit={handleSubmit(onSubmit)}>

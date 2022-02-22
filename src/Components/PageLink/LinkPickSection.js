@@ -55,6 +55,7 @@ const LinkPickSection = ({
   init,
   setInit,
   link,
+  setMsg
 }) => {
   const [isSeeDisplay, setIsSeeDisplay] = useState(
     pageLinkSection === "pageLink" ? "none" : "block"
@@ -110,6 +111,7 @@ const LinkPickSection = ({
                   key={index}
                   userEmail={userEmail}
                   userLinkTitleArr={userLinkTitleArr}
+                  setMsg={setMsg}
                 />
               );
             })}

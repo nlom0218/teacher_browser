@@ -11,6 +11,7 @@ import { isPopupVar } from "../apollo";
 import SeePageLink from "../Components/PageLink/Popup/SeePageLink";
 import DetailPageLink from "../Components/PageLink/Popup/DetailPageLink";
 import useTitle from "../Hooks/useTitle";
+import AlertMessage from "../Components/Shared/AlertMessage";
 
 //추천사이트 목록 정리하기
 //즐겨찾기 없을 경우 설명하는 페이지 추가
@@ -24,6 +25,8 @@ const PageLink = () => {
   const me = useMe();
   const isPopup = useReactiveVar(isPopupVar);
   const pageLinkSection = useReactiveVar(pageLinkSectionVar);
+
+  const [msg, setMsg] = useState(undefined)
 
   const [init, setInit] = useState(true);
   return (
@@ -41,13 +44,15 @@ const PageLink = () => {
           pageLinkSection={pageLinkSection}
           userEmail={me?.email}
           link={me?.link}
+          setMsg={setMsg}
         />
       </Container>
-      {isPopup === "addBookmark" && <AddBookmark userEmail={me?.email} />}
+      {isPopup === "addBookmark" && <AddBookmark userEmail={me?.email} setMsg={setMsg} />}
       {isPopup === "seePageLink" && <SeePageLink />}
       {isPopup === "detailPageLink" && (
-        <DetailPageLink link={me?.link} userEmail={me?.email} />
+        <DetailPageLink link={me?.link} userEmail={me?.email} setMsg={setMsg} />
       )}
+      {msg && <AlertMessage type="success" time={3000} msg={msg} setMsg={setMsg} />}
     </BasicContainer>
   );
 };

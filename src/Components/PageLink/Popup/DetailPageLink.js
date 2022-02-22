@@ -15,11 +15,13 @@ import { FiLink } from "react-icons/fi";
 import { SETTING_LINK_MUTATION } from "../../../Graphql/User/mutation";
 import { ME_QUERY } from "../../../Hooks/useMe";
 import { outPopup } from "../../../apollo";
+import Loading from "../../Shared/Loading";
 
 const Container = styled.form`
   padding: 20px 0px;
   padding: 1.25rem 0rem;
   display: grid;
+  grid-template-rows: auto auto 1fr auto auto;
   row-gap: 20px;
   row-gap: 1.25rem;
   textarea {
@@ -41,11 +43,13 @@ const Container = styled.form`
     }
   }
 `;
+
 const Title = styled.div`
   justify-self: flex-end;
   font-size: 1.25rem;
   font-size: 1.25em;
 `;
+
 const Layout = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
@@ -103,7 +107,7 @@ const DelBtn = styled.div`
   cursor: pointer;
 `;
 
-const DetailPageLink = ({ link, userEmail }) => {
+const DetailPageLink = ({ link, userEmail, setMsg }) => {
   const pageTitle = localStorage.getItem("addBookmark");
   const [isEdit, setIsEdit] = useState(false);
   const { register, handleSubmit, setValue, getValues } = useForm({
@@ -121,6 +125,7 @@ const DetailPageLink = ({ link, userEmail }) => {
     } = result;
     if (ok) {
       setIsEdit(false);
+      setMsg(`메모가 수정되었습니다. 😀`)
     }
   };
 
@@ -139,6 +144,7 @@ const DetailPageLink = ({ link, userEmail }) => {
     if (ok) {
       outPopup();
       localStorage.removeItem("addBookmark")
+      setMsg(`즐겨찾기에서 제거되었습니다. 😀`)
     }
   };
 
@@ -185,6 +191,10 @@ const DetailPageLink = ({ link, userEmail }) => {
       }
     }
   }, [link]);
+
+  if (loading || editLoading || settingLoading) {
+    return <Loading page="popupPage" />
+  }
 
   return (
     <PopupContainer>
