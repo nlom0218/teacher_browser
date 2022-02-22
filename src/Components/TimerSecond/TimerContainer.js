@@ -23,8 +23,8 @@ const TimeBox = styled.div`
   transition: font-size 0.4s ease;
   cursor: pointer;
   color: ${props => props.screen === "full" && color.white};
-  text-shadow: ${props => props.screen === "full" && "rgb(0, 0, 0) 5px 5px 5px"};;
-  text-shadow: ${props => props.screen === "full" && "rgb(0, 0, 0) 0.3125rem 0.3125rem 0.3125rem"};;
+  text-shadow: ${props => props.screen === "full" && "rgb(0, 0, 0) 5px 5px 5px"};
+  text-shadow: ${props => props.screen === "full" && "rgb(0, 0, 0) 0.3125rem 0.3125rem 0.3125rem"};
 `
 
 const TimerContainer = ({ hours, minutes, seconds, setScreen, screen }) => {

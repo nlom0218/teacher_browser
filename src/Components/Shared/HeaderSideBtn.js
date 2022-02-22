@@ -93,9 +93,6 @@ const HeaderSideBtn = ({ seeSideMenu, setSeeSideMenu }) => {
               <Content onClick={() => navigate(routes.login)}>
                 <Link to={routes.login}>로그인</Link>
               </Content>
-              <Content onClick={() => navigate(routes.createAccount)}>
-                <Link to={routes.createAccount}>회원가입</Link>
-              </Content>
             </React.Fragment>
           )}
         </SideContents>

@@ -16,11 +16,12 @@ const LIST = "/list";
 
 // account link
 const LOGIN = "/login";
-const CREATEACCOUNT = "/create-account";
 const EDITACCOUNT = "/edit-account";
 const NAVERLOGINCALLBACK = "/naverLogin";
 const GOOGLELOGINCALLBACK = "/googleLogin";
 const FINDPASSWORD = "/find-password";
+const FAKE_CREATEACCOUNT = "/fake-create-account";
+const FAKE_LOGIN = "/fake-login"
 
 const TRASH = "/trash";
 
@@ -46,11 +47,12 @@ const routes = {
 
   // account link
   login: LOGIN,
-  createAccount: CREATEACCOUNT,
+  createAccount: FAKE_CREATEACCOUNT,
   editAccount: EDITACCOUNT,
   naverLoginCallBack: NAVERLOGINCALLBACK,
   googleLoginCallBack: GOOGLELOGINCALLBACK,
   findPassword: FINDPASSWORD,
+  fakeLogin: FAKE_LOGIN,
 
   trash: TRASH,
 

@@ -11,16 +11,16 @@ const SDivideLine = styled.div`
   font-size: 14px;
   font-size: 0.875rem;
   font-weight: 500;
-  div {
-    height: 1px;
-    height: 0.0625rem;
-    background: ${props => props.theme.fontColor};
-    transition: background 1s ease;
-  }
+  height: 1px;
+  height: 0.0625rem;
+  background: ${props => props.theme.fontColor};
+  transition: background 1s ease;
+  margin: 20px 0px;
+  margin: 1.25rem 0rem;
 `
 
 const DivideLine = () => {
-  return (<SDivideLine><div></div>또는<div></div></SDivideLine>);
+  return (<SDivideLine></SDivideLine>);
 }
 
 export default DivideLine;

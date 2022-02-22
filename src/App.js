@@ -4,13 +4,11 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { darkModeVar, disableBgThemeAni, isPopupVar, isLoggedInVar } from "./apollo";
 import { darkTheme, GlobalStyle, ligthTheme } from "./styles";
-import Home from "./Pages/Home";
 import Calendar from "./Pages/Calendar";
 import PageLink from "./Pages/PageLink";
 import TodoList from "./Pages/TodoList";
 import Menu from "./Pages/Menu";
 import routes from "./routes";
-import Timer from "./Pages/Timer";
 import Draw from "./Pages/Draw";
 import Swap from "./Pages/Swap";
 import Order from "./Pages/Order";
@@ -19,6 +17,7 @@ import Schedule from "./Pages/Schedule";
 import Journal from "./Pages/Journal";
 import EditAccount from "./Pages/EditAccount";
 import Login from "./Pages/Login";
+import FakeLogin from "./Pages/FakeLogin"
 import CreateAccount from "./Pages/CreateAccount";
 import NaverLoginCallBack from "./Pages/NaverLoginCallBack";
 import GoogleLoginCallBack from "./Pages/GoogleLoginCallBack";
@@ -96,6 +95,7 @@ function App() {
         {/* <Route path={routes.home} element={<Home />} /> */}
         <Route path={routes.home} element={<Welcome />} />
         <Route path={routes.login} element={<Login />} />
+        <Route path={routes.fakeLogin} element={<FakeLogin />} />
         <Route path={routes.createAccount} element={<CreateAccount />} />
         <Route path={routes.naverLoginCallBack} element={<NaverLoginCallBack />} />
         <Route path={routes.googleLoginCallBack} element={<GoogleLoginCallBack />} />

@@ -38,8 +38,8 @@ const BasicLayout = styled.div`
 
 const Layout = styled.div`
   display: grid;
-  row-gap: 60px;
-  row-gap: 3.75rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
   justify-items: center;
   padding: 40px;
   padding: 2.5rem;
