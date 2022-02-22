@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { IoCloseOutline } from "react-icons/io5";
 import styled from "styled-components";
 import { outPopup } from "../../apollo";
 import { stopMusicFn } from "../../audio/BackgroundMusic/BackgroundMusic";
@@ -16,32 +17,31 @@ const Background = styled.div`
 
 const SRegisterContainer = styled.div`
   width: 90%;
-  overflow: auto;
-  -ms-overflow-style: none; // IE and Edge
-  scrollbar-width: none; // Firefox
-  ::-webkit-scrollbar {
-    display: none; // Chrome, Safari, Opera
-  };
   position: fixed;
   left: 50%;
-  top: 15%;
+  top: 10%;
   transform: translate(-50%, 0%);
-  /* height: 70%; */
-  max-height: 70%;
+  max-height: 80%;
   height: ${props => props.maxHeight && "100%"};
+  display: grid;
+  grid-template-rows: auto 1fr;
+  row-gap: 5px;
+  row-gap: 0.3125rem;
   ${customMedia.greaterThan("tablet")`
     width: 60%
   `}
   ${customMedia.greaterThan("desktop")`
     width: 40%
   `}
-  background-color: ${props => props.theme.bgColor};
-  transition: background-color 1s ease;
-  border-radius: 5px;
-  border-radius: .3125rem;
 `
 
 const RegisterPage = styled.div`
+  overflow: auto;
+  -ms-overflow-style: none; // IE and Edge
+  scrollbar-width: none; // Firefox
+  ::-webkit-scrollbar {
+    display: none; // Chrome, Safari, Opera
+  };
   height: ${props => props.maxHeight && "100%"};
   padding: 0px 20px;
   padding: 0rem 1.25rem;
@@ -50,6 +50,10 @@ const RegisterPage = styled.div`
   align-items: flex-start;
   row-gap: 10px;
   row-gap: 1.25rem;
+  background-color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease;
+  border-radius: 5px;
+  border-radius: .3125rem;
   /* Emoji css 커스튬 */
   .emoji-picker-react {
     padding-top: 20px;
@@ -103,6 +107,20 @@ const NoBtn = styled.div`
 `
 
 const YesBtn = styled.div`
+`
+
+const OutBtn = styled.div`
+  justify-self: flex-end;
+  color: ${props => props.theme.bgColor};
+  padding: 1px;
+  padding: 0.0625rem;
+  background-color: ${props => props.theme.redColor};
+  border-radius: 50%;
+  font-size: 1.25em;
+  cursor: pointer;
+  svg {
+    display: flex;
+  }
 `
 
 const PopupContainer = ({ children, emojiPopup, maxHeight, sound1, sound2, needAlert }) => {
@@ -159,10 +177,12 @@ const PopupContainer = ({ children, emojiPopup, maxHeight, sound1, sound2, needA
       </AlertPopup>
       :
       <SRegisterContainer onClick={e => e.stopPropagation()} maxHeight={maxHeight}>
+        <OutBtn onClick={onClickBackground}><IoCloseOutline /></OutBtn>
         <RegisterPage emojiPopup={emojiPopup} maxHeight={maxHeight}>
           {children}
         </RegisterPage>
-      </SRegisterContainer>}
+      </SRegisterContainer>
+    }
   </Background>
   );
 }
