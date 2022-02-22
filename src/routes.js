@@ -19,6 +19,7 @@ const LOGIN = "/login";
 const EDITACCOUNT = "/edit-account";
 const NAVERLOGINCALLBACK = "/naverLogin";
 const GOOGLELOGINCALLBACK = "/googleLogin";
+const KAKAOLOGINCALLBACK = "/kakaoLogin";
 const FINDPASSWORD = "/find-password";
 const FAKE_CREATEACCOUNT = "/fake-create-account";
 const FAKE_LOGIN = "/fake-login"
@@ -52,6 +53,7 @@ const routes = {
   editAccount: EDITACCOUNT,
   naverLoginCallBack: NAVERLOGINCALLBACK,
   googleLoginCallBack: GOOGLELOGINCALLBACK,
+  kakaoLoginCallBack: KAKAOLOGINCALLBACK,
   findPassword: FINDPASSWORD,
   fakeLogin: FAKE_LOGIN,
   agreePolicy: AGREE_POLICY,

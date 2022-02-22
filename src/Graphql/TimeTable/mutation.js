@@ -38,13 +38,19 @@ export const SET_TIMETABLE_TIME_MUTATION = gql`
 `;
 
 export const SET_TIMETABLE_DATA_MUTATION = gql`
-  mutation SetTimetableData(
-    $teacherEmail: String
-    $timetableData: [InputTimetableData]
+  mutation Mutation(
+    $userEmail: String!
+    $studentId: String!
+    $type: String!
+    $date: Float!
+    $contents: String
   ) {
-    setTimetableData(
-      teacherEmail: $teacherEmail
-      timetableData: $timetableData
+    createAttendance(
+      userEmail: $userEmail
+      studentId: $studentId
+      type: $type
+      date: $date
+      contents: $contents
     ) {
       ok
       error

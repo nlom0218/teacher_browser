@@ -21,6 +21,7 @@ import FakeLogin from "./Pages/FakeLogin"
 import CreateAccount from "./Pages/CreateAccount";
 import NaverLoginCallBack from "./Pages/NaverLoginCallBack";
 import GoogleLoginCallBack from "./Pages/GoogleLoginCallBack";
+import KakaoLoginCallBack from "./Pages/KakaoLoginCallBack";
 import useMe from "./Hooks/useMe";
 import HeaderWeather from "./Components/Shared/HeaderWeather";
 import useMedia from "./Hooks/useMedia";
@@ -116,6 +117,7 @@ function App() {
         <Route path={routes.createAccount} element={<CreateAccount />} />
         <Route path={routes.naverLoginCallBack} element={<NaverLoginCallBack />} />
         <Route path={routes.googleLoginCallBack} element={<GoogleLoginCallBack />} />
+        <Route path={routes.kakaoLoginCallBack} element={<KakaoLoginCallBack />} />
         <Route path={routes.editAccount} element={<EditAccount />} />
         <Route path={routes.todo} element={<TodoList />} />
         <Route path={`${routes.todo}/:id`} element={<TodoList />} />

@@ -8,7 +8,7 @@ import {
 import { linkPickFolderVar } from "../../apollo";
 import { removeLinkPickFolder } from "../../apollo";
 import { moveLinkPickFolder } from "../../apollo";
-
+import { Link } from "react-router-dom";
 const Container = styled.div`
   position: absolute;
   padding: 20px;
@@ -36,6 +36,7 @@ const Container = styled.div`
     transition: background-color 1s ease, color 1s ease;
     border-radius: 5px;
     border-radius: 0.3125rem;
+    cursor: pointer;
   }
 `;
 const SFolderList = styled.div`
@@ -87,11 +88,12 @@ const FolderList = ({ right }) => {
       }
     }
   };
-  const onClickLinkPush = () => {};
+  const pageSubmitUrl = "https://forms.gle/cbvs7BuY1RKmcFHo7";
+  const onClickLinkPush = () => {
+    window.open(pageSubmitUrl, "_blank");
+  };
   const pageLinkFolderName = [
     "전체보기",
-    "교육청",
-    "연수원",
     "학급경영",
     "국어",
     "영어",
@@ -108,6 +110,9 @@ const FolderList = ({ right }) => {
     "다문화",
     "출판사",
     "학년밴드",
+    "온라인학습툴",
+    "교육청",
+    "연수원",
     "교권/복지",
   ];
   const listnum = pageLinkFolderName.length;

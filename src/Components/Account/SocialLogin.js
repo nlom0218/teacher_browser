@@ -77,38 +77,6 @@ const GoogleLoginBtn = styled.div`
 `;
 
 const SocialLogin = () => {
-  const navigate = useNavigate();
-
-  //
-  // 카카오 로그인
-  const kakao = window.Kakao;
-
-  //
-  // 뮤테이션 complete 실행 함수
-  const onCompleted = (result) => {
-    let ok, error, token;
-    if (result.kakaoLogin) {
-      ok = result.kakaoLogin.ok;
-      error = result.kakaoLogin.error;
-      token = result.kakaoLogin.token;
-    } else if (result.googleLogin) {
-      ok = result.googleLogin.ok;
-      error = result.googleLogin.error;
-      token = result.googleLogin.token;
-    }
-    if (error) {
-      return <>{error.message}</>;
-    }
-    if (ok) {
-      logInUser(token);
-      navigate(routes.home);
-    }
-  };
-
-  const [kakaoLoginMutation, { loading: kakaoLoginLoading }] = useMutation(KAKAO_LOGIN_MUTATION, {
-    onCompleted,
-  });
-
   // 네이버 버튼 클릭 핸들
   const onClickNaverLoginBtn = () => {
     const protocol = window.location.protocol;
@@ -118,27 +86,9 @@ const SocialLogin = () => {
 
   // 카카오 버튼 클릭 핸들
   const onClickKakaoLoginBtn = () => {
-    kakao.Auth.login({
-      scope: "account_email",
-      success: () => {
-        kakao.API.request({
-          url: "/v2/user/me",
-          success: ({ kakao_account }) => {
-            if (kakao_account.email) {
-              const email = kakao_account.email;
-              if (kakaoLoginLoading) return;
-              kakaoLoginMutation({ variables: { email } });
-            } else {
-              alert("정상적으로 가입되었습니다.\n다시 로그인 후 이메일 정보를 제공해주세요.");
-            }
-          },
-          fail: (err) => console.log(err),
-        });
-      },
-      fail: (err) => {
-        console.log(err);
-      },
-    });
+    const protocol = window.location.protocol;
+    const host = window.location.host;
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.REACT_APP_KAKAO_API_KEY}&redirect_uri=${protocol}//${host}/kakaoLogin&scope=account_email`;
   };
 
   // 구글 버튼 클릭 핸들

@@ -5,27 +5,11 @@ import PopupPrintContainer from "../../Shared/PopupPrintContainer";
 import { useReactToPrint } from "react-to-print";
 import { color } from "../../../styles";
 import { useQuery } from "@apollo/client";
-import { GET_TIMETABLE_TIME_QUERY } from "../../../Graphql/TimeTable/query";
+import { GET_TIMETABLE_DATA_QUERY } from "../../../Graphql/TimeTable/query";
 
 const PrintTopContents = styled.div`
   display: grid;
   grid-template-columns: auto auto;
-`;
-
-const PrintType = styled.div`
-  display: grid;
-  grid-template-columns: auto auto 1fr;
-  column-gap: 20px;
-  column-gap: 1.25rem;
-`;
-
-const PrintTypeItem = styled.div`
-  display: grid;
-  grid-template-columns: auto auto;
-  align-items: center;
-  column-gap: 5px;
-  column-gap: 0.3125rem;
-  cursor: pointer;
 `;
 
 const PrintIcon = styled.div`
@@ -45,7 +29,6 @@ const PrintIcon = styled.div`
 `;
 
 const PrintContainer = styled.div`
-  /* grid-template-rows: 0.5fr 1.5fr 18fr; */
   display: grid;
   row-gap: 40px;
   row-gap: 2.5rem;
@@ -71,46 +54,33 @@ const Title = styled.div`
   align-self: center;
 `;
 
-const List = styled.div`
-  border: ${color.black} 2px solid;
-  background-color: ${color.black};
-  color: ${color.black};
-  row-gap: 2px;
-  row-gap: 0.125rem;
-  column-gap: 2px;
-  column-gap: 0.125rem;
+const UPDOWN = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  .print_table_row_name {
-    text-align: center;
-    font-weight: 600;
-    background-color: ${color.white};
-  }
+  grid-template-rows: 1fr 6fr;
+  row-gap: 5px;
+  row-gap: 0.3125rem;
 `;
-
-const Item = styled.div`
-  background-color: #ffffff;
+const RIGHTLEFT = styled.div`
   display: grid;
-  grid-template-columns: 1fr 3fr;
-  font-size: 1.2em;
-  font-size: 1.2rem;
+  grid-template-columns: 1fr 5fr;
+  column-gap: 5px;
+  column-gap: 0.3125rem;
 `;
-
-const Number = styled.div`
-  padding: 15px 20px;
-  padding: 0.9375rem 1.25rem;
-  background-color: ${color.white};
-  text-align: center;
-  border-right: ${color.black} 2px solid;
-  font-weight: 600;
+const GridTime = styled.div`
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  row-gap: 5px;
+  row-gap: 0.3125rem;
 `;
-
-const Name = styled.div`
-  background-color: #ffffff;
-  padding: 15px 20px;
-  padding: 0.9375rem 1.25rem;
+const GridDay = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  column-gap: 5px;
+  column-gap: 0.3125rem;
+  row-gap: 5px;
+  row-gap: 0.3125rem;
 `;
-
 const GridList = styled.div`
   height: 100%;
   display: grid;
@@ -181,6 +151,7 @@ const GridItem = styled.div`
 `;
 
 const PrintScheduleContents = ({ printRef, title, viewTime, timeResult }) => {
+  const { data, loading, error } = useQuery(GET_TIMETABLE_DATA_QUERY);
   const handlePrint = useReactToPrint({
     content: () => printRef.current,
   });
@@ -190,12 +161,7 @@ const PrintScheduleContents = ({ printRef, title, viewTime, timeResult }) => {
   };
 
   const dayList = ["", "월", "화", "수", "목", "금"];
-  const table1st = ["", "", "", "", ""];
-  const table2nd = ["", "", "", "", ""];
-  const table3rd = ["", "", "", "", ""];
-  const table4th = ["", "", "", "", ""];
-  const table5th = ["", "", "", "", ""];
-  const table6th = ["", "", "", "", ""];
+  const timeList = ["1", "2", "3", "4", "5", "6"];
 
   return (
     <PopupPrintContainer printRef={printRef}>
@@ -208,78 +174,54 @@ const PrintScheduleContents = ({ printRef, title, viewTime, timeResult }) => {
       <PrintContainer ref={printRef}>
         <PageTitle>시간표</PageTitle>
         <Title>{title}</Title>
-
-        <GridList>
-          {dayList.map((item, index) => {
-            return <TableOutItem>{item}</TableOutItem>;
-          })}
-          {viewTime === true ? (
-            <TableOutItem>
-              1<TimeUp>{timeResult[0]}</TimeUp>
-              <TimeDown>{timeResult[1]}</TimeDown>
-            </TableOutItem>
-          ) : (
-            <TableOutItem>1</TableOutItem>
-          )}
-          {table1st.map((item, index) => {
-            return <TableItem>{item}</TableItem>;
-          })}
-          {viewTime === true ? (
-            <TableOutItem>
-              2<TimeUp>{timeResult[2]}</TimeUp>
-              <TimeDown>{timeResult[3]}</TimeDown>
-            </TableOutItem>
-          ) : (
-            <TableOutItem>2</TableOutItem>
-          )}
-          {table2nd.map((item, index) => {
-            return <TableItem>{item}</TableItem>;
-          })}
-          {viewTime === true ? (
-            <TableOutItem>
-              3<TimeUp>{timeResult[4]}</TimeUp>
-              <TimeDown>{timeResult[5]}</TimeDown>
-            </TableOutItem>
-          ) : (
-            <TableOutItem>3</TableOutItem>
-          )}{" "}
-          {table3rd.map((item, index) => {
-            return <TableItem>{item}</TableItem>;
-          })}
-          {viewTime === true ? (
-            <TableOutItem>
-              4<TimeUp>{timeResult[6]}</TimeUp>
-              <TimeDown>{timeResult[7]}</TimeDown>
-            </TableOutItem>
-          ) : (
-            <TableOutItem>4</TableOutItem>
-          )}{" "}
-          {table4th.map((item, index) => {
-            return <TableItem>{item}</TableItem>;
-          })}
-          {viewTime === true ? (
-            <TableOutItem>
-              5<TimeUp>{timeResult[8]}</TimeUp>
-              <TimeDown>{timeResult[9]}</TimeDown>
-            </TableOutItem>
-          ) : (
-            <TableOutItem>5</TableOutItem>
-          )}{" "}
-          {table5th.map((item, index) => {
-            return <TableItem>{item}</TableItem>;
-          })}
-          {viewTime === true ? (
-            <TableOutItem>
-              6<TimeUp>{timeResult[10]}</TimeUp>
-              <TimeDown>{timeResult[11]}</TimeDown>
-            </TableOutItem>
-          ) : (
-            <TableOutItem>6</TableOutItem>
-          )}{" "}
-          {table6th.map((item, index) => {
-            return <TableItem>{item}</TableItem>;
-          })}
-        </GridList>
+        <UPDOWN>
+          <GridList>
+            {dayList.map((item, index) => {
+              return <TableOutItem>{item}</TableOutItem>;
+            })}
+          </GridList>
+          <RIGHTLEFT>
+            {viewTime === true ? (
+              <GridTime>
+                <TableOutItem>
+                  1<TimeUp>{timeResult[0]}</TimeUp>
+                  <TimeDown>{timeResult[1]}</TimeDown>
+                </TableOutItem>
+                <TableOutItem>
+                  2<TimeUp>{timeResult[2]}</TimeUp>
+                  <TimeDown>{timeResult[3]}</TimeDown>
+                </TableOutItem>
+                <TableOutItem>
+                  3<TimeUp>{timeResult[4]}</TimeUp>
+                  <TimeDown>{timeResult[5]}</TimeDown>
+                </TableOutItem>
+                <TableOutItem>
+                  4<TimeUp>{timeResult[6]}</TimeUp>
+                  <TimeDown>{timeResult[7]}</TimeDown>
+                </TableOutItem>
+                <TableOutItem>
+                  5<TimeUp>{timeResult[8]}</TimeUp>
+                  <TimeDown>{timeResult[9]}</TimeDown>
+                </TableOutItem>
+                <TableOutItem>
+                  6<TimeUp>{timeResult[10]}</TimeUp>
+                  <TimeDown>{timeResult[11]}</TimeDown>
+                </TableOutItem>
+              </GridTime>
+            ) : (
+              <GridTime>
+                {timeList.map((item, index) => {
+                  return <TableOutItem>{item}</TableOutItem>;
+                })}
+              </GridTime>
+            )}
+            <GridDay>
+              {data?.getTimetableData.map((item, index) => {
+                return <TableItem>{item.subname}</TableItem>;
+              })}
+            </GridDay>
+          </RIGHTLEFT>
+        </UPDOWN>
       </PrintContainer>
     </PopupPrintContainer>
   );

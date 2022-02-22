@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { useLazyQuery } from "@apollo/client";
+import { WEATHER_QUERY } from "../../Graphql/Weather/query";
+
 import styled from "styled-components";
-import { FcDown, FcUp } from "react-icons/fc";
-import { weatherBtnDown, weatherBtnUp, weatherDown, weatherUp } from "../../Animations/WeatherAni";
 import { color } from "../../styles";
+import { FcDown, FcUp } from "react-icons/fc";
 import { BsEmojiDizzy, BsEmojiFrown, BsEmojiHeartEyes, BsEmojiLaughing } from "react-icons/bs";
 import IcDustGood from "../../icons/Dust/IcDustGood";
 import IcDustSoso from "../../icons/Dust/IcDustSoso";
 import IcDustBad from "../../icons/Dust/IcDustBad";
 import IcDustVeryBad from "../../icons/Dust/IcDustVeryBad";
+import { weatherBtnDown, weatherBtnUp, weatherDown, weatherUp } from "../../Animations/WeatherAni";
 
 const Weather = styled.div``;
 
@@ -86,32 +89,12 @@ const HeaderWeather = () => {
   };
   //--날씨 위젯 컨트롤 부분--//
 
-  const [weather, setWeather] = useState(false);
+  //날씨 정보 불러오기 쿼리
+  const [getWeather, { loading, error, data }] = useLazyQuery(WEATHER_QUERY);
 
   //위치 정보 수신 성공 시
   function handleGeoSuccess(position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-
-    const query = `{
-      weather(lat: ${latitude}, lng: ${longitude}) {
-        address1, address2, temp, icon, pm10grade
-      }
-    }`;
-
-    const apiUrl = process.env.NODE_ENV === "production"
-      ? "https://teachercan.herokuapp.com/graphql"
-      : "http://localhost:4000/graphql"
-
-    fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ query }),
-    })
-      .then((res) => res.json())
-      .then(({ data: { weather: weather } }) => setWeather(weather));
+    getWeather({ variables: { lat: position.coords.latitude, lng: position.coords.longitude } });
   }
 
   //위치 정보 수신 거부 시
@@ -128,7 +111,7 @@ const HeaderWeather = () => {
   }
 
   //첫 렌더링 시 좌표 수집
-  useEffect(askForCoords, []);
+  useEffect(askForCoords, [askForCoords]);
 
   return (
     <Weather>
@@ -136,10 +119,14 @@ const HeaderWeather = () => {
         {seeWeather ? <FcUp /> : <FcDown />}
       </WeatherBtn>
       <WeatherContent seeWeather={seeWeather} firstEnter={firstEnter}>
-        {weather ? (
+        {loading ? (
+          "날씨 정보 수신 중..."
+        ) : error ? (
+          error.message
+        ) : data ? (
           <WeatherItems>
-            <Temp>{Math.round(weather.temp)}℃</Temp>
-            <WeatherIcon src={require(`../../image/icons/weather/${weather.icon}.svg`).default} />
+            <Temp>{Math.round(data.weather.temp)}℃</Temp>
+            <WeatherIcon src={require(`../../image/icons/weather/${data.weather.icon}.svg`).default} />
             <Dust>미세먼지</Dust>
             <DustIcon>
               {weather.pm10grade === "1" ? (
@@ -155,10 +142,10 @@ const HeaderWeather = () => {
               )}
             </DustIcon>
             <div>@</div>
-            <Address>{weather.address1 + " " + weather.address2}</Address>
+            <Address>{data.weather.address1 + " " + data.weather.address2}</Address>
           </WeatherItems>
         ) : (
-          "날씨 정보 수신 중..."
+          "위치 정보 없음"
         )}
       </WeatherContent>
     </Weather>

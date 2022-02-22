@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
-import { inPopup, isPopupVar } from "../apollo";
+import { inPopup, isPopupVar, outPopup } from "../apollo";
 import useMedia from "../Hooks/useMedia";
 import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
 import TimeTableFont from "../Components/Schedule/TimeTableFont";
@@ -17,6 +17,7 @@ import useMe from "../Hooks/useMe";
 import ScheduleForm from "../Components/Schedule/ScheduleForm";
 import { useQuery } from "@apollo/client";
 import { GET_TIMETABLE_TIME_QUERY } from "../Graphql/TimeTable/query";
+import { GET_TIMETABLE_DATA_QUERY } from "../Graphql/TimeTable/query";
 //음영한 뒤 다크모드에서 글씨 안 보임.
 //수업추가 어떻게?
 
@@ -66,6 +67,11 @@ const TypeBtn = styled.div`
 const Schedule = () => {
   const [timeResult, setTimeResult] = useState([]);
   const [timetableTime, setTimetableTime] = useState([]);
+  const {
+    data: timetableData,
+    loading: timetableLoading,
+    error: timetableError,
+  } = useQuery(GET_TIMETABLE_DATA_QUERY);
 
   const { data, loading, error } = useQuery(GET_TIMETABLE_TIME_QUERY, {
     onCompleted: ({ getTimetableTime: data }) => {
@@ -142,7 +148,10 @@ const Schedule = () => {
       </Container>
 
       {isPopup === "registerClass" && (
-        <ClassRegisterPage userEmail={me?.email} />
+        <ClassRegisterPage
+          userEmail={me?.email}
+          timetableData={timetableData}
+        />
       )}
       {isPopup === "registerTime" && (
         <TimeRegisterPage timeResult={timeResult} userEmail={me?.email} />
