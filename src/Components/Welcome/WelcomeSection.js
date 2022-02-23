@@ -192,7 +192,7 @@ const WelcomeSection = ({ welcomeSection, init, setInit, logoImageArr, me }) => 
       <LogoContents>
         <LogoMsg>
           <div>티처캔 캐릭터에 어울리는 멋진 이름을 지어주세요! 선정된 분들껜 소소한 선물이 기다리고 있습니다. 😁</div>
-          <GoogleForm>응모하러 가기</GoogleForm>
+          <GoogleForm onClick={() => { window.open("https://forms.gle/ih3oF6uPrn3Z1C3b7") }}>응모하러 가기</GoogleForm>
         </LogoMsg>
         <LogoList>
           {logoImageArr.map((item, index) => {
