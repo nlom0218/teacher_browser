@@ -34,7 +34,7 @@ const GoogleLoginCallBack = () => {
     else navigate(routes.login);
   }, [googleLoginMutation, navigate]);
 
-  if (loading) return <Loading page="subPage" />;
+  if (loading) return <Loading page="mainPage" />;
   if (error) return <>{error.message}</>;
 
   return <>{errMsg}</>;

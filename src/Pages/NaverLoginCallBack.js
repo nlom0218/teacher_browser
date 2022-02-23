@@ -36,7 +36,7 @@ const NaverLoginCallBack = () => {
     naverLoginMutation({ variables: { code, state, error, errorDescription } });
   }, [naverLoginMutation]);
 
-  if (loading) return <Loading page="subPage" />;
+  if (loading) return <Loading page="mainPage" />;
 
   return <>{errMsg}</>;
 };

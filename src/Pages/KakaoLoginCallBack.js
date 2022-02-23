@@ -42,7 +42,7 @@ const KakaoLoginCallBack = () => {
     else navigate(routes.login);
   }, [kakaoLoginMutation, navigate]);
 
-  if (loading) return <Loading page="subPage" />;
+  if (loading) return <Loading page="mainPage" />;
   if (error) return <>{error.message}</>;
 
   return <>{errMsg}</>;
