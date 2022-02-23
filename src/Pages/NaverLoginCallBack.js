@@ -2,6 +2,7 @@ import { useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { logInUser } from "../apollo";
+import Loading from "../Components/Shared/Loading";
 import { NAVER_LOGIN_MUTATION } from "../Graphql/User/mutation";
 import routes from "../routes";
 
@@ -35,7 +36,7 @@ const NaverLoginCallBack = () => {
     naverLoginMutation({ variables: { code, state, error, errorDescription } });
   }, [naverLoginMutation]);
 
-  if (loading) return <>로딩중입니다...</>;
+  if (loading) return <Loading page="subPage" />;
 
   return <>{errMsg}</>;
 };
