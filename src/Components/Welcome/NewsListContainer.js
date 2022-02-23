@@ -93,12 +93,7 @@ const PageBtn = styled.div`
 
 
 const NewsListContainer = ({ search, data, userEmail, favoriteNews, start, setStart }) => {
-  const onCompleted = (result) => {
-
-  }
-
   const [setFavoriteNews, { loading }] = useMutation(SET_FAVORITE_NEWS_MUTATION, {
-    onCompleted,
     refetchQueries: [{ query: ME_QUERY }]
   })
 
@@ -124,9 +119,9 @@ const NewsListContainer = ({ search, data, userEmail, favoriteNews, start, setSt
           <SearchTitle>
             <span className="news_search_title">{search}</span> NAVER NEWS 검색 결과
           </SearchTitle>
-          <StartIcon onClick={onClickIcon} favoriteNews={favoriteNews.includes(search)}>
+          {favoriteNews && <StartIcon onClick={onClickIcon} favoriteNews={favoriteNews.includes(search)}>
             {favoriteNews.includes(search) ? <BsStarFill /> : <BsStar />}
-          </StartIcon>
+          </StartIcon>}
         </SearchResult>
         <NewsList>
           {data?.getNews?.map((item, index) => {

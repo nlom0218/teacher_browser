@@ -76,6 +76,7 @@ const HeaderSideBtn = ({ seeSideMenu, setSeeSideMenu }) => {
   };
   const onClickLogOut = () => {
     navigate(routes.home);
+    localStorage.removeItem("welcomeSection")
     logOutUser(() => window.location.reload());
   };
   return (

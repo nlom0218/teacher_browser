@@ -31,6 +31,7 @@ const FavoriteNewsList = ({ favoriteNews, setSeacrh, setStart }) => {
     setSeacrh(item)
     setStart(1)
   }
+
   return (<Container>
     {favoriteNews?.length === 0 ? <div>즐겨찾기 검색어가 없습니다. 😭</div>
       : <List>
