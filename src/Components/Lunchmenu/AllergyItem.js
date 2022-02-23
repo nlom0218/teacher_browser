@@ -57,8 +57,8 @@ const AllergyItem = ({ item, me }) => {
   }, [])
 
   useEffect(() => {
-    if (data) {
-      const students = data?.seeAllStudent.map((item) => item.studentName)
+    if (data?.seeAllStudent) {
+      const students = data?.seeAllStudent?.map((item) => item.studentName)
       if (students.length !== 0) {
         const studentName = [students[0], students[1], students[2]]
           .filter(item => item)
@@ -66,11 +66,13 @@ const AllergyItem = ({ item, me }) => {
         const studentNum = students.length
         setHoverContent({ studentName, studentNum })
       }
+    } else {
+      return
     }
   }, [data])
 
   return (<SAllergyItem
-    myAllergy={me?.allergy.includes(parseInt(item))}
+    myAllergy={me ? me?.allergy.includes(parseInt(item)) : false}
     onClick={() => onClickAllergy(item)}
     onMouseEnter={() => setIsHover(true)}
     onMouseLeave={() => setIsHover(false)}

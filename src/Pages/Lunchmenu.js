@@ -17,6 +17,7 @@ import IcSchoolYellow from "../icons/School/IcSchoolYellow";
 import { useLocation } from "react-router";
 import Loading from "../Components/Shared/Loading";
 import useTitle from "../Hooks/useTitle";
+import NoSchoolData from "../Components/Lunchmenu/Popup/NoSchoolData";
 dotenv.config();
 
 const LunchmenuContainer = styled.div`
@@ -159,7 +160,7 @@ const LunchmenuBtn = styled.div`
     `}
   ${customMedia.greaterThan("desktop")`
     justify-self: flex-start;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto auto auto;
   `}
   div {
     padding: 10px 20px;
@@ -284,6 +285,13 @@ const Lunchmenu = () => {
 
   const onClickBtn = (mode) => {
     const lmSetting = JSON.parse(localStorage.getItem("lmSetting"))
+    if (mode === "yesterday") {
+      const yesterdayDate = new window.Date(date.setDate(date.getDate() - 1))
+      const newLmSetting = { ...lmSetting, date: yesterdayDate }
+      localStorage.setItem("lmSetting", JSON.stringify(newLmSetting))
+      setDate(new window.Date(yesterdayDate))
+      return
+    }
     if (mode === "tomorrow") {
       const tomorrowDate = new window.Date(date.setDate(date.getDate() + 1))
       const newLmSetting = { ...lmSetting, date: tomorrowDate }
@@ -309,7 +317,7 @@ const Lunchmenu = () => {
       setSchoolName(me?.schoolName)
       localStorage.setItem("lmSetting", JSON.stringify(newLmSetting))
     } else {
-      window.alert("학교정보가 없습니다.")
+      inPopup("noSchoolData")
     }
   }
 
@@ -361,6 +369,7 @@ const Lunchmenu = () => {
             }
           </SLunchmenus>
           <LunchmenuBtn>
+            <div onClick={() => onClickBtn("yesterday")}>어제 식단표</div>
             <div onClick={() => onClickBtn("tomorrow")}>다음날 식단표</div>
             <div onClick={() => onClickBtn("today")}>오늘 식단표</div>
             {me && <div onClick={() => onClickBtn("school")}>우리학교 식단표</div>}
@@ -382,7 +391,8 @@ const Lunchmenu = () => {
         setSchoolCode={setSchoolCode}
         setSchoolName={setSchoolName}
       />}
-      {isPopup == "seeAllergy" && <SeeAllergy />}
+      {isPopup === "seeAllergy" && <SeeAllergy />}
+      {isPopup === "noSchoolData" && <NoSchoolData />}
     </BasicContainer>
   );
 };
