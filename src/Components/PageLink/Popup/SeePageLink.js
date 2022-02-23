@@ -6,6 +6,7 @@ import PopupContainer from "../../Shared/PopupContainer";
 import { MdOutlineDescription } from "react-icons/md";
 import TextareaAutosize from "react-textarea-autosize";
 import { FiLink } from "react-icons/fi";
+import Loading from "../../Shared/Loading";
 
 const Container = styled.div`
   min-height: 100%;
@@ -84,6 +85,10 @@ const SeePageLink = () => {
   const onClickPageURL = () => {
     window.open(data?.seePageLink[0].pageURL, "_blank");
   };
+
+  if (loading) {
+    return <Loading page="popupPage" />
+  }
 
   return (
     <PopupContainer maxHeight={true}>
