@@ -15,9 +15,15 @@ const Container = styled.div`
   }
 `
 
-const SortTagBtn = () => {
+const SortTagBtn = ({ me }) => {
 
-  const onClickStudentSetting = () => inPopup("seeStudentSetting")
+  const onClickStudentSetting = () => {
+    if (me) {
+      inPopup("seeStudentSetting")
+    } else {
+      inPopup("needLogin")
+    }
+  }
 
   return (<Container>
     <FcSettings onClick={onClickStudentSetting} />

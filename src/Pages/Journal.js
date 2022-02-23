@@ -90,7 +90,7 @@ const Journal = ({ me }) => {
       <Container>
         <TitleArea studentListName={studentListName} type={type} studentName={studentName} />
         {type === "list" && <MainArea me={me} students={students} loading={loading} error={error} setSort={setSort} sort={sort} listId={id} />}
-        {type === "student" && <JournalDetail studentId={id} teacherEmail={me?.email} refetchQuery={refetchQuery} studentName={studentName} />}
+        {type === "student" && <JournalDetail studentId={id} refetchQuery={refetchQuery} studentName={studentName} />}
       </Container>
       {isPopup === "seeStudentList" && <StudentList me={me} />}
       {isPopup === "deleteJournal" && <DeleteJournal />}

@@ -52,17 +52,18 @@ const HelpIcon = styled.div`
   }
 `
 
-const AllList = ({ someDragging, setSuccessMsg, setErrorMsg, setSomeDragging, selectedTag, selectedSort, setDragType, dragType }) => {
+const AllList = ({ someDragging, setSuccessMsg, setErrorMsg, setSomeDragging, selectedTag, selectedSort, setDragType, dragType, me }) => {
   // 학생 리스트가 아니라 명렬표임!!!
   const [studentList, setSudentList] = useState(undefined)
 
-  const isPopup = useReactiveVar(isPopupVar)
   const { data, loading } = useQuery(SEE_ALL_STUDENT_LIST_QUERY)
   const onClickAddIcon = () => {
     if (data?.seeStudentList.length === 10) {
       setErrorMsg("명렬표는 최대 10개까지 생성 가능합니다. 😅")
-    } else {
+    } else if (me) {
       inPopup("createList")
+    } else {
+      inPopup("needLogin")
     }
   }
 
