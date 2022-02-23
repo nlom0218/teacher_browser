@@ -21,6 +21,9 @@ import IcNameTable from "../icons/NameTable/IcNameTable";
 import useTitle from "../Hooks/useTitle";
 import StudentList from "../Components/Shared/popup/StudentList";
 import Loading from "../Components/Shared/Loading";
+import NeedLoginPopupContainer from "../Components/Shared/NeedLoginPopupContainer";
+import useMe from "../Hooks/useMe";
+import NoStudentMsg from "../Components/Shared/styled/NoStudentMsg";
 
 
 // 전체 틀
@@ -169,6 +172,8 @@ const Order = () => {
 
   const componentRef = useRef(null);
 
+  const me = useMe()
+
   const [IconsLIstisHover, setIconListIsHover] = useState(false)
   const [studentListName, setStudentListName] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState([]);
@@ -189,7 +194,14 @@ const Order = () => {
     skip: !id,
   });
 
-  const onClickListIcon = () => inPopup("seeStudentList");
+  const onClickListIcon = () => {
+    if (me) {
+      inPopup("seeStudentList")
+    } else {
+      inPopup("needLogin")
+    }
+  }
+
   const onClickInput = () => {
     setIsEdit(true);
   };
@@ -249,7 +261,7 @@ const Order = () => {
           </ListIcon>
         </TopContents>
         {loading ? <Loading page="subPage" /> :
-          id && (
+          id && (selectedStudent.length === 0 ? <NoStudentMsg>명렬표에 학생이 없습니다. 😅 <br />명렬표에서 학생을 추가하세요!</NoStudentMsg> : (
             <React.Fragment>
               <OptionContents>
                 {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
@@ -277,11 +289,12 @@ const Order = () => {
                 setSelectedStudent={setSelectedStudent}
                 isShuffle={isShuffle}
               />
-            </React.Fragment>
+            </React.Fragment>)
           )}
       </Container>
       { isPopup === "seeStudentList" && <StudentList page="order" setIsShuffle={setIsShuffle} />}
       { isPopup === "print" && <PrintOrderContents printRef={componentRef} title={title} selectedStudent={selectedStudent} />}
+      {isPopup === "needLogin" && <NeedLoginPopupContainer />}
       { isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
     </BasicContainer >
   );

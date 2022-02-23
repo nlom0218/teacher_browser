@@ -39,7 +39,7 @@ const AddStudentBtn = styled.div`
   transition: background-color 1s ease, color 1s ease;
 `
 
-const StudentList = ({ setSomeDragging, studentId, meTag, seeNum, setDragType, allStudent, seeStudentIcon }) => {
+const StudentList = ({ setSomeDragging, studentId, seeNum, setDragType, allStudent, seeStudentIcon, me }) => {
   // 초기 로드 시 에니메이션 작동 안하게 하기
   const [initLoad, setInitLoad] = useState(true)
 
@@ -47,7 +47,13 @@ const StudentList = ({ setSomeDragging, studentId, meTag, seeNum, setDragType, a
   const [isSeedisplay, isSeeSetDisplay] = useState(isSeeList)
 
   // 학생 생성을 위한 팝업창
-  const onClickAddBtn = () => inPopup("createStudent")
+  const onClickAddBtn = () => {
+    if (me) {
+      inPopup("createStudent")
+    } else {
+      inPopup("needLogin")
+    }
+  }
 
   const onClickSeeBtn = () => {
     if (initLoad) {
@@ -70,7 +76,7 @@ const StudentList = ({ setSomeDragging, studentId, meTag, seeNum, setDragType, a
     </SeeRightContentsBtn>
     <DivideRightContents isSeeList={isSeeList} initLoad={initLoad} isSeedisplay={isSeedisplay}>
       <SStudentList>
-        <SortTagBtn />
+        <SortTagBtn me={me} />
         {allStudent?.length === 0 ?
           <div className="noStudnet">생성된 학생이 없습니다.</div>
           :

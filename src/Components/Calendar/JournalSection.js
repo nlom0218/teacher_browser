@@ -41,14 +41,12 @@ const PlusJournalBtn = styled.div`
   }
 `
 
-const JournalSection = ({ teacherEmail, urlDate, refetchQuery }) => {
+const JournalSection = ({ urlDate, refetchQuery }) => {
 
   const { data, loading, refetch } = useQuery(SEE_JOURNAL_QUERY, {
     variables: {
       date: parseInt(urlDate),
-      teacherEmail
-    },
-    skip: !teacherEmail
+    }
   })
 
   const onClickPlusBtn = () => {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BasicContainer from '../Components/Shared/BasicContainer';
+import NeedLoginPopupContainer from '../Components/Shared/NeedLoginPopupContainer';
 import TodoHead from '../Components/TodoList/TodoHead';
 import styled from 'styled-components';
 import TodoCreate from '../Components/TodoList/Popup/TodoCreate';
@@ -134,7 +135,7 @@ const TodoList = () => {
   return (
     <BasicContainer screen="small">
       <Container>
-        <TodoHead />
+        <TodoHead userEmail={me?.email} />
         <TodoBody>
           <IngToDoContainer className="todo_container"><TodoIng ingToDos={ingToDos} /></IngToDoContainer>
           <NotIngToDoContainer className="todo_container">
@@ -149,6 +150,7 @@ const TodoList = () => {
       {isPopup === "detailToDo" && <DetailToDo setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} />}
       {isPopup === "confirmDelAll" && <DelAllToDos setMsg={setMsg} userEmail={me?.email} />}
       {isPopup === "toDoHelper" && <ToDoHelper />}
+      {isPopup === "needLogin" && <NeedLoginPopupContainer />}
       <AlertMessage msg={errMsg} time={3000} setMsg={setErrMsg} type="error" />
       <AlertMessage msg={msg} time={3000} setMsg={setMsg} type="success" />
     </BasicContainer>

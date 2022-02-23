@@ -115,7 +115,11 @@ const Trash = ({ someDragging, setSuccessMsg, selectedTag, selectedSort, dragTyp
   })
 
   const onClickTrash = () => {
-    navigate(routes.trash)
+    if (me) {
+      navigate(routes.trash)
+    } else {
+      inPopup("needLogin")
+    }
   }
 
   useEffect(() => {

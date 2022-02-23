@@ -74,10 +74,13 @@ const HeaderSideBtn = ({ seeSideMenu, setSeeSideMenu }) => {
   const onClickSideBtn = () => {
     setSeeSideMenu((prev) => !prev);
   };
+
   const onClickLogOut = () => {
     navigate(routes.home);
+    localStorage.removeItem("welcomeSection")
     logOutUser(() => window.location.reload());
   };
+
   return (
     <SideMenu>
       <SideBtn onClick={onClickSideBtn}>
@@ -93,8 +96,8 @@ const HeaderSideBtn = ({ seeSideMenu, setSeeSideMenu }) => {
               <Content onClick={() => window.open(`https://www.notion.so/18b5b5b23fb84323b5a2a0b71c9980fd`)}>
                 About 팀 초코
               </Content>
-              <Content onClick={onClickLogOut}>이용약관</Content>
-              <Content onClick={onClickLogOut}>개인정보 처리방침</Content>
+              <Content onClick={() => window.open("https://www.notion.so/c14d0210aefd451bb3308048ca48d7ba")}>이용약관</Content>
+              <Content onClick={() => window.open("https://www.notion.so/28730aebd08147a9816952e4222db44f")}>개인정보 처리방침</Content>
               <Content onClick={onClickLogOut}>로그아웃</Content>
             </React.Fragment>
           ) : (

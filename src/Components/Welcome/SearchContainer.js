@@ -156,10 +156,10 @@ const SearchContainer = ({ search, setSeacrh, sort, setSort, favoriteNews, setSt
         <div>최신순</div>
       </SeeTypeIcon>
     </SeeType>
-    <FavoriteNews>
+    {favoriteNews && <FavoriteNews>
       <Title><BsStarFill /><div>즐겨찾기</div></Title>
       <FavoriteNewsList favoriteNews={favoriteNews} setSeacrh={setSeacrh} setStart={setStart} />
-    </FavoriteNews>
+    </FavoriteNews>}
   </SearchBox>);
 }
 

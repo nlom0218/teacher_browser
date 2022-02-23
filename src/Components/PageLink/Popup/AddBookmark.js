@@ -8,7 +8,7 @@ import { SETTING_LINK_MUTATION } from "../../../Graphql/User/mutation";
 import { outPopup } from "../../../apollo";
 import { ME_QUERY } from "../../../Hooks/useMe";
 import { useForm } from "react-hook-form";
-import { GrHomeRounded } from "react-icons/gr";
+import { BiHome } from "react-icons/bi";
 import { SEE_MY_PAGE_LINK_QUERY } from "../../../Graphql/PageLink/query";
 import Loading from "../../Shared/Loading";
 
@@ -27,7 +27,7 @@ const Container = styled.form`
     border-radius: 5px;
     border-radius: 0.3125rem;
     border: ${(props) => props.isEdit && `${props.theme.fontColor} 1px solid`};
-    background-color: #ffffff;
+    background-color: ${props => props.theme.originBgColor};
     transition: border 1s ease, background-color 1s ease;
     line-height: 160%;
     ::placeholder {
@@ -59,7 +59,7 @@ const Icon = styled.div`
   }
 `;
 const Title = styled.div`
-  background-color: #ffffff;
+  background-color: ${props => props.theme.originBgColor};
   padding: 20px;
   padding: 1.25rem;
   border-radius: 5px;
@@ -122,7 +122,7 @@ const AddBookmark = ({ userEmail, setMsg }) => {
         <PopupTitle>즐겨찾기 추가하기</PopupTitle>
         <Layout>
           <Icon>
-            <GrHomeRounded />
+            <BiHome />
           </Icon>
           <Title>{title}</Title>
         </Layout>

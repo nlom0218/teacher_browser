@@ -11,6 +11,7 @@ import { ko } from "date-fns/esm/locale";
 import DatePicker from 'react-datepicker';
 import IcNameTableClick from '../../../icons/NameTable/IcNameTableClick';
 import { CREATE_ATTENDANCE_MUTATION } from '../../../Graphql/Attendance/mutation';
+import { format } from 'date-fns';
 
 const CalenderPopupFormContainer = styled.form`
   padding : 20px 0px;
@@ -159,11 +160,14 @@ const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) =
       return
     }
 
+    const month = parseInt(format(new window.Date(date), "yyMM"))
+
     createAttendance({
       variables: {
         userEmail,
         studentId,
         type,
+        month,
         date: new window.Date(date).setHours(0, 0, 0, 0),
         ...(contents && { contents })
       }

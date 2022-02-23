@@ -21,6 +21,7 @@ import useMedia from '../Hooks/useMedia';
 import useTitle from '../Hooks/useTitle';
 import CreateList from "../Components/List/Popup/CreateList"
 import { customMedia } from '../styles';
+import NeedLoginPopupContainer from '../Components/Shared/NeedLoginPopupContainer';
 
 const Container = styled.div`
   min-height: 100%;
@@ -84,7 +85,13 @@ const List = () => {
     }
   })
 
-  const onClickStudentIcon = () => inPopup("students")
+  const onClickStudentIcon = () => {
+    if (me) {
+      inPopup("students")
+    } else {
+      inPopup("needLogin")
+    }
+  }
 
   // 무언가를 드래그 중일 때 successMsg 초기화
   useEffect(() => {
@@ -135,6 +142,7 @@ const List = () => {
           selectedSort={selectedSort}
           setDragType={setDragType}
           dragType={dragType}
+          me={me}
         />}
         {type === "student" && <DetailStudent
           studentId={id}
@@ -148,7 +156,8 @@ const List = () => {
       {media === "Desktop" ?
         <StudentList
           setSomeDragging={setSomeDragging}
-          studentId={id} meTag={me?.tag}
+          studentId={id}
+          me={me}
           selectedTag={selectedTag}
           seeNum={seeNum}
           selectedSort={selectedSort}
@@ -192,6 +201,7 @@ const List = () => {
         selectedSort={selectedSort}
         setErrorMsg={setErrorMsg}
       />}
+    {isPopup === "needLogin" && <NeedLoginPopupContainer />}
   </BasicContainer>);
 }
 

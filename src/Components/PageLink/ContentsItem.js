@@ -61,8 +61,12 @@ const ContentsItem = ({ item, userEmail, userLinkTitleArr, setMsg }) => {
     window.open(item.pageURL, "_blank");
   };
   const onClickBookmark = () => {
-    inPopup("addBookmark");
-    localStorage.setItem("addBookmark", item.pageTitle);
+    if (userEmail) {
+      inPopup("addBookmark");
+      localStorage.setItem("addBookmark", item.pageTitle);
+    } else {
+      inPopup("needLogin")
+    }
   };
   const onClickDelBookmark = () => {
     settingLink({

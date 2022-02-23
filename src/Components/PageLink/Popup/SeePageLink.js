@@ -6,6 +6,7 @@ import PopupContainer from "../../Shared/PopupContainer";
 import { MdOutlineDescription } from "react-icons/md";
 import TextareaAutosize from "react-textarea-autosize";
 import { FiLink } from "react-icons/fi";
+import Loading from "../../Shared/Loading";
 
 const Container = styled.div`
   min-height: 100%;
@@ -40,7 +41,7 @@ const Description = styled.div`
     border-radius: 5px;
     border-radius: 0.3125rem;
     border: ${(props) => props.isEdit && `${props.theme.fontColor} 1px solid`};
-    background-color: #ffffff;
+    background-color: ${props => props.theme.originBgColor};
     transition: border 1s ease, background-color 1s ease;
     line-height: 160%;
   }
@@ -64,7 +65,7 @@ const PageURLLayout = styled.div`
 const PageURL = styled.div`
   padding: 20px;
   padding: 1.25rem;
-  background-color: #ffffff;
+  background-color: ${props => props.theme.originBgColor};
   border-radius: 40px;
   border-radius: 2.5rem;
   font-family: Arial, Helvetica, sans-serif;
@@ -84,6 +85,10 @@ const SeePageLink = () => {
   const onClickPageURL = () => {
     window.open(data?.seePageLink[0].pageURL, "_blank");
   };
+
+  if (loading) {
+    return <Loading page="popupPage" />
+  }
 
   return (
     <PopupContainer maxHeight={true}>

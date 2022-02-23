@@ -32,7 +32,7 @@ const ScheduleSection = ({ urlDate, refetchQuery }) => {
   const { data, loading, refetch } = useQuery(SEE_SCHEDULE_QUERY, {
     variables: {
       date: parseInt(urlDate)
-    }
+    },
   })
 
   const onClickPlusBtn = () => {

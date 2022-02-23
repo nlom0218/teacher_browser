@@ -9,6 +9,7 @@ import { hideNewsSection, seeNewsSection } from '../../Animations/WelcomeSection
 import { FaArrowCircleLeft } from 'react-icons/fa';
 import { moveWelcome } from '../../apollo';
 import useTitle from '../../Hooks/useTitle';
+import Loading from '../Shared/Loading';
 
 const MoveContainer = styled.div`
   display: ${props => props.isSeeDisplay};
@@ -87,14 +88,16 @@ const NewsSection = ({ favoriteNews, userEmail, welcomeSection, init, setInit })
         setSort={setSort}
         favoriteNews={favoriteNews}
       />
-      <NewsListContainer
-        start={start}
-        setStart={setStart}
-        search={search}
-        data={data}
-        userEmail={userEmail}
-        favoriteNews={favoriteNews}
-      />
+      {loading ? <Loading page="subPage" /> :
+        <NewsListContainer
+          start={start}
+          setStart={setStart}
+          search={search}
+          data={data}
+          userEmail={userEmail}
+          favoriteNews={favoriteNews}
+        />
+      }
     </Container>
   </MoveContainer>
   );

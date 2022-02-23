@@ -2,6 +2,7 @@ import React from 'react';
 import { MdAddCircle } from 'react-icons/md';
 import styled from 'styled-components';
 import { inPopup } from '../../apollo';
+import useMedia from '../../Hooks/useMedia';
 import IcHelper from '../../icons/Helper/IcHelper';
 import { customMedia } from '../../styles';
 
@@ -48,15 +49,13 @@ const ButtonContent = styled.div`
   row-gap: 0.625rem;
   align-self: flex-start;
   align-items: center;
-  ${customMedia.greaterThan("tablet")`
+  ${customMedia.greaterThan("desktop")`
     grid-template-columns: 1fr auto auto;
   `}
 `;
 
 const ComleteToDo = styled.div`
   cursor: pointer;
-  grid-column: 1 / -1;
-  grid-row: 2 / 3;
   align-self: center;
   background-color : ${props => props.theme.btnBgColor};
   color: ${props => props.theme.bgColor};
@@ -68,7 +67,6 @@ const ComleteToDo = styled.div`
   font-size : 0.875rem;
   font-size : 0.875em;
   ${customMedia.greaterThan("tablet")`
-    grid-row: 1 / 2;
     padding: 10px 20px;
     padding: 0.625rem 1.25rem;
     font-size : 1rem;
@@ -108,7 +106,8 @@ const HelpIcon = styled.div`
   `}
 `
 
-const TodoHead = () => {
+const TodoHead = ({ userEmail }) => {
+  const media = useMedia()
   const date = new Date()
   const processSetDay = () => {
     const day = date.getDay()
@@ -135,11 +134,19 @@ const TodoHead = () => {
   }
 
   const onClickCreateBtn = () => {
-    inPopup("todoCreate")
+    if (userEmail) {
+      inPopup("todoCreate")
+    } else {
+      inPopup("needLogin")
+    }
   }
 
   const onClickCompleteBtn = () => {
-    inPopup("toDoComplete")
+    if (userEmail) {
+      inPopup("toDoComplete")
+    } else {
+      inPopup("needLogin")
+    }
   }
 
   const onClickHelper = () => {
@@ -155,7 +162,7 @@ const TodoHead = () => {
       <ButtonContent>
         <ComleteToDo onClick={onClickCompleteBtn}>완료된 할 일</ComleteToDo>
         <AddIcon onClick={onClickCreateBtn}><MdAddCircle /></AddIcon>
-        <HelpIcon onClick={onClickHelper}><IcHelper /></HelpIcon>
+        {media === "Desktop" && <HelpIcon onClick={onClickHelper}><IcHelper /></HelpIcon>}
       </ButtonContent>
     </TodoHeadBlock>
   );

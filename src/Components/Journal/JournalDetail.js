@@ -55,14 +55,12 @@ const NoDateText = styled.div`
   grid-column: 1 / -1;
 `
 
-const JournalDetail = ({ studentId, teacherEmail, refetchQuery, studentName }) => {
+const JournalDetail = ({ studentId, refetchQuery, studentName }) => {
 
   const { data, loading, refetch } = useQuery(SEE_JOURNAL_QUERY, {
     variables: {
-      studentId,
-      teacherEmail
-    },
-    skip: !teacherEmail
+      studentId
+    }
   })
 
   const onClickPlusBtn = () => {

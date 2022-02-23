@@ -9,6 +9,7 @@ import { customMedia } from "../../styles";
 import IcNameTable from "../../icons/NameTable/IcNameTable";
 import IcNameTableClick from "../../icons/NameTable/IcNameTableClick";
 import { inPopup } from "../../apollo";
+import useMe from "../../Hooks/useMe";
 
 const Container = styled.div`
   display: grid;
@@ -48,9 +49,14 @@ const ListIcon = styled.div`
 const ListName = styled.div``;
 
 const TitleArea = ({ studentListName, type, studentName }) => {
+  const me = useMe()
   const [IconListIsHover, setIconListIsHover] = useState(false);
   const onClickListIcon = () => {
-    inPopup("seeStudentList");
+    if (me) {
+      inPopup("seeStudentList")
+    } else {
+      inPopup("needLogin")
+    }
   };
 
   return (

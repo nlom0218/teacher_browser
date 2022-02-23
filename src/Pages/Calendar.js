@@ -29,6 +29,8 @@ import useTitle from '../Hooks/useTitle';
 import IcHelper from '../icons/Helper/IcHelper';
 import AddJournal from '../Components/Journal/Popup/AddJournal';
 import EditJournal from '../Components/Journal/Popup/EditJournal';
+import NeedLoginPopupContainer from '../Components/Shared/NeedLoginPopupContainer';
+import CalendarHelper from '../Components/Calendar/Popup/CalendarHelper';
 
 const Container = styled.div`
   display: grid;
@@ -66,7 +68,7 @@ const Title = styled.div`
 `
 
 const BtnContainer = styled.div`
-  grid-template-columns: repeat(5, auto);
+  grid-template-columns: repeat(4, auto);
   display: grid;
   align-items: center;
   column-gap: 20px;
@@ -185,8 +187,10 @@ const Calendar = ({ screen, setScreen }) => {
 
   const { data, loading } = useQuery(SEE_SCHEDULE_QUERY, {
     variables: {
+      userEmail: me?.email,
       month: parseInt(format(date, "yyMM"))
-    }
+    },
+    skip: !me
   })
 
   const onClickTodayBtn = () => {
@@ -206,7 +210,11 @@ const Calendar = ({ screen, setScreen }) => {
   }
 
   const onClickPlusBtn = () => {
-    inPopup("addSchedule")
+    if (me) {
+      inPopup("addSchedule")
+    } else {
+      inPopup("needLogin")
+    }
   }
 
   const onClickFull = () => {
@@ -215,6 +223,10 @@ const Calendar = ({ screen, setScreen }) => {
     } else {
       setScreen("small")
     }
+  }
+
+  const onClickHelper = () => {
+    inPopup("CalendarHelper")
   }
 
   useEffect(() => {
@@ -280,7 +292,7 @@ const Calendar = ({ screen, setScreen }) => {
             <Btn className="calendar_btn" onClick={onClickBtn}><IoIosArrowForward /></Btn>
             {media === "Desktop" && <Btn className="calendar_btn" onClick={onClickFull}>{screen === "small" ? <BiFullscreen /> : <BiExitFullscreen />}</Btn>}
             <Btn className="calendar_btn" onClick={onClickPlusBtn}><AiOutlinePlus /></Btn>
-            <HelpIcon><IcHelper /></HelpIcon>
+            {media === "Desktop" && <HelpIcon onClick={onClickHelper}><IcHelper /></HelpIcon>}
           </BtnContainer>
         </TopContainer>
         {loading ? <Loading page="subPage" /> : <BottomContainerLayout>
@@ -292,7 +304,7 @@ const Calendar = ({ screen, setScreen }) => {
             })}
             <CalendarList weekLength={weekLength}>
               {dateArr && dateArr?.map((item, index) => {
-                return <CalendarItem media={media} key={index} item={item} userEmail={me?.email} schedule={schedule?.seeSchedule} refetchQuery={refetchQuery} />
+                return <CalendarItem media={media} key={index} item={item} userEmail={me?.email} schedule={schedule?.seeSchedule} />
               })}
             </CalendarList>
           </BottomContainer>
@@ -310,6 +322,8 @@ const Calendar = ({ screen, setScreen }) => {
     {isPopup === "addAttend" && <AddAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
     {isPopup === "eidtAttend" && <EditAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
     {isPopup === "selectedStudent" && <AttendSelectedStudent />}
+    {isPopup === "needLogin" && <NeedLoginPopupContainer />}
+    {isPopup === "CalendarHelper" && <CalendarHelper />}
     {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
     {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
   </BasicContainer>);

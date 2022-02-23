@@ -12,6 +12,7 @@ import SeePageLink from "../Components/PageLink/Popup/SeePageLink";
 import DetailPageLink from "../Components/PageLink/Popup/DetailPageLink";
 import useTitle from "../Hooks/useTitle";
 import AlertMessage from "../Components/Shared/AlertMessage";
+import NeedLoginPopupContainer from "../Components/Shared/NeedLoginPopupContainer";
 
 //추천사이트 목록 정리하기
 //즐겨찾기 없을 경우 설명하는 페이지 추가
@@ -52,6 +53,7 @@ const PageLink = () => {
       {isPopup === "detailPageLink" && (
         <DetailPageLink link={me?.link} userEmail={me?.email} setMsg={setMsg} />
       )}
+      {isPopup === "needLogin" && <NeedLoginPopupContainer />}
       {msg && <AlertMessage type="success" time={3000} msg={msg} setMsg={setMsg} />}
     </BasicContainer>
   );

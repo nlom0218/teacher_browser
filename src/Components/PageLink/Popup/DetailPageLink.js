@@ -33,7 +33,7 @@ const Container = styled.form`
     border-radius: 5px;
     border-radius: 0.3125rem;
     border: ${(props) => props.isEdit && `${props.theme.fontColor} 1px solid`};
-    background-color: #ffffff;
+    background-color: ${props => props.theme.originBgColor};
     transition: border 1s ease, background-color 1s ease;
     line-height: 160%;
     ::placeholder {
@@ -87,7 +87,7 @@ const PageURLLayout = styled.div`
 const PageURL = styled.div`
   padding: 20px;
   padding: 1.25rem;
-  background-color: #ffffff;
+  background-color: ${props => props.theme.originBgColor};
   border-radius: 40px;
   border-radius: 2.5rem;
   font-family: Arial, Helvetica, sans-serif;
