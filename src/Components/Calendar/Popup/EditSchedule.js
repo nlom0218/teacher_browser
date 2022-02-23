@@ -66,6 +66,7 @@ const EditSchedule = ({ userEmail, setErrMsg, setMsg }) => {
 
   const { data, loading, refetch: seeRefetch } = useQuery(SEE_SCHEDULE_QUERY, {
     variables: {
+      userEmail,
       scheduleId: id
     }
   })

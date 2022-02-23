@@ -29,6 +29,7 @@ import useTitle from '../Hooks/useTitle';
 import IcHelper from '../icons/Helper/IcHelper';
 import AddJournal from '../Components/Journal/Popup/AddJournal';
 import EditJournal from '../Components/Journal/Popup/EditJournal';
+import NeedLoginPopupContainer from '../Components/Shared/NeedLoginPopupContainer';
 
 const Container = styled.div`
   display: grid;
@@ -185,8 +186,10 @@ const Calendar = ({ screen, setScreen }) => {
 
   const { data, loading } = useQuery(SEE_SCHEDULE_QUERY, {
     variables: {
+      userEmail: me?.email,
       month: parseInt(format(date, "yyMM"))
-    }
+    },
+    skip: !me
   })
 
   const onClickTodayBtn = () => {
@@ -206,7 +209,11 @@ const Calendar = ({ screen, setScreen }) => {
   }
 
   const onClickPlusBtn = () => {
-    inPopup("addSchedule")
+    if (me) {
+      inPopup("addSchedule")
+    } else {
+      inPopup("needLogin")
+    }
   }
 
   const onClickFull = () => {
@@ -292,7 +299,7 @@ const Calendar = ({ screen, setScreen }) => {
             })}
             <CalendarList weekLength={weekLength}>
               {dateArr && dateArr?.map((item, index) => {
-                return <CalendarItem media={media} key={index} item={item} userEmail={me?.email} schedule={schedule?.seeSchedule} refetchQuery={refetchQuery} />
+                return <CalendarItem media={media} key={index} item={item} userEmail={me?.email} schedule={schedule?.seeSchedule} />
               })}
             </CalendarList>
           </BottomContainer>
@@ -310,6 +317,7 @@ const Calendar = ({ screen, setScreen }) => {
     {isPopup === "addAttend" && <AddAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
     {isPopup === "eidtAttend" && <EditAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={urlDate} />}
     {isPopup === "selectedStudent" && <AttendSelectedStudent />}
+    {isPopup === "needLogin" && <NeedLoginPopupContainer />}
     {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
     {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
   </BasicContainer>);

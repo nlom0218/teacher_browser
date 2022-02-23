@@ -28,9 +28,10 @@ const PlusScheduleBtn = styled.div`
   }
 `
 
-const ScheduleSection = ({ urlDate, refetchQuery }) => {
+const ScheduleSection = ({ userEmail, urlDate, refetchQuery }) => {
   const { data, loading, refetch } = useQuery(SEE_SCHEDULE_QUERY, {
     variables: {
+      userEmail,
       date: parseInt(urlDate)
     }
   })

@@ -143,7 +143,7 @@ const DotIcon = styled.div`
 
 `
 
-const CalendarItem = ({ item, create, media, userEmail, schedule, refetchQuery }) => {
+const CalendarItem = ({ item, media, userEmail, schedule, }) => {
 
   const navigate = useNavigate()
 
@@ -195,8 +195,12 @@ const CalendarItem = ({ item, create, media, userEmail, schedule, refetchQuery }
   }
 
   const onClickDay = () => {
-    const date = new window.Date(item.date).setHours(0, 0, 0, 0)
-    navigate(`${routes.calendar}/${date}`)
+    if (userEmail) {
+      const date = new window.Date(item.date).setHours(0, 0, 0, 0)
+      navigate(`${routes.calendar}/${date}`)
+    } else {
+      inPopup("needLogin")
+    }
   }
 
   useEffect(() => {
