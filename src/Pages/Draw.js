@@ -17,6 +17,8 @@ import IcNameTable from '../icons/NameTable/IcNameTable';
 import useTitle from '../Hooks/useTitle';
 import StudentList from '../Components/Shared/popup/StudentList';
 import Loading from '../Components/Shared/Loading';
+import NeedLoginPopupContainer from '../Components/Shared/NeedLoginPopupContainer';
+import useMe from '../Hooks/useMe';
 
 const Container = styled.div`
   min-height : ${props => props.seeResultType === "ONE" && "100%"};
@@ -153,6 +155,8 @@ const Draw = () => {
   const { id } = useParams()
   const isPopup = useReactiveVar(isPopupVar);
 
+  const me = useMe()
+
   const [IconsLIstisHover, setIconListIsHover] = useState(false)
   const [studentListName, setStudentListName] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState([]);
@@ -180,7 +184,13 @@ const Draw = () => {
     defaultValues: { title: "랜덤뽑기 제목" },
   });
 
-  const onClickListIcon = () => inPopup("seeStudentList")
+  const onClickListIcon = () => {
+    if (me) {
+      inPopup("seeStudentList")
+    } else {
+      inPopup("needLogin")
+    }
+  }
   const onClickInput = () => {
     setIsEdit(true)
   }
@@ -273,6 +283,7 @@ const Draw = () => {
           )}
       </Container>
       {isPopup === "seeStudentList" && <StudentList setIsShuffle={setIsShuffle} page="draw" />}
+      {isPopup === "needLogin" && <NeedLoginPopupContainer />}
       {isShuffle === "ing" &&
         <Shuffling
           pickNum={pickNum}

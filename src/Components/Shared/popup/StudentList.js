@@ -22,6 +22,8 @@ const Container = styled.div`
 const StudentList = ({ setIsShuffle, page }) => {
   const { data, loading } = useQuery(SEE_ALL_STUDENT_LIST_QUERY)
 
+  console.log(data);
+
   if (loading) {
     return <Loading page="popupPage" />
   }

@@ -17,6 +17,7 @@ import AttendSelectedStudent from "../Components/Calendar/Popup/AttendSelectedSt
 import useTitle from "../Hooks/useTitle";
 import AddJournal from "../Components/Journal/Popup/AddJournal";
 import EditJournal from "../Components/Journal/Popup/EditJournal";
+import NeedLoginPopupContainer from "../Components/Shared/NeedLoginPopupContainer";
 
 const Container = styled.div`
   min-height: 100%;
@@ -96,6 +97,7 @@ const Journal = ({ me }) => {
       {isPopup === "addJournal" && <AddJournal setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={undefined} />}
       {isPopup === "editJournal" && <EditJournal setErrMsg={setErrMsg} setRefetchQuery={setRefetchQuery} userEmail={me?.email} setMsg={setMsg} urlDate={undefined} />}
       {isPopup === "selectedStudent" && <AttendSelectedStudent />}
+      {isPopup === "needLogin" && <NeedLoginPopupContainer />}
       {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
       {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
     </BasicContainer>

@@ -22,6 +22,8 @@ import AlertMessage from '../Components/Shared/AlertMessage';
 import PrintOrder from '../Components/Order/PrintOrder';
 import useMedia from '../Hooks/useMedia';
 import PrintSwapContents from '../Components/Swap/Popup/PrintSwapContents';
+import useMe from '../Hooks/useMe';
+import NeedLoginPopupContainer from '../Components/Shared/NeedLoginPopupContainer';
 
 const Container = styled.div`
   display : grid;
@@ -155,6 +157,8 @@ const Swap = () => {
 
   const isPopup = useReactiveVar(isPopupVar);
 
+  const me = useMe()
+
   const componentRef = useRef(null);
 
   const [isEdit, setIsEdit] = useState(false);
@@ -199,7 +203,13 @@ const Swap = () => {
     setIsShuffle(type);
   };
 
-  const onClickListIcon = () => inPopup("seeStudentList")
+  const onClickListIcon = () => {
+    if (me) {
+      inPopup("seeStudentList")
+    } else {
+      inPopup("needLogin")
+    }
+  }
 
   useEffect(() => {
     if (data) {
@@ -278,6 +288,7 @@ const Swap = () => {
     </Container>
     {isPopup === "seeStudentList" && <StudentList page="swap" setIsShuffle={setIsShuffle} />}
     {isPopup === "print" && <PrintSwapContents printRef={componentRef} title={title} selectedStudent={selectedStudent} pickNum={pickNum} />}
+    {isPopup === "needLogin" && <NeedLoginPopupContainer />}
     {isShuffle === "pickNum" && <StudentNumber
       pickNum={pickNum}
       setPickNum={setPickNum}

@@ -74,11 +74,13 @@ const HeaderSideBtn = ({ seeSideMenu, setSeeSideMenu }) => {
   const onClickSideBtn = () => {
     setSeeSideMenu((prev) => !prev);
   };
+
   const onClickLogOut = () => {
     navigate(routes.home);
     localStorage.removeItem("welcomeSection")
     logOutUser(() => window.location.reload());
   };
+
   return (
     <SideMenu>
       <SideBtn onClick={onClickSideBtn}>

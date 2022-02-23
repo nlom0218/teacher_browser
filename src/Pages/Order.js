@@ -21,6 +21,8 @@ import IcNameTable from "../icons/NameTable/IcNameTable";
 import useTitle from "../Hooks/useTitle";
 import StudentList from "../Components/Shared/popup/StudentList";
 import Loading from "../Components/Shared/Loading";
+import NeedLoginPopupContainer from "../Components/Shared/NeedLoginPopupContainer";
+import useMe from "../Hooks/useMe";
 
 
 // 전체 틀
@@ -169,6 +171,8 @@ const Order = () => {
 
   const componentRef = useRef(null);
 
+  const me = useMe()
+
   const [IconsLIstisHover, setIconListIsHover] = useState(false)
   const [studentListName, setStudentListName] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState([]);
@@ -189,7 +193,14 @@ const Order = () => {
     skip: !id,
   });
 
-  const onClickListIcon = () => inPopup("seeStudentList");
+  const onClickListIcon = () => {
+    if (me) {
+      inPopup("seeStudentList")
+    } else {
+      inPopup("needLogin")
+    }
+  }
+
   const onClickInput = () => {
     setIsEdit(true);
   };
@@ -282,6 +293,7 @@ const Order = () => {
       </Container>
       { isPopup === "seeStudentList" && <StudentList page="order" setIsShuffle={setIsShuffle} />}
       { isPopup === "print" && <PrintOrderContents printRef={componentRef} title={title} selectedStudent={selectedStudent} />}
+      {isPopup === "needLogin" && <NeedLoginPopupContainer />}
       { isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
     </BasicContainer >
   );
