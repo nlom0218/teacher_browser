@@ -146,8 +146,8 @@ const EditSchedule = ({ userEmail, setErrMsg, setMsg }) => {
       setErrMsg("시작일과 종료일을 다시 확인해주세요. 🥲")
       return
     }
-    const startMonths = parseInt(format(new Date(startDate), "yyMM"))
-    const endMonths = parseInt(format(new Date(endDate), "yyMM"))
+    const startMonths = parseInt(format(new window.Date(startDate), "yyMM"))
+    const endMonths = parseInt(format(new window.Date(endDate), "yyMM"))
 
     let months = undefined
     if (startMonths === endMonths) {

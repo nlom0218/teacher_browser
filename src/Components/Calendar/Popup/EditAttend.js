@@ -12,6 +12,7 @@ import DatePicker from 'react-datepicker';
 import { DELETE_ATTENDANCE_MUTATION, EDIT_ATTENDANCE_MUTATION } from '../../../Graphql/Attendance/mutation';
 import { SEE_ATTENDANCE_QUERY } from "../../../Graphql/Attendance/query"
 import Loading from '../../Shared/Loading';
+import { format } from 'date-fns';
 
 const CalenderPopupFormContainer = styled.form`
   padding : 20px 0px;
@@ -192,11 +193,14 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) 
       return
     }
 
+    const month = parseInt(format(new window.Date(date), "yyMM"))
+
     editAttendance({
       variables: {
         attendId,
         userEmail,
         type,
+        month,
         date: new window.Date(date).setHours(0, 0, 0, 0),
         ...(contents && { contents })
       }

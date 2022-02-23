@@ -8,6 +8,7 @@ export const SEE_ATTENDANCE_QUERY = gql`
       studentId
       type
       date
+      month
       contents
     }
   }
