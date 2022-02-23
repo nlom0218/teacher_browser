@@ -108,7 +108,7 @@ const HelpIcon = styled.div`
   `}
 `
 
-const TodoHead = () => {
+const TodoHead = ({ userEmail }) => {
   const date = new Date()
   const processSetDay = () => {
     const day = date.getDay()
@@ -135,11 +135,19 @@ const TodoHead = () => {
   }
 
   const onClickCreateBtn = () => {
-    inPopup("todoCreate")
+    if (userEmail) {
+      inPopup("todoCreate")
+    } else {
+      inPopup("needLogin")
+    }
   }
 
   const onClickCompleteBtn = () => {
-    inPopup("toDoComplete")
+    if (userEmail) {
+      inPopup("toDoComplete")
+    } else {
+      inPopup("needLogin")
+    }
   }
 
   const onClickHelper = () => {
