@@ -21,6 +21,16 @@ import { GET_TIMETABLE_DATA_QUERY } from "../Graphql/TimeTable/query";
 //음영한 뒤 다크모드에서 글씨 안 보임.
 //수업추가 어떻게?
 
+const SorryMsg = styled.div`
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  margin-top: 100px;
+  margin-top: 6.25rem;
+  font-size: 1.5em;
+  font-size: 1.5rem;
+`
+
 const Container = styled.div`
   min-height: 100%;
   display: grid;
@@ -120,7 +130,10 @@ const Schedule = () => {
   };
   return (
     <BasicContainer menuItem={true} screen="small">
-      <Container>
+      <SorryMsg>
+        페이지 준비중 입니다. 빠른 시간에 완성하겠습니다!(2.26 새벽 완성 예정) 😓
+      </SorryMsg>
+      {/* <Container>
         <TimeTableTitle title={title} setTitle={setTitle} />
         <OptionContents>
           <OptionBtn onClick={onClickTimeSetBtn}> 시간설정 </OptionBtn>
@@ -164,7 +177,7 @@ const Schedule = () => {
           viewTime={viewTime}
           timeResult={timeResult}
         />
-      )}
+      )} */}
     </BasicContainer>
   );
 };
