@@ -24,6 +24,7 @@ import useMedia from '../Hooks/useMedia';
 import PrintSwapContents from '../Components/Swap/Popup/PrintSwapContents';
 import useMe from '../Hooks/useMe';
 import NeedLoginPopupContainer from '../Components/Shared/NeedLoginPopupContainer';
+import NoStudentMsg from '../Components/Shared/styled/NoStudentMsg';
 
 const Container = styled.div`
   display : grid;
@@ -177,6 +178,7 @@ const Swap = () => {
     },
     skip: !id
   });
+  console.log(selectedStudent);
 
   const { register, handleSubmit, getValues } = useForm({
     mode: "onChange",
@@ -251,7 +253,7 @@ const Swap = () => {
         </ListIcon>
       </TopContents>
       {loading ? <Loading page="subPage" /> :
-        id && (
+        id && (selectedStudent.length === 0 ? <NoStudentMsg>명렬표에 학생이 없습니다. 😅 <br />명렬표에서 학생을 추가하세요!</NoStudentMsg> : (
           <React.Fragment>
             <OptionContents>
               <OptionBtn onClick={() => onClickShuffleBtn("pickNum")}> 자리 설정 </OptionBtn>
@@ -283,7 +285,7 @@ const Swap = () => {
               setPickNum={setPickNum}
               studentNum={selectedStudent.length}
             />
-          </React.Fragment>
+          </React.Fragment>)
         )}
     </Container>
     {isPopup === "seeStudentList" && <StudentList page="swap" setIsShuffle={setIsShuffle} />}

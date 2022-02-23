@@ -19,6 +19,7 @@ import StudentList from '../Components/Shared/popup/StudentList';
 import Loading from '../Components/Shared/Loading';
 import NeedLoginPopupContainer from '../Components/Shared/NeedLoginPopupContainer';
 import useMe from '../Hooks/useMe';
+import NoStudentMsg from '../Components/Shared/styled/NoStudentMsg';
 
 const Container = styled.div`
   min-height : ${props => props.seeResultType === "ONE" && "100%"};
@@ -252,7 +253,7 @@ const Draw = () => {
           </ListIcon>
         </TopContents>
         {loading ? <Loading page="subPage" /> :
-          id && (
+          id && (selectedStudent.length === 0 ? <NoStudentMsg>명렬표에 학생이 없습니다. 😅 <br />명렬표에서 학생을 추가하세요!</NoStudentMsg> : (
             <React.Fragment>
               <OptionContents>
                 {isShuffle === "init" &&
@@ -279,7 +280,7 @@ const Draw = () => {
                 fontSizeOne={fontSizeOne}
                 pickNum={pickNum}
                 pickType={pickType} />
-            </React.Fragment>
+            </React.Fragment>)
           )}
       </Container>
       {isPopup === "seeStudentList" && <StudentList setIsShuffle={setIsShuffle} page="draw" />}

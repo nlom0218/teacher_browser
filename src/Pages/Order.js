@@ -23,6 +23,7 @@ import StudentList from "../Components/Shared/popup/StudentList";
 import Loading from "../Components/Shared/Loading";
 import NeedLoginPopupContainer from "../Components/Shared/NeedLoginPopupContainer";
 import useMe from "../Hooks/useMe";
+import NoStudentMsg from "../Components/Shared/styled/NoStudentMsg";
 
 
 // 전체 틀
@@ -260,7 +261,7 @@ const Order = () => {
           </ListIcon>
         </TopContents>
         {loading ? <Loading page="subPage" /> :
-          id && (
+          id && (selectedStudent.length === 0 ? <NoStudentMsg>명렬표에 학생이 없습니다. 😅 <br />명렬표에서 학생을 추가하세요!</NoStudentMsg> : (
             <React.Fragment>
               <OptionContents>
                 {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
@@ -288,7 +289,7 @@ const Order = () => {
                 setSelectedStudent={setSelectedStudent}
                 isShuffle={isShuffle}
               />
-            </React.Fragment>
+            </React.Fragment>)
           )}
       </Container>
       { isPopup === "seeStudentList" && <StudentList page="order" setIsShuffle={setIsShuffle} />}
