@@ -7,6 +7,10 @@ import NewsSection from '../Components/Welcome/NewsSection';
 import WelcomeSection from '../Components/Welcome/WelcomeSection';
 import useMe from '../Hooks/useMe';
 import useTitle from '../Hooks/useTitle';
+import LogoImage1 from "../image/LogoImage.png"
+import LogoImage2 from "../image/LogoImage2.png"
+import LogoImage3 from "../image/LogoImage3.png"
+import LogoImage4 from "../image/LogoImage4.png"
 
 const Container = styled.div`
   min-height: 100%;
@@ -27,6 +31,8 @@ const Welcome = () => {
         init={init}
         setInit={setInit}
         welcomeSection={welcomeSection}
+        logoImageArr={[LogoImage1, LogoImage2, LogoImage3, LogoImage4]}
+        me={me}
       />
       <NewsSection
         init={init}
