@@ -8,44 +8,49 @@ import { outPopup } from "../../../apollo";
 import { DetailTitle } from "../../List/styled/DetailStudent";
 import { SET_TIMETABLE_TIME_MUTATION } from "../../../Graphql/TimeTable/mutation";
 import { GET_TIMETABLE_TIME_QUERY } from "../../../Graphql/TimeTable/query";
+import { customMedia } from "../../../styles";
 
 const RegisterForm = styled.form`
   width: 100%;
   display: grid;
   column-gap: 20px;
   column-gap: 1.25rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
   grid-template-columns: 1fr;
   align-items: center;
-  padding: 20px;
-  padding: 1.25rem;
+  padding: 20px 0px;
+  padding: 1.25rem 0rem;
   svg {
     font-size: 1.875em;
     font-size: 1.875rem;
     cursor: pointer;
   }
 `;
+
 const LayOut = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  padding-bottom: 20px;
-  padding-bottom: 1.25rem;
+  grid-template-columns: 1fr 2fr 2fr;
   row-gap: 5px;
   row-gap: 0.3125rem;
   font-size: 1em;
   font-size: 1rem;
   text-align: center;
-  justify-items: center;
+  column-gap: 20px;
+  column-gap: 1.25rem;
 `;
+
 const InputLayout = styled.input`
-  display: grid;
-  grid-template-columns: auto 1fr;
-  width: 70%;
-  margin-top: 10px;
-  margin-top: 0.625rem;
-  margin-bottom: 10px;
-  margin-bottom: 0.625rem;
+  align-self: center;
+  padding: 10px;
+  padding: 0.625rem;
   background-color: ${(props) => props.theme.cardBg};
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  display: flex;
+  align-items: center;
 `;
+
 const AddTagBtn = styled.input`
   text-align: center;
   padding: 10px 20px;
@@ -96,6 +101,7 @@ const TimeRegisterPage = ({ userEmail, timeResult }) => {
       start6,
       end6,
     } = data;
+    console.log(start1, end1);
     setTimetableTime({
       variables: {
         teacherEmail: userEmail,
@@ -128,12 +134,14 @@ const TimeRegisterPage = ({ userEmail, timeResult }) => {
               required: true,
             })}
             defaultValue={timeResult[0]}
+            type="time"
           />
           <InputLayout
             {...register("end1", {
               required: true,
             })}
             defaultValue={timeResult[1]}
+            type="time"
           />
           <DetailTitle>2교시</DetailTitle>
           <InputLayout
@@ -141,12 +149,14 @@ const TimeRegisterPage = ({ userEmail, timeResult }) => {
               required: true,
             })}
             defaultValue={timeResult[2]}
+            type="time"
           />
           <InputLayout
             {...register("end2", {
               required: true,
             })}
             defaultValue={timeResult[3]}
+            type="time"
           />
           <DetailTitle>3교시</DetailTitle>
           <InputLayout
@@ -154,12 +164,14 @@ const TimeRegisterPage = ({ userEmail, timeResult }) => {
               required: true,
             })}
             defaultValue={timeResult[4]}
+            type="time"
           />
           <InputLayout
             {...register("end3", {
               required: true,
             })}
             defaultValue={timeResult[5]}
+            type="time"
           />
           <DetailTitle>4교시</DetailTitle>
           <InputLayout
@@ -167,12 +179,14 @@ const TimeRegisterPage = ({ userEmail, timeResult }) => {
               required: true,
             })}
             defaultValue={timeResult[6]}
+            type="time"
           />
           <InputLayout
             {...register("end4", {
               required: true,
             })}
             defaultValue={timeResult[7]}
+            type="time"
           />
           <DetailTitle>5교시</DetailTitle>
           <InputLayout
@@ -180,12 +194,14 @@ const TimeRegisterPage = ({ userEmail, timeResult }) => {
               required: true,
             })}
             defaultValue={timeResult[8]}
+            type="time"
           />
           <InputLayout
             {...register("end5", {
               required: true,
             })}
             defaultValue={timeResult[9]}
+            type="time"
           />
           <DetailTitle>6교시</DetailTitle>
           <InputLayout
@@ -193,14 +209,16 @@ const TimeRegisterPage = ({ userEmail, timeResult }) => {
               required: true,
             })}
             defaultValue={timeResult[10]}
+            type="time"
           />
           <InputLayout
             {...register("end6", {
               required: true,
             })}
             defaultValue={timeResult[11]}
+            type="time"
           />
-        </LayOut>{" "}
+        </LayOut>
         <AddTagBtn type="submit" value="완료" />
       </RegisterForm>
     </PopupContainer>

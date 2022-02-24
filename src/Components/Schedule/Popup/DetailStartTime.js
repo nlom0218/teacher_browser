@@ -187,7 +187,6 @@ const DetailStartTime = ({ userEmail }) => {
         />
         <Font>분 </Font>
       </LayOut>
-      <div />
       <AddTagBtn type="submit" value="완료" />
     </FormContainer>
   );
