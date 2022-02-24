@@ -34,9 +34,8 @@ const Span = styled.span`
 
 const HoverContainer = styled.div`
   position: absolute;
-  display: grid;
-  justify-items: center;
-  align-self: center;
+  display: flex;
+  justify-content: center;
   align-items: center;
   font-size: 0.8rem;
   font-size: 0.8em;
@@ -44,7 +43,6 @@ const HoverContainer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  align-items: flex-end;
   background-color: ${(props) => props.theme.cardHoverBg};
   border-radius: 5px;
   border-radius: 0.3125rem;
@@ -86,7 +84,7 @@ const TableInItem = ({ num, subName, index, color, tag, fontSize }) => {
         onClick={() => onClickItem(num)}
       >
         <Span color={color}>{subName}</Span>
-        {hoverContainer === true ? (
+        {hoverContainer ? (
           <HoverContainer>
             {tag}
             <RegisterScheduleOne
