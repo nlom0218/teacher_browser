@@ -269,7 +269,7 @@ const ClassRegisterPage = ({
             <DayContainer>
               {timeday.map((item, index) => {
                 return (
-                  <TimeTable item={item} index={index}>
+                  <TimeTable item={item} index={index} key={index}>
                     {item}
                   </TimeTable>
                 );
@@ -279,7 +279,7 @@ const ClassRegisterPage = ({
               <TimeContainer>
                 {timelist.map((item, index) => {
                   return (
-                    <TimeTable item={item} index={index}>
+                    <TimeTable item={item} index={index} key={index}>
                       {item}
                     </TimeTable>
                   );
@@ -294,7 +294,7 @@ const ClassRegisterPage = ({
                           <BsCheck />
                         </TimeTable>
                       ) : (
-                        <TimeTable item={item} index={index}>
+                        <TimeTable item={item} index={index} key={index}>
                           {index}
                         </TimeTable>
                       )}

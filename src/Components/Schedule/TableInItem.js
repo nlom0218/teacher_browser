@@ -6,10 +6,8 @@ import { customMedia } from "../../styles";
 
 const TableItem = styled.div`
   position: relative;
-  height: 100%;
   border: 1px solid ${(props) => props.theme.cardBorder};
   background-color: ${(props) => props.theme.cardBg};
-  //background-color: ${(props) => props.color};
   transition: border 1s ease, background-color 1s ease;
   border-radius: 5px;
   border-radius: 0.3125rem;
@@ -22,33 +20,30 @@ const SubjectName = styled.div`
   text-align: center;
   align-self: center;
   overflow: hidden;
-  line-height: 250%;
   font-size: 73%;
   ${customMedia.greaterThan("tablet")`
-   font-size: ${(props) => props.fontSize}em;
-  font-size: ${(props) => props.fontSize}rem;
+    font-size: ${(props) => props.fontSize}em;
+    font-size: ${(props) => props.fontSize}rem;
   `}
 `;
-const SPAN = styled.span`
+const Span = styled.span`
   background-color: ${(props) => props.color};
   border-radius: 5px;
   border-radius: 0.3125rem;
 `;
 
 const HoverContainer = styled.div`
+  position: absolute;
   display: grid;
   justify-items: center;
   align-self: center;
   align-items: center;
   font-size: 0.8rem;
   font-size: 0.8em;
-  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  padding-bottom: 1.875rem;
-  padding-bottom: 30px;
   align-items: flex-end;
   background-color: ${(props) => props.theme.cardHoverBg};
   border-radius: 5px;
@@ -58,7 +53,7 @@ const HoverContainer = styled.div`
   overflow: hidden;
 `;
 
-const TableInItem = ({ num, item, index, color, tag, fontSize }) => {
+const TableInItem = ({ num, subName, index, color, tag, fontSize }) => {
   const [hoverContainer, setHoverContainer] = useState(false);
   const [itemPick, setItemPick] = useState(undefined);
 
@@ -82,7 +77,7 @@ const TableInItem = ({ num, item, index, color, tag, fontSize }) => {
       color={color}
     >
       <SubjectName
-        item={item}
+        subName={subName}
         color={color}
         tag={tag}
         fontSize={fontSize}
@@ -90,13 +85,13 @@ const TableInItem = ({ num, item, index, color, tag, fontSize }) => {
         onMouseLeave={onMouseLeave}
         onClick={() => onClickItem(num)}
       >
-        <SPAN color={color}> &nbsp; {item} &nbsp; </SPAN>
+        <Span color={color}>{subName}</Span>
         {hoverContainer === true ? (
           <HoverContainer>
             {tag}
             <RegisterScheduleOne
               num={num}
-              item={item}
+              subName={subName}
               color={color}
               tag={tag}
             />

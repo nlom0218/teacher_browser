@@ -5,13 +5,13 @@ import { CardFadeIn } from "../../Animations/Fade";
 const TableItem = styled.div`
   position: relative;
   height: 100%;
+  width: 100%;
   border: 1px solid ${(props) => props.theme.cardBorder};
   background-color: lightblue;
   transition: border 1s ease, background-color 1s ease;
   border-radius: 5px;
   border-radius: 0.3125rem;
   display: grid;
-  grid-template-rows: 1fr;
   opacity: ${(props) => (props.hoverContainer ? 0.6 : 1)};
 `;
 
@@ -19,14 +19,13 @@ const SubjectName = styled.div`
   text-align: center;
   align-self: center;
   overflow: hidden;
-  line-height: 300%;
   font-size: ${(props) => props.fontSize}em;
   font-size: ${(props) => props.fontSize}rem;
 `;
 
 const HoverContainer = styled.div`
   display: grid;
-  justify-items: center;
+  text-align: center;
   align-items: center;
   font-size: 0.8rem;
   font-size: 0.8em;
@@ -35,9 +34,6 @@ const HoverContainer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  padding-bottom: 1.875rem;
-  padding-bottom: 30px;
-  align-items: flex-end;
   background-color: ${(props) => props.theme.cardHoverBg};
   border-radius: 5px;
   border-radius: 0.3125rem;

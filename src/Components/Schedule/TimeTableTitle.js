@@ -9,42 +9,37 @@ import PrintSchedule from "../../Components/Schedule/PrintSchedule";
 
 const TopContents = styled.div`
   display: grid;
-  grid-template-columns: 12fr 1fr;
-  padding-top: 30px;
-  padding-top: 1.875rem;
-  padding-left: 10px;
-  padding-left: 0.625rem;
-  padding-right: 10px;
-  padding-right: 0.625rem;
+  grid-template-columns: 1fr auto;
   row-gap: 20px;
   row-gap: 1.25rem;
+  column-gap: 20px;
+  column-gap: 1.25rem;
   align-items: center;
 `;
 
 const Title = styled.form`
-  grid-row: 1/2;
   display: grid;
-  grid-template-columns: 1fr auto;
   column-gap: 20px;
   column-gap: 1.25rem;
-  h1 {
-    font-size: 0.9rem;
-    font-size: 0.9em;
+  h2 {
     opacity: 0.7;
+    grid-column: 1 / -1;
   }
 `;
+
 const Input = styled.input`
   width: 100%;
-  font-size: 2em;
-  font-size: 2rem;
+  font-size: 1.5em;
+  font-size: 1.5rem;
   padding: 10px 0px;
   padding: 0.625rem 0rem;
 `;
-const InputLayout = styled.div``;
+
 
 const LineBox = styled.div`
   position: relative;
 `;
+
 const Line = styled.div`
   position: absolute;
   height: 2px;
@@ -56,8 +51,18 @@ const Line = styled.div`
   transition: background 1s ease, opacity 1s ease;
   animation: ${inputLine} 0.6s ease forwards;
 `;
+
+const Eles = styled.div`
+  display: grid;
+  grid-template-columns: ${props => props.isEdit ? "auto auto" : "auto"};
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  align-self: flex-end;
+`
+
 const SubmitInput = styled.input`
   background-color: ${(props) => props.theme.btnBgColor};
+  align-self: center;
   padding: 10px 30px;
   padding: 0.625rem 1.875rem;
   cursor: pointer;
@@ -67,7 +72,7 @@ const SubmitInput = styled.input`
   animation: ${BtnFadeIn} 0.6s ease;
 `;
 
-const TimeTableTitle = ({ title, setTitle }) => {
+const TimeTableTitle = ({ setTitle }) => {
   const media = useMedia();
   const date = new Date();
   const processSetDate = () => {
@@ -99,29 +104,27 @@ const TimeTableTitle = ({ title, setTitle }) => {
   return (
     <TopContents>
       <Title onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
-        <InputLayout>
-          <h2>
-            {processSetDate(date)} {processSetDay(date)}요일
-          </h2>
-          <Input
-            {...register("title", {
-              required: true,
-              onChange: () => setIsEdit(true),
-            })}
-            type="text"
-            placeholder="제목을 입력하세요"
-            autoComplete="off"
-            onClick={onClickInput}
-          />
-          {isEdit && (
-            <LineBox>
-              <Line></Line>
-            </LineBox>
-          )}
-        </InputLayout>
-        {isEdit && <SubmitInput type="submit" value="저장" />}
+        <h2>{processSetDate(date)} {processSetDay(date)}요일</h2>
+        <Input
+          {...register("title", {
+            required: true,
+            onChange: () => setIsEdit(true),
+          })}
+          type="text"
+          placeholder="제목을 입력하세요"
+          autoComplete="off"
+          onClick={onClickInput}
+        />
+        {isEdit && (
+          <LineBox>
+            <Line></Line>
+          </LineBox>
+        )}
       </Title>
-      {media === "Desktop" && <PrintSchedule />}
+      <Eles isEdit={isEdit}>
+        {isEdit && <SubmitInput type="submit" value="저장" />}
+        {media === "Desktop" && <PrintSchedule />}
+      </Eles>
     </TopContents>
   );
 };

@@ -177,7 +177,7 @@ const PrintScheduleContents = ({ printRef, title, viewTime, timeResult }) => {
         <UPDOWN>
           <GridList>
             {dayList.map((item, index) => {
-              return <TableOutItem>{item}</TableOutItem>;
+              return <TableOutItem key={index}>{item}</TableOutItem>;
             })}
           </GridList>
           <RIGHTLEFT>
@@ -211,13 +211,13 @@ const PrintScheduleContents = ({ printRef, title, viewTime, timeResult }) => {
             ) : (
               <GridTime>
                 {timeList.map((item, index) => {
-                  return <TableOutItem>{item}</TableOutItem>;
+                  return <TableOutItem key={index}>{item}</TableOutItem>;
                 })}
               </GridTime>
             )}
             <GridDay>
               {data?.getTimetableData.map((item, index) => {
-                return <TableItem>{item.subname}</TableItem>;
+                return <TableItem key={index}>{item.subname}</TableItem>;
               })}
             </GridDay>
           </RIGHTLEFT>

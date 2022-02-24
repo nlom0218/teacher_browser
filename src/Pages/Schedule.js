@@ -18,25 +18,14 @@ import ScheduleForm from "../Components/Schedule/ScheduleForm";
 import { useQuery } from "@apollo/client";
 import { GET_TIMETABLE_TIME_QUERY } from "../Graphql/TimeTable/query";
 import { GET_TIMETABLE_DATA_QUERY } from "../Graphql/TimeTable/query";
-//음영한 뒤 다크모드에서 글씨 안 보임.
-//수업추가 어떻게?
-
-const SorryMsg = styled.div`
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  margin-top: 100px;
-  margin-top: 6.25rem;
-  font-size: 1.5em;
-  font-size: 1.5rem;
-`
+import { customMedia } from "../styles";
 
 const Container = styled.div`
   min-height: 100%;
   display: grid;
   grid-template-rows: auto auto 1fr;
-  padding: 20px;
-  padding: 1.25rem;
+  padding: 40px;
+  padding: 2.5rem;
   row-gap: 20px;
   row-gap: 1.25rem;
   align-items: flex-start;
@@ -75,6 +64,7 @@ const TypeBtn = styled.div`
 `;
 
 const Schedule = () => {
+  const titleUpdataer = useTitle("티처캔 | 시간표");
   const [timeResult, setTimeResult] = useState([]);
   const [timetableTime, setTimetableTime] = useState([]);
   const {
@@ -110,7 +100,6 @@ const Schedule = () => {
     },
   });
 
-  const titleUpdataer = useTitle("티처캔 | 시간표");
   const isPopup = useReactiveVar(isPopupVar);
   const media = useMedia();
   const componentRef = useRef(null);
@@ -130,11 +119,8 @@ const Schedule = () => {
   };
   return (
     <BasicContainer menuItem={true} screen="small">
-      <SorryMsg>
-        페이지 준비중 입니다. 빠른 시간에 완성하겠습니다!(2.26 새벽 완성 예정) 😓
-      </SorryMsg>
-      {/* <Container>
-        <TimeTableTitle title={title} setTitle={setTitle} />
+      <Container>
+        <TimeTableTitle setTitle={setTitle} />
         <OptionContents>
           <OptionBtn onClick={onClickTimeSetBtn}> 시간설정 </OptionBtn>
           <TypeBtn onClick={onClickTimeviewBtn}>
@@ -177,7 +163,7 @@ const Schedule = () => {
           viewTime={viewTime}
           timeResult={timeResult}
         />
-      )} */}
+      )}
     </BasicContainer>
   );
 };
