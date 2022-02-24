@@ -64,6 +64,8 @@ const ScheduleForm = ({ timetableTime, fontSize, setFontSize, viewTime, setViewT
     }
   }, [data]);
 
+  console.log(data);
+
   return (
     <Container>
       <DayTop>

@@ -49,6 +49,9 @@ const InputLayout = styled.input`
   border-radius: 0.3125rem;
   display: flex;
   align-items: center;
+  ::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+}
 `;
 
 const AddTagBtn = styled.input`

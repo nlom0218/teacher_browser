@@ -19,6 +19,7 @@ import { useQuery } from "@apollo/client";
 import { GET_TIMETABLE_TIME_QUERY } from "../Graphql/TimeTable/query";
 import { GET_TIMETABLE_DATA_QUERY } from "../Graphql/TimeTable/query";
 import { customMedia } from "../styles";
+import AlertMessage from "../Components/Shared/AlertMessage";
 
 const Container = styled.div`
   min-height: 100%;
@@ -67,6 +68,7 @@ const Schedule = () => {
   const titleUpdataer = useTitle("티처캔 | 시간표");
   const [timeResult, setTimeResult] = useState([]);
   const [timetableTime, setTimetableTime] = useState([]);
+  const [errMsg, setErrMsg] = useState(undefined)
   const {
     data: timetableData,
     loading: timetableLoading,
@@ -105,7 +107,6 @@ const Schedule = () => {
   const componentRef = useRef(null);
   const me = useMe();
 
-  const [isEdit, setIsEdit] = useState(false);
   const [title, setTitle] = useState("우리반 시간표");
   const [fontSize, setFontSize] = useState(1.25);
   const [viewTime, setViewTime] = useState(false);
@@ -150,6 +151,7 @@ const Schedule = () => {
         <ClassRegisterPage
           userEmail={me?.email}
           timetableData={timetableData}
+          setErrMsg={setErrMsg}
         />
       )}
       {isPopup === "registerTime" && (
@@ -164,6 +166,7 @@ const Schedule = () => {
           timeResult={timeResult}
         />
       )}
+      {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} time={3000} type="error" />}
     </BasicContainer>
   );
 };
