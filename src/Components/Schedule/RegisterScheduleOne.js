@@ -14,7 +14,7 @@ const RegisterClassOneBtn = styled.div`
   cursor: pointer;
 `;
 
-const RegisterScheduleOne = ({ num, item, color, tag }) => {
+const RegisterScheduleOne = ({ num }) => {
   const onClickRegisterClassOne = () => {
     inPopup("registerClass");
   };

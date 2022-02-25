@@ -150,7 +150,6 @@ const Schedule = () => {
       {isPopup === "registerClass" && (
         <ClassRegisterPage
           userEmail={me?.email}
-          timetableData={timetableData}
           setErrMsg={setErrMsg}
         />
       )}

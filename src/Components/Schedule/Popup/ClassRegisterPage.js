@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import useMe, { ME_QUERY } from "../../../Hooks/useMe";
+import { ME_QUERY } from "../../../Hooks/useMe";
 import PopupContainer from "../../Shared/PopupContainer";
 import { outPopup } from "../../../apollo";
 import InputUnderLine from "../../List/InputUnderLine";
 import { BsCheck } from "react-icons/bs";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { SET_TIMETABLE_DATA_MUTATION } from "../../../Graphql/TimeTable/mutation";
 import { GET_TIMETABLE_DATA_QUERY } from "../../../Graphql/TimeTable/query";
+import Loading from "../../Shared/Loading";
 
 const RegisterForm = styled.form`
   padding: 20px 0px;
@@ -25,6 +26,14 @@ const RegisterForm = styled.form`
     cursor: pointer;
   }
 `;
+
+const Title = styled.div`
+  grid-column: 1 / -1;
+  justify-self: flex-end;
+  font-size: 1.25em;
+  font-size: 1.25rem;
+`
+
 const LayOut = styled.div`
   display: grid;
   grid-template-columns: 1fr 4fr;
@@ -101,7 +110,6 @@ const DelBtn = styled.div`
 
 const BtnFrame = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
   column-gap: 20px;
   column-gap: 1.25rem;
 `;
@@ -160,17 +168,18 @@ const timelist = ["1", "2", "3", "4", "5", "6"];
 
 const ClassRegisterPage = ({
   setErrMsg,
-  timetableData,
   userEmail,
-  num,
-  item,
-  color,
-  tag,
 }) => {
   const [pickColor, setPickColor] = useState(undefined);
   const [isEditMemo, setIsEditMemo] = useState(false);
   const [isEditName, setIsEditName] = useState(false);
   const [pickIndexArr, setPickIndexArr] = useState([parseInt(localStorage.getItem("classPick"))])
+
+  const { data, loading: queryLoading } = useQuery(GET_TIMETABLE_DATA_QUERY, {
+    variables: {
+      index: parseInt(localStorage.getItem("classPick"))
+    }
+  })
 
   const onCompleted = (result) => {
     const {
@@ -217,7 +226,7 @@ const ClassRegisterPage = ({
       setErrMsg("과목명을 입력해주세요. 😅")
       return
     }
-    console.log(pickIndexArr, pickColor, userEmail, subName, memo);
+
     setTimetableData({
       variables: {
         teacherEmail: userEmail,
@@ -243,9 +252,22 @@ const ClassRegisterPage = ({
     setPickIndexArr(newPickIndexArr)
   }
 
+  useEffect(() => {
+    if (data) {
+      setValue("subName", data?.getTimetableData[0]?.subName)
+      setPickColor(data?.getTimetableData[0]?.color)
+      setValue("memo", data?.getTimetableData[0]?.memo)
+    }
+  }, [data])
+
+  if (queryLoading || loading) {
+    return <Loading page="popupPage" />
+  }
+
   return (
     <PopupContainer>
       <RegisterForm onSubmit={handleSubmit(onSubmit)}>
+        <Title>수업 설정 및 수정하기</Title>
         <LayOut>
           <DetailTitle>수업명</DetailTitle>
           <InputUnderLine isEdit={isEditName}>
@@ -344,7 +366,6 @@ const ClassRegisterPage = ({
         </LayOut>
         <BtnFrame>
           <AddTagBtn type="submit" value="완료" />
-          <DelBtn>초기화</DelBtn>
         </BtnFrame>
       </RegisterForm>
     </PopupContainer>

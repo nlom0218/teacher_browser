@@ -5,6 +5,7 @@ import TableOutItem from "./TableOutItem";
 import TableOutDay from "./TableOutDay";
 import { useQuery } from "@apollo/client";
 import { GET_TIMETABLE_DATA_QUERY } from "../../Graphql/TimeTable/query";
+import Loading from "../Shared/Loading";
 
 const Container = styled.div`
   min-height: 100%;
@@ -58,13 +59,15 @@ for (var i = 0; i < 6; i++) {
 const dayValue = [[], ["월", , result[0]], ["화", , result[1]], ["수", , result[2]], ["목", , result[3]], ["금", , result[4]],];
 
 const ScheduleForm = ({ timetableTime, fontSize, setFontSize, viewTime, setViewTime }) => {
-  const { data, loading, error } = useQuery(GET_TIMETABLE_DATA_QUERY);
+  const { data, loading } = useQuery(GET_TIMETABLE_DATA_QUERY);
   useEffect(() => {
     if (data) {
     }
   }, [data]);
 
-  console.log(data);
+  if (loading) {
+    return <Loading page="subPage" />
+  }
 
   return (
     <Container>
@@ -103,7 +106,7 @@ const ScheduleForm = ({ timetableTime, fontSize, setFontSize, viewTime, setViewT
               num={name.index}
               subName={name.subName}
               color={name.color}
-              tag={name.memo}
+              memo={name.memo}
               fontSize={fontSize}
               setFontSize={setFontSize}
             />
