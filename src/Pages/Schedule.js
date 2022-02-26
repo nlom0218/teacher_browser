@@ -70,6 +70,7 @@ const Schedule = () => {
   const [timeResult, setTimeResult] = useState([]);
   const [timetableTime, setTimetableTime] = useState([]);
   const [errMsg, setErrMsg] = useState(undefined)
+  const [msg, setMsg] = useState(undefined)
   const { data: tableData, loading: tableLoading } = useQuery(GET_TIMETABLE_DATA_QUERY);
 
   const { data, loading, error } = useQuery(GET_TIMETABLE_TIME_QUERY, {
@@ -152,12 +153,13 @@ const Schedule = () => {
         <ClassRegisterPage
           userEmail={me?.email}
           setErrMsg={setErrMsg}
+          setMsg={setMsg}
         />
       )}
       {isPopup === "registerTime" && (
-        <TimeRegisterPage timeResult={timeResult} userEmail={me?.email} />
+        <TimeRegisterPage timeResult={timeResult} userEmail={me?.email} setMsg={setMsg} />
       )}
-      {isPopup === "registerTimeSet" && <ClassTimeSet userEmail={me?.email} />}
+      {isPopup === "registerTimeSet" && <ClassTimeSet userEmail={me?.email} setMsg={setMsg} />}
       {isPopup === "print" && (
         <PrintScheduleContents
           printRef={componentRef}
@@ -168,6 +170,7 @@ const Schedule = () => {
         />
       )}
       {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} time={3000} type="error" />}
+      {msg && <AlertMessage msg={msg} setMsg={setMsg} time={3000} type="success" />}
     </BasicContainer>
   );
 };

@@ -39,7 +39,8 @@ export const ligthTheme = {
   green: "#007f4c",
   originBgColor: "#ffffff",
   girdBorderColor: "rgb(181, 181, 181)",
-  yelloColor: "rgba(244, 242, 90, 0.8)"
+  yelloColor: "rgba(244, 242, 90, 0.8)",
+  skyblue: "#CEECF5"
 };
 export const darkTheme = {
   originBgColor: "#222222",
@@ -59,7 +60,8 @@ export const darkTheme = {
   green: "#20c997",
   originBgColor: "#000000",
   girdBorderColor: color.maroon,
-  yelloColor: "rgba(112, 108, 0, 0.8)"
+  yelloColor: "rgba(112, 108, 0, 0.8)",
+  skyblue: "#478b9e"
 };
 
 export const GlobalStyle = createGlobalStyle`

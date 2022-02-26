@@ -8,13 +8,14 @@ import { GET_TIMETABLE_TIME_QUERY } from "../../../Graphql/TimeTable/query";
 import Loading from "../../Shared/Loading";
 import { outPopup } from "../../../apollo";
 
-const ClassTimeSet = ({ userEmail }) => {
+const ClassTimeSet = ({ userEmail, setMsg }) => {
   const onCompleted = (result) => {
     const {
       setTimetableTime: { ok },
     } = result;
     if (ok) {
       outPopup();
+      setMsg("시간이 설정되었습니다. 😀")
     }
   };
 

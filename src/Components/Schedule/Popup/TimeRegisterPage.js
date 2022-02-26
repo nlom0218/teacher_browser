@@ -66,13 +66,14 @@ const AddTagBtn = styled.input`
   cursor: pointer;
 `;
 
-const TimeRegisterPage = ({ userEmail, timeResult }) => {
+const TimeRegisterPage = ({ userEmail, timeResult, setMsg }) => {
   const onCompleted = (result) => {
     const {
       setTimetableTime: { ok },
     } = result;
     if (ok) {
       outPopup();
+      setMsg("시간이 설정되었습니다. 😀")
     }
   };
 

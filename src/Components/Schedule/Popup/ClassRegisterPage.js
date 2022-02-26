@@ -164,6 +164,7 @@ const timelist = ["1", "2", "3", "4", "5", "6"];
 const ClassRegisterPage = ({
   setErrMsg,
   userEmail,
+  setMsg
 }) => {
   const [pickColor, setPickColor] = useState(undefined);
   const [isEditMemo, setIsEditMemo] = useState(false);
@@ -182,6 +183,7 @@ const ClassRegisterPage = ({
     } = result;
     if (ok) {
       outPopup();
+      setMsg("시간표가 등록되었습니다. 😀")
     }
   };
 
@@ -191,6 +193,7 @@ const ClassRegisterPage = ({
     } = result;
     if (ok) {
       outPopup();
+      setMsg("시간표가 삭제되었습니다. 😀")
     }
   };
 
