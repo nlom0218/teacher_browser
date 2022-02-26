@@ -63,7 +63,7 @@ function App() {
     if (!bgTheme) {
       return
     }
-    if ("" + bgTheme.substr(0, 1) === "#") {
+    if (bgTheme.substr(0, 1) === "#") {
       const changBg = setTimeout(() => {
         setUserBgTheme(bgTheme);
       }, [1800]);
@@ -76,8 +76,8 @@ function App() {
   }, [bgTheme]);
 
   useEffect(() => {
-    window.Kakao.init(process.env.REACT_APP_KAKAO_API_KEY);
     disableBgThemeAni();
+    editBgTheme("nature")
   }, []);
 
   useEffect(() => {
@@ -96,8 +96,6 @@ function App() {
   useEffect(() => {
     if (me) {
       editBgTheme(me?.bgTheme)
-    } else {
-      editBgTheme("nature")
     }
     if (me === undefined) {
       return
