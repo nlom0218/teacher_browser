@@ -379,7 +379,7 @@ const ClassRegisterPage = ({
                         </TimeTable>
                       ) : (
                         <TimeTable onClick={() => onClickTimeIndex(index)}>
-                          {index + 1}
+                          {/* {index + 1} */}
                         </TimeTable>
                       )}
                     </React.Fragment>

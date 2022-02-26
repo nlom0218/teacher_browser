@@ -74,14 +74,23 @@ const Form = styled.form`
   padding: 0.625rem;
 `;
 
-const EditBg = ({ userEmail, bgTheme }) => {
+const EditBg = ({ userEmail, bgTheme, setMsg }) => {
   const bgThemeAni = useReactiveVar(bgThemeAniVar)
   const bgColorArr = [
     "#F44336", "#E91E62", "#9C27B0", "#673AB6", "#3F50B5", "#2096F3",
     "#00A8F4", "#00BCD4", "#009688", "#4CAF4F", "#8BC24A", "#CDDC39",
     "#FFEB3A", "#FFC007", "#FF9800", "#FF5721", "#795548", "#607D8A"
   ]
+
+  const onCompleted = (result) => {
+    const { updateUser: { ok } } = result
+    if (ok) {
+      setMsg("배경화면이 수정되었습니다. 😀")
+    }
+  }
+
   const [updateBgTheme] = useMutation(UPDATE_USER_BGTHEME_MUTATION, {
+    onCompleted,
     refetchQueries: [{ query: ME_QUERY }],
   });
   const { register, handleSubmit, setValue } = useForm({ mode: "onChange" });
