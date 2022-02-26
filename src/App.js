@@ -77,7 +77,9 @@ function App() {
 
   useEffect(() => {
     disableBgThemeAni();
-    editBgTheme("nature")
+    if (!bgTheme) {
+      editBgTheme("nature")
+    }
   }, []);
 
   useEffect(() => {
