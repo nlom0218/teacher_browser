@@ -231,7 +231,7 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) 
   }, [data])
 
 
-  if (loading) {
+  if (loading || editLoading || deleteLoading) {
     return <Loading page="popupPage" />
   }
 

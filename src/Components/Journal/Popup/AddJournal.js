@@ -11,6 +11,7 @@ import IcNameTableClick from '../../../icons/NameTable/IcNameTableClick';
 import { WRITE_JOURNAL_MUTATION } from '../../../Graphql/Journal/mutation';
 import { SEE_JOURNAL_QUERY } from '../../../Graphql/Journal/query';
 import PopupContainer from '../../Shared/PopupContainer';
+import Loading from '../../Shared/Loading';
 
 const CalenderPopupFormContainer = styled.form`
   padding : 20px 0px;
@@ -166,6 +167,10 @@ const AddJournal = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) 
       setStudentId(journalStudentId)
     }
   }, [])
+
+  if (loading) {
+    return <Loading page="popupPage" />
+  }
 
   return (<PopupContainer maxHeight={true} needAlert={true}>
     <CalenderPopupFormContainer onSubmit={handleSubmit(onSubmit)}>
