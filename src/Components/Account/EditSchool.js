@@ -45,10 +45,6 @@ const EditSchool = ({ userEmail, schoolName, schoolAdress, setMsg }) => {
     }
   }
 
-  if (loading) {
-    return <Loading page="subpage" />
-  }
-
   return (<Container>
     <SchoolName>{schoolName ? schoolName : "등록된 학교가 없습니다."}</SchoolName>
     {schoolAdress && <SchoolAdress>{schoolAdress}</SchoolAdress>}
@@ -56,6 +52,7 @@ const EditSchool = ({ userEmail, schoolName, schoolAdress, setMsg }) => {
       <RegisterBtn onClick={onClickRegisterBtn}>{schoolName ? "변경하기" : "등록하기"}</RegisterBtn>
       <DelBtn onClick={onClickDelBtn}>학교정보 삭제하기</DelBtn>
     </BtnContainer>
+    {loading && <Loading page="center" />}
   </Container>);
 }
 

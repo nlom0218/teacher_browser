@@ -1,6 +1,6 @@
 import { useReactiveVar } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
-import { bgThemeAniVar } from '../../apollo';
+import { bgThemeAniVar, bgThemeVar } from '../../apollo';
 import useMe from '../../Hooks/useMe';
 import ChangBackgroundItem from './ChangBackgroundItem';
 
@@ -11,17 +11,18 @@ const ChangBackground = () => {
     "#FFEB3A", "#FFC007", "#FF9800", "#FF5721", "#795548", "#607D8A",
   ]
   const bgThemeAni = useReactiveVar(bgThemeAniVar)
+  const bgTheme = useReactiveVar(bgThemeVar)
 
   const me = useMe()
   const [userBgTheme, setUserBgTheme] = useState(undefined)
 
   useEffect(() => {
-    if (me && bgThemeAni) {
-      if (me.bgTheme.substr(0, 1) === "#") {
-        setUserBgTheme(me.bgTheme)
+    if (bgTheme) {
+      if (bgTheme.substr(0, 1) === "#") {
+        setUserBgTheme(bgTheme)
       }
     }
-  }, [me])
+  }, [bgTheme])
 
   useEffect(() => {
     const removeBgTheme = setTimeout(() => {

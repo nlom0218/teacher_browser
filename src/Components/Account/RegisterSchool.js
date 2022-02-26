@@ -88,7 +88,6 @@ const RegisterSchool = ({ setMsg }) => {
     findSchool(school)
   }
   const onCompleted = (result) => {
-    console.log(result);
     const { updateUser: { ok } } = result
     if (ok) {
       onChangeInput()

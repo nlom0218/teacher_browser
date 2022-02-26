@@ -99,7 +99,7 @@ const EditAccount = () => {
         <Changes>
           <List>배경화면 테마</List>
           <Item>
-            <EditBgTheme setMsg={setMsg} userEmail={me?.email} bgTheme={me?.bgTheme} />
+            <EditBgTheme setMsg={setMsg} userEmail={me?.email} bgTheme={me?.bgTheme} userId={me?._id} />
           </Item>
         </Changes>
         {data?.checkPw.ok && (

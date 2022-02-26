@@ -12,6 +12,13 @@ const Container = styled.div`
   transform: translate(-50%, 50%);
 `
 
+const FixContainer = styled.div`
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, 50%);
+`
+
 // mainPage => 명렬표, 학급일지, 순서정하기 등 가장 메인이 되는 페이지
 // subPage => 명렬표의 학생 디테일, 리스트 디테일 같이 메인 페이지에서 이동되는 서브 페이지
 // popupPage => popup페이지
@@ -39,6 +46,10 @@ const Loading = ({ page }) => {
           <RandomCircle />
         </Container>
       </BtnPopupContainer>}
+    {page === "center" &&
+      <FixContainer>
+        <RandomCircle />
+      </FixContainer>}
   </React.Fragment>);
 }
 
