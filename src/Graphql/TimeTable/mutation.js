@@ -57,3 +57,12 @@ export const SET_TIMETABLE_DATA_MUTATION = gql`
     }
   }
 `;
+
+export const RESET_TIMETABLE_DATA_MUTATION = gql`
+  mutation Mutation($teacherEmail: String!, $resetIndex: Int!) {
+    resetTimetableData(teacherEmail: $teacherEmail, resetIndex: $resetIndex){
+      ok
+      error
+    }
+  }
+`

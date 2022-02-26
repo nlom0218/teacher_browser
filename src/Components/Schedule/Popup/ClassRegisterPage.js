@@ -7,7 +7,7 @@ import { outPopup } from "../../../apollo";
 import InputUnderLine from "../../List/InputUnderLine";
 import { BsCheck } from "react-icons/bs";
 import { useMutation, useQuery } from "@apollo/client";
-import { SET_TIMETABLE_DATA_MUTATION } from "../../../Graphql/TimeTable/mutation";
+import { RESET_TIMETABLE_DATA_MUTATION, SET_TIMETABLE_DATA_MUTATION } from "../../../Graphql/TimeTable/mutation";
 import { GET_TIMETABLE_DATA_QUERY } from "../../../Graphql/TimeTable/query";
 import Loading from "../../Shared/Loading";
 import bgColorArr from "../../Calendar/Popup/ScheduleBgColorArr";
@@ -105,6 +105,8 @@ const BtnFrame = styled.div`
   display: grid;
   column-gap: 20px;
   column-gap: 1.25rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
 `;
 
 const AddClassContainer = styled.div`
@@ -145,6 +147,17 @@ const TimeTable = styled.div`
   justify-items: center;
 `;
 
+const ResetBtn = styled.div`
+  text-align: center;
+  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
+  background-color: ${(props) => props.theme.redColor};
+  color: ${(props) => props.theme.bgColor};
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+`
+
 const timeday = ["", "월", "화", "수", "목", "금"];
 const timelist = ["1", "2", "3", "4", "5", "6"];
 
@@ -171,6 +184,16 @@ const ClassRegisterPage = ({
       outPopup();
     }
   };
+
+  const resetOnCompleted = (result) => {
+    const {
+      resetTimetableData: { ok },
+    } = result;
+    if (ok) {
+      outPopup();
+    }
+  };
+
   const [setTimetableData, { loading }] = useMutation(
     SET_TIMETABLE_DATA_MUTATION,
     {
@@ -181,6 +204,14 @@ const ClassRegisterPage = ({
       ],
     }
   );
+
+  const [resetTimetableData, { loading: resetLoading }] = useMutation(RESET_TIMETABLE_DATA_MUTATION, {
+    onCompleted: resetOnCompleted,
+    refetchQueries: [
+      { query: ME_QUERY },
+      { query: GET_TIMETABLE_DATA_QUERY, variables: { userEmail } },
+    ],
+  })
 
   const { register, handleSubmit, setValue, getValues } = useForm({
     mode: "onChange",
@@ -234,6 +265,15 @@ const ClassRegisterPage = ({
     setPickIndexArr(newPickIndexArr)
   }
 
+  const onClickResetBtn = () => {
+    resetTimetableData({
+      variables: {
+        teacherEmail: userEmail,
+        resetIndex: parseInt(localStorage.getItem("classPick"))
+      }
+    })
+  }
+
   useEffect(() => {
     if (data) {
       setValue("subName", data?.getTimetableData[0]?.subName)
@@ -242,7 +282,7 @@ const ClassRegisterPage = ({
     }
   }, [data])
 
-  if (queryLoading || loading) {
+  if (queryLoading || loading || resetLoading) {
     return <Loading page="popupPage" />
   }
 
@@ -348,6 +388,7 @@ const ClassRegisterPage = ({
         </LayOut>
         <BtnFrame>
           <AddTagBtn type="submit" value="완료" />
+          <ResetBtn onClick={onClickResetBtn}>삭제하기</ResetBtn>
         </BtnFrame>
       </RegisterForm>
     </PopupContainer>
