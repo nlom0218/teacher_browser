@@ -98,7 +98,7 @@ const StudentNumber = styled.div`
   opacity: 0.6;
 `;
 
-const StudentInItem = ({ item, listId, page, setSuccessMsg, listName }) => {
+const StudentInItem = ({ item, listId, page, setSuccessMsg, listName, sort }) => {
   const me = useMe();
 
   const media = useMedia();
@@ -115,7 +115,25 @@ const StudentInItem = ({ item, listId, page, setSuccessMsg, listName }) => {
 
   const [deleteStudent, { loading }] = useMutation(DELETE_STUDENT_MUTATION, {
     onCompleted,
-    refetchQueries: [{ query: SEE_ONE_STUDENT_LIST_QUERY, variables: { listId } }],
+    update: (cache, { data: { deleteStudent: { ok } } }) => {
+      cache.modify({
+        id: `Student:${item._id}`,
+        fields: {
+          listId(prev) {
+            const newListId = prev.filter(i => i !== listId)
+            return newListId
+          }
+        }
+      })
+      cache.modify({
+        id: "ROOT_QUERY",
+        fields: {
+          seeStudentList(prev) {
+
+          }
+        }
+      })
+    }
   });
 
   const onMouseEnter = () => {

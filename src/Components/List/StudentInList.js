@@ -83,6 +83,7 @@ const StudentInList = ({ students, listId, setSort, sort, setSuccessMsg, listNam
           listId={listId}
           setSuccessMsg={setSuccessMsg}
           listName={listName}
+          sort={sort}
         />
       })}
     </Container>
