@@ -60,7 +60,7 @@ function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
 
   useEffect(() => {
-    if (bgTheme.substr(0, 1) === "#") {
+    if ("" + bgTheme.substr(0, 1) === "#") {
       const changBg = setTimeout(() => {
         setUserBgTheme(bgTheme);
       }, [1800]);
