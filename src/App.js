@@ -93,6 +93,8 @@ function App() {
   useEffect(() => {
     if (me) {
       editBgTheme(me?.bgTheme)
+    } else {
+      editBgTheme("nature")
     }
     if (me === undefined) {
       return
