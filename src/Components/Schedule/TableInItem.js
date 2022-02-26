@@ -70,18 +70,12 @@ const Memo = styled.div`
 
 const TableInItem = ({ num, subName, index, color, memo, fontSize }) => {
   const [hoverContainer, setHoverContainer] = useState(false);
-  const [itemPick, setItemPick] = useState(undefined);
 
   const onMouseEnter = () => {
     setHoverContainer(true);
   };
   const onMouseLeave = () => {
     setHoverContainer(false);
-  };
-
-  const onClickItem = (item) => {
-    setItemPick(item);
-    localStorage.setItem("classPick", item);
   };
 
   return (
@@ -92,21 +86,14 @@ const TableInItem = ({ num, subName, index, color, memo, fontSize }) => {
       color={color}
     >
       <SubjectName
-        subName={subName}
-        color={color}
         fontSize={fontSize}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
-        onClick={() => onClickItem(num)}
       >
         <Span color={color}>{subName}</Span>
         {hoverContainer ? (
           <HoverContainer memo={memo}>
-            <RegisterScheduleOne
-              num={num}
-              subName={subName}
-              color={color}
-            />
+            <RegisterScheduleOne num={num} />
             {memo && <Memo>{memo}</Memo>}
           </HoverContainer>
         ) : null}

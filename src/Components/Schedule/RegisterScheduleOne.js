@@ -16,6 +16,7 @@ const RegisterClassOneBtn = styled.div`
 
 const RegisterScheduleOne = ({ num }) => {
   const onClickRegisterClassOne = () => {
+    localStorage.setItem("classPick", num);
     inPopup("registerClass");
   };
 
