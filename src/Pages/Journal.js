@@ -6,7 +6,6 @@ import MainArea from "../Components/Journal/MainArea";
 import { isPopupVar } from "../apollo";
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { SEE_ONE_STUDENT_LIST_QUERY } from "../Graphql/StudentList/query";
-import StudentList from "../Components/Journal/Popup/StudentList";
 import DeleteJournal from "../Components/Journal/Popup/DeleteJournal";
 import styled from "styled-components";
 import { customMedia } from "../styles";
@@ -18,6 +17,7 @@ import useTitle from "../Hooks/useTitle";
 import AddJournal from "../Components/Journal/Popup/AddJournal";
 import EditJournal from "../Components/Journal/Popup/EditJournal";
 import NeedLoginPopupContainer from "../Components/Shared/NeedLoginPopupContainer";
+import StudentList from "../Components/Shared/popup/StudentList";
 
 const Container = styled.div`
   min-height: 100%;
@@ -92,7 +92,7 @@ const Journal = ({ me }) => {
         {type === "list" && <MainArea me={me} students={students} loading={loading} error={error} setSort={setSort} sort={sort} listId={id} />}
         {type === "student" && <JournalDetail studentId={id} refetchQuery={refetchQuery} studentName={studentName} />}
       </Container>
-      {isPopup === "seeStudentList" && <StudentList me={me} />}
+      {isPopup === "seeStudentList" && <StudentList me={me} page="journal" />}
       {isPopup === "deleteJournal" && <DeleteJournal />}
       {isPopup === "addJournal" && <AddJournal setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={undefined} />}
       {isPopup === "editJournal" && <EditJournal setErrMsg={setErrMsg} setRefetchQuery={setRefetchQuery} userEmail={me?.email} setMsg={setMsg} urlDate={undefined} />}
