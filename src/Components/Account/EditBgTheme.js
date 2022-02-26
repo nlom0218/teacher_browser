@@ -1,13 +1,13 @@
 import { useMutation, useReactiveVar } from "@apollo/client";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { ME_QUERY } from "../../Hooks/useMe";
 import { useForm } from "react-hook-form";
 import { BsCheckLg } from "react-icons/bs";
 import { UPDATE_USER_BGTHEME_MUTATION } from "../../Graphql/User/mutation";
 import { RiCheckboxBlankLine, RiCheckboxLine } from 'react-icons/ri';
 import { customMedia } from "../../styles";
-import { bgThemeAniVar, enableBgThemeAni } from "../../apollo";
+import { bgThemeAniVar, bgThemeVar, editBgTheme, enableBgThemeAni } from "../../apollo";
+import Loading from "../Shared/Loading";
 
 const Container = styled.div`
   display: grid;
@@ -69,20 +69,24 @@ const BgThemeItem = styled.div`
   }
 `
 
-const Form = styled.form`
-  padding: 10px;
-  padding: 0.625rem;
-`;
-
-const EditBg = ({ userEmail, bgTheme }) => {
+const EditBg = ({ userEmail, setMsg }) => {
   const bgThemeAni = useReactiveVar(bgThemeAniVar)
+  const bgTheme = useReactiveVar(bgThemeVar)
   const bgColorArr = [
     "#F44336", "#E91E62", "#9C27B0", "#673AB6", "#3F50B5", "#2096F3",
     "#00A8F4", "#00BCD4", "#009688", "#4CAF4F", "#8BC24A", "#CDDC39",
     "#FFEB3A", "#FFC007", "#FF9800", "#FF5721", "#795548", "#607D8A"
   ]
-  const [updateBgTheme] = useMutation(UPDATE_USER_BGTHEME_MUTATION, {
-    refetchQueries: [{ query: ME_QUERY }],
+
+  const onCompleted = (result) => {
+    const { updateUser: { ok } } = result
+    if (ok) {
+      setMsg("배경화면이 수정되었습니다. 😀")
+    }
+  }
+
+  const [updateBgTheme, { loading }] = useMutation(UPDATE_USER_BGTHEME_MUTATION, {
+    onCompleted,
   });
   const { register, handleSubmit, setValue } = useForm({ mode: "onChange" });
 
@@ -98,6 +102,7 @@ const EditBg = ({ userEmail, bgTheme }) => {
   const onClickColorBgTheme = (color) => {
     // if (!bgThemeAni) {
     enableBgThemeAni()
+    editBgTheme(color)
     updateBgTheme({
       variables: {
         userEmail: userEmail,
@@ -112,6 +117,7 @@ const EditBg = ({ userEmail, bgTheme }) => {
     if (bgTheme) {
       // 배경화면만 리렌더링 되는 거 왜 그럴까? refetchQuery로 me쿼리를 다시 불러와서?
       // 값을 변경했다 다시 원래 값으로 변경할 때 사진이 왜 바로 다른 사진으로 안 바뀌지?
+      editBgTheme(bgTheme)
       updateBgTheme({
         variables: {
           userEmail: userEmail,
@@ -187,6 +193,7 @@ const EditBg = ({ userEmail, bgTheme }) => {
         </select>
       </Form>
       <RegisterBtn onClick={handleClick}>배경화면 새로고침</RegisterBtn> */}
+      {loading && <Loading page="center" />}
     </Container>
   );
 };

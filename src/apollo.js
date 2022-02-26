@@ -2,6 +2,7 @@ import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { makeVar } from "@apollo/client";
 
+const BG_THEME = "bgTheme"
 const DARK = "dark";
 const TOKEN = "token";
 const POPUP = "popup";
@@ -13,6 +14,12 @@ const BG_ANI = "bgAni";
 const PAGELINK_SECTION = "pageLinkSection";
 const PAGE_LINK_FOLDER = "pageLinkFolder";
 const LINK_PICK_FOLDER = "linkPickFolder";
+
+export const bgThemeVar = makeVar(localStorage.getItem(BG_THEME))
+export const editBgTheme = (theme) => {
+  localStorage.setItem(BG_THEME, theme)
+  bgThemeVar(theme)
+}
 
 export const menuTypeVar = makeVar(localStorage.getItem(MENU_TYPE));
 export const setMenuType = (type) => {

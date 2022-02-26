@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { isPopupVar } from "../apollo";
 import EditSchool from "../Components/Account/EditSchool";
@@ -14,6 +14,7 @@ import Pop_ChangePw from "../Components/Account/Popup/Pop_ChangePw";
 import { CHECK_PASSWORD_QUERY } from "../Graphql/User/query";
 import { useQuery } from "@apollo/client";
 import useTitle from "../Hooks/useTitle";
+import AlertMessage from "../Components/Shared/AlertMessage";
 
 const Title = styled.div`
   font-size: 1.5em;
@@ -70,6 +71,9 @@ const Item = styled.div`
 const EditAccount = () => {
   const titleUpdataer = useTitle("티처캔 | 회원정보")
   const isPopup = useReactiveVar(isPopupVar);
+
+  const [msg, setMsg] = useState(undefined)
+
   const me = useMe();
   const { data } = useQuery(CHECK_PASSWORD_QUERY, {
     variables: { userEmail: me?.email },
@@ -89,13 +93,13 @@ const EditAccount = () => {
         <Changes>
           <List>학교정보</List>
           <Item>
-            <EditSchool schoolName={me?.schoolName} schoolAdress={me?.schoolAdress} userEmail={me?.email} />
+            <EditSchool setMsg={setMsg} schoolName={me?.schoolName} schoolAdress={me?.schoolAdress} userEmail={me?.email} />
           </Item>
         </Changes>
         <Changes>
           <List>배경화면 테마</List>
           <Item>
-            <EditBgTheme userEmail={me?.email} bgTheme={me?.bgTheme} />
+            <EditBgTheme setMsg={setMsg} userEmail={me?.email} bgTheme={me?.bgTheme} userId={me?._id} />
           </Item>
         </Changes>
         {data?.checkPw.ok && (
@@ -111,8 +115,9 @@ const EditAccount = () => {
           </Changes>
         )}
       </Container>
-      {isPopup === "registerSchool" && <RegisterSchool />}
+      {isPopup === "registerSchool" && <RegisterSchool setMsg={setMsg} />}
       {isPopup === "changePw" && <Pop_ChangePw userEmail={me?.email} />}
+      {msg && <AlertMessage msg={msg} setMsg={setMsg} time={3000} type="success" />}
     </BasicContainer>
   );
 };

@@ -7,7 +7,7 @@ const TableItem = styled.div`
   position: relative;
   height: 100%;
   border: 1px solid ${(props) => props.theme.cardBorder};
-  background-color: lightblue;
+  background-color: ${props => props.theme.skyblue};
   transition: border 1s ease, background-color 1s ease;
   border-radius: 5px;
   border-radius: 0.3125rem;
@@ -47,8 +47,8 @@ const SubjectName = styled.div`
 `;
 
 const HoverContainer = styled.div`
-  display: grid;
-  justify-items: center;
+  display: flex;
+  justify-content: center;
   align-items: center;
   font-size: 0.8rem;
   font-size: 0.8em;
@@ -57,9 +57,6 @@ const HoverContainer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  padding-bottom: 1.875rem;
-  padding-bottom: 30px;
-  align-items: flex-end;
   background-color: ${(props) => props.theme.cardHoverBg};
   border-radius: 5px;
   border-radius: 0.3125rem;
@@ -75,7 +72,6 @@ const TableOutItem = ({
   fontSize,
   setFontSize,
   viewTime,
-  setViewTime,
 }) => {
   const [hoverContainer, setHoverContainer] = useState(false);
 

@@ -6,10 +6,8 @@ import { customMedia } from "../../styles";
 
 const TableItem = styled.div`
   position: relative;
-  height: 100%;
   border: 1px solid ${(props) => props.theme.cardBorder};
   background-color: ${(props) => props.theme.cardBg};
-  //background-color: ${(props) => props.color};
   transition: border 1s ease, background-color 1s ease;
   border-radius: 5px;
   border-radius: 0.3125rem;
@@ -19,59 +17,78 @@ const TableItem = styled.div`
 `;
 
 const SubjectName = styled.div`
-  text-align: center;
   align-self: center;
-  overflow: hidden;
-  line-height: 250%;
+  justify-self: center;
   font-size: 73%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin: 0px 10px;
+  margin: 0px 0.625rem;
+  background-color: ${props => props.color};
   ${customMedia.greaterThan("tablet")`
-   font-size: ${(props) => props.fontSize}em;
-  font-size: ${(props) => props.fontSize}rem;
+    font-size: ${(props) => props.fontSize}em;
+    font-size: ${(props) => props.fontSize}rem;
   `}
+  position: relative;
 `;
-const SPAN = styled.span`
-  background-color: ${(props) => props.color};
+
+const Span = styled.span`
+`;
+
+const Color = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
   border-radius: 5px;
   border-radius: 0.3125rem;
-`;
+  width: 100%;
+  height: ${props => props.fontSize / 2 * 16}px;
+  height: ${props => props.fontSize / 2}rem;
+  background-color: ${props => props.color};
+`
 
 const HoverContainer = styled.div`
-  display: grid;
-  justify-items: center;
-  align-self: center;
-  align-items: center;
-  font-size: 0.8rem;
-  font-size: 0.8em;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  padding-bottom: 1.875rem;
-  padding-bottom: 30px;
-  align-items: flex-end;
-  background-color: ${(props) => props.theme.cardHoverBg};
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  animation: ${CardFadeIn} 0.6s ease forwards;
-  color: ${(props) => props.theme.bgColor};
-  overflow: hidden;
+position: absolute;
+font-size: 0.8rem;
+font-size: 0.8em;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: ${(props) => props.theme.cardHoverBg};
+border-radius: 5px;
+border-radius: 0.3125rem;
+animation: ${CardFadeIn} 0.6s ease forwards;
+color: ${(props) => props.theme.bgColor};
+display: grid;
+grid-template-columns: ${props => props.memo ? "auto 1fr" : "auto"};
+justify-items: ${props => !props.memo && "center"};
+align-items: center;
+padding: 0px 10px;
+padding: 0rem 0.625rem;
+column-gap: 5px;
+column-gap: 0.3125rem;
+svg {
+  display: flex;
+}
 `;
 
-const TableInItem = ({ num, item, index, color, tag, fontSize }) => {
+const Memo = styled.div`
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+justify-self: flex-start;
+`
+
+const TableInItem = ({ num, subName, index, color, memo, fontSize }) => {
   const [hoverContainer, setHoverContainer] = useState(false);
-  const [itemPick, setItemPick] = useState(undefined);
 
   const onMouseEnter = () => {
     setHoverContainer(true);
   };
   const onMouseLeave = () => {
     setHoverContainer(false);
-  };
-
-  const onClickItem = (item) => {
-    setItemPick(item);
-    localStorage.setItem("classPick", item);
   };
 
   return (
@@ -82,27 +99,19 @@ const TableInItem = ({ num, item, index, color, tag, fontSize }) => {
       color={color}
     >
       <SubjectName
-        item={item}
-        color={color}
-        tag={tag}
         fontSize={fontSize}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
-        onClick={() => onClickItem(num)}
       >
-        <SPAN color={color}> &nbsp; {item} &nbsp; </SPAN>
-        {hoverContainer === true ? (
-          <HoverContainer>
-            {tag}
-            <RegisterScheduleOne
-              num={num}
-              item={item}
-              color={color}
-              tag={tag}
-            />
-          </HoverContainer>
-        ) : null}
+        <Span>{subName}</Span>
+        <Color color={color} fontSize={fontSize}></Color>
       </SubjectName>
+      {hoverContainer ? (
+        <HoverContainer memo={memo}>
+          <RegisterScheduleOne num={num} />
+          {memo && <Memo>{memo}</Memo>}
+        </HoverContainer>
+      ) : null}
     </TableItem>
   );
 };

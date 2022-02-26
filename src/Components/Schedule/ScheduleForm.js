@@ -3,35 +3,9 @@ import styled from "styled-components";
 import TableInItem from "./TableInItem";
 import TableOutItem from "./TableOutItem";
 import TableOutDay from "./TableOutDay";
-import { useQuery } from "@apollo/client";
-import { GET_TIMETABLE_DATA_QUERY } from "../../Graphql/TimeTable/query";
 
 const Container = styled.div`
-  height: 100%;
-  display: grid;
-  text-align: center;
-  column-gap: 5px;
-  column-gap: 0.3125rem;
-  row-gap: 5px;
-  row-gap: 0.3125rem;
-  grid-template-rows: 0.6fr 6fr;
-`;
-
-const DayTop = styled.div`
-  height: 100%;
-  display: grid;
-  font-size: 1rem;
-  font-size: 1em;
-  text-align: center;
-  column-gap: 5px;
-  column-gap: 0.3125rem;
-  row-gap: 5px;
-  row-gap: 0.3125rem;
-  grid-template-rows: 1fr;
-  grid-template-columns: repeat(6, 1fr);
-`;
-const DayDown = styled.div`
-  height: 100%;
+  min-height: 100%;
   display: grid;
   text-align: center;
   column-gap: 5px;
@@ -39,32 +13,36 @@ const DayDown = styled.div`
   row-gap: 5px;
   row-gap: 0.3125rem;
   grid-template-columns: 1fr 5fr;
+  grid-template-rows: 1fr 8fr;
 `;
 
-const DayOne = styled.div`
-  height: 100%;
+const DayTop = styled.div`
+  grid-column: 1 / -1;
   display: grid;
-  font-size: 1rem;
-  font-size: 1 em;
   text-align: center;
   column-gap: 5px;
   column-gap: 0.3125rem;
+  grid-template-columns: repeat(6, 1fr);
+`;
+
+
+const DayOne = styled.div`
+  display: grid;
+  text-align: center;
   row-gap: 5px;
   row-gap: 0.3125rem;
-  grid-template-rows: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
 `;
+
 const DayAll = styled.div`
-  height: 100%;
   display: grid;
-  font-size: 1rem;
-  font-size: 1 em;
   text-align: center;
   column-gap: 5px;
   column-gap: 0.3125rem;
   row-gap: 5px;
   row-gap: 0.3125rem;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
 `;
 
 const result = [];
@@ -75,27 +53,14 @@ for (var i = 0; i < 6; i++) {
   myDate.setDate(myDate.getDate() + 1);
   result.push(myDate.toLocaleDateString().slice(5));
 }
-const dayValue = [
-  [, ,],
-  ["월", , result[0]],
-  ["화", , result[1]],
-  ["수", , result[2]],
-  ["목", , result[3]],
-  ["금", , result[4]],
-];
+const dayValue = [[], ["월", , result[0]], ["화", , result[1]], ["수", , result[2]], ["목", , result[3]], ["금", , result[4]],];
 
-const ScheduleForm = ({
-  timetableTime,
-  fontSize,
-  setFontSize,
-  viewTime,
-  setViewTime,
-}) => {
-  const { data, loading, error } = useQuery(GET_TIMETABLE_DATA_QUERY);
+const ScheduleForm = ({ timetableTime, fontSize, setFontSize, viewTime, tableData }) => {
   useEffect(() => {
-    if (data) {
+    if (tableData) {
     }
-  }, [data]);
+  }, [tableData]);
+
 
   return (
     <Container>
@@ -103,6 +68,7 @@ const ScheduleForm = ({
         {dayValue.map((item, index) => {
           return (
             <TableOutDay
+              key={index}
               item={item[0]}
               index={index}
               color={item[1]}
@@ -111,36 +77,34 @@ const ScheduleForm = ({
           );
         })}
       </DayTop>
-      <DayDown>
-        <DayOne>
-          {timetableTime.map((item, index) => {
-            return (
-              <TableOutItem
-                viewTime={viewTime}
-                setViewTime={setViewTime}
-                item={item[0]}
-                index={index}
-                tag={item[1]}
-              />
-            );
-          })}
-        </DayOne>
-        <DayAll>
-          {data?.getTimetableData.map((name, index) => {
-            return (
-              <TableInItem
-                key={index}
-                num={name.index}
-                item={name.subName}
-                color={name.color}
-                tag={name.memo}
-                fontSize={fontSize}
-                setFontSize={setFontSize}
-              />
-            );
-          })}
-        </DayAll>
-      </DayDown>
+      <DayOne>
+        {timetableTime.map((item, index) => {
+          return (
+            <TableOutItem
+              key={index}
+              viewTime={viewTime}
+              item={item[0]}
+              index={index}
+              tag={item[1]}
+            />
+          );
+        })}
+      </DayOne>
+      <DayAll>
+        {tableData?.getTimetableData.map((name, index) => {
+          return (
+            <TableInItem
+              key={index}
+              num={name.index}
+              subName={name.subName}
+              color={name.color}
+              memo={name.memo}
+              fontSize={fontSize}
+              setFontSize={setFontSize}
+            />
+          );
+        })}
+      </DayAll>
     </Container>
   );
 };

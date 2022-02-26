@@ -18,25 +18,16 @@ import ScheduleForm from "../Components/Schedule/ScheduleForm";
 import { useQuery } from "@apollo/client";
 import { GET_TIMETABLE_TIME_QUERY } from "../Graphql/TimeTable/query";
 import { GET_TIMETABLE_DATA_QUERY } from "../Graphql/TimeTable/query";
-//음영한 뒤 다크모드에서 글씨 안 보임.
-//수업추가 어떻게?
-
-const SorryMsg = styled.div`
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  margin-top: 100px;
-  margin-top: 6.25rem;
-  font-size: 1.5em;
-  font-size: 1.5rem;
-`
+import { customMedia } from "../styles";
+import AlertMessage from "../Components/Shared/AlertMessage";
+import Loading from "../Components/Shared/Loading";
 
 const Container = styled.div`
   min-height: 100%;
   display: grid;
   grid-template-rows: auto auto 1fr;
-  padding: 20px;
-  padding: 1.25rem;
+  padding: 40px;
+  padding: 2.5rem;
   row-gap: 20px;
   row-gap: 1.25rem;
   align-items: flex-start;
@@ -75,13 +66,12 @@ const TypeBtn = styled.div`
 `;
 
 const Schedule = () => {
+  const titleUpdataer = useTitle("티처캔 | 시간표");
   const [timeResult, setTimeResult] = useState([]);
   const [timetableTime, setTimetableTime] = useState([]);
-  const {
-    data: timetableData,
-    loading: timetableLoading,
-    error: timetableError,
-  } = useQuery(GET_TIMETABLE_DATA_QUERY);
+  const [errMsg, setErrMsg] = useState(undefined)
+  const [msg, setMsg] = useState(undefined)
+  const { data: tableData, loading: tableLoading } = useQuery(GET_TIMETABLE_DATA_QUERY);
 
   const { data, loading, error } = useQuery(GET_TIMETABLE_TIME_QUERY, {
     onCompleted: ({ getTimetableTime: data }) => {
@@ -110,13 +100,11 @@ const Schedule = () => {
     },
   });
 
-  const titleUpdataer = useTitle("티처캔 | 시간표");
   const isPopup = useReactiveVar(isPopupVar);
   const media = useMedia();
   const componentRef = useRef(null);
   const me = useMe();
 
-  const [isEdit, setIsEdit] = useState(false);
   const [title, setTitle] = useState("우리반 시간표");
   const [fontSize, setFontSize] = useState(1.25);
   const [viewTime, setViewTime] = useState(false);
@@ -128,22 +116,23 @@ const Schedule = () => {
   const onClickTimeviewBtn = () => {
     setViewTime(!viewTime);
   };
+
+  if (loading || tableLoading) {
+    return <Loading page="mainPage" />
+  }
+
   return (
     <BasicContainer menuItem={true} screen="small">
-      <SorryMsg>
-        페이지 준비중 입니다. 빠른 시간에 완성하겠습니다!(2.26 새벽 완성 예정) 😓
-      </SorryMsg>
-      {/* <Container>
-        <TimeTableTitle title={title} setTitle={setTitle} />
+      <Container>
+        <TimeTableTitle setTitle={setTitle} />
         <OptionContents>
           <OptionBtn onClick={onClickTimeSetBtn}> 시간설정 </OptionBtn>
           <TypeBtn onClick={onClickTimeviewBtn}>
-            {" "}
             {viewTime === true ? (
               <RiCheckboxLine />
             ) : (
               <RiCheckboxBlankLine />
-            )}{" "}
+            )}
             <div> 시간 보기 </div>
           </TypeBtn>
           {media !== "Mobile" && (
@@ -154,30 +143,34 @@ const Schedule = () => {
           fontSize={fontSize}
           setFontSize={setFontSize}
           viewTime={viewTime}
-          setViewTime={setViewTime}
           timetableTime={timetableTime}
           setTimetableTime={setTimetableTime}
+          tableData={tableData}
         />
       </Container>
 
       {isPopup === "registerClass" && (
         <ClassRegisterPage
           userEmail={me?.email}
-          timetableData={timetableData}
+          setErrMsg={setErrMsg}
+          setMsg={setMsg}
         />
       )}
       {isPopup === "registerTime" && (
-        <TimeRegisterPage timeResult={timeResult} userEmail={me?.email} />
+        <TimeRegisterPage timeResult={timeResult} userEmail={me?.email} setMsg={setMsg} />
       )}
-      {isPopup === "registerTimeSet" && <ClassTimeSet userEmail={me?.email} />}
+      {isPopup === "registerTimeSet" && <ClassTimeSet userEmail={me?.email} setMsg={setMsg} />}
       {isPopup === "print" && (
         <PrintScheduleContents
           printRef={componentRef}
           title={title}
           viewTime={viewTime}
           timeResult={timeResult}
+          tableData={tableData}
         />
-      )} */}
+      )}
+      {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} time={3000} type="error" />}
+      {msg && <AlertMessage msg={msg} setMsg={setMsg} time={3000} type="success" />}
     </BasicContainer>
   );
 };

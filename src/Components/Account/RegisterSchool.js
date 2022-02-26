@@ -9,6 +9,7 @@ import RegisterForm from './styled/RegisterForm';
 import RegisterErrMsg from './styled/RegisterErrMsg';
 import { outPopup } from '../../apollo';
 import { UPDATE_USER_MUTATION } from '../../Graphql/User/mutation';
+import Loading from '../Shared/Loading';
 
 const SearchInput = styled.input`
   width: 100%;
@@ -45,7 +46,7 @@ const PageBtn = styled.div`
 `
 
 
-const RegisterSchool = () => {
+const RegisterSchool = ({ setMsg }) => {
   const me = useMe()
   const [page, setPage] = useState(1)
   const [schoolInfo, setSchoolInfo] = useState(undefined)
@@ -86,12 +87,16 @@ const RegisterSchool = () => {
     setPreventSubmit(true)
     findSchool(school)
   }
-  const onCompleted = () => {
-    onChangeInput()
-    outPopup()
-    setValue("school", "")
+  const onCompleted = (result) => {
+    const { updateUser: { ok } } = result
+    if (ok) {
+      onChangeInput()
+      outPopup()
+      setValue("school", "")
+      setMsg("학교정보가 수정되었습니다. 😀")
+    }
   }
-  const [updateUser] = useMutation(UPDATE_USER_MUTATION, {
+  const [updateUser, { loading }] = useMutation(UPDATE_USER_MUTATION, {
     onCompleted,
     refetchQueries: [{ query: ME_QUERY }]
   })
@@ -118,6 +123,11 @@ const RegisterSchool = () => {
   const onClickPageBtn = () => {
     findSchool(getValues("school"))
   }
+
+  if (loading) {
+    return <Loading page="popupPage" />
+  }
+
   return (<PopupContainer>
     <RegisterForm onSubmit={handleSubmit(onSubmit)}>
       <SearchInput

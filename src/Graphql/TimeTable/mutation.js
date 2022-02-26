@@ -39,21 +39,30 @@ export const SET_TIMETABLE_TIME_MUTATION = gql`
 
 export const SET_TIMETABLE_DATA_MUTATION = gql`
   mutation Mutation(
-    $userEmail: String!
-    $studentId: String!
-    $type: String!
-    $date: Float!
-    $contents: String
+    $teacherEmail: String!
+    $index: [Int]!
+    $subName: String!
+    $color: String
+    $memo: String
   ) {
-    createAttendance(
-      userEmail: $userEmail
-      studentId: $studentId
-      type: $type
-      date: $date
-      contents: $contents
+    setTimetableData(
+      teacherEmail: $teacherEmail
+      index: $index
+      subName: $subName
+      color: $color
+      memo: $memo
     ) {
       ok
       error
     }
   }
 `;
+
+export const RESET_TIMETABLE_DATA_MUTATION = gql`
+  mutation Mutation($teacherEmail: String!, $resetIndex: Int!) {
+    resetTimetableData(teacherEmail: $teacherEmail, resetIndex: $resetIndex){
+      ok
+      error
+    }
+  }
+`

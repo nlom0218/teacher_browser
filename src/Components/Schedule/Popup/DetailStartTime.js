@@ -4,10 +4,6 @@ import { useForm } from "react-hook-form";
 import { outPopup } from "../../../apollo";
 import { DetailTitle } from "../../List/styled/DetailStudent";
 import timeSetCal from "../TimeSetCal";
-import { useMutation } from "@apollo/client";
-import { ME_QUERY } from "../../../Hooks/useMe";
-import { SET_TIMETABLE_TIME_MUTATION } from "../../../Graphql/TimeTable/mutation";
-import { GET_TIMETABLE_TIME_QUERY } from "../../../Graphql/TimeTable/query";
 
 const FormContainer = styled.form`
   display: grid;
@@ -16,6 +12,7 @@ const FormContainer = styled.form`
   padding: 20px 0px;
   padding: 1.25rem 0rem;
 `;
+
 const LayOut = styled.div`
   display: grid;
   column-gap: 20px;
@@ -46,25 +43,7 @@ const AddTagBtn = styled.input`
   border-radius: 0.3125rem;
   cursor: pointer;
 `;
-const DetailStartTime = ({ userEmail }) => {
-  const onCompleted = (result) => {
-    const {
-      setTimetableTime: { ok },
-    } = result;
-    if (ok) {
-      outPopup();
-    }
-  };
-  const [setTimetableTime, { loading }] = useMutation(
-    SET_TIMETABLE_TIME_MUTATION,
-    {
-      onCompleted,
-      refetchQueries: [
-        { query: ME_QUERY },
-        { query: GET_TIMETABLE_TIME_QUERY, variables: { userEmail } },
-      ],
-    }
-  );
+const DetailStartTime = ({ userEmail, setTimetableTime }) => {
 
   const { register, handleSubmit, getValues } = useForm({
     mode: "onChange",
@@ -104,6 +83,7 @@ const DetailStartTime = ({ userEmail }) => {
       },
     });
   };
+
   return (
     <FormContainer onSubmit={handleSubmit(onSubmit)}>
       <LayOut>
@@ -187,7 +167,6 @@ const DetailStartTime = ({ userEmail }) => {
         />
         <Font>분 </Font>
       </LayOut>
-      <div />
       <AddTagBtn type="submit" value="완료" />
     </FormContainer>
   );

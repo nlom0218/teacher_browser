@@ -22,8 +22,8 @@ export const GET_TIMETABLE_TIME_QUERY = gql`
 `;
 
 export const GET_TIMETABLE_DATA_QUERY = gql`
-  query GetTimetableData($day: Int) {
-    getTimetableData(day: $day) {
+  query GetTimetableData($day: Int, $index: Int) {
+    getTimetableData(day: $day, index: $index) {
       _id
       teacherEmail
       index

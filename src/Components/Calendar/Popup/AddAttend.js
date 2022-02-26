@@ -12,6 +12,7 @@ import DatePicker from 'react-datepicker';
 import IcNameTableClick from '../../../icons/NameTable/IcNameTableClick';
 import { CREATE_ATTENDANCE_MUTATION } from '../../../Graphql/Attendance/mutation';
 import { format } from 'date-fns';
+import Loading from '../../Shared/Loading';
 
 const CalenderPopupFormContainer = styled.form`
   padding : 20px 0px;
@@ -188,6 +189,10 @@ const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) =
       setDate(new window.Date(parseInt(urlDate)))
     }
   }, [])
+
+  if (loading) {
+    return <Loading page="popupPage" />
+  }
 
   return (<PopupContainer maxHeight={true} needAlert={true}>
     <CalenderPopupFormContainer onSubmit={handleSubmit(onSubmit)}>

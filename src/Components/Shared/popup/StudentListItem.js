@@ -35,7 +35,11 @@ const StudentListItem = ({ item, setIsShuffle, page }) => {
     if (setIsShuffle) {
       setIsShuffle("init")
     }
-    navigate(`/${page}/${item.listId}`)
+    if (page === "journal") {
+      navigate(`/${page}/list/${item.listId}`)
+    } else {
+      navigate(`/${page}/${item.listId}`)
+    }
     outPopup()
   }
   return (<ListItem
