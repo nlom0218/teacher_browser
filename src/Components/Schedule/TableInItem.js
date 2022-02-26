@@ -17,9 +17,8 @@ const TableItem = styled.div`
 `;
 
 const SubjectName = styled.div`
-  text-align: center;
   align-self: center;
-  overflow: hidden;
+  text-align: center;
   font-size: 73%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -31,6 +30,7 @@ const SubjectName = styled.div`
     font-size: ${(props) => props.fontSize}rem;
   `}
 `;
+
 const Span = styled.span`
   background-color: ${(props) => props.color};
   border-radius: 5px;
@@ -39,9 +39,6 @@ const Span = styled.span`
 
 const HoverContainer = styled.div`
   position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-size: 0.8rem;
   font-size: 0.8em;
   top: 0;
@@ -55,10 +52,15 @@ const HoverContainer = styled.div`
   color: ${(props) => props.theme.bgColor};
   display: grid;
   grid-template-columns: ${props => props.memo ? "auto 1fr" : "auto"};
+  justify-items: ${props => !props.memo && "center"};
+  align-items: center;
   padding: 0px 10px;
   padding: 0rem 0.625rem;
   column-gap: 5px;
   column-gap: 0.3125rem;
+  svg {
+    display: flex;
+  }
 `;
 
 const Memo = styled.div`
@@ -91,13 +93,13 @@ const TableInItem = ({ num, subName, index, color, memo, fontSize }) => {
         onMouseLeave={onMouseLeave}
       >
         <Span color={color}>{subName}</Span>
-        {hoverContainer ? (
-          <HoverContainer memo={memo}>
-            <RegisterScheduleOne num={num} />
-            {memo && <Memo>{memo}</Memo>}
-          </HoverContainer>
-        ) : null}
       </SubjectName>
+      {hoverContainer ? (
+        <HoverContainer memo={memo}>
+          <RegisterScheduleOne num={num} />
+          {memo && <Memo>{memo}</Memo>}
+        </HoverContainer>
+      ) : null}
     </TableItem>
   );
 };

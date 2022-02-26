@@ -3,9 +3,6 @@ import styled from "styled-components";
 import TableInItem from "./TableInItem";
 import TableOutItem from "./TableOutItem";
 import TableOutDay from "./TableOutDay";
-import { useQuery } from "@apollo/client";
-import { GET_TIMETABLE_DATA_QUERY } from "../../Graphql/TimeTable/query";
-import Loading from "../Shared/Loading";
 
 const Container = styled.div`
   min-height: 100%;
@@ -58,16 +55,12 @@ for (var i = 0; i < 6; i++) {
 }
 const dayValue = [[], ["월", , result[0]], ["화", , result[1]], ["수", , result[2]], ["목", , result[3]], ["금", , result[4]],];
 
-const ScheduleForm = ({ timetableTime, fontSize, setFontSize, viewTime, setViewTime }) => {
-  const { data, loading } = useQuery(GET_TIMETABLE_DATA_QUERY);
+const ScheduleForm = ({ timetableTime, fontSize, setFontSize, viewTime, tableData }) => {
   useEffect(() => {
-    if (data) {
+    if (tableData) {
     }
-  }, [data]);
+  }, [tableData]);
 
-  if (loading) {
-    return <Loading page="subPage" />
-  }
 
   return (
     <Container>
@@ -90,7 +83,6 @@ const ScheduleForm = ({ timetableTime, fontSize, setFontSize, viewTime, setViewT
             <TableOutItem
               key={index}
               viewTime={viewTime}
-              setViewTime={setViewTime}
               item={item[0]}
               index={index}
               tag={item[1]}
@@ -99,7 +91,7 @@ const ScheduleForm = ({ timetableTime, fontSize, setFontSize, viewTime, setViewT
         })}
       </DayOne>
       <DayAll>
-        {data?.getTimetableData.map((name, index) => {
+        {tableData?.getTimetableData.map((name, index) => {
           return (
             <TableInItem
               key={index}

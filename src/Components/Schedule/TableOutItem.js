@@ -7,8 +7,9 @@ const TableItem = styled.div`
   position: relative;
   height: 100%;
   border: 1px solid ${(props) => props.theme.cardBorder};
-  background-color: lightblue;
-  transition: border 1s ease, background-color 1s ease;
+  background-color: ${props => props.theme.green};
+  color: ${props => props.theme.bgColor};
+  transition: border 1s ease, background-color 1s ease, color 1s ease;
   border-radius: 5px;
   border-radius: 0.3125rem;
   display: grid;
@@ -72,7 +73,6 @@ const TableOutItem = ({
   fontSize,
   setFontSize,
   viewTime,
-  setViewTime,
 }) => {
   const [hoverContainer, setHoverContainer] = useState(false);
 

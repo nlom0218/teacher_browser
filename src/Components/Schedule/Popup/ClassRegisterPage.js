@@ -10,6 +10,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { SET_TIMETABLE_DATA_MUTATION } from "../../../Graphql/TimeTable/mutation";
 import { GET_TIMETABLE_DATA_QUERY } from "../../../Graphql/TimeTable/query";
 import Loading from "../../Shared/Loading";
+import bgColorArr from "../../Calendar/Popup/ScheduleBgColorArr";
 
 const RegisterForm = styled.form`
   padding: 20px 0px;
@@ -39,8 +40,9 @@ const LayOut = styled.div`
   grid-template-columns: 1fr 4fr;
   text-align: center;
   align-items: center;
-  .addClass {
+  .align-self {
     align-self: flex-start;
+    padding: 0;
   }
 `;
 
@@ -72,6 +74,8 @@ const ColorBox = styled.div`
   grid-template-columns: repeat(6, 1fr);
   column-gap: 10px;
   column-gap: 0.625rem;
+  row-gap: 10px;
+  row-gap: 0.625rem;
 `;
 
 const ColorBgThemeItem = styled.div`
@@ -97,17 +101,6 @@ const AddTagBtn = styled.input`
   cursor: pointer;
 `;
 
-const DelBtn = styled.div`
-  background-color: ${(props) => props.theme.redColor};
-  text-align: center;
-  padding: 10px 20px;
-  padding: 0.625rem 1.25rem;
-  color: ${(props) => props.theme.bgColor};
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  cursor: pointer;
-`;
-
 const BtnFrame = styled.div`
   display: grid;
   column-gap: 20px;
@@ -115,8 +108,6 @@ const BtnFrame = styled.div`
 `;
 
 const AddClassContainer = styled.div`
-  padding: 10px;
-  padding: 0.625rem;
   display: grid;
   border-radius: 5px;
   border-radius: 0.625rem;
@@ -153,15 +144,6 @@ const TimeTable = styled.div`
   align-items: center;
   justify-items: center;
 `;
-
-const bgColorArr = [
-  "#FFB6C1",
-  "#F4A460",
-  "#FFFF00",
-  "#98FB98",
-  "#87CDDB",
-  "#DA70D6",
-];
 
 const timeday = ["", "월", "화", "수", "목", "금"];
 const timelist = ["1", "2", "3", "4", "5", "6"];
@@ -288,7 +270,7 @@ const ClassRegisterPage = ({
           </InputUnderLine>
         </LayOut>
         <LayOut>
-          <DetailTitle>음영</DetailTitle>
+          <DetailTitle className="align-self">음영</DetailTitle>
           <ColorBox>
             {bgColorArr.map((item, index) => {
               return (
@@ -323,7 +305,7 @@ const ClassRegisterPage = ({
           </InputUnderLine>
         </LayOut>
         <LayOut>
-          <DetailTitle className="addClass">수업추가</DetailTitle>
+          <DetailTitle className="align-self">수업추가</DetailTitle>
           <AddClassContainer>
             <DayContainer>
               {timeday.map((item, index) => {

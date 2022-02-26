@@ -20,6 +20,7 @@ import { GET_TIMETABLE_TIME_QUERY } from "../Graphql/TimeTable/query";
 import { GET_TIMETABLE_DATA_QUERY } from "../Graphql/TimeTable/query";
 import { customMedia } from "../styles";
 import AlertMessage from "../Components/Shared/AlertMessage";
+import Loading from "../Components/Shared/Loading";
 
 const Container = styled.div`
   min-height: 100%;
@@ -69,11 +70,7 @@ const Schedule = () => {
   const [timeResult, setTimeResult] = useState([]);
   const [timetableTime, setTimetableTime] = useState([]);
   const [errMsg, setErrMsg] = useState(undefined)
-  const {
-    data: timetableData,
-    loading: timetableLoading,
-    error: timetableError,
-  } = useQuery(GET_TIMETABLE_DATA_QUERY);
+  const { data: tableData, loading: tableLoading } = useQuery(GET_TIMETABLE_DATA_QUERY);
 
   const { data, loading, error } = useQuery(GET_TIMETABLE_TIME_QUERY, {
     onCompleted: ({ getTimetableTime: data }) => {
@@ -118,6 +115,11 @@ const Schedule = () => {
   const onClickTimeviewBtn = () => {
     setViewTime(!viewTime);
   };
+
+  if (loading || tableLoading) {
+    return <Loading page="mainPage" />
+  }
+
   return (
     <BasicContainer menuItem={true} screen="small">
       <Container>
@@ -125,12 +127,11 @@ const Schedule = () => {
         <OptionContents>
           <OptionBtn onClick={onClickTimeSetBtn}> 시간설정 </OptionBtn>
           <TypeBtn onClick={onClickTimeviewBtn}>
-            {" "}
             {viewTime === true ? (
               <RiCheckboxLine />
             ) : (
               <RiCheckboxBlankLine />
-            )}{" "}
+            )}
             <div> 시간 보기 </div>
           </TypeBtn>
           {media !== "Mobile" && (
@@ -141,9 +142,9 @@ const Schedule = () => {
           fontSize={fontSize}
           setFontSize={setFontSize}
           viewTime={viewTime}
-          setViewTime={setViewTime}
           timetableTime={timetableTime}
           setTimetableTime={setTimetableTime}
+          tableData={tableData}
         />
       </Container>
 
@@ -163,6 +164,7 @@ const Schedule = () => {
           title={title}
           viewTime={viewTime}
           timeResult={timeResult}
+          tableData={tableData}
         />
       )}
       {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} time={3000} type="error" />}

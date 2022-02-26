@@ -4,12 +4,10 @@ import IcPrint from "../../../icons/Print/IcPrint";
 import PopupPrintContainer from "../../Shared/PopupPrintContainer";
 import { useReactToPrint } from "react-to-print";
 import { color } from "../../../styles";
-import { useQuery } from "@apollo/client";
-import { GET_TIMETABLE_DATA_QUERY } from "../../../Graphql/TimeTable/query";
 
 const PrintTopContents = styled.div`
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto;
 `;
 
 const PrintIcon = styled.div`
@@ -56,22 +54,26 @@ const Title = styled.div`
 
 const UPDOWN = styled.div`
   display: grid;
-  grid-template-rows: 1fr 6fr;
+  grid-template-rows: auto auto;
   row-gap: 5px;
   row-gap: 0.3125rem;
 `;
+
+
 const RIGHTLEFT = styled.div`
   display: grid;
   grid-template-columns: 1fr 5fr;
   column-gap: 5px;
   column-gap: 0.3125rem;
 `;
+
 const GridTime = styled.div`
   display: grid;
   grid-template-rows: repeat(6, 1fr);
   row-gap: 5px;
   row-gap: 0.3125rem;
 `;
+
 const GridDay = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -81,6 +83,7 @@ const GridDay = styled.div`
   row-gap: 5px;
   row-gap: 0.3125rem;
 `;
+
 const GridList = styled.div`
   height: 100%;
   display: grid;
@@ -100,9 +103,12 @@ const TableItem = styled.div`
   border-radius: 0.3125rem;
   grid-template-rows: 1fr;
   text-align: center;
-  line-height: 300%;
   align-items: center;
+  padding: 20px 10px;
+  padding: 1.25rem 0.625rem;
+  background-color: ${props => props.theme.color};
 `;
+
 const TableOutItem = styled.div`
   background-color: #ceecf5;
   height: 100%;
@@ -110,11 +116,11 @@ const TableOutItem = styled.div`
   border-radius: 5px;
   border-radius: 0.3125rem;
   display: grid;
-  grid-template-rows: 1fr;
   text-align: center;
-  line-height: 300%;
   align-items: center;
   position: relative;
+  padding: 20px 10px;
+  padding: 1.25rem 0.625rem;
 `;
 
 const TimeUp = styled.div`
@@ -138,20 +144,7 @@ const TimeDown = styled.div`
   opacity: 0.6;
 `;
 
-const GridItem = styled.div`
-  display: grid;
-  text-align: center;
-  row-gap: 10px;
-  row-gap: 0.625rem;
-  padding: 20px 5px;
-  padding: 1.25rem 0.3125rem;
-  border: 1px solid ${color.black};
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-`;
-
-const PrintScheduleContents = ({ printRef, title, viewTime, timeResult }) => {
-  const { data, loading, error } = useQuery(GET_TIMETABLE_DATA_QUERY);
+const PrintScheduleContents = ({ printRef, title, viewTime, timeResult, tableData }) => {
   const handlePrint = useReactToPrint({
     content: () => printRef.current,
   });
@@ -216,8 +209,8 @@ const PrintScheduleContents = ({ printRef, title, viewTime, timeResult }) => {
               </GridTime>
             )}
             <GridDay>
-              {data?.getTimetableData.map((item, index) => {
-                return <TableItem key={index}>{item.subname}</TableItem>;
+              {tableData?.getTimetableData.map((item, index) => {
+                return <TableItem key={index} color={item.color}>{item.subName}</TableItem>;
               })}
             </GridDay>
           </RIGHTLEFT>

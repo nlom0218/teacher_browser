@@ -9,6 +9,7 @@ import { DetailTitle } from "../../List/styled/DetailStudent";
 import { SET_TIMETABLE_TIME_MUTATION } from "../../../Graphql/TimeTable/mutation";
 import { GET_TIMETABLE_TIME_QUERY } from "../../../Graphql/TimeTable/query";
 import { customMedia } from "../../../styles";
+import Loading from "../../Shared/Loading";
 
 const RegisterForm = styled.form`
   width: 100%;
@@ -104,7 +105,6 @@ const TimeRegisterPage = ({ userEmail, timeResult }) => {
       start6,
       end6,
     } = data;
-    console.log(start1, end1);
     setTimetableTime({
       variables: {
         teacherEmail: userEmail,
@@ -123,6 +123,10 @@ const TimeRegisterPage = ({ userEmail, timeResult }) => {
       },
     });
   };
+
+  if (loading) {
+    return <Loading page="popupPage" />
+  }
 
   return (
     <PopupContainer>
