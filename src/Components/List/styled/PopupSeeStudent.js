@@ -2,13 +2,13 @@ import styled from "styled-components";
 import { customMedia } from "../../../styles";
 
 export const Container = styled.div`
+  padding: 20px 0px;
+  padding: 1.25rem 0rem;
   display: grid;
   grid-template-rows: 1fr auto;
   row-gap: 30px;
   row-gap: 1.875rem;
   height: 96%;
-  padding: 10px 0px;
-  padding: 0.625rem 0rem;
   position: absolute;
   left: 50%;
   width: 90%;

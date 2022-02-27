@@ -2,13 +2,41 @@ import { useMutation, useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { RiCheckboxBlankLine, RiCheckboxLine } from 'react-icons/ri';
 import PopupContainer from '../../Shared/PopupContainer';
-import { Btn, Container, Item, List } from '../styled/PopupSeeStudent';
+import { Btn, Item, List } from '../styled/PopupSeeStudent';
 import useMe from '../../../Hooks/useMe';
 import { outPopup } from '../../../apollo';
 import { SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
-import { SEE_ONE_STUDENT_LIST_QUERY } from '../../../Graphql/StudentList/query';
 import { ADD_STUDENT_MUTATION } from '../../../Graphql/StudentList/mutation';
 import Loading from '../../Shared/Loading';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  padding: 20px 0px;
+  padding: 1.25rem 0rem;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  height: 96%;
+  position: absolute;
+  left: 50%;
+  width: 90%;
+  transform: translate(-50%, 0);
+`
+
+const SelectedAll = styled.div`
+  justify-self: flex-end;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 10px;
+  column-gap: 0.625rem;
+  cursor: pointer;
+  svg {
+    display: flex;
+  }
+`
+
+const SelectedAllBtn = styled.div``
 
 const AddManyStudent = ({ inStudent, listId, setSuccessMsg, listName }) => {
   const selectedTag = JSON.parse(localStorage.getItem("selectedTag")) ? JSON.parse(localStorage.getItem("selectedTag")) : []
@@ -83,6 +111,23 @@ const AddManyStudent = ({ inStudent, listId, setSuccessMsg, listName }) => {
     })
   }
 
+  const onClickSeletedAllBtn = () => {
+    const newAddStudentId = outStudent.map(item => item._id)
+    if (addStudentId.length === outStudent.length) {
+      setAddStudentId([])
+    } else {
+      setAddStudentId(newAddStudentId)
+    }
+  }
+
+  const processSeleteAll = () => {
+    if (addStudentId.length === outStudent.length) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   useEffect(() => {
     if (data && inStudent) {
       const inStudentName = inStudent.map(item => item.studentName)
@@ -108,23 +153,35 @@ const AddManyStudent = ({ inStudent, listId, setSuccessMsg, listName }) => {
   return (<PopupContainer maxHeight={true}>
     <Container>
       <List>
-        {data?.seeAllStudent?.length !== 0 ? (outStudent.length === 0 ? <div className="noStudnet">학생들이 모두 포함되어 있습니다.</div>
+        {data?.seeAllStudent?.length !== 0 ?
+          (outStudent.length === 0 ?
+            <div className="noStudnet">학생들이 모두 포함되어 있습니다.</div>
+            :
+            <React.Fragment>
+              <SelectedAll onClick={onClickSeletedAllBtn}>
+                <div>모두 선택하기</div>
+                <SelectedAllBtn>{processSeleteAll() ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</SelectedAllBtn>
+              </SelectedAll>
+              {outStudent.map((item, index) => {
+                return <Item key={index} addStudent={true} onClick={() => onClickStudent(item._id)} >
+                  <div>{item.studentName}</div>
+                  <div>
+                    {addStudentId.includes(item._id) ?
+                      <RiCheckboxLine />
+                      :
+                      <RiCheckboxBlankLine />
+                    }
+                  </div>
+                </Item>
+              })}
+            </React.Fragment>
+          )
           :
-          outStudent.map((item, index) => {
-            return <Item key={index} addStudent={true} onClick={() => onClickStudent(item._id)} >
-              <div>{item.studentName}</div>
-              <div>
-                {addStudentId.includes(item._id) ?
-                  <RiCheckboxLine />
-                  :
-                  <RiCheckboxBlankLine />
-                }
-              </div>
-            </Item>
-          })) : <div className="noStudnet">생성된 학생이 없습니다.</div>
+          <div className="noStudnet">생성된 학생이 없습니다.</div>
         }
       </List>
-      {outStudent.length !== 0 && <Btn onClick={onClickAddBtn}>학생 추가하기</Btn>}
+      {outStudent.length !== 0 && <Btn onClick={onClickAddBtn}>학생 추가하기</Btn>
+      }
     </Container>
   </PopupContainer>);
 }

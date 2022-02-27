@@ -169,8 +169,8 @@ const List = () => {
         <StudentIcon onClick={onClickStudentIcon}><FaUserFriends /></StudentIcon>
       }
     </Container>
-    <AlertMessage msg={successMsg} setMsg={setSuccessMsg} time={5000} type="success" />
-    <AlertMessage msg={errorMsg} setMsg={setErrorMsg} time={5000} type="error" />
+    <AlertMessage msg={successMsg} setMsg={setSuccessMsg} time={3000} type="success" />
+    <AlertMessage msg={errorMsg} setMsg={setErrorMsg} time={3000} type="error" />
 
     {/* 데스크탑이 아닐 때 학생 전체 리스트를 팝업으로 띄우기 */}
     {isPopup === "students" && <SeeStudents
