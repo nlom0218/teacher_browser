@@ -116,23 +116,15 @@ const StudentInItem = ({ item, listId, page, setSuccessMsg, listName, sort }) =>
   const [deleteStudent, { loading }] = useMutation(DELETE_STUDENT_MUTATION, {
     onCompleted,
     update: (cache, { data: { deleteStudent: { ok } } }) => {
-      cache.modify({
-        id: `Student:${item._id}`,
-        fields: {
-          listId(prev) {
-            const newListId = prev.filter(i => i !== listId)
-            return newListId
+      if (ok) {
+        cache.modify({
+          id: "ROOT_QUERY",
+          fields: {
+            seeStudentList() {
+            }
           }
-        }
-      })
-      cache.modify({
-        id: "ROOT_QUERY",
-        fields: {
-          seeStudentList(prev) {
-
-          }
-        }
-      })
+        })
+      }
     }
   });
 
