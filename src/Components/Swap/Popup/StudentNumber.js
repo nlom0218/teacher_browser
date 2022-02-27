@@ -37,6 +37,8 @@ const Type = styled.div`
     column-gap : 10px;
     column-gap : 0.625rem;
     align-items : center;
+    text-align: center;
+    line-height: 160%;
 `
 
 const SubmitInput = styled.input`
@@ -77,9 +79,11 @@ const StudentNumber = ({ pickNum, setPickNum, onClickShuffleBtn, setErrMsg }) =>
                     })}
                     type="number"
                     placeholder="몇 명을 뽑나요?"
+                    min={2}
+                    max={10}
                 />
                 <TypeLayout>
-                    <Type> 한 줄에 들어갈 학생 수를 입력해주세요. </Type>
+                    <Type>첫 줄(가로)에 들어갈 학생 수를 입력해주세요.</Type>
                 </TypeLayout>
                 <SubmitInput
                     type="submit"
