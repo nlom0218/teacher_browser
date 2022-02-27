@@ -4,6 +4,7 @@ import { AiOutlinePlus } from 'react-icons/ai';
 import styled from 'styled-components';
 import { inPopup } from '../../apollo';
 import { SEE_JOURNAL_QUERY } from '../../Graphql/Journal/query';
+import { customMedia } from '../../styles';
 import JournalSectionItem from '../Calendar/JournalSectionItem';
 import Loading from '../Shared/Loading';
 
@@ -43,12 +44,14 @@ const AddBtn = styled.div`
 const JournalList = styled.div`
   align-self: flex-start;
   display: grid;
-  grid-template-columns: 1fr 1fr;
   column-gap: 20px;
   column-gap: 1.25rem;
   row-gap: 20px;
   row-gap: 1.25rem;
   align-items: flex-start;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: 1fr 1fr;
+  `}
 `
 
 const NoDateText = styled.div`
