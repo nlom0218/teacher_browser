@@ -14,7 +14,7 @@ const Container = styled.div`
   padding: 20px 0px;
   padding: 1.25rem 0rem;
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: 1fr auto;
   row-gap: 20px;
   row-gap: 1.25rem;
   height: 96%;
@@ -25,6 +25,9 @@ const Container = styled.div`
 `
 
 const SelectedAll = styled.div`
+  grid-column: 1 / -1;
+  padding: 10px;
+  padding: 0.625rem;
   justify-self: flex-end;
   display: grid;
   grid-template-columns: 1fr auto;
@@ -32,6 +35,9 @@ const SelectedAll = styled.div`
   column-gap: 0.625rem;
   cursor: pointer;
   svg {
+    font-size: 1.25rem;
+    font-size: 1.25em;
+    cursor: pointer;
     display: flex;
   }
 `
