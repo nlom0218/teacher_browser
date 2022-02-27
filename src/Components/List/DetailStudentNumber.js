@@ -147,6 +147,7 @@ const DetailStudentNumber = ({ studentInfo, selectedSort, selectedTag, setSucces
         type="submit"
       /> : (media !== "Mobile" && <div></div>)}
     </DetailNumberForm>
+    {loading && <Loading page="center" />}
   </DetailStudentLayout>);
 }
 

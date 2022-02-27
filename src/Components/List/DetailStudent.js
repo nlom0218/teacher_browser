@@ -293,6 +293,7 @@ const DetailStudent = ({ studentId, selectedSort, selectedTag, setSuccessMsg, se
       />
     }
     {isPopup === "deleteStudent" && <DeleteStudent selectedTag={selectedTag} selectedSort={selectedSort} studentId={studentId} />}
+    {loading && <Loading page="center" />}
   </Container>);
 }
 

@@ -12,6 +12,7 @@ import AddTag from './Popup/AddTag';
 import { SEE_ALL_STUDENT_QUERY, SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
 import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
 import TagItem from './TagItem';
+import Loading from '../Shared/Loading';
 
 const StudentTagContainer = styled.div`
   padding: 20px;
@@ -192,6 +193,7 @@ const DetailStudentTag = ({ studentInfo, selectedSort, selectedTag, setSuccessMs
         tagArr={tagArr}
         onClickAddTag={onClickAddTag}
       />}
+    {loading && <Loading page="center" />}
   </DetailStudentLayout>);
 }
 

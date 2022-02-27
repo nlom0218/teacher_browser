@@ -8,6 +8,7 @@ import { SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
 import { useMutation } from '@apollo/client';
 import { BtnFadeIn } from '../../Animations/Fade';
 import { customMedia } from '../../styles';
+import Loading from '../Shared/Loading';
 
 const MemoContainer = styled.form`
   margin-top: 20px;
@@ -106,6 +107,7 @@ const DetailStudentMemo = ({ studentMemo, studentId, teacherEmail, setSuccessMsg
         placeholder="학생에 대한 간단한 메모를 남겨보세요!"
       />
       {isEdit && <SubmitInput type="submit" value="수정" />}
+      {loading && <Loading page="center" />}
     </MemoContainer>
   </DetailStudentLayout>);
 }

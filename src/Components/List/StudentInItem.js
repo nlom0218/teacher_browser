@@ -158,10 +158,6 @@ const StudentInItem = ({ item, listId, page, setSuccessMsg, listName, sort }) =>
     });
   };
 
-  if (loading) {
-    return <Loading page="center" />
-  }
-
   return (
     <Student onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} page={page}>
       <StudentName>{item.studentName}</StudentName>
@@ -198,6 +194,7 @@ const StudentInItem = ({ item, listId, page, setSuccessMsg, listName, sort }) =>
           </HoverContainer>
         )
       )}
+      {loading && <Loading page="center" />}
     </Student>
   );
 };

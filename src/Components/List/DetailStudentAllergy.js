@@ -8,6 +8,7 @@ import { customMedia } from '../../styles';
 import { SEE_ONE_STUDENT_QUERY } from '../../Graphql/Student/query';
 import { EDIT_STUDENT_MUTATION } from '../../Graphql/Student/mutation';
 import { ME_QUERY } from '../../Hooks/useMe';
+import Loading from '../Shared/Loading';
 
 const AllergyList = styled.div`
   padding: 20px;
@@ -125,6 +126,7 @@ const DetailStudentAllergy = ({ studentInfo, setSuccessMsg }) => {
       setStudentAllergy(studentInfo.allergy)
     }
   }, [studentInfo])
+
   return (<DetailStudentLayout>
     <DetailTitle>알레르기</DetailTitle>
     <AllergyList isEdit={isEdit}>
@@ -140,6 +142,7 @@ const DetailStudentAllergy = ({ studentInfo, setSuccessMsg }) => {
       })}
     </AllergyList>
     {isEdit && <EditBtn onClick={onClickEditBtn}>수정</EditBtn>}
+    {loading && <Loading page="center" />}
   </DetailStudentLayout>);
 }
 
