@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/client';
 import useMe from '../../../Hooks/useMe';
 import { SEE_ONE_STUDENT_LIST_QUERY } from '../../../Graphql/StudentList/query';
 import { ADD_STUDENT_MUTATION } from '../../../Graphql/StudentList/mutation';
+import Loading from '../../Shared/Loading';
 
 const SCenterDndContainer = styled.div`
   height: ${props => props.inList ? "100%" : "60%"};
@@ -31,12 +32,17 @@ const CenterDndContainer = ({ someDragging, setSuccessMsg, setErrorMsg, listName
   }
   const [addStudent, { loading }] = useMutation(ADD_STUDENT_MUTATION, {
     onCompleted,
-    refetchQueries: [{
-      query: SEE_ONE_STUDENT_LIST_QUERY,
-      variables: {
-        listId
+    update: (cache, { data: { addStudent: { ok } } }) => {
+      if (ok) {
+        cache.modify({
+          id: "ROOT_QUERY",
+          fields: {
+            seeStudentList() {
+            }
+          }
+        })
       }
-    }]
+    }
   })
 
   // 학생을 리스트에 추가하기 위한 drop
@@ -67,6 +73,10 @@ const CenterDndContainer = ({ someDragging, setSuccessMsg, setErrorMsg, listName
       setMouseEnter(false)
     }
   }, [someDragging])
+
+  if (loading) {
+    return <Loading page="center" />
+  }
 
   return (<SCenterDndContainer someDragging={someDragging} ref={studentDrop} inList={inList}></SCenterDndContainer>);
 }

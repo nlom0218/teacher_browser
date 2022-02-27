@@ -159,7 +159,7 @@ const StudentInItem = ({ item, listId, page, setSuccessMsg, listName, sort }) =>
   };
 
   if (loading) {
-    return <Loading page="subPage" />
+    return <Loading page="center" />
   }
 
   return (

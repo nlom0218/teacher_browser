@@ -34,12 +34,17 @@ const AddManyStudent = ({ inStudent, listId, setSuccessMsg, listName }) => {
 
   const [addStudent, { loading: addLoading }] = useMutation(ADD_STUDENT_MUTATION, {
     onCompleted,
-    refetchQueries: [{
-      query: SEE_ONE_STUDENT_LIST_QUERY,
-      variables: {
-        listId
+    update: (cache, { data: { addStudent: { ok } } }) => {
+      if (ok) {
+        cache.modify({
+          id: "ROOT_QUERY",
+          fields: {
+            seeStudentList() {
+            }
+          }
+        })
       }
-    }]
+    }
   })
 
   const checkStudent = (id) => {
