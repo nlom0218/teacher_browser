@@ -12,10 +12,6 @@ const Container = styled.div`
   display: grid;
   row-gap: 10px;
   row-gap: 0.625rem;
-  /* :not(:last-child) {
-    padding-bottom: 20px;
-    padding-bottom: 1.25rem;
-  } */
 `
 
 const StudentInfo = styled.div`
@@ -92,6 +88,8 @@ const JournalSectionItem = ({ item, page }) => {
     <StudentJournal onClick={onClickStudentJournal} page={page}>
       <TextareaAutosize
         value={item.text}
+        minRows={page === "journal" && 5}
+        maxRows={page === "journal" ? 5 : 3}
       />
     </StudentJournal>
   </Container>);

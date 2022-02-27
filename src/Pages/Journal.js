@@ -22,8 +22,8 @@ import StudentList from "../Components/Shared/popup/StudentList";
 const Container = styled.div`
   min-height: 100%;
   display: grid;
-  padding: 20px;
-  padding: 1.25rem;
+  padding: 40px 20px;
+  padding: 2.5rem 1.25rem;
   grid-template-rows: auto 1fr;
   row-gap: 40px;
   row-gap: 2.5rem;

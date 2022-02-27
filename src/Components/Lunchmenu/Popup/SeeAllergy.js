@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { SEE_ALLERGY_STUDENT_QUERY } from '../../../Graphql/Student/query';
 import routes from '../../../routes';
 import { customMedia } from '../../../styles';
+import Loading from '../../Shared/Loading';
 import PopupContainer from '../../Shared/PopupContainer';
 
 const Container = styled.div`
@@ -88,6 +89,10 @@ const SeeAllergy = () => {
     } else if (allergyNum === 18) {
       return "18. 조개류(굴, 전복, 홍합 등)"
     }
+  }
+
+  if (loading) {
+    return <Loading page="popupPage" />
   }
 
   return (<PopupContainer>

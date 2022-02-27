@@ -17,6 +17,7 @@ const FixContainer = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, 50%);
+  z-index: 10;
 `
 
 // mainPage => 명렬표, 학급일지, 순서정하기 등 가장 메인이 되는 페이지

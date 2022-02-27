@@ -3,12 +3,12 @@ import SocialLogin from "../Components/Account/SocialLogin";
 import AccountContainer from "../Components/Shared/AccountContainer";
 import useTitle from "../Hooks/useTitle";
 import styled from "styled-components";
-import LogoImage from "../image/LogoImage.png"
+import LogoText from "../image/LogoText.png"
 import BackBtn from "../Components/Account/BackBtn";
 
 const LogoIcon = styled.img`
-  width: 100px;
-  width: 6.25rem;
+  width: 240px;
+  width: 15rem;
 `
 
 const Login = () => {
@@ -17,7 +17,7 @@ const Login = () => {
   return (
     <AccountContainer>
       <BackBtn />
-      <LogoIcon src={LogoImage}>
+      <LogoIcon src={LogoText}>
       </LogoIcon>
       <SocialLogin />
     </AccountContainer >

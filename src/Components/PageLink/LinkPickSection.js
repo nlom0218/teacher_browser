@@ -37,6 +37,7 @@ const MoveContainer = styled.div`
     (props.pageLinkSection === "pageLink" ? hideNewsSection : seeNewsSection)}
     1s ease forwards;
 `;
+
 const MoveIcon = styled.div`
   position: absolute;
   top: 1%;
@@ -56,7 +57,8 @@ const LinkPickSection = ({
   init,
   setInit,
   link,
-  setMsg
+  setMsg,
+  media
 }) => {
   const [isSeeDisplay, setIsSeeDisplay] = useState(
     pageLinkSection === "pageLink" ? "none" : "block"
@@ -98,12 +100,13 @@ const LinkPickSection = ({
       <MoveIcon onClick={onClickMoveIcon}>
         <FaArrowCircleLeft />
       </MoveIcon>
-      <FolderList />
+      {media === "Desktop" && <FolderList />}
       <ContentsList>
         <PageLinkTitle>
           <HelpIcon><IcHelper /></HelpIcon>
           <div>추천 페이지</div>
         </PageLinkTitle>
+        {media !== "Desktop" && <FolderList />}
         {loading ? <Loading page="subPage" /> : <PageLinkList>
           {data &&
             data?.seePageLink.map((item, index) => {

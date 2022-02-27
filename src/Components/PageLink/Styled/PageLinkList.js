@@ -17,10 +17,9 @@ const PageLinkList = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
-  ${customMedia.greaterThan("desktop")`
+  ${customMedia.greaterThan("tablet")`
   grid-template-columns: ${(props) => !props.none && "repeat(4, 1fr)"};
   grid-column: ${(props) => props.none && 1 / 3};
-
 `}
 `;
 

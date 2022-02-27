@@ -178,7 +178,7 @@ const Swap = () => {
     },
     skip: !id
   });
-  console.log(selectedStudent);
+
 
   const { register, handleSubmit, getValues } = useForm({
     mode: "onChange",

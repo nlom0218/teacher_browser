@@ -13,6 +13,8 @@ import DetailPageLink from "../Components/PageLink/Popup/DetailPageLink";
 import useTitle from "../Hooks/useTitle";
 import AlertMessage from "../Components/Shared/AlertMessage";
 import NeedLoginPopupContainer from "../Components/Shared/NeedLoginPopupContainer";
+import PageLinkHelper from "../Components/PageLink/Popup/PageLinkHelper";
+import useMedia from "../Hooks/useMedia";
 
 //추천사이트 목록 정리하기
 //즐겨찾기 없을 경우 설명하는 페이지 추가
@@ -24,6 +26,7 @@ const Container = styled.div``;
 const PageLink = () => {
   const titleUpdataer = useTitle("티처캔 | 즐겨찾기")
   const me = useMe();
+  const media = useMedia()
   const isPopup = useReactiveVar(isPopupVar);
   const pageLinkSection = useReactiveVar(pageLinkSectionVar);
 
@@ -38,6 +41,7 @@ const PageLink = () => {
           setInit={setInit}
           pageLinkSection={pageLinkSection}
           userEmail={me?.email}
+          media={media}
         />
         <LinkPickSection
           init={init}
@@ -46,6 +50,7 @@ const PageLink = () => {
           userEmail={me?.email}
           link={me?.link}
           setMsg={setMsg}
+          media={media}
         />
       </Container>
       {isPopup === "addBookmark" && <AddBookmark userEmail={me?.email} setMsg={setMsg} />}
@@ -54,6 +59,7 @@ const PageLink = () => {
         <DetailPageLink link={me?.link} userEmail={me?.email} setMsg={setMsg} />
       )}
       {isPopup === "needLogin" && <NeedLoginPopupContainer />}
+      {isPopup === "pageLinkHelper" && <PageLinkHelper />}
       {msg && <AlertMessage type="success" time={3000} msg={msg} setMsg={setMsg} />}
     </BasicContainer>
   );
