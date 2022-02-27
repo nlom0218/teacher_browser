@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { useMutation } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { ME_QUERY } from "../../../Hooks/useMe";
 import PopupContainer from "../../Shared/PopupContainer";
-import { outPopup } from "../../../apollo";
+import { darkModeVar, outPopup } from "../../../apollo";
 import { DetailTitle } from "../../List/styled/DetailStudent";
 import { SET_TIMETABLE_TIME_MUTATION } from "../../../Graphql/TimeTable/mutation";
 import { GET_TIMETABLE_TIME_QUERY } from "../../../Graphql/TimeTable/query";
@@ -52,7 +52,8 @@ const InputLayout = styled.input`
   align-items: center;
   ::-webkit-calendar-picker-indicator {
     cursor: pointer;
-}
+    filter:${props => props.darkMode ? "invert(1)" : "invert(0)"}
+  }
 `;
 
 const AddTagBtn = styled.input`
@@ -67,6 +68,7 @@ const AddTagBtn = styled.input`
 `;
 
 const TimeRegisterPage = ({ userEmail, timeResult, setMsg }) => {
+  const darkMode = useReactiveVar(darkModeVar);
   const onCompleted = (result) => {
     const {
       setTimetableTime: { ok },
@@ -143,6 +145,7 @@ const TimeRegisterPage = ({ userEmail, timeResult, setMsg }) => {
             })}
             defaultValue={timeResult[0]}
             type="time"
+            darkMode={darkMode}
           />
           <InputLayout
             {...register("end1", {
@@ -150,6 +153,7 @@ const TimeRegisterPage = ({ userEmail, timeResult, setMsg }) => {
             })}
             defaultValue={timeResult[1]}
             type="time"
+            darkMode={darkMode}
           />
           <DetailTitle>2교시</DetailTitle>
           <InputLayout
@@ -158,6 +162,7 @@ const TimeRegisterPage = ({ userEmail, timeResult, setMsg }) => {
             })}
             defaultValue={timeResult[2]}
             type="time"
+            darkMode={darkMode}
           />
           <InputLayout
             {...register("end2", {
@@ -165,6 +170,7 @@ const TimeRegisterPage = ({ userEmail, timeResult, setMsg }) => {
             })}
             defaultValue={timeResult[3]}
             type="time"
+            darkMode={darkMode}
           />
           <DetailTitle>3교시</DetailTitle>
           <InputLayout
@@ -173,6 +179,7 @@ const TimeRegisterPage = ({ userEmail, timeResult, setMsg }) => {
             })}
             defaultValue={timeResult[4]}
             type="time"
+            darkMode={darkMode}
           />
           <InputLayout
             {...register("end3", {
@@ -180,6 +187,7 @@ const TimeRegisterPage = ({ userEmail, timeResult, setMsg }) => {
             })}
             defaultValue={timeResult[5]}
             type="time"
+            darkMode={darkMode}
           />
           <DetailTitle>4교시</DetailTitle>
           <InputLayout
@@ -188,6 +196,7 @@ const TimeRegisterPage = ({ userEmail, timeResult, setMsg }) => {
             })}
             defaultValue={timeResult[6]}
             type="time"
+            darkMode={darkMode}
           />
           <InputLayout
             {...register("end4", {
@@ -195,6 +204,7 @@ const TimeRegisterPage = ({ userEmail, timeResult, setMsg }) => {
             })}
             defaultValue={timeResult[7]}
             type="time"
+            darkMode={darkMode}
           />
           <DetailTitle>5교시</DetailTitle>
           <InputLayout
@@ -203,6 +213,7 @@ const TimeRegisterPage = ({ userEmail, timeResult, setMsg }) => {
             })}
             defaultValue={timeResult[8]}
             type="time"
+            darkMode={darkMode}
           />
           <InputLayout
             {...register("end5", {
@@ -210,6 +221,7 @@ const TimeRegisterPage = ({ userEmail, timeResult, setMsg }) => {
             })}
             defaultValue={timeResult[9]}
             type="time"
+            darkMode={darkMode}
           />
           <DetailTitle>6교시</DetailTitle>
           <InputLayout
@@ -218,6 +230,7 @@ const TimeRegisterPage = ({ userEmail, timeResult, setMsg }) => {
             })}
             defaultValue={timeResult[10]}
             type="time"
+            darkMode={darkMode}
           />
           <InputLayout
             {...register("end6", {
@@ -225,6 +238,7 @@ const TimeRegisterPage = ({ userEmail, timeResult, setMsg }) => {
             })}
             defaultValue={timeResult[11]}
             type="time"
+            darkMode={darkMode}
           />
         </LayOut>
         <AddTagBtn type="submit" value="완료" />
