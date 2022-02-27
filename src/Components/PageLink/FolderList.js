@@ -8,8 +8,10 @@ import {
 import { linkPickFolderVar } from "../../apollo";
 import { removeLinkPickFolder } from "../../apollo";
 import { moveLinkPickFolder } from "../../apollo";
-import { Link } from "react-router-dom";
+import { customMedia } from "../../styles";
+
 const Container = styled.div`
+  ${customMedia.greaterThan("desktop")`
   position: absolute;
   padding: 20px;
   padding: 1.25rem;
@@ -23,10 +25,11 @@ const Container = styled.div`
   row-gap: 20px;
   row-gap: 1.25rem;
   grid-template-rows: 1fr auto;
-  background-color: ${(props) => props.theme.bgColor};
   transition: background-color 1s ease;
+  `}
   border-radius: 5px;
   border-radius: 0.3125rem;
+  background-color: ${(props) => props.theme.bgColor};
   .LinkPush {
     color: ${(props) => props.theme.bgColor};
     padding: 10px;
@@ -39,7 +42,12 @@ const Container = styled.div`
     cursor: pointer;
   }
 `;
+
+
 const SFolderList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  ${customMedia.greaterThan("desktop")`
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: repeat(${(props) => props.listnum + 1}, auto) 1fr;
@@ -48,16 +56,19 @@ const SFolderList = styled.div`
   min-height: 100%;
   max-height: 100%;
   overflow: scroll;
-  cursor: pointer;
   -ms-overflow-style: none;
   scrollbar-width: none;
   ::-webkit-scrollbar {
     display: none;
   }
-`;
+  `}
+  `;
 
 const Folder = styled.div`
+  margin: 5px;
+  margin: 0.3125rem;
   padding: 10px;
+  cursor: pointer;
   padding: 0.625rem;
   border-radius: 5px;
   border-radius: 0.3125rem;
@@ -66,6 +77,9 @@ const Folder = styled.div`
   }
   background-color: ${(props) => props.selected && props.theme.hoverColor};
   transition: background-color 1s ease;
+  ${customMedia.greaterThan("desktop")`
+    margin: 0;
+  `}
 `;
 
 const FolderList = ({ right }) => {

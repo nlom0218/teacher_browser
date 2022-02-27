@@ -16,6 +16,7 @@ import MyPageLink from "./MyPageLink";
 import IcHelper from "../../icons/Helper/IcHelper";
 import HelpIcon from "./Styled/HelpIcon";
 import Loading from "../Shared/Loading";
+import { customMedia } from "../../styles";
 
 const MoveContainer = styled.div`
   position: absolute;
@@ -29,10 +30,10 @@ const MoveContainer = styled.div`
       ? seeWelcomSection
       : hideWelcomeSection)}
     1s ease forwards;
-  display: grid;
-  row-gap: 20px;
-  row-gap: 1.25rem;
+  padding: 20px;
+  padding: 1.25rem;
 `;
+
 const MoveIcon = styled.div`
   position: absolute;
   top: 1%;
@@ -46,7 +47,7 @@ const MoveIcon = styled.div`
   }
 `;
 
-const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit }) => {
+const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit, media }) => {
   const [myPageLink, setMyPageLink] = useState([]);
   const [none, setNone] = useState();
   const pageLinkFolder = useReactiveVar(pageLinkFolderVar);
@@ -102,12 +103,13 @@ const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit }) => {
       <MoveIcon onClick={onClickMoveIcon}>
         <FaArrowCircleRight />{" "}
       </MoveIcon>
-      <FolderList right={true} />
+      {media === "Desktop" && <FolderList right={true} />}
       <ContentsList right={true}>
         <PageLinkTitle left={true}>
           <div>나의 즐겨찾기 페이지</div>
           <HelpIcon onClick={onClickHelper}><IcHelper /></HelpIcon>
         </PageLinkTitle>
+        {media !== "Desktop" && <FolderList right={true} />}
         <PageLinkList none={none}>
           {!pageLinkFolder &&
             (myPageLink.length === 0 ? (
