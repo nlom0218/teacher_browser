@@ -135,7 +135,7 @@ const OptionContents = styled.div`
   row-gap: 1.25rem;
   text-align: center;
   ${customMedia.greaterThan("tablet")`
-   grid-template-columns : auto auto auto 1fr auto;
+   grid-template-columns : auto auto 1fr auto;
    column-gap:20px;
    column-gap:1.25rem;
   `}
@@ -174,6 +174,7 @@ const Swap = () => {
   const [fontSizeAll, setFontSizeAll] = useState(1.5);
   const [errMsg, setErrMsg] = useState(undefined)
   const [sort, setSort] = useState(undefined)
+  const [hasNum, setHasNum] = useState(false)
 
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: {
@@ -222,6 +223,13 @@ const Swap = () => {
       //휴지통에 있는 학생은 filter로 거르기 
       const newSelectedStudent = data?.seeStudentList[0]?.students.filter(item => !item.trash).map((item) => item.studentName)
       setSelectedStudent(newSelectedStudent);
+
+      const studentNum = data?.seeStudentList[0]?.students.filter(item => !item.trash).map((item) => item.studentNumber)
+      if (studentNum.includes(null)) {
+        setHasNum(false)
+      } else {
+        setHasNum(true)
+      }
     }
   }, [data]);
 
@@ -268,19 +276,20 @@ const Swap = () => {
           <React.Fragment>
             <OptionContents>
               <OptionBtn onClick={() => onClickShuffleBtn("pickNum")}> 자리 설정 </OptionBtn>
-              {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
+              {isShuffle === "init" && <OptionBtn onClick={() => {
+                onClickShuffleBtn("ing")
+                setSort(undefined)
+              }}>순서 섞기</OptionBtn>}
               {isShuffle === "pickNum" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
               {isShuffle === "ing" && (
                 <OptionBtn onClick={() => onClickShuffleBtn("finish")} isShuffling={true}>
                   섞는 중
                 </OptionBtn>
               )}
-              {isShuffle === "finish" && (
-                <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
-                  다시 섞기
-                </OptionBtn>
-              )}
-              <SortBtn setSort={setSort} sort={sort} />
+              {isShuffle === "finish" && <OptionBtn onClick={() => {
+                onClickShuffleBtn("ing")
+                setSort(undefined)
+              }}>다시 섞기</OptionBtn>}
               {media === "Desktop" && <PrintOrder />}
               <FontSizeBtn
                 setFontSizeAll={setFontSizeAll}
@@ -309,7 +318,12 @@ const Swap = () => {
       onClickShuffleBtn={onClickShuffleBtn}
       setErrMsg={setErrMsg}
     />}
-    {isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
+    {isShuffle === "ing" && <Shuffling
+      onClickShuffleBtn={onClickShuffleBtn}
+      sort={sort}
+      setSort={setSort}
+      hasNum={hasNum}
+      setErrMsg={setErrMsg} />}
     {errMsg && <AlertMessage msg={errMsg} type="error" setMsg={setErrMsg} time={3000} />}
   </BasicContainer>);
 };

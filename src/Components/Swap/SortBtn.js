@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { RiCheckboxBlankLine, RiCheckboxLine } from 'react-icons/ri';
 
 const Container = styled.div`
-  align-self: flex-end;
   display: grid;
   grid-template-columns: auto auto;
-  column-gap: 10px;
-  column-gap: 0.625rem;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  position: relative;
+  color: ${props => props.theme.bgColor};
 `
 
 const Layout = styled.div`
@@ -18,14 +19,15 @@ const Layout = styled.div`
   cursor: pointer;
 `
 
-const SortBtn = ({ setSort, sort }) => {
+const SortBtn = ({ setSort, sort, onClickShuffleBtn, hasNum, setErrMsg }) => {
 
   const onClickSortBtn = (type) => {
-    if (type === sort) {
-      setSort(undefined)
+    if (!hasNum && type === "studentNumber") {
+      setErrMsg("모든 학생의 번호가 설정되지 않았습니다. 😅")
       return
     }
     setSort(type)
+    onClickShuffleBtn("finish")
   }
 
   return (<Container>
