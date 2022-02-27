@@ -10,6 +10,7 @@ import { CREATE_TAG_MUTATION, DELETE_TAG_MUTATION } from '../../../Graphql/User/
 import useMe, { ME_QUERY } from '../../../Hooks/useMe';
 import useMedia from '../../../Hooks/useMedia';
 import { customMedia } from '../../../styles';
+import Loading from '../../Shared/Loading';
 import PopupContainer from '../../Shared/PopupContainer';
 
 const Container = styled.div`
@@ -168,6 +169,11 @@ const CreateTag = ({ studentId, isBackBtn }) => {
       setTagArr(me?.tag)
     }
   }, [me])
+
+  if (loading || delLoading) {
+    return <Loading page="popupPage" />
+  }
+
   return (<PopupContainer>
     <Container>
       {media !== "Desktop" && <BackBtn onClick={onClickBackAddTagBtn}><IoArrowBackSharp /></BackBtn>}

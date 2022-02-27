@@ -3,6 +3,14 @@ import { IoIosRemoveCircleOutline } from 'react-icons/io';
 import styled from 'styled-components';
 import PopupContainer from '../../Shared/PopupContainer';
 
+const Container = styled.div`
+  padding: 20px 0px;
+  padding: 1.25rem 0rem;
+  display: grid;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+`
+
 const StudentTag = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -79,26 +87,28 @@ const Tag = styled.div`
 
 const AddTag = ({ studentTatArr, onClickDelTag, onClickCreateTag, tagArr, onClickAddTag }) => {
   return (<PopupContainer>
-    <StudentTag>{studentTatArr?.length === 0 ?
-      <div className="no_student_tag">등록된 태그가 없습니다.</div>
-      :
-      studentTatArr?.map((item, index) => {
-        return <TagItem key={index}>
-          <div>{item}</div>
-          <IoIosRemoveCircleOutline onClick={() => onClickDelTag(item)} />
-        </TagItem>
-      })
-    }</StudentTag>
-    <TagBox>
-      {tagArr.length === 0 ? <div className="no_tag_div">생성된 태그가 없습니다.</div>
-        : tagArr.map((item, index) => {
-          return <Tag key={index}>
-            <div onClick={() => onClickAddTag(item)}>{item}</div>
-          </Tag>
+    <Container>
+      <StudentTag>{studentTatArr?.length === 0 ?
+        <div className="no_student_tag">등록된 태그가 없습니다.</div>
+        :
+        studentTatArr?.map((item, index) => {
+          return <TagItem key={index}>
+            <div>{item}</div>
+            <IoIosRemoveCircleOutline onClick={() => onClickDelTag(item)} />
+          </TagItem>
         })
-      }
-    </TagBox>
-    <CreateTagBtn onClick={onClickCreateTag}>태그 관리하기</CreateTagBtn>
+      }</StudentTag>
+      <TagBox>
+        {tagArr.length === 0 ? <div className="no_tag_div">생성된 태그가 없습니다.</div>
+          : tagArr.map((item, index) => {
+            return <Tag key={index}>
+              <div onClick={() => onClickAddTag(item)}>{item}</div>
+            </Tag>
+          })
+        }
+      </TagBox>
+      <CreateTagBtn onClick={onClickCreateTag}>태그 관리하기</CreateTagBtn>
+    </Container>
   </PopupContainer>);
 }
 
