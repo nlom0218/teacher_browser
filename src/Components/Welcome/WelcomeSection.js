@@ -130,7 +130,6 @@ const LogoList = styled.div`
   grid-template-columns: repeat(4, 1fr);
   column-gap: 40px;
   column-gap: 2.5rem;
-  background-color: ${props => props.theme.originBgColor};
   transition: background-color 1s ease;
   border-radius: 10px;
   border-radius: 0.625rem;

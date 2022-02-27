@@ -93,11 +93,11 @@ const HeaderSideBtn = ({ seeSideMenu, setSeeSideMenu }) => {
               <Content onClick={() => navigate(routes.editAccount)}>
                 <Link to={routes.editAccount}>회원정보 변경</Link>
               </Content>
-              <Content onClick={() => window.open(`https://www.notion.so/18b5b5b23fb84323b5a2a0b71c9980fd`)}>
+              <Content onClick={() => window.open(`https://sparkly-corleggy-3e4.notion.site/18b5b5b23fb84323b5a2a0b71c9980fd`)}>
                 About 팀 초코
               </Content>
-              <Content onClick={() => window.open("https://www.notion.so/c14d0210aefd451bb3308048ca48d7ba")}>이용약관</Content>
-              <Content onClick={() => window.open("https://www.notion.so/28730aebd08147a9816952e4222db44f")}>개인정보 처리방침</Content>
+              <Content onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/c14d0210aefd451bb3308048ca48d7ba")}>이용약관</Content>
+              <Content onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/28730aebd08147a9816952e4222db44f")}>개인정보 처리방침</Content>
               <Content onClick={onClickLogOut}>로그아웃</Content>
             </React.Fragment>
           ) : (
@@ -105,7 +105,7 @@ const HeaderSideBtn = ({ seeSideMenu, setSeeSideMenu }) => {
               <Content onClick={() => navigate(routes.login)}>
                 <Link to={routes.login}>로그인</Link>
               </Content>
-              <Content onClick={() => window.open(`https://www.notion.so/18b5b5b23fb84323b5a2a0b71c9980fd`)}>
+              <Content onClick={() => window.open(`https://sparkly-corleggy-3e4.notion.site/18b5b5b23fb84323b5a2a0b71c9980fd`)}>
                 About 팀 초코
               </Content>
             </React.Fragment>
