@@ -180,6 +180,7 @@ const List = () => {
       seeStudentIcon={seeStudentIcon}
       selectedSort={selectedSort}
       allStudent={data?.seeAllStudent}
+      me={me}
     />}
     {isPopup === "seeStudentSetting" &&
       <StudentSortTag

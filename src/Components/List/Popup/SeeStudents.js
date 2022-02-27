@@ -22,8 +22,7 @@ const StudentNum = styled.div`
 
 const StudentIcon = styled.div``
 
-const SeeStudents = ({ meTag, selectedTag, seeNum, selectedSort, allStudent, seeStudentIcon }) => {
-  const isPopup = useReactiveVar(isPopupVar)
+const SeeStudents = ({ me, seeNum, allStudent, seeStudentIcon }) => {
 
   const navigate = useNavigate()
 
@@ -38,7 +37,7 @@ const SeeStudents = ({ meTag, selectedTag, seeNum, selectedSort, allStudent, see
   return (<PopupContainer maxHeight={true}>
     <Container>
       <List>
-        <SortTagBtn />
+        <SortTagBtn me={me} />
         {allStudent?.length === 0 ?
           <div className="noStudnet">생성된 학생이 없습니다.</div>
           :
