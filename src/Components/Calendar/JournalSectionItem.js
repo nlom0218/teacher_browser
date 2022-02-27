@@ -88,8 +88,8 @@ const JournalSectionItem = ({ item, page }) => {
     <StudentJournal onClick={onClickStudentJournal} page={page}>
       <TextareaAutosize
         value={item.text}
-        minRows={5}
-        maxRows={5}
+        minRows={page === "journal" && 5}
+        maxRows={page === "journal" ? 5 : 3}
       />
     </StudentJournal>
   </Container>);
