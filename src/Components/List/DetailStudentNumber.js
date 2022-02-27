@@ -94,6 +94,7 @@ const DetailStudentNumber = ({ studentInfo, selectedSort, selectedTag, setSucces
 
   const onSubmit = (data) => {
     const { studentNum } = data
+    console.log(!studentNum);
     if (loading) {
       return
     }
@@ -101,7 +102,7 @@ const DetailStudentNumber = ({ studentInfo, selectedSort, selectedTag, setSucces
       variables: {
         teacherEmail: studentInfo?.teacherEmail,
         studentId: studentInfo?._id,
-        studentNumber: studentNum
+        ...(studentNum ? { studentNumber: studentNum } : { studentNumber: "delNum" })
       }
     })
   }
