@@ -25,6 +25,8 @@ import PrintSwapContents from '../Components/Swap/Popup/PrintSwapContents';
 import useMe from '../Hooks/useMe';
 import NeedLoginPopupContainer from '../Components/Shared/NeedLoginPopupContainer';
 import NoStudentMsg from '../Components/Shared/styled/NoStudentMsg';
+import SortBtn from '../Components/Swap/SortBtn';
+import { compare, compareDesc } from "../shared"
 
 const Container = styled.div`
   display : grid;
@@ -133,7 +135,7 @@ const OptionContents = styled.div`
   row-gap: 1.25rem;
   text-align: center;
   ${customMedia.greaterThan("tablet")`
-   grid-template-columns : auto auto 1fr auto;
+   grid-template-columns : auto auto auto 1fr auto;
    column-gap:20px;
    column-gap:1.25rem;
   `}
@@ -171,6 +173,7 @@ const Swap = () => {
   const [pickNum, setPickNum] = useState(6);
   const [fontSizeAll, setFontSizeAll] = useState(1.5);
   const [errMsg, setErrMsg] = useState(undefined)
+  const [sort, setSort] = useState(undefined)
 
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: {
@@ -217,9 +220,17 @@ const Swap = () => {
     if (data) {
       setStudentListName(data?.seeStudentList[0]?.listName);
       //휴지통에 있는 학생은 filter로 거르기 
-      setSelectedStudent(data?.seeStudentList[0]?.students.filter(item => !item.trash).map((item) => item.studentName));
+      const newSelectedStudent = data?.seeStudentList[0]?.students.filter(item => !item.trash).map((item) => item.studentName)
+      setSelectedStudent(newSelectedStudent);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (sort) {
+      const newSelectedStudent = data?.seeStudentList[0]?.students.filter(item => !item.trash).sort(compare(sort)).map((item) => item.studentName)
+      setSelectedStudent(newSelectedStudent);
+    }
+  }, [sort])
 
   return (<BasicContainer menuItem={true} screen="small">
     <Container pickNum={pickNum}>
@@ -269,6 +280,7 @@ const Swap = () => {
                   다시 섞기
                 </OptionBtn>
               )}
+              <SortBtn setSort={setSort} sort={sort} />
               {media === "Desktop" && <PrintOrder />}
               <FontSizeBtn
                 setFontSizeAll={setFontSizeAll}
