@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { moveLinkPick, pageLinkFolderVar } from "../../apollo";
+import { inPopup, moveLinkPick, pageLinkFolderVar } from "../../apollo";
 import {
   hideWelcomeSection,
   seeWelcomSection,
@@ -74,6 +74,10 @@ const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit }) => {
   const allNotFound = !pageLinkFolder && myPageLink.length === 0;
   const folderNotFound = pageLinkFolder && found.length === 0;
 
+  const onClickHelper = () => {
+    inPopup("pageLinkHelper")
+  }
+
   useEffect(() => {
     {
       if (allNotFound) {
@@ -102,7 +106,7 @@ const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit }) => {
       <ContentsList right={true}>
         <PageLinkTitle left={true}>
           <div>나의 즐겨찾기 페이지</div>
-          <HelpIcon><IcHelper /></HelpIcon>
+          <HelpIcon onClick={onClickHelper}><IcHelper /></HelpIcon>
         </PageLinkTitle>
         <PageLinkList none={none}>
           {!pageLinkFolder &&
