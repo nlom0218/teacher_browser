@@ -4,11 +4,9 @@ import styled from 'styled-components';
 import { hideWelcomeSection, seeWelcomSection } from '../../Animations/WelcomeSectionAni';
 import { moveNews } from '../../apollo';
 import AlertMessage from '../Shared/AlertMessage';
-import useMedia from '../../Hooks/useMedia';
 import { customMedia } from '../../styles';
-import routes from '../../routes';
-import { Link } from 'react-router-dom';
 import WelcomeContents from './WelcomeContents';
+import TopContents from './TopContents';
 
 const MoveContainer = styled.div`
   position: absolute;
@@ -23,8 +21,8 @@ const MoveContainer = styled.div`
 `
 
 const Container = styled.div`
-  padding: 20px;
-  padding: 1.25rem;
+  padding: 40px 20px;
+  padding: 2.5rem 1.25rem;
   display: grid;
   grid-template-rows: auto 1fr auto;
   row-gap: 20px;
@@ -33,8 +31,6 @@ const Container = styled.div`
   ${customMedia.greaterThan("tablet")`
     padding: 40px;
     padding: 2.5rem;
-    row-gap: 40px;
-    row-gap: 2.5rem;
   `}
 `
 
@@ -49,46 +45,6 @@ const MoveIcon = styled.div`
     font-size: 1.5em;
     font-size: 1.5rem;
   }
-`
-
-const WelcomeTitle = styled.div`
-  justify-self: flex-end;
-  font-size: 1.25em;
-  font-size: 1.25rem;
-  line-height: 160%;
-  font-weight: 600;
-`
-
-const LoginMsg = styled.div`
-  justify-self: flex-end;
-  font-size: 1.25em;
-  font-size: 1.25rem;
-  line-height: 160%;
-  display: grid;
-  row-gap: 10px;
-  row-gap: 0.625rem;
-  align-items: center;
-  justify-items: flex-end;
-  column-gap: 10px;
-  column-gap: 0.625rem;
-  ${customMedia.greaterThan("tablet")`
-    grid-template-columns: 1fr auto;
-  `}
-`
-
-const Msg = styled.div``
-
-const LoginBtn = styled.div`
-  font-size: 1em;
-  font-size: 1rem;
-  padding: 5px 20px;
-  padding: 0.3125rem 1.25rem;
-  background-color: ${props => props.theme.green};
-  color: ${props => props.theme.bgColor};
-  transition: background-color 1s ease, color 1s ease;
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  cursor: pointer;
 `
 
 const LogoContents = styled.div`
@@ -168,7 +124,6 @@ const LogoNum = styled.div`
 
 const WelcomeSection = ({ welcomeSection, init, setInit, logoImageArr, me }) => {
   const [msg, setMsg] = useState(undefined)
-  const media = useMedia()
 
   const onClickMoveIcon = () => {
     setInit(false)
@@ -180,13 +135,7 @@ const WelcomeSection = ({ welcomeSection, init, setInit, logoImageArr, me }) => 
       <MoveIcon onClick={onClickMoveIcon}>
         <FaArrowCircleRight />
       </MoveIcon>
-      {me ? <WelcomeTitle>{me?.email}님 환영합니다. 😆</WelcomeTitle>
-        :
-        <LoginMsg>
-          <Msg>네이버, 카카오, 구글로 간단히</Msg>
-          <Link to={routes.login}><LoginBtn>로그인하기</LoginBtn></Link>
-        </LoginMsg>
-      }
+      <TopContents me={me} />
       <WelcomeContents />
       <LogoContents>
         <LogoMsg>
