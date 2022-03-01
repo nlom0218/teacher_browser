@@ -129,6 +129,9 @@ export const processSetDate = (date) => {
 }
 
 export const compare = (key) => {
+  if (key === "studentNumber") {
+    return (a, b) => (parseInt(a[key]) > parseInt(b[key]) ? 1 : (parseInt(a[key]) < parseInt(b[key]) ? -1 : 0))
+  }
   return (a, b) => (a[key] > b[key] ? 1 : (a[key] < b[key] ? -1 : 0))
 }
 
