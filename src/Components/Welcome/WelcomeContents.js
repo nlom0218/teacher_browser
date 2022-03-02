@@ -121,6 +121,15 @@ const WelcomeContents = () => {
     </ContentsContainer>
     <ContentsContainer>
       <Title>
+        <TitleLayout><FcLike /><div>진행중인 이벤트</div></TitleLayout>
+        <TitleLayout className="title_notion" onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/1aa6fc8d7ec1492a8a24890ca1907549")}><SiNotion /><div>노션에서 더 보기</div></TitleLayout>
+      </Title>
+      <Layout>
+        <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/522744f7087644538dbf8d3d19eb5eca")}><FcCursor /><div>티처캔 캐릭터 이름 공모 이벤트(~3.31)</div></ContentsItem>
+      </Layout>
+    </ContentsContainer>
+    <ContentsContainer>
+      <Title>
         <TitleLayout><FcAreaChart /><div>진행중인 업데이트 및 오류해결</div></TitleLayout>
         <TitleLayout className="title_notion" onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/a5b56d8122f444cd9e372674f57724b2")}><SiNotion /><div>노션에서 더 보기</div></TitleLayout>
       </Title>
@@ -129,15 +138,6 @@ const WelcomeContents = () => {
         <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-2-27-0d3b660e9d5849dfabcc301ef3ec4d1e")}><FcCursor /><div>랜덤뽑기 뽑힌 학생 제외 기능</div></ContentsItem>
         <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-2-28-5529895b4b324f1d9134734644a44e23")}><FcCursor /><div>자리정하기에서 남녀 기능 추가</div></ContentsItem>
         <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-2-28-bdd3892c7e5b4dceb7c110858bb2f5a3")}><FcCursor /><div>전체화면 기능 적용</div></ContentsItem>
-      </Layout>
-    </ContentsContainer>
-    <ContentsContainer>
-      <Title>
-        <TitleLayout><FcLike /><div>진행중인 이벤트</div></TitleLayout>
-        <TitleLayout className="title_notion" onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/1aa6fc8d7ec1492a8a24890ca1907549")}><SiNotion /><div>노션에서 더 보기</div></TitleLayout>
-      </Title>
-      <Layout>
-        <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/522744f7087644538dbf8d3d19eb5eca")}><FcCursor /><div>티처캔 캐릭터 이름 공모 이벤트(~3.31)</div></ContentsItem>
       </Layout>
     </ContentsContainer>
     {/* <ContentsContainer>
