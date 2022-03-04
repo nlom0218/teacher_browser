@@ -10,7 +10,6 @@ import { inPopup, isPopupVar } from '../apollo';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import useMe from '../Hooks/useMe';
 import AlertMessage from '../Components/Shared/AlertMessage';
-import { BiExitFullscreen, BiFullscreen } from "react-icons/bi"
 import EditSchedule from '../Components/Calendar/Popup/EditSchedule';
 import { useParams } from 'react-router';
 import useMedia from '../Hooks/useMedia';
@@ -79,7 +78,7 @@ const BtnContainer = styled.div`
     grid-row: 1 / 2
   `}
   ${customMedia.greaterThan("desktop")`
-    grid-template-columns: repeat(6, auto);
+    grid-template-columns: repeat(5, auto);
   `}
 `
 
@@ -290,7 +289,6 @@ const Calendar = ({ screen, setScreen }) => {
             <TodayBtn className="calendar_btn" onClick={onClickTodayBtn}>TODAY</TodayBtn>
             <Btn className="calendar_btn" onClick={onClickBtnMinus}><IoIosArrowBack /></Btn>
             <Btn className="calendar_btn" onClick={onClickBtn}><IoIosArrowForward /></Btn>
-            {media === "Desktop" && <Btn className="calendar_btn" onClick={onClickFull}>{screen === "small" ? <BiFullscreen /> : <BiExitFullscreen />}</Btn>}
             <Btn className="calendar_btn" onClick={onClickPlusBtn}><AiOutlinePlus /></Btn>
             {media === "Desktop" && <HelpIcon onClick={onClickHelper}><IcHelper /></HelpIcon>}
           </BtnContainer>

@@ -2,6 +2,7 @@ import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { makeVar } from "@apollo/client";
 
+const FULL_SCREEN = "fullScreen"
 const BG_THEME = "bgTheme"
 const DARK = "dark";
 const TOKEN = "token";
@@ -14,6 +15,17 @@ const BG_ANI = "bgAni";
 const PAGELINK_SECTION = "pageLinkSection";
 const PAGE_LINK_FOLDER = "pageLinkFolder";
 const LINK_PICK_FOLDER = "linkPickFolder";
+
+export const fullScreenModeVar = makeVar(Boolean(localStorage.getItem(FULL_SCREEN)))
+export const fullScreenMode = () => {
+  localStorage.setItem(FULL_SCREEN, true)
+  fullScreenModeVar(true)
+}
+export const smallScreenMode = () => {
+  localStorage.removeItem(FULL_SCREEN)
+  fullScreenModeVar(false)
+}
+
 
 export const bgThemeVar = makeVar(localStorage.getItem(BG_THEME))
 export const editBgTheme = (theme) => {

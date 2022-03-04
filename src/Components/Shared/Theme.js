@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useReactiveVar } from '@apollo/client';
-import { darkModeVar, disableDarkMode, enableDarkMode } from '../../apollo';
+import { darkModeVar, disableDarkMode, enableDarkMode, fullScreenMode, fullScreenModeVar, smallScreenMode } from '../../apollo';
 import { FaSun, FaMoon } from "react-icons/fa";
 import { BiExitFullscreen, BiFullscreen } from "react-icons/bi"
+import useMedia from '../../Hooks/useMedia';
+import media from 'styled-media-query';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -74,6 +76,9 @@ const DarkModeBtn = styled.div`
 `
 
 const Theme = () => {
+  const media = useMedia()
+
+  const fullScreen = useReactiveVar(fullScreenModeVar)
   const darkMode = useReactiveVar(darkModeVar)
   const onClickBtn = () => {
     if (darkMode) {
@@ -82,11 +87,18 @@ const Theme = () => {
       enableDarkMode()
     }
   }
+  const onClickScreenBtn = () => {
+    if (fullScreen) {
+      smallScreenMode()
+    } else {
+      fullScreenMode()
+    }
+  }
   return (
     <Wrapper>
-      <ScreenTheme>
-        <BiFullscreen />
-      </ScreenTheme>
+      {media === "Desktop" && <ScreenTheme onClick={onClickScreenBtn}>
+        {fullScreen ? <BiExitFullscreen /> : <BiFullscreen />}
+      </ ScreenTheme>}
       <BackgroungTheme onClick={onClickBtn}>
         {darkMode ?
           <LightModeBtn>
@@ -98,7 +110,7 @@ const Theme = () => {
         </DarkModeBtn>
         }
       </BackgroungTheme>
-    </Wrapper>
+    </Wrapper >
   )
 }
 
