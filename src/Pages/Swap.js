@@ -240,7 +240,7 @@ const Swap = () => {
     }
   }, [sort])
 
-  return (<BasicContainer menuItem={true} screen="small">
+  return (<BasicContainer menuItem={true}>
     <Container pickNum={pickNum}>
       <TopContents>
         <Title onBlur={onBlurForm} onSubmit={handleSubmit(onSubmit)}>

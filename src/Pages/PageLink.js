@@ -34,7 +34,7 @@ const PageLink = () => {
 
   const [init, setInit] = useState(true);
   return (
-    <BasicContainer screen="small">
+    <BasicContainer>
       <Container>
         <PageLinkSection
           init={init}

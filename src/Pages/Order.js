@@ -229,7 +229,7 @@ const Order = () => {
     }
   }, [data]);
   return (
-    <BasicContainer menuItem={true} screen="small">
+    <BasicContainer menuItem={true}>
       <Container seeResultType={seeResultType}>
         <TopContents>
           <Title onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>

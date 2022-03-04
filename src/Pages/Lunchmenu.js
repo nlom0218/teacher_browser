@@ -339,7 +339,7 @@ const Lunchmenu = () => {
 
   //리턴
   return (
-    <BasicContainer menuItem={true} screen="small">
+    <BasicContainer menuItem={true}>
       <LunchmenuContainer isPopup={isPopup}>
         <Title>
           <SchoolName>{schoolName ? `${schoolName} 식단표` : "학교를 검색해주세요."}</SchoolName>

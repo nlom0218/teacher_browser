@@ -221,7 +221,7 @@ const Draw = () => {
   }, [data])
 
   return (
-    <BasicContainer menuItem={true} screen="small">
+    <BasicContainer menuItem={true}>
       <Container isShuffle={isShuffle} seeResultType={seeResultType} pickNum={pickNum}>
         <TopContents>
           <Title onBlur={onBlurForm} onSubmit={handleSubmit(onSubmit)}>

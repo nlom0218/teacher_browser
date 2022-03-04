@@ -80,7 +80,7 @@ const EditAccount = () => {
     skip: !me
   });
   return (
-    <BasicContainer menuItem={true} screen="small">
+    <BasicContainer menuItem={true}>
       <Title>회원정보</Title>
       <Container>
         <Changes>

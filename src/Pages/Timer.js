@@ -114,7 +114,7 @@ const Timer = () => {
   let minutesLeftDisplay = String(minutesLeft).padStart(2, '0');
 
   return (
-    <BasicContainer menuItem={true} screen="small">
+    <BasicContainer menuItem={true}>
       <TimerContainer>
         <TimerOuterFrame gauge={seconds}>
           {!isCountdownTimer ?

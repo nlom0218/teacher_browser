@@ -106,7 +106,7 @@ const Trash = () => {
     return <Loading page="mainPage" />
   }
 
-  return (<BasicContainer menuItem={true} screen="small">
+  return (<BasicContainer menuItem={true}>
     <Container>
       <TopLayout>
         <Title>휴지통</Title>

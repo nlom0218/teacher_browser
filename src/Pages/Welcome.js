@@ -25,7 +25,7 @@ const Welcome = () => {
 
   const [init, setInit] = useState(true)
 
-  return (<BasicContainer screen="small">
+  return (<BasicContainer>
     <Container>
       <WelcomeSection
         init={init}

@@ -51,7 +51,7 @@ const ContentLayout = styled.div`
   `}
 `
 
-const BasicContainer = ({ children, menuItem, notScroll, screen, page }) => {
+const BasicContainer = ({ children, menuItem, notScroll, page }) => {
   const isFullScreenMode = useReactiveVar(isFullScreenModeVar)
 
   const bgThemeAni = useReactiveVar(bgThemeAniVar)

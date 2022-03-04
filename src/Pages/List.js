@@ -130,7 +130,7 @@ const List = () => {
     return <Loading page="mainPage" />
   }
 
-  return (<BasicContainer menuItem={true} notScroll={true} screen="small">
+  return (<BasicContainer menuItem={true} notScroll={true}>
     <Container>
       <DivideLeftContents isSeeList={isSeeList}>
         {!type && <AllList

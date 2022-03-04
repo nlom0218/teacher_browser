@@ -86,7 +86,7 @@ const Journal = ({ me }) => {
   }, [refetchQuery])
 
   return (
-    <BasicContainer menuItem={true} screen="small">
+    <BasicContainer menuItem={true}>
       <Container>
         <TitleArea studentListName={studentListName} type={type} studentName={studentName} />
         {type === "list" && <MainArea me={me} students={students} loading={loading} error={error} setSort={setSort} sort={sort} listId={id} />}

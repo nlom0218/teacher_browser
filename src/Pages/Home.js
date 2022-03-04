@@ -19,7 +19,7 @@ const TopContents = styled.div`
 const NewsContents = styled.div`
 `
 const Home = () => {
-  return (<BasicContainer screen="small">
+  return (<BasicContainer>
     <Container>
       <TopContents>
         <h2> 오늘 할일 </h2>

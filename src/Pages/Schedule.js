@@ -122,7 +122,7 @@ const Schedule = () => {
   }
 
   return (
-    <BasicContainer menuItem={true} screen="small">
+    <BasicContainer menuItem={true}>
       <Container>
         <TimeTableTitle setTitle={setTitle} />
         <OptionContents>
