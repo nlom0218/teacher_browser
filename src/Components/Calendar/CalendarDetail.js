@@ -37,7 +37,7 @@ const TopContents = styled.div`
     grid-template-columns: 1fr auto auto auto auto;
   `}
     ${customMedia.greaterThan("desktop")`
-    grid-template-columns: 1fr auto auto auto auto auto;
+    grid-template-columns: 1fr auto auto auto auto;
   `}
 `
 
@@ -130,14 +130,6 @@ const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery, m
     navigate(`${routes.calendar}/${newDate}`)
   }
 
-  const onClickFull = () => {
-    if (screen === "small") {
-      setScreen("full")
-    } else {
-      setScreen("small")
-    }
-  }
-
   const onClickCalendar = () => {
     navigate(routes.calendar)
   }
@@ -149,7 +141,6 @@ const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery, m
       <TodayBtn className="calendar_btn" onClick={onClickTodayBtn}>TODAY</TodayBtn>
       <Btn className="calendar_btn" onClick={onClickBtnMinus}><IoIosArrowBack /></Btn>
       <Btn className="calendar_btn" onClick={onClickBtn}><IoIosArrowForward /></Btn>
-      {media === "Desktop" && <Btn className="calendar_btn" onClick={onClickFull}>{screen === "small" ? <BiFullscreen /> : <BiExitFullscreen />}</Btn>}
       <Btn className="calendar_btn" onClick={onClickCalendar}><BsCalendarDate /></Btn>
     </TopContents>
     <BottomContainer>

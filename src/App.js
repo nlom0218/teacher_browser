@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useReactiveVar } from "@apollo/client";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import { darkModeVar, disableBgThemeAni, isPopupVar, isLoggedInVar, bgThemeVar, editBgTheme } from "./apollo";
+import { darkModeVar, disableBgThemeAni, isPopupVar, isLoggedInVar, bgThemeVar, editBgTheme, isFullScreenModeVar } from "./apollo";
 import { darkTheme, GlobalStyle, ligthTheme } from "./styles";
 import Calendar from "./Pages/Calendar";
 import PageLink from "./Pages/PageLink";
@@ -40,6 +40,7 @@ import AgreePolicy from "./Pages/AgreePolicy";
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
   const bgTheme = useReactiveVar(bgThemeVar)
+  const fullScreen = useReactiveVar(isFullScreenModeVar)
 
   const media = useMedia();
 
@@ -50,8 +51,6 @@ function App() {
   // useMe() 값을 다 불러온 뒤에 return할 수 있을까?
   const me = useMe();
   const [userBgTheme, setUserBgTheme] = useState(undefined);
-
-  const [screen, setScreen] = useState("small")
 
   // timer 오디오 없애기 위함...
   const pathname = window.location.pathname;
@@ -112,7 +111,7 @@ function App() {
     <ThemeProvider theme={darkMode ? darkTheme : ligthTheme}>
       <GlobalStyle bgTheme={userBgTheme ? userBgTheme : me?.bgTheme} isLoggedIn={isLoggedIn} />
       <ChangBackground />
-      {media !== "Mobile" && (screen === "small" && <HeaderWeather />)}
+      {media !== "Mobile" && (!fullScreen && <HeaderWeather />)}
       <Routes>
         {/* <Route path={routes.home} element={<Home />} /> */}
         <Route path={routes.home} element={<Welcome />} />
@@ -126,11 +125,11 @@ function App() {
         <Route path={routes.editAccount} element={<EditAccount />} />
         <Route path={routes.todo} element={<TodoList />} />
         <Route path={`${routes.todo}/:id`} element={<TodoList />} />
-        <Route path={routes.calendar} element={<Calendar screen={screen} setScreen={setScreen} />} />
-        <Route path={`${routes.calendar}/:date`} element={<Calendar screen={screen} setScreen={setScreen} />} />
+        <Route path={routes.calendar} element={<Calendar />} />
+        <Route path={`${routes.calendar}/:date`} element={<Calendar />} />
         <Route path={routes.pageLink} element={<PageLink />} />
         <Route path={routes.menu} element={<Menu />} />
-        <Route path={`${routes.timer}/:mode`} element={<TimerSecond bgMusicMp3={bgMusicMp3} setBgMusicMp3={setBgMusicMp3} screen={screen} setScreen={setScreen} />} />
+        <Route path={`${routes.timer}/:mode`} element={<TimerSecond bgMusicMp3={bgMusicMp3} setBgMusicMp3={setBgMusicMp3} />} />
         <Route path={routes.draw} element={<Draw />} />
         <Route path={`${routes.draw}/:id`} element={<Draw />} />
         <Route path={routes.swap} element={<Swap />} />

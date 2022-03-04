@@ -16,14 +16,14 @@ const PAGELINK_SECTION = "pageLinkSection";
 const PAGE_LINK_FOLDER = "pageLinkFolder";
 const LINK_PICK_FOLDER = "linkPickFolder";
 
-export const fullScreenModeVar = makeVar(Boolean(localStorage.getItem(FULL_SCREEN)))
+export const isFullScreenModeVar = makeVar(Boolean(localStorage.getItem(FULL_SCREEN)))
 export const fullScreenMode = () => {
   localStorage.setItem(FULL_SCREEN, true)
-  fullScreenModeVar(true)
+  isFullScreenModeVar(true)
 }
 export const smallScreenMode = () => {
   localStorage.removeItem(FULL_SCREEN)
-  fullScreenModeVar(false)
+  isFullScreenModeVar(false)
 }
 
 

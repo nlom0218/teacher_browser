@@ -27,20 +27,20 @@ const Container = styled.div`
 
 const PlayBtn = styled.div`
   cursor: pointer;
-  font-size: ${props => props.screen === "full" ? "1.25em" : "2em"};
-  font-size: ${props => props.screen === "full" ? "1.25rem" : "2rem"};
+  font-size: ${props => props.isFullScreenMode ? "1.25em" : "2em"};
+  font-size: ${props => props.isFullScreenMode ? "1.25rem" : "2rem"};
 `
 
 const PauseBtn = styled.div`
   cursor: pointer;
-  font-size: ${props => props.screen === "full" ? "1.25em" : "2em"};
-  font-size: ${props => props.screen === "full" ? "1.25rem" : "2rem"};
+  font-size: ${props => props.isFullScreenMode ? "1.25em" : "2em"};
+  font-size: ${props => props.isFullScreenMode ? "1.25rem" : "2rem"};
 `
 
 const StopBtn = styled.div`
   cursor: pointer;
-  font-size: ${props => props.screen === "full" ? "1.25em" : "2em"};
-  font-size: ${props => props.screen === "full" ? "1.25rem" : "2rem"};
+  font-size: ${props => props.isFullScreenMode ? "1.25em" : "2em"};
+  font-size: ${props => props.isFullScreenMode ? "1.25rem" : "2rem"};
 `
 
 const BgMusic = styled.div`
@@ -49,9 +49,9 @@ const BgMusic = styled.div`
   justify-self: center;
   grid-template-columns: auto auto;
   align-items: center;
-  color: ${props => props.screen === "full" && color.white};
-  text-shadow: ${props => props.screen === "full" && "rgb(0, 0, 0) 5px 5px 5px"};;
-  text-shadow: ${props => props.screen === "full" && "rgb(0, 0, 0) 0.3125rem 0.3125rem 0.3125rem"};
+  color: ${props => props.isFullScreenMode && color.white};
+  text-shadow: ${props => props.isFullScreenMode && "rgb(0, 0, 0) 5px 5px 5px"};;
+  text-shadow: ${props => props.isFullScreenMode && "rgb(0, 0, 0) 0.3125rem 0.3125rem 0.3125rem"};
   ${customMedia.greaterThan("desktop")`
     position: absolute;
     bottom: 2%;
@@ -62,7 +62,7 @@ const BgMusic = styled.div`
 `
 
 
-const TimerBtnContainer = ({ alarmAudio, timerStatus, setTimerStatus, setReset, setErrMsg, localHours, localMinutes, localSeconds, mode, bgMusic, screen }) => {
+const TimerBtnContainer = ({ alarmAudio, timerStatus, setTimerStatus, setReset, setErrMsg, localHours, localMinutes, localSeconds, mode, bgMusic, isFullScreenMode }) => {
   const onClickBtn = () => {
     if (mode === "countdown") {
       if (localHours === 0 && localMinutes === 0 && localSeconds === 0) {
@@ -83,12 +83,12 @@ const TimerBtnContainer = ({ alarmAudio, timerStatus, setTimerStatus, setReset, 
 
   return (<Container timerStatus={timerStatus} >
     {timerStatus === "pause" ?
-      <PlayBtn screen={screen} className="timerBtn" onClick={onClickBtn}><FaPlay /></PlayBtn>
+      <PlayBtn isFullScreenMode={isFullScreenMode} className="timerBtn" onClick={onClickBtn}><FaPlay /></PlayBtn>
       :
-      <PauseBtn screen={screen} className="timerBtn" onClick={onClickBtn}><FaPause /></PauseBtn>
+      <PauseBtn isFullScreenMode={isFullScreenMode} className="timerBtn" onClick={onClickBtn}><FaPause /></PauseBtn>
     }
-    <StopBtn screen={screen} className="timerBtn" onClick={onClickStopBtn}><FaStop /></StopBtn>
-    {bgMusic && <BgMusic screen={screen}>
+    <StopBtn isFullScreenMode={isFullScreenMode} className="timerBtn" onClick={onClickStopBtn}><FaStop /></StopBtn>
+    {bgMusic && <BgMusic isFullScreenMode={isFullScreenMode}>
       <MdAudiotrack />
       <div>{bgMusic.name}</div>
     </BgMusic>}

@@ -4,7 +4,7 @@ import { FcSettings } from 'react-icons/fc';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { inPopup, isPopupVar } from '../apollo';
+import { inPopup, isFullScreenModeVar, isPopupVar } from '../apollo';
 import AlertMessage from '../Components/Shared/AlertMessage';
 import BasicContainer from '../Components/Shared/BasicContainer';
 import TimerSetting from '../Components/TimerSecond/Popup/TimerSetting';
@@ -63,11 +63,11 @@ const SettingIcon = styled.div`
     cursor : pointer;
   }
   justify-self: flex-end;
-  background-color: ${props => props.screen === "full" && color.white};
-  padding: ${props => props.screen === "full" && "5px"};
-  padding: ${props => props.screen === "full" && "0.3125rem"};
-  border-radius: ${props => props.screen === "full" && "5px"};
-  border-radius: ${props => props.screen === "full" && "0.3125rem"};
+  background-color: ${props => props.isFullScreenMode && color.white};
+  padding: ${props => props.isFullScreenMode && "5px"};
+  padding: ${props => props.isFullScreenMode && "0.3125rem"};
+  border-radius: ${props => props.isFullScreenMode && "5px"};
+  border-radius: ${props => props.isFullScreenMode && "0.3125rem"};
 `
 
 const SetModeContainer = styled.div`
@@ -102,10 +102,11 @@ const ModeBtn = styled.div`
 `
 
 
-const TimerSecond = ({ bgMusicMp3, setBgMusicMp3, screen, setScreen }) => {
+const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
   const titleUpdataer = useTitle("티처캔 | 타이머")
 
   const isPopup = useReactiveVar(isPopupVar)
+  const isFullScreenMode = useReactiveVar(isFullScreenModeVar)
 
   const { mode } = useParams()
 
@@ -245,11 +246,11 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3, screen, setScreen }) => {
   }, [alarmAudio])
 
   return (
-    <BasicContainer menuItem={true} screen={screen} page="timer">
+    <BasicContainer menuItem={true} page="timer">
       <Container>
         <TopContaner>
-          <Title isFull={screen === "full"}>{screen === "small" ? "타이머" : "11"}</Title>
-          {timerStatus === "pause" && <SettingIcon screen={screen} onClick={onClickSettingBtn}><FcSettings /></SettingIcon>}
+          <Title isFull={isFullScreenMode}>{!isFullScreenMode ? "타이머" : "11"}</Title>
+          {timerStatus === "pause" && <SettingIcon isFullScreenMode={isFullScreenMode} onClick={onClickSettingBtn}><FcSettings /></SettingIcon>}
         </TopContaner>
         <SetModeContainer>
           <Link to={`${routes.timer}/countup`}>
@@ -259,7 +260,7 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3, screen, setScreen }) => {
             <ModeBtn selected={mode === "countdown"}>COUNT DOWN</ModeBtn>
           </Link>
         </SetModeContainer>
-        <TimerContainer hours={hours} minutes={minutes} seconds={seconds} setScreen={setScreen} screen={screen} />
+        <TimerContainer hours={hours} minutes={minutes} seconds={seconds} isFullScreenMode={isFullScreenMode} />
         <TimerBtnContainer
           timerStatus={timerStatus}
           setTimerStatus={setTimerStatus}
@@ -269,9 +270,9 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3, screen, setScreen }) => {
           localMinutes={localMinutes}
           localSeconds={localSeconds}
           mode={mode}
-          screen={screen}
           bgMusic={bgMusic}
           alarmAudio={alarmAudio}
+          isFullScreenMode={isFullScreenMode}
         />
       </Container>
       {isPopup === "timerSetting" && <TimerSetting

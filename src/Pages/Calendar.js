@@ -166,7 +166,7 @@ const CalendarList = styled.div`
 `
 
 
-const Calendar = ({ screen, setScreen }) => {
+const Calendar = () => {
   const titleUpdataer = useTitle("티처캔 | 달력")
   const { date: urlDate } = useParams()
 
@@ -216,14 +216,6 @@ const Calendar = ({ screen, setScreen }) => {
     }
   }
 
-  const onClickFull = () => {
-    if (screen === "small") {
-      setScreen("full")
-    } else {
-      setScreen("small")
-    }
-  }
-
   const onClickHelper = () => {
     inPopup("CalendarHelper")
   }
@@ -265,19 +257,11 @@ const Calendar = ({ screen, setScreen }) => {
     }
   }, [data])
 
-  useEffect(() => {
-    if (screen === "full") {
-      setScreen("small")
-    }
-  }, [media])
-
-  return (<BasicContainer screen={screen}>
+  return (<BasicContainer>
     {urlDate ?
       <CalendarDetail
         userEmail={me?.email}
         urlDate={urlDate}
-        setScreen={setScreen}
-        screen={screen}
         refetchQuery={refetchQuery}
         me={me}
       />
