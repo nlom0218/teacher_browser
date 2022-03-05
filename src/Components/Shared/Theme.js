@@ -9,6 +9,7 @@ import { HeaderNews, HeaderToDo, HeaderBookMark, HedaerCalender, HeaderMenu } fr
 import { BtnFadeIn } from "../../Animations/Fade"
 import routes from '../../routes';
 import { Link, useNavigate } from 'react-router-dom';
+import { customMedia } from '../../styles';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -24,8 +25,6 @@ const Wrapper = styled.div`
     display: flex;
   }
   .theme_btn {
-    margin-right: 10px;
-    margin-right: 0.625rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -50,13 +49,17 @@ const MenuNavigation = styled.div`
 `
 
 const MenuItem = styled.div`
+  margin-right: 10px;
+  margin-right: 0.625rem;
 `
 
 const ScreenTheme = styled.div`
+  margin-right: 10px;
+  margin-right: 0.625rem;
 `
 
 const BackgroungTheme = styled.div`
-  padding: 12px 10px;
+  /* padding: 12px 10px;
   padding: 0.75rem 0.625rem;
   border-radius: 20px;
   border-radius: 1.25rem;
@@ -70,31 +73,43 @@ const BackgroungTheme = styled.div`
   :hover {
     background: ${props => props.theme.fontColor};
     color: ${props => props.theme.bgColor};
-  }
+  } */
 `
 
 const LightModeBtn = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
+  font-size: 0.75em;
+  font-size: 0.75rem;
   svg {
     display: flex;
     color: tomato;
-    margin-right: 5px;
-    margin-right: 0.3125rem;
+    /* margin-right: 5px;
+    margin-right: 0.3125rem; */
   }
+  ${customMedia.greaterThan("desktop")`
+    font-size: 1em;
+    font-size: 1rem;
+  `}
 `
 
 const DarkModeBtn = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
+  font-size: 0.75em;
+  font-size: 0.75rem;
   svg {
     display: flex;
     color: yellow;
-    margin-right: 5px;
-    margin-right: 0.3125rem;
+    /* margin-right: 5px;
+    margin-right: 0.3125rem; */
   }
+  ${customMedia.greaterThan("desktop")`
+    font-size: 1em;
+    font-size: 1rem;
+  `}
 `
 
 const Theme = () => {
@@ -157,16 +172,16 @@ const Theme = () => {
       {media === "Desktop" && <ScreenTheme onClick={onClickScreenBtn} className="theme_btn">
         {isFullScreen ? <BiExitFullscreen /> : <BiFullscreen />}
       </ ScreenTheme>}
-      <BackgroungTheme onClick={onClickBtn}>
+      <BackgroungTheme onClick={onClickBtn} className="theme_btn">
         {darkMode ?
           <LightModeBtn>
             <FaSun />
-            <div>라이트 모드로 보기</div>
+            {/* <div>라이트 모드로 보기</div> */}
           </LightModeBtn>
           :
           <DarkModeBtn>
             <FaMoon />
-            <div>다크 모드로 보기</div>
+            {/* <div>다크 모드로 보기</div> */}
           </DarkModeBtn>
         }
       </BackgroungTheme>
