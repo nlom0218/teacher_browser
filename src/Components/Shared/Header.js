@@ -1,17 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { customMedia } from '../../styles';
-import { FcNews, FcCalendar, FcTodoList, FcGrid, FcBookmark } from "react-icons/fc";
-import { Link } from 'react-router-dom';
-import routes from '../../routes';
 import HeaderSideBtn from './HeaderSideBtn';
 import { HeaderBookMark, HeaderMenu, HeaderNews, HeaderToDo, HedaerCalender } from "./HeaderLink"
 
 const Container = styled.div`
   width: 100%;
   display: grid;
-  padding: 20px;
-  padding: 1.25rem;
+  padding: ${props => props.isFullScreenMode ? "10px" : "20px"};
+  padding: ${props => props.isFullScreenMode ? "0.625rem" : "1.25rem"};
   row-gap: 10px;
   row-gap: 0.625rem;
   ${customMedia.greaterThan("tablet")`
@@ -43,16 +40,17 @@ const PageBtn = styled.div`
   transition: background 1s ease;
 `
 
-const Header = ({ seeSideMenu, setSeeSideMenu }) => {
-  return (<Container>
+const Header = ({ seeSideMenu, setSeeSideMenu, isFullScreenMode }) => {
+  return (<Container isFullScreenMode={isFullScreenMode}>
     <div></div>
-    <PageBtn>
-      <HeaderNews />
-      <HeaderToDo />
-      <HedaerCalender />
-      <HeaderBookMark />
-      <HeaderMenu />
-    </PageBtn>
+    {isFullScreenMode ? <div></div> :
+      <PageBtn>
+        <HeaderNews />
+        <HeaderToDo />
+        <HedaerCalender />
+        <HeaderBookMark />
+        <HeaderMenu />
+      </PageBtn>}
     <HeaderSideBtn seeSideMenu={seeSideMenu} setSeeSideMenu={setSeeSideMenu} />
   </Container>);
 }

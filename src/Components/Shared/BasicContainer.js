@@ -63,9 +63,9 @@ const BasicContainer = ({ children, menuItem, notScroll, page }) => {
   }
   return (<Container onClick={onClickBackground} bgThemeAni={bgThemeAni} isFullScreenMode={isFullScreenMode}>
     <Theme />
-    {!isFullScreenMode ? <Header seeSideMenu={seeSideMenu} setSeeSideMenu={setSeeSideMenu} /> : <div></div>}
+    <Header seeSideMenu={seeSideMenu} setSeeSideMenu={setSeeSideMenu} isFullScreenMode={isFullScreenMode} />
     <ContentLayout notScroll={notScroll} isFullScreenMode={isFullScreenMode} page={page}>
-      {menuItem && (!isFullScreenMode && <PreviousPageBtn />)}
+      {menuItem && <PreviousPageBtn />}
       {children}
     </ContentLayout>
   </Container>);
