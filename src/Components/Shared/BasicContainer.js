@@ -21,8 +21,8 @@ const opacityContainerAni = keyframes`
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: ${props => !props.isFullScreenMode ? "auto 1fr 60px" : "20px 1fr 20px"};
-  grid-template-rows: ${props => !props.isFullScreenMode ? "auto 1fr 3.75rem" : "1.25rem 1fr 1.25rem"};
+  grid-template-rows: ${props => !props.isFullScreenMode ? "auto 1fr 60px" : "40px 1fr 40px"};
+  grid-template-rows: ${props => !props.isFullScreenMode ? "auto 1fr 3.75rem" : "2.5rem 1fr 2.5rem"};
   min-height: 100vh;
   height: 100vh;
   z-index: 0;
@@ -47,7 +47,7 @@ const ContentLayout = styled.div`
     display: none; // Chrome, Safari, Opera
   }
   ${customMedia.greaterThan("desktop")`
-    width: ${props => !props.isFullScreenMode ? "100%" : "98%"};
+    width: ${props => !props.isFullScreenMode ? "100%" : "96%"};
   `}
 `
 

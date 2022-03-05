@@ -5,7 +5,7 @@ import { darkModeVar, disableDarkMode, enableDarkMode, fullScreenMode, isFullScr
 import { FaSun, FaMoon } from "react-icons/fa";
 import { BiExitFullscreen, BiFullscreen } from "react-icons/bi"
 import useMedia from '../../Hooks/useMedia';
-import media from 'styled-media-query';
+import { HeaderNews, HeaderToDo, HeaderBookMark, HedaerCalender, HeaderMenu } from "./HeaderLink"
 
 const Wrapper = styled.div`
   position: fixed;
@@ -14,34 +14,45 @@ const Wrapper = styled.div`
   right: 20px;
   right: 1.25rem;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: ${props => props.isFullScreen ? "auto auto auto" : "auto auto"};
   z-index: 1;
-`
-
-const ScreenTheme = styled.div`
-  margin-right: 10px;
-  margin-right: 0.625rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  padding: 0.625rem;
-  border-radius: 50%;
-  box-shadow: 0px 2px 1px 0.5px rgba(0,0,0,0.2);
-  box-shadow: 0px 0.125rem 0.0625rem 0.03125rem rgba(0,0,0,0.2);
-  background: ${props => props.theme.bgColor};
-  transition: none;
-  cursor: pointer;
-  :hover {
-    background: ${props => props.theme.fontColor};
-    color: ${props => props.theme.bgColor};
+  svg {
+    font-size: 1.5em;
+    display: flex;
+  }
+  .theme_btn {
+    margin-right: 10px;
+    margin-right: 0.625rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    padding: 0.625rem;
+    border-radius: 50%;
+    box-shadow: 0px 2px 1px 0.5px rgba(0,0,0,0.2);
+    box-shadow: 0px 0.125rem 0.0625rem 0.03125rem rgba(0,0,0,0.2);
+    background: ${props => props.theme.bgColor};
+    transition: none;
+    cursor: pointer;
+    :hover {
+      background: ${props => props.theme.fontColor};
+      color: ${props => props.theme.bgColor};
+    }
   }
 `
 
+const MenuNavigation = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+`
+
+const MenuItem = styled.div`
+`
+
+const ScreenTheme = styled.div`
+`
+
 const BackgroungTheme = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 12px 10px;
   padding: 0.75rem 0.625rem;
   border-radius: 20px;
@@ -60,7 +71,11 @@ const BackgroungTheme = styled.div`
 `
 
 const LightModeBtn = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
   svg {
+    display: flex;
     color: tomato;
     margin-right: 5px;
     margin-right: 0.3125rem;
@@ -68,7 +83,11 @@ const LightModeBtn = styled.div`
 `
 
 const DarkModeBtn = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
   svg {
+    display: flex;
     color: yellow;
     margin-right: 5px;
     margin-right: 0.3125rem;
@@ -95,19 +114,38 @@ const Theme = () => {
     }
   }
   return (
-    <Wrapper>
-      {media === "Desktop" && <ScreenTheme onClick={onClickScreenBtn}>
+    <Wrapper isFullScreen={isFullScreen}>
+      {isFullScreen && <MenuNavigation>
+        <MenuItem className="theme_btn">
+          <HeaderNews />
+        </MenuItem>
+        <MenuItem className="theme_btn">
+          <HeaderToDo />
+        </MenuItem>
+        <MenuItem className="theme_btn">
+          <HeaderBookMark />
+        </MenuItem>
+        <MenuItem className="theme_btn">
+          <HedaerCalender />
+        </MenuItem>
+        <MenuItem className="theme_btn">
+          <HeaderMenu />
+        </MenuItem>
+      </MenuNavigation>}
+      {media === "Desktop" && <ScreenTheme onClick={onClickScreenBtn} className="theme_btn">
         {isFullScreen ? <BiExitFullscreen /> : <BiFullscreen />}
       </ ScreenTheme>}
       <BackgroungTheme onClick={onClickBtn}>
         {darkMode ?
           <LightModeBtn>
-            <FaSun /> 라이트 모드로 보기
-        </LightModeBtn>
+            <FaSun />
+            <div>라이트 모드로 보기</div>
+          </LightModeBtn>
           :
           <DarkModeBtn>
-            <FaMoon /> 다크 모드로 보기
-        </DarkModeBtn>
+            <FaMoon />
+            <div>다크 모드로 보기</div>
+          </DarkModeBtn>
         }
       </BackgroungTheme>
     </Wrapper >
