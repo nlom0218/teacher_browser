@@ -19,6 +19,26 @@ const opacityContainerAni = keyframes`
   }
 `
 
+const fullScreenAni = keyframes`
+  from {
+    max-width: 1200px;
+    max-width: 75rem;
+  }
+  to {
+    max-width: 96vw;
+  }
+`
+
+const smallScreenModeAni = keyframes`
+  from {
+    max-width: 96vw;
+  }
+  to {
+    max-width: 1200px;
+    max-width: 75rem;
+  }
+`
+
 const Container = styled.div`
   display: grid;
   grid-template-rows: ${props => !props.isFullScreenMode ? "auto 1fr 60px" : "40px 1fr 40px"};
@@ -27,13 +47,15 @@ const Container = styled.div`
   height: 100vh;
   z-index: 0;
   /* animation: ${props => props.bgThemeAni && opacityContainerAni} 2.1s ease; */
+  position: relative;
 `
 
 const ContentLayout = styled.div`
   margin: 0 auto;
-  max-width: ${props => !props.isFullScreenMode && "1200px"};
-  max-width: ${props => !props.isFullScreenMode && "75rem"};
-  width: ${props => !props.isFullScreenMode ? "90%" : "96%"};
+  max-width: ${props => !props.isFullScreenMode ? "1200px" : "96vw"};
+  max-width: ${props => !props.isFullScreenMode ? "75rem" : "96vw"};
+  /* width: ${props => !props.isFullScreenMode ? "90%" : "96%"}; */
+  width: 96%;
   border-radius: 10px;
   border-radius: 0.625rem;
   background: ${props => props.theme.blurColor};
@@ -47,8 +69,9 @@ const ContentLayout = styled.div`
     display: none; // Chrome, Safari, Opera
   }
   ${customMedia.greaterThan("desktop")`
-    width: ${props => !props.isFullScreenMode ? "100%" : "96%"};
+    width: 100%;
   `}
+  /* animation: ${props => props.isFullScreenMode ? fullScreenAni : smallScreenModeAni} 1s ease forwards; */
 `
 
 const BasicContainer = ({ children, menuItem, notScroll, page }) => {
