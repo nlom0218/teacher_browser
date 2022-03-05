@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useReactiveVar } from "@apollo/client";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import { darkModeVar, disableBgThemeAni, isPopupVar, isLoggedInVar, bgThemeVar, editBgTheme, isFullScreenModeVar } from "./apollo";
+import { darkModeVar, disableBgThemeAni, isPopupVar, isLoggedInVar, bgThemeVar, editBgTheme, isFullScreenModeVar, smallScreenMode } from "./apollo";
 import { darkTheme, GlobalStyle, ligthTheme } from "./styles";
 import Calendar from "./Pages/Calendar";
 import PageLink from "./Pages/PageLink";
@@ -106,6 +106,12 @@ function App() {
       navigate(routes.agreePolicy)
     }
   }, [me])
+
+  useEffect(() => {
+    if (media !== "Desktop") {
+      smallScreenMode()
+    }
+  }, [media])
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : ligthTheme}>
