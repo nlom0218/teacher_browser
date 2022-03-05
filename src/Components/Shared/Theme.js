@@ -1,11 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { useReactiveVar } from '@apollo/client';
-import { darkModeVar, disableDarkMode, enableDarkMode, fullScreenMode, isFullScreenModeVar, smallScreenMode } from '../../apollo';
+import { darkModeVar, disableDarkMode, enableDarkMode, fullScreenMode, isFullScreenModeVar, movePageLink, moveWelcome, smallScreenMode } from '../../apollo';
 import { FaSun, FaMoon } from "react-icons/fa";
 import { BiExitFullscreen, BiFullscreen } from "react-icons/bi"
 import useMedia from '../../Hooks/useMedia';
 import { HeaderNews, HeaderToDo, HeaderBookMark, HedaerCalender, HeaderMenu } from "./HeaderLink"
+import { BtnFadeIn } from "../../Animations/Fade"
+import routes from '../../routes';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -96,9 +99,28 @@ const DarkModeBtn = styled.div`
 
 const Theme = () => {
   const media = useMedia()
+  const navigate = useNavigate()
 
   const isFullScreen = useReactiveVar(isFullScreenModeVar)
   const darkMode = useReactiveVar(darkModeVar)
+
+  const onClickRoutes = (page) => {
+    if (page === "home") {
+      moveWelcome()
+      navigate(routes.home)
+    } else if (page === "todo") {
+      navigate(routes.todo)
+    } else if (page === "pageLink") {
+      movePageLink()
+      navigate(routes.pageLink)
+    } else if (page === "calendar") {
+      localStorage.setItem("calendarDate", new Date())
+      navigate(routes.calendar)
+    } else if (page === "menu") {
+      navigate(routes.menu)
+    }
+  }
+
   const onClickBtn = () => {
     if (darkMode) {
       disableDarkMode()
@@ -116,19 +138,19 @@ const Theme = () => {
   return (
     <Wrapper isFullScreen={isFullScreen}>
       {isFullScreen && <MenuNavigation>
-        <MenuItem className="theme_btn">
+        <MenuItem className="theme_btn" onClick={() => onClickRoutes("home")}>
           <HeaderNews />
         </MenuItem>
-        <MenuItem className="theme_btn">
+        <MenuItem className="theme_btn" onClick={() => onClickRoutes("todo")}>
           <HeaderToDo />
         </MenuItem>
-        <MenuItem className="theme_btn">
+        <MenuItem className="theme_btn" onClick={() => onClickRoutes("pageLink")}>
           <HeaderBookMark />
         </MenuItem>
-        <MenuItem className="theme_btn">
+        <MenuItem className="theme_btn" onClick={() => onClickRoutes("calendar")}>
           <HedaerCalender />
         </MenuItem>
-        <MenuItem className="theme_btn">
+        <MenuItem className="theme_btn" onClick={() => onClickRoutes("menu")}>
           <HeaderMenu />
         </MenuItem>
       </MenuNavigation>}
