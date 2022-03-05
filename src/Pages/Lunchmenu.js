@@ -369,7 +369,7 @@ const Lunchmenu = () => {
             }
           </SLunchmenus>
           <LunchmenuBtn>
-            <div onClick={() => onClickBtn("yesterday")}>어제 식단표</div>
+            <div onClick={() => onClickBtn("yesterday")}>전날 식단표</div>
             <div onClick={() => onClickBtn("tomorrow")}>다음날 식단표</div>
             <div onClick={() => onClickBtn("today")}>오늘 식단표</div>
             {me && <div onClick={() => onClickBtn("school")}>우리학교 식단표</div>}
