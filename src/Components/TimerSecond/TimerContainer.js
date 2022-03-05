@@ -15,7 +15,7 @@ const TimeBox = styled.div`
   -moz-user-select:none;
   -ms-user-select:none;
   user-select:none;
-  font-size: ${props => props.screen === "full" ?
+  font-size: ${props => props.isFullScreenMode ?
     (props.isHours ? "20vw" : "26vw")
     :
     (props.isHours ? "12vw" : "18vw")
