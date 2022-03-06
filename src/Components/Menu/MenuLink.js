@@ -18,6 +18,7 @@ import IcOrder from '../../icons/Order/IcOrder';
 import IcJournal from '../../icons/Journal/IcJournal';
 import IcJournalClick from "../../icons/Journal/IcJournalClick"
 import IcNameTableOpened from '../../icons/NameTable/IcNameTableOpened';
+import { enableSeeStudent } from '../../apollo';
 
 const SMenu = styled.div`
   display: grid;
@@ -118,7 +119,10 @@ export const JournalLink = () => {
 
 export const ListLink = () => {
   const [isHover, setIsHover] = useState(false)
-  return (<Link to={routes.list}>
+  const onClickListLink = () => {
+    enableSeeStudent()
+  }
+  return (<Link to={routes.list} onClick={onClickListLink}>
     <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
       {isHover ? <IcNameTableOpened /> : <IcNameTable />}
       <Title>명렬표</Title>

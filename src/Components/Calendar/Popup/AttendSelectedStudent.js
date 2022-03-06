@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-import { inPopup } from '../../../apollo';
+import { enableSeeStudent, inPopup } from '../../../apollo';
 import { SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
 import routes from '../../../routes';
 import Loading from '../../Shared/Loading';
@@ -63,6 +63,7 @@ const AttendSelectedStudent = () => {
 
   const onClickBtn = () => {
     navigate(routes.list)
+    enableSeeStudent()
     inPopup("createStudent")
   }
 
