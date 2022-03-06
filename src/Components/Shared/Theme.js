@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   right: 1.25rem;
   display: grid;
   grid-template-columns: ${props => props.isFullScreen ? "auto auto auto" : "auto auto"};
-  z-index: 20;
+  z-index: 15;
   svg {
     font-size: 1.5em;
     display: flex;

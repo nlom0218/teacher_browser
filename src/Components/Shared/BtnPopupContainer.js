@@ -8,7 +8,7 @@ const Background = styled.div`
   bottom: 0;
   right: 0;
   background-color: ${props => props.theme.popupBgColor};
-  z-index: 10;
+  z-index: 20;
 `;
 
 const Container = styled.div`
