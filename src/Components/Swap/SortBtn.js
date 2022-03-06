@@ -5,18 +5,21 @@ import { RiCheckboxBlankLine, RiCheckboxLine } from 'react-icons/ri';
 const Container = styled.div`
   display: grid;
   grid-template-columns: auto auto;
-  column-gap: 20px;
-  column-gap: 1.25rem;
+  column-gap: 10px;
+  column-gap: 0.625rem;
   position: relative;
   color: ${props => props.theme.bgColor};
 `
 
 const Layout = styled.div`
   display: grid;
-  grid-template-columns: auto auto;
-  column-gap: 5px;
-  column-gap: 0.3125rem;
   cursor: pointer;
+  background-color: ${props => props.theme.btnBgColor};
+  text-align: center;
+  padding: 10px 0px;
+  padding: 0.625rem 0rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
 `
 
 const SortBtn = ({ setSort, sort, onClickShuffleBtn, hasNum, setErrMsg }) => {
@@ -32,11 +35,9 @@ const SortBtn = ({ setSort, sort, onClickShuffleBtn, hasNum, setErrMsg }) => {
 
   return (<Container>
     <Layout onClick={() => onClickSortBtn("studentName")}>
-      {sort === "studentName" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
       <div>이름 순</div>
     </Layout>
     <Layout onClick={() => onClickSortBtn("studentNumber")}>
-      {sort === "studentNumber" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
       <div>번호 순</div>
     </Layout>
   </Container>);

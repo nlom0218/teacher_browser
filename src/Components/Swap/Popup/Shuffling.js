@@ -8,10 +8,10 @@ const Container = styled.div`
   display: grid;
   row-gap: 10px;
   row-gap: 0.625rem;
-  justify-items: center;
 `
 
 const StopBtn = styled.div`
+text-align: center;
 padding: 20px 60px;
 padding : 1.25rem 3.75rem;
 background-color:${props => props.theme.redColor};
