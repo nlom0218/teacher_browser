@@ -104,6 +104,8 @@ const AddJournal = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) 
       localStorage.removeItem("attendStudentName")
       localStorage.removeItem("attendStudentId")
       localStorage.removeItem("seletedStudentType")
+      localStorage.removeItem("JournalStudentId")
+      localStorage.removeItem("JournalStudentName")
       setRefetchQuery(prev => prev + 1)
     } else {
       setErrMsg(error)

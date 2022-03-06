@@ -12,7 +12,7 @@ const Background = styled.div`
   bottom: 0;
   right: 0;
   background-color: ${props => props.theme.popupBgColor};
-  z-index: 10;
+  z-index: 20;
 `;
 
 const SRegisterContainer = styled.div`
@@ -139,6 +139,8 @@ const PopupContainer = ({ children, emojiPopup, maxHeight, sound1, sound2, needA
     localStorage.removeItem("AllergyNum")
     localStorage.removeItem("detailToDo")
     localStorage.removeItem("editSchedule")
+    localStorage.removeItem("JournalStudentId")
+    localStorage.removeItem("JournalStudentName")
     if (sound1) {
       stopMusicFn(sound1)
     }
