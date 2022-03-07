@@ -25,8 +25,9 @@ import PrintSwapContents from '../Components/Swap/Popup/PrintSwapContents';
 import useMe from '../Hooks/useMe';
 import NeedLoginPopupContainer from '../Components/Shared/NeedLoginPopupContainer';
 import NoStudentMsg from '../Components/Shared/styled/NoStudentMsg';
-import SortBtn from '../Components/Swap/SortBtn';
-import { compare, compareDesc } from "../shared"
+import { compare } from "../shared"
+import { FcSettings } from 'react-icons/fc';
+import SwapDetailSetting from '../Components/Swap/Popup/SwapDetailSetting';
 
 const Container = styled.div`
   display : grid;
@@ -152,6 +153,23 @@ const OptionBtn = styled.div`
   cursor: pointer;
 `
 
+const SettingBtn = styled.div`
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  align-items: center;
+`
+
+const DetailSetting = styled.div`
+  svg {
+    display: flex;
+    font-size: 1.75em;
+    font-size: 1.75rem;
+    cursor: pointer;
+  }
+`
+
 const Swap = () => {
   const titleUpdataer = useTitle("티처캔 | 자리바꾸기")
 
@@ -215,6 +233,10 @@ const Swap = () => {
     } else {
       inPopup("needLogin")
     }
+  }
+
+  const onClickDetailSetting = () => {
+    inPopup("detailSetting")
   }
 
   useEffect(() => {
@@ -291,10 +313,13 @@ const Swap = () => {
                 setSort(undefined)
               }}>다시 섞기</OptionBtn>}
               {media === "Desktop" && <PrintOrder />}
-              <FontSizeBtn
-                setFontSizeAll={setFontSizeAll}
-                fontSizeAll={fontSizeAll}
-              />
+              <SettingBtn>
+                <DetailSetting onClick={onClickDetailSetting}><FcSettings /></DetailSetting>
+                <FontSizeBtn
+                  setFontSizeAll={setFontSizeAll}
+                  fontSizeAll={fontSizeAll}
+                />
+              </SettingBtn>
             </OptionContents>
             <StudentOrder
               selectedStudent={selectedStudent}
@@ -312,6 +337,7 @@ const Swap = () => {
     {isPopup === "seeStudentList" && <StudentList page="swap" setIsShuffle={setIsShuffle} />}
     {isPopup === "print" && <PrintSwapContents printRef={componentRef} title={title} selectedStudent={selectedStudent} pickNum={pickNum} />}
     {isPopup === "needLogin" && <NeedLoginPopupContainer />}
+    {isPopup === "detailSetting" && <SwapDetailSetting />}
     {isShuffle === "pickNum" && <StudentNumber
       pickNum={pickNum}
       setPickNum={setPickNum}
