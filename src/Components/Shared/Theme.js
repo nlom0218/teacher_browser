@@ -1,14 +1,13 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { useReactiveVar } from '@apollo/client';
 import { darkModeVar, disableDarkMode, enableDarkMode, fullScreenMode, isFullScreenModeVar, movePageLink, moveWelcome, smallScreenMode } from '../../apollo';
 import { FaSun, FaMoon } from "react-icons/fa";
 import { BiExitFullscreen, BiFullscreen } from "react-icons/bi"
 import useMedia from '../../Hooks/useMedia';
 import { HeaderNews, HeaderToDo, HeaderBookMark, HedaerCalender, HeaderMenu } from "./HeaderLink"
-import { BtnFadeIn } from "../../Animations/Fade"
 import routes from '../../routes';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { customMedia } from '../../styles';
 
 const Wrapper = styled.div`
@@ -159,11 +158,11 @@ const Theme = () => {
         <MenuItem className="theme_btn" onClick={() => onClickRoutes("todo")}>
           <HeaderToDo />
         </MenuItem>
-        <MenuItem className="theme_btn" onClick={() => onClickRoutes("pageLink")}>
-          <HeaderBookMark />
-        </MenuItem>
         <MenuItem className="theme_btn" onClick={() => onClickRoutes("calendar")}>
           <HedaerCalender />
+        </MenuItem>
+        <MenuItem className="theme_btn" onClick={() => onClickRoutes("pageLink")}>
+          <HeaderBookMark />
         </MenuItem>
         <MenuItem className="theme_btn" onClick={() => onClickRoutes("menu")}>
           <HeaderMenu />
