@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PopupContainer from '../../Shared/PopupContainer';
+import DetailPickNum from './DetailPickNum';
 import DetailSeatType from './DetailSeatType';
 
 const Container = styled.div`
@@ -14,6 +15,7 @@ const Title = styled.div`
   justify-self: flex-end;
   font-size: 1.25em;
   font-size: 1.25rem;
+  font-weight: 600;
 `
 
 const SettingType = styled.div`
@@ -26,6 +28,7 @@ const SettingType = styled.div`
 const TypeName = styled.div`
   padding-top: 15px;
   padding-top: 0.9375rem;
+  font-weight: 600;
 `
 
 const SettingLayout = styled.div`
@@ -36,14 +39,20 @@ const SettingLayout = styled.div`
   padding: 0.625rem;
 `
 
-const SwapDetailSetting = ({ pickNum, setErrMsg, setSeatType, seatType }) => {
+const SwapDetailSetting = ({ pickNum, setPickNum, setErrMsg, setSeatType, seatType }) => {
   return (<PopupContainer>
     <Container>
       <Title>자리 설정</Title>
       <SettingType>
         <TypeName>자리 대형</TypeName>
         <SettingLayout>
-          <DetailSeatType seatType={seatType} setSeatType={setSeatType} setErrMsg={setErrMsg} pickNum={pickNum} />
+          <DetailSeatType seatType={seatType} setSeatType={setSeatType} setErrMsg={setErrMsg} setPickNum={setPickNum} />
+        </SettingLayout>
+      </SettingType>
+      <SettingType>
+        <TypeName>첫 줄 설정</TypeName>
+        <SettingLayout>
+          <DetailPickNum seatType={seatType} pickNum={pickNum} setPickNum={setPickNum} />
         </SettingLayout>
       </SettingType>
       {seatType === 2 && <SettingType>

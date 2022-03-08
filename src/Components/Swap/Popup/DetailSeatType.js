@@ -21,20 +21,14 @@ const Type = styled.div`
   cursor: pointer;
 `
 
-const DetailSeatType = ({ pickNum, setErrMsg, setSeatType, seatType }) => {
+const DetailSeatType = ({ setSeatType, seatType, setPickNum }) => {
   const onClickSetSeatType = (type) => {
-    if (type === 2 && pickNum % 2 !== 0) {
-      setErrMsg("첫 줄을 짝수로 설정하세요! 😂")
-      return
+    if (type !== 1) {
+      setPickNum(6)
     }
     setSeatType(type)
   }
 
-  useEffect(() => {
-    if (pickNum % 2 !== 0) {
-      setSeatType(1)
-    }
-  }, [pickNum])
   return (<Container>
     <Type selected={seatType === 1} onClick={() => onClickSetSeatType(1)}>거리두기 대형</Type>
     <Type selected={seatType === 2} onClick={() => onClickSetSeatType(2)}>짝궁 대형</Type>

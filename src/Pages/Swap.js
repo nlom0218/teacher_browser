@@ -136,7 +136,7 @@ const OptionContents = styled.div`
   row-gap: 1.25rem;
   text-align: center;
   ${customMedia.greaterThan("tablet")`
-   grid-template-columns : auto auto 1fr auto;
+   grid-template-columns: auto 1fr auto;
    column-gap:20px;
    column-gap:1.25rem;
   `}
@@ -299,7 +299,7 @@ const Swap = () => {
         id && (selectedStudent.length === 0 ? <NoStudentMsg>명렬표에 학생이 없습니다. 😅 <br />명렬표에서 학생을 추가하세요!</NoStudentMsg> : (
           <React.Fragment>
             <OptionContents>
-              <OptionBtn onClick={() => onClickShuffleBtn("pickNum")}>첫 줄 설정</OptionBtn>
+              {/* <OptionBtn onClick={() => onClickShuffleBtn("pickNum")}>첫 줄 설정</OptionBtn> */}
               {isShuffle === "init" && <OptionBtn onClick={() => {
                 onClickShuffleBtn("ing")
                 setSort(undefined)
@@ -342,6 +342,7 @@ const Swap = () => {
     {isPopup === "detailSetting" && <SwapDetailSetting
       setErrMsg={setErrMsg}
       pickNum={pickNum}
+      setPickNum={setPickNum}
       seatType={seatType}
       setSeatType={setSeatType}
     />}
