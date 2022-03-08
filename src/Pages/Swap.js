@@ -194,6 +194,8 @@ const Swap = () => {
   const [sort, setSort] = useState(undefined)
   const [hasNum, setHasNum] = useState(false)
 
+  const [seatType, setSeatType] = useState(1) // 1: 거리두기, 2: 짝궁. 3: 모둠(2*2), 4: 모둠(3*3)
+
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: {
       listId: id
@@ -297,7 +299,7 @@ const Swap = () => {
         id && (selectedStudent.length === 0 ? <NoStudentMsg>명렬표에 학생이 없습니다. 😅 <br />명렬표에서 학생을 추가하세요!</NoStudentMsg> : (
           <React.Fragment>
             <OptionContents>
-              <OptionBtn onClick={() => onClickShuffleBtn("pickNum")}> 자리 설정 </OptionBtn>
+              <OptionBtn onClick={() => onClickShuffleBtn("pickNum")}>첫 줄 설정</OptionBtn>
               {isShuffle === "init" && <OptionBtn onClick={() => {
                 onClickShuffleBtn("ing")
                 setSort(undefined)
@@ -337,7 +339,12 @@ const Swap = () => {
     {isPopup === "seeStudentList" && <StudentList page="swap" setIsShuffle={setIsShuffle} />}
     {isPopup === "print" && <PrintSwapContents printRef={componentRef} title={title} selectedStudent={selectedStudent} pickNum={pickNum} />}
     {isPopup === "needLogin" && <NeedLoginPopupContainer />}
-    {isPopup === "detailSetting" && <SwapDetailSetting />}
+    {isPopup === "detailSetting" && <SwapDetailSetting
+      setErrMsg={setErrMsg}
+      pickNum={pickNum}
+      seatType={seatType}
+      setSeatType={setSeatType}
+    />}
     {isShuffle === "pickNum" && <StudentNumber
       pickNum={pickNum}
       setPickNum={setPickNum}
