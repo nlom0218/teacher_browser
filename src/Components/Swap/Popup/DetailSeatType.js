@@ -23,8 +23,10 @@ const Type = styled.div`
 
 const DetailSeatType = ({ setSeatType, seatType, setPickNum }) => {
   const onClickSetSeatType = (type) => {
-    if (type !== 1) {
+    if (type === 2 || type === 1) {
       setPickNum(6)
+    } else if (type === 3 || type === 4) {
+      setPickNum(3)
     }
     setSeatType(type)
   }

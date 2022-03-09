@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { customMedia } from "../../styles";
 
@@ -33,12 +33,6 @@ const Container = styled.div`
     row-gap : 0.625rem;
     column-gap : 10px;
     column-gap : 0.625rem;
-    ${customMedia.greaterThan("tablet")`
-    grid-template-columns : ${props => props.seeResultType === "ALL" && "repeat(6,1fr)"};
-    `}
-    ${customMedia.greaterThan("desktop")`
-    grid-template-columns : ${props => props.seeResultType === "ALL" && "repeat(6,1fr)"};
-    `}
 `;
 
 const Item = styled.div`
@@ -70,14 +64,13 @@ const Name = styled.div`
 `
 
 
-const StudentOrder = ({ selectedStudent, setSelectedStudent, seeResultType, fontSizeAll, fontSizeOne, isShuffle, pickNum, pickType }) => {
+const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuffle, pickNum, seatType }) => {
 
     useEffect(() => {
         const shuffledStudent = () => {
             const newSelectedStudent = selectedStudent
-                .map((value) => ({ value, sort: Math.random() }))
+                .map((value) => ({ ...value, sort: Math.random() }))
                 .sort((a, b) => a.sort - b.sort)
-                .map(({ value }) => value);
             setSelectedStudent(newSelectedStudent);
         };
         let shuffling;
@@ -95,11 +88,11 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, seeResultType, font
     return (
         <RealContainer>
             <Table>칠판</Table>
-            <Container pickNum={pickNum}>
+            <Container pickNum={pickNum} seatType={seatType}>
                 {selectedStudent.map((item, index) => {
                     return (
-                        <Item key={item}>
-                            <Name fontSize={fontSizeAll}>{item}</Name>
+                        <Item key={index}>
+                            <Name fontSize={fontSizeAll}>{item.name}</Name>
                         </Item>
                     );
                 })

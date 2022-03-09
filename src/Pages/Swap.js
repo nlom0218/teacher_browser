@@ -188,12 +188,12 @@ const Swap = () => {
   const [IconsLIstisHover, setIconListIsHover] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState([]);
   const [isShuffle, setIsShuffle] = useState("init");
-  const [pickNum, setPickNum] = useState(6);
   const [fontSizeAll, setFontSizeAll] = useState(1.5);
   const [errMsg, setErrMsg] = useState(undefined)
   const [sort, setSort] = useState(undefined)
   const [hasNum, setHasNum] = useState(false)
 
+  const [pickNum, setPickNum] = useState(6); // 첫 줄 학생 또는 모둠 수
   const [seatType, setSeatType] = useState(1) // 1: 거리두기, 2: 짝궁. 3: 모둠(2*2), 4: 모둠(3*3)
 
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
@@ -240,12 +240,17 @@ const Swap = () => {
   const onClickDetailSetting = () => {
     inPopup("detailSetting")
   }
+  console.log(selectedStudent);
 
   useEffect(() => {
     if (data) {
       setStudentListName(data?.seeStudentList[0]?.listName);
       //휴지통에 있는 학생은 filter로 거르기 
-      const newSelectedStudent = data?.seeStudentList[0]?.students.filter(item => !item.trash).map((item) => item.studentName)
+      const newSelectedStudent = data?.seeStudentList[0]?.students
+        .filter(item => !item.trash)
+        .map((item) => {
+          return { name: item.studentName, gender: item.studentGender, id: item._id }
+        })
       setSelectedStudent(newSelectedStudent);
 
       const studentNum = data?.seeStudentList[0]?.students.filter(item => !item.trash).map((item) => item.studentNumber)
@@ -327,11 +332,9 @@ const Swap = () => {
               selectedStudent={selectedStudent}
               setSelectedStudent={setSelectedStudent}
               isShuffle={isShuffle}
-              setFontSizeAll={setFontSizeAll}
               fontSizeAll={fontSizeAll}
               pickNum={pickNum}
-              setPickNum={setPickNum}
-              studentNum={selectedStudent.length}
+              seatType={seatType}
             />
           </React.Fragment>)
         )}
