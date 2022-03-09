@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PopupContainer from '../../Shared/PopupContainer';
 import DetailPickNum from './DetailPickNum';
 import DetailSeatType from './DetailSeatType';
+import KeepDistanceGroup from './KeepDistanceGroup';
 
 const Container = styled.div`
   padding: 20px 0px;
@@ -38,7 +39,7 @@ const SettingLayout = styled.div`
   padding: 0.625rem;
 `
 
-const SwapDetailSetting = ({ pickNum, setPickNum, setErrMsg, setSeatType, seatType }) => {
+const SwapDetailSetting = ({ pickNum, setPickNum, setErrMsg, setSeatType, seatType, keepDistanceGroup, setKeepDistanceGroup }) => {
   return (<PopupContainer>
     <Container>
       <Title>자리 설정</Title>
@@ -58,6 +59,12 @@ const SwapDetailSetting = ({ pickNum, setPickNum, setErrMsg, setSeatType, seatTy
         <TypeName>짝궁 성별</TypeName>
         <SettingLayout>
 
+        </SettingLayout>
+      </SettingType>}
+      {seatType === 1 && <SettingType>
+        <TypeName>거리두기 모둠</TypeName>
+        <SettingLayout>
+          <KeepDistanceGroup keepDistanceGroup={keepDistanceGroup} setKeepDistanceGroup={setKeepDistanceGroup} setErrMsg={setErrMsg} />
         </SettingLayout>
       </SettingType>}
       <SettingType>

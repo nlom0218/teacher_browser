@@ -76,7 +76,6 @@ const Name = styled.div`
 
 const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuffle, pickNum, seatType }) => {
 
-    console.log(pickNum);
     useEffect(() => {
 
         const shuffledStudent = () => {
