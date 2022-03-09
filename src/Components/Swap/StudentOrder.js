@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { customMedia } from "../../styles";
 
@@ -26,7 +26,8 @@ const Table = styled.div`
 
 const Container = styled.div`
     display : grid;
-    grid-template-columns: ${props => `repeat(${props.pickNum}, 1fr)`};
+    grid-template-rows: ${props => props.groupType === "vertical" ? `auto repeat(${props.rowLength}, 1fr)` : `repeat(${props.rowLength}, 1fr)`};
+    grid-template-columns: ${props => props.groupType === "horizontal" ? `auto repeat(${props.pickNum}, 1fr)` : `repeat(${props.pickNum}, 1fr)`};
     padding : 20px 0px;
     padding : 1.25rem 0rem;
     row-gap : 10px;
@@ -73,35 +74,97 @@ const Name = styled.div`
     font-size : ${props => props.fontSize}rem;
 `
 
+const GroupName = styled.div`
+    grid-column: ${props => props.groupType === "vertical" && "1 / -1"};
+    grid-row: ${props => props.groupType === "horizontal" && "1 / -1"};
+    display: grid;
+    grid-template-columns: ${props => props.groupType === "vertical" && `repeat(${props.pickNum}, 1fr)`};
+    grid-template-rows: ${props => props.groupType === "horizontal" && `repeat(${props.rowLength}, 1fr)`};
+    justify-items: center;
+    align-items: center;
+    font-weight: 600;
+`
 
-const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuffle, pickNum, seatType }) => {
+
+const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuffle, pickNum, seatType, keepDistanceGroup }) => {
+
+    const [groupArr, setGroupArr] = useState([])
+
+    console.log(keepDistanceGroup);
 
     useEffect(() => {
-
-        const shuffledStudent = () => {
-            const newSelectedStudent = selectedStudent
-                .map((value) => ({ ...value, sort: Math.random() }))
-                .sort((a, b) => a.sort - b.sort)
-            setSelectedStudent(newSelectedStudent);
-        };
-
-        let shuffling;
         if (isShuffle === "ing") {
-            shuffling = setInterval(() => {
-                shuffledStudent();
-            }, 100);
-        } else {
-            clearInterval(shuffling);
+            const shuffledStudent = () => {
+                const newSelectedStudent = selectedStudent
+                    .map((value) => ({ ...value, sort: Math.random() }))
+                    .sort((a, b) => a.sort - b.sort)
+                setSelectedStudent(newSelectedStudent);
+            };
+
+            let shuffling;
+            if (isShuffle === "ing") {
+                shuffling = setInterval(() => {
+                    shuffledStudent();
+                }, 100);
+            } else {
+                clearInterval(shuffling);
+            }
+            return () => clearInterval(shuffling);
         }
-        return () => clearInterval(shuffling);
+        if (isShuffle === "finish") {
+            if (keepDistanceGroup.gender === "same" && keepDistanceGroup.type === "horizontal") {
+                // 모둥미 가로 형태이고 같은 성별끼리 같은 모둠
+            }
+            if (keepDistanceGroup.gender === "helf" && keepDistanceGroup.type === "horizontal") {
+                // 모둥미 가로 형태이고 성별이 섞인 모둠
+            }
+            if (keepDistanceGroup.gender === "same" && keepDistanceGroup.type === "vertical") {
+                // 모둥미 세로 형태이고 같은 성별끼리 같은 모둠
+            }
+            if (keepDistanceGroup.gender === "helf" && keepDistanceGroup.type === "vertical") {
+                // 모둥미 세로 형태이고 같은 성별이 섞인 모둠
+            }
+        }
 
     }, [isShuffle]);
+
+
+    useEffect(() => {
+        if (keepDistanceGroup.type === "vertical") {
+            let newGroupArr = []
+            for (let i = 0; i < pickNum; i++) {
+                newGroupArr.push(i + 1)
+            }
+            setGroupArr(newGroupArr)
+        } else if (keepDistanceGroup.type === "horizontal") {
+            let newGroupArr = []
+            for (let i = 0; i < Math.ceil(selectedStudent.length / pickNum); i++) {
+                newGroupArr.push(i + 1)
+            }
+            setGroupArr(newGroupArr)
+        }
+    }, [keepDistanceGroup, pickNum])
 
 
     return (
         <RealContainer>
             <Table>칠판</Table>
-            <Container pickNum={pickNum} seatType={seatType}>
+            <Container
+                pickNum={pickNum}
+                seatType={seatType}
+                groupType={keepDistanceGroup.type}
+                rowLength={Math.ceil(selectedStudent.length / pickNum)}
+            >
+                {keepDistanceGroup.type !== "none" &&
+                    <GroupName
+                        groupType={keepDistanceGroup.type}
+                        pickNum={pickNum}
+                        rowLength={Math.ceil(selectedStudent.length / pickNum)}
+                    >
+                        {groupArr.map((item, index) => {
+                            return <div key={index}>{item}모둠</div>
+                        })}
+                    </GroupName>}
                 {selectedStudent.map((item, index) => {
                     return (
                         <Item key={index} seatType={seatType} pickNum={pickNum}>

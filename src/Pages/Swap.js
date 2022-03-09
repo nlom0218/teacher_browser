@@ -340,6 +340,7 @@ const Swap = () => {
               fontSizeAll={fontSizeAll}
               pickNum={pickNum}
               seatType={seatType}
+              keepDistanceGroup={keepDistanceGroup}
             />
           </React.Fragment>)
         )}

@@ -46,7 +46,7 @@ const SwapDetailSetting = ({ pickNum, setPickNum, setErrMsg, setSeatType, seatTy
       <SettingType>
         <TypeName>자리 대형</TypeName>
         <SettingLayout>
-          <DetailSeatType seatType={seatType} setSeatType={setSeatType} setErrMsg={setErrMsg} setPickNum={setPickNum} />
+          <DetailSeatType seatType={seatType} setSeatType={setSeatType} setErrMsg={setErrMsg} setPickNum={setPickNum} setKeepDistanceGroup={setKeepDistanceGroup} />
         </SettingLayout>
       </SettingType>
       <SettingType>
