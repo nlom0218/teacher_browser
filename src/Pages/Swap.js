@@ -240,7 +240,6 @@ const Swap = () => {
   const onClickDetailSetting = () => {
     inPopup("detailSetting")
   }
-  console.log(selectedStudent);
 
   useEffect(() => {
     if (data) {
@@ -264,7 +263,12 @@ const Swap = () => {
 
   useEffect(() => {
     if (sort) {
-      const newSelectedStudent = data?.seeStudentList[0]?.students.filter(item => !item.trash).sort(compare(sort)).map((item) => item.studentName)
+      const newSelectedStudent = data?.seeStudentList[0]?.students
+        .filter(item => !item.trash)
+        .sort(compare(sort))
+        .map((item) => {
+          return { name: item.studentName, gender: item.studentGender, id: item._id }
+        })
       setSelectedStudent(newSelectedStudent);
     }
   }, [sort])

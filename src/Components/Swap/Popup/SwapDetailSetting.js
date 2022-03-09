@@ -15,7 +15,6 @@ const Title = styled.div`
   justify-self: flex-end;
   font-size: 1.25em;
   font-size: 1.25rem;
-  font-weight: 600;
 `
 
 const SettingType = styled.div`

@@ -27,34 +27,44 @@ const Table = styled.div`
 const Container = styled.div`
     display : grid;
     grid-template-columns: ${props => `repeat(${props.pickNum}, 1fr)`};
-    padding : 10px 5px;
-    padding : 1.25rem 0.625rem;
+    padding : 20px 0px;
+    padding : 1.25rem 0rem;
     row-gap : 10px;
     row-gap : 0.625rem;
     column-gap : 10px;
     column-gap : 0.625rem;
+    column-gap: ${props => props.seatType === 2 && "0px"};
+    column-gap: ${props => props.seatType === 2 && "0rem"};
 `;
 
 const Item = styled.div`
     min-height : 120px;
     min-height : 7.5rem;
-    padding : 20px 10px;
-    padding : 1.25rem 0.625rem;
-    transition : border 1s ease;
+    padding: 20px 10px;
+    padding: 1.25rem 0.625rem;
+    transition: border 1s ease;
     border-radius : 5px;
     border-radius : 0.3125rem;
-    display : grid;
+    display: grid;
     justify-items : center;
     align-items : center;
     row-gap : 10px;
-    position : relative;
+    position: relative;
     border: 1px solid ${props => props.theme.cardBorder};
     background-color: ${props => props.theme.cardBg};
-    transition: border 1s ease, background-color 1s ease;
+    transition: border 1s ease, background - color 1s ease;
+    :nth-child(2n) {
+    margin-right: ${props => props.seatType === 2 && "10px"};
+    margin-right: ${props => props.seatType === 2 && "0.625rem"};
+    }
+    :nth-child(${props => props.pickNum}n) {
+    margin-right: ${props => props.seatType === 2 && "0px"};
+    margin-right: ${props => props.seatType === 2 && "0rem"};
+    }
 `
 
 const Name = styled.div`
-    width : 100%;
+    width: 100%;
     /* overflow : hidden;
     text-overflow : clip;
     white-space : nowrap; */
@@ -66,13 +76,16 @@ const Name = styled.div`
 
 const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuffle, pickNum, seatType }) => {
 
+    console.log(pickNum);
     useEffect(() => {
+
         const shuffledStudent = () => {
             const newSelectedStudent = selectedStudent
                 .map((value) => ({ ...value, sort: Math.random() }))
                 .sort((a, b) => a.sort - b.sort)
             setSelectedStudent(newSelectedStudent);
         };
+
         let shuffling;
         if (isShuffle === "ing") {
             shuffling = setInterval(() => {
@@ -82,6 +95,7 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuf
             clearInterval(shuffling);
         }
         return () => clearInterval(shuffling);
+
     }, [isShuffle]);
 
 
@@ -91,7 +105,7 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuf
             <Container pickNum={pickNum} seatType={seatType}>
                 {selectedStudent.map((item, index) => {
                     return (
-                        <Item key={index}>
+                        <Item key={index} seatType={seatType} pickNum={pickNum}>
                             <Name fontSize={fontSizeAll}>{item.name}</Name>
                         </Item>
                     );
