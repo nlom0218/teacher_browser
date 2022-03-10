@@ -90,8 +90,6 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuf
 
     const [groupArr, setGroupArr] = useState([])
 
-    console.log(keepDistanceGroup);
-
     useEffect(() => {
         if (isShuffle === "ing") {
             const shuffledStudent = () => {
