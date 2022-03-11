@@ -88,6 +88,7 @@ const GroupName = styled.div`
 
 const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuffle, pickNum, seatType, keepDistanceGroup }) => {
 
+    console.log(selectedStudent);
     const [groupArr, setGroupArr] = useState([])
 
     useEffect(() => {
@@ -110,17 +111,21 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuf
             return () => clearInterval(shuffling);
         }
         if (isShuffle === "finish") {
-            if (keepDistanceGroup.gender === "same" && keepDistanceGroup.type === "horizontal") {
+            if (seatType === 1 && keepDistanceGroup.gender === "same" && keepDistanceGroup.type === "horizontal") {
                 // 모둥미 가로 형태이고 같은 성별끼리 같은 모둠
+                console.log("거리두기 대형, 가로 모둠, 같은 성별");
             }
-            if (keepDistanceGroup.gender === "helf" && keepDistanceGroup.type === "horizontal") {
+            if (seatType === 1 && keepDistanceGroup.gender === "helf" && keepDistanceGroup.type === "horizontal") {
                 // 모둥미 가로 형태이고 성별이 섞인 모둠
+                console.log("거리두기 대형, 가로 모둠, 다른 성별");
             }
-            if (keepDistanceGroup.gender === "same" && keepDistanceGroup.type === "vertical") {
+            if (seatType === 1 && keepDistanceGroup.gender === "same" && keepDistanceGroup.type === "vertical") {
                 // 모둥미 세로 형태이고 같은 성별끼리 같은 모둠
+                console.log("거리두기 대형, 세로 모둠, 같은 성별");
             }
-            if (keepDistanceGroup.gender === "helf" && keepDistanceGroup.type === "vertical") {
+            if (seatType === 1 && keepDistanceGroup.gender === "helf" && keepDistanceGroup.type === "vertical") {
                 // 모둥미 세로 형태이고 같은 성별이 섞인 모둠
+                console.log("거리두기 대형, 세로 모둠, 다른 성별");
             }
         }
 
