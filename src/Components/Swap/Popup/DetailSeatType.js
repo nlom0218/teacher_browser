@@ -35,8 +35,8 @@ const DetailSeatType = ({ setSeatType, seatType, setPickNum, setKeepDistanceGrou
   return (<Container>
     <Type selected={seatType === 1} onClick={() => onClickSetSeatType(1)}>거리두기 대형</Type>
     <Type selected={seatType === 2} onClick={() => onClickSetSeatType(2)}>짝궁 대형</Type>
-    <Type selected={seatType === 3} onClick={() => onClickSetSeatType(3)}>모둠 대형(4인)</Type>
-    <Type selected={seatType === 4} onClick={() => onClickSetSeatType(4)}>모둠 대형(6인)</Type>
+    {/* <Type selected={seatType === 3} onClick={() => onClickSetSeatType(3)}>모둠 대형(4인)</Type>
+    <Type selected={seatType === 4} onClick={() => onClickSetSeatType(4)}>모둠 대형(6인)</Type> */}
   </Container>);
 }
 

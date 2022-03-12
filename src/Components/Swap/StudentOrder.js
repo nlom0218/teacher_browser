@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { customMedia } from "../../styles";
+import { keepDistanceGroupHorizontalSame } from "./sharedFn/keepDistanceGroup";
 
 const RealContainer = styled.div`
 
@@ -114,6 +115,7 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuf
             if (seatType === 1 && keepDistanceGroup.gender === "same" && keepDistanceGroup.type === "horizontal") {
                 // 모둥미 가로 형태이고 같은 성별끼리 같은 모둠
                 console.log("거리두기 대형, 가로 모둠, 같은 성별");
+                keepDistanceGroupHorizontalSame(selectedStudent, pickNum)
             }
             if (seatType === 1 && keepDistanceGroup.gender === "helf" && keepDistanceGroup.type === "horizontal") {
                 // 모둥미 가로 형태이고 성별이 섞인 모둠
@@ -171,7 +173,7 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuf
                 {selectedStudent.map((item, index) => {
                     return (
                         <Item key={index} seatType={seatType} pickNum={pickNum}>
-                            <Name fontSize={fontSizeAll}>{item.name}</Name>
+                            <Name fontSize={fontSizeAll}>{item.name} {item.gender}</Name>
                         </Item>
                     );
                 })

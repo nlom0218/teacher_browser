@@ -61,12 +61,12 @@ const SwapDetailSetting = ({ pickNum, setPickNum, setErrMsg, setSeatType, seatTy
 
         </SettingLayout>
       </SettingType>}
-      {seatType === 1 && <SettingType>
+      {/* {seatType === 1 && <SettingType>
         <TypeName>거리두기 모둠</TypeName>
         <SettingLayout>
           <KeepDistanceGroup keepDistanceGroup={keepDistanceGroup} setKeepDistanceGroup={setKeepDistanceGroup} setErrMsg={setErrMsg} />
         </SettingLayout>
-      </SettingType>}
+      </SettingType>} */}
       <SettingType>
         <TypeName>학생 분리</TypeName>
         <SettingLayout>
