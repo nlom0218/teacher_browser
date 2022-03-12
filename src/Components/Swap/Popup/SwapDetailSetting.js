@@ -20,7 +20,7 @@ const Title = styled.div`
 
 const SettingType = styled.div`
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: auto 1fr;
   column-gap: 20px;
   column-gap: 1.25rem;
 `
