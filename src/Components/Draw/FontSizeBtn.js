@@ -17,26 +17,13 @@ const Container = styled.div`
     }
 `
 
-const FontSizeBtn = ({ setFontSizeAll, fontSizeAll, fontSizeOne, setFontSizeOne, seeResultType }) => {
-
-
+const FontSizeBtn = ({ setFontSizeAll, fontSizeAll }) => {
     const onClickSizeBtn = (type) => {
-        if (seeResultType == "ALL") {
-            if (type === "plus") {
-                setFontSizeAll(prev => prev + (0.0625 * 2))
-            }
-            if (type === "minus" && fontSizeAll > 1) {
-                setFontSizeAll(prev => prev - (0.0625 * 2))
-            }
+        if (type === "plus") {
+            setFontSizeAll(prev => prev + (0.0625 * 2))
         }
-
-        if (seeResultType === "ONE") {
-            if (type === "plus") {
-                setFontSizeOne(prev => prev + (0.0625 * 4))
-            }
-            if (type === "minus" && fontSizeOne > 1) {
-                setFontSizeOne(prev => prev - (0.0625 * 4))
-            }
+        if (type === "minus" && fontSizeAll > 1) {
+            setFontSizeAll(prev => prev - (0.0625 * 2))
         }
     }
     return (<Container>

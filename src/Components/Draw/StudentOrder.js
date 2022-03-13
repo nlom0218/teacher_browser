@@ -5,18 +5,17 @@ import { TiDelete } from "react-icons/ti";
 import SeeSelectedStudent from "./SeeSelectedStudent";
 
 const Container = styled.div`
-    min-height : 100%;
     display : grid;
-    grid-template-columns : ${props => props.seeResultType === "ALL" && "repeat(2,1fr)"};
+    grid-template-columns : repeat(2,1fr);
     row-gap : 10px;
     row-gap : 0.625rem;
     column-gap : 10px;
     column-gap : 0.625rem;
     ${customMedia.greaterThan("tablet")`
-    grid-template-columns : ${props => props.seeResultType === "ALL" && "repeat(4,1fr)"};
+        grid-template-columns : repeat(4,1fr);
     `}
     ${customMedia.greaterThan("desktop")`
-    grid-template-columns : ${props => props.seeResultType === "ALL" && "repeat(6,1fr)"};
+    grid-template-columns : repeat(6,1fr);
     `}
 `;
 
@@ -58,59 +57,7 @@ const Name = styled.div`
     font-size : ${props => props.fontSize}rem;
 `
 
-const SeeOneItem = styled.div`
-    display : grid;
-    row-gap : 20px;
-    row-gap : 1.25rem;
-    grid-template-columns : 1fr 1fr;
-    ${customMedia.greaterThan("desktop")`
-    width : 60%;
-    justify-self : center;
-    grid-template-columns : auto 1fr auto;
-    column-gap : 20px;
-    column-gap : 1.25rem;
-    .order-student-back-btn {
-        grid-column : 1/2;
-        grid-row : 1/2;
-    }
-        .order-student-forward-btn {
-        grid-column : 3/4;
-        grid-row : 1/2;
-    `}
-`
-const Student = styled.div`
-    border : 1px solid ${props => props.theme.fontcolor};
-    transition : border 1s ease;
-    border-radius : 5px;
-    border-radius : 0.3125rem;
-    display : grid;
-    align-items : center;
-    justify-items : center;
-    padding : 20px;
-    padding : 1.25rem;
-    row-gap : 40px;
-    row-gap : 2.5rem;
-    grid-column : 1/ -1;
-    ${customMedia.greaterThan("tablet")`
-        padding : 80px 20px;
-        padding : 5rem 1.25rem;
-    `}
-    ${customMedia.greaterThan("desktop")`
-        grid-column : 2/3;
-    `}
-`
-
-const StudentOrder = ({ selectedStudent, setSelectedStudent, seeResultType, fontSizeAll, fontSizeOne, isShuffle, pickNum, pickType }) => {
-    const [order, setOrder] = useState(1)
-
-    const onClickArrow = (type) => {
-        if (type === "back" && order !== 1) {
-            setOrder(prev => prev - 1)
-        }
-        if (type === "forward" && order !== selectedStudent.length) {
-            setOrder(prev => prev + 1)
-        }
-    }
+const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuffle, pickNum, pickType }) => {
 
     const onClickRemoveBtn = (name) => {
         const newSelectedStudent = selectedStudent.filter((item) => item !== name)
@@ -138,20 +85,15 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, seeResultType, font
 
 
     return (
-        <Container seeResultType={seeResultType}>
-            {isShuffle !== "finish" ? (seeResultType === "ALL" ? selectedStudent.map((item, index) => {
+        <Container>
+            {isShuffle !== "finish" ? selectedStudent.map((item, index) => {
                 return (
                     <Item key={item}>
                         <Name fontSize={fontSizeAll}>{item}</Name>
                         <RemoveBtn onClick={() => onClickRemoveBtn(item)}><TiDelete /></RemoveBtn>
                     </Item>
                 );
-            }) :
-                <SeeOneItem order={order} studentLength={selectedStudent.length}>
-                    <Student>
-                        <Name fontSize={fontSizeOne}> {selectedStudent[order - 1]}</Name>
-                    </Student>
-                </SeeOneItem>)
+            })
                 :
                 <SeeSelectedStudent
                     selectedStudent={selectedStudent}

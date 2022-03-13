@@ -22,7 +22,6 @@ import useMe from '../Hooks/useMe';
 import NoStudentMsg from '../Components/Shared/styled/NoStudentMsg';
 
 const Container = styled.div`
-  min-height : ${props => props.seeResultType === "ONE" && "100%"};
   min-height : ${props => props.isShuffle === "finish" && (props.pickNum < 4 && "100%")};
   display : grid;
   grid-template-rows : auto auto 1fr;
@@ -161,7 +160,6 @@ const Draw = () => {
   const [IconsLIstisHover, setIconListIsHover] = useState(false)
   const [studentListName, setStudentListName] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState([]);
-  const [seeResultType, setSeeResultType] = useState("ALL");
   const [fontSizeAll, setFontSizeAll] = useState(1.5);
   const [fontSizeOne, setFontSizeOne] = useState(2);
   const [isEdit, setIsEdit] = useState(false);
@@ -222,7 +220,7 @@ const Draw = () => {
 
   return (
     <BasicContainer menuItem={true}>
-      <Container isShuffle={isShuffle} seeResultType={seeResultType} pickNum={pickNum}>
+      <Container isShuffle={isShuffle} pickNum={pickNum}>
         <TopContents>
           <Title onBlur={onBlurForm} onSubmit={handleSubmit(onSubmit)}>
             <InputLayout>
@@ -268,14 +266,12 @@ const Draw = () => {
                   fontSizeAll={fontSizeAll}
                   setFontSizeOne={setFontSizeOne}
                   fontSizeOne={fontSizeOne}
-                  seeResultType={seeResultType}
                 />
               </OptionContents>
               <StudentOrder
                 isShuffle={isShuffle}
                 selectedStudent={selectedStudent}
                 setSelectedStudent={setSelectedStudent}
-                seeResultType={seeResultType}
                 fontSizeAll={fontSizeAll}
                 fontSizeOne={fontSizeOne}
                 pickNum={pickNum}
