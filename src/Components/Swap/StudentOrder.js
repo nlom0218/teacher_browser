@@ -173,7 +173,7 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuf
                 {selectedStudent.map((item, index) => {
                     return (
                         <Item key={index} seatType={seatType} pickNum={pickNum}>
-                            <Name fontSize={fontSizeAll}>{item.name} {item.gender}</Name>
+                            <Name fontSize={fontSizeAll}>{item.name}</Name>
                         </Item>
                     );
                 })

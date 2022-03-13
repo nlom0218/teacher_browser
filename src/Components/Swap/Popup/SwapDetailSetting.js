@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { customMedia } from '../../../styles';
 import PopupContainer from '../../Shared/PopupContainer';
 import DetailPickNum from './DetailPickNum';
 import DetailSeatType from './DetailSeatType';
@@ -20,9 +21,13 @@ const Title = styled.div`
 
 const SettingType = styled.div`
   display: grid;
-  grid-template-columns: auto 1fr;
+  row-gap: 10px;
+  row-gap: 0.625rem;
   column-gap: 20px;
   column-gap: 1.25rem;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: auto 1fr;
+  `}
 `
 
 const TypeName = styled.div`
@@ -55,30 +60,30 @@ const SwapDetailSetting = ({ pickNum, setPickNum, setErrMsg, setSeatType, seatTy
           <DetailPickNum seatType={seatType} pickNum={pickNum} setPickNum={setPickNum} />
         </SettingLayout>
       </SettingType>
-      {seatType === 2 && <SettingType>
+      {/* {seatType === 2 && <SettingType>
         <TypeName>짝궁 성별</TypeName>
         <SettingLayout>
 
         </SettingLayout>
-      </SettingType>}
+      </SettingType>} */}
       {/* {seatType === 1 && <SettingType>
         <TypeName>거리두기 모둠</TypeName>
         <SettingLayout>
           <KeepDistanceGroup keepDistanceGroup={keepDistanceGroup} setKeepDistanceGroup={setKeepDistanceGroup} setErrMsg={setErrMsg} />
         </SettingLayout>
       </SettingType>} */}
-      <SettingType>
+      {/* <SettingType>
         <TypeName>학생 분리</TypeName>
         <SettingLayout>
 
         </SettingLayout>
-      </SettingType>
-      <SettingType>
+      </SettingType> */}
+      {/* <SettingType>
         <TypeName>자리 지정</TypeName>
         <SettingLayout>
 
         </SettingLayout>
-      </SettingType>
+      </SettingType> */}
     </Container>
   </PopupContainer>);
 }
