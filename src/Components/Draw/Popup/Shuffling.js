@@ -31,9 +31,10 @@ const Input = styled.input`
 
 const TypeLayout = styled.div`
     display : grid;
-    grid-template-columns : 1fr 1fr;
     column-gap : 20px;
     column-gap : 1.25rem;
+    row-gap: 10px;
+    row-gap: 0.625rem;
     cursor : pointer;
 `
 
@@ -60,7 +61,7 @@ const ErrMsg = styled.div`
     color : #db3a1e;
 `
 
-const Shuffling = ({ pickNum, pickType, setPickNum, setPickType, studentNum, setIsShuffle }) => {
+const Shuffling = ({ pickNum, pickType, setPickNum, setPickType, studentNum, setIsShuffle, setExclude, exclude }) => {
     const [errMsg, setErrMsg] = useState(undefined)
     const { register, handleSubmit, getValues } = useForm({
         mode: "onChange",
@@ -75,7 +76,14 @@ const Shuffling = ({ pickNum, pickType, setPickNum, setPickType, studentNum, set
         } else {
             setPickType("see")
         }
+    }
 
+    const onClickExcludeBtn = () => {
+        if (exclude) {
+            setExclude(false)
+        } else {
+            setExclude(true)
+        }
     }
 
     const onSubmit = (data) => {
@@ -103,7 +111,11 @@ const Shuffling = ({ pickNum, pickType, setPickNum, setPickType, studentNum, set
                 />
                 <TypeLayout>
                     <Type onClick={onClickTypeBtn}>
-                        {pickType === "see" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}<div>이름 보이기</div></Type>
+                        {pickType === "see" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}<div>이름 보이기</div>
+                    </Type>
+                    <Type onClick={onClickExcludeBtn}>
+                        {exclude ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}<div>뽑힌 학생 제외하기</div>
+                    </Type>
                 </TypeLayout>
                 <SubmitInput
                     type="submit"

@@ -169,6 +169,7 @@ const Draw = () => {
   // 뽑을 때 필요한 state 값
   const [pickNum, setPickNum] = useState(1);
   const [pickType, setPickType] = useState("see");
+  const [exclude, setExclude] = useState(true)
 
 
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
@@ -275,7 +276,9 @@ const Draw = () => {
                 fontSizeAll={fontSizeAll}
                 fontSizeOne={fontSizeOne}
                 pickNum={pickNum}
-                pickType={pickType} />
+                pickType={pickType}
+                exclude={exclude}
+              />
             </React.Fragment>)
           )}
       </Container>
@@ -287,6 +290,8 @@ const Draw = () => {
           setPickNum={setPickNum}
           pickType={pickType}
           setPickType={setPickType}
+          exclude={exclude}
+          setExclude={setExclude}
           studentNum={selectedStudent.length}
           setIsShuffle={setIsShuffle}
         />

@@ -17,7 +17,7 @@ const Container = styled.div`
   `}
 `
 
-const SeeSelectedStudent = ({ selectedStudent, pickNum, pickType, fontSizeAll }) => {
+const SeeSelectedStudent = ({ selectedStudent, pickNum, pickType, fontSizeAll, exclude, setSelectedStudent }) => {
   const [pickStudent, setPickStudent] = useState([])
   useEffect(() => {
     const newSelectedStudent = []
@@ -26,6 +26,14 @@ const SeeSelectedStudent = ({ selectedStudent, pickNum, pickType, fontSizeAll })
     }
     setPickStudent(newSelectedStudent);
   }, [])
+
+  useEffect(() => {
+    if (exclude && pickStudent.length !== 0) {
+      const newSelectedStudent = selectedStudent.filter(item => !pickStudent.includes(item))
+      setSelectedStudent(newSelectedStudent)
+    }
+  }, [pickStudent])
+
   return (<Container pickNum={pickNum}>
     {pickStudent.map((item, index) => {
       return <SeeSelectedStudentItem key={index}

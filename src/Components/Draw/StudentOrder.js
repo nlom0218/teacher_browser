@@ -15,7 +15,8 @@ const Container = styled.div`
         grid-template-columns : repeat(4,1fr);
     `}
     ${customMedia.greaterThan("desktop")`
-    grid-template-columns : repeat(6,1fr);
+        grid-template-columns : repeat(6,1fr);
+        min-height : 100%;
     `}
 `;
 
@@ -57,7 +58,7 @@ const Name = styled.div`
     font-size : ${props => props.fontSize}rem;
 `
 
-const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuffle, pickNum, pickType }) => {
+const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuffle, pickNum, pickType, exclude }) => {
 
     const onClickRemoveBtn = (name) => {
         const newSelectedStudent = selectedStudent.filter((item) => item !== name)
@@ -100,6 +101,8 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuf
                     pickNum={pickNum}
                     pickType={pickType}
                     fontSizeAll={fontSizeAll}
+                    exclude={exclude}
+                    setSelectedStudent={setSelectedStudent}
                 />
             }
         </Container>
