@@ -5,7 +5,6 @@ import { WEATHER_QUERY } from "../../Graphql/Weather/query";
 import styled from "styled-components";
 import { color } from "../../styles";
 import { FcDown, FcUp } from "react-icons/fc";
-import { BsEmojiDizzy, BsEmojiFrown, BsEmojiHeartEyes, BsEmojiLaughing } from "react-icons/bs";
 import IcDustGood from "../../icons/Dust/IcDustGood";
 import IcDustSoso from "../../icons/Dust/IcDustSoso";
 import IcDustBad from "../../icons/Dust/IcDustBad";
@@ -29,6 +28,7 @@ const WeatherBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 5;
 `;
 
 const WeatherContent = styled.div`

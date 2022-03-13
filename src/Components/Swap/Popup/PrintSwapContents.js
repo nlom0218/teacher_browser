@@ -93,6 +93,8 @@ const GridList = styled.div`
   column-gap: 20px;
   column-gap: 1.25rem;
   color: ${color.black};
+  column-gap: ${props => props.seatType === 2 && "0px"};
+  column-gap: ${props => props.seatType === 2 && "0rem"};
 `
 
 const GridItem = styled.div`
@@ -104,13 +106,21 @@ const GridItem = styled.div`
   border-radius: 5px;
   border-radius: 0.3125rem;
   line-height: 160%;
+  :nth-child(2n) {
+    margin-right: ${props => props.seatType === 2 && "10px"};
+    margin-right: ${props => props.seatType === 2 && "0.625rem"};
+    }
+    :nth-child(${props => props.pickNum}n) {
+    margin-right: ${props => props.seatType === 2 && "0px"};
+    margin-right: ${props => props.seatType === 2 && "0rem"};
+    }
 `
 
 const EmptyItem = styled.div`
   opacity: 0;
 `
 
-const PrintSwapContents = ({ printRef, title, selectedStudent, pickNum }) => {
+const PrintSwapContents = ({ printRef, title, selectedStudent, pickNum, seatType }) => {
   const [emptyArr, setEmptyArr] = useState(undefined)
 
   const [printType, setPrintType] = useState("student")
@@ -126,6 +136,8 @@ const PrintSwapContents = ({ printRef, title, selectedStudent, pickNum }) => {
   const onClickPrintType = (type) => {
     setPrintType(type)
   }
+
+  console.log(selectedStudent);
 
   useEffect(() => {
     const emtpyNum = pickNum - (selectedStudent.length % pickNum)
@@ -157,25 +169,25 @@ const PrintSwapContents = ({ printRef, title, selectedStudent, pickNum }) => {
       <Title>{title}</Title>
       {printType === "student" && <React.Fragment>
         <Table>칠판</Table>
-        <GridList pickNum={pickNum}>
+        <GridList pickNum={pickNum} seatType={seatType}>
           {selectedStudent?.map((item, index) => {
-            return <GridItem key={index}>
-              <div>{item}</div>
+            return <GridItem key={index} seatType={seatType} pickNum={pickNum}>
+              <div>{item.name}</div>
             </GridItem>
           })}
         </GridList>
       </React.Fragment>
       }
       {printType === "teacher" && <React.Fragment>
-        <GridList pickNum={pickNum}>
+        <GridList pickNum={pickNum} seatType={seatType}>
           {emptyArr?.map((item, index) => {
-            return <GridItem key={index}>
+            return <GridItem key={index} seatType={seatType} pickNum={pickNum}>
               <EmptyItem>-</EmptyItem>
             </GridItem>
           })}
           {[...selectedStudent]?.reverse().map((item, index) => {
-            return <GridItem key={index}>
-              <div>{item}</div>
+            return <GridItem key={index} seatType={seatType} pickNum={pickNum}>
+              <div>{item.name}</div>
             </GridItem>
           })}
         </GridList>

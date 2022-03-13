@@ -116,6 +116,7 @@ const WelcomeContents = () => {
         <TitleLayout className="title_notion" onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/d8d13d9d93ab4026bef0c440ada24292")}><SiNotion /><div>노션에서 더 보기</div></TitleLayout>
       </Title>
       <Layout>
+        <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-3-13-2dbd49475afb4c4591e19cb6b88cafca")}><FcCursor /><div>22.3.13. 공지사항</div></ContentsItem>
         <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-3-6-8a5cad61d1a745859c38a870f86918ad")}><FcCursor /><div>22.3.6. 공지사항</div></ContentsItem>
         <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-3-1-51a53ce9f6f84433b27fce1e1041f15e")}><FcCursor /><div>22.3.1. 공지사항</div></ContentsItem>
       </Layout>
@@ -135,11 +136,11 @@ const WelcomeContents = () => {
         <TitleLayout className="title_notion" onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/a5b56d8122f444cd9e372674f57724b2")}><SiNotion /><div>노션에서 더 보기</div></TitleLayout>
       </Title>
       <Layout>
-        <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-2-27-0d3b660e9d5849dfabcc301ef3ec4d1e")}><FcCursor /><div>랜덤뽑기 뽑힌 학생 제외 기능</div></ContentsItem>
-        <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-2-28-5529895b4b324f1d9134734644a44e23")}><FcCursor /><div>자리정하기에서 남녀 기능 추가</div></ContentsItem>
         <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-3-3-61d3d415dec8429489de22fbf288cdb0")}><FcCursor /><div>명렬표 인쇄 기능 추가</div></ContentsItem>
+        <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-2-28-5529895b4b324f1d9134734644a44e23")}><FcCursor /><div>자리정하기에서 남녀 기능 추가</div></ContentsItem>
         <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-3-6-b896a3ad47544036a42e64280ab28b0b")}><FcCursor /><div>상단메뉴 이름 표시하기</div></ContentsItem>
-        <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-3-6-0e26df5e82894d89b7e99e64422c6f03")}><FcCursor /><div>랜덤뽑기 반응형 업데이트</div></ContentsItem>
+        <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-3-6-2af75c222d5d4549adc4acd71454b12c")}><FcCursor /><div>알러지 정보 업데이트 오류</div></ContentsItem>
+        <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-3-6-80f6018a752f4393af0dc9be1c405507")}><FcCursor /><div>명렬표에 포함된 학생 표시 기능 추가</div></ContentsItem>
       </Layout>
     </ContentsContainer>
     {/* <ContentsContainer>

@@ -9,7 +9,7 @@ const Background = styled.div`
   bottom: 0;
   right: 0;
   background-color: rgba(0,0,0,0.75);
-  z-index: 10;
+  z-index: 20;
   color: ${color.black};
 `;
 

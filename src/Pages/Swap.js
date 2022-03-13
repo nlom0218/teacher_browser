@@ -25,8 +25,9 @@ import PrintSwapContents from '../Components/Swap/Popup/PrintSwapContents';
 import useMe from '../Hooks/useMe';
 import NeedLoginPopupContainer from '../Components/Shared/NeedLoginPopupContainer';
 import NoStudentMsg from '../Components/Shared/styled/NoStudentMsg';
-import SortBtn from '../Components/Swap/SortBtn';
-import { compare, compareDesc } from "../shared"
+import { compare } from "../shared"
+import { FcSettings } from 'react-icons/fc';
+import SwapDetailSetting from '../Components/Swap/Popup/SwapDetailSetting';
 
 const Container = styled.div`
   display : grid;
@@ -135,7 +136,7 @@ const OptionContents = styled.div`
   row-gap: 1.25rem;
   text-align: center;
   ${customMedia.greaterThan("tablet")`
-   grid-template-columns : auto auto 1fr auto;
+   grid-template-columns: auto 1fr auto;
    column-gap:20px;
    column-gap:1.25rem;
   `}
@@ -150,6 +151,24 @@ const OptionBtn = styled.div`
   border-radius: 5px;
   border-radius: 0.3125rem;
   cursor: pointer;
+`
+
+const SettingBtn = styled.div`
+  justify-self: flex-end;
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  align-items: center;
+`
+
+const DetailSetting = styled.div`
+  svg {
+    display: flex;
+    font-size: 1.75em;
+    font-size: 1.75rem;
+    cursor: pointer;
+  }
 `
 
 const Swap = () => {
@@ -170,11 +189,14 @@ const Swap = () => {
   const [IconsLIstisHover, setIconListIsHover] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState([]);
   const [isShuffle, setIsShuffle] = useState("init");
-  const [pickNum, setPickNum] = useState(6);
   const [fontSizeAll, setFontSizeAll] = useState(1.5);
   const [errMsg, setErrMsg] = useState(undefined)
   const [sort, setSort] = useState(undefined)
   const [hasNum, setHasNum] = useState(false)
+
+  const [pickNum, setPickNum] = useState(6); // 첫 줄 학생 또는 모둠 수
+  const [seatType, setSeatType] = useState(1) // 1: 거리두기, 2: 짝궁. 3: 모둠(2*2), 4: 모둠(3*3)
+  const [keepDistanceGroup, setKeepDistanceGroup] = useState({ type: "none", gender: "random" }) // 거리두기의 모둠 유무 및 성별
 
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: {
@@ -217,11 +239,19 @@ const Swap = () => {
     }
   }
 
+  const onClickDetailSetting = () => {
+    inPopup("detailSetting")
+  }
+
   useEffect(() => {
     if (data) {
       setStudentListName(data?.seeStudentList[0]?.listName);
       //휴지통에 있는 학생은 filter로 거르기 
-      const newSelectedStudent = data?.seeStudentList[0]?.students.filter(item => !item.trash).map((item) => item.studentName)
+      const newSelectedStudent = data?.seeStudentList[0]?.students
+        .filter(item => !item.trash)
+        .map((item) => {
+          return { name: item.studentName, gender: item.studentGender, id: item._id }
+        })
       setSelectedStudent(newSelectedStudent);
 
       const studentNum = data?.seeStudentList[0]?.students.filter(item => !item.trash).map((item) => item.studentNumber)
@@ -235,7 +265,12 @@ const Swap = () => {
 
   useEffect(() => {
     if (sort) {
-      const newSelectedStudent = data?.seeStudentList[0]?.students.filter(item => !item.trash).sort(compare(sort)).map((item) => item.studentName)
+      const newSelectedStudent = data?.seeStudentList[0]?.students
+        .filter(item => !item.trash)
+        .sort(compare(sort))
+        .map((item) => {
+          return { name: item.studentName, gender: item.studentGender, id: item._id }
+        })
       setSelectedStudent(newSelectedStudent);
     }
   }, [sort])
@@ -275,7 +310,7 @@ const Swap = () => {
         id && (selectedStudent.length === 0 ? <NoStudentMsg>명렬표에 학생이 없습니다. 😅 <br />명렬표에서 학생을 추가하세요!</NoStudentMsg> : (
           <React.Fragment>
             <OptionContents>
-              <OptionBtn onClick={() => onClickShuffleBtn("pickNum")}> 자리 설정 </OptionBtn>
+              {/* <OptionBtn onClick={() => onClickShuffleBtn("pickNum")}>첫 줄 설정</OptionBtn> */}
               {isShuffle === "init" && <OptionBtn onClick={() => {
                 onClickShuffleBtn("ing")
                 setSort(undefined)
@@ -291,27 +326,45 @@ const Swap = () => {
                 setSort(undefined)
               }}>다시 섞기</OptionBtn>}
               {media === "Desktop" && <PrintOrder />}
-              <FontSizeBtn
-                setFontSizeAll={setFontSizeAll}
-                fontSizeAll={fontSizeAll}
-              />
+              <SettingBtn>
+                <DetailSetting onClick={onClickDetailSetting}><FcSettings /></DetailSetting>
+                <FontSizeBtn
+                  setFontSizeAll={setFontSizeAll}
+                  fontSizeAll={fontSizeAll}
+                />
+              </SettingBtn>
             </OptionContents>
             <StudentOrder
               selectedStudent={selectedStudent}
               setSelectedStudent={setSelectedStudent}
               isShuffle={isShuffle}
-              setFontSizeAll={setFontSizeAll}
               fontSizeAll={fontSizeAll}
               pickNum={pickNum}
-              setPickNum={setPickNum}
-              studentNum={selectedStudent.length}
+              seatType={seatType}
+              keepDistanceGroup={keepDistanceGroup}
             />
           </React.Fragment>)
         )}
     </Container>
     {isPopup === "seeStudentList" && <StudentList page="swap" setIsShuffle={setIsShuffle} />}
-    {isPopup === "print" && <PrintSwapContents printRef={componentRef} title={title} selectedStudent={selectedStudent} pickNum={pickNum} />}
+    {isPopup === "print" && <PrintSwapContents
+      printRef={componentRef}
+      title={title}
+      selectedStudent={selectedStudent}
+      pickNum={pickNum}
+      seatType={seatType}
+    />}
     {isPopup === "needLogin" && <NeedLoginPopupContainer />}
+    {isPopup === "detailSetting" && <SwapDetailSetting
+      setErrMsg={setErrMsg}
+      pickNum={pickNum}
+      setPickNum={setPickNum}
+      seatType={seatType}
+      setSeatType={setSeatType}
+      keepDistanceGroup={keepDistanceGroup}
+      setKeepDistanceGroup={setKeepDistanceGroup}
+
+    />}
     {isShuffle === "pickNum" && <StudentNumber
       pickNum={pickNum}
       setPickNum={setPickNum}

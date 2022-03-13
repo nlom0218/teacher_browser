@@ -6,19 +6,18 @@ import SeeSelectedStudentItem from './SeeSelectedStudentItem';
 
 const Container = styled.div`
   grid-column : 1 / -1;
-  min-height : 100%;
   display : grid;
   column-gap : 20px;
   column-gap : 1.25rem;
   row-gap : 20px;
   row-gap : 1.25rem;
-  grid-template-columns : ${props => props.pickNum > 2 ? "repeat(3, 1fr)" : "repeat(1, 1fr)"}; 
+  grid-template-columns : repeat(2, 1fr); 
   ${customMedia.greaterThan('desktop')`
     grid-template-columns : ${props => props.pickNum === 2 ? "repeat(2, 1fr)" : "repeat(3, 1fr)"};  
   `}
 `
 
-const SeeSelectedStudent = ({ selectedStudent, pickNum, pickType, fontSizeAll }) => {
+const SeeSelectedStudent = ({ selectedStudent, pickNum, pickType, fontSizeAll, exclude, setSelectedStudent }) => {
   const [pickStudent, setPickStudent] = useState([])
   useEffect(() => {
     const newSelectedStudent = []
@@ -27,6 +26,14 @@ const SeeSelectedStudent = ({ selectedStudent, pickNum, pickType, fontSizeAll })
     }
     setPickStudent(newSelectedStudent);
   }, [])
+
+  useEffect(() => {
+    if (exclude && pickStudent.length !== 0) {
+      const newSelectedStudent = selectedStudent.filter(item => !pickStudent.includes(item))
+      setSelectedStudent(newSelectedStudent)
+    }
+  }, [pickStudent])
+
   return (<Container pickNum={pickNum}>
     {pickStudent.map((item, index) => {
       return <SeeSelectedStudentItem key={index}
