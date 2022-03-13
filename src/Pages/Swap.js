@@ -154,6 +154,7 @@ const OptionBtn = styled.div`
 `
 
 const SettingBtn = styled.div`
+  justify-self: flex-end;
   display: grid;
   grid-template-columns: auto auto;
   column-gap: 20px;
@@ -346,7 +347,13 @@ const Swap = () => {
         )}
     </Container>
     {isPopup === "seeStudentList" && <StudentList page="swap" setIsShuffle={setIsShuffle} />}
-    {isPopup === "print" && <PrintSwapContents printRef={componentRef} title={title} selectedStudent={selectedStudent} pickNum={pickNum} />}
+    {isPopup === "print" && <PrintSwapContents
+      printRef={componentRef}
+      title={title}
+      selectedStudent={selectedStudent}
+      pickNum={pickNum}
+      seatType={seatType}
+    />}
     {isPopup === "needLogin" && <NeedLoginPopupContainer />}
     {isPopup === "detailSetting" && <SwapDetailSetting
       setErrMsg={setErrMsg}

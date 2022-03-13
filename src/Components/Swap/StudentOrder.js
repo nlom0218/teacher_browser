@@ -88,8 +88,6 @@ const GroupName = styled.div`
 
 
 const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuffle, pickNum, seatType, keepDistanceGroup }) => {
-
-    console.log(selectedStudent);
     const [groupArr, setGroupArr] = useState([])
 
     useEffect(() => {
