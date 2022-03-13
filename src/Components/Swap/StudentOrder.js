@@ -54,7 +54,7 @@ const Item = styled.div`
     position: relative;
     border: 1px solid ${props => props.theme.cardBorder};
     background-color: ${props => props.theme.cardBg};
-    transition: border 1s ease, background - color 1s ease;
+    transition: border 1s ease, background-color 1s ease;
     :nth-child(2n) {
     margin-right: ${props => props.seatType === 2 && "10px"};
     margin-right: ${props => props.seatType === 2 && "0.625rem"};

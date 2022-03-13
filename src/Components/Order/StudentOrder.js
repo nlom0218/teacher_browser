@@ -116,6 +116,7 @@ row-gap: 2.5rem;
 grid-column: 1/-1;
 border: 1px solid ${props => props.theme.cardBorder};
 background-color: ${props => props.theme.cardBg};
+transition: border 1s ease, background-color 1s ease;
 opacity: 0.8;
 
 ${customMedia.greaterThan("tablet")`
