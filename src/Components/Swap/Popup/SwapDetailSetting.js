@@ -5,6 +5,7 @@ import PopupContainer from '../../Shared/PopupContainer';
 import DetailPickNum from './DetailPickNum';
 import DetailSeatType from './DetailSeatType';
 import KeepDistanceGroup from './KeepDistanceGroup';
+import MateGender from './MateGender';
 
 const Container = styled.div`
   padding: 20px 0px;
@@ -26,7 +27,7 @@ const SettingType = styled.div`
   column-gap: 20px;
   column-gap: 1.25rem;
   ${customMedia.greaterThan("tablet")`
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr 5fr;
   `}
 `
 
@@ -60,13 +61,13 @@ const SwapDetailSetting = ({ pickNum, setPickNum, setErrMsg, setSeatType, seatTy
           <DetailPickNum seatType={seatType} pickNum={pickNum} setPickNum={setPickNum} />
         </SettingLayout>
       </SettingType>
-      {/* {seatType === 2 && <SettingType>
+      {seatType === 2 && <SettingType>
         <TypeName>짝궁 성별</TypeName>
         <SettingLayout>
-
+          <MateGender />
         </SettingLayout>
       </SettingType>}
-      {seatType === 1 && <SettingType>
+      {/* {seatType === 1 && <SettingType>
         <TypeName>거리두기 모둠</TypeName>
         <SettingLayout>
           <KeepDistanceGroup keepDistanceGroup={keepDistanceGroup} setKeepDistanceGroup={setKeepDistanceGroup} setErrMsg={setErrMsg} />
@@ -83,7 +84,7 @@ const SwapDetailSetting = ({ pickNum, setPickNum, setErrMsg, setSeatType, seatTy
         <SettingLayout>
 
         </SettingLayout>
-      </SettingType> */}
+      </SettingType>  */}
     </Container>
   </PopupContainer>);
 }
