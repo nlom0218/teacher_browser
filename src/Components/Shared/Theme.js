@@ -58,21 +58,6 @@ const ScreenTheme = styled.div`
 `
 
 const BackgroungTheme = styled.div`
-  /* padding: 12px 10px;
-  padding: 0.75rem 0.625rem;
-  border-radius: 20px;
-  border-radius: 1.25rem;
-  box-shadow: 0px 2px 1px 0.5px rgba(0,0,0,0.2);
-  box-shadow: 0px 0.125rem 0.0625rem 0.03125rem rgba(0,0,0,0.2);
-  background: ${props => props.theme.bgColor};
-  transition: none;
-  font-size: 0.75em;
-  font-size: 0.75rem;
-  cursor: pointer;
-  :hover {
-    background: ${props => props.theme.fontColor};
-    color: ${props => props.theme.bgColor};
-  } */
 `
 
 const LightModeBtn = styled.div`
@@ -84,8 +69,6 @@ const LightModeBtn = styled.div`
   svg {
     display: flex;
     color: tomato;
-    /* margin-right: 5px;
-    margin-right: 0.3125rem; */
   }
   ${customMedia.greaterThan("desktop")`
     font-size: 1em;
