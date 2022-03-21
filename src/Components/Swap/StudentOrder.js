@@ -87,9 +87,7 @@ const GroupName = styled.div`
 `
 
 
-const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuffle, pickNum, seatType, keepDistanceGroup }) => {
-    const [groupArr, setGroupArr] = useState([])
-
+const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuffle, pickNum, seatType }) => {
     useEffect(() => {
         if (isShuffle === "ing") {
             const shuffledStudent = () => {
@@ -109,45 +107,7 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuf
             }
             return () => clearInterval(shuffling);
         }
-        if (isShuffle === "finish") {
-            if (seatType === 1 && keepDistanceGroup.gender === "same" && keepDistanceGroup.type === "horizontal") {
-                // 모둥미 가로 형태이고 같은 성별끼리 같은 모둠
-                console.log("거리두기 대형, 가로 모둠, 같은 성별");
-                keepDistanceGroupHorizontalSame(selectedStudent, pickNum)
-            }
-            if (seatType === 1 && keepDistanceGroup.gender === "helf" && keepDistanceGroup.type === "horizontal") {
-                // 모둥미 가로 형태이고 성별이 섞인 모둠
-                console.log("거리두기 대형, 가로 모둠, 다른 성별");
-            }
-            if (seatType === 1 && keepDistanceGroup.gender === "same" && keepDistanceGroup.type === "vertical") {
-                // 모둥미 세로 형태이고 같은 성별끼리 같은 모둠
-                console.log("거리두기 대형, 세로 모둠, 같은 성별");
-            }
-            if (seatType === 1 && keepDistanceGroup.gender === "helf" && keepDistanceGroup.type === "vertical") {
-                // 모둥미 세로 형태이고 같은 성별이 섞인 모둠
-                console.log("거리두기 대형, 세로 모둠, 다른 성별");
-            }
-        }
-
     }, [isShuffle]);
-
-
-    useEffect(() => {
-        if (keepDistanceGroup.type === "vertical") {
-            let newGroupArr = []
-            for (let i = 0; i < pickNum; i++) {
-                newGroupArr.push(i + 1)
-            }
-            setGroupArr(newGroupArr)
-        } else if (keepDistanceGroup.type === "horizontal") {
-            let newGroupArr = []
-            for (let i = 0; i < Math.ceil(selectedStudent.length / pickNum); i++) {
-                newGroupArr.push(i + 1)
-            }
-            setGroupArr(newGroupArr)
-        }
-    }, [keepDistanceGroup, pickNum])
-
 
     return (
         <RealContainer>
@@ -155,19 +115,8 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuf
             <Container
                 pickNum={pickNum}
                 seatType={seatType}
-                groupType={keepDistanceGroup.type}
                 rowLength={Math.ceil(selectedStudent.length / pickNum)}
             >
-                {keepDistanceGroup.type !== "none" &&
-                    <GroupName
-                        groupType={keepDistanceGroup.type}
-                        pickNum={pickNum}
-                        rowLength={Math.ceil(selectedStudent.length / pickNum)}
-                    >
-                        {groupArr.map((item, index) => {
-                            return <div key={index}>{item}모둠</div>
-                        })}
-                    </GroupName>}
                 {selectedStudent.map((item, index) => {
                     return (
                         <Item key={index} seatType={seatType} pickNum={pickNum}>

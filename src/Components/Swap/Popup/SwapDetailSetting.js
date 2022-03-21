@@ -4,7 +4,6 @@ import { customMedia } from '../../../styles';
 import PopupContainer from '../../Shared/PopupContainer';
 import DetailPickNum from './DetailPickNum';
 import DetailSeatType from './DetailSeatType';
-import KeepDistanceGroup from './KeepDistanceGroup';
 import MateGender from './MateGender';
 
 const Container = styled.div`
@@ -45,34 +44,41 @@ const SettingLayout = styled.div`
   padding: 0.625rem;
 `
 
-const SwapDetailSetting = ({ pickNum, setPickNum, setErrMsg, setSeatType, seatType, keepDistanceGroup, setKeepDistanceGroup }) => {
+const SwapDetailSetting = ({ pickNum, setPickNum, setErrMsg, setSeatType, seatType, mateGender, setMateGender }) => {
   return (<PopupContainer>
     <Container>
       <Title>자리 설정</Title>
       <SettingType>
         <TypeName>자리 대형</TypeName>
         <SettingLayout>
-          <DetailSeatType seatType={seatType} setSeatType={setSeatType} setErrMsg={setErrMsg} setPickNum={setPickNum} setKeepDistanceGroup={setKeepDistanceGroup} />
+          <DetailSeatType
+            seatType={seatType}
+            setSeatType={setSeatType}
+            setErrMsg={setErrMsg}
+            setPickNum={setPickNum}
+          />
         </SettingLayout>
       </SettingType>
       <SettingType>
         <TypeName>첫 줄 설정</TypeName>
         <SettingLayout>
-          <DetailPickNum seatType={seatType} pickNum={pickNum} setPickNum={setPickNum} />
+          <DetailPickNum
+            seatType={seatType}
+            pickNum={pickNum}
+            setPickNum={setPickNum}
+          />
         </SettingLayout>
       </SettingType>
       {seatType === 2 && <SettingType>
         <TypeName>짝궁 성별</TypeName>
         <SettingLayout>
-          <MateGender />
+          <MateGender
+            mateGender={mateGender}
+            setMateGender={setMateGender}
+          />
         </SettingLayout>
       </SettingType>}
-      {/* {seatType === 1 && <SettingType>
-        <TypeName>거리두기 모둠</TypeName>
-        <SettingLayout>
-          <KeepDistanceGroup keepDistanceGroup={keepDistanceGroup} setKeepDistanceGroup={setKeepDistanceGroup} setErrMsg={setErrMsg} />
-        </SettingLayout>
-      </SettingType>}
+      {/*
       <SettingType>
         <TypeName>학생 분리</TypeName>
         <SettingLayout>

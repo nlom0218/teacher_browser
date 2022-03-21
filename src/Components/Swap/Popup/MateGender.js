@@ -13,9 +13,11 @@ const Container = styled.div`
 
 const Item = styled.div`
   display: grid;
+  justify-items: flex-start;
   grid-template-columns: auto 1fr;
   column-gap: 5px;
   column-gap: 0.3125rem;
+  cursor: pointer;
   svg {
     display: flex;
   }
@@ -23,18 +25,18 @@ const Item = styled.div`
 
 const Type = styled.div``
 
-const MateGender = () => {
+const MateGender = ({ mateGender, setMateGender }) => {
   return (<Container>
-    <Item>
-      <RiCheckboxBlankLine />
+    <Item onClick={() => setMateGender("random")}>
+      {mateGender === "random" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
       <Type>랜덤</Type>
     </Item>
-    <Item>
-      <RiCheckboxBlankLine />
+    <Item onClick={() => setMateGender("same")}>
+      {mateGender === "same" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
       <Type>동성</Type>
     </Item>
-    <Item>
-      <RiCheckboxBlankLine />
+    <Item onClick={() => setMateGender("other")}>
+      {mateGender === "other" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
       <Type>이성</Type>
     </Item>
   </Container>);
