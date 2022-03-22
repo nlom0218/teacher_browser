@@ -196,7 +196,7 @@ const Swap = () => {
 
   const [pickNum, setPickNum] = useState(6); // 첫 줄 학생 또는 모둠 수
   const [seatType, setSeatType] = useState(2) // 1: 거리두기, 2: 짝궁. 3: 모둠(2*2), 4: 모둠(3*3)
-  const [mateGender, setMateGender] = useState("same") // random, same, other
+  const [mateGender, setMateGender] = useState("other") // random, same, other
 
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: {

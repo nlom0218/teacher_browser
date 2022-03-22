@@ -88,11 +88,15 @@ const GroupName = styled.div`
 
 
 const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuffle, pickNum, seatType, mateGender }) => {
-    const shuffledStudent = () => {
-        const newSelectedStudent = selectedStudent
+
+    const basicShuffled = () => {
+        return selectedStudent
             .map((value) => ({ ...value, sort: Math.random() }))
             .sort((a, b) => a.sort - b.sort)
-        setSelectedStudent(newSelectedStudent);
+    }
+
+    const shuffledStudent = () => {
+        setSelectedStudent(basicShuffled());
     };
 
     const shuffledStudentSameMateGender = () => {
@@ -100,7 +104,31 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuf
     }
 
     const shuffledStudentOtherGender = () => {
-        console.log("other");
+        const maleStudents = basicShuffled().filter(item => item.gender === "male")
+        const femaleStudents = basicShuffled().filter(item => item.gender === "female")
+        const moreNumberOfStudents = maleStudents.length === femaleStudents.length ? maleStudents.length
+            : maleStudents.length > femaleStudents.length ? maleStudents.length : femaleStudents.length
+        const newSelectedStudent = []
+        for (let i = 0; i < moreNumberOfStudents; i++) {
+            if (maleStudents.length === femaleStudents.length) {
+                // 여학생 수와 남학생 수가 같은 경우
+                newSelectedStudent.push(maleStudents[i])
+                newSelectedStudent.push(femaleStudents[i])
+            } else if (maleStudents.length > femaleStudents.length) {
+                // 남학생 수가 더 많은 경우
+                newSelectedStudent.push(maleStudents[i])
+                if (femaleStudents[i]) {
+                    newSelectedStudent.push(femaleStudents[i])
+                }
+            } else {
+                // 여학생 수가 더 많은 경우
+                if (maleStudents[i]) {
+                    newSelectedStudent.push(maleStudents[i])
+                }
+                newSelectedStudent.push(femaleStudents[i])
+            }
+        }
+        setSelectedStudent(newSelectedStudent)
     }
 
     useEffect(() => {
