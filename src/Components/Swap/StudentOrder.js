@@ -87,26 +87,44 @@ const GroupName = styled.div`
 `
 
 
-const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuffle, pickNum, seatType }) => {
-    useEffect(() => {
-        if (isShuffle === "ing") {
-            const shuffledStudent = () => {
-                const newSelectedStudent = selectedStudent
-                    .map((value) => ({ ...value, sort: Math.random() }))
-                    .sort((a, b) => a.sort - b.sort)
-                setSelectedStudent(newSelectedStudent);
-            };
+const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuffle, pickNum, seatType, mateGender }) => {
+    const shuffledStudent = () => {
+        const newSelectedStudent = selectedStudent
+            .map((value) => ({ ...value, sort: Math.random() }))
+            .sort((a, b) => a.sort - b.sort)
+        setSelectedStudent(newSelectedStudent);
+    };
 
-            let shuffling;
-            if (isShuffle === "ing") {
-                shuffling = setInterval(() => {
-                    shuffledStudent();
-                }, 100);
-            } else {
-                clearInterval(shuffling);
-            }
-            return () => clearInterval(shuffling);
+    const shuffledStudentSameMateGender = () => {
+        console.log("same");
+    }
+
+    const shuffledStudentOtherGender = () => {
+        console.log("other");
+    }
+
+    useEffect(() => {
+        if (isShuffle !== "ing") {
+            console.log("is not ing");
+            return
         }
+        let shuffling;
+        if (seatType === 1 || seatType === 2 && mateGender === "random") {
+            shuffling = setInterval(() => {
+                shuffledStudent();
+            }, 100);
+        }
+        if (seatType === 2 && mateGender === "same") {
+            shuffling = setInterval(() => {
+                shuffledStudentSameMateGender();
+            }, 100);
+        }
+        if (seatType === 2 && mateGender === "other") {
+            shuffling = setInterval(() => {
+                shuffledStudentOtherGender();
+            }, 100);
+        }
+        return () => clearInterval(shuffling);
     }, [isShuffle]);
 
     return (
@@ -120,7 +138,7 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuf
                 {selectedStudent.map((item, index) => {
                     return (
                         <Item key={index} seatType={seatType} pickNum={pickNum}>
-                            <Name fontSize={fontSizeAll}>{item.name}</Name>
+                            <Name fontSize={fontSizeAll}>{item.name} {item.gender}</Name>
                         </Item>
                     );
                 })
