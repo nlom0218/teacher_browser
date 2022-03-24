@@ -100,7 +100,29 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuf
     };
 
     const shuffledStudentSameMateGender = () => {
-        console.log("same");
+        const maleStudents = basicShuffled().filter(item => item.gender === "male")
+        const femaleStudents = basicShuffled().filter(item => item.gender === "female")
+        const helfOfStudents = Math.ceil(basicShuffled().length / 2)
+        console.log(femaleStudents);
+        const newSelectedStudent = []
+        for (let i = 0; i < basicShuffled().length; i++) {
+            if (Math.ceil((i + 1) / 2) % 2 === 1) {
+                if (maleStudents[Math.ceil(i / 2)]) {
+                    newSelectedStudent.push(maleStudents[Math.ceil(i / 2)])
+                } else {
+                    newSelectedStudent.push(femaleStudents[Math.ceil((i - 2) / 2)])
+                }
+            }
+            if (Math.ceil((i + 1) / 2) % 2 === 0) {
+                if (femaleStudents[Math.ceil((i - 2) / 2)]) {
+                    newSelectedStudent.push(femaleStudents[Math.ceil((i - 2) / 2)])
+                } else {
+                    newSelectedStudent.push(maleStudents[Math.ceil(i / 2)])
+                }
+            }
+        }
+        setSelectedStudent(newSelectedStudent)
+        console.log(newSelectedStudent);
     }
 
     const shuffledStudentOtherGender = () => {
@@ -154,6 +176,8 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuf
         }
         return () => clearInterval(shuffling);
     }, [isShuffle]);
+
+    // return <div></div>
 
     return (
         <RealContainer>
