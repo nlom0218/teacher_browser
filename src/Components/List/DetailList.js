@@ -22,6 +22,7 @@ import DetailEomjiIcon from "./styled/DetailEomjiIcon";
 import SettingEmojiIconBtn from "./styled/SettingEmojiIconBtn";
 import Loading from "../Shared/Loading";
 import PrintList from "./PrintList";
+import PrintListContents from "./Popup/PrintListContents";
 
 const Container = styled.div`
   padding: 20px;
@@ -289,6 +290,13 @@ const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
         />
       )}
       {isPopup === "deleteList" && <DeleteList listId={listId} />}
+      {isPopup === "printList" && (
+        <PrintListContents
+          studentList={data?.seeStudentList[0]?.students.filter(
+            (item) => !item.trash
+          )}
+        />
+      )}
     </Container>
   );
 };
