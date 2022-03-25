@@ -126,6 +126,7 @@ const CheckIn = styled.div`
 const PrintListContents = ({ printRef, studentList }) => {
   const [printType, setPrintType] = useState("table");
   const [num, setNum] = useState(1);
+
   const title = localStorage.getItem("listName").slice(1, -1);
   const onClickPrintType = (type) => {
     setPrintType(type);
@@ -142,26 +143,35 @@ const PrintListContents = ({ printRef, studentList }) => {
   const onClickPrint = () => {
     handlePrint();
   };
-  const studentNum = 30;
-  console.log("학생수:", studentList?.length);
+  const studentnameList = studentList?.map((item) => item.studentName);
+  const studentnumList = studentList?.map((item) => item.studentNumber);
+  if (studentList) {
+    console.log(studentnameList);
+  }
 
-  const tableCount = [...Array(studentNum)].map(function (a, index) {
-    return (
-      <React.Fragment>
-        <Number>{index + 1}</Number>
-        <Name>이름</Name>
-      </React.Fragment>
-    );
-  });
-  const checklistMap = [...Array(num)].map(function () {
+  const tableCount = () => {
+    studentnameList?.map((item, index) => {
+      return (
+        <React.Fragment>
+          {/* 학생번호로 교체 */}
+          <Number>{index + 1}</Number>
+          {/* 이름이 안 나와ㅠ */}
+          <Name>{item}</Name>
+        </React.Fragment>
+      );
+    });
+  };
+  const checklistMap = [...Array(num)].map((item, index) => {
     return <CheckIn />;
   });
-  const checkCount = [...Array(studentNum)].map(function (a, index) {
+  const checkCount = studentnameList?.map((item, index) => {
     return (
       <React.Fragment>
         <Item>
+          {/* 학생번호로 교체 */}
           <Number>{index + 1}</Number>
-          <Name>이름</Name>
+          {/* 이름이 안 나와ㅠ */}
+          <Name>{item}</Name>
         </Item>
         <Check num={num}>{checklistMap}</Check>
       </React.Fragment>
@@ -210,7 +220,7 @@ const PrintListContents = ({ printRef, studentList }) => {
           <List>
             <Number>번호</Number>
             <Name className="print_table_row_name">이름</Name>
-            {tableCount}
+            {tableCount(studentList)}
           </List>
         )}
         {printType === "checklist" && (
