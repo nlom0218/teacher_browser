@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { customMedia } from "../../styles";
-import { keepDistanceGroupHorizontalSame } from "./sharedFn/keepDistanceGroup";
+import { IoMdMan, IoMdWoman } from "react-icons/io"
 
 const RealContainer = styled.div`
 
@@ -40,6 +39,7 @@ const Container = styled.div`
 `;
 
 const Item = styled.div`
+    position: relative;
     min-height : 120px;
     min-height : 7.5rem;
     padding: 20px 10px;
@@ -86,6 +86,16 @@ const GroupName = styled.div`
     font-weight: 600;
 `
 
+const GenderIcon = styled.div`
+    position: absolute;
+    top: 6%;
+    left: 3%;
+    color: ${props => props.gender === "male" ? "#2BA4D8" : "#ECA1C3"};
+    svg {
+        font-size: 1.5em;
+        font-size: 1.5rem;
+    }
+`
 
 const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuffle, pickNum, seatType, mateGender }) => {
 
@@ -193,6 +203,10 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuf
                     return (
                         <Item key={index} seatType={seatType} pickNum={pickNum}>
                             <Name fontSize={fontSizeAll}>{item.name}</Name>
+                            <GenderIcon
+                                gender={item.gender}
+                            >{item.gender === "male" ? <IoMdMan /> : <IoMdWoman />}
+                            </GenderIcon>
                         </Item>
                     );
                 })
