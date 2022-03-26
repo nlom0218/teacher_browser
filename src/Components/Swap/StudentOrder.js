@@ -102,27 +102,29 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuf
     const shuffledStudentSameMateGender = () => {
         const maleStudents = basicShuffled().filter(item => item.gender === "male")
         const femaleStudents = basicShuffled().filter(item => item.gender === "female")
-        const helfOfStudents = Math.ceil(basicShuffled().length / 2)
-        console.log(femaleStudents);
         const newSelectedStudent = []
         for (let i = 0; i < basicShuffled().length; i++) {
-            if (Math.ceil((i + 1) / 2) % 2 === 1) {
-                if (maleStudents[Math.ceil(i / 2)]) {
-                    newSelectedStudent.push(maleStudents[Math.ceil(i / 2)])
+            if (Math.floor(i / 2) % 2 === 0) {
+                //남학생
+                if (maleStudents.length !== 0) {
+                    newSelectedStudent.push(maleStudents[0])
+                    maleStudents.shift()
                 } else {
-                    newSelectedStudent.push(femaleStudents[Math.ceil((i - 2) / 2)])
+                    newSelectedStudent.push(femaleStudents[0])
+                    femaleStudents.shift()
                 }
-            }
-            if (Math.ceil((i + 1) / 2) % 2 === 0) {
-                if (femaleStudents[Math.ceil((i - 2) / 2)]) {
-                    newSelectedStudent.push(femaleStudents[Math.ceil((i - 2) / 2)])
+            } else {
+                //여학생
+                if (femaleStudents.length !== 0) {
+                    newSelectedStudent.push(femaleStudents[0])
+                    femaleStudents.shift()
                 } else {
-                    newSelectedStudent.push(maleStudents[Math.ceil(i / 2)])
+                    newSelectedStudent.push(maleStudents[0])
+                    maleStudents.shift()
                 }
             }
         }
         setSelectedStudent(newSelectedStudent)
-        console.log(newSelectedStudent);
     }
 
     const shuffledStudentOtherGender = () => {
@@ -190,7 +192,7 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuf
                 {selectedStudent.map((item, index) => {
                     return (
                         <Item key={index} seatType={seatType} pickNum={pickNum}>
-                            <Name fontSize={fontSizeAll}>{item.name} {item.gender}</Name>
+                            <Name fontSize={fontSizeAll}>{item.name}</Name>
                         </Item>
                     );
                 })
