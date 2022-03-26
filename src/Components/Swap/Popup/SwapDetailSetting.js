@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { outPopup } from '../../../apollo';
 import { customMedia } from '../../../styles';
 import PopupContainer from '../../Shared/PopupContainer';
 import DetailPickNum from './DetailPickNum';
@@ -44,7 +45,19 @@ const SettingLayout = styled.div`
   padding: 0.625rem;
 `
 
+const CompleteBtn = styled.div`
+  background-color: ${props => props.theme.btnBgColor};
+  color: ${props => props.theme.bgColor};
+  text-align: center;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+`
+
 const SwapDetailSetting = ({ pickNum, setPickNum, setErrMsg, setSeatType, seatType, mateGender, setMateGender }) => {
+  const onClickCompleteBtn = () => outPopup()
+
   return (<PopupContainer>
     <Container>
       <Title>자리 설정</Title>
@@ -78,6 +91,7 @@ const SwapDetailSetting = ({ pickNum, setPickNum, setErrMsg, setSeatType, seatTy
           />
         </SettingLayout>
       </SettingType>}
+      <CompleteBtn onClick={onClickCompleteBtn}>완료</CompleteBtn>
       {/*
       <SettingType>
         <TypeName>학생 분리</TypeName>
