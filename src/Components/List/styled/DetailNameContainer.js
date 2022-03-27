@@ -29,6 +29,6 @@ const DetailNameContainer = styled.div`
     column-gap: 0.625rem;
   `}
   }
-`
+`;
 
-export default DetailNameContainer
+export default DetailNameContainer;
