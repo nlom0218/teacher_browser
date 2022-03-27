@@ -152,7 +152,7 @@ const PrintListContents = ({ printRef, studentList }) => {
   const tableCount = () => {
     return studentList?.map((item, index) => {
       return (
-        <React.Fragment>
+        <React.Fragment key={index}>
           {item.studentNumber ? (
             <Number>{item.studentNumber}</Number>
           ) : (
@@ -164,11 +164,11 @@ const PrintListContents = ({ printRef, studentList }) => {
     });
   };
   const checklistMap = [...Array(num)].map((item, index) => {
-    return <CheckIn />;
+    return <CheckIn key={index}/>;
   });
   const checkCount = studentList?.map((item, index) => {
     return (
-      <React.Fragment>
+      <React.Fragment key={index}>
         <Item>
           {item.studentNumber ? (
             <Number>{item.studentNumber}</Number>
