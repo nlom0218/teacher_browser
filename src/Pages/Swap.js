@@ -196,7 +196,7 @@ const Swap = () => {
 
   const [pickNum, setPickNum] = useState(6); // 첫 줄 학생 또는 모둠 수
   const [seatType, setSeatType] = useState(1) // 1: 거리두기, 2: 짝궁. 3: 모둠(2*2), 4: 모둠(3*3)
-  const [keepDistanceGroup, setKeepDistanceGroup] = useState({ type: "none", gender: "random" }) // 거리두기의 모둠 유무 및 성별
+  const [mateGender, setMateGender] = useState("random") // random, same, other
 
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: {
@@ -341,7 +341,7 @@ const Swap = () => {
               fontSizeAll={fontSizeAll}
               pickNum={pickNum}
               seatType={seatType}
-              keepDistanceGroup={keepDistanceGroup}
+              mateGender={mateGender}
             />
           </React.Fragment>)
         )}
@@ -361,9 +361,8 @@ const Swap = () => {
       setPickNum={setPickNum}
       seatType={seatType}
       setSeatType={setSeatType}
-      keepDistanceGroup={keepDistanceGroup}
-      setKeepDistanceGroup={setKeepDistanceGroup}
-
+      mateGender={mateGender}
+      setMateGender={setMateGender}
     />}
     {isShuffle === "pickNum" && <StudentNumber
       pickNum={pickNum}
