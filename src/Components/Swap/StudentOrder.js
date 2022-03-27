@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { customMedia } from "../../styles";
-import { keepDistanceGroupHorizontalSame } from "./sharedFn/keepDistanceGroup";
+import { IoMdMan, IoMdWoman } from "react-icons/io"
 
 const RealContainer = styled.div`
 
@@ -40,6 +39,7 @@ const Container = styled.div`
 `;
 
 const Item = styled.div`
+    position: relative;
     min-height : 120px;
     min-height : 7.5rem;
     padding: 20px 10px;
@@ -86,68 +86,109 @@ const GroupName = styled.div`
     font-weight: 600;
 `
 
+const GenderIcon = styled.div`
+    position: absolute;
+    top: 6%;
+    left: 3%;
+    color: ${props => props.gender === "male" ? "#2BA4D8" : "#ECA1C3"};
+    svg {
+        font-size: 1.5em;
+        font-size: 1.5rem;
+    }
+`
 
-const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuffle, pickNum, seatType, keepDistanceGroup }) => {
-    const [groupArr, setGroupArr] = useState([])
+const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuffle, pickNum, seatType, mateGender }) => {
+
+    const basicShuffled = () => {
+        return selectedStudent
+            .map((value) => ({ ...value, sort: Math.random() }))
+            .sort((a, b) => a.sort - b.sort)
+    }
+
+    const shuffledStudent = () => {
+        setSelectedStudent(basicShuffled());
+    };
+
+    const shuffledStudentSameMateGender = () => {
+        const maleStudents = basicShuffled().filter(item => item.gender === "male")
+        const femaleStudents = basicShuffled().filter(item => item.gender === "female")
+        const newSelectedStudent = []
+        for (let i = 0; i < basicShuffled().length; i++) {
+            if (Math.floor(i / 2) % 2 === 0) {
+                //남학생
+                if (maleStudents.length !== 0) {
+                    newSelectedStudent.push(maleStudents[0])
+                    maleStudents.shift()
+                } else {
+                    newSelectedStudent.push(femaleStudents[0])
+                    femaleStudents.shift()
+                }
+            } else {
+                //여학생
+                if (femaleStudents.length !== 0) {
+                    newSelectedStudent.push(femaleStudents[0])
+                    femaleStudents.shift()
+                } else {
+                    newSelectedStudent.push(maleStudents[0])
+                    maleStudents.shift()
+                }
+            }
+        }
+        setSelectedStudent(newSelectedStudent)
+    }
+
+    const shuffledStudentOtherGender = () => {
+        const maleStudents = basicShuffled().filter(item => item.gender === "male")
+        const femaleStudents = basicShuffled().filter(item => item.gender === "female")
+        const moreNumberOfStudents = maleStudents.length === femaleStudents.length ? maleStudents.length
+            : maleStudents.length > femaleStudents.length ? maleStudents.length : femaleStudents.length
+        const newSelectedStudent = []
+        for (let i = 0; i < moreNumberOfStudents; i++) {
+            if (maleStudents.length === femaleStudents.length) {
+                // 여학생 수와 남학생 수가 같은 경우
+                newSelectedStudent.push(maleStudents[i])
+                newSelectedStudent.push(femaleStudents[i])
+            } else if (maleStudents.length > femaleStudents.length) {
+                // 남학생 수가 더 많은 경우
+                newSelectedStudent.push(maleStudents[i])
+                if (femaleStudents[i]) {
+                    newSelectedStudent.push(femaleStudents[i])
+                }
+            } else {
+                // 여학생 수가 더 많은 경우
+                if (maleStudents[i]) {
+                    newSelectedStudent.push(maleStudents[i])
+                }
+                newSelectedStudent.push(femaleStudents[i])
+            }
+        }
+        setSelectedStudent(newSelectedStudent)
+    }
 
     useEffect(() => {
-        if (isShuffle === "ing") {
-            const shuffledStudent = () => {
-                const newSelectedStudent = selectedStudent
-                    .map((value) => ({ ...value, sort: Math.random() }))
-                    .sort((a, b) => a.sort - b.sort)
-                setSelectedStudent(newSelectedStudent);
-            };
-
-            let shuffling;
-            if (isShuffle === "ing") {
-                shuffling = setInterval(() => {
-                    shuffledStudent();
-                }, 100);
-            } else {
-                clearInterval(shuffling);
-            }
-            return () => clearInterval(shuffling);
+        if (isShuffle !== "ing") {
+            return
         }
-        if (isShuffle === "finish") {
-            if (seatType === 1 && keepDistanceGroup.gender === "same" && keepDistanceGroup.type === "horizontal") {
-                // 모둥미 가로 형태이고 같은 성별끼리 같은 모둠
-                console.log("거리두기 대형, 가로 모둠, 같은 성별");
-                keepDistanceGroupHorizontalSame(selectedStudent, pickNum)
-            }
-            if (seatType === 1 && keepDistanceGroup.gender === "helf" && keepDistanceGroup.type === "horizontal") {
-                // 모둥미 가로 형태이고 성별이 섞인 모둠
-                console.log("거리두기 대형, 가로 모둠, 다른 성별");
-            }
-            if (seatType === 1 && keepDistanceGroup.gender === "same" && keepDistanceGroup.type === "vertical") {
-                // 모둥미 세로 형태이고 같은 성별끼리 같은 모둠
-                console.log("거리두기 대형, 세로 모둠, 같은 성별");
-            }
-            if (seatType === 1 && keepDistanceGroup.gender === "helf" && keepDistanceGroup.type === "vertical") {
-                // 모둥미 세로 형태이고 같은 성별이 섞인 모둠
-                console.log("거리두기 대형, 세로 모둠, 다른 성별");
-            }
+        let shuffling;
+        if (seatType === 1 || seatType === 2 && mateGender === "random") {
+            shuffling = setInterval(() => {
+                shuffledStudent();
+            }, 100);
         }
-
+        if (seatType === 2 && mateGender === "same") {
+            shuffling = setInterval(() => {
+                shuffledStudentSameMateGender();
+            }, 100);
+        }
+        if (seatType === 2 && mateGender === "other") {
+            shuffling = setInterval(() => {
+                shuffledStudentOtherGender();
+            }, 100);
+        }
+        return () => clearInterval(shuffling);
     }, [isShuffle]);
 
-
-    useEffect(() => {
-        if (keepDistanceGroup.type === "vertical") {
-            let newGroupArr = []
-            for (let i = 0; i < pickNum; i++) {
-                newGroupArr.push(i + 1)
-            }
-            setGroupArr(newGroupArr)
-        } else if (keepDistanceGroup.type === "horizontal") {
-            let newGroupArr = []
-            for (let i = 0; i < Math.ceil(selectedStudent.length / pickNum); i++) {
-                newGroupArr.push(i + 1)
-            }
-            setGroupArr(newGroupArr)
-        }
-    }, [keepDistanceGroup, pickNum])
-
+    // return <div></div>
 
     return (
         <RealContainer>
@@ -155,23 +196,16 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuf
             <Container
                 pickNum={pickNum}
                 seatType={seatType}
-                groupType={keepDistanceGroup.type}
                 rowLength={Math.ceil(selectedStudent.length / pickNum)}
             >
-                {keepDistanceGroup.type !== "none" &&
-                    <GroupName
-                        groupType={keepDistanceGroup.type}
-                        pickNum={pickNum}
-                        rowLength={Math.ceil(selectedStudent.length / pickNum)}
-                    >
-                        {groupArr.map((item, index) => {
-                            return <div key={index}>{item}모둠</div>
-                        })}
-                    </GroupName>}
                 {selectedStudent.map((item, index) => {
                     return (
                         <Item key={index} seatType={seatType} pickNum={pickNum}>
                             <Name fontSize={fontSizeAll}>{item.name}</Name>
+                            <GenderIcon
+                                gender={item.gender}
+                            >{item.gender === "male" ? <IoMdMan /> : <IoMdWoman />}
+                            </GenderIcon>
                         </Item>
                     );
                 })

@@ -21,7 +21,7 @@ const Type = styled.div`
   cursor: pointer;
 `
 
-const DetailSeatType = ({ setSeatType, seatType, setPickNum, setKeepDistanceGroup }) => {
+const DetailSeatType = ({ setSeatType, seatType, setPickNum }) => {
   const onClickSetSeatType = (type) => {
     if (type === 2 || type === 1) {
       setPickNum(6)
@@ -29,7 +29,6 @@ const DetailSeatType = ({ setSeatType, seatType, setPickNum, setKeepDistanceGrou
       setPickNum(3)
     }
     setSeatType(type)
-    setKeepDistanceGroup({ type: "none", gender: "random" })
   }
 
   return (<Container>

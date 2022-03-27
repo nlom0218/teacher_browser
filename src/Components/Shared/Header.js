@@ -18,6 +18,7 @@ const Container = styled.div`
 `
 
 const PageBtn = styled.div`
+  position: relative;
   justify-self: center;
   a {
     display: flex;
