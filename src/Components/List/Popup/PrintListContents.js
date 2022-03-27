@@ -27,6 +27,9 @@ const PrintTypeItem = styled.div`
   column-gap: 5px;
   column-gap: 0.3125rem;
   cursor: pointer;
+  svg {
+    display: flex;
+  }
 `;
 const PrintIcon = styled.div`
   justify-self: flex-end;
@@ -145,18 +148,17 @@ const PrintListContents = ({ printRef, studentList }) => {
   };
   const studentnameList = studentList?.map((item) => item.studentName);
   const studentnumList = studentList?.map((item) => item.studentNumber);
-  if (studentList) {
-    console.log(studentnameList);
-  }
 
   const tableCount = () => {
-    studentnameList?.map((item, index) => {
+    return studentList?.map((item, index) => {
       return (
         <React.Fragment>
-          {/* 학생번호로 교체 */}
-          <Number>{index + 1}</Number>
-          {/* 이름이 안 나와ㅠ */}
-          <Name>{item}</Name>
+          {item.studentNumber ? (
+            <Number>{item.studentNumber}</Number>
+          ) : (
+            <Number>{index + 1}</Number>
+          )}
+          <Name>{item.studentName}</Name>
         </React.Fragment>
       );
     });
@@ -164,14 +166,16 @@ const PrintListContents = ({ printRef, studentList }) => {
   const checklistMap = [...Array(num)].map((item, index) => {
     return <CheckIn />;
   });
-  const checkCount = studentnameList?.map((item, index) => {
+  const checkCount = studentList?.map((item, index) => {
     return (
       <React.Fragment>
         <Item>
-          {/* 학생번호로 교체 */}
-          <Number>{index + 1}</Number>
-          {/* 이름이 안 나와ㅠ */}
-          <Name>{item}</Name>
+          {item.studentNumber ? (
+            <Number>{item.studentNumber}</Number>
+          ) : (
+            <Number>{index + 1}</Number>
+          )}
+          <Name>{item.studentName}</Name>
         </Item>
         <Check num={num}>{checklistMap}</Check>
       </React.Fragment>
@@ -220,7 +224,7 @@ const PrintListContents = ({ printRef, studentList }) => {
           <List>
             <Number>번호</Number>
             <Name className="print_table_row_name">이름</Name>
-            {tableCount(studentList)}
+            {tableCount()}
           </List>
         )}
         {printType === "checklist" && (

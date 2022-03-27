@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useReactiveVar } from "@apollo/client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { inPopup, isPopupVar } from "../../apollo";
@@ -184,6 +184,7 @@ const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
   const onClickDeleteListBtn = () => {
     inPopup("deleteList");
   };
+  const componentRef = useRef(null);
 
   // 데이터 정보가 불러온 뒤 아이콘과 이름 값 세팅하기
   useEffect(() => {
@@ -292,6 +293,7 @@ const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
       {isPopup === "deleteList" && <DeleteList listId={listId} />}
       {isPopup === "printList" && (
         <PrintListContents
+          printRef={componentRef}
           studentList={data?.seeStudentList[0]?.students.filter(
             (item) => !item.trash
           )}

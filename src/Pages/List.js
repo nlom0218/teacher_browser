@@ -1,5 +1,5 @@
 import { useQuery, useReactiveVar } from "@apollo/client";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { FaUserFriends } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -86,7 +86,6 @@ const List = () => {
       trash: false,
     },
   });
-  const componentRef = useRef(null);
 
   const onClickStudentIcon = () => {
     if (me) {
@@ -237,7 +236,6 @@ const List = () => {
         />
       )}
       {isPopup === "needLogin" && <NeedLoginPopupContainer />}
-      {isPopup === "printList" && <PrintListContents printRef={componentRef} />}
     </BasicContainer>
   );
 };
