@@ -167,7 +167,6 @@ const StudentOrder = ({ selectedStudent, setSelectedStudent, fontSizeAll, isShuf
 
     useEffect(() => {
         if (isShuffle !== "ing") {
-            console.log("is not ing");
             return
         }
         let shuffling;
