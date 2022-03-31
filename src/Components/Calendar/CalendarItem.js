@@ -7,6 +7,7 @@ import { inPopup } from '../../apollo';
 import { SEE_TO_DO_LIST_ONLY_LENGTH_QUERY } from '../../Graphql/ToDoList/query';
 import IcToDoList from '../../icons/ToDoList/IcToDoList';
 import routes from '../../routes';
+import AttendCalendar from './AttendCalendar';
 
 const Container = styled.div`
   background-color: ${props => props.theme.bgColor};
@@ -143,8 +144,8 @@ const DotIcon = styled.div`
 
 `
 
-const CalendarItem = ({ item, media, userEmail, schedule, }) => {
-
+const CalendarItem = ({ item, media, userEmail, schedule, calendarType }) => {
+  console.log(item);
   const navigate = useNavigate()
 
   const [dateSchedule, setDateSchedule] = useState([])
@@ -227,10 +228,6 @@ const CalendarItem = ({ item, media, userEmail, schedule, }) => {
     }
   }, [schedule])
 
-  // useEffect(() => {
-  //   refetch()
-  // }, [refetchQuery])
-
   return (<Container>
     <Day
       sun={getDay(item.date) === 0}
@@ -240,7 +237,7 @@ const CalendarItem = ({ item, media, userEmail, schedule, }) => {
     </Day>
     {media !== "Mobile" ?
       <React.Fragment>
-        <ScheduleList row={row}>
+        {calendarType === "calendar" ? <ScheduleList row={row}>
           {dateSchedule.length !== 0 && dateSchedule?.map((scheduleItem, index) => {
             if (!scheduleItem) {
               return <ScheduleItem key={index}>
@@ -255,6 +252,9 @@ const CalendarItem = ({ item, media, userEmail, schedule, }) => {
             }
           })}
         </ScheduleList>
+          :
+          <AttendCalendar />
+        }
         <Summary>
           {!toDoLength?.seeToDoListOnlyLength ? <div></div> : toDoLength?.seeToDoListOnlyLength !== 0 && <ToDoLength>
             <ToDoIcon><IcToDoList /></ToDoIcon>

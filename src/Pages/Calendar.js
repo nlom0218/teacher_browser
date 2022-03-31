@@ -30,6 +30,7 @@ import AddJournal from '../Components/Journal/Popup/AddJournal';
 import EditJournal from '../Components/Journal/Popup/EditJournal';
 import NeedLoginPopupContainer from '../Components/Shared/NeedLoginPopupContainer';
 import CalendarHelper from '../Components/Calendar/Popup/CalendarHelper';
+import { SEE_ATTENDANCE_QUERY } from '../Graphql/Attendance/query';
 
 const Container = styled.div`
   display: grid;
@@ -245,6 +246,13 @@ const Calendar = () => {
     skip: !me
   })
 
+  const { data: attendData, loading: attendLoading } = useQuery(SEE_ATTENDANCE_QUERY, {
+    variables: {
+      month: parseInt(format(date, "yyMM"))
+    },
+    skip: !me || calendarType === "calendar"
+  })
+
   const onClickTodayBtn = () => {
     const newDate = new Date()
     setDate(newDate)
@@ -346,7 +354,7 @@ const Calendar = () => {
             {media === "Desktop" && <HelpIcon onClick={onClickHelper}><IcHelper /></HelpIcon>}
           </BtnContainer>
         </TopContainer>
-        {loading ? <Loading page="subPage" /> : <BottomContainerLayout>
+        {loading || attendLoading ? <Loading page="subPage" /> : <BottomContainerLayout>
           <BottomContainer>
             {["일", "월", "화", "수", "목", "금", "토"].map((item, index) => {
               return <Day key={index} sun={item === "일"}>
@@ -355,7 +363,15 @@ const Calendar = () => {
             })}
             <CalendarList weekLength={weekLength}>
               {dateArr && dateArr?.map((item, index) => {
-                return <CalendarItem media={media} key={index} item={item} userEmail={me?.email} schedule={schedule?.seeSchedule} />
+                return <CalendarItem
+                  media={media}
+                  key={index}
+                  item={item}
+                  userEmail={me?.email}
+                  schedule={schedule?.seeSchedule}
+                  calendarType={calendarType}
+                  attendData={attendData}
+                />
               })}
             </CalendarList>
           </BottomContainer>
