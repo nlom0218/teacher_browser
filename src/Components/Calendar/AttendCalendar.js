@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { inPopup } from '../../apollo';
 import { compare } from '../../shared';
 
 const Container = styled.div`
@@ -24,6 +25,7 @@ const AttendInfoItem = styled.div`
   column-gap: 10px;
   column-gap: 0.625rem;
   transition: background-color 1s ease;
+  cursor: pointer;
 `
 
 const StudentName = styled.div`
@@ -38,6 +40,13 @@ const AttendType = styled.div`
 
 const AttendCalendar = ({ attendData, item }) => {
   const [attendInfo, setAttendInfo] = useState([])
+
+  const onClickAttendInfo = (id, studentName) => {
+    inPopup("eidtAttend")
+    localStorage.setItem("summaryAttendId", id)
+    localStorage.setItem("summaryAttendName", studentName)
+  }
+
   useEffect(() => {
     if (attendData) {
       const newAttendInfo = attendData?.
@@ -50,7 +59,7 @@ const AttendCalendar = ({ attendData, item }) => {
   return (<Container>
     <AttendInfoList>
       {attendInfo.map((item, index) => {
-        return <AttendInfoItem key={index}>
+        return <AttendInfoItem key={index} onClick={() => onClickAttendInfo(item._id, item.studentName)}>
           <StudentName>{item.studentName}</StudentName>
           <AttendType attendType={item.type}>{item.type}</AttendType>
         </AttendInfoItem>
