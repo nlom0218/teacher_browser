@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { format, startOfWeek, getWeeksInMonth, addMonths, startOfMonth, addDays, addWeeks, getMonth, getDay } from "date-fns"
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
 import { AiOutlinePlus } from "react-icons/ai"
 import { useQuery, useReactiveVar } from '@apollo/client';
@@ -75,10 +75,11 @@ const BtnContainer = styled.div`
   grid-row: 2 / 3;
   grid-column: 2 / 3;
   ${customMedia.greaterThan("tablet")`
-    grid-row: 1 / 2
+    grid-row: 1 / 2;
+    grid-template-columns: repeat(5, auto);
   `}
   ${customMedia.greaterThan("desktop")`
-    grid-template-columns: repeat(5, auto);
+    grid-template-columns: repeat(6, auto);
   `}
 `
 
@@ -165,6 +166,55 @@ const CalendarList = styled.div`
   `}
 `
 
+const CalendarType = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 20px;
+  border-radius: 1.25rem;
+  background-color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease;
+  position: relative;
+`
+
+const CalendarTypeBtn = styled.div`
+  cursor: pointer;
+  padding: 5px 16px;
+  padding: 0.3125rem 1rem;
+  opacity: 0.8;
+`
+
+const MoveRight = keyframes`
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+`
+
+const MoveLeft = keyframes`
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+`
+
+const CalendarTypeBackground = styled.div`
+  position: absolute;
+  left: 0;
+  padding: 5px 16px;
+  padding: 0.3125rem 1rem;
+  border-radius: 20px;
+  border-radius: 1.25rem;
+  background-color: ${props => props.theme.btnBgColor};
+  color: ${props => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
+  cursor: pointer;
+  animation: ${props => props.typeAniInit ? "none" : props.calendarType === "calendar" ? MoveLeft : MoveRight} 1s ease forwards;
+`
+
 
 const Calendar = () => {
   const titleUpdataer = useTitle("티처캔 | 달력")
@@ -176,6 +226,9 @@ const Calendar = () => {
   const me = useMe()
 
   const [date, setDate] = useState(new Date(localStorage.getItem("calendarDate")))
+
+  const [calendarType, setCalendarType] = useState("calendar")
+  const [typeAniInit, setTypeAniInit] = useState(true)
 
   const [weekLength, setWeekLength] = useState(1)
   const [dateArr, setDateArr] = useState(undefined)
@@ -218,6 +271,15 @@ const Calendar = () => {
 
   const onClickHelper = () => {
     inPopup("CalendarHelper")
+  }
+
+  const onClickCalendarTypeBtn = () => {
+    if (calendarType === "calendar") {
+      setCalendarType("attend")
+    } else {
+      setCalendarType("calendar")
+    }
+    setTypeAniInit(false)
   }
 
   useEffect(() => {
@@ -270,6 +332,13 @@ const Calendar = () => {
         <TopContainer>
           <Title>{format(date, "yyyy년 MM월")}</Title>
           <BtnContainer>
+            <CalendarType>
+              <CalendarTypeBtn onClick={onClickCalendarTypeBtn}>일정</CalendarTypeBtn>
+              <CalendarTypeBtn onClick={onClickCalendarTypeBtn}>출결</CalendarTypeBtn>
+              <CalendarTypeBackground calendarType={calendarType} onClick={onClickCalendarTypeBtn} typeAniInit={typeAniInit}>
+                {calendarType === "calendar" ? <div>일정</div> : <div>출결</div>}
+              </CalendarTypeBackground>
+            </CalendarType>
             <TodayBtn className="calendar_btn" onClick={onClickTodayBtn}>TODAY</TodayBtn>
             <Btn className="calendar_btn" onClick={onClickBtnMinus}><IoIosArrowBack /></Btn>
             <Btn className="calendar_btn" onClick={onClickBtn}><IoIosArrowForward /></Btn>
