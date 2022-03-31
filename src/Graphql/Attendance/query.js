@@ -10,6 +10,7 @@ export const SEE_ATTENDANCE_QUERY = gql`
       date
       month
       contents
+      studentName
     }
   }
 `

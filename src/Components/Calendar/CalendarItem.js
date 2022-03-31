@@ -144,8 +144,7 @@ const DotIcon = styled.div`
 
 `
 
-const CalendarItem = ({ item, media, userEmail, schedule, calendarType }) => {
-  console.log(item);
+const CalendarItem = ({ item, media, userEmail, schedule, calendarType, attendData }) => {
   const navigate = useNavigate()
 
   const [dateSchedule, setDateSchedule] = useState([])
@@ -253,7 +252,7 @@ const CalendarItem = ({ item, media, userEmail, schedule, calendarType }) => {
           })}
         </ScheduleList>
           :
-          <AttendCalendar />
+          <AttendCalendar attendData={attendData} item={item} />
         }
         <Summary>
           {!toDoLength?.seeToDoListOnlyLength ? <div></div> : toDoLength?.seeToDoListOnlyLength !== 0 && <ToDoLength>
