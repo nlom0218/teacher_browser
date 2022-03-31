@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { inPopup } from '../../apollo';
 import { compare } from '../../shared';
+import { customMedia } from '../../styles';
 
 const Container = styled.div`
   padding: 5px;
@@ -21,11 +22,16 @@ const AttendInfoItem = styled.div`
   border-radius: 0.3125rem;
   background-color: ${props => props.theme.cardBg};
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr;
   column-gap: 10px;
   column-gap: 0.625rem;
+  row-gap: 5px;
+  row-gap: 0.3125rem;
   transition: background-color 1s ease;
   cursor: pointer;
+  ${customMedia.greaterThan("desktop")`
+    grid-template-columns: auto 1fr;
+  `}
 `
 
 const StudentName = styled.div`

@@ -340,13 +340,13 @@ const Calendar = () => {
         <TopContainer>
           <Title>{format(date, "yyyy년 MM월")}</Title>
           <BtnContainer>
-            <CalendarType>
+            {media !== "Mobile" && <CalendarType>
               <CalendarTypeBtn onClick={onClickCalendarTypeBtn}>일정</CalendarTypeBtn>
               <CalendarTypeBtn onClick={onClickCalendarTypeBtn}>출결</CalendarTypeBtn>
               <CalendarTypeBackground calendarType={calendarType} onClick={onClickCalendarTypeBtn} typeAniInit={typeAniInit}>
                 {calendarType === "calendar" ? <div>일정</div> : <div>출결</div>}
               </CalendarTypeBackground>
-            </CalendarType>
+            </CalendarType>}
             <TodayBtn className="calendar_btn" onClick={onClickTodayBtn}>TODAY</TodayBtn>
             <Btn className="calendar_btn" onClick={onClickBtnMinus}><IoIosArrowBack /></Btn>
             <Btn className="calendar_btn" onClick={onClickBtn}><IoIosArrowForward /></Btn>
