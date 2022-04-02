@@ -31,6 +31,7 @@ import EditJournal from '../Components/Journal/Popup/EditJournal';
 import NeedLoginPopupContainer from '../Components/Shared/NeedLoginPopupContainer';
 import CalendarHelper from '../Components/Calendar/Popup/CalendarHelper';
 import { SEE_ATTENDANCE_QUERY } from '../Graphql/Attendance/query';
+import AttendSortBtn from "../Components/Calendar/AttendSortBtn"
 
 const Container = styled.div`
   display: grid;
@@ -75,6 +76,7 @@ const BtnContainer = styled.div`
   column-gap: 1.25rem;
   grid-row: 2 / 3;
   grid-column: 2 / 3;
+  position: relative;
   ${customMedia.greaterThan("tablet")`
     grid-row: 1 / 2;
     grid-template-columns: repeat(5, auto);
@@ -216,7 +218,6 @@ const CalendarTypeBackground = styled.div`
   animation: ${props => props.typeAniInit ? "none" : props.calendarType === "calendar" ? MoveLeft : MoveRight} 1s ease forwards;
 `
 
-
 const Calendar = () => {
   const titleUpdataer = useTitle("티처캔 | 달력")
   const { date: urlDate } = useParams()
@@ -229,6 +230,8 @@ const Calendar = () => {
   const [date, setDate] = useState(new Date(localStorage.getItem("calendarDate")))
 
   const [calendarType, setCalendarType] = useState("calendar")
+  const [attendOption, setAttendOption] = useState([])
+  const [selectedAttendOption, setSelectedAttendOption] = useState({ option: "전체보기" })
   const [typeAniInit, setTypeAniInit] = useState(true)
 
   const [weekLength, setWeekLength] = useState(1)
@@ -327,6 +330,28 @@ const Calendar = () => {
     }
   }, [data])
 
+  useEffect(() => {
+    if (media === "Mobile") {
+      setCalendarType("calendar")
+      setTypeAniInit(true)
+    }
+  }, [media])
+
+  useEffect(() => {
+    if (attendData) {
+      const attendType = [...new Set(attendData?.seeAttendance?.map(item => item.type))]
+        .map(item => {
+          return { option: item, subject: "attendType" }
+        })
+      const studentName = [...new Set(attendData?.seeAttendance?.map(item => item.studentName).sort())]
+        .map(item => {
+          return { option: item, subject: "studentName" }
+        })
+      const newAttendOption = [...attendType, ...studentName]
+      setAttendOption(newAttendOption)
+    }
+  }, [attendData])
+
   return (<BasicContainer>
     {urlDate ?
       <CalendarDetail
@@ -352,6 +377,14 @@ const Calendar = () => {
             <Btn className="calendar_btn" onClick={onClickBtn}><IoIosArrowForward /></Btn>
             <Btn className="calendar_btn" onClick={onClickPlusBtn}><AiOutlinePlus /></Btn>
             {media === "Desktop" && <HelpIcon onClick={onClickHelper}><IcHelper /></HelpIcon>}
+            {calendarType === "attend" &&
+              <AttendSortBtn
+                attendOption={attendOption}
+                setAttendOption={setAttendOption}
+                selectedAttendOption={selectedAttendOption}
+                setSelectedAttendOption={setSelectedAttendOption}
+              />
+            }
           </BtnContainer>
         </TopContainer>
         {loading || attendLoading ? <Loading page="subPage" /> : <BottomContainerLayout>
