@@ -231,7 +231,7 @@ const Calendar = () => {
 
   const [calendarType, setCalendarType] = useState("calendar")
   const [attendOption, setAttendOption] = useState([])
-  const [selectedAttendOption, setSelectedAttendOption] = useState({ option: "전체보기" })
+  const [selectedAttendOption, setSelectedAttendOption] = useState({ attend: "전체보기", studentName: "전체보기" })
   const [typeAniInit, setTypeAniInit] = useState(true)
 
   const [weekLength, setWeekLength] = useState(1)
@@ -380,7 +380,6 @@ const Calendar = () => {
             {calendarType === "attend" &&
               <AttendSortBtn
                 attendOption={attendOption}
-                setAttendOption={setAttendOption}
                 selectedAttendOption={selectedAttendOption}
                 setSelectedAttendOption={setSelectedAttendOption}
               />

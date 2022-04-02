@@ -9,32 +9,41 @@ const Container = styled.div`
   right: 0;
 `
 
-const AttendSortBtn = ({ attendOption, setAttendOption, selectedAttendOption, setSelectedAttedOption }) => {
-  console.log(attendOption);
-  const { register } = useForm({
+const AttendSortBtn = ({ attendOption, selectedAttendOption, setSelectedAttendOption }) => {
+
+  const { register, getValues } = useForm({
     mode: "onChange"
   })
 
-  const onInpuAttendSort = (event) => {
-    console.log(event.currentTarget);
+  const onChange = (data) => {
+    const attendType = getValues("attendType")
+    const studentName = getValues("studentName")
+    const newSelected = { attend: attendType, studentName }
+    setSelectedAttendOption(newSelected)
   }
 
   return (<Container>
     <form>
       <select
-        {...register("attendType")}
+        {...register("attendType", {
+          onChange: onChange
+        })}
+        value={selectedAttendOption.attend}
       >
-        <option>전체보기</option>
+        <option value="전체보기">전체보기</option>
         {attendOption.filter(item => item.subject === "attendType").map((item, index) => {
-          return <option key={index}>{item.option}</option>
+          return <option key={index} value={item.option}>{item.option}</option>
         })}
       </select>
       <select
-        {...register("studentName")}
+        {...register("studentName", {
+          onChange: onChange
+        })}
+        value={selectedAttendOption.studentName}
       >
-        <option>전체보기</option>
+        <option value="전체보기">전체보기</option>
         {attendOption.filter(item => item.subject === "studentName").map((item, index) => {
-          return <option key={index}>{item.option}</option>
+          return <option key={index} value={item.option}>{item.option}</option>
         })}
       </select>
     </form>
