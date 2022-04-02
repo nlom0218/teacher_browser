@@ -44,6 +44,8 @@ const TopContainer = styled.div`
   grid-template-columns: 1fr auto;
   padding: 20px;
   padding: 1.25rem;
+  padding-bottom: 0px;
+  padding-bottom: 0rem;
   align-items: center;
   column-gap: 20px;
   column-gap: 1.25rem;
@@ -61,6 +63,7 @@ const Title = styled.div`
   font-size : 1.25em;
   font-size : 1.25rem;
   grid-column: 1 / 3;
+  align-self: flex-start;
   ${customMedia.greaterThan("tablet")`
     grid-column: 1 / 2;
     font-size: 2em;
@@ -74,6 +77,8 @@ const BtnContainer = styled.div`
   align-items: center;
   column-gap: 20px;
   column-gap: 1.25rem;
+  row-gap: 10px;
+  row-gap: 0.625rem;
   grid-row: 2 / 3;
   grid-column: 2 / 3;
   position: relative;
