@@ -39,13 +39,6 @@ const AttendSortBtn = ({ attendOption, setAttendOption, selectedAttendOption, se
       </select>
     </form>
   </Container>)
-  // return (<SAttendSortBtn value={selectedAttendOption.option} onInput={onInpuAttendSort}>
-  //   <option>전체보기</option>
-  //   {attendOption.map((item, index) => {
-  //     return <option key={index} value={item}>{item.option}</option>
-  //   })}
-  //   <
-  // </SAttendSortBtn>);
 }
 
 export default AttendSortBtn;
