@@ -31,6 +31,8 @@ const AttendInfoItem = styled.div`
   cursor: pointer;
   ${customMedia.greaterThan("desktop")`
     grid-template-columns: auto 1fr;
+    row-gap: 0px;
+    row-gap: 0rem;
   `}
 `
 
@@ -56,13 +58,13 @@ const AttendCalendar = ({ attendData, item, selectedAttendOption }) => {
   const processAttendInfo = () => {
     const { attend, studentName } = selectedAttendOption
     if (attend === "전체보기" && studentName === "전체보기") {
-      return attendInfo
+      return attendInfo.sort(compare("studentName"))
     } else if (attend === "전체보기") {
-      return attendInfo.filter(item => item.studentName === studentName)
+      return attendInfo.filter(item => item.studentName === studentName).sort(compare("studentName"))
     } else if (studentName === "전체보기") {
-      return attendInfo.filter(item => item.type === attend)
+      return attendInfo.filter(item => item.type === attend).sort(compare("studentName"))
     } else {
-      return attendInfo.filter(item => item.studentName === studentName && item.type === attend)
+      return attendInfo.filter(item => item.studentName === studentName && item.type === attend).sort(compare("studentName"))
     }
   }
 
