@@ -144,7 +144,7 @@ const DotIcon = styled.div`
 
 `
 
-const CalendarItem = ({ item, media, userEmail, schedule, calendarType, attendData }) => {
+const CalendarItem = ({ item, media, userEmail, schedule, calendarType, attendData, selectedAttendOption }) => {
   const navigate = useNavigate()
 
   const [dateSchedule, setDateSchedule] = useState([])
@@ -259,7 +259,7 @@ const CalendarItem = ({ item, media, userEmail, schedule, calendarType, attendDa
           </Summary>
         </React.Fragment>
           :
-          <AttendCalendar attendData={attendData} item={item} />
+          <AttendCalendar attendData={attendData} item={item} selectedAttendOption={selectedAttendOption} />
         }
       </React.Fragment>
       :

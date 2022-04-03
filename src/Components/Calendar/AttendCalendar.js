@@ -44,13 +44,27 @@ const AttendType = styled.div`
   transition: color 1s ease;
 `
 
-const AttendCalendar = ({ attendData, item }) => {
+const AttendCalendar = ({ attendData, item, selectedAttendOption }) => {
   const [attendInfo, setAttendInfo] = useState([])
 
   const onClickAttendInfo = (id, studentName) => {
     inPopup("eidtAttend")
     localStorage.setItem("summaryAttendId", id)
     localStorage.setItem("summaryAttendName", studentName)
+  }
+
+  const processAttendInfo = () => {
+    const { attend, studentName } = selectedAttendOption
+    console.log(attend, studentName);
+    if (attend === "전체보기" && studentName === "전체보기") {
+      return attendInfo
+    } else if (attend === "전체보기") {
+      return attendInfo.filter(item => item.studentName === studentName)
+    } else if (studentName === "전체보기") {
+      return attendInfo.filter(item => item.type === attend)
+    } else {
+      return attendInfo.filter(item => item.studentName === studentName && item.type === attend)
+    }
   }
 
   useEffect(() => {
@@ -62,9 +76,15 @@ const AttendCalendar = ({ attendData, item }) => {
       setAttendInfo(newAttendInfo)
     }
   }, [attendData])
+
+  // useEffect(() => {
+  //   const newAttendInfo = attendInfo.filter(item => item.studentName === selectedAttendOption.studentName)
+  //   setAttendInfo(newAttendInfo)
+  // }, [selectedAttendOption])
+
   return (<Container>
     <AttendInfoList>
-      {attendInfo.map((item, index) => {
+      {processAttendInfo().map((item, index) => {
         return <AttendInfoItem key={index} onClick={() => onClickAttendInfo(item._id, item.studentName)}>
           <StudentName>{item.studentName}</StudentName>
           <AttendType attendType={item.type}>{item.type}</AttendType>

@@ -408,6 +408,7 @@ const Calendar = () => {
                   schedule={schedule?.seeSchedule}
                   calendarType={calendarType}
                   attendData={attendData}
+                  selectedAttendOption={selectedAttendOption}
                 />
               })}
             </CalendarList>
