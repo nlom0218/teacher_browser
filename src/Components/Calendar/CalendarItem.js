@@ -236,7 +236,7 @@ const CalendarItem = ({ item, media, userEmail, schedule, calendarType, attendDa
     </Day>
     {media !== "Mobile" ?
       <React.Fragment>
-        {calendarType === "calendar" ? <ScheduleList row={row}>
+        {calendarType === "calendar" ? <React.Fragment> <ScheduleList row={row}>
           {dateSchedule.length !== 0 && dateSchedule?.map((scheduleItem, index) => {
             if (!scheduleItem) {
               return <ScheduleItem key={index}>
@@ -251,15 +251,16 @@ const CalendarItem = ({ item, media, userEmail, schedule, calendarType, attendDa
             }
           })}
         </ScheduleList>
+          <Summary>
+            {!toDoLength?.seeToDoListOnlyLength ? <div></div> : toDoLength?.seeToDoListOnlyLength !== 0 && <ToDoLength>
+              <ToDoIcon><IcToDoList /></ToDoIcon>
+              <ToDoText>{toDoLength?.seeToDoListOnlyLength}개</ToDoText>
+            </ToDoLength>}
+          </Summary>
+        </React.Fragment>
           :
           <AttendCalendar attendData={attendData} item={item} />
         }
-        <Summary>
-          {!toDoLength?.seeToDoListOnlyLength ? <div></div> : toDoLength?.seeToDoListOnlyLength !== 0 && <ToDoLength>
-            <ToDoIcon><IcToDoList /></ToDoIcon>
-            <ToDoText>{toDoLength?.seeToDoListOnlyLength}개</ToDoText>
-          </ToDoLength>}
-        </Summary>
       </React.Fragment>
       :
       <React.Fragment>
