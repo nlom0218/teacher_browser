@@ -55,7 +55,6 @@ const AttendCalendar = ({ attendData, item, selectedAttendOption }) => {
 
   const processAttendInfo = () => {
     const { attend, studentName } = selectedAttendOption
-    console.log(attend, studentName);
     if (attend === "전체보기" && studentName === "전체보기") {
       return attendInfo
     } else if (attend === "전체보기") {

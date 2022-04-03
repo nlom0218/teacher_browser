@@ -13,6 +13,7 @@ import IcNameTableClick from '../../../icons/NameTable/IcNameTableClick';
 import { CREATE_ATTENDANCE_MUTATION } from '../../../Graphql/Attendance/mutation';
 import { format } from 'date-fns';
 import Loading from '../../Shared/Loading';
+import { SEE_ATTENDANCE_QUERY } from '../../../Graphql/Attendance/query';
 
 const CalenderPopupFormContainer = styled.form`
   padding : 20px 0px;
@@ -122,7 +123,7 @@ const SubmitInput = styled.input`
 const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) => {
 
   const [type, setType] = useState(undefined)
-  const [date, setDate] = useState(undefined);
+  const [date, setDate] = useState(undefined)
   const [studentName, setStudentName] = useState(undefined)
   const [studentId, setStudentId] = useState(undefined)
   const { register, handleSubmit } = useForm({
@@ -144,6 +145,7 @@ const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) =
 
   const [createAttendance, { loading }] = useMutation(CREATE_ATTENDANCE_MUTATION, {
     onCompleted,
+    refetchQueries: [{ query: SEE_ATTENDANCE_QUERY, variables: { month: date && parseInt(format(date, "yyMM")) } }]
   })
 
   const onSubmit = (data) => {
