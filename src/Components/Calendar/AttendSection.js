@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import SectionContainer from './styled/SectionContainer';
 import SectionContents from './styled/SectionContents';
 import SectionTitle from './styled/SectionTitle';
@@ -12,6 +12,7 @@ import Loading from '../Shared/Loading';
 import SectionNoDateText from './styled/SectionNoDateText';
 import AttendSectionItem from './AttendSectionItem';
 import { customMedia } from '../../styles';
+import { compare } from '../../shared';
 
 const PlusScheduleBtn = styled.div`
   padding: 5px;
@@ -44,6 +45,7 @@ const AttendList = styled.div`
 `
 
 const AttendSection = ({ urlDate, refetchQuery }) => {
+  const [attendArr, setAttendArr] = useState([])
 
   const { data, loading, refetch } = useQuery(SEE_ATTENDANCE_QUERY, {
     variables: {
@@ -59,6 +61,13 @@ const AttendSection = ({ urlDate, refetchQuery }) => {
     refetch()
   }, [refetchQuery])
 
+  useEffect(() => {
+    if (data) {
+      const newAttendArr = data?.seeAttendance
+      setAttendArr([...newAttendArr].sort(compare("studentName")))
+    }
+  }, [data])
+
   return (<SectionContainer>
     <SectionTitle>
       <div><IcAttendanceClick /></div>
@@ -67,9 +76,9 @@ const AttendSection = ({ urlDate, refetchQuery }) => {
     </SectionTitle>
     <SectionContents>
       {loading ? <Loading page="subPage" /> :
-        data?.seeAttendance.length === 0 ? <SectionNoDateText>생성된 출결이 없습니다. 😁</SectionNoDateText> :
+        attendArr === 0 ? <SectionNoDateText>생성된 출결이 없습니다. 😁</SectionNoDateText> :
           <AttendList>
-            {data?.seeAttendance.map((item, index) => {
+            {attendArr?.map((item, index) => {
               return <AttendSectionItem key={index} item={item} />
             })}
           </AttendList>
