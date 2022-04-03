@@ -221,6 +221,7 @@ const CalendarTypeBackground = styled.div`
   transition: background-color 1s ease, color 1s ease;
   cursor: pointer;
   animation: ${props => props.typeAniInit ? "none" : props.calendarType === "calendar" ? MoveLeft : MoveRight} 1s ease forwards;
+  transform: ${props => props.typeAniInit && props.calendarType === "calendar" ? "translateX(0%)" : "translateX(100%)"};
 `
 
 const Calendar = () => {
@@ -296,6 +297,9 @@ const Calendar = () => {
       setCalendarType("calendar")
     }
     setTypeAniInit(false)
+    setTimeout(() => {
+      setTypeAniInit(true)
+    }, 1000);
   }
 
   useEffect(() => {
