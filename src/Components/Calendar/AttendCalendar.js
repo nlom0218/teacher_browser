@@ -21,12 +21,7 @@ const AttendInfoItem = styled.div`
   border-radius: 5px;
   border-radius: 0.3125rem;
   background-color: ${props => props.theme.cardBg};
-  display: grid;
-  grid-template-rows: auto 1fr;
-  column-gap: 10px;
-  column-gap: 0.625rem;
-  row-gap: 5px;
-  row-gap: 0.3125rem;
+  line-height: 120%;
   transition: background-color 1s ease;
   cursor: pointer;
   ${customMedia.greaterThan("desktop")`
@@ -36,11 +31,13 @@ const AttendInfoItem = styled.div`
   `}
 `
 
-const StudentName = styled.div`
+const StudentName = styled.span`
   /* font-weight: 600; */
+  margin-right: 5px;
+  margin-right: 0.3125rem;
 `
 
-const AttendType = styled.div`
+const AttendType = styled.span`
   /* font-weight: 600; */
   color: ${props => props.attendType.includes("결석") ? props.theme.redColor : props.theme.btnBgColor};
   transition: color 1s ease;
