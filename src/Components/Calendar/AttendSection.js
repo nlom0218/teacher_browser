@@ -1,33 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import SectionContainer from './styled/SectionContainer';
-import SectionContents from './styled/SectionContents';
-import SectionTitle from './styled/SectionTitle';
-import { AiOutlinePlus } from "react-icons/ai"
-import styled from 'styled-components';
-import IcAttendanceClick from '../../icons/Attendance/IcAttendanceClick';
-import { inPopup } from '../../apollo';
-import { useQuery } from '@apollo/client';
-import { SEE_ATTENDANCE_QUERY } from '../../Graphql/Attendance/query';
-import Loading from '../Shared/Loading';
-import SectionNoDateText from './styled/SectionNoDateText';
-import AttendSectionItem from './AttendSectionItem';
-import { customMedia } from '../../styles';
-import { compare } from '../../shared';
+import React, { useEffect, useState } from "react";
+import SectionContainer from "./styled/SectionContainer";
+import SectionContents from "./styled/SectionContents";
+import SectionTitle from "./styled/SectionTitle";
+import { AiOutlinePlus } from "react-icons/ai";
+import styled from "styled-components";
+import IcAttendanceClick from "../../icons/Attendance/IcAttendanceClick";
+import { inPopup } from "../../apollo";
+import { useQuery } from "@apollo/client";
+import { SEE_ATTENDANCE_QUERY } from "../../Graphql/Attendance/query";
+import Loading from "../Shared/Loading";
+import SectionNoDateText from "./styled/SectionNoDateText";
+import AttendSectionItem from "./AttendSectionItem";
+import { customMedia } from "../../styles";
+import { compare } from "../../shared";
 
 const PlusScheduleBtn = styled.div`
   padding: 5px;
   padding: 0.3125rem;
   border-radius: 50%;
   cursor: pointer;
-  color: ${props => props.theme.bgColor};
-  background-color: ${props => props.theme.btnBgColor};
+  color: ${(props) => props.theme.bgColor};
+  background-color: ${(props) => props.theme.btnBgColor};
   transition: color 1s ease, background-color 1s ease;
   svg {
     font-size: 1.25em;
     font-size: 1.25rem;
     display: flex;
   }
-`
+`;
 
 const AttendList = styled.div`
   display: grid;
@@ -42,49 +42,58 @@ const AttendList = styled.div`
     padding: 1.25rem;
     grid-template-columns: 1fr 1fr;
   `}
-`
+`;
 
 const AttendSection = ({ urlDate, refetchQuery }) => {
-  const [attendArr, setAttendArr] = useState([])
+  const [attendArr, setAttendArr] = useState([]);
 
   const { data, loading, refetch } = useQuery(SEE_ATTENDANCE_QUERY, {
     variables: {
-      date: parseInt(urlDate)
-    }
-  })
+      date: parseInt(urlDate),
+    },
+  });
 
   const onClickPlusBtn = () => {
-    inPopup("addAttend")
-  }
+    inPopup("addAttend");
+  };
 
   useEffect(() => {
-    refetch()
-  }, [refetchQuery])
+    refetch();
+  }, [refetchQuery]);
 
   useEffect(() => {
     if (data) {
-      const newAttendArr = data?.seeAttendance
-      setAttendArr([...newAttendArr].sort(compare("studentName")))
+      const newAttendArr = data?.seeAttendance;
+      setAttendArr([...newAttendArr].sort(compare("studentName")));
     }
-  }, [data])
+  }, [data]);
 
-  return (<SectionContainer>
-    <SectionTitle>
-      <div><IcAttendanceClick /></div>
-      <div>출결</div>
-      <PlusScheduleBtn onClick={onClickPlusBtn}><AiOutlinePlus /></PlusScheduleBtn>
-    </SectionTitle>
-    <SectionContents>
-      {loading ? <Loading page="subPage" /> :
-        attendArr === 0 ? <SectionNoDateText>생성된 출결이 없습니다. 😁</SectionNoDateText> :
+  return (
+    <SectionContainer>
+      <SectionTitle>
+        <div>
+          <IcAttendanceClick />
+        </div>
+        <div>출결</div>
+        <PlusScheduleBtn onClick={onClickPlusBtn}>
+          <AiOutlinePlus />
+        </PlusScheduleBtn>
+      </SectionTitle>
+      <SectionContents>
+        {loading ? (
+          <Loading page="subPage" />
+        ) : attendArr.length === 0 ? (
+          <SectionNoDateText>생성된 출결이 없습니다. 😁</SectionNoDateText>
+        ) : (
           <AttendList>
             {attendArr?.map((item, index) => {
-              return <AttendSectionItem key={index} item={item} />
+              return <AttendSectionItem key={index} item={item} />;
             })}
           </AttendList>
-      }
-    </SectionContents>
-  </SectionContainer>);
-}
+        )}
+      </SectionContents>
+    </SectionContainer>
+  );
+};
 
 export default AttendSection;

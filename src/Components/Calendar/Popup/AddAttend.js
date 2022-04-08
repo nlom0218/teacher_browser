@@ -166,28 +166,6 @@ const AddAttend = ({
     CREATE_ATTENDANCE_MUTATION,
     {
       onCompleted,
-      update(
-        cache,
-        {
-          data: {
-            createAttendance: { ok, attendanceId },
-          },
-        }
-      ) {
-        if (ok) {
-          cache.modify({
-            id: "ROOT_QUERY",
-            fields: {
-              seeAttendance(prev) {
-                const newRef = attendanceId.map((item) => {
-                  return { __ref: `Attendance:${item}` };
-                });
-                return [...prev, ...newRef];
-              },
-            },
-          });
-        }
-      },
     }
   );
 
