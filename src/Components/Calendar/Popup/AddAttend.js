@@ -9,20 +9,13 @@ import {
   CalenderPopupTextareaLayout,
   CalenderPopupTitle,
   InputLayout,
-  DateContainer,
   CalenderPopupDateLayout,
 } from "./PopupLayout";
-import {
-  BsCalendarDate,
-  BsFillPersonCheckFill,
-  BsFillPersonFill,
-} from "react-icons/bs";
+import { BsFillPersonCheckFill, BsFillPersonFill } from "react-icons/bs";
 import { customMedia } from "../../../styles";
-import { ko } from "date-fns/esm/locale";
-import DatePicker from "react-datepicker";
 import IcNameTableClick from "../../../icons/NameTable/IcNameTableClick";
 import { CREATE_ATTENDANCE_MUTATION } from "../../../Graphql/Attendance/mutation";
-import { format, parse } from "date-fns";
+import { format } from "date-fns";
 import Loading from "../../Shared/Loading";
 import { SEE_ATTENDANCE_QUERY } from "../../../Graphql/Attendance/query";
 
@@ -166,6 +159,16 @@ const AddAttend = ({
     CREATE_ATTENDANCE_MUTATION,
     {
       onCompleted,
+      refetchQueries: [
+        {
+          query: SEE_ATTENDANCE_QUERY,
+          variables: { month: 2204, userEmail },
+        },
+        {
+          query: SEE_ATTENDANCE_QUERY,
+          variables: { month: 2205, userEmail },
+        },
+      ],
     }
   );
 
@@ -184,18 +187,39 @@ const AddAttend = ({
       return;
     }
 
-    const month = parseInt(format(new window.Date(startDate), "yyMM"));
+    const startDateObject = new window.Date(startDate);
+    const startDateMillisecond = startDateObject.setHours(0, 0, 0, 0);
+    const endDateObject = new window.Date(endDate);
+    const endDateMillisecond = endDateObject.setHours(0, 0, 0, 0);
 
-    createAttendance({
-      variables: {
-        userEmail,
-        studentId,
-        type,
-        month,
-        date: new window.Date(startDate).setHours(0, 0, 0, 0),
-        ...(contents && { contents }),
-      },
-    });
+    if (startDateMillisecond === endDateMillisecond) {
+      const month = parseInt(format(startDateObject, "yyMM"));
+      createAttendance({
+        variables: {
+          userEmail,
+          studentId,
+          type,
+          month,
+          date: startDateMillisecond,
+          ...(contents && { contents }),
+        },
+      });
+    } else {
+      // 여러 날을 중복하여 출결을 생성할 때
+      const term =
+        (endDateMillisecond - startDateMillisecond) / 24 / 60 / 60 / 1000 + 1;
+      const dateMonthArr = [];
+      for (let index = 0; index < term; index++) {
+        const date = new window.Date(
+          startDateMillisecond + 86400000 * index
+        ).setHours(0, 0, 0, 0);
+        const month = parseInt(
+          format(startDateMillisecond + 86400000 * index, "yyMM")
+        );
+        dateMonthArr.push({ date, month });
+      }
+      console.log(dateMonthArr);
+    }
   };
 
   const onClickSelectBtn = () => {

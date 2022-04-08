@@ -19,7 +19,6 @@ export const CREATE_ATTENDANCE_MUTATION = gql`
     ) {
       ok
       error
-      attendanceId
     }
   }
 `;

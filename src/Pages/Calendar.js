@@ -395,10 +395,6 @@ const Calendar = () => {
     }
   }, [attendData]);
 
-  useEffect(() => {
-    refetch();
-  }, [refetchQuery]);
-
   return (
     <BasicContainer>
       {urlDate ? (
