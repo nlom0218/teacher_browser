@@ -23,6 +23,8 @@ import SettingEmojiIconBtn from "./styled/SettingEmojiIconBtn";
 import Loading from "../Shared/Loading";
 import PrintList from "./PrintList";
 import PrintListContents from "./Popup/PrintListContents";
+import { useSetRecoilState } from "recoil";
+import { existStudentsInListAtom } from "../../atom";
 
 const Container = styled.div`
   padding: 20px;
@@ -81,6 +83,8 @@ const ErrMsg = styled.div`
   font-weight: 600;
 `;
 const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
+  const setExistStudentsInList = useSetRecoilState(existStudentsInListAtom);
+
   const isPopup = useReactiveVar(isPopupVar);
   const [teacherEmail, setTeacherEmail] = useState(undefined);
   const [listName, setListName] = useState(undefined);
@@ -194,11 +198,15 @@ const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
       setListName(data?.seeStudentList[0].listName);
       setValue("name", data?.seeStudentList[0].listName);
       setPlaceholder("명렬표 이름을 입력하세요.");
+      setExistStudentsInList(data?.seeStudentList[0]?.students);
+      // setExistStudentsInList(data?.seeStudentList[0]?.students);
     }
   }, [data]);
+
   useEffect(() => {
     refetch();
   }, []);
+
   if (loading) {
     return <Loading page="subPage" />;
   }

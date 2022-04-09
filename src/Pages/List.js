@@ -149,7 +149,7 @@ const List = () => {
               dragType={dragType}
               me={me}
             />
-          )}{" "}
+          )}
           {type === "student" && (
             <DetailStudent
               studentId={id}
@@ -158,7 +158,7 @@ const List = () => {
               setSuccessMsg={setSuccessMsg}
               setErrorMsg={setErrorMsg}
             />
-          )}{" "}
+          )}
           {type === "detail" && (
             <DetailList
               listId={id}
@@ -166,7 +166,7 @@ const List = () => {
               setSuccessMsg={setSuccessMsg}
               setErrorMsg={setErrorMsg}
             />
-          )}{" "}
+          )}
         </DivideLeftContents>
         {media === "Desktop" ? (
           <StudentList
