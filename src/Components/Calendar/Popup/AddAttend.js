@@ -137,46 +137,65 @@ const AddAttend = ({
   const [type, setType] = useState(undefined);
   const [startDate, setStartDate] = useState(undefined);
   const [endDate, setEndDate] = useState(undefined);
+  const [monthArr, setMonthArr] = useState([]);
   const [studentName, setStudentName] = useState(undefined);
   const [studentId, setStudentId] = useState(undefined);
   const { register, handleSubmit } = useForm({
     mode: "onChange",
   });
 
-  const onCompleted = (result) => {
-    const {
-      createAttendance: { ok, error },
-    } = result;
-    if (ok) {
-      setMsg("새로운 출결이 등록되었습니다. 😀");
-      outPopup();
-      localStorage.removeItem("attendStudentName");
-      localStorage.removeItem("attendStudentId");
-      setRefetchQuery((prev) => prev + 1);
-    } else {
-      setErrMsg(error);
-    }
+  const refetchCalendarAttendance = () => {
+    return monthArr.map((item) => {
+      return {
+        query: SEE_ATTENDANCE_QUERY,
+        variables: {
+          month: item,
+          userEmail,
+        },
+      };
+    });
+  };
+
+  const onCompleted = () => {
+    setMsg("새로운 출결이 등록되었습니다. 😀");
+    outPopup();
+    localStorage.removeItem("attendStudentName");
+    localStorage.removeItem("attendStudentId");
+    setRefetchQuery((prev) => prev + 1);
   };
 
   const [createAttendance, { loading }] = useMutation(
     CREATE_ATTENDANCE_MUTATION,
     {
-      onCompleted,
-      refetchQueries: [
-        {
-          query: SEE_ATTENDANCE_QUERY,
-          variables: { month: 2204, userEmail },
-        },
-        {
-          query: SEE_ATTENDANCE_QUERY,
-          variables: { month: 2205, userEmail },
-        },
-      ],
+      onCompleted: (result) => {
+        const {
+          createAttendance: { ok, error },
+        } = result;
+        if (ok) {
+          onCompleted();
+        } else {
+          setErrMsg(error);
+        }
+      },
+      refetchQueries: refetchCalendarAttendance(),
     }
   );
 
   const [createManyAttendance, { loading: manyLoading }] = useMutation(
-    CREATE_MANY_ATTENDANCE_MUTATION
+    CREATE_MANY_ATTENDANCE_MUTATION,
+    {
+      onCompleted: (result) => {
+        const {
+          createManyAttendance: { ok, error },
+        } = result;
+        if (ok) {
+          onCompleted();
+        } else {
+          setErrMsg(error);
+        }
+      },
+      refetchQueries: refetchCalendarAttendance(),
+    }
   );
 
   const onSubmit = (data) => {
@@ -201,6 +220,7 @@ const AddAttend = ({
 
     if (startDateMillisecond === endDateMillisecond) {
       const month = parseInt(format(startDateObject, "yyMM"));
+      setMonthArr([month]);
       createAttendance({
         variables: {
           userEmail,
@@ -216,6 +236,7 @@ const AddAttend = ({
       const term =
         (endDateMillisecond - startDateMillisecond) / 24 / 60 / 60 / 1000 + 1;
       const dateMonthArr = [];
+      const newMonthArr = [];
       for (let index = 0; index < term; index++) {
         const date = new window.Date(
           startDateMillisecond + 86400000 * index
@@ -225,8 +246,10 @@ const AddAttend = ({
         );
         if (!isWeekend(date)) {
           dateMonthArr.push({ date, month });
+          newMonthArr.push(month);
         }
       }
+      setMonthArr([...new Set(newMonthArr)]);
       createManyAttendance({
         variables: {
           userEmail,
