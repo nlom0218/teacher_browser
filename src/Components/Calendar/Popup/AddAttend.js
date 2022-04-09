@@ -15,7 +15,7 @@ import { BsFillPersonCheckFill, BsFillPersonFill } from "react-icons/bs";
 import { customMedia } from "../../../styles";
 import IcNameTableClick from "../../../icons/NameTable/IcNameTableClick";
 import { CREATE_ATTENDANCE_MUTATION } from "../../../Graphql/Attendance/mutation";
-import { format } from "date-fns";
+import { format, getDay, isWeekend } from "date-fns";
 import Loading from "../../Shared/Loading";
 import { SEE_ATTENDANCE_QUERY } from "../../../Graphql/Attendance/query";
 
@@ -216,9 +216,10 @@ const AddAttend = ({
         const month = parseInt(
           format(startDateMillisecond + 86400000 * index, "yyMM")
         );
-        dateMonthArr.push({ date, month });
+        if (!isWeekend(date)) {
+          dateMonthArr.push({ date, month });
+        }
       }
-      console.log(dateMonthArr);
     }
   };
 
