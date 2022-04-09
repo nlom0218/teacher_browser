@@ -14,7 +14,10 @@ import {
 import { BsFillPersonCheckFill, BsFillPersonFill } from "react-icons/bs";
 import { customMedia } from "../../../styles";
 import IcNameTableClick from "../../../icons/NameTable/IcNameTableClick";
-import { CREATE_ATTENDANCE_MUTATION } from "../../../Graphql/Attendance/mutation";
+import {
+  CREATE_ATTENDANCE_MUTATION,
+  CREATE_MANY_ATTENDANCE_MUTATION,
+} from "../../../Graphql/Attendance/mutation";
 import { format, getDay, isWeekend } from "date-fns";
 import Loading from "../../Shared/Loading";
 import { SEE_ATTENDANCE_QUERY } from "../../../Graphql/Attendance/query";
@@ -172,6 +175,10 @@ const AddAttend = ({
     }
   );
 
+  const [createManyAttendance, { loading: manyLoading }] = useMutation(
+    CREATE_MANY_ATTENDANCE_MUTATION
+  );
+
   const onSubmit = (data) => {
     const { contents } = data;
     if (!studentId) {
@@ -220,6 +227,15 @@ const AddAttend = ({
           dateMonthArr.push({ date, month });
         }
       }
+      createManyAttendance({
+        variables: {
+          userEmail,
+          studentId,
+          type,
+          dateMonthArr,
+          ...(contents && { contents }),
+        },
+      });
     }
   };
 
@@ -242,7 +258,7 @@ const AddAttend = ({
     }
   }, []);
 
-  if (loading) {
+  if (loading || manyLoading) {
     return <Loading page="popupPage" />;
   }
 
