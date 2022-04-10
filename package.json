@@ -13,6 +13,7 @@
     "dotenv": "^10.0.0",
     "emoji-picker-react": "^3.4.12",
     "history": "^5.1.0",
+    "node-polyfill-webpack-plugin": "^1.1.4",
     "npm-check-updates": "^12.2.1",
     "npm-force-resolutions": "^0.0.10",
     "path-browserify": "^1.0.1",
@@ -39,7 +40,7 @@
   "scripts": {
     "eject": "react-scripts eject",
     "start": "react-scripts start",
-    "build": "CI='' react-scripts build",
+    "build": "CI= react-scripts build",
     "test": "react-scripts test"
   },
   "eslintConfig": {
