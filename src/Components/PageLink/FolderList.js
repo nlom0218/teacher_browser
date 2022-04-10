@@ -43,7 +43,6 @@ const Container = styled.div`
   }
 `;
 
-
 const SFolderList = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -62,7 +61,7 @@ const SFolderList = styled.div`
     display: none;
   }
   `}
-  `;
+`;
 
 const Folder = styled.div`
   margin: 5px;
@@ -128,6 +127,7 @@ const FolderList = ({ right }) => {
     "교육청",
     "연수원",
     "교권/복지",
+    "검색포털",
   ];
   const listnum = pageLinkFolderName.length;
   const processSelected = (item) => {
