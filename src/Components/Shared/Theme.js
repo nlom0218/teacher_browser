@@ -23,7 +23,8 @@ const Wrapper = styled.div`
     font-size: 1.5em;
     display: flex;
   }
-  .theme_btn {
+  .theme_btn,
+  .menu_btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,12 +34,14 @@ const Wrapper = styled.div`
     box-shadow: 0px 2px 1px 0.5px rgba(0,0,0,0.2);
     box-shadow: 0px 0.125rem 0.0625rem 0.03125rem rgba(0,0,0,0.2);
     background: ${props => props.theme.bgColor};
-    transition: none;
     cursor: pointer;
     :hover {
       background: ${props => props.theme.fontColor};
       color: ${props => props.theme.bgColor};
     }
+  }
+  .menu_btn {
+    transition: background 1s ease;
   }
 `
 
@@ -135,23 +138,23 @@ const Theme = () => {
   return (
     <Wrapper isFullScreen={isFullScreen}>
       {isFullScreen && <MenuNavigation>
-        <MenuItem className="theme_btn" onClick={() => onClickRoutes("home")}>
+        <MenuItem className="menu_btn" onClick={() => onClickRoutes("home")}>
           <HeaderNews />
         </MenuItem>
-        <MenuItem className="theme_btn" onClick={() => onClickRoutes("todo")}>
+        <MenuItem className="menu_btn" onClick={() => onClickRoutes("todo")}>
           <HeaderToDo />
         </MenuItem>
-        <MenuItem className="theme_btn" onClick={() => onClickRoutes("calendar")}>
+        <MenuItem className="menu_btn" onClick={() => onClickRoutes("calendar")}>
           <HedaerCalender />
         </MenuItem>
-        <MenuItem className="theme_btn" onClick={() => onClickRoutes("pageLink")}>
+        <MenuItem className="menu_btn" onClick={() => onClickRoutes("pageLink")}>
           <HeaderBookMark />
         </MenuItem>
-        <MenuItem className="theme_btn" onClick={() => onClickRoutes("menu")}>
+        <MenuItem className="menu_btn" onClick={() => onClickRoutes("menu")}>
           <HeaderMenu />
         </MenuItem>
       </MenuNavigation>}
-      {media === "Desktop" && <ScreenTheme onClick={onClickScreenBtn} className="theme_btn">
+      {media === "Desktop" && <ScreenTheme onClick={onClickScreenBtn} className="menu_btn">
         {isFullScreen ? <BiExitFullscreen /> : <BiFullscreen />}
       </ ScreenTheme>}
       <BackgroungTheme onClick={onClickBtn} className="theme_btn">

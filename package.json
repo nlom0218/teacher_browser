@@ -1,9 +1,10 @@
 {
   "name": "teacher_browser",
-  "version": "1.2.0",
+  "version": "1.4.0",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.5.7",
+    "@craco/craco": "^6.4.3",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -14,6 +15,7 @@
     "history": "^5.1.0",
     "npm-check-updates": "^12.2.1",
     "npm-force-resolutions": "^0.0.10",
+    "path-browserify": "^1.0.1",
     "react": "^17.0.2",
     "react-datepicker": "^4.5.0",
     "react-dnd": "^14.0.4",
@@ -23,10 +25,11 @@
     "react-icons": "^4.3.1",
     "react-responsive": "^9.0.0-beta.4",
     "react-router-dom": "^6.0.2",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^5.0.0",
     "react-table": "^7.7.0",
     "react-textarea-autosize": "^8.3.3",
     "react-to-print": "^2.14.3",
+    "recoil": "^0.7.0",
     "styled-components": "^5.3.3",
     "styled-media-query": "^2.1.2",
     "styled-reset": "^4.3.4",
@@ -34,10 +37,10 @@
   },
   "proxy": "https://openapi.naver.com",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "CI= react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start": "craco start",
+    "build": "CI= craco build",
+    "test": "craco test"
   },
   "eslintConfig": {
     "extends": [

@@ -1,12 +1,21 @@
-import { useReactiveVar } from '@apollo/client';
-import React, { useState } from 'react';
-import { FcNext, FcPrevious } from 'react-icons/fc';
-import styled from 'styled-components';
-import { disableSeeStudent, inPopup, isSeeStudentVar, enableSeeStudent } from '../../apollo';
-import Loading from '../Shared/Loading';
-import { DivideRightContents, SeeRightContentsBtn } from '../Shared/styled/DivideContents';
-import SortTagBtn from './SortTagBtn';
-import StudentItem from './StudentItem';
+import { useReactiveVar } from "@apollo/client";
+import React, { useState } from "react";
+import { FcNext, FcPrevious } from "react-icons/fc";
+import styled from "styled-components";
+import {
+  disableSeeStudent,
+  inPopup,
+  isSeeStudentVar,
+  enableSeeStudent,
+} from "../../apollo";
+import { useRecoilValue } from "recoil";
+import {
+  DivideRightContents,
+  SeeRightContentsBtn,
+} from "../Shared/styled/DivideContents";
+import SortTagBtn from "./SortTagBtn";
+import StudentItem from "./StudentItem";
+import { existStudentsInListAtom } from "../../atom";
 
 const SStudentList = styled.div`
   max-height: 100%;
@@ -22,73 +31,105 @@ const SStudentList = styled.div`
   row-gap: 0.3125rem;
   .noStudnet {
     text-align: center;
-    color: ${props => props.theme.redColor};
+    color: ${(props) => props.theme.redColor};
     transition: color 1s ease;
   }
-`
+`;
 
 const AddStudentBtn = styled.div`
   justify-self: center;
   cursor: pointer;
   padding: 10px 20px;
   padding: 0.625rem 1.25rem;
-  background-color: ${props => props.theme.btnBgColor};
-  color: ${props => props.theme.bgColor};
+  background-color: ${(props) => props.theme.btnBgColor};
+  color: ${(props) => props.theme.bgColor};
   border-radius: 5px;
   border-radius: 0.3125rem;
   transition: background-color 1s ease, color 1s ease;
-`
+`;
 
-const StudentList = ({ setSomeDragging, studentId, seeNum, setDragType, allStudent, seeStudentIcon, me }) => {
+const StudentList = ({
+  setSomeDragging,
+  studentId,
+  seeNum,
+  setDragType,
+  allStudent,
+  seeStudentIcon,
+  me,
+}) => {
+  const existStudentsInList = useRecoilValue(existStudentsInListAtom);
+
   // 초기 로드 시 에니메이션 작동 안하게 하기
-  const [initLoad, setInitLoad] = useState(true)
+  const [initLoad, setInitLoad] = useState(true);
 
-  const isSeeList = useReactiveVar(isSeeStudentVar)
-  const [isSeedisplay, isSeeSetDisplay] = useState(isSeeList)
+  const isSeeList = useReactiveVar(isSeeStudentVar);
+  const [isSeedisplay, isSeeSetDisplay] = useState(isSeeList);
 
   // 학생 생성을 위한 팝업창
   const onClickAddBtn = () => {
     if (me) {
-      inPopup("createStudent")
+      inPopup("createStudent");
     } else {
-      inPopup("needLogin")
+      inPopup("needLogin");
     }
-  }
+  };
 
   const onClickSeeBtn = () => {
     if (initLoad) {
-      setInitLoad(false)
+      setInitLoad(false);
     }
     if (isSeeList) {
-      disableSeeStudent()
+      disableSeeStudent();
       setTimeout(() => {
-        isSeeSetDisplay(false)
-      }, 1000)
+        isSeeSetDisplay(false);
+      }, 1000);
     } else {
-      enableSeeStudent()
-      isSeeSetDisplay(true)
+      enableSeeStudent();
+      isSeeSetDisplay(true);
     }
-  }
+  };
 
-  return (<React.Fragment>
-    <SeeRightContentsBtn onClick={onClickSeeBtn} isSeeList={isSeeList} initLoad={initLoad}>
-      {isSeeList ? <FcNext /> : <FcPrevious />}
-    </SeeRightContentsBtn>
-    <DivideRightContents isSeeList={isSeeList} initLoad={initLoad} isSeedisplay={isSeedisplay}>
-      <SStudentList>
-        <SortTagBtn me={me} />
-        {allStudent?.length === 0 ?
-          <div className="noStudnet">생성된 학생이 없습니다.</div>
-          :
-          allStudent?.map((item, index) => {
-            return <StudentItem key={index} item={item} setSomeDragging={setSomeDragging} studentId={studentId} seeNum={seeNum} setDragType={setDragType} seeStudentIcon={seeStudentIcon} />
-
-          })}
-      </SStudentList>
-      <AddStudentBtn onClick={onClickAddBtn}>학생 생성하기</AddStudentBtn>
-    </DivideRightContents>
-  </React.Fragment>
+  return (
+    <React.Fragment>
+      <SeeRightContentsBtn
+        onClick={onClickSeeBtn}
+        isSeeList={isSeeList}
+        initLoad={initLoad}
+      >
+        {isSeeList ? <FcNext /> : <FcPrevious />}
+      </SeeRightContentsBtn>
+      <DivideRightContents
+        isSeeList={isSeeList}
+        initLoad={initLoad}
+        isSeedisplay={isSeedisplay}
+      >
+        <SStudentList>
+          <SortTagBtn me={me} />
+          {allStudent?.length === 0 ? (
+            <div className="noStudnet">생성된 학생이 없습니다.</div>
+          ) : (
+            allStudent?.map((item, index) => {
+              return (
+                <StudentItem
+                  key={index}
+                  item={item}
+                  setSomeDragging={setSomeDragging}
+                  studentId={studentId}
+                  seeNum={seeNum}
+                  setDragType={setDragType}
+                  seeStudentIcon={seeStudentIcon}
+                  isExisted={existStudentsInList
+                    .map((item) => item._id)
+                    .includes(item._id)}
+                />
+              );
+            })
+          )}
+        </SStudentList>
+        <AddStudentBtn onClick={onClickAddBtn}>학생 생성하기</AddStudentBtn>
+      </DivideRightContents>
+    </React.Fragment>
   );
-}
+};
 
 export default StudentList;
