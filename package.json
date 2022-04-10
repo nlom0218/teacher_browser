@@ -38,9 +38,9 @@
   "proxy": "https://openapi.naver.com",
   "scripts": {
     "eject": "react-scripts eject",
-    "start": "craco start",
-    "build": "CI= craco build",
-    "test": "craco test"
+    "start": "react-scripts start",
+    "build": "CI= react-scripts build",
+    "test": "react-scripts test"
   },
   "eslintConfig": {
     "extends": [
