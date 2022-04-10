@@ -120,7 +120,7 @@ const DelBtn = styled.div`
   cursor: pointer;
 `
 
-const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) => {
+const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery }) => {
 
   const attendId = localStorage.getItem("summaryAttendId")
   const attendName = localStorage.getItem("summaryAttendName")
@@ -217,16 +217,11 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) 
   }
 
   useEffect(() => {
-    if (urlDate) {
-      setDate(new window.Date(parseInt(urlDate)))
-    }
-  }, [])
-
-  useEffect(() => {
     if (data) {
       setStudentId(data?.seeAttendance[0]?.studentId)
       setType(data?.seeAttendance[0]?.type)
       setValue("contents", data?.seeAttendance[0]?.contents)
+      setDate(new window.Date(data?.seeAttendance[0]?.date))
     }
   }, [data])
 
