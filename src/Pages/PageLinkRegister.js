@@ -142,6 +142,7 @@ const PageLinkRegister = () => {
     "교육청",
     "연수원",
     "교권/복지",
+    "검색포털",
   ];
   const pageType = ["블로그", "유튜브"];
   const [submitFolder, setSubmitFolder] = useState([]);
