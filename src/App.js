@@ -45,6 +45,7 @@ import PageLinkDetail from "./Pages/PageLinkDetail";
 import TimerSecond from "./Pages/TimerSecond";
 import { stopMusicFn } from "./audio/BackgroundMusic/BackgroundMusic";
 import AgreePolicy from "./Pages/AgreePolicy";
+import News from "./Pages/News";
 
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
@@ -184,6 +185,7 @@ function App() {
         <Route path={routes.findPassword} element={<FindPassword />} />
         <Route path={routes.pageLinkRegister} element={<PageLinkRegister />} />
         <Route path={routes.pageLinkAllList} element={<PageLinkAllList />} />
+        <Route path={routes.news} element={<News />} />
         <Route
           path={`${routes.pageLink}/:pageTitle`}
           element={<PageLinkDetail />}

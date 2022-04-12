@@ -1,25 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { useQuery } from '@apollo/client';
-import { GET_NEWS_QUERY } from '../../Graphql/News/query';
-import styled from 'styled-components';
-import SearchContainer from './SearchContainer';
-import NewsListContainer from './NewsListContainer';
-import { customMedia } from '../../styles';
-import { hideNewsSection, seeNewsSection } from '../../Animations/WelcomeSectionAni';
-import { FaArrowCircleLeft } from 'react-icons/fa';
-import { moveWelcome } from '../../apollo';
-import useTitle from '../../Hooks/useTitle';
-import Loading from '../Shared/Loading';
+import React, { useEffect, useState } from "react";
+import { useQuery } from "@apollo/client";
+import { GET_NEWS_QUERY } from "../../Graphql/News/query";
+import styled from "styled-components";
+import SearchContainer from "./SearchContainer";
+import NewsListContainer from "./NewsListContainer";
+import { customMedia } from "../../styles";
+import {
+  hideNewsSection,
+  seeNewsSection,
+} from "../../Animations/WelcomeSectionAni";
+import Loading from "../Shared/Loading";
 
 const MoveContainer = styled.div`
-  display: ${props => props.isSeeDisplay};
+  display: ${(props) => props.isSeeDisplay};
   position: absolute;
   top: 0;
   bottom: 0;
-  right: ${props => props.welcomeSection === "welcome" ? "-100%" : 0};
-  left: ${props => props.welcomeSection === "welcome" ? "100%" : 0};
-  animation: ${props => !props.init && (props.welcomeSection === "welcome" ? hideNewsSection : seeNewsSection)} 1s ease forwards;
-`
+  right: ${(props) => (props.welcomeSection === "welcome" ? "-100%" : 0)};
+  left: ${(props) => (props.welcomeSection === "welcome" ? "100%" : 0)};
+  animation: ${(props) =>
+      !props.init &&
+      (props.welcomeSection === "welcome" ? hideNewsSection : seeNewsSection)}
+    1s ease forwards;
+`;
 
 const MoveIcon = styled.div`
   position: absolute;
@@ -32,7 +35,7 @@ const MoveIcon = styled.div`
     font-size: 1.5em;
     font-size: 1.5rem;
   }
-`
+`;
 
 const Container = styled.div`
   display: grid;
@@ -48,59 +51,53 @@ const Container = styled.div`
     min-height: 100%;
     max-height: 100%;
   `}
-`
+`;
 
-const NewsSection = ({ favoriteNews, userEmail, welcomeSection, init, setInit }) => {
-  const [isSeeDisplay, setIsSeeDisplay] = useState(welcomeSection === "welcome" ? "none" : "block")
-  const [search, setSeacrh] = useState(undefined)
-  const [start, setStart] = useState(1) // => page
-  const [sort, setSort] = useState("sim")
+const NewsSection = ({
+  favoriteNews,
+  userEmail,
+  welcomeSection,
+  init,
+  setInit,
+}) => {
+  const [search, setSeacrh] = useState(undefined);
+  const [start, setStart] = useState(1); // => page
+  const [sort, setSort] = useState("sim");
   const { data, loading } = useQuery(GET_NEWS_QUERY, {
     variables: {
       search,
       start,
-      sort
+      sort,
     },
-    skip: !search
-  })
-  const onClickMoveIcon = () => {
-    setInit(false)
-    moveWelcome()
-    setTimeout(() => {
-      setIsSeeDisplay("none")
-    }, 1000)
-  }
+    skip: !search,
+  });
 
-  useEffect(() => {
-    if (welcomeSection === "news") {
-      setIsSeeDisplay("block")
-    }
-  }, [welcomeSection])
-
-  return (<MoveContainer welcomeSection={welcomeSection} init={init} isSeeDisplay={isSeeDisplay}>
-    <MoveIcon onClick={onClickMoveIcon}><FaArrowCircleLeft /></MoveIcon>
-    <Container>
-      <SearchContainer
-        search={search}
-        setSeacrh={setSeacrh}
-        setStart={setStart}
-        sort={sort}
-        setSort={setSort}
-        favoriteNews={favoriteNews}
-      />
-      {loading ? <Loading page="subPage" /> :
-        <NewsListContainer
-          start={start}
-          setStart={setStart}
+  return (
+    <MoveContainer welcomeSection={welcomeSection} init={init}>
+      <Container>
+        <SearchContainer
           search={search}
-          data={data}
-          userEmail={userEmail}
+          setSeacrh={setSeacrh}
+          setStart={setStart}
+          sort={sort}
+          setSort={setSort}
           favoriteNews={favoriteNews}
         />
-      }
-    </Container>
-  </MoveContainer>
+        {loading ? (
+          <Loading page="subPage" />
+        ) : (
+          <NewsListContainer
+            start={start}
+            setStart={setStart}
+            search={search}
+            data={data}
+            userEmail={userEmail}
+            favoriteNews={favoriteNews}
+          />
+        )}
+      </Container>
+    </MoveContainer>
   );
-}
+};
 
 export default NewsSection;

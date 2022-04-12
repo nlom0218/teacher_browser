@@ -13,6 +13,7 @@ const LUNCHMENU = "/lunchmenu";
 const SCHEDULE = "/schedule";
 const JOURNAL = "/journal";
 const LIST = "/list";
+const NEWS = "/news";
 
 // account link
 const LOGIN = "/login";
@@ -22,8 +23,8 @@ const GOOGLELOGINCALLBACK = "/googleLogin";
 const KAKAOLOGINCALLBACK = "/kakaoLogin";
 const FINDPASSWORD = "/find-password";
 const FAKE_CREATEACCOUNT = "/fake-create-account";
-const FAKE_LOGIN = "/fake-login"
-const AGREE_POLICY = "/agreePolicy"
+const FAKE_LOGIN = "/fake-login";
+const AGREE_POLICY = "/agreePolicy";
 
 const TRASH = "/trash";
 
@@ -46,6 +47,7 @@ const routes = {
   schedule: SCHEDULE,
   journal: JOURNAL,
   list: LIST,
+  news: NEWS,
 
   // account link
   login: LOGIN,
