@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import HomeSection from "../Components/Welcome/HomeSection";
@@ -16,14 +16,20 @@ const Container = styled.div`
 const Welcome = () => {
   const titleUpdataer = useTitle("티처캔");
 
+  const [welcomePage, setWelComPage] = useState("home");
+
   const me = useMe();
 
   return (
     <BasicContainer>
       <Container>
-        <TopContents me={me} />
-        <HomeSection />
-        <WelcomeSection />
+        <TopContents
+          me={me}
+          welcomePage={welcomePage}
+          setWelComPage={setWelComPage}
+        />
+        {welcomePage === "home" && <HomeSection />}
+        {welcomePage === "notice" && <WelcomeSection />}
       </Container>
     </BasicContainer>
   );

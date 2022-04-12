@@ -12,6 +12,7 @@
     "date-fns": "^2.27.0",
     "dotenv": "^10.0.0",
     "emoji-picker-react": "^3.4.12",
+    "framer-motion": "^6.2.9",
     "history": "^5.1.0",
     "npm-check-updates": "^12.2.1",
     "npm-force-resolutions": "^0.0.10",
