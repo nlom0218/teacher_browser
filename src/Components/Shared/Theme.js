@@ -1,14 +1,28 @@
-import React from 'react';
-import styled from 'styled-components';
-import { useReactiveVar } from '@apollo/client';
-import { darkModeVar, disableDarkMode, enableDarkMode, fullScreenMode, isFullScreenModeVar, movePageLink, moveWelcome, smallScreenMode } from '../../apollo';
+import React from "react";
+import styled from "styled-components";
+import { useReactiveVar } from "@apollo/client";
+import {
+  darkModeVar,
+  disableDarkMode,
+  enableDarkMode,
+  fullScreenMode,
+  isFullScreenModeVar,
+  movePageLink,
+  smallScreenMode,
+} from "../../apollo";
 import { FaSun, FaMoon } from "react-icons/fa";
-import { BiExitFullscreen, BiFullscreen } from "react-icons/bi"
-import useMedia from '../../Hooks/useMedia';
-import { HeaderNews, HeaderToDo, HeaderBookMark, HedaerCalender, HeaderMenu } from "./HeaderLink"
-import routes from '../../routes';
-import { useNavigate } from 'react-router-dom';
-import { customMedia } from '../../styles';
+import { BiExitFullscreen, BiFullscreen } from "react-icons/bi";
+import useMedia from "../../Hooks/useMedia";
+import {
+  HeaderNews,
+  HeaderToDo,
+  HeaderBookMark,
+  HedaerCalender,
+  HeaderMenu,
+} from "./HeaderLink";
+import routes from "../../routes";
+import { useNavigate } from "react-router-dom";
+import { customMedia } from "../../styles";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -17,7 +31,8 @@ const Wrapper = styled.div`
   right: 20px;
   right: 1.25rem;
   display: grid;
-  grid-template-columns: ${props => props.isFullScreen ? "auto auto auto" : "auto auto"};
+  grid-template-columns: ${(props) =>
+    props.isFullScreen ? "auto auto auto" : "auto auto"};
   z-index: 15;
   svg {
     font-size: 1.5em;
@@ -31,37 +46,36 @@ const Wrapper = styled.div`
     padding: 10px;
     padding: 0.625rem;
     border-radius: 50%;
-    box-shadow: 0px 2px 1px 0.5px rgba(0,0,0,0.2);
-    box-shadow: 0px 0.125rem 0.0625rem 0.03125rem rgba(0,0,0,0.2);
-    background: ${props => props.theme.bgColor};
+    box-shadow: 0px 2px 1px 0.5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0.125rem 0.0625rem 0.03125rem rgba(0, 0, 0, 0.2);
+    background: ${(props) => props.theme.bgColor};
     cursor: pointer;
     :hover {
-      background: ${props => props.theme.fontColor};
-      color: ${props => props.theme.bgColor};
+      background: ${(props) => props.theme.fontColor};
+      color: ${(props) => props.theme.bgColor};
     }
   }
   .menu_btn {
     transition: background 1s ease;
   }
-`
+`;
 
 const MenuNavigation = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-`
+`;
 
 const MenuItem = styled.div`
   margin-right: 10px;
   margin-right: 0.625rem;
-`
+`;
 
 const ScreenTheme = styled.div`
   margin-right: 10px;
   margin-right: 0.625rem;
-`
+`;
 
-const BackgroungTheme = styled.div`
-`
+const BackgroungTheme = styled.div``;
 
 const LightModeBtn = styled.div`
   display: grid;
@@ -77,7 +91,7 @@ const LightModeBtn = styled.div`
     font-size: 1em;
     font-size: 1rem;
   `}
-`
+`;
 
 const DarkModeBtn = styled.div`
   display: grid;
@@ -95,83 +109,92 @@ const DarkModeBtn = styled.div`
     font-size: 1em;
     font-size: 1rem;
   `}
-`
+`;
 
 const Theme = () => {
-  const media = useMedia()
-  const navigate = useNavigate()
+  const media = useMedia();
+  const navigate = useNavigate();
 
-  const isFullScreen = useReactiveVar(isFullScreenModeVar)
-  const darkMode = useReactiveVar(darkModeVar)
+  const isFullScreen = useReactiveVar(isFullScreenModeVar);
+  const darkMode = useReactiveVar(darkModeVar);
 
   const onClickRoutes = (page) => {
     if (page === "home") {
-      moveWelcome()
-      navigate(routes.home)
+      navigate(routes.home);
     } else if (page === "todo") {
-      navigate(routes.todo)
+      navigate(routes.todo);
     } else if (page === "pageLink") {
-      movePageLink()
-      navigate(routes.pageLink)
+      movePageLink();
+      navigate(routes.pageLink);
     } else if (page === "calendar") {
-      localStorage.setItem("calendarDate", new Date())
-      navigate(routes.calendar)
+      localStorage.setItem("calendarDate", new Date());
+      navigate(routes.calendar);
     } else if (page === "menu") {
-      navigate(routes.menu)
+      navigate(routes.menu);
     }
-  }
+  };
 
   const onClickBtn = () => {
     if (darkMode) {
-      disableDarkMode()
+      disableDarkMode();
     } else {
-      enableDarkMode()
+      enableDarkMode();
     }
-  }
+  };
   const onClickScreenBtn = () => {
     if (isFullScreen) {
-      smallScreenMode()
+      smallScreenMode();
     } else {
-      fullScreenMode()
+      fullScreenMode();
     }
-  }
+  };
   return (
     <Wrapper isFullScreen={isFullScreen}>
-      {isFullScreen && <MenuNavigation>
-        <MenuItem className="menu_btn" onClick={() => onClickRoutes("home")}>
-          <HeaderNews />
-        </MenuItem>
-        <MenuItem className="menu_btn" onClick={() => onClickRoutes("todo")}>
-          <HeaderToDo />
-        </MenuItem>
-        <MenuItem className="menu_btn" onClick={() => onClickRoutes("calendar")}>
-          <HedaerCalender />
-        </MenuItem>
-        <MenuItem className="menu_btn" onClick={() => onClickRoutes("pageLink")}>
-          <HeaderBookMark />
-        </MenuItem>
-        <MenuItem className="menu_btn" onClick={() => onClickRoutes("menu")}>
-          <HeaderMenu />
-        </MenuItem>
-      </MenuNavigation>}
-      {media === "Desktop" && <ScreenTheme onClick={onClickScreenBtn} className="menu_btn">
-        {isFullScreen ? <BiExitFullscreen /> : <BiFullscreen />}
-      </ ScreenTheme>}
+      {isFullScreen && (
+        <MenuNavigation>
+          <MenuItem className="menu_btn" onClick={() => onClickRoutes("home")}>
+            <HeaderNews />
+          </MenuItem>
+          <MenuItem className="menu_btn" onClick={() => onClickRoutes("todo")}>
+            <HeaderToDo />
+          </MenuItem>
+          <MenuItem
+            className="menu_btn"
+            onClick={() => onClickRoutes("calendar")}
+          >
+            <HedaerCalender />
+          </MenuItem>
+          <MenuItem
+            className="menu_btn"
+            onClick={() => onClickRoutes("pageLink")}
+          >
+            <HeaderBookMark />
+          </MenuItem>
+          <MenuItem className="menu_btn" onClick={() => onClickRoutes("menu")}>
+            <HeaderMenu />
+          </MenuItem>
+        </MenuNavigation>
+      )}
+      {media === "Desktop" && (
+        <ScreenTheme onClick={onClickScreenBtn} className="menu_btn">
+          {isFullScreen ? <BiExitFullscreen /> : <BiFullscreen />}
+        </ScreenTheme>
+      )}
       <BackgroungTheme onClick={onClickBtn} className="theme_btn">
-        {darkMode ?
+        {darkMode ? (
           <LightModeBtn>
             <FaSun />
             {/* <div>라이트 모드로 보기</div> */}
           </LightModeBtn>
-          :
+        ) : (
           <DarkModeBtn>
             <FaMoon />
             {/* <div>다크 모드로 보기</div> */}
           </DarkModeBtn>
-        }
+        )}
       </BackgroungTheme>
-    </Wrapper >
-  )
-}
+    </Wrapper>
+  );
+};
 
 export default Theme;

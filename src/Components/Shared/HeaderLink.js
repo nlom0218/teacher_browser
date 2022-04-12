@@ -2,12 +2,7 @@ import { useReactiveVar } from "@apollo/client";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import {
-  moveWelcome,
-  movePageLink,
-  isFullScreenModeVar,
-  moveHome,
-} from "../../apollo";
+import { movePageLink, isFullScreenModeVar } from "../../apollo";
 import IcBookMark from "../../icons/Bookmark/IcBookMark";
 import IcBookMarkClick from "../../icons/Bookmark/IcBookMarkClick";
 import IcCalender from "../../icons/Calender/IcCalender";
@@ -39,16 +34,12 @@ export const HeaderNews = () => {
   const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
 
   const [isHover, setIsHover] = useState(false);
-  const onClickHome = () => {
-    moveHome();
-  };
 
   return (
     <Link
       to={routes.home}
       onMouseEnter={() => setIsHover(true)}
       onMouseLeave={() => setIsHover(false)}
-      onClick={onClickHome}
     >
       {isHover ? <IcNewsClick /> : <IcNews />}
       {isHover && !isFullScreenMode && <LinkName>홈/뉴스</LinkName>}

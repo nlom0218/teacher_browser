@@ -1,16 +1,9 @@
-import { useReactiveVar } from "@apollo/client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { welcomeSectionVar } from "../apollo";
+import NewsSection from "../Components/News/NewsSection";
 import BasicContainer from "../Components/Shared/BasicContainer";
-import NewsSection from "../Components/Welcome/NewsSection";
-import WelcomeSection from "../Components/Welcome/WelcomeSection";
 import useMe from "../Hooks/useMe";
 import useTitle from "../Hooks/useTitle";
-import LogoImage1 from "../image/LogoImage.png";
-import LogoImage2 from "../image/LogoImage2.png";
-import LogoImage3 from "../image/LogoImage3.png";
-import LogoImage4 from "../image/LogoImage4.png";
 
 const Container = styled.div`
   min-height: 100%;

@@ -104,20 +104,6 @@ export const disableSeeStudentList = () => {
   isSeeStudentListVar(false);
 };
 
-export const welcomeSectionVar = makeVar(
-  localStorage.getItem(WELCOME_SECTION)
-    ? localStorage.getItem(WELCOME_SECTION)
-    : "welcome"
-);
-export const moveWelcome = () => {
-  localStorage.setItem(WELCOME_SECTION, "welcome");
-  welcomeSectionVar("welcome");
-};
-export const moveHome = () => {
-  localStorage.setItem(WELCOME_SECTION, "home");
-  welcomeSectionVar("home");
-};
-
 export const bgThemeAniVar = makeVar(Boolean(localStorage.getItem(BG_ANI)));
 export const enableBgThemeAni = () => {
   localStorage.setItem(BG_ANI, "true");

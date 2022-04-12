@@ -12,21 +12,6 @@ import WelcomeContents from "./WelcomeContents";
 import TopContents from "./TopContents";
 import BottomContents from "./BottomContents";
 
-const MoveContainer = styled.div`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: ${(props) => (props.welcomeSection === "home" ? "-100%" : 0)};
-  left: ${(props) => (props.welcomeSection === "home" ? "100%" : 0)};
-  animation: ${(props) =>
-      !props.init &&
-      (props.welcomeSection === "home" ? hideNewsSection : seeNewsSection)}
-    1s ease forwards;
-  display: grid;
-  row-gap: 20px;
-  row-gap: 1.25rem;
-`;
-
 const Container = styled.div`
   padding: 40px 20px;
   padding: 2.5rem 1.25rem;
@@ -54,32 +39,15 @@ const MoveIcon = styled.div`
   }
 `;
 
-const WelcomeSection = ({
-  welcomeSection,
-  init,
-  setInit,
-  logoImageArr,
-  me,
-}) => {
+const WelcomeSection = () => {
   const [msg, setMsg] = useState(undefined);
 
-  const onClickMoveIcon = () => {
-    setInit(false);
-    moveHome();
-  };
-
   return (
-    <MoveContainer welcomeSection={welcomeSection} init={init}>
-      <Container>
-        <MoveIcon onClick={onClickMoveIcon}>
-          <FaArrowCircleLeft />
-        </MoveIcon>
-        <TopContents me={me} welcomeSection={welcomeSection} />
-        <WelcomeContents />
-        <BottomContents />
-      </Container>
+    <Container>
+      <WelcomeContents />
+      <BottomContents />
       <AlertMessage msg={msg} type="success" setMsg={setMsg} />
-    </MoveContainer>
+    </Container>
   );
 };
 
