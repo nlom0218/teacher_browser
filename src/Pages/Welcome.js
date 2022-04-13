@@ -6,11 +6,20 @@ import TopContents from "../Components/Welcome/TopContents";
 import WelcomeSection from "../Components/Welcome/WelcomeSection";
 import useMe from "../Hooks/useMe";
 import useTitle from "../Hooks/useTitle";
+import { customMedia } from "../styles";
 
 const Container = styled.div`
   min-height: 100%;
-  padding: 40px 20px;
-  padding: 2.5rem 1.25rem;
+  padding: 20px;
+  padding: 1.25rem;
+  display: grid;
+  row-gap: 40px;
+  grid-template-rows: auto 1fr;
+  align-items: flex-start;
+  ${customMedia.greaterThan("tablet")`
+    padding: 40px;
+    padding: 2.5rem;
+  `}
 `;
 
 const Welcome = () => {
