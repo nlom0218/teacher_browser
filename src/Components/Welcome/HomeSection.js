@@ -5,10 +5,10 @@ import LinkContents from "./LinkContents";
 
 const Container = styled.div``;
 
-const HomeSection = ({}) => {
+const HomeSection = ({ dDay }) => {
   return (
     <Container>
-      <DDayContents />
+      <DDayContents dDay={dDay} />
       <LinkContents />
     </Container>
   );

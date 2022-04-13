@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import BasicContainer from "../Components/Shared/BasicContainer";
+import Loading from "../Components/Shared/Loading";
 import HomeSection from "../Components/Welcome/HomeSection";
 import TopContents from "../Components/Welcome/TopContents";
 import WelcomeSection from "../Components/Welcome/WelcomeSection";
@@ -29,6 +30,10 @@ const Welcome = () => {
 
   const me = useMe();
 
+  if (!me) {
+    return <Loading page="subPage" />;
+  }
+
   return (
     <BasicContainer>
       <Container>
@@ -37,7 +42,7 @@ const Welcome = () => {
           welcomePage={welcomePage}
           setWelComPage={setWelComPage}
         />
-        {welcomePage === "home" && <HomeSection />}
+        {welcomePage === "home" && <HomeSection dDay={me?.dDay} />}
         {welcomePage === "notice" && <WelcomeSection />}
       </Container>
     </BasicContainer>

@@ -1,6 +1,8 @@
 import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import routes from "../../routes";
 
 const Container = styled.div`
   text-align: center;
@@ -9,6 +11,25 @@ const Container = styled.div`
   row-gap: 0.625rem;
   letter-spacing: 5px;
   letter-spacing: 0.3125rem;
+  a {
+    justify-self: center;
+  }
+`;
+
+const RegisterDDay = styled.div`
+  padding: 20px;
+  letter-spacing: 0px;
+  letter-spacing: 0rem;
+  line-height: 160%;
+  border: 1px dashed ${(props) => props.theme.fontColor};
+  transition: border 1s ease;
+  cursor: pointer;
+  font-weight: 600;
+  :hover {
+    background-color: ${(props) => props.theme.fontColor};
+    color: ${(props) => props.theme.bgColor};
+    transition: background-color 0.6s ease, color 0.6s ease;
+  }
 `;
 
 const DDayCount = styled.div`
@@ -41,6 +62,7 @@ const DDay = styled.div`
   font-size: 5rem;
   font-weight: 900;
   letter-spacing: 0px;
+  letter-spacing: 0rem;
 `;
 
 const DDAYName = styled.div`
@@ -51,17 +73,13 @@ const DDayDate = styled.div`
   font-weight: 600;
 `;
 
-const dDay = [
-  { title: "어제", date: 1649689200000 },
-  { title: "오늘", date: 1649775600000 },
-  { title: "내일", date: 1649862000000 },
-  { title: "일주일 후", date: 1650380400000 },
-  { title: "여름방학", date: 1658329200000 },
-];
-
-const DDayContents = () => {
+const DDayContents = ({ dDay }) => {
   const [index, setIndex] = useState(0);
+
   const processDDay = (index) => {
+    if (dDay.length === 0) {
+      return;
+    }
     const now = new window.Date().setHours(0, 0, 0, 0);
     const setDay = new Date(dDay[index].date).getTime();
     let DDAY;
@@ -79,10 +97,16 @@ const DDayContents = () => {
   };
 
   const processDDayName = (index) => {
+    if (dDay.length === 0) {
+      return;
+    }
     return dDay[index].title;
   };
 
   const processDDayDate = (index) => {
+    if (dDay.length === 0) {
+      return;
+    }
     return format(dDay[index].date, "yyyy년 MM월 dd일");
   };
 
@@ -112,18 +136,28 @@ const DDayContents = () => {
 
   return (
     <Container>
-      {dDay.length !== 1 && (
-        <DDayCount column={dDay.length}>
-          {dDay.map((item, i) => {
-            return (
-              <CountDot
-                key={i}
-                index={i === index}
-                onClick={() => onClickDot(i)}
-              ></CountDot>
-            );
-          })}
-        </DDayCount>
+      {dDay.length === 0 ? (
+        <Link to={routes.editAccount}>
+          <RegisterDDay>
+            등록된 D-Day가 없습니다.
+            <br />
+            D-Day 등록하러 가기
+          </RegisterDDay>
+        </Link>
+      ) : (
+        dDay.length !== 1 && (
+          <DDayCount column={dDay.length}>
+            {dDay.map((item, i) => {
+              return (
+                <CountDot
+                  key={i}
+                  index={i === index}
+                  onClick={() => onClickDot(i)}
+                ></CountDot>
+              );
+            })}
+          </DDayCount>
+        )
       )}
       <DDayLayout>
         <DDay>{processDDay(index)}</DDay>
