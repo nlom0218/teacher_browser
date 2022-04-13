@@ -15,6 +15,8 @@ import { CHECK_PASSWORD_QUERY } from "../Graphql/User/query";
 import { useQuery } from "@apollo/client";
 import useTitle from "../Hooks/useTitle";
 import AlertMessage from "../Components/Shared/AlertMessage";
+import EditDDay from "../Components/Account/EditDDay";
+import Loading from "../Components/Shared/Loading";
 
 const Title = styled.div`
   font-size: 1.5em;
@@ -69,16 +71,22 @@ const Item = styled.div`
 `;
 
 const EditAccount = () => {
-  const titleUpdataer = useTitle("티처캔 | 회원정보")
+  const titleUpdataer = useTitle("티처캔 | 회원정보");
   const isPopup = useReactiveVar(isPopupVar);
 
-  const [msg, setMsg] = useState(undefined)
+  const [msg, setMsg] = useState(undefined);
+  const [errMsg, setErrMsg] = useState(undefined);
 
   const me = useMe();
   const { data } = useQuery(CHECK_PASSWORD_QUERY, {
     variables: { userEmail: me?.email },
-    skip: !me
+    skip: !me,
   });
+
+  if (!me) {
+    return <Loading page="subPage" />;
+  }
+
   return (
     <BasicContainer menuItem={true}>
       <Title>회원정보</Title>
@@ -93,13 +101,29 @@ const EditAccount = () => {
         <Changes>
           <List>학교정보</List>
           <Item>
-            <EditSchool setMsg={setMsg} schoolName={me?.schoolName} schoolAdress={me?.schoolAdress} userEmail={me?.email} />
+            <EditSchool
+              setMsg={setMsg}
+              schoolName={me?.schoolName}
+              schoolAdress={me?.schoolAdress}
+              userEmail={me?.email}
+            />
+          </Item>
+        </Changes>
+        <Changes>
+          <List>D-DAY</List>
+          <Item>
+            <EditDDay dDay={me?.dDay} setErrMsg={setErrMsg} />
           </Item>
         </Changes>
         <Changes>
           <List>배경화면 테마</List>
           <Item>
-            <EditBgTheme setMsg={setMsg} userEmail={me?.email} bgTheme={me?.bgTheme} userId={me?._id} />
+            <EditBgTheme
+              setMsg={setMsg}
+              userEmail={me?.email}
+              bgTheme={me?.bgTheme}
+              userId={me?._id}
+            />
           </Item>
         </Changes>
         {data?.checkPw.ok && (
@@ -117,7 +141,17 @@ const EditAccount = () => {
       </Container>
       {isPopup === "registerSchool" && <RegisterSchool setMsg={setMsg} />}
       {isPopup === "changePw" && <Pop_ChangePw userEmail={me?.email} />}
-      {msg && <AlertMessage msg={msg} setMsg={setMsg} time={3000} type="success" />}
+      {msg && (
+        <AlertMessage msg={msg} setMsg={setMsg} time={3000} type="success" />
+      )}
+      {errMsg && (
+        <AlertMessage
+          msg={errMsg}
+          setMsg={setErrMsg}
+          time={3000}
+          type="error"
+        />
+      )}
     </BasicContainer>
   );
 };

@@ -139,9 +139,9 @@ const DDayContents = ({ dDay }) => {
       {dDay.length === 0 ? (
         <Link to={routes.editAccount}>
           <RegisterDDay>
-            등록된 D-Day가 없습니다.
+            등록된 D-DAY가 없습니다.
             <br />
-            D-Day 등록하러 가기
+            D-DAY 등록하러 가기
           </RegisterDDay>
         </Link>
       ) : (
