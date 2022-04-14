@@ -76,35 +76,38 @@ const DDayContents = ({ dDay }) => {
   const processDDay = (index) => {
     if (dDay.length === 0) {
       return;
+    } else {
+      const now = new window.Date().setHours(0, 0, 0, 0);
+      const setDay = new Date(dDay[index].date).getTime();
+      let DDAY;
+      if (now > setDay) {
+        // 이미 지난 D-Day
+        DDAY = `D + ${Math.floor((now - setDay) / (1000 * 60 * 60 * 24))}`;
+      } else if (now < setDay) {
+        // 다가오는 D-Day
+        DDAY = `D - ${Math.floor((setDay - now) / (1000 * 60 * 60 * 24))}`;
+      } else if (now === setDay) {
+        // 오늘
+        DDAY = "D-DAY";
+      }
+      return DDAY;
     }
-    const now = new window.Date().setHours(0, 0, 0, 0);
-    const setDay = new Date(dDay[index].date).getTime();
-    let DDAY;
-    if (now > setDay) {
-      // 이미 지난 D-Day
-      DDAY = `D + ${Math.floor((now - setDay) / (1000 * 60 * 60 * 24))}`;
-    } else if (now < setDay) {
-      // 다가오는 D-Day
-      DDAY = `D - ${Math.floor((setDay - now) / (1000 * 60 * 60 * 24))}`;
-    } else if (now === setDay) {
-      // 오늘
-      DDAY = "D-DAY";
-    }
-    return DDAY;
   };
 
   const processDDayName = (index) => {
     if (dDay.length === 0) {
       return;
+    } else {
+      return dDay[index].title;
     }
-    return dDay[index].title;
   };
 
   const processDDayDate = (index) => {
     if (dDay.length === 0) {
       return;
+    } else {
+      return format(dDay[index].date, "yyyy년 MM월 dd일");
     }
-    return format(dDay[index].date, "yyyy년 MM월 dd일");
   };
 
   const onClickDot = (i) => {
@@ -118,7 +121,7 @@ const DDayContents = ({ dDay }) => {
   useEffect(() => {
     const length = dDay.length;
     // 0 ~ length - 1
-    if (length === 1) {
+    if (length === 1 || length === 0) {
       return;
     } else {
       const timeout = setTimeout(() => {
@@ -133,7 +136,7 @@ const DDayContents = ({ dDay }) => {
         clearTimeout(timeout);
       };
     }
-  }, [index]);
+  }, [index, dDay]);
 
   return (
     <Container>

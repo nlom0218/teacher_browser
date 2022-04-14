@@ -219,48 +219,48 @@ const AddAttend = ({
     const endDateMillisecond = endDateObject.setHours(0, 0, 0, 0);
     console.log(endDateMillisecond);
 
-    // if (startDateMillisecond === endDateMillisecond) {
-    //   const month = parseInt(format(startDateObject, "yyMM"));
-    //   setMonthArr([month]);
-    //   createAttendance({
-    //     variables: {
-    //       userEmail,
-    //       studentId,
-    //       type,
-    //       month,
-    //       date: startDateMillisecond,
-    //       ...(contents && { contents }),
-    //     },
-    //   });
-    // } else {
-    //   // 여러 날을 중복하여 출결을 생성할 때
-    //   const term =
-    //     (endDateMillisecond - startDateMillisecond) / 24 / 60 / 60 / 1000 + 1;
-    //   const dateMonthArr = [];
-    //   const newMonthArr = [];
-    //   for (let index = 0; index < term; index++) {
-    //     const date = new window.Date(
-    //       startDateMillisecond + 86400000 * index
-    //     ).setHours(0, 0, 0, 0);
-    //     const month = parseInt(
-    //       format(startDateMillisecond + 86400000 * index, "yyMM")
-    //     );
-    //     if (!isWeekend(date)) {
-    //       dateMonthArr.push({ date, month });
-    //       newMonthArr.push(month);
-    //     }
-    //   }
-    //   setMonthArr([...new Set(newMonthArr)]);
-    //   createManyAttendance({
-    //     variables: {
-    //       userEmail,
-    //       studentId,
-    //       type,
-    //       dateMonthArr,
-    //       ...(contents && { contents }),
-    //     },
-    //   });
-    // }
+    if (startDateMillisecond === endDateMillisecond) {
+      const month = parseInt(format(startDateObject, "yyMM"));
+      setMonthArr([month]);
+      createAttendance({
+        variables: {
+          userEmail,
+          studentId,
+          type,
+          month,
+          date: startDateMillisecond,
+          ...(contents && { contents }),
+        },
+      });
+    } else {
+      // 여러 날을 중복하여 출결을 생성할 때
+      const term =
+        (endDateMillisecond - startDateMillisecond) / 24 / 60 / 60 / 1000 + 1;
+      const dateMonthArr = [];
+      const newMonthArr = [];
+      for (let index = 0; index < term; index++) {
+        const date = new window.Date(
+          startDateMillisecond + 86400000 * index
+        ).setHours(0, 0, 0, 0);
+        const month = parseInt(
+          format(startDateMillisecond + 86400000 * index, "yyMM")
+        );
+        if (!isWeekend(date)) {
+          dateMonthArr.push({ date, month });
+          newMonthArr.push(month);
+        }
+      }
+      setMonthArr([...new Set(newMonthArr)]);
+      createManyAttendance({
+        variables: {
+          userEmail,
+          studentId,
+          type,
+          dateMonthArr,
+          ...(contents && { contents }),
+        },
+      });
+    }
   };
 
   const onClickSelectBtn = () => {
