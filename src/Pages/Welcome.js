@@ -1,8 +1,12 @@
+import { useReactiveVar } from "@apollo/client";
 import React, { useState } from "react";
 import styled from "styled-components";
+import { isPopupVar } from "../apollo";
+import AlertMessage from "../Components/Shared/AlertMessage";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import Loading from "../Components/Shared/Loading";
 import HomeSection from "../Components/Welcome/HomeSection";
+import RegisterDDay from "../Components/Welcome/Popup/RegisterDDay";
 import TopContents from "../Components/Welcome/TopContents";
 import WelcomeSection from "../Components/Welcome/WelcomeSection";
 import useMe from "../Hooks/useMe";
@@ -26,7 +30,11 @@ const Container = styled.div`
 const Welcome = () => {
   const titleUpdataer = useTitle("티처캔");
 
+  const isPopup = useReactiveVar(isPopupVar);
+
   const [welcomePage, setWelComPage] = useState("home");
+  const [errMsg, setErrMsg] = useState(undefined);
+  const [msg, setMsg] = useState(undefined);
 
   const me = useMe();
 
@@ -45,6 +53,17 @@ const Welcome = () => {
         {welcomePage === "home" && <HomeSection dDay={me?.dDay} />}
         {welcomePage === "notice" && <WelcomeSection />}
       </Container>
+      {isPopup === "registerDDay" && (
+        <RegisterDDay userEmail={me?.email} setErrMsg={setErrMsg} />
+      )}
+      {errMsg && (
+        <AlertMessage
+          msg={errMsg}
+          setMsg={setErrMsg}
+          type="error"
+          time={3000}
+        />
+      )}
     </BasicContainer>
   );
 };

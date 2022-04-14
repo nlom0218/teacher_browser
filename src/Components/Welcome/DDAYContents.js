@@ -1,8 +1,7 @@
 import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
-import routes from "../../routes";
+import { inPopup } from "../../apollo";
 
 const Container = styled.div`
   text-align: center;
@@ -11,12 +10,10 @@ const Container = styled.div`
   row-gap: 0.625rem;
   letter-spacing: 5px;
   letter-spacing: 0.3125rem;
-  a {
-    justify-self: center;
-  }
 `;
 
 const RegisterDDay = styled.div`
+  justify-self: center;
   padding: 20px;
   letter-spacing: 0px;
   letter-spacing: 0rem;
@@ -114,6 +111,10 @@ const DDayContents = ({ dDay }) => {
     setIndex(i);
   };
 
+  const onClickRegister = () => {
+    inPopup("registerDDay");
+  };
+
   useEffect(() => {
     const length = dDay.length;
     // 0 ~ length - 1
@@ -137,13 +138,11 @@ const DDayContents = ({ dDay }) => {
   return (
     <Container>
       {dDay.length === 0 ? (
-        <Link to={routes.editAccount}>
-          <RegisterDDay>
-            등록된 D-DAY가 없습니다.
-            <br />
-            D-DAY 등록하러 가기
-          </RegisterDDay>
-        </Link>
+        <RegisterDDay onClick={onClickRegister}>
+          등록된 D-DAY가 없습니다.
+          <br />
+          D-DAY 등록하기
+        </RegisterDDay>
       ) : (
         dDay.length !== 1 && (
           <DDayCount column={dDay.length}>
