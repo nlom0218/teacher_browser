@@ -78,6 +78,7 @@ const EditAccount = () => {
   const [errMsg, setErrMsg] = useState(undefined);
 
   const me = useMe();
+  console.log(me);
   const { data } = useQuery(CHECK_PASSWORD_QUERY, {
     variables: { userEmail: me?.email },
     skip: !me,
@@ -112,7 +113,11 @@ const EditAccount = () => {
         <Changes>
           <List>D-DAY</List>
           <Item>
-            <EditDDay dDay={me?.dDay} setErrMsg={setErrMsg} />
+            <EditDDay
+              dDay={me?.dDay}
+              setErrMsg={setErrMsg}
+              userEmail={me?.email}
+            />
           </Item>
         </Changes>
         <Changes>

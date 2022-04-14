@@ -66,8 +66,22 @@ export const DELETE_SCHOOL_INFO_MUTATION = gql`
 `;
 
 export const UPDATE_USER_MUTATION = gql`
-  mutation UpdateUser($userEmail: String!, $schoolName: String, $schoolCode: String, $areaCode: String, $schoolAdress: String, $agreePolicy: Boolean) {
-    updateUser(userEmail: $userEmail, schoolName: $schoolName, schoolCode: $schoolCode, areaCode: $areaCode, schoolAdress: $schoolAdress, agreePolicy: $agreePolicy) {
+  mutation UpdateUser(
+    $userEmail: String!
+    $schoolName: String
+    $schoolCode: String
+    $areaCode: String
+    $schoolAdress: String
+    $agreePolicy: Boolean
+  ) {
+    updateUser(
+      userEmail: $userEmail
+      schoolName: $schoolName
+      schoolCode: $schoolCode
+      areaCode: $areaCode
+      schoolAdress: $schoolAdress
+      agreePolicy: $agreePolicy
+    ) {
       ok
       error
     }
@@ -102,8 +116,16 @@ export const DELETE_USER_MUTATION = gql`
 `;
 
 export const CHANGE_PASSWORD_MUTATION = gql`
-  mutation ChangePw($userEmail: String!, $password: String!, $newPassword: String!) {
-    changePw(userEmail: $userEmail, password: $password, newPassword: $newPassword) {
+  mutation ChangePw(
+    $userEmail: String!
+    $password: String!
+    $newPassword: String!
+  ) {
+    changePw(
+      userEmail: $userEmail
+      password: $password
+      newPassword: $newPassword
+    ) {
       ok
       error
     }
@@ -112,7 +134,11 @@ export const CHANGE_PASSWORD_MUTATION = gql`
 
 export const NEW_PASSWORD_MUTATION = gql`
   mutation NewPw($userEmail: String!, $certificate: String, $password: String) {
-    newPw(userEmail: $userEmail, certificate: $certificate, password: $password) {
+    newPw(
+      userEmail: $userEmail
+      certificate: $certificate
+      password: $password
+    ) {
       ok
       error
     }
@@ -123,6 +149,20 @@ export const SETTING_LINK_MUTATION = gql`
   mutation SettingLink($userEmail: String!, $siteName: String!, $memo: String) {
     settingLink(userEmail: $userEmail, siteName: $siteName, memo: $memo) {
       ok
+    }
+  }
+`;
+
+export const CREATE_DDAY = gql`
+  mutation CreateDDay(
+    $userEmail: String!
+    $title: String!
+    $date: Float!
+    $ID: Float!
+  ) {
+    createDDay(userEmail: $userEmail, title: $title, date: $date, ID: $ID) {
+      ok
+      error
     }
   }
 `;

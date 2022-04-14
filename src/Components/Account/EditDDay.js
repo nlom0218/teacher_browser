@@ -7,7 +7,7 @@ const Container = styled.div``;
 
 const DDayList = styled.div``;
 
-const EditDDay = ({ dDay, setErrMsg }) => {
+const EditDDay = ({ dDay, setErrMsg, userEmail }) => {
   return (
     <Container>
       <DDayList>
@@ -15,7 +15,9 @@ const EditDDay = ({ dDay, setErrMsg }) => {
           dDay.map((item, index) => {
             return <EditDDayItem key={index} {...item} />;
           })}
-        {dDay.length !== 5 && <CreateDDay setErrMsg={setErrMsg} />}
+        {dDay.length !== 5 && (
+          <CreateDDay setErrMsg={setErrMsg} userEmail={userEmail} />
+        )}
       </DDayList>
     </Container>
   );

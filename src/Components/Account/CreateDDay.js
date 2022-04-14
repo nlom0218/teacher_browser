@@ -3,6 +3,9 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
 import { useForm } from "react-hook-form";
+import { useMutation } from "@apollo/client";
+import { CREATE_DDAY } from "../../Graphql/User/mutation";
+import { ME_QUERY } from "../../Hooks/useMe";
 
 const SCreateDDay = styled.form`
   display: grid;
@@ -41,10 +44,14 @@ const Submit = styled.input`
   cursor: pointer;
 `;
 
-const CreateDDay = ({ setErrMsg }) => {
+const CreateDDay = ({ setErrMsg, userEmail }) => {
   const [date, setDate] = useState(new Date());
   const { register, handleSubmit } = useForm({
     mode: "onChange",
+  });
+
+  const [cerateDDay, { loading }] = useMutation(CREATE_DDAY, {
+    refetchQueries: [{ query: ME_QUERY }],
   });
 
   const onSubmit = (data) => {
@@ -54,7 +61,15 @@ const CreateDDay = ({ setErrMsg }) => {
       return;
     }
     const numberDate = new Date(date).setHours(0, 0, 0, 0);
-    const ID = new window.Date();
+    const ID = new window.Date().getTime();
+    cerateDDay({
+      variables: {
+        userEmail,
+        title,
+        date: numberDate,
+        ID,
+      },
+    });
   };
 
   return (
