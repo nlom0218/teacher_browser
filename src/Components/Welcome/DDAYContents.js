@@ -1,5 +1,10 @@
 import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
+import {
+  AiFillPauseCircle,
+  AiFillPlayCircle,
+  AiFillPlusCircle,
+} from "react-icons/ai";
 import styled from "styled-components";
 import { inPopup } from "../../apollo";
 
@@ -32,13 +37,23 @@ const RegisterDDay = styled.div`
 const DDayCount = styled.div`
   display: flex;
   justify-content: space-around;
-  width: 80px;
-  width: 5rem;
+  align-items: center;
+  width: 120px;
+  width: 7.5rem;
   margin: 0 auto;
+`;
+
+const DDayBtn = styled.div`
+  cursor: pointer;
+  svg {
+    display: flex;
+    font-size: 1.5em;
+  }
 `;
 
 const CountDot = styled.div`
   background-color: ${(props) => props.theme.fontColor};
+  transition: background-color 1s ease;
   width: 10px;
   width: 0.625rem;
   height: 10px;
@@ -70,8 +85,9 @@ const DDayDate = styled.div`
   font-weight: 600;
 `;
 
-const DDayContents = ({ dDay }) => {
+const DDayContents = ({ dDay, isMoveDDay }) => {
   const [index, setIndex] = useState(0);
+  const [isMove, setIsMove] = useState(true);
 
   const processDDay = (index) => {
     if (dDay.length === 0) {
@@ -119,6 +135,9 @@ const DDayContents = ({ dDay }) => {
   };
 
   useEffect(() => {
+    if (isMove) {
+      return;
+    }
     const length = dDay.length;
     // 0 ~ length - 1
     if (length === 1 || length === 0) {
@@ -136,7 +155,15 @@ const DDayContents = ({ dDay }) => {
         clearTimeout(timeout);
       };
     }
-  }, [index, dDay]);
+  }, [index, dDay, isMove]);
+
+  useEffect(() => {
+    if (isMoveDDay === undefined || null || false) {
+      setIsMove(false);
+    } else {
+      setIsMove(true);
+    }
+  }, [isMoveDDay]);
 
   return (
     <Container>
@@ -147,9 +174,23 @@ const DDayContents = ({ dDay }) => {
           D-DAY 등록하기
         </RegisterDDay>
       ) : (
-        dDay.length !== 1 && (
-          <DDayCount column={dDay.length}>
-            {dDay.map((item, i) => {
+        <DDayCount>
+          {dDay.length !== 1 && (
+            <DDayBtn
+              onClick={() => {
+                setIsMove((prev) => !prev);
+              }}
+            >
+              {isMove ? <AiFillPauseCircle /> : <AiFillPlayCircle />}
+            </DDayBtn>
+          )}
+          {dDay.length !== 5 && (
+            <DDayBtn>
+              <AiFillPlusCircle onClick={onClickRegister} />
+            </DDayBtn>
+          )}
+          {dDay.length !== 1 &&
+            dDay.map((item, i) => {
               return (
                 <CountDot
                   key={i}
@@ -158,8 +199,7 @@ const DDayContents = ({ dDay }) => {
                 ></CountDot>
               );
             })}
-          </DDayCount>
-        )
+        </DDayCount>
       )}
       <DDayLayout>
         <DDay>{processDDay(index)}</DDay>

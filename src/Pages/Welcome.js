@@ -38,6 +38,8 @@ const Welcome = () => {
 
   const me = useMe();
 
+  console.log(me);
+
   if (!me) {
     return <Loading page="subPage" />;
   }
@@ -54,7 +56,11 @@ const Welcome = () => {
         {welcomePage === "notice" && <WelcomeSection />}
       </Container>
       {isPopup === "registerDDay" && (
-        <RegisterDDay userEmail={me?.email} setErrMsg={setErrMsg} />
+        <RegisterDDay
+          userEmail={me?.email}
+          setErrMsg={setErrMsg}
+          setMsg={setMsg}
+        />
       )}
       {errMsg && (
         <AlertMessage
@@ -62,6 +68,15 @@ const Welcome = () => {
           setMsg={setErrMsg}
           type="error"
           time={3000}
+        />
+      )}
+      {msg && (
+        <AlertMessage
+          msg={msg}
+          setMsg={setMsg}
+          type="success"
+          time={3000}
+          isMoveDDay={me?.isMoveDDay}
         />
       )}
     </BasicContainer>

@@ -8,6 +8,7 @@ import PopupContainer from "../../Shared/PopupContainer";
 import { CREATE_DDAY } from "../../../Graphql/User/mutation";
 import { ME_QUERY } from "../../../Hooks/useMe";
 import { BsCalendarDate, BsFillPencilFill } from "react-icons/bs";
+import { outPopup } from "../../../apollo";
 
 const SCreateDDay = styled.form`
   padding: 20px 0px;
@@ -74,14 +75,26 @@ const Submit = styled.input`
   cursor: pointer;
 `;
 
-const RegisterDDay = ({ setErrMsg, userEmail }) => {
+const RegisterDDay = ({ setErrMsg, userEmail, setMsg }) => {
   const [date, setDate] = useState(new Date());
   const { register, handleSubmit } = useForm({
     mode: "onChange",
   });
 
-  const [cerateDDay, { loading }] = useMutation(CREATE_DDAY, {
+  const onCompleted = (result) => {
+    console.log(result);
+    const {
+      createDDay: { ok, error },
+    } = result;
+    if (ok) {
+      outPopup();
+      setMsg("D-DAY가 생성되었습니다.😀");
+    }
+  };
+
+  const [createDDay, { loading }] = useMutation(CREATE_DDAY, {
     refetchQueries: [{ query: ME_QUERY }],
+    onCompleted,
   });
 
   const onSubmit = (data) => {
@@ -92,7 +105,7 @@ const RegisterDDay = ({ setErrMsg, userEmail }) => {
     }
     const numberDate = new Date(date).setHours(0, 0, 0, 0);
     const ID = new window.Date().getTime();
-    cerateDDay({
+    createDDay({
       variables: {
         userEmail,
         title,
