@@ -1,5 +1,4 @@
 import { useMutation } from "@apollo/client";
-import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import {
   AiFillPauseCircle,
@@ -10,6 +9,7 @@ import styled from "styled-components";
 import { inPopup } from "../../apollo";
 import { TOGGLE_IS_MOVE_DDAY_MTUATION } from "../../Graphql/User/mutation";
 import { ME_QUERY } from "../../Hooks/useMe";
+import DDayLayout from "./DDayLayout";
 
 const Container = styled.div`
   text-align: center;
@@ -66,37 +66,6 @@ const CountDot = styled.div`
   cursor: pointer;
 `;
 
-const DDayLayout = styled.div`
-  justify-self: center;
-  padding: 10px 20px;
-  padding: 0.625rem 1.25rem;
-  display: grid;
-  row-gap: 10px;
-  row-gap: 0.625rem;
-  :hover {
-    background-color: ${(props) => props.theme.cardBg};
-    border-radius: 10px;
-    border-radius: 0.625rem;
-    transition: background-color 0.4s ease;
-  }
-`;
-
-const DDay = styled.div`
-  font-size: 5em;
-  font-size: 5rem;
-  font-weight: 900;
-  letter-spacing: 0px;
-  letter-spacing: 0rem;
-`;
-
-const DDAYName = styled.div`
-  font-weight: 600;
-`;
-
-const DDayDate = styled.div`
-  font-weight: 600;
-`;
-
 const DDayContents = ({ dDay, isMoveDDay, userEmail }) => {
   const [index, setIndex] = useState(0);
 
@@ -114,43 +83,6 @@ const DDayContents = ({ dDay, isMoveDDay, userEmail }) => {
       toggleIsMoveDDay({
         variables: { userEmail, type: "start" },
       });
-    }
-  };
-
-  const processDDay = (index) => {
-    if (dDay.length === 0) {
-      return;
-    } else {
-      const now = new window.Date().setHours(0, 0, 0, 0);
-      const setDay = new Date(dDay[index].date).getTime();
-      let DDAY;
-      if (now > setDay) {
-        // 이미 지난 D-Day
-        DDAY = `D + ${Math.floor((now - setDay) / (1000 * 60 * 60 * 24))}`;
-      } else if (now < setDay) {
-        // 다가오는 D-Day
-        DDAY = `D - ${Math.floor((setDay - now) / (1000 * 60 * 60 * 24))}`;
-      } else if (now === setDay) {
-        // 오늘
-        DDAY = "D-DAY";
-      }
-      return DDAY;
-    }
-  };
-
-  const processDDayName = (index) => {
-    if (dDay.length === 0) {
-      return;
-    } else {
-      return dDay[index].title;
-    }
-  };
-
-  const processDDayDate = (index) => {
-    if (dDay.length === 0) {
-      return;
-    } else {
-      return format(dDay[index].date, "yyyy년 MM월 dd일");
     }
   };
 
@@ -221,11 +153,7 @@ const DDayContents = ({ dDay, isMoveDDay, userEmail }) => {
             })}
         </DDayCount>
       )}
-      <DDayLayout>
-        <DDay>{processDDay(index)}</DDay>
-        <DDAYName>{processDDayName(index)}</DDAYName>
-        <DDayDate>{processDDayDate(index)}</DDayDate>
-      </DDayLayout>
+      <DDayLayout dDay={dDay} index={index} />
     </Container>
   );
 };
