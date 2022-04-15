@@ -14,6 +14,9 @@ import { BsCalendarDate, BsFillPencilFill } from "react-icons/bs";
 import { outPopup } from "../../../apollo";
 
 const SCreateDDay = styled.form`
+  letter-spacing: 0px;
+  letter-spacing: 0rem;
+  text-align: start;
   padding: 20px 0px;
   padding: 1.25rem 0rem;
   display: grid;
@@ -78,7 +81,14 @@ const Submit = styled.input`
   cursor: pointer;
 `;
 
-const RegisterDDay = ({ setErrMsg, userEmail, setMsg, dDay }) => {
+const RegisterDDay = ({
+  setErrMsg,
+  userEmail,
+  setMsg,
+  dDay,
+  initMove,
+  toggleIsMoveDDay,
+}) => {
   const dDayID = parseInt(localStorage.getItem("dDayID"));
   const [date, setDate] = useState(new Date());
   const { register, handleSubmit, setValue } = useForm({
@@ -107,6 +117,11 @@ const RegisterDDay = ({ setErrMsg, userEmail, setMsg, dDay }) => {
         editDDay: { ok },
       } = result;
       if (ok) {
+        if (initMove) {
+          toggleIsMoveDDay({
+            variables: { userEmail, type: "start" },
+          });
+        }
         outPopup();
         localStorage.removeItem("dDayID");
         setMsg("D-DAY가 수정되었습니다.😀");

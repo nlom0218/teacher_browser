@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import {
   AiFillPauseCircle,
@@ -6,10 +6,11 @@ import {
   AiFillPlusCircle,
 } from "react-icons/ai";
 import styled from "styled-components";
-import { inPopup } from "../../apollo";
+import { inPopup, isPopupVar } from "../../apollo";
 import { TOGGLE_IS_MOVE_DDAY_MTUATION } from "../../Graphql/User/mutation";
 import { ME_QUERY } from "../../Hooks/useMe";
 import DDayLayout from "./DDayLayout";
+import RegisterDDay from "./Popup/RegisterDDay";
 
 const Container = styled.div`
   text-align: center;
@@ -20,7 +21,7 @@ const Container = styled.div`
   row-gap: 0.3125rem;
 `;
 
-const RegisterDDay = styled.div`
+const SRegisterDDay = styled.div`
   justify-self: center;
   padding: 20px;
   letter-spacing: 0px;
@@ -66,10 +67,13 @@ const CountDot = styled.div`
   cursor: pointer;
 `;
 
-const DDayContents = ({ dDay, isMoveDDay, userEmail, setMsg }) => {
+const DDayContents = ({ dDay, isMoveDDay, userEmail, setMsg, setErrMsg }) => {
+  const isPopup = useReactiveVar(isPopupVar);
+
   const [index, setIndex] = useState(0);
   const [settingMode, setSettingMode] = useState(false);
   const [hover, setHover] = useState(false);
+  const [initMove, setInitMove] = useState();
 
   const [toggleIsMoveDDay, { loading }] = useMutation(
     TOGGLE_IS_MOVE_DDAY_MTUATION,
@@ -130,11 +134,11 @@ const DDayContents = ({ dDay, isMoveDDay, userEmail, setMsg }) => {
   return (
     <Container>
       {dDay.length === 0 ? (
-        <RegisterDDay onClick={onClickRegister}>
+        <SRegisterDDay onClick={onClickRegister}>
           등록된 D-DAY가 없습니다.
           <br />
           D-DAY 등록하기
-        </RegisterDDay>
+        </SRegisterDDay>
       ) : (
         <DDayCount>
           {dDay.length !== 1 && (
@@ -175,7 +179,19 @@ const DDayContents = ({ dDay, isMoveDDay, userEmail, setMsg }) => {
         setHover={setHover}
         hover={hover}
         setMsg={setMsg}
+        setInitMove={setInitMove}
+        initMove={initMove}
       />
+      {isPopup === "registerDDay" && (
+        <RegisterDDay
+          dDay={dDay}
+          userEmail={userEmail}
+          setErrMsg={setErrMsg}
+          setMsg={setMsg}
+          toggleIsMoveDDay={toggleIsMoveDDay}
+          initMove={initMove}
+        />
+      )}
     </Container>
   );
 };

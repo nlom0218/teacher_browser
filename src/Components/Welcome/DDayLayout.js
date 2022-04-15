@@ -92,9 +92,9 @@ const DDayLayout = ({
   setHover,
   setMsg,
   isMoveDDay,
+  initMove,
+  setInitMove,
 }) => {
-  const [initMove, setInitMove] = useState();
-
   const [deleteDDay, { loading }] = useMutation(DELETE_DDAY_MUTATION, {
     onCompleted: (result) => {
       const {

@@ -31,8 +31,6 @@ const Container = styled.div`
 const Welcome = () => {
   const titleUpdataer = useTitle("티처캔");
 
-  const isPopup = useReactiveVar(isPopupVar);
-
   const [welcomePage, setWelComPage] = useState("home");
   const [errMsg, setErrMsg] = useState(undefined);
   const [msg, setMsg] = useState(undefined);
@@ -57,18 +55,11 @@ const Welcome = () => {
             userEmail={me?.email}
             isMoveDDay={me?.isMoveDDay}
             setMsg={setMsg}
+            setErrMsg={setErrMsg}
           />
         )}
         {welcomePage === "notice" && <WelcomeSection />}
       </Container>
-      {isPopup === "registerDDay" && (
-        <RegisterDDay
-          dDay={me?.dDay}
-          userEmail={me?.email}
-          setErrMsg={setErrMsg}
-          setMsg={setMsg}
-        />
-      )}
       {errMsg && (
         <AlertMessage
           msg={errMsg}
