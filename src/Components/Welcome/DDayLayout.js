@@ -45,9 +45,36 @@ const DDaySetting = styled.div`
 
 const SettingIcon = styled.div``;
 
-const SettingList = styled.div``;
+const SettingList = styled.div`
+  display: grid;
+  border-radius: 10px;
+`;
 
-const SettingItem = styled.div``;
+const SettingItem = styled.div`
+  background-color: ${(props) => props.theme.originBgColor};
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  padding: 10px;
+  padding: 0.625rem;
+  transition: background-color 1s ease;
+  :hover {
+    background-color: ${(props) => props.theme.fontColor};
+    color: ${(props) => props.theme.bgColor};
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  :first-child {
+    border-bottom-left-radius: 0px;
+    border-bottom-left-radius: 0rem;
+    border-bottom-right-radius: 0px;
+    border-bottom-right-radius: 0rem;
+  }
+  :last-child {
+    border-top-left-radius: 0px;
+    border-top-left-radius: 0rem;
+    border-top-right-radius: 0px;
+    border-top-right-radius: 0rem;
+  }
+`;
 
 const DDayLayout = ({
   dDay,
@@ -141,7 +168,7 @@ const DDayLayout = ({
             <AiOutlineMenu />
           </SettingIcon>
           {settingMode && (
-            <SettingList>
+            <SettingList settingMode={settingMode}>
               <SettingItem>D-DAY 수정</SettingItem>
               <SettingItem>D-DAY 삭제</SettingItem>
             </SettingList>
