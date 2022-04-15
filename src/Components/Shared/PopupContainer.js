@@ -11,7 +11,7 @@ const Background = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: ${props => props.theme.popupBgColor};
+  background-color: ${(props) => props.theme.popupBgColor};
   z-index: 20;
 `;
 
@@ -22,7 +22,7 @@ const SRegisterContainer = styled.div`
   top: 10%;
   transform: translate(-50%, 0%);
   max-height: 80%;
-  height: ${props => props.maxHeight && "100%"};
+  height: ${(props) => props.maxHeight && "100%"};
   display: grid;
   grid-template-rows: auto 1fr;
   row-gap: 5px;
@@ -33,7 +33,7 @@ const SRegisterContainer = styled.div`
   ${customMedia.greaterThan("desktop")`
     width: 40%
   `}
-`
+`;
 
 const RegisterPage = styled.div`
   overflow: auto;
@@ -41,19 +41,19 @@ const RegisterPage = styled.div`
   scrollbar-width: none; // Firefox
   ::-webkit-scrollbar {
     display: none; // Chrome, Safari, Opera
-  };
-  height: ${props => props.maxHeight && "100%"};
+  }
+  height: ${(props) => props.maxHeight && "100%"};
   padding: 0px 20px;
   padding: 0rem 1.25rem;
-  padding: ${props => props.emojiPopup && 0};
+  padding: ${(props) => props.emojiPopup && 0};
   display: grid;
   align-items: flex-start;
   row-gap: 10px;
   row-gap: 1.25rem;
-  background-color: ${props => props.theme.bgColor};
+  background-color: ${(props) => props.theme.bgColor};
   transition: background-color 1s ease;
   border-radius: 5px;
-  border-radius: .3125rem;
+  border-radius: 0.3125rem;
   /* Emoji css 커스튬 */
   .emoji-picker-react {
     padding-top: 20px;
@@ -66,9 +66,9 @@ const RegisterPage = styled.div`
   ${customMedia.greaterThan(`tablet`)`
     padding: 10px 30px;
     padding: 0.625rem 1.875rem;
-    padding: ${props => props.emojiPopup && 0};
+    padding: ${(props) => props.emojiPopup && 0};
   `}
-`
+`;
 
 const AlertPopup = styled.div`
   position: fixed;
@@ -78,13 +78,13 @@ const AlertPopup = styled.div`
   display: grid;
   row-gap: 10px;
   row-gap: 0.625rem;
-`
+`;
 
 const Msg = styled.div`
-  color: ${props => props.theme.bgColor};
+  color: ${(props) => props.theme.bgColor};
   text-align: center;
   line-height: 160%;
-`
+`;
 
 const Btn = styled.div`
   display: grid;
@@ -92,103 +92,113 @@ const Btn = styled.div`
   text-align: center;
   column-gap: 20px;
   column-gap: 1.25rem;
-  color: ${props => props.theme.bgColor};
+  color: ${(props) => props.theme.bgColor};
   div {
     padding: 10px;
     padding: 0.625rem;
     border-radius: 5px;
     border-radius: 0.3125rem;
     cursor: pointer;
-    background-color: ${props => props.theme.btnBgColor};
+    background-color: ${(props) => props.theme.btnBgColor};
   }
-`
+`;
 
-const NoBtn = styled.div`
-`
+const NoBtn = styled.div``;
 
-const YesBtn = styled.div`
-`
+const YesBtn = styled.div``;
 
 const OutBtn = styled.div`
   justify-self: flex-end;
-  color: ${props => props.theme.bgColor};
+  color: ${(props) => props.theme.bgColor};
   padding: 1px;
   padding: 0.0625rem;
-  background-color: ${props => props.theme.redColor};
+  background-color: ${(props) => props.theme.redColor};
   border-radius: 50%;
   font-size: 1.25em;
   cursor: pointer;
   svg {
     display: flex;
   }
-`
+`;
 
-const PopupContainer = ({ children, emojiPopup, maxHeight, sound1, sound2, needAlert }) => {
-  const [alertPopup, setAlertPoup] = useState(false)
+const PopupContainer = ({
+  children,
+  emojiPopup,
+  maxHeight,
+  sound1,
+  sound2,
+  needAlert,
+}) => {
+  const [alertPopup, setAlertPoup] = useState(false);
 
   const processOutPopup = () => {
-    outPopup()
-    localStorage.removeItem("attendStudentName")
-    localStorage.removeItem("attendStudentId")
-    localStorage.removeItem("summaryAttendId")
-    localStorage.removeItem("summaryAttendName")
-    localStorage.removeItem("seletedStudentType")
-    localStorage.removeItem("JournalId")
-    localStorage.removeItem("JournalStudentName")
-    localStorage.removeItem("addBookmark")
-    localStorage.removeItem("AllergyNum")
-    localStorage.removeItem("detailToDo")
-    localStorage.removeItem("editSchedule")
-    localStorage.removeItem("JournalStudentId")
-    localStorage.removeItem("JournalStudentName")
+    outPopup();
+    localStorage.removeItem("attendStudentName");
+    localStorage.removeItem("attendStudentId");
+    localStorage.removeItem("summaryAttendId");
+    localStorage.removeItem("summaryAttendName");
+    localStorage.removeItem("seletedStudentType");
+    localStorage.removeItem("JournalId");
+    localStorage.removeItem("JournalStudentName");
+    localStorage.removeItem("addBookmark");
+    localStorage.removeItem("AllergyNum");
+    localStorage.removeItem("detailToDo");
+    localStorage.removeItem("editSchedule");
+    localStorage.removeItem("JournalStudentId");
+    localStorage.removeItem("JournalStudentName");
+    localStorage.removeItem("dDayID");
     if (sound1) {
-      stopMusicFn(sound1)
+      stopMusicFn(sound1);
     }
     if (sound2) {
-      stopMusicFn(sound2)
+      stopMusicFn(sound2);
     }
-  }
+  };
   // 팝업창의 배경을 클릭하게 되면 팝업창에서 벗어나게 된다.
   const onClickBackground = () => {
     if (needAlert) {
-      setAlertPoup(true)
-      return
+      setAlertPoup(true);
+      return;
     } else {
-      processOutPopup()
+      processOutPopup();
     }
-  }
+  };
 
   const onClickYesBtn = () => {
-    processOutPopup()
-  }
+    processOutPopup();
+  };
 
   const onClickNoBtn = () => {
-    setAlertPoup(false)
-  }
+    setAlertPoup(false);
+  };
 
-  return (<Background onClick={onClickBackground}>
-    {/* e.stopPropagation 이벤트가 부모로 전달되는 것을 막는다. 즉, outPopup이 실행이 안된다. */}
-    {alertPopup ?
-      <AlertPopup onClick={e => e.stopPropagation()}>
-        <Msg>팝업창을 벗어나면 새롭게 작성한 글은 사라집니다.</Msg>
-        <Msg>팝업창을 벗어나시겠습니까?</Msg>
-        <Btn>
-          <YesBtn onClick={onClickYesBtn}>네</YesBtn>
-          <NoBtn onClick={onClickNoBtn}>아니요</NoBtn>
-        </Btn>
-      </AlertPopup>
-      :
-      <SRegisterContainer onClick={e => e.stopPropagation()} maxHeight={maxHeight}>
-        <OutBtn onClick={onClickBackground}><IoCloseOutline /></OutBtn>
-        <RegisterPage emojiPopup={emojiPopup} maxHeight={maxHeight}>
-          {children}
-        </RegisterPage>
-      </SRegisterContainer>
-    }
-  </Background>
+  return (
+    <Background onClick={onClickBackground}>
+      {/* e.stopPropagation 이벤트가 부모로 전달되는 것을 막는다. 즉, outPopup이 실행이 안된다. */}
+      {alertPopup ? (
+        <AlertPopup onClick={(e) => e.stopPropagation()}>
+          <Msg>팝업창을 벗어나면 새롭게 작성한 글은 사라집니다.</Msg>
+          <Msg>팝업창을 벗어나시겠습니까?</Msg>
+          <Btn>
+            <YesBtn onClick={onClickYesBtn}>네</YesBtn>
+            <NoBtn onClick={onClickNoBtn}>아니요</NoBtn>
+          </Btn>
+        </AlertPopup>
+      ) : (
+        <SRegisterContainer
+          onClick={(e) => e.stopPropagation()}
+          maxHeight={maxHeight}
+        >
+          <OutBtn onClick={onClickBackground}>
+            <IoCloseOutline />
+          </OutBtn>
+          <RegisterPage emojiPopup={emojiPopup} maxHeight={maxHeight}>
+            {children}
+          </RegisterPage>
+        </SRegisterContainer>
+      )}
+    </Background>
   );
-}
-
-
+};
 
 export default PopupContainer;

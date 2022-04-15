@@ -184,3 +184,17 @@ export const DELETE_DDAY_MUTATION = gql`
     }
   }
 `;
+
+export const EDIT_DDAY_MUTATION = gql`
+  mutation EditDDay(
+    $userEmail: String!
+    $ID: Float!
+    $title: String!
+    $date: Float!
+  ) {
+    editDDay(userEmail: $userEmail, ID: $ID, title: $title, date: $date) {
+      ok
+      error
+    }
+  }
+`;

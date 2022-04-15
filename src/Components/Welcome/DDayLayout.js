@@ -4,6 +4,7 @@ import { is } from "date-fns/locale";
 import React, { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import styled from "styled-components";
+import { inPopup } from "../../apollo";
 import { DELETE_DDAY_MUTATION } from "../../Graphql/User/mutation";
 import { ME_QUERY } from "../../Hooks/useMe";
 
@@ -108,13 +109,20 @@ const DDayLayout = ({
     refetchQueries: [{ query: ME_QUERY }],
   });
 
-  const deleteBtn = () => {
+  const onClickDeleteBtn = () => {
     deleteDDay({
       variables: {
         userEmail,
         ID: dDay[index].ID,
       },
     });
+  };
+
+  const onClickEditBtn = () => {
+    inPopup("registerDDay");
+    setSettingMode(false);
+    setHover(false);
+    localStorage.setItem("dDayID", dDay[index].ID);
   };
 
   const onClickSettingBtn = () => {
@@ -197,8 +205,8 @@ const DDayLayout = ({
           </SettingIcon>
           {settingMode && (
             <SettingList settingMode={settingMode}>
-              <SettingItem>D-DAY 수정</SettingItem>
-              <SettingItem onClick={deleteBtn}>D-DAY 삭제</SettingItem>
+              <SettingItem onClick={onClickEditBtn}>D-DAY 수정</SettingItem>
+              <SettingItem onClick={onClickDeleteBtn}>D-DAY 삭제</SettingItem>
             </SettingList>
           )}
         </DDaySetting>

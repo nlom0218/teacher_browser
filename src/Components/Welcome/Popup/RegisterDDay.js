@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import { ko } from "date-fns/esm/locale";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 import PopupContainer from "../../Shared/PopupContainer";
-import { CREATE_DDAY } from "../../../Graphql/User/mutation";
+import {
+  CREATE_DDAY,
+  EDIT_DDAY_MUTATION,
+} from "../../../Graphql/User/mutation";
 import { ME_QUERY } from "../../../Hooks/useMe";
 import { BsCalendarDate, BsFillPencilFill } from "react-icons/bs";
 import { outPopup } from "../../../apollo";
@@ -75,9 +78,10 @@ const Submit = styled.input`
   cursor: pointer;
 `;
 
-const RegisterDDay = ({ setErrMsg, userEmail, setMsg }) => {
+const RegisterDDay = ({ setErrMsg, userEmail, setMsg, dDay }) => {
+  const dDayID = parseInt(localStorage.getItem("dDayID"));
   const [date, setDate] = useState(new Date());
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, setValue } = useForm({
     mode: "onChange",
   });
 
@@ -96,6 +100,20 @@ const RegisterDDay = ({ setErrMsg, userEmail, setMsg }) => {
     onCompleted,
   });
 
+  const [editDDay, { loading: editLoading }] = useMutation(EDIT_DDAY_MUTATION, {
+    refetchQueries: [{ query: ME_QUERY }],
+    onCompleted: (result) => {
+      const {
+        editDDay: { ok },
+      } = result;
+      if (ok) {
+        outPopup();
+        localStorage.removeItem("dDayID");
+        setMsg("D-DAY가 수정되었습니다.😀");
+      }
+    },
+  });
+
   const onSubmit = (data) => {
     const { title } = data;
     if (!title) {
@@ -104,19 +122,39 @@ const RegisterDDay = ({ setErrMsg, userEmail, setMsg }) => {
     }
     const numberDate = new Date(date).setHours(0, 0, 0, 0);
     const ID = new window.Date().getTime();
-    createDDay({
-      variables: {
-        userEmail,
-        title,
-        date: numberDate,
-        ID,
-      },
-    });
+    if (dDayID) {
+      editDDay({
+        variables: {
+          userEmail,
+          title,
+          date: numberDate,
+          ID: dDayID,
+        },
+      });
+    } else {
+      createDDay({
+        variables: {
+          userEmail,
+          title,
+          date: numberDate,
+          ID,
+        },
+      });
+    }
   };
+
+  useEffect(() => {
+    if (dDayID) {
+      const curDDay = dDay.filter((item) => item.ID === dDayID)[0];
+      setValue("title", curDDay.title);
+      setDate(new Date(curDDay.date));
+    }
+  }, []);
+
   return (
     <PopupContainer>
       <SCreateDDay onSubmit={handleSubmit(onSubmit)}>
-        <Title>D-DAY 등록</Title>
+        <Title>D-DAY {dDayID ? "수정" : "등록"}</Title>
         <InputLayout>
           <Icon>
             <BsFillPencilFill />
@@ -136,7 +174,7 @@ const RegisterDDay = ({ setErrMsg, userEmail, setMsg }) => {
               locale={ko}
             />
           </DDayDate>
-          <Submit type="submit" value="등록하기" />
+          {<Submit type="submit" value={dDayID ? "수정하기" : "등록하기"} />}
         </InputLayout>
       </SCreateDDay>
     </PopupContainer>

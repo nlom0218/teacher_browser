@@ -63,6 +63,7 @@ const Welcome = () => {
       </Container>
       {isPopup === "registerDDay" && (
         <RegisterDDay
+          dDay={me?.dDay}
           userEmail={me?.email}
           setErrMsg={setErrMsg}
           setMsg={setMsg}
