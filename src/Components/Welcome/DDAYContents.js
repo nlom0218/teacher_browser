@@ -1,3 +1,4 @@
+import { useMutation } from "@apollo/client";
 import { format } from "date-fns";
 import React, { useEffect, useState } from "react";
 import {
@@ -7,6 +8,8 @@ import {
 } from "react-icons/ai";
 import styled from "styled-components";
 import { inPopup } from "../../apollo";
+import { TOGGLE_IS_MOVE_DDAY_MTUATION } from "../../Graphql/User/mutation";
+import { ME_QUERY } from "../../Hooks/useMe";
 
 const Container = styled.div`
   text-align: center;
@@ -85,9 +88,20 @@ const DDayDate = styled.div`
   font-weight: 600;
 `;
 
-const DDayContents = ({ dDay, isMoveDDay }) => {
+const DDayContents = ({ dDay, isMoveDDay, userEmail }) => {
+  console.log(isMoveDDay);
   const [index, setIndex] = useState(0);
-  const [isMove, setIsMove] = useState(true);
+
+  const [toggleIsMoveDDay, { loading }] = useMutation(
+    TOGGLE_IS_MOVE_DDAY_MTUATION,
+    { refetchQueries: [{ query: ME_QUERY }] }
+  );
+
+  const onClickToggleBtn = () => {
+    toggleIsMoveDDay({
+      variables: { userEmail },
+    });
+  };
 
   const processDDay = (index) => {
     if (dDay.length === 0) {
@@ -135,7 +149,7 @@ const DDayContents = ({ dDay, isMoveDDay }) => {
   };
 
   useEffect(() => {
-    if (isMove) {
+    if (!Boolean(isMoveDDay)) {
       return;
     }
     const length = dDay.length;
@@ -155,15 +169,7 @@ const DDayContents = ({ dDay, isMoveDDay }) => {
         clearTimeout(timeout);
       };
     }
-  }, [index, dDay, isMove]);
-
-  useEffect(() => {
-    if (isMoveDDay === undefined || null || false) {
-      setIsMove(false);
-    } else {
-      setIsMove(true);
-    }
-  }, [isMoveDDay]);
+  }, [index, dDay, isMoveDDay]);
 
   return (
     <Container>
@@ -176,12 +182,12 @@ const DDayContents = ({ dDay, isMoveDDay }) => {
       ) : (
         <DDayCount>
           {dDay.length !== 1 && (
-            <DDayBtn
-              onClick={() => {
-                setIsMove((prev) => !prev);
-              }}
-            >
-              {isMove ? <AiFillPauseCircle /> : <AiFillPlayCircle />}
+            <DDayBtn onClick={onClickToggleBtn}>
+              {Boolean(isMoveDDay) ? (
+                <AiFillPauseCircle />
+              ) : (
+                <AiFillPlayCircle />
+              )}
             </DDayBtn>
           )}
           {dDay.length !== 5 && (

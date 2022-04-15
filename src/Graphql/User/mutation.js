@@ -166,3 +166,12 @@ export const CREATE_DDAY = gql`
     }
   }
 `;
+
+export const TOGGLE_IS_MOVE_DDAY_MTUATION = gql`
+  mutation ToggleIsMoveDDay($userEmail: String!) {
+    toggleIsMoveDDay(userEmail: $userEmail) {
+      ok
+      error
+    }
+  }
+`;

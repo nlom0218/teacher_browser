@@ -52,7 +52,13 @@ const Welcome = () => {
           welcomePage={welcomePage}
           setWelComPage={setWelComPage}
         />
-        {welcomePage === "home" && <HomeSection dDay={me?.dDay} />}
+        {welcomePage === "home" && (
+          <HomeSection
+            dDay={me?.dDay}
+            userEmail={me?.email}
+            isMoveDDay={me?.isMoveDDay}
+          />
+        )}
         {welcomePage === "notice" && <WelcomeSection />}
       </Container>
       {isPopup === "registerDDay" && (
