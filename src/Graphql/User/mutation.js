@@ -175,3 +175,12 @@ export const TOGGLE_IS_MOVE_DDAY_MTUATION = gql`
     }
   }
 `;
+
+export const DELETE_DDAY_MUTATION = gql`
+  mutation DeleteDDay($userEmail: String!, $ID: Float!) {
+    deleteDDay(userEmail: $userEmail, ID: $ID) {
+      ok
+      error
+    }
+  }
+`;

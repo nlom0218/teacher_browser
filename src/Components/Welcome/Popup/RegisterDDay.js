@@ -82,7 +82,6 @@ const RegisterDDay = ({ setErrMsg, userEmail, setMsg }) => {
   });
 
   const onCompleted = (result) => {
-    console.log(result);
     const {
       createDDay: { ok, error },
     } = result;

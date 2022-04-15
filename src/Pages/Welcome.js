@@ -56,6 +56,7 @@ const Welcome = () => {
             dDay={me?.dDay}
             userEmail={me?.email}
             isMoveDDay={me?.isMoveDDay}
+            setMsg={setMsg}
           />
         )}
         {welcomePage === "notice" && <WelcomeSection />}

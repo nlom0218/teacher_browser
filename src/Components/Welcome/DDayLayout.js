@@ -1,8 +1,11 @@
+import { useMutation } from "@apollo/client";
 import { format } from "date-fns";
 import { is } from "date-fns/locale";
 import React, { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import styled from "styled-components";
+import { DELETE_DDAY_MUTATION } from "../../Graphql/User/mutation";
+import { ME_QUERY } from "../../Hooks/useMe";
 
 const SDDayLayout = styled.div`
   position: relative;
@@ -79,15 +82,40 @@ const SettingItem = styled.div`
 const DDayLayout = ({
   dDay,
   index,
+  setIndex,
   toggleIsMoveDDay,
   userEmail,
   settingMode,
   setSettingMode,
   hover,
   setHover,
+  setMsg,
   isMoveDDay,
 }) => {
   const [initMove, setInitMove] = useState();
+
+  const [deleteDDay, { loading }] = useMutation(DELETE_DDAY_MUTATION, {
+    onCompleted: (result) => {
+      const {
+        deleteDDay: { ok },
+      } = result;
+      if (ok) {
+        setMsg("D-DAY가 삭제되었습니다.😄");
+        setIndex(0);
+        setSettingMode(false);
+      }
+    },
+    refetchQueries: [{ query: ME_QUERY }],
+  });
+
+  const deleteBtn = () => {
+    deleteDDay({
+      variables: {
+        userEmail,
+        ID: dDay[index].ID,
+      },
+    });
+  };
 
   const onClickSettingBtn = () => {
     if (settingMode === false) {
@@ -170,7 +198,7 @@ const DDayLayout = ({
           {settingMode && (
             <SettingList settingMode={settingMode}>
               <SettingItem>D-DAY 수정</SettingItem>
-              <SettingItem>D-DAY 삭제</SettingItem>
+              <SettingItem onClick={deleteBtn}>D-DAY 삭제</SettingItem>
             </SettingList>
           )}
         </DDaySetting>

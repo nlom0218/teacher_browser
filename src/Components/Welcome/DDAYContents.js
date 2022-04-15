@@ -66,7 +66,7 @@ const CountDot = styled.div`
   cursor: pointer;
 `;
 
-const DDayContents = ({ dDay, isMoveDDay, userEmail }) => {
+const DDayContents = ({ dDay, isMoveDDay, userEmail, setMsg }) => {
   const [index, setIndex] = useState(0);
   const [settingMode, setSettingMode] = useState(false);
   const [hover, setHover] = useState(false);
@@ -166,6 +166,7 @@ const DDayContents = ({ dDay, isMoveDDay, userEmail }) => {
       <DDayLayout
         dDay={dDay}
         index={index}
+        setIndex={setIndex}
         toggleIsMoveDDay={toggleIsMoveDDay}
         userEmail={userEmail}
         isMoveDDay={isMoveDDay}
@@ -173,6 +174,7 @@ const DDayContents = ({ dDay, isMoveDDay, userEmail }) => {
         settingMode={settingMode}
         setHover={setHover}
         hover={hover}
+        setMsg={setMsg}
       />
     </Container>
   );
