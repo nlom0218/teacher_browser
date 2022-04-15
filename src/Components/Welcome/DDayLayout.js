@@ -103,6 +103,11 @@ const DDayLayout = ({
       if (ok) {
         setMsg("D-DAY가 삭제되었습니다.😄");
         setIndex(0);
+        if (initMove) {
+          toggleIsMoveDDay({
+            variables: { userEmail, type: "start" },
+          });
+        }
         setSettingMode(false);
       }
     },
