@@ -22,10 +22,6 @@ const Container = styled.div`
   row-gap: ${(props) => (props.welcomePage === "home" ? "0rem" : "1.25rem")};
   grid-template-rows: auto 1fr;
   align-items: flex-start;
-  ${customMedia.greaterThan("tablet")`
-    padding: 40px;
-    padding: 2.5rem;
-  `}
 `;
 
 const Welcome = () => {
