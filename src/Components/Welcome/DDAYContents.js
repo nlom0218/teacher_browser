@@ -14,10 +14,10 @@ import { ME_QUERY } from "../../Hooks/useMe";
 const Container = styled.div`
   text-align: center;
   display: grid;
-  row-gap: 10px;
-  row-gap: 0.625rem;
   letter-spacing: 5px;
   letter-spacing: 0.3125rem;
+  row-gap: 5px;
+  row-gap: 0.3125rem;
 `;
 
 const RegisterDDay = styled.div`
@@ -67,9 +67,18 @@ const CountDot = styled.div`
 `;
 
 const DDayLayout = styled.div`
+  justify-self: center;
+  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
   display: grid;
   row-gap: 10px;
   row-gap: 0.625rem;
+  :hover {
+    background-color: ${(props) => props.theme.cardBg};
+    border-radius: 10px;
+    border-radius: 0.625rem;
+    transition: background-color 0.4s ease;
+  }
 `;
 
 const DDay = styled.div`
@@ -89,7 +98,6 @@ const DDayDate = styled.div`
 `;
 
 const DDayContents = ({ dDay, isMoveDDay, userEmail }) => {
-  console.log(isMoveDDay);
   const [index, setIndex] = useState(0);
 
   const [toggleIsMoveDDay, { loading }] = useMutation(

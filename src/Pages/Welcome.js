@@ -18,8 +18,8 @@ const Container = styled.div`
   padding: 20px;
   padding: 1.25rem;
   display: grid;
-  row-gap: 20px;
-  row-gap: 1.25rem;
+  row-gap: ${(props) => (props.welcomePage === "home" ? "0px" : "20px")};
+  row-gap: ${(props) => (props.welcomePage === "home" ? "0rem" : "1.25rem")};
   grid-template-rows: auto 1fr;
   align-items: flex-start;
   ${customMedia.greaterThan("tablet")`
@@ -39,15 +39,13 @@ const Welcome = () => {
 
   const me = useMe();
 
-  console.log(me);
-
   if (!me) {
     return <Loading page="subPage" />;
   }
 
   return (
     <BasicContainer>
-      <Container>
+      <Container welcomePage={welcomePage}>
         <TopContents
           me={me}
           welcomePage={welcomePage}
