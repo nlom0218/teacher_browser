@@ -18,7 +18,8 @@ const Container = styled.div`
   padding: 20px;
   padding: 1.25rem;
   display: grid;
-  row-gap: 40px;
+  row-gap: 20px;
+  row-gap: 1.25rem;
   grid-template-rows: auto 1fr;
   align-items: flex-start;
   ${customMedia.greaterThan("tablet")`

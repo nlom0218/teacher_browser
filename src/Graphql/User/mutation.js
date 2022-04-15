@@ -168,8 +168,8 @@ export const CREATE_DDAY = gql`
 `;
 
 export const TOGGLE_IS_MOVE_DDAY_MTUATION = gql`
-  mutation ToggleIsMoveDDay($userEmail: String!) {
-    toggleIsMoveDDay(userEmail: $userEmail) {
+  mutation ToggleIsMoveDDay($userEmail: String!, $type: String!) {
+    toggleIsMoveDDay(userEmail: $userEmail, type: $type) {
       ok
       error
     }

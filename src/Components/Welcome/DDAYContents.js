@@ -98,9 +98,15 @@ const DDayContents = ({ dDay, isMoveDDay, userEmail }) => {
   );
 
   const onClickToggleBtn = () => {
-    toggleIsMoveDDay({
-      variables: { userEmail },
-    });
+    if (Boolean(isMoveDDay)) {
+      toggleIsMoveDDay({
+        variables: { userEmail, type: "stop" },
+      });
+    } else {
+      toggleIsMoveDDay({
+        variables: { userEmail, type: "start" },
+      });
+    }
   };
 
   const processDDay = (index) => {
