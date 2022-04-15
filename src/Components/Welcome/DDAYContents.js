@@ -68,13 +68,21 @@ const CountDot = styled.div`
 
 const DDayContents = ({ dDay, isMoveDDay, userEmail }) => {
   const [index, setIndex] = useState(0);
+  const [settingMode, setSettingMode] = useState(false);
+  const [hover, setHover] = useState(false);
 
   const [toggleIsMoveDDay, { loading }] = useMutation(
     TOGGLE_IS_MOVE_DDAY_MTUATION,
     { refetchQueries: [{ query: ME_QUERY }] }
   );
 
+  const initSettingHoverMode = () => {
+    setSettingMode(false);
+    setHover(false);
+  };
+
   const onClickToggleBtn = () => {
+    initSettingHoverMode();
     if (Boolean(isMoveDDay)) {
       toggleIsMoveDDay({
         variables: { userEmail, type: "stop" },
@@ -87,10 +95,12 @@ const DDayContents = ({ dDay, isMoveDDay, userEmail }) => {
   };
 
   const onClickDot = (i) => {
+    initSettingHoverMode();
     setIndex(i);
   };
 
   const onClickRegister = () => {
+    initSettingHoverMode();
     inPopup("registerDDay");
   };
 
@@ -153,7 +163,17 @@ const DDayContents = ({ dDay, isMoveDDay, userEmail }) => {
             })}
         </DDayCount>
       )}
-      <DDayLayout dDay={dDay} index={index} />
+      <DDayLayout
+        dDay={dDay}
+        index={index}
+        toggleIsMoveDDay={toggleIsMoveDDay}
+        userEmail={userEmail}
+        isMoveDDay={isMoveDDay}
+        setSettingMode={setSettingMode}
+        settingMode={settingMode}
+        setHover={setHover}
+        hover={hover}
+      />
     </Container>
   );
 };

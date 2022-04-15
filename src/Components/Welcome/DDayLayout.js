@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { is } from "date-fns/locale";
 import React, { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import styled from "styled-components";
@@ -6,17 +7,15 @@ import styled from "styled-components";
 const SDDayLayout = styled.div`
   position: relative;
   justify-self: center;
-  padding: 10px 20px;
-  padding: 0.625rem 1.25rem;
+  padding: 10px 40px;
+  padding: 0.625rem 2.5rem;
   display: grid;
   row-gap: 10px;
   row-gap: 0.625rem;
-  :hover {
-    background-color: ${(props) => props.theme.cardBg};
-    border-radius: 10px;
-    border-radius: 0.625rem;
-    transition: background-color 0.4s ease;
-  }
+  background-color: ${(props) => props.hover && props.theme.cardBg};
+  border-radius: 10px;
+  border-radius: 0.625rem;
+  transition: background-color 1s ease;
 `;
 
 const DDay = styled.div`
@@ -35,15 +34,55 @@ const DDayDate = styled.div`
   font-weight: 600;
 `;
 
-const SettingIcon = styled.div`
+const DDaySetting = styled.div`
   position: absolute;
   top: 2%;
   right: 2%;
   cursor: pointer;
+  display: grid;
+  justify-items: flex-end;
 `;
 
-const DDayLayout = ({ dDay, index }) => {
-  const [hover, setHover] = useState(false);
+const SettingIcon = styled.div``;
+
+const SettingList = styled.div``;
+
+const SettingItem = styled.div``;
+
+const DDayLayout = ({
+  dDay,
+  index,
+  toggleIsMoveDDay,
+  userEmail,
+  settingMode,
+  setSettingMode,
+  hover,
+  setHover,
+  isMoveDDay,
+}) => {
+  const [initMove, setInitMove] = useState();
+
+  const onClickSettingBtn = () => {
+    if (settingMode === false) {
+      if (isMoveDDay) {
+        setInitMove(true);
+      } else {
+        setInitMove(false);
+      }
+      toggleIsMoveDDay({
+        variables: { userEmail, type: "stop" },
+      });
+      setSettingMode(true);
+    } else {
+      if (initMove) {
+        toggleIsMoveDDay({
+          variables: { userEmail, type: "start" },
+        });
+      }
+      setSettingMode(false);
+    }
+  };
+
   const processDDay = (index) => {
     if (dDay.length === 0) {
       return;
@@ -82,10 +121,14 @@ const DDayLayout = ({ dDay, index }) => {
   };
   return (
     <SDDayLayout
+      hover={hover}
       onMouseEnter={() => {
         setHover(true);
       }}
       onMouseLeave={() => {
+        if (settingMode) {
+          return;
+        }
         setHover(false);
       }}
     >
@@ -93,9 +136,17 @@ const DDayLayout = ({ dDay, index }) => {
       <DDAYName>{processDDayName(index)}</DDAYName>
       <DDayDate>{processDDayDate(index)}</DDayDate>
       {hover && (
-        <SettingIcon>
-          <AiOutlineMenu />
-        </SettingIcon>
+        <DDaySetting>
+          <SettingIcon onClick={onClickSettingBtn}>
+            <AiOutlineMenu />
+          </SettingIcon>
+          {settingMode && (
+            <SettingList>
+              <SettingItem>D-DAY 수정</SettingItem>
+              <SettingItem>D-DAY 삭제</SettingItem>
+            </SettingList>
+          )}
+        </DDaySetting>
       )}
     </SDDayLayout>
   );
