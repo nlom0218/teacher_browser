@@ -6,6 +6,7 @@ const Link = styled.div`
   row-gap: 15px;
   row-gap: 0.625rem;
   justify-items: center;
+  align-items: flex-start;
 `;
 
 const LinkIconLayout = styled.div`
@@ -25,7 +26,10 @@ const LinkIcon = styled.div`
   height: 1.5rem;
 `;
 
-const LinkTitle = styled.div``;
+const LinkTitle = styled.div`
+  text-align: center;
+  line-height: 120%;
+`;
 
 const LinkItem = ({ magic, info, link, title }) => {
   return (

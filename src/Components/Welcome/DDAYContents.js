@@ -13,6 +13,7 @@ import DDayLayout from "./DDayLayout";
 import RegisterDDay from "./Popup/RegisterDDay";
 
 const Container = styled.div`
+  align-self: center;
   text-align: center;
   display: grid;
   letter-spacing: 5px;

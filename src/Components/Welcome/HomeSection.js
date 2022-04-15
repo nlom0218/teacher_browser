@@ -7,7 +7,7 @@ const Container = styled.div`
   max-height: 100%;
   min-height: 100%;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: 1fr 1fr;
   row-gap: 20px;
   row-gap: 1.25rem;
 `;
