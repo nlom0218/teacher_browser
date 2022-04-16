@@ -83,7 +83,41 @@ const PlusBtn = styled.div`
 const LinkContents = ({ links, setMsg, setErrMsg, userEmail, userId }) => {
   const isPopup = useReactiveVar(isPopupVar);
 
-  const [moveHomeLink, { loading }] = useMutation(MOVE_HOME_LINK_MUTATION, {});
+  let sourceIndex;
+  let destinationIndex;
+
+  console.log(sourceIndex, destinationIndex);
+
+  const [moveHomeLink, { loading }] = useMutation(MOVE_HOME_LINK_MUTATION, {
+    update(
+      cache,
+      {
+        data: {
+          moveHomeLink: { ok },
+        },
+      }
+    ) {
+      // console.log(dragIndexObj.source, dragIndexObj.destination);
+      // if (!dragIndexObj.source || !dragIndexObj.destination) {
+      //   return;
+      // }
+      if (ok) {
+        console.log(sourceIndex, destinationIndex);
+        cache.modify({
+          id: `User:${userId}`,
+          fields: {
+            homeLinks(prev) {
+              const copyLinks = [...prev];
+              const moveObj = copyLinks[sourceIndex];
+              copyLinks.splice(sourceIndex, 1);
+              copyLinks.splice(destinationIndex, 0, moveObj);
+              return copyLinks;
+            },
+          },
+        });
+      }
+    },
+  });
 
   const onDragEnd = (arg) => {
     const { destination, source } = arg;
@@ -94,14 +128,8 @@ const LinkContents = ({ links, setMsg, setErrMsg, userEmail, userId }) => {
       setErrMsg("잠시만 기다려주세요!😅");
       return;
     }
-    const sourceIndex = source.index;
-    const destinationIndex = destination.index;
-
-    // const copyLinks = [...links];
-    // const moveObj = copyLinks[sourceIndex];
-    // copyLinks.splice(sourceIndex, 1);
-    // copyLinks.splice(destinationIndex, 0, moveObj);
-    // setLinks(copyLinks);
+    sourceIndex = source.index;
+    destinationIndex = destination.index;
 
     moveHomeLink({
       variables: {
