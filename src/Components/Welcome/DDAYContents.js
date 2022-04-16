@@ -169,21 +169,23 @@ const DDayContents = ({ dDay, isMoveDDay, userEmail, setMsg, setErrMsg }) => {
             })}
         </DDayCount>
       )}
-      <DDayLayout
-        dDay={dDay}
-        index={index}
-        setIndex={setIndex}
-        toggleIsMoveDDay={toggleIsMoveDDay}
-        userEmail={userEmail}
-        isMoveDDay={isMoveDDay}
-        setSettingMode={setSettingMode}
-        settingMode={settingMode}
-        setHover={setHover}
-        hover={hover}
-        setMsg={setMsg}
-        setInitMove={setInitMove}
-        initMove={initMove}
-      />
+      {dDay.length !== 0 && (
+        <DDayLayout
+          dDay={dDay}
+          index={index}
+          setIndex={setIndex}
+          toggleIsMoveDDay={toggleIsMoveDDay}
+          userEmail={userEmail}
+          isMoveDDay={isMoveDDay}
+          setSettingMode={setSettingMode}
+          settingMode={settingMode}
+          setHover={setHover}
+          hover={hover}
+          setMsg={setMsg}
+          setInitMove={setInitMove}
+          initMove={initMove}
+        />
+      )}
       {isPopup === "registerDDay" && (
         <RegisterDDay
           dDay={dDay}

@@ -22,7 +22,8 @@ const HomeSection = ({
   isMoveDDay,
   setMsg,
   setErrMsg,
-  homeLinks,
+  links,
+  userId,
 }) => {
   const media = useMedia();
   return (
@@ -36,10 +37,11 @@ const HomeSection = ({
       />
       {media !== "Mobile" && (
         <LinkContents
-          homeLinks={homeLinks}
+          links={links}
           setMsg={setMsg}
           setErrMsg={setErrMsg}
           userEmail={userEmail}
+          userId={userId}
         />
       )}
     </Container>

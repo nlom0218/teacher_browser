@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   CREATE_HOME_LINKS_MUTATION,
@@ -74,15 +74,15 @@ const SubmitInput = styled.input`
   cursor: pointer;
 `;
 
-const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail, links }) => {
+const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail, links, userId }) => {
   const homeLinkID = parseInt(localStorage.getItem("homeLinkID"));
-  const { register, handleSubmit, setValue } = useForm({
+  const [createID, setCreateID] = useState(undefined);
+  const { register, handleSubmit, setValue, getValues } = useForm({
     mode: "onChange",
   });
   const [createHomeLinks, { loading }] = useMutation(
     CREATE_HOME_LINKS_MUTATION,
     {
-      refetchQueries: [{ query: ME_QUERY }],
       onCompleted: (result) => {
         const {
           createHomeLinks: { ok },
@@ -92,13 +92,38 @@ const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail, links }) => {
           setMsg("즐겨찾기가 추가되었습니다.😀");
         }
       },
+      update(
+        cache,
+        {
+          data: {
+            createHomeLinks: { ok },
+          },
+        }
+      ) {
+        if (ok) {
+          cache.modify({
+            id: `User:${userId}`,
+            fields: {
+              homeLinks(prev) {
+                return [
+                  ...prev,
+                  {
+                    ID: createID,
+                    title: getValues("title"),
+                    link: `https://www.${getValues("link")}`,
+                  },
+                ];
+              },
+            },
+          });
+        }
+      },
     }
   );
 
   const [editHomeLink, { loading: editLoading }] = useMutation(
     EDIT_HOME_LINK_MUTATION,
     {
-      refetchQueries: [{ query: ME_QUERY }],
       onCompleted: (result) => {
         const {
           editHomeLink: { ok },
@@ -106,6 +131,38 @@ const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail, links }) => {
         if (ok) {
           outPopup();
           setMsg("즐겨찾기가 수정되었습니다.😀");
+        }
+      },
+      update(
+        cache,
+        {
+          data: {
+            editHomeLink: { ok },
+          },
+        }
+      ) {
+        if (ok) {
+          cache.modify({
+            id: `User:${userId}`,
+            fields: {
+              homeLinks(prev) {
+                const copyHomeLinks = [...prev];
+                const targetIndex = copyHomeLinks.findIndex(
+                  (item) => item.ID === homeLinkID
+                );
+                return [
+                  ...copyHomeLinks.slice(0, targetIndex),
+                  {
+                    ID: homeLinkID,
+                    title: getValues("title"),
+                    link: `https://www.${getValues("link")}`,
+                  },
+                  ...copyHomeLinks.slice(targetIndex + 1),
+                  ,
+                ];
+              },
+            },
+          });
         }
       },
     }
@@ -121,6 +178,8 @@ const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail, links }) => {
       setErrMsg("링크를 입력하세요.😂");
       return;
     }
+    const ID = new window.Date().getTime();
+    setCreateID(ID);
     if (homeLinkID) {
       editHomeLink({
         variables: {
@@ -136,7 +195,7 @@ const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail, links }) => {
           userEmail,
           title,
           link: `https://www.${link}`,
-          ID: new window.Date().getTime(),
+          ID,
         },
       });
     }

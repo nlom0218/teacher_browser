@@ -80,10 +80,8 @@ const PlusBtn = styled.div`
   }
 `;
 
-const LinkContents = ({ homeLinks, setMsg, setErrMsg, userEmail }) => {
+const LinkContents = ({ links, setMsg, setErrMsg, userEmail, userId }) => {
   const isPopup = useReactiveVar(isPopupVar);
-
-  const [links, setLinks] = useState([]);
 
   const [moveHomeLink, { loading }] = useMutation(MOVE_HOME_LINK_MUTATION, {});
 
@@ -99,11 +97,11 @@ const LinkContents = ({ homeLinks, setMsg, setErrMsg, userEmail }) => {
     const sourceIndex = source.index;
     const destinationIndex = destination.index;
 
-    const copyLinks = [...links];
-    const moveObj = copyLinks[sourceIndex];
-    copyLinks.splice(sourceIndex, 1);
-    copyLinks.splice(destinationIndex, 0, moveObj);
-    setLinks(copyLinks);
+    // const copyLinks = [...links];
+    // const moveObj = copyLinks[sourceIndex];
+    // copyLinks.splice(sourceIndex, 1);
+    // copyLinks.splice(destinationIndex, 0, moveObj);
+    // setLinks(copyLinks);
 
     moveHomeLink({
       variables: {
@@ -117,10 +115,6 @@ const LinkContents = ({ homeLinks, setMsg, setErrMsg, userEmail }) => {
   const onClickCreateLink = () => {
     inPopup("createHomeLinks");
   };
-
-  useEffect(() => {
-    setLinks(homeLinks);
-  }, []);
 
   return (
     <Container linksNum={links.length}>
@@ -173,6 +167,7 @@ const LinkContents = ({ homeLinks, setMsg, setErrMsg, userEmail }) => {
           userEmail={userEmail}
           setErrMsg={setErrMsg}
           links={links}
+          userId={userId}
         />
       )}
     </Container>

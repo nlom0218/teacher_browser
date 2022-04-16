@@ -217,7 +217,6 @@ const AddAttend = ({
     const startDateMillisecond = startDateObject.setHours(0, 0, 0, 0);
     const endDateObject = new window.Date(endDate);
     const endDateMillisecond = endDateObject.setHours(0, 0, 0, 0);
-    console.log(endDateMillisecond);
 
     if (startDateMillisecond === endDateMillisecond) {
       const month = parseInt(format(startDateObject, "yyMM"));
