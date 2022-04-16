@@ -53,6 +53,7 @@ const DDayBtn = styled.div`
   svg {
     display: flex;
     font-size: 1.5em;
+    font-size: 1.5rem;
   }
 `;
 
