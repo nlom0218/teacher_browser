@@ -198,3 +198,22 @@ export const EDIT_DDAY_MUTATION = gql`
     }
   }
 `;
+
+export const CREATE_HOME_LINKS_MUTATION = gql`
+  mutation CreateHomeLinks(
+    $userEmail: String!
+    $title: String!
+    $link: String!
+    $ID: Float!
+  ) {
+    createHomeLinks(
+      userEmail: $userEmail
+      title: $title
+      link: $link
+      ID: $ID
+    ) {
+      ok
+      error
+    }
+  }
+`;

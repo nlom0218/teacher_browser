@@ -29,7 +29,12 @@ const HomeSection = ({
         setMsg={setMsg}
         setErrMsg={setErrMsg}
       />
-      <LinkContents links={links} />
+      <LinkContents
+        links={links}
+        setMsg={setMsg}
+        setErrMsg={setErrMsg}
+        userEmail={userEmail}
+      />
     </Container>
   );
 };

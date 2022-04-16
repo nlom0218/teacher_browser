@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import LinkItem from "./LinkItem";
 import { AiOutlinePlus } from "react-icons/ai";
+import { useReactiveVar } from "@apollo/client";
+import { inPopup, isPopupVar } from "../../apollo";
+import RegisterHomeLinks from "./Popup/RegisterHomeLinks";
 
 const Container = styled.div`
   min-width: ${(props) =>
@@ -26,7 +29,6 @@ const Links = styled.div`
   display: grid;
   grid-template-columns: ${(props) => `repeat(${props.linksNum}, 1fr)`};
   background-color: ${(props) => props.isDraggingOver && props.theme.blurColor};
-  /* background-color: ${(props) => props.theme.blurColor}; */
   border-radius: 10px;
   border-radius: 0.625rem;
   column-gap: 40px;
@@ -45,13 +47,10 @@ const PlusLayout = styled.div`
   padding: 20px;
   padding: 1.25rem;
   text-align: center;
+  line-height: 120%;
 `;
 
 const PlusBtn = styled.div`
-  /* position: absolute;
-  right: -20px;
-  top: -20px;
-  justify-self: center; */
   padding: 15px;
   padding: 1rem;
   background-color: ${(props) => props.theme.originBgColor};
@@ -67,7 +66,9 @@ const PlusBtn = styled.div`
   }
 `;
 
-const LinkContents = ({ links }) => {
+const LinkContents = ({ links, setMsg, setErrMsg, userEmail }) => {
+  const isPopup = useReactiveVar(isPopupVar);
+
   const onDragEnd = (arg) => {
     // const { destination, source } = arg;
     // if (!destination) {
@@ -78,6 +79,10 @@ const LinkContents = ({ links }) => {
     // copyLinks.splice(source.index, 1);
     // copyLinks.splice(destination.index, 0, moveObj);
     // setLinks(copyLinks);
+  };
+
+  const onClickCreateLink = () => {
+    inPopup("createHomeLinks");
   };
   return (
     <Container linksNum={links.length}>
@@ -95,8 +100,8 @@ const LinkContents = ({ links }) => {
                 {links.map((item, index) => {
                   return (
                     <Draggable
-                      key={item.id + ""}
-                      draggableId={item.id + ""}
+                      key={item.ID + ""}
+                      draggableId={item.ID + ""}
                       index={index}
                     >
                       {(magic, info) => (
@@ -117,11 +122,18 @@ const LinkContents = ({ links }) => {
       )}
       {links.length < 5 && (
         <PlusLayout>
-          <PlusBtn>
+          <PlusBtn onClick={onClickCreateLink}>
             <AiOutlinePlus />
           </PlusBtn>
           <div>바로가기 추가</div>
         </PlusLayout>
+      )}
+      {isPopup === "createHomeLinks" && (
+        <RegisterHomeLinks
+          setMsg={setMsg}
+          userEmail={userEmail}
+          setErrMsg={setErrMsg}
+        />
       )}
     </Container>
   );
