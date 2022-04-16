@@ -12,7 +12,14 @@ const Container = styled.div`
   row-gap: 1.25rem;
 `;
 
-const HomeSection = ({ dDay, userEmail, isMoveDDay, setMsg, setErrMsg }) => {
+const HomeSection = ({
+  dDay,
+  userEmail,
+  isMoveDDay,
+  setMsg,
+  setErrMsg,
+  links,
+}) => {
   return (
     <Container>
       <DDayContents
@@ -22,7 +29,7 @@ const HomeSection = ({ dDay, userEmail, isMoveDDay, setMsg, setErrMsg }) => {
         setMsg={setMsg}
         setErrMsg={setErrMsg}
       />
-      <LinkContents />
+      <LinkContents links={links} />
     </Container>
   );
 };

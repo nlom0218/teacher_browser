@@ -28,6 +28,11 @@ export const ME_QUERY = gql`
         ID
       }
       isMoveDDay
+      homeLinks {
+        title
+        link
+        ID
+      }
     }
   }
 `;

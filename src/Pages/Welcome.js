@@ -33,6 +33,8 @@ const Welcome = () => {
 
   const me = useMe();
 
+  console.log(me);
+
   if (!me) {
     return <Loading page="subPage" />;
   }
@@ -52,6 +54,7 @@ const Welcome = () => {
             isMoveDDay={me?.isMoveDDay}
             setMsg={setMsg}
             setErrMsg={setErrMsg}
+            links={me?.homeLinks}
           />
         )}
         {welcomePage === "notice" && <WelcomeSection />}

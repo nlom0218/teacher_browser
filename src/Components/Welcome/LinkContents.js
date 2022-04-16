@@ -14,7 +14,8 @@ const Container = styled.div`
   justify-self: center;
   align-self: center;
   display: grid;
-  grid-template-columns: ${(props) => `${props.linksNum}fr 1fr`};
+  grid-template-columns: ${(props) =>
+    props.linksNum === 0 ? "1fr" : `${props.linksNum}fr 1fr`};
   column-gap: 40px;
   column-gap: 2.5rem;
   row-gap: 10px;
@@ -66,77 +67,54 @@ const PlusBtn = styled.div`
   }
 `;
 
-const linksArr = [
-  {
-    title: "네이버네이",
-    link: "https://www.naver.com",
-    id: 1,
-  },
-  { title: "다음", link: "https://www.daum.net", id: 2 },
-  { title: "구글", link: "https://www.google.com", id: 3 },
-  // {
-  //   title: "인디스쿨",
-  //   link: "https://www.indischool.com",
-  //   id: 4,
-  // },
-  // { title: "카카오", link: "https://www.kakao.com", id: 5 },
-  // { title: "구글", link: "https://www.google.com", id: 6 },
-  // {
-  //   title: "네이버",
-  //   link: "https://www.naver.com",
-  //   id: 7,
-  // },
-  // { title: "다음", link: "https://www.daum.net", id: 8 },
-  // { title: "구글", link: "https://www.google.com", id: 9 },
-];
-
-const LinkContents = () => {
-  const [links, setLinks] = useState(linksArr);
+const LinkContents = ({ links }) => {
   const onDragEnd = (arg) => {
-    const { destination, source } = arg;
-    if (!destination) {
-      return;
-    }
-    const copyLinks = [...links];
-    const moveObj = links[source.index];
-    copyLinks.splice(source.index, 1);
-    copyLinks.splice(destination.index, 0, moveObj);
-    setLinks(copyLinks);
+    // const { destination, source } = arg;
+    // if (!destination) {
+    //   return;
+    // }
+    // const copyLinks = [...links];
+    // const moveObj = links[source.index];
+    // copyLinks.splice(source.index, 1);
+    // copyLinks.splice(destination.index, 0, moveObj);
+    // setLinks(copyLinks);
   };
   return (
     <Container linksNum={links.length}>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="links" direction="horizontal">
-          {(magic, info) => (
-            <Links
-              linksNum={links.length}
-              boardId="links"
-              ref={magic.innerRef}
-              {...magic.droppableProps}
-              isDraggingOver={info.isDraggingOver}
-            >
-              {links.map((item, index) => {
-                return (
-                  <Draggable
-                    key={item.id + ""}
-                    draggableId={item.id + ""}
-                    index={index}
-                  >
-                    {(magic, info) => (
-                      <LinkItem
-                        magic={magic}
-                        info={info}
-                        {...item}
-                        isDraggingOver={info.isDraggingOver}
-                      />
-                    )}
-                  </Draggable>
-                );
-              })}
-            </Links>
-          )}
-        </Droppable>
-      </DragDropContext>
+      {links.length !== 0 && (
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="links" direction="horizontal">
+            {(magic, info) => (
+              <Links
+                linksNum={links.length}
+                boardId="links"
+                ref={magic.innerRef}
+                {...magic.droppableProps}
+                isDraggingOver={info.isDraggingOver}
+              >
+                {links.map((item, index) => {
+                  return (
+                    <Draggable
+                      key={item.id + ""}
+                      draggableId={item.id + ""}
+                      index={index}
+                    >
+                      {(magic, info) => (
+                        <LinkItem
+                          magic={magic}
+                          info={info}
+                          {...item}
+                          isDraggingOver={info.isDraggingOver}
+                        />
+                      )}
+                    </Draggable>
+                  );
+                })}
+              </Links>
+            )}
+          </Droppable>
+        </DragDropContext>
+      )}
       {links.length < 5 && (
         <PlusLayout>
           <PlusBtn>
