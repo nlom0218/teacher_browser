@@ -14,11 +14,11 @@ import { FaSun, FaMoon } from "react-icons/fa";
 import { BiExitFullscreen, BiFullscreen } from "react-icons/bi";
 import useMedia from "../../Hooks/useMedia";
 import {
-  HeaderNews,
   HeaderToDo,
   HeaderBookMark,
   HedaerCalender,
   HeaderMenu,
+  HeaderHome,
 } from "./HeaderLink";
 import routes from "../../routes";
 import { useNavigate } from "react-router-dom";
@@ -153,7 +153,7 @@ const Theme = () => {
       {isFullScreen && (
         <MenuNavigation>
           <MenuItem className="menu_btn" onClick={() => onClickRoutes("home")}>
-            <HeaderNews />
+            <HeaderHome />
           </MenuItem>
           <MenuItem className="menu_btn" onClick={() => onClickRoutes("todo")}>
             <HeaderToDo />

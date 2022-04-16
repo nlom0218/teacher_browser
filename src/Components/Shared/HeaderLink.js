@@ -7,6 +7,8 @@ import IcBookMark from "../../icons/Bookmark/IcBookMark";
 import IcBookMarkClick from "../../icons/Bookmark/IcBookMarkClick";
 import IcCalender from "../../icons/Calender/IcCalender";
 import IcCalenderClick from "../../icons/Calender/IcCalenderClick";
+import IcHome from "../../icons/Home/IcHome";
+import IcHomeClick from "../../icons/Home/IcHomeClick";
 import IcNews from "../../icons/News/IcNews";
 import IcNewsClick from "../../icons/News/IcNewsClick";
 import IcTeacherTool from "../../icons/TeacherTool/TeacherTool";
@@ -29,23 +31,6 @@ const LinkName = styled.div`
   font-size: 0.75rem;
   border-radius: 5px;
 `;
-
-export const HeaderNews = () => {
-  const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
-
-  const [isHover, setIsHover] = useState(false);
-
-  return (
-    <Link
-      to={routes.home}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
-    >
-      {isHover ? <IcNewsClick /> : <IcNews />}
-      {isHover && !isFullScreenMode && <LinkName>홈/뉴스</LinkName>}
-    </Link>
-  );
-};
 
 export const HeaderToDo = () => {
   const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
@@ -118,6 +103,22 @@ export const HeaderMenu = () => {
     >
       {isHover ? <IcTeacherToolClick /> : <IcTeacherTool />}
       {isHover && !isFullScreenMode && <LinkName>메뉴</LinkName>}
+    </Link>
+  );
+};
+
+export const HeaderHome = () => {
+  const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
+
+  const [isHover, setIsHover] = useState(false);
+  return (
+    <Link
+      to={routes.home}
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+    >
+      {isHover ? <IcHomeClick /> : <IcHome />}
+      {isHover && !isFullScreenMode && <LinkName>홈</LinkName>}
     </Link>
   );
 };
