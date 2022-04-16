@@ -45,6 +45,8 @@ const InputLayout = styled.div`
 `;
 
 const Icon = styled.div`
+  font-size: 1.25em;
+  font-size: 1.25rem;
   svg {
     display: flex;
   }

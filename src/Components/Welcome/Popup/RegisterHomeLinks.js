@@ -40,6 +40,8 @@ const InputLayout = styled.div`
 `;
 
 const Icon = styled.div`
+  font-size: 1.25em;
+  font-size: 1.25rem;
   svg {
     display: flex;
   }
@@ -73,7 +75,6 @@ const SubmitInput = styled.input`
 
 const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail, links }) => {
   const homeLinkID = parseInt(localStorage.getItem("homeLinkID"));
-  console.log(homeLinkID);
   const { register, handleSubmit, setValue } = useForm({
     mode: "onChange",
   });
