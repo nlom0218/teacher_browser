@@ -174,7 +174,11 @@ const RegisterDDay = ({
           <Icon>
             <BsFillPencilFill />
           </Icon>
-          <TitleInput {...register("title")} placeholder="내용을 입력하세요." />
+          <TitleInput
+            {...register("title")}
+            placeholder="내용을 입력하세요."
+            autoComplete="off"
+          />
         </InputLayout>
         <InputLayout className="dateInput">
           <Icon>
