@@ -12,6 +12,7 @@ import {
 import { ME_QUERY } from "../../../Hooks/useMe";
 import { BsCalendarDate, BsFillPencilFill } from "react-icons/bs";
 import { outPopup } from "../../../apollo";
+import Loading from "../../Shared/Loading";
 
 const SCreateDDay = styled.form`
   letter-spacing: 0px;
@@ -167,6 +168,10 @@ const RegisterDDay = ({
       setDate(new Date(curDDay.date));
     }
   }, []);
+
+  if (loading || editLoading) {
+    return <Loading page="popupPage" />;
+  }
 
   return (
     <PopupContainer>

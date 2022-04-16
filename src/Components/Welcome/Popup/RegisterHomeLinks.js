@@ -11,6 +11,7 @@ import styled from "styled-components";
 import { outPopup } from "../../../apollo";
 import { BsFillPencilFill } from "react-icons/bs";
 import { AiOutlineLink } from "react-icons/ai";
+import Loading from "../../Shared/Loading";
 
 const Container = styled.form`
   letter-spacing: 0px;
@@ -148,6 +149,10 @@ const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail, links }) => {
       setValue("link", curHomeLink.link.substring(12));
     }
   }, []);
+
+  if (loading || editLoading) {
+    return <Loading page="popupPage" />;
+  }
 
   return (
     <PopupContainer>
