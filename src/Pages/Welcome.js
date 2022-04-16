@@ -52,7 +52,7 @@ const Welcome = () => {
             isMoveDDay={me?.isMoveDDay}
             setMsg={setMsg}
             setErrMsg={setErrMsg}
-            links={me?.homeLinks}
+            homeLinks={me?.homeLinks}
           />
         )}
         {welcomePage === "notice" && <WelcomeSection />}

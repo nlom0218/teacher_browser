@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import LinkItem from "./LinkItem";
 import { AiOutlinePlus } from "react-icons/ai";
-import { useReactiveVar } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import { inPopup, isPopupVar } from "../../apollo";
 import RegisterHomeLinks from "./Popup/RegisterHomeLinks";
 import { customMedia } from "../../styles";
+import { MOVE_HOME_LINK_MUTATION } from "../../Graphql/User/mutation";
+import { ME_QUERY } from "../../Hooks/useMe";
+import Loading from "../Shared/Loading";
 
 const Container = styled.div`
   max-width: 100%;
@@ -77,24 +80,48 @@ const PlusBtn = styled.div`
   }
 `;
 
-const LinkContents = ({ links, setMsg, setErrMsg, userEmail }) => {
+const LinkContents = ({ homeLinks, setMsg, setErrMsg, userEmail }) => {
   const isPopup = useReactiveVar(isPopupVar);
 
+  const [links, setLinks] = useState([]);
+
+  const [moveHomeLink, { loading }] = useMutation(MOVE_HOME_LINK_MUTATION, {});
+
   const onDragEnd = (arg) => {
-    // const { destination, source } = arg;
-    // if (!destination) {
-    //   return;
-    // }
-    // const copyLinks = [...links];
-    // const moveObj = links[source.index];
-    // copyLinks.splice(source.index, 1);
-    // copyLinks.splice(destination.index, 0, moveObj);
-    // setLinks(copyLinks);
+    const { destination, source } = arg;
+    if (!destination) {
+      return;
+    }
+    if (loading) {
+      setErrMsg("잠시만 기다려주세요!😅");
+      return;
+    }
+    const sourceIndex = source.index;
+    const destinationIndex = destination.index;
+
+    const copyLinks = [...links];
+    const moveObj = copyLinks[sourceIndex];
+    copyLinks.splice(sourceIndex, 1);
+    copyLinks.splice(destinationIndex, 0, moveObj);
+    setLinks(copyLinks);
+
+    moveHomeLink({
+      variables: {
+        userEmail,
+        sourceIndex,
+        destinationIndex,
+      },
+    });
   };
 
   const onClickCreateLink = () => {
     inPopup("createHomeLinks");
   };
+
+  useEffect(() => {
+    setLinks(homeLinks);
+  }, []);
+
   return (
     <Container linksNum={links.length}>
       {links.length !== 0 && (

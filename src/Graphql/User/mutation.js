@@ -240,3 +240,20 @@ export const EDIT_HOME_LINK_MUTATION = gql`
     }
   }
 `;
+
+export const MOVE_HOME_LINK_MUTATION = gql`
+  mutation MoveHomeLink(
+    $userEmail: String!
+    $sourceIndex: Int!
+    $destinationIndex: Int!
+  ) {
+    moveHomeLink(
+      userEmail: $userEmail
+      sourceIndex: $sourceIndex
+      destinationIndex: $destinationIndex
+    ) {
+      ok
+      error
+    }
+  }
+`;
