@@ -49,6 +49,8 @@ const LinkTitle = styled.div`
 
 const LinkSetting = styled.div`
   position: absolute;
+  width: 160px;
+  width: 10rem;
   top: 2%;
   right: 2%;
   cursor: pointer;
@@ -97,7 +99,6 @@ const LinkItem = ({ magic, info, link, title, userEmail, ID, setMsg }) => {
   const [deleteHomeLink, { loading }] = useMutation(DELETE_HOME_LINK_MUTATION, {
     refetchQueries: [{ query: ME_QUERY }],
     onCompleted: (result) => {
-      console.log(result);
       const {
         deleteHomeLink: { ok },
       } = result;

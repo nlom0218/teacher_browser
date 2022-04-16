@@ -8,17 +8,24 @@ import { inPopup, isPopupVar } from "../../apollo";
 import RegisterHomeLinks from "./Popup/RegisterHomeLinks";
 
 const Container = styled.div`
-  min-width: ${(props) =>
-    props.linksNum !== 0 &&
-    (props.linksNum > 4 ? "100" : props.linksNum * 20)}%;
-  max-width: ${(props) =>
-    props.linksNum !== 0 &&
-    (props.linksNum > 4 ? "100" : props.linksNum * 20)}%;
+  max-width: 80%;
+  /* min-width: ${(props) =>
+    props.linksNum === 1
+      ? "30"
+      : props.linksNum !== 0 &&
+        (props.linksNum > 4 ? "80" : props.linksNum * 20)}%; */
+  /* max-width: ${(props) =>
+    props.linksNum === 1
+      ? "30"
+      : props.linksNum !== 0 &&
+        (props.linksNum > 4 ? "80" : props.linksNum * 20)}%; */
   justify-self: center;
   align-self: center;
   display: grid;
   grid-template-columns: ${(props) =>
-    props.linksNum === 0 ? "1fr" : `${props.linksNum}fr 1fr`};
+    props.linksNum === 0 || props.linksNum === 5
+      ? "1fr"
+      : `${props.linksNum}fr 1fr`};
   column-gap: 40px;
   column-gap: 2.5rem;
   row-gap: 10px;

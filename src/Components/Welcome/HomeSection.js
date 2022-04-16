@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import useMedia from "../../Hooks/useMedia";
+import { customMedia } from "../../styles";
 import DDayContents from "./DDAYContents";
 import LinkContents from "./LinkContents";
 
@@ -7,9 +9,11 @@ const Container = styled.div`
   max-height: 100%;
   min-height: 100%;
   display: grid;
-  grid-template-rows: 1fr 1fr;
   row-gap: 20px;
   row-gap: 1.25rem;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-rows: 1fr 1fr;
+  `}
 `;
 
 const HomeSection = ({
@@ -20,6 +24,7 @@ const HomeSection = ({
   setErrMsg,
   links,
 }) => {
+  const media = useMedia();
   return (
     <Container>
       <DDayContents
@@ -29,12 +34,14 @@ const HomeSection = ({
         setMsg={setMsg}
         setErrMsg={setErrMsg}
       />
-      <LinkContents
-        links={links}
-        setMsg={setMsg}
-        setErrMsg={setErrMsg}
-        userEmail={userEmail}
-      />
+      {media !== "Mobile" && (
+        <LinkContents
+          links={links}
+          setMsg={setMsg}
+          setErrMsg={setErrMsg}
+          userEmail={userEmail}
+        />
+      )}
     </Container>
   );
 };

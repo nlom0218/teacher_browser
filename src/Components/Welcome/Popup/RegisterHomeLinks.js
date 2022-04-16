@@ -46,8 +46,8 @@ const Warpper = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
-  column-gap: 10px;
-  column-gap: 0.625rem;
+  column-gap: 5px;
+  column-gap: 0.3125rem;
 `;
 
 const Input = styled.input`
@@ -101,7 +101,7 @@ const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail }) => {
       variables: {
         userEmail,
         title,
-        link,
+        link: `https://www.${link}`,
         ID: new window.Date().getTime(),
       },
     });
@@ -109,7 +109,7 @@ const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail }) => {
   return (
     <PopupContainer>
       <Container onSubmit={handleSubmit(onSubmit)}>
-        <Title>즐겨찾기 추가</Title>
+        <Title>바로가기 추가</Title>
         <InputLayout>
           <Icon>
             <BsFillPencilFill />
@@ -125,7 +125,7 @@ const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail }) => {
             <AiOutlineLink />
           </Icon>
           <Warpper>
-            <div>https://</div>
+            <div>https://www.</div>
             <Input
               {...register("link")}
               autoComplete="off"
