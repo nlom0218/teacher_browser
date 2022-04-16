@@ -2,6 +2,7 @@ import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import styled from "styled-components";
+import { inPopup } from "../../apollo";
 import { DELETE_HOME_LINK_MUTATION } from "../../Graphql/User/mutation";
 import { ME_QUERY } from "../../Hooks/useMe";
 
@@ -115,7 +116,10 @@ const LinkItem = ({ magic, info, link, title, userEmail, ID, setMsg }) => {
     setSettingMode((prev) => !prev);
   };
 
-  const onClickEditBtn = () => {};
+  const onClickEditBtn = () => {
+    inPopup("createHomeLinks");
+    localStorage.setItem("homeLinkID", ID);
+  };
 
   const onClickDeleteBtn = () => {
     deleteHomeLink({

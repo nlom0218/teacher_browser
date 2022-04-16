@@ -145,6 +145,7 @@ const LinkContents = ({ links, setMsg, setErrMsg, userEmail }) => {
           setMsg={setMsg}
           userEmail={userEmail}
           setErrMsg={setErrMsg}
+          links={links}
         />
       )}
     </Container>

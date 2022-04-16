@@ -147,6 +147,7 @@ const PopupContainer = ({
     localStorage.removeItem("JournalStudentId");
     localStorage.removeItem("JournalStudentName");
     localStorage.removeItem("dDayID");
+    localStorage.removeItem("homeLinkID");
     if (sound1) {
       stopMusicFn(sound1);
     }

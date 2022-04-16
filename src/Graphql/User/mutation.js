@@ -226,3 +226,17 @@ export const DELETE_HOME_LINK_MUTATION = gql`
     }
   }
 `;
+
+export const EDIT_HOME_LINK_MUTATION = gql`
+  mutation EditHomeLink(
+    $userEmail: String!
+    $ID: Float!
+    $title: String!
+    $link: String!
+  ) {
+    editHomeLink(userEmail: $userEmail, ID: $ID, title: $title, link: $link) {
+      ok
+      error
+    }
+  }
+`;

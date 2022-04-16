@@ -1,7 +1,10 @@
 import { useMutation } from "@apollo/client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { CREATE_HOME_LINKS_MUTATION } from "../../../Graphql/User/mutation";
+import {
+  CREATE_HOME_LINKS_MUTATION,
+  EDIT_HOME_LINK_MUTATION,
+} from "../../../Graphql/User/mutation";
 import { ME_QUERY } from "../../../Hooks/useMe";
 import PopupContainer from "../../Shared/PopupContainer";
 import styled from "styled-components";
@@ -68,8 +71,10 @@ const SubmitInput = styled.input`
   cursor: pointer;
 `;
 
-const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail }) => {
-  const { register, handleSubmit } = useForm({
+const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail, links }) => {
+  const homeLinkID = parseInt(localStorage.getItem("homeLinkID"));
+  console.log(homeLinkID);
+  const { register, handleSubmit, setValue } = useForm({
     mode: "onChange",
   });
   const [createHomeLinks, { loading }] = useMutation(
@@ -87,6 +92,23 @@ const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail }) => {
       },
     }
   );
+
+  const [editHomeLink, { loading: editLoading }] = useMutation(
+    EDIT_HOME_LINK_MUTATION,
+    {
+      refetchQueries: [{ query: ME_QUERY }],
+      onCompleted: (result) => {
+        const {
+          editHomeLink: { ok },
+        } = result;
+        if (ok) {
+          outPopup();
+          setMsg("즐겨찾기가 수정되었습니다.😀");
+        }
+      },
+    }
+  );
+
   const onSubmit = (data) => {
     const { title, link } = data;
     if (!title) {
@@ -97,19 +119,39 @@ const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail }) => {
       setErrMsg("링크를 입력하세요.😂");
       return;
     }
-    createHomeLinks({
-      variables: {
-        userEmail,
-        title,
-        link: `https://www.${link}`,
-        ID: new window.Date().getTime(),
-      },
-    });
+    if (homeLinkID) {
+      editHomeLink({
+        variables: {
+          userEmail,
+          title,
+          link: `https://www.${link}`,
+          ID: homeLinkID,
+        },
+      });
+    } else {
+      createHomeLinks({
+        variables: {
+          userEmail,
+          title,
+          link: `https://www.${link}`,
+          ID: new window.Date().getTime(),
+        },
+      });
+    }
   };
+
+  useEffect(() => {
+    if (homeLinkID) {
+      const curHomeLink = links.filter((item) => item.ID === homeLinkID)[0];
+      setValue("title", curHomeLink.title);
+      setValue("link", curHomeLink.link.substring(12));
+    }
+  }, []);
+
   return (
     <PopupContainer>
       <Container onSubmit={handleSubmit(onSubmit)}>
-        <Title>바로가기 추가</Title>
+        <Title>바로가기 {homeLinkID ? "수정" : "추가"}</Title>
         <InputLayout>
           <Icon>
             <BsFillPencilFill />
@@ -129,11 +171,14 @@ const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail }) => {
             <Input
               {...register("link")}
               autoComplete="off"
-              placeholder="URL을 입력하세요."
+              placeholder="나머지 URL을 입력하세요."
             />
           </Warpper>
         </InputLayout>
-        <SubmitInput type="submit" value="추가하기" />
+        <SubmitInput
+          type="submit"
+          value={homeLinkID ? "수정하기" : "추가하기"}
+        />
       </Container>
     </PopupContainer>
   );
