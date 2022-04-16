@@ -109,7 +109,8 @@ const LinkContents = ({ links, setMsg, setErrMsg, userEmail }) => {
                           magic={magic}
                           info={info}
                           {...item}
-                          isDraggingOver={info.isDraggingOver}
+                          userEmail={userEmail}
+                          setMsg={setMsg}
                         />
                       )}
                     </Draggable>

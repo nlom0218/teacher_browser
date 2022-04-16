@@ -33,8 +33,6 @@ const Welcome = () => {
 
   const me = useMe();
 
-  console.log(me);
-
   if (!me) {
     return <Loading page="subPage" />;
   }

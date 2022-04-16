@@ -1,6 +1,9 @@
+import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import styled from "styled-components";
+import { DELETE_HOME_LINK_MUTATION } from "../../Graphql/User/mutation";
+import { ME_QUERY } from "../../Hooks/useMe";
 
 const Container = styled.div`
   position: relative;
@@ -87,9 +90,23 @@ const SettingItem = styled.div`
   }
 `;
 
-const LinkItem = ({ magic, info, link, title }) => {
+const LinkItem = ({ magic, info, link, title, userEmail, ID, setMsg }) => {
   const [settingMode, setSettingMode] = useState(false);
   const [hover, setHover] = useState(false);
+
+  const [deleteHomeLink, { loading }] = useMutation(DELETE_HOME_LINK_MUTATION, {
+    refetchQueries: [{ query: ME_QUERY }],
+    onCompleted: (result) => {
+      console.log(result);
+      const {
+        deleteHomeLink: { ok },
+      } = result;
+      if (ok) {
+        setMsg("즐겨찾기가 삭제되었습니다.😀");
+      }
+    },
+  });
+
   const onClickLink = () => {
     window.open(link);
   };
@@ -99,7 +116,14 @@ const LinkItem = ({ magic, info, link, title }) => {
 
   const onClickEditBtn = () => {};
 
-  const onClickDeleteBtn = () => {};
+  const onClickDeleteBtn = () => {
+    deleteHomeLink({
+      variables: {
+        userEmail,
+        ID,
+      },
+    });
+  };
 
   return (
     <Container
