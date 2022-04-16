@@ -143,6 +143,7 @@ const LinkContents = ({ links, setMsg, setErrMsg, userEmail, userId }) => {
                           {...item}
                           userEmail={userEmail}
                           setMsg={setMsg}
+                          userId={userId}
                         />
                       )}
                     </Draggable>

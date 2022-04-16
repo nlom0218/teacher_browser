@@ -130,6 +130,7 @@ const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail, links, userId }) => {
         } = result;
         if (ok) {
           outPopup();
+          localStorage.removeItem("homeLinkID");
           setMsg("즐겨찾기가 수정되었습니다.😀");
         }
       },

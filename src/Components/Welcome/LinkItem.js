@@ -93,18 +93,46 @@ const SettingItem = styled.div`
   }
 `;
 
-const LinkItem = ({ magic, info, link, title, userEmail, ID, setMsg }) => {
+const LinkItem = ({
+  magic,
+  info,
+  link,
+  title,
+  userEmail,
+  ID,
+  setMsg,
+  userId,
+}) => {
   const [settingMode, setSettingMode] = useState(false);
   const [hover, setHover] = useState(false);
 
   const [deleteHomeLink, { loading }] = useMutation(DELETE_HOME_LINK_MUTATION, {
-    refetchQueries: [{ query: ME_QUERY }],
     onCompleted: (result) => {
       const {
         deleteHomeLink: { ok },
       } = result;
       if (ok) {
         setMsg("즐겨찾기가 삭제되었습니다.😀");
+      }
+    },
+    update(
+      cache,
+      {
+        data: {
+          deleteHomeLink: { ok },
+        },
+      }
+    ) {
+      if (ok) {
+        cache.modify({
+          id: `User:${userId}`,
+          fields: {
+            homeLinks(prev) {
+              const copyHomeLinks = [...prev];
+              return copyHomeLinks.filter((item) => item.ID !== ID);
+            },
+          },
+        });
       }
     },
   });
