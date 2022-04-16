@@ -6,9 +6,10 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { useReactiveVar } from "@apollo/client";
 import { inPopup, isPopupVar } from "../../apollo";
 import RegisterHomeLinks from "./Popup/RegisterHomeLinks";
+import { customMedia } from "../../styles";
 
 const Container = styled.div`
-  max-width: 80%;
+  max-width: 100%;
   /* min-width: ${(props) =>
     props.linksNum === 1
       ? "30"
@@ -30,6 +31,9 @@ const Container = styled.div`
   column-gap: 2.5rem;
   row-gap: 10px;
   row-gap: 0.625rem;
+  ${customMedia.greaterThan("desktop")`
+    max-width: 80%;
+  `}
 `;
 
 const Links = styled.div`
