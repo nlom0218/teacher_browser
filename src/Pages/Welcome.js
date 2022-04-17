@@ -46,8 +46,6 @@ const Welcome = () => {
     }
   }, [me]);
 
-  console.log(links);
-
   return (
     <BasicContainer>
       <Container welcomePage={welcomePage}>

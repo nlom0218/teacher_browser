@@ -1,9 +1,12 @@
-import { useMutation } from "@apollo/client";
-import React, { useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import axios from "axios";
+import zhCN from "date-fns/esm/locale/zh-CN";
+import React, { useEffect, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import styled from "styled-components";
 import { inPopup } from "../../apollo";
 import { DELETE_HOME_LINK_MUTATION } from "../../Graphql/User/mutation";
+import { VALIDATION_LINK_URL_QUERY } from "../../Graphql/User/query";
 import { ME_QUERY } from "../../Hooks/useMe";
 
 const Container = styled.div`
@@ -41,6 +44,17 @@ const LinkIcon = styled.div`
   width: 1.5rem;
   height: 24px;
   height: 1.5rem;
+`;
+
+const LinkString = styled.div`
+  width: 24px;
+  width: 1.5rem;
+  height: 24px;
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
 `;
 
 const LinkTitle = styled.div`
@@ -106,6 +120,14 @@ const LinkItem = ({
 }) => {
   const [settingMode, setSettingMode] = useState(false);
   const [hover, setHover] = useState(false);
+  const [faviconUrl, setFaviconUrl] = useState(undefined);
+
+  const { data, loading: valLoading } = useQuery(VALIDATION_LINK_URL_QUERY, {
+    variables: {
+      url: faviconUrl,
+    },
+    skip: !faviconUrl,
+  });
 
   const [deleteHomeLink, { loading }] = useMutation(DELETE_HOME_LINK_MUTATION, {
     onCompleted: (result) => {
@@ -163,6 +185,14 @@ const LinkItem = ({
     });
   };
 
+  useEffect(() => {
+    if (link) {
+      setFaviconUrl(`${link}/favicon.ico`);
+    } else {
+      setFaviconUrl(undefined);
+    }
+  }, [link]);
+
   return (
     <Container
       onMouseEnter={() => {
@@ -180,7 +210,11 @@ const LinkItem = ({
     >
       <Link onClick={onClickLink}>
         <LinkIconLayout>
-          <LinkIcon link={link}></LinkIcon>
+          {data?.validationLinkUrl ? (
+            <LinkIcon link={link}></LinkIcon>
+          ) : (
+            <LinkString>{title.substring(0, 1)}</LinkString>
+          )}
         </LinkIconLayout>
         <LinkTitle>{title}</LinkTitle>
       </Link>

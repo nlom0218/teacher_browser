@@ -152,8 +152,6 @@ const LinkContents = ({
     }
   };
 
-  console.log(links);
-
   return (
     <Container linksNum={links?.length}>
       {links?.length !== 0 && links && (
