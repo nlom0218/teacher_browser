@@ -74,7 +74,14 @@ const SubmitInput = styled.input`
   cursor: pointer;
 `;
 
-const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail, links, userId }) => {
+const RegisterHomeLinks = ({
+  setMsg,
+  setErrMsg,
+  userEmail,
+  links,
+  userId,
+  setLinks,
+}) => {
   const homeLinkID = parseInt(localStorage.getItem("homeLinkID"));
   const [createID, setCreateID] = useState(undefined);
   const { register, handleSubmit, setValue, getValues } = useForm({
@@ -159,7 +166,6 @@ const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail, links, userId }) => {
                     link: `https://www.${getValues("link")}`,
                   },
                   ...copyHomeLinks.slice(targetIndex + 1),
-                  ,
                 ];
               },
             },
@@ -182,6 +188,21 @@ const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail, links, userId }) => {
     const ID = new window.Date().getTime();
     setCreateID(ID);
     if (homeLinkID) {
+      setLinks((prev) => {
+        const copyHomeLinks = [...prev];
+        const targetIndex = copyHomeLinks.findIndex(
+          (item) => item.ID === homeLinkID
+        );
+        return [
+          ...copyHomeLinks.slice(0, targetIndex),
+          {
+            ID: homeLinkID,
+            title: getValues("title"),
+            link: `https://www.${getValues("link")}`,
+          },
+          ...copyHomeLinks.slice(targetIndex + 1),
+        ];
+      });
       editHomeLink({
         variables: {
           userEmail,
@@ -191,6 +212,16 @@ const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail, links, userId }) => {
         },
       });
     } else {
+      setLinks((prev) => {
+        return [
+          ...prev,
+          {
+            ID,
+            title: getValues("title"),
+            link: `https://www.${getValues("link")}`,
+          },
+        ];
+      });
       createHomeLinks({
         variables: {
           userEmail,
@@ -205,10 +236,10 @@ const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail, links, userId }) => {
   useEffect(() => {
     if (homeLinkID) {
       const curHomeLink = links.filter((item) => item.ID === homeLinkID)[0];
-      setValue("title", curHomeLink.title);
-      setValue("link", curHomeLink.link.substring(12));
+      setValue("title", curHomeLink?.title);
+      setValue("link", curHomeLink?.link.substring(12));
     }
-  }, []);
+  }, [links]);
 
   if (loading || editLoading) {
     return <Loading page="popupPage" />;

@@ -8,8 +8,6 @@ import { inPopup, isPopupVar } from "../../apollo";
 import RegisterHomeLinks from "./Popup/RegisterHomeLinks";
 import { customMedia } from "../../styles";
 import { MOVE_HOME_LINK_MUTATION } from "../../Graphql/User/mutation";
-import { ME_QUERY } from "../../Hooks/useMe";
-import Loading from "../Shared/Loading";
 
 const Container = styled.div`
   max-width: 100%;
@@ -80,13 +78,13 @@ const PlusBtn = styled.div`
   }
 `;
 
-const LinkContents = ({ links, setMsg, setErrMsg, userEmail, userId }) => {
+const LinkContents = ({ homeLinks, setMsg, setErrMsg, userEmail, userId }) => {
   const isPopup = useReactiveVar(isPopupVar);
+
+  const [links, setLinks] = useState([]);
 
   let sourceIndex;
   let destinationIndex;
-
-  console.log(sourceIndex, destinationIndex);
 
   const [moveHomeLink, { loading }] = useMutation(MOVE_HOME_LINK_MUTATION, {
     update(
@@ -97,12 +95,7 @@ const LinkContents = ({ links, setMsg, setErrMsg, userEmail, userId }) => {
         },
       }
     ) {
-      // console.log(dragIndexObj.source, dragIndexObj.destination);
-      // if (!dragIndexObj.source || !dragIndexObj.destination) {
-      //   return;
-      // }
       if (ok) {
-        console.log(sourceIndex, destinationIndex);
         cache.modify({
           id: `User:${userId}`,
           fields: {
@@ -131,6 +124,12 @@ const LinkContents = ({ links, setMsg, setErrMsg, userEmail, userId }) => {
     sourceIndex = source.index;
     destinationIndex = destination.index;
 
+    const copyLinks = [...homeLinks];
+    const moveObj = copyLinks[sourceIndex];
+    copyLinks.splice(sourceIndex, 1);
+    copyLinks.splice(destinationIndex, 0, moveObj);
+    setLinks(copyLinks);
+
     moveHomeLink({
       variables: {
         userEmail,
@@ -143,6 +142,10 @@ const LinkContents = ({ links, setMsg, setErrMsg, userEmail, userId }) => {
   const onClickCreateLink = () => {
     inPopup("createHomeLinks");
   };
+
+  useEffect(() => {
+    setLinks(homeLinks);
+  }, []);
 
   return (
     <Container linksNum={links.length}>
@@ -172,6 +175,8 @@ const LinkContents = ({ links, setMsg, setErrMsg, userEmail, userId }) => {
                           userEmail={userEmail}
                           setMsg={setMsg}
                           userId={userId}
+                          setLinks={setLinks}
+                          links={links}
                         />
                       )}
                     </Draggable>
@@ -197,6 +202,7 @@ const LinkContents = ({ links, setMsg, setErrMsg, userEmail, userId }) => {
           setErrMsg={setErrMsg}
           links={links}
           userId={userId}
+          setLinks={setLinks}
         />
       )}
     </Container>

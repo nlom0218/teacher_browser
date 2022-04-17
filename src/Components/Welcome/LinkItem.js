@@ -102,6 +102,7 @@ const LinkItem = ({
   ID,
   setMsg,
   userId,
+  setLinks,
 }) => {
   const [settingMode, setSettingMode] = useState(false);
   const [hover, setHover] = useState(false);
@@ -150,6 +151,11 @@ const LinkItem = ({
   };
 
   const onClickDeleteBtn = () => {
+    setLinks((prev) => {
+      const copyHomeLinks = [...prev];
+      console.log(copyHomeLinks);
+      return copyHomeLinks.filter((item) => item?.ID !== ID);
+    });
     deleteHomeLink({
       variables: {
         userEmail,
