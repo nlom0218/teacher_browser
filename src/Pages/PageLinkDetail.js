@@ -6,10 +6,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
 import FolderItem from "../Components/PageLinkRegister/FolderItem";
 import TypeItem from "../Components/PageLinkRegister/TypeItem";
-import {
-  DELETE_PAGE_LINK_MUTATION,
-  UPDATE_PAGE_LINK_MUTATION,
-} from "../Graphql/PageLink/mutation";
+import { DELETE_PAGE_LINK_MUTATION, UPDATE_PAGE_LINK_MUTATION } from "../Graphql/PageLink/mutation";
 import { SEE_PAGE_LINK_QUERY } from "../Graphql/PageLink/query";
 import routes from "../routes";
 
@@ -140,7 +137,7 @@ const DelBtn = styled.div`
 const PageLinkDetail = () => {
   const { pageTitle } = useParams();
   const navigate = useNavigate();
-  const { data, loading } = useQuery(SEE_PAGE_LINK_QUERY, {
+  const { data } = useQuery(SEE_PAGE_LINK_QUERY, {
     variables: {
       pageTitle,
     },
@@ -200,19 +197,13 @@ const PageLinkDetail = () => {
     }
   };
 
-  const [updatePageLink, { loading: updateLoading }] = useMutation(
-    UPDATE_PAGE_LINK_MUTATION,
-    {
-      onCompleted,
-    }
-  );
+  const [updatePageLink] = useMutation(UPDATE_PAGE_LINK_MUTATION, {
+    onCompleted,
+  });
 
-  const [deletePageLink, { loading: deleteLoading }] = useMutation(
-    DELETE_PAGE_LINK_MUTATION,
-    {
-      onCompleted: deleteOnCompleted,
-    }
-  );
+  const [deletePageLink] = useMutation(DELETE_PAGE_LINK_MUTATION, {
+    onCompleted: deleteOnCompleted,
+  });
 
   const onSubmit = (data) => {
     const { pageDescription } = data;
@@ -259,59 +250,29 @@ const PageLinkDetail = () => {
         <FormContainer onSubmit={handleSubmit(onSubmit)}>
           <InputLayout>
             <InputTitle>추천 페이지 이름: 수정 불가능</InputTitle>
-            <input
-              {...register("pageTitle", { required: true })}
-              autoComplete="off"
-              readOnly={true}
-            />
+            <input {...register("pageTitle", { required: true })} autoComplete="off" readOnly={true} />
           </InputLayout>
           <InputLayout>
             <InputTitle>추천 페이지 URL: 수정 불가능</InputTitle>
-            <input
-              {...register("pageURL", { required: true })}
-              autoComplete="off"
-              readOnly={true}
-            />
+            <input {...register("pageURL", { required: true })} autoComplete="off" readOnly={true} />
           </InputLayout>
           <InputLayout>
             <InputTitle>추천 페이지 설명: 필수 / 수정 가능</InputTitle>
-            <TextareaAutosize
-              {...register("pageDescription", { required: true })}
-              minRows="8"
-              maxRows="8"
-              placeholder="추천 페이지 설명을 적으세요. 줄바꿈이 적용됩니다."
-            ></TextareaAutosize>
+            <TextareaAutosize {...register("pageDescription", { required: true })} minRows="8" maxRows="8" placeholder="추천 페이지 설명을 적으세요. 줄바꿈이 적용됩니다."></TextareaAutosize>
           </InputLayout>
           <InputLayout>
             <InputTitle>폴더 선택(중복 가능): 필수 / 수정 가능</InputTitle>
             <Folder>
               {folder.map((item, index) => {
-                return (
-                  <FolderItem
-                    key={index}
-                    item={item}
-                    setSubmitFolder={setSubmitFolder}
-                    submitFolder={submitFolder}
-                  />
-                );
+                return <FolderItem key={index} item={item} setSubmitFolder={setSubmitFolder} submitFolder={submitFolder} />;
               })}
             </Folder>
           </InputLayout>
           <InputLayout>
-            <InputTitle>
-              추천 페이지 종류(중복 불가능): 생략 가능 / 수정 불가능 / 다른
-              것으로 선택하고 수정해도 변하지 않음!
-            </InputTitle>
+            <InputTitle>추천 페이지 종류(중복 불가능): 생략 가능 / 수정 불가능 / 다른 것으로 선택하고 수정해도 변하지 않음!</InputTitle>
             <Folder>
               {pageType.map((item, index) => {
-                return (
-                  <TypeItem
-                    key={index}
-                    item={item}
-                    setSubmitType={setSubmitType}
-                    submitType={submitType}
-                  />
-                );
+                return <TypeItem key={index} item={item} setSubmitType={setSubmitType} submitType={submitType} />;
               })}
             </Folder>
           </InputLayout>

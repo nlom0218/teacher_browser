@@ -69,15 +69,15 @@ const Item = styled.div`
 `;
 
 const EditAccount = () => {
-  const titleUpdataer = useTitle("티처캔 | 회원정보")
+  useTitle("티처캔 | 회원정보");
   const isPopup = useReactiveVar(isPopupVar);
 
-  const [msg, setMsg] = useState(undefined)
+  const [msg, setMsg] = useState(undefined);
 
   const me = useMe();
   const { data } = useQuery(CHECK_PASSWORD_QUERY, {
     variables: { userEmail: me?.email },
-    skip: !me
+    skip: !me,
   });
   return (
     <BasicContainer menuItem={true}>

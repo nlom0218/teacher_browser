@@ -22,7 +22,7 @@ import useTitle from "../Hooks/useTitle";
 import CreateList from "../Components/List/Popup/CreateList";
 import { customMedia } from "../styles";
 import NeedLoginPopupContainer from "../Components/Shared/NeedLoginPopupContainer";
-import PrintListContents from "../Components/List/Popup/PrintListContents";
+
 const Container = styled.div`
   min-height: 100%;
   max-height: 100%;
@@ -49,7 +49,7 @@ const StudentIcon = styled.div`
 `;
 
 const List = () => {
-  const titleUpdataer = useTitle("티처캔 | 명렬표");
+  useTitle("티처캔 | 명렬표");
   const me = useMe();
   const isSeeList = useReactiveVar(isSeeStudentVar);
   const isPopup = useReactiveVar(isPopupVar);
@@ -59,9 +59,7 @@ const List = () => {
   const [selectedTag, setSelectedTag] = useState([]);
   const [selectedSort, setSelectedSort] = useState(undefined);
   const [seeNum, setSeeNum] = useState(Boolean(localStorage.getItem("seeNum")));
-  const [seeStudentIcon, setSeeStudentIcon] = useState(
-    Boolean(localStorage.getItem("seeStudentIcon"))
-  );
+  const [seeStudentIcon, setSeeStudentIcon] = useState(Boolean(localStorage.getItem("seeStudentIcon")));
 
   // 드래그 중일 때와 아닐 때를 나타내기 위한 값
   const [someDragging, setSomeDragging] = useState(false);
@@ -123,9 +121,7 @@ const List = () => {
   // 학생 정보가 불러와지면 existStudentArray 값 생성
   useEffect(() => {
     if (data) {
-      const newExistStudentArray = data?.seeAllStudent.map(
-        (item) => item.studentName
-      );
+      const newExistStudentArray = data?.seeAllStudent.map((item) => item.studentName);
       setExistStudentArray(newExistStudentArray);
     }
   }, [data]);
@@ -150,23 +146,8 @@ const List = () => {
               me={me}
             />
           )}
-          {type === "student" && (
-            <DetailStudent
-              studentId={id}
-              selectedTag={selectedTag}
-              selectedSort={selectedSort}
-              setSuccessMsg={setSuccessMsg}
-              setErrorMsg={setErrorMsg}
-            />
-          )}
-          {type === "detail" && (
-            <DetailList
-              listId={id}
-              someDragging={someDragging}
-              setSuccessMsg={setSuccessMsg}
-              setErrorMsg={setErrorMsg}
-            />
-          )}
+          {type === "student" && <DetailStudent studentId={id} selectedTag={selectedTag} selectedSort={selectedSort} setSuccessMsg={setSuccessMsg} setErrorMsg={setErrorMsg} />}
+          {type === "detail" && <DetailList listId={id} someDragging={someDragging} setSuccessMsg={setSuccessMsg} setErrorMsg={setErrorMsg} />}
         </DivideLeftContents>
         {media === "Desktop" ? (
           <StudentList
@@ -186,30 +167,12 @@ const List = () => {
           </StudentIcon>
         )}
       </Container>
-      <AlertMessage
-        msg={successMsg}
-        setMsg={setSuccessMsg}
-        time={3000}
-        type="success"
-      />
-      <AlertMessage
-        msg={errorMsg}
-        setMsg={setErrorMsg}
-        time={3000}
-        type="error"
-      />
+      <AlertMessage msg={successMsg} setMsg={setSuccessMsg} time={3000} type="success" />
+      <AlertMessage msg={errorMsg} setMsg={setErrorMsg} time={3000} type="error" />
 
       {/* 데스크탑이 아닐 때 학생 전체 리스트를 팝업으로 띄우기 */}
       {isPopup === "students" && (
-        <SeeStudents
-          meTag={me?.tag}
-          selectedTag={selectedTag}
-          seeNum={seeNum}
-          seeStudentIcon={seeStudentIcon}
-          selectedSort={selectedSort}
-          allStudent={data?.seeAllStudent}
-          me={me}
-        />
+        <SeeStudents meTag={me?.tag} selectedTag={selectedTag} seeNum={seeNum} seeStudentIcon={seeStudentIcon} selectedSort={selectedSort} allStudent={data?.seeAllStudent} me={me} />
       )}
       {isPopup === "seeStudentSetting" && (
         <StudentSortTag
@@ -224,17 +187,8 @@ const List = () => {
           setSeeStudentIcon={setSeeStudentIcon}
         />
       )}
-      {isPopup === "createList" && (
-        <CreateList setErrorMsg={setErrorMsg} setSuccessMsg={setSuccessMsg} />
-      )}
-      {isPopup === "createStudent" && (
-        <CreateStudent
-          existStudentArray={existStudentArray}
-          selectedTag={selectedTag}
-          selectedSort={selectedSort}
-          setErrorMsg={setErrorMsg}
-        />
-      )}
+      {isPopup === "createList" && <CreateList setErrorMsg={setErrorMsg} setSuccessMsg={setSuccessMsg} />}
+      {isPopup === "createStudent" && <CreateStudent existStudentArray={existStudentArray} selectedTag={selectedTag} selectedSort={selectedSort} setErrorMsg={setErrorMsg} />}
       {isPopup === "needLogin" && <NeedLoginPopupContainer />}
     </BasicContainer>
   );

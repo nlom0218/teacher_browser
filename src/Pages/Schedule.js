@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
-import { inPopup, isPopupVar, outPopup } from "../apollo";
+import { inPopup, isPopupVar } from "../apollo";
 import useMedia from "../Hooks/useMedia";
 import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
 import TimeTableFont from "../Components/Schedule/TimeTableFont";
@@ -18,7 +18,6 @@ import ScheduleForm from "../Components/Schedule/ScheduleForm";
 import { useQuery } from "@apollo/client";
 import { GET_TIMETABLE_TIME_QUERY } from "../Graphql/TimeTable/query";
 import { GET_TIMETABLE_DATA_QUERY } from "../Graphql/TimeTable/query";
-import { customMedia } from "../styles";
 import AlertMessage from "../Components/Shared/AlertMessage";
 import Loading from "../Components/Shared/Loading";
 
@@ -66,29 +65,16 @@ const TypeBtn = styled.div`
 `;
 
 const Schedule = () => {
-  const titleUpdataer = useTitle("티처캔 | 시간표");
+  useTitle("티처캔 | 시간표");
   const [timeResult, setTimeResult] = useState([]);
   const [timetableTime, setTimetableTime] = useState([]);
-  const [errMsg, setErrMsg] = useState(undefined)
-  const [msg, setMsg] = useState(undefined)
+  const [errMsg, setErrMsg] = useState(undefined);
+  const [msg, setMsg] = useState(undefined);
   const { data: tableData, loading: tableLoading } = useQuery(GET_TIMETABLE_DATA_QUERY);
 
-  const { data, loading, error } = useQuery(GET_TIMETABLE_TIME_QUERY, {
+  const { loading } = useQuery(GET_TIMETABLE_TIME_QUERY, {
     onCompleted: ({ getTimetableTime: data }) => {
-      setTimeResult([
-        data.start1,
-        data.end1,
-        data.start2,
-        data.end2,
-        data.start3,
-        data.end3,
-        data.start4,
-        data.end4,
-        data.start5,
-        data.end5,
-        data.start6,
-        data.end6,
-      ]);
+      setTimeResult([data.start1, data.end1, data.start2, data.end2, data.start3, data.end3, data.start4, data.end4, data.start5, data.end5, data.start6, data.end6]);
       setTimetableTime([
         ["1", [data.start1, data.end1]],
         ["2", [data.start2, data.end2]],
@@ -118,7 +104,7 @@ const Schedule = () => {
   };
 
   if (loading || tableLoading) {
-    return <Loading page="mainPage" />
+    return <Loading page="mainPage" />;
   }
 
   return (
@@ -128,47 +114,18 @@ const Schedule = () => {
         <OptionContents>
           <OptionBtn onClick={onClickTimeSetBtn}> 시간설정 </OptionBtn>
           <TypeBtn onClick={onClickTimeviewBtn}>
-            {viewTime === true ? (
-              <RiCheckboxLine />
-            ) : (
-              <RiCheckboxBlankLine />
-            )}
+            {viewTime === true ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
             <div> 시간 보기 </div>
           </TypeBtn>
-          {media !== "Mobile" && (
-            <TimeTableFont fontSize={fontSize} setFontSize={setFontSize} />
-          )}
+          {media !== "Mobile" && <TimeTableFont fontSize={fontSize} setFontSize={setFontSize} />}
         </OptionContents>
-        <ScheduleForm
-          fontSize={fontSize}
-          setFontSize={setFontSize}
-          viewTime={viewTime}
-          timetableTime={timetableTime}
-          setTimetableTime={setTimetableTime}
-          tableData={tableData}
-        />
+        <ScheduleForm fontSize={fontSize} setFontSize={setFontSize} viewTime={viewTime} timetableTime={timetableTime} setTimetableTime={setTimetableTime} tableData={tableData} />
       </Container>
 
-      {isPopup === "registerClass" && (
-        <ClassRegisterPage
-          userEmail={me?.email}
-          setErrMsg={setErrMsg}
-          setMsg={setMsg}
-        />
-      )}
-      {isPopup === "registerTime" && (
-        <TimeRegisterPage timeResult={timeResult} userEmail={me?.email} setMsg={setMsg} />
-      )}
+      {isPopup === "registerClass" && <ClassRegisterPage userEmail={me?.email} setErrMsg={setErrMsg} setMsg={setMsg} />}
+      {isPopup === "registerTime" && <TimeRegisterPage timeResult={timeResult} userEmail={me?.email} setMsg={setMsg} />}
       {isPopup === "registerTimeSet" && <ClassTimeSet userEmail={me?.email} setMsg={setMsg} />}
-      {isPopup === "print" && (
-        <PrintScheduleContents
-          printRef={componentRef}
-          title={title}
-          viewTime={viewTime}
-          timeResult={timeResult}
-          tableData={tableData}
-        />
-      )}
+      {isPopup === "print" && <PrintScheduleContents printRef={componentRef} title={title} viewTime={viewTime} timeResult={timeResult} tableData={tableData} />}
       {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} time={3000} type="error" />}
       {msg && <AlertMessage msg={msg} setMsg={setMsg} time={3000} type="success" />}
     </BasicContainer>

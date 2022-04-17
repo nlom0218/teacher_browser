@@ -168,7 +168,7 @@ const PageLinkRegister = () => {
     }
   };
 
-  const [createPageLink, { loading }] = useMutation(CREATE_PAGE_LINK_MUTATION, {
+  const [createPageLink] = useMutation(CREATE_PAGE_LINK_MUTATION, {
     onCompleted,
   });
 
@@ -195,41 +195,21 @@ const PageLinkRegister = () => {
         <FormContainer onSubmit={handleSubmit(onSubmit)}>
           <InputLayout>
             <InputTitle>추천 페이지 이름(중복 불가능): 필수</InputTitle>
-            <input
-              {...register("pageTitle", { required: true })}
-              placeholder="추천 페이지 이름을 적으세요."
-              autoComplete="off"
-            />
+            <input {...register("pageTitle", { required: true })} placeholder="추천 페이지 이름을 적으세요." autoComplete="off" />
           </InputLayout>
           <InputLayout>
             <InputTitle>추천 페이지 URL: 필수</InputTitle>
-            <input
-              {...register("pageURL", { required: true })}
-              autoComplete="off"
-              placeholder="추천 페이지의 주소를 적으세요. ex) https://www.teacher-can.com (https:// => 필수!!!)"
-            />
+            <input {...register("pageURL", { required: true })} autoComplete="off" placeholder="추천 페이지의 주소를 적으세요. ex) https://www.teacher-can.com (https:// => 필수!!!)" />
           </InputLayout>
           <InputLayout>
             <InputTitle>추천 페이지 설명: 필수</InputTitle>
-            <TextareaAutosize
-              {...register("pageDescription", { required: true })}
-              minRows="8"
-              maxRows="8"
-              placeholder="추천 페이지 설명을 적으세요. 줄바꿈이 적용됩니다."
-            ></TextareaAutosize>
+            <TextareaAutosize {...register("pageDescription", { required: true })} minRows="8" maxRows="8" placeholder="추천 페이지 설명을 적으세요. 줄바꿈이 적용됩니다."></TextareaAutosize>
           </InputLayout>
           <InputLayout>
             <InputTitle>폴더 선택(중복 가능): 필수</InputTitle>
             <Folder>
               {folder.map((item, index) => {
-                return (
-                  <FolderItem
-                    key={index}
-                    item={item}
-                    setSubmitFolder={setSubmitFolder}
-                    submitFolder={submitFolder}
-                  />
-                );
+                return <FolderItem key={index} item={item} setSubmitFolder={setSubmitFolder} submitFolder={submitFolder} />;
               })}
             </Folder>
           </InputLayout>
@@ -237,14 +217,7 @@ const PageLinkRegister = () => {
             <InputTitle>추천 페이지 종류(중복 불가능): 생략 가능</InputTitle>
             <Folder>
               {pageType.map((item, index) => {
-                return (
-                  <TypeItem
-                    key={index}
-                    item={item}
-                    setSubmitType={setSubmitType}
-                    submitType={submitType}
-                  />
-                );
+                return <TypeItem key={index} item={item} setSubmitType={setSubmitType} submitType={submitType} />;
               })}
             </Folder>
           </InputLayout>

@@ -3,7 +3,6 @@ import styled from "styled-components";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import "react-datepicker/dist/react-datepicker.css";
 import { Date } from "../Components/Lunchmenu/Date";
-import { FaSchool } from "react-icons/fa";
 import SearchSchool from "../Components/Lunchmenu/SearchSchool";
 import { useReactiveVar } from "@apollo/client";
 import { inPopup, isPopupVar } from "../apollo";
@@ -190,7 +189,7 @@ const LunchmenuDetail = styled.div`
 const LunchmenuOrigin = styled.div``;
 
 const Lunchmenu = () => {
-  const titleUpdataer = useTitle("티처캔 | 식단표");
+  useTitle("티처캔 | 식단표");
   // 반응형
   const media = useMedia();
 
@@ -263,7 +262,7 @@ const Lunchmenu = () => {
             })
           );
           setOrigin(
-            json.mealServiceDietInfo[1].row[0].ORPLC_INFO.replace(/\:/g, "(")
+            json.mealServiceDietInfo[1].row[0].ORPLC_INFO.replace(/:/g, "(")
               .replace(/\s/gi, "")
               .split("<br/>")
               .map((item) => item + ")")

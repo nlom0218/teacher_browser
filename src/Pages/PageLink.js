@@ -24,40 +24,24 @@ import useMedia from "../Hooks/useMedia";
 const Container = styled.div``;
 
 const PageLink = () => {
-  const titleUpdataer = useTitle("티처캔 | 즐겨찾기")
+  useTitle("티처캔 | 즐겨찾기");
   const me = useMe();
-  const media = useMedia()
+  const media = useMedia();
   const isPopup = useReactiveVar(isPopupVar);
   const pageLinkSection = useReactiveVar(pageLinkSectionVar);
 
-  const [msg, setMsg] = useState(undefined)
+  const [msg, setMsg] = useState(undefined);
 
   const [init, setInit] = useState(true);
   return (
     <BasicContainer>
       <Container>
-        <PageLinkSection
-          init={init}
-          setInit={setInit}
-          pageLinkSection={pageLinkSection}
-          userEmail={me?.email}
-          media={media}
-        />
-        <LinkPickSection
-          init={init}
-          setInit={setInit}
-          pageLinkSection={pageLinkSection}
-          userEmail={me?.email}
-          link={me?.link}
-          setMsg={setMsg}
-          media={media}
-        />
+        <PageLinkSection init={init} setInit={setInit} pageLinkSection={pageLinkSection} userEmail={me?.email} media={media} />
+        <LinkPickSection init={init} setInit={setInit} pageLinkSection={pageLinkSection} userEmail={me?.email} link={me?.link} setMsg={setMsg} media={media} />
       </Container>
       {isPopup === "addBookmark" && <AddBookmark userEmail={me?.email} setMsg={setMsg} />}
       {isPopup === "seePageLink" && <SeePageLink />}
-      {isPopup === "detailPageLink" && (
-        <DetailPageLink link={me?.link} userEmail={me?.email} setMsg={setMsg} />
-      )}
+      {isPopup === "detailPageLink" && <DetailPageLink link={me?.link} userEmail={me?.email} setMsg={setMsg} />}
       {isPopup === "needLogin" && <NeedLoginPopupContainer />}
       {isPopup === "pageLinkHelper" && <PageLinkHelper />}
       {msg && <AlertMessage type="success" time={3000} msg={msg} setMsg={setMsg} />}

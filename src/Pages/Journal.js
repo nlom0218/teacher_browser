@@ -31,22 +31,22 @@ const Container = styled.div`
     padding: 40px;
     padding: 2.5rem;
   `}
-`
+`;
 
 const Journal = ({ me }) => {
-  const titleUpdataer = useTitle("티처캔 | 학급일지")
+  useTitle("티처캔 | 학급일지");
   const { type, id } = useParams();
 
   const isPopup = useReactiveVar(isPopupVar);
   const [studentListName, setStudentListName] = useState(undefined);
-  const [studentName, setStudentName] = useState(undefined)
+  const [studentName, setStudentName] = useState(undefined);
   const [students, setStudents] = useState([]);
   const [sort, setSort] = useState("num");
 
-  const [refetchQuery, setRefetchQuery] = useState(1)
+  const [refetchQuery, setRefetchQuery] = useState(1);
 
-  const [msg, setMsg] = useState(undefined)
-  const [errMsg, setErrMsg] = useState(undefined)
+  const [msg, setMsg] = useState(undefined);
+  const [errMsg, setErrMsg] = useState(undefined);
 
   const { data, loading, error } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: {
@@ -56,12 +56,12 @@ const Journal = ({ me }) => {
     skip: !id || type === "student",
   });
 
-  const { data: studentData, loading: studentLoading, refetch } = useQuery(SEE_ONE_STUDENT_QUERY, {
+  const { data: studentData, refetch } = useQuery(SEE_ONE_STUDENT_QUERY, {
     variables: {
-      studentId: id
+      studentId: id,
     },
-    skip: !id || type !== "student"
-  })
+    skip: !id || type !== "student",
+  });
 
   // 팝업 닫으면 localstorage의 학생 정보 삭제
   if (!localStorage.getItem("popup") && localStorage.getItem("selectedStudent")) localStorage.removeItem("selectedStudent");
@@ -75,15 +75,15 @@ const Journal = ({ me }) => {
 
   useEffect(() => {
     if (studentData) {
-      setStudentName(studentData?.seeAllStudent[0]?.studentName)
+      setStudentName(studentData?.seeAllStudent[0]?.studentName);
     } else {
-      setStudentName(undefined)
+      setStudentName(undefined);
     }
-  }, [studentData])
+  }, [studentData]);
 
   useEffect(() => {
-    refetch()
-  }, [refetchQuery])
+    refetch();
+  }, [refetchQuery]);
 
   return (
     <BasicContainer menuItem={true}>

@@ -25,10 +25,9 @@ import NeedLoginPopupContainer from "../Components/Shared/NeedLoginPopupContaine
 import useMe from "../Hooks/useMe";
 import NoStudentMsg from "../Components/Shared/styled/NoStudentMsg";
 
-
 // 전체 틀
 const Container = styled.div`
-  min-height: ${props => props.seeResultType === "ONE" && "100%"};
+  min-height: ${(props) => props.seeResultType === "ONE" && "100%"};
   display: grid;
   grid-template-rows: auto auto 1fr;
   padding: 20px;
@@ -52,20 +51,20 @@ const TopContents = styled.div`
    grid-template-columns: 1fr auto;
    column-gap:20px;
    column-gap:1.25rem;
-  `}
-   /* padding : 20px 20px 0px 0px;
+  `}/* padding : 20px 20px 0px 0px;
     padding : 1.25rem 1.25rem 0rem 0rem; */
 `;
-const Main = styled.div`
-  display: grid;
-  grid-template-columns: auto 1fr;
-  row-gap: 20px;
-  row-gap: 1.25rem;
-  column-gap: 20px;
-  column-gap: 1.25rem;
-  grid-row: 1/-1;
-  align-items: center;
-`;
+
+// const Main = styled.div`
+//   display: grid;
+//   grid-template-columns: auto 1fr;
+//   row-gap: 20px;
+//   row-gap: 1.25rem;
+//   column-gap: 20px;
+//   column-gap: 1.25rem;
+//   grid-row: 1/-1;
+//   align-items: center;
+// `;
 
 //제목
 const Title = styled.form`
@@ -157,7 +156,7 @@ const ListIcon = styled.div`
     font-size: 2.5em;
     font-size: 2.5rem;
     cursor: pointer;
-    filter: drop-shadow(1px 1px 1px rgb(0, 0, 0))
+    filter: drop-shadow(1px 1px 1px rgb(0, 0, 0));
   }
 `;
 
@@ -165,22 +164,22 @@ const ListName = styled.div``;
 //추가 기능 (프린트)
 
 const Order = () => {
-  const titleUpdataer = useTitle("티처캔 | 순서정하기")
+  useTitle("티처캔 | 순서정하기");
   const { id } = useParams();
   const isPopup = useReactiveVar(isPopupVar);
-  const media = useMedia()
+  const media = useMedia();
 
   const componentRef = useRef(null);
 
-  const me = useMe()
+  const me = useMe();
 
-  const [IconsLIstisHover, setIconListIsHover] = useState(false)
+  const [IconsLIstisHover, setIconListIsHover] = useState(false);
   const [studentListName, setStudentListName] = useState(null);
   const [selectedStudent, setSelectedStudent] = useState([]);
   const [isShuffle, setIsShuffle] = useState("init");
   const [seeResultType, setSeeResultType] = useState("ALL");
-  const [fontSizeAll, setFontSizeAll] = useState(1.5)
-  const [fontSizeOne, setFontSizeOne] = useState(5)
+  const [fontSizeAll, setFontSizeAll] = useState(1.5);
+  const [fontSizeOne, setFontSizeOne] = useState(5);
   const [isEdit, setIsEdit] = useState(false);
   //title : 인쇄할 때 필요한 제목
   const [title, setTitle] = useState("순서 정하기 제목");
@@ -196,11 +195,11 @@ const Order = () => {
 
   const onClickListIcon = () => {
     if (me) {
-      inPopup("seeStudentList")
+      inPopup("seeStudentList");
     } else {
-      inPopup("needLogin")
+      inPopup("needLogin");
     }
-  }
+  };
 
   const onClickInput = () => {
     setIsEdit(true);
@@ -224,8 +223,8 @@ const Order = () => {
   useEffect(() => {
     if (data) {
       setStudentListName(data?.seeStudentList[0]?.listName);
-      //휴지통에 있는 학생은 filter로 거르기 
-      setSelectedStudent(data?.seeStudentList[0]?.students.filter(item => !item.trash).map((item) => item.studentName));
+      //휴지통에 있는 학생은 filter로 거르기
+      setSelectedStudent(data?.seeStudentList[0]?.students.filter((item) => !item.trash).map((item) => item.studentName));
     }
   }, [data]);
   return (
@@ -260,8 +259,16 @@ const Order = () => {
             </div>
           </ListIcon>
         </TopContents>
-        {loading ? <Loading page="subPage" /> :
-          id && (selectedStudent.length === 0 ? <NoStudentMsg>명렬표에 학생이 없습니다. 😅 <br />명렬표에서 학생을 추가하세요!</NoStudentMsg> : (
+        {loading ? (
+          <Loading page="subPage" />
+        ) : (
+          id &&
+          (selectedStudent.length === 0 ? (
+            <NoStudentMsg>
+              명렬표에 학생이 없습니다. 😅 <br />
+              명렬표에서 학생을 추가하세요!
+            </NoStudentMsg>
+          ) : (
             <React.Fragment>
               <OptionContents>
                 {isShuffle === "init" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>순서 섞기</OptionBtn>}
@@ -272,11 +279,7 @@ const Order = () => {
                   </OptionBtn>
                 )}
 
-                {isShuffle === "finish" && (
-                  <OptionBtn onClick={() => onClickShuffleBtn("ing")}>
-                    다시 섞기
-                  </OptionBtn>
-                )}
+                {isShuffle === "finish" && <OptionBtn onClick={() => onClickShuffleBtn("ing")}>다시 섞기</OptionBtn>}
                 <SeeResultType seeResultType={seeResultType} setSeeResultType={setSeeResultType} />
                 {media === "Desktop" && <PrintOrder />}
                 <FontSizeBtn seeResultType={seeResultType} setFontSizeAll={setFontSizeAll} fontSizeAll={fontSizeAll} fontSizeOne={fontSizeOne} setFontSizeOne={setFontSizeOne} />
@@ -289,14 +292,15 @@ const Order = () => {
                 setSelectedStudent={setSelectedStudent}
                 isShuffle={isShuffle}
               />
-            </React.Fragment>)
-          )}
+            </React.Fragment>
+          ))
+        )}
       </Container>
-      { isPopup === "seeStudentList" && <StudentList page="order" setIsShuffle={setIsShuffle} />}
-      { isPopup === "print" && <PrintOrderContents printRef={componentRef} title={title} selectedStudent={selectedStudent} />}
+      {isPopup === "seeStudentList" && <StudentList page="order" setIsShuffle={setIsShuffle} />}
+      {isPopup === "print" && <PrintOrderContents printRef={componentRef} title={title} selectedStudent={selectedStudent} />}
       {isPopup === "needLogin" && <NeedLoginPopupContainer />}
-      { isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
-    </BasicContainer >
+      {isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
+    </BasicContainer>
   );
 };
 
