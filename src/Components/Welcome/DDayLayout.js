@@ -126,7 +126,7 @@ const DDayLayout = ({
           fields: {
             dDay(prev) {
               const copyDDay = [...prev];
-              return copyDDay.filter((item) => item.ID !== dDay[index].ID);
+              return copyDDay.filter((item) => item.ID !== dDay[index]?.ID);
             },
           },
         });
@@ -138,7 +138,7 @@ const DDayLayout = ({
     deleteDDay({
       variables: {
         userEmail,
-        ID: dDay[index].ID,
+        ID: dDay[index]?.ID,
       },
     });
   };
@@ -147,7 +147,7 @@ const DDayLayout = ({
     inPopup("registerDDay");
     setSettingMode(false);
     setHover(false);
-    localStorage.setItem("dDayID", dDay[index].ID);
+    localStorage.setItem("dDayID", dDay[index]?.ID);
   };
 
   const onClickSettingBtn = () => {
@@ -172,11 +172,11 @@ const DDayLayout = ({
   };
 
   const processDDay = (index) => {
-    if (dDay.length === 0) {
+    if (dDay?.length === 0 || !dDay) {
       return;
     } else {
       const now = new window.Date().setHours(0, 0, 0, 0);
-      const setDay = new Date(dDay[index].date).getTime();
+      const setDay = new Date(dDay[index]?.date).getTime();
       let DDAY;
       if (now > setDay) {
         // 이미 지난 D-Day
@@ -193,18 +193,18 @@ const DDayLayout = ({
   };
 
   const processDDayName = (index) => {
-    if (dDay.length === 0) {
+    if (dDay?.length === 0 || !dDay) {
       return;
     } else {
-      return dDay[index].title;
+      return dDay[index]?.title;
     }
   };
 
   const processDDayDate = (index) => {
-    if (dDay.length === 0) {
+    if (dDay?.length === 0 || !dDay) {
       return;
     } else {
-      return format(dDay[index].date, "yyyy년 MM월 dd일");
+      return format(dDay[index]?.date, "yyyy년 MM월 dd일");
     }
   };
   return (

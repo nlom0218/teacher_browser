@@ -5,6 +5,7 @@ import { isPopupVar } from "../apollo";
 import AlertMessage from "../Components/Shared/AlertMessage";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import Loading from "../Components/Shared/Loading";
+import NeedLoginPopupContainer from "../Components/Shared/NeedLoginPopupContainer";
 import HomeSection from "../Components/Welcome/HomeSection";
 import RegisterDDay from "../Components/Welcome/Popup/RegisterDDay";
 import TopContents from "../Components/Welcome/TopContents";
@@ -27,15 +28,13 @@ const Container = styled.div`
 const Welcome = () => {
   const titleUpdataer = useTitle("티처캔");
 
+  const isPopup = useReactiveVar(isPopupVar);
+
   const [welcomePage, setWelComPage] = useState("home");
   const [errMsg, setErrMsg] = useState(undefined);
   const [msg, setMsg] = useState(undefined);
 
   const me = useMe();
-
-  if (!me) {
-    return <Loading page="subPage" />;
-  }
 
   return (
     <BasicContainer>
@@ -75,6 +74,7 @@ const Welcome = () => {
           isMoveDDay={me?.isMoveDDay}
         />
       )}
+      {isPopup === "needLogin" && <NeedLoginPopupContainer />}
     </BasicContainer>
   );
 };

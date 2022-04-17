@@ -140,7 +140,11 @@ const LinkContents = ({ homeLinks, setMsg, setErrMsg, userEmail, userId }) => {
   };
 
   const onClickCreateLink = () => {
-    inPopup("createHomeLinks");
+    if (!userId) {
+      inPopup("needLogin");
+    } else {
+      inPopup("createHomeLinks");
+    }
   };
 
   useEffect(() => {
@@ -148,53 +152,55 @@ const LinkContents = ({ homeLinks, setMsg, setErrMsg, userEmail, userId }) => {
   }, []);
 
   return (
-    <Container linksNum={links.length}>
-      {links.length !== 0 && (
-        <DragDropContext onDragEnd={onDragEnd}>
-          <Droppable droppableId="links" direction="horizontal">
-            {(magic, info) => (
-              <Links
-                linksNum={links.length}
-                boardId="links"
-                ref={magic.innerRef}
-                {...magic.droppableProps}
-                isDraggingOver={info.isDraggingOver}
-              >
-                {links.map((item, index) => {
-                  return (
-                    <Draggable
-                      key={item.ID + ""}
-                      draggableId={item.ID + ""}
-                      index={index}
-                    >
-                      {(magic, info) => (
-                        <LinkItem
-                          magic={magic}
-                          info={info}
-                          {...item}
-                          userEmail={userEmail}
-                          setMsg={setMsg}
-                          userId={userId}
-                          setLinks={setLinks}
-                          links={links}
-                        />
-                      )}
-                    </Draggable>
-                  );
-                })}
-              </Links>
-            )}
-          </Droppable>
-        </DragDropContext>
-      )}
-      {links.length < 5 && (
-        <PlusLayout>
-          <PlusBtn onClick={onClickCreateLink}>
-            <AiOutlinePlus />
-          </PlusBtn>
-          <div>바로가기 추가</div>
-        </PlusLayout>
-      )}
+    <Container linksNum={links?.length}>
+      {links?.length !== 0 ||
+        (!links && (
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="links" direction="horizontal">
+              {(magic, info) => (
+                <Links
+                  linksNum={links.length}
+                  boardId="links"
+                  ref={magic.innerRef}
+                  {...magic.droppableProps}
+                  isDraggingOver={info.isDraggingOver}
+                >
+                  {links.map((item, index) => {
+                    return (
+                      <Draggable
+                        key={item.ID + ""}
+                        draggableId={item.ID + ""}
+                        index={index}
+                      >
+                        {(magic, info) => (
+                          <LinkItem
+                            magic={magic}
+                            info={info}
+                            {...item}
+                            userEmail={userEmail}
+                            setMsg={setMsg}
+                            userId={userId}
+                            setLinks={setLinks}
+                            links={links}
+                          />
+                        )}
+                      </Draggable>
+                    );
+                  })}
+                </Links>
+              )}
+            </Droppable>
+          </DragDropContext>
+        ))}
+      {links?.length < 5 ||
+        (!links && (
+          <PlusLayout>
+            <PlusBtn onClick={onClickCreateLink}>
+              <AiOutlinePlus />
+            </PlusBtn>
+            <div>바로가기 추가</div>
+          </PlusLayout>
+        ))}
       {isPopup === "createHomeLinks" && (
         <RegisterHomeLinks
           setMsg={setMsg}

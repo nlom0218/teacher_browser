@@ -113,8 +113,12 @@ const DDayContents = ({
   };
 
   const onClickRegister = () => {
-    initSettingHoverMode();
-    inPopup("registerDDay");
+    if (!userId) {
+      inPopup("needLogin");
+    } else {
+      initSettingHoverMode();
+      inPopup("registerDDay");
+    }
   };
 
   useEffect(() => {
@@ -142,7 +146,7 @@ const DDayContents = ({
 
   return (
     <Container>
-      {dDay.length === 0 ? (
+      {dDay?.length === 0 || !dDay ? (
         <SRegisterDDay onClick={onClickRegister}>
           등록된 D-DAY가 없습니다.
           <br />
@@ -150,7 +154,7 @@ const DDayContents = ({
         </SRegisterDDay>
       ) : (
         <DDayCount>
-          {dDay.length !== 1 && (
+          {dDay?.length !== 1 && (
             <DDayBtn onClick={onClickToggleBtn}>
               {Boolean(isMoveDDay) ? (
                 <AiFillPauseCircle />
@@ -159,12 +163,12 @@ const DDayContents = ({
               )}
             </DDayBtn>
           )}
-          {dDay.length !== 5 && (
+          {dDay?.length !== 5 && (
             <DDayBtn>
               <AiFillPlusCircle onClick={onClickRegister} />
             </DDayBtn>
           )}
-          {dDay.length !== 1 &&
+          {dDay?.length !== 1 &&
             dDay.map((item, i) => {
               return (
                 <CountDot
@@ -176,7 +180,7 @@ const DDayContents = ({
             })}
         </DDayCount>
       )}
-      {dDay.length !== 0 && (
+      {dDay?.length !== 0 && (
         <DDayLayout
           dDay={dDay}
           index={index}
