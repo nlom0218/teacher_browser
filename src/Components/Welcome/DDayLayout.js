@@ -214,10 +214,13 @@ const DDayLayout = ({
         setHover(true);
       }}
       onMouseLeave={() => {
-        if (settingMode) {
-          return;
-        }
         setHover(false);
+        if (initMove) {
+          toggleIsMoveDDay({
+            variables: { userEmail, type: "start" },
+          });
+        }
+        setSettingMode(false);
       }}
     >
       <DDay>{processDDay(index)}</DDay>
