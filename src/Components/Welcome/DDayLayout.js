@@ -204,7 +204,9 @@ const DDayLayout = ({
     if (dDay?.length === 0 || !dDay) {
       return;
     } else {
-      return format(dDay[index]?.date, "yyyy년 MM월 dd일");
+      if (dDay[index]?.date) {
+        return format(dDay[index].date, "yyyy년 MM월 dd일");
+      }
     }
   };
   return (

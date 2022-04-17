@@ -1,5 +1,5 @@
 import { useReactiveVar } from "@apollo/client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { isPopupVar } from "../apollo";
 import AlertMessage from "../Components/Shared/AlertMessage";
@@ -28,6 +28,8 @@ const Container = styled.div`
 const Welcome = () => {
   const titleUpdataer = useTitle("티처캔");
 
+  const [links, setLinks] = useState([]);
+
   const isPopup = useReactiveVar(isPopupVar);
 
   const [welcomePage, setWelComPage] = useState("home");
@@ -35,6 +37,16 @@ const Welcome = () => {
   const [msg, setMsg] = useState(undefined);
 
   const me = useMe();
+
+  useEffect(() => {
+    if (me) {
+      setLinks(me?.homeLinks);
+    } else {
+      setLinks([]);
+    }
+  }, [me]);
+
+  console.log(links);
 
   return (
     <BasicContainer>
@@ -51,7 +63,8 @@ const Welcome = () => {
             isMoveDDay={me?.isMoveDDay}
             setMsg={setMsg}
             setErrMsg={setErrMsg}
-            homeLinks={me?.homeLinks}
+            links={links}
+            setLinks={setLinks}
             userId={me?._id}
           />
         )}

@@ -78,10 +78,15 @@ const PlusBtn = styled.div`
   }
 `;
 
-const LinkContents = ({ homeLinks, setMsg, setErrMsg, userEmail, userId }) => {
+const LinkContents = ({
+  links,
+  setMsg,
+  setErrMsg,
+  userEmail,
+  userId,
+  setLinks,
+}) => {
   const isPopup = useReactiveVar(isPopupVar);
-
-  const [links, setLinks] = useState([]);
 
   let sourceIndex;
   let destinationIndex;
@@ -124,7 +129,7 @@ const LinkContents = ({ homeLinks, setMsg, setErrMsg, userEmail, userId }) => {
     sourceIndex = source.index;
     destinationIndex = destination.index;
 
-    const copyLinks = [...homeLinks];
+    const copyLinks = [...links];
     const moveObj = copyLinks[sourceIndex];
     copyLinks.splice(sourceIndex, 1);
     copyLinks.splice(destinationIndex, 0, moveObj);
@@ -140,67 +145,63 @@ const LinkContents = ({ homeLinks, setMsg, setErrMsg, userEmail, userId }) => {
   };
 
   const onClickCreateLink = () => {
-    if (!userId) {
+    if (!userEmail) {
       inPopup("needLogin");
     } else {
       inPopup("createHomeLinks");
     }
   };
 
-  useEffect(() => {
-    setLinks(homeLinks);
-  }, []);
+  console.log(links);
 
   return (
     <Container linksNum={links?.length}>
-      {links?.length !== 0 ||
-        (!links && (
-          <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId="links" direction="horizontal">
-              {(magic, info) => (
-                <Links
-                  linksNum={links.length}
-                  boardId="links"
-                  ref={magic.innerRef}
-                  {...magic.droppableProps}
-                  isDraggingOver={info.isDraggingOver}
-                >
-                  {links.map((item, index) => {
-                    return (
-                      <Draggable
-                        key={item.ID + ""}
-                        draggableId={item.ID + ""}
-                        index={index}
-                      >
-                        {(magic, info) => (
-                          <LinkItem
-                            magic={magic}
-                            info={info}
-                            {...item}
-                            userEmail={userEmail}
-                            setMsg={setMsg}
-                            userId={userId}
-                            setLinks={setLinks}
-                            links={links}
-                          />
-                        )}
-                      </Draggable>
-                    );
-                  })}
-                </Links>
-              )}
-            </Droppable>
-          </DragDropContext>
-        ))}
-      {links?.length < 5 ||
-        (!links && (
-          <PlusLayout>
-            <PlusBtn onClick={onClickCreateLink}>
-              <AiOutlinePlus />
-            </PlusBtn>
-            <div>바로가기 추가</div>
-          </PlusLayout>
-        ))}
+      {links?.length !== 0 && links && (
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="links" direction="horizontal">
+            {(magic, info) => (
+              <Links
+                linksNum={links?.length}
+                boardId="links"
+                ref={magic.innerRef}
+                {...magic.droppableProps}
+                isDraggingOver={info.isDraggingOver}
+              >
+                {links.map((item, index) => {
+                  return (
+                    <Draggable
+                      key={item.ID + ""}
+                      draggableId={item.ID + ""}
+                      index={index}
+                    >
+                      {(magic, info) => (
+                        <LinkItem
+                          magic={magic}
+                          info={info}
+                          {...item}
+                          userEmail={userEmail}
+                          setMsg={setMsg}
+                          userId={userId}
+                          setLinks={setLinks}
+                          links={links}
+                        />
+                      )}
+                    </Draggable>
+                  );
+                })}
+              </Links>
+            )}
+          </Droppable>
+        </DragDropContext>
+      )}
+      {links?.length < 5 && (
+        <PlusLayout>
+          <PlusBtn onClick={onClickCreateLink}>
+            <AiOutlinePlus />
+          </PlusBtn>
+          <div>바로가기 추가</div>
+        </PlusLayout>
+      )}
       {isPopup === "createHomeLinks" && (
         <RegisterHomeLinks
           setMsg={setMsg}

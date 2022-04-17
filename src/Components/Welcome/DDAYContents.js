@@ -113,7 +113,7 @@ const DDayContents = ({
   };
 
   const onClickRegister = () => {
-    if (!userId) {
+    if (!userEmail) {
       inPopup("needLogin");
     } else {
       initSettingHoverMode();
