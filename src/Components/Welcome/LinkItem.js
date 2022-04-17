@@ -26,6 +26,7 @@ const Link = styled.div`
   row-gap: 0.625rem;
   justify-items: center;
   align-items: flex-start;
+  cursor: pointer;
 `;
 
 const LinkIconLayout = styled.div`
