@@ -100,9 +100,7 @@ const HeaderWeather = () => {
   //위치 정보 수신 거부 시
   function handleGeoError() {
     console.log("위치 정보 없음");
-    window.alert(
-      "위치 정보 제공을 거부하였습니다.\n날씨 정보 수신을 원한다면 위치 정보 제공에 동의해주십시오.\n(설정 - 개인정보 및 보안 - 사이트 설정 - 위치 정보 제공 동의)"
-    );
+    window.alert("위치 정보 제공을 거부하였습니다.\n날씨 정보 수신을 원한다면 위치 정보 제공에 동의해주십시오.\n(설정 - 개인정보 및 보안 - 사이트 설정 - 위치 정보 제공 동의)");
   }
 
   //좌표 수집 함수
@@ -126,7 +124,7 @@ const HeaderWeather = () => {
         ) : data ? (
           <WeatherItems>
             <Temp>{Math.round(data.weather.temp)}℃</Temp>
-            <WeatherIcon src={require(`../../image/icons/weather/${data.weather.icon}.svg`).default} />
+            <WeatherIcon src={require(`../../image/icons/weather/${data.weather.icon}.svg`)} />
             <Dust>미세먼지</Dust>
             <DustIcon>
               {data.weather.pm10grade === "1" ? (
