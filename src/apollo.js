@@ -2,8 +2,8 @@ import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { makeVar } from "@apollo/client";
 
-const FULL_SCREEN = "fullScreen"
-const BG_THEME = "bgTheme"
+const FULL_SCREEN = "fullScreen";
+const BG_THEME = "bgTheme";
 const DARK = "dark";
 const TOKEN = "token";
 const POPUP = "popup";
@@ -16,22 +16,23 @@ const PAGELINK_SECTION = "pageLinkSection";
 const PAGE_LINK_FOLDER = "pageLinkFolder";
 const LINK_PICK_FOLDER = "linkPickFolder";
 
-export const isFullScreenModeVar = makeVar(Boolean(localStorage.getItem(FULL_SCREEN)))
+export const isFullScreenModeVar = makeVar(
+  Boolean(localStorage.getItem(FULL_SCREEN))
+);
 export const fullScreenMode = () => {
-  localStorage.setItem(FULL_SCREEN, true)
-  isFullScreenModeVar(true)
-}
+  localStorage.setItem(FULL_SCREEN, true);
+  isFullScreenModeVar(true);
+};
 export const smallScreenMode = () => {
-  localStorage.removeItem(FULL_SCREEN)
-  isFullScreenModeVar(false)
-}
+  localStorage.removeItem(FULL_SCREEN);
+  isFullScreenModeVar(false);
+};
 
-
-export const bgThemeVar = makeVar(localStorage.getItem(BG_THEME))
+export const bgThemeVar = makeVar(localStorage.getItem(BG_THEME));
 export const editBgTheme = (theme) => {
-  localStorage.setItem(BG_THEME, theme)
-  bgThemeVar(theme)
-}
+  localStorage.setItem(BG_THEME, theme);
+  bgThemeVar(theme);
+};
 
 export const menuTypeVar = makeVar(localStorage.getItem(MENU_TYPE));
 export const setMenuType = (type) => {
@@ -101,20 +102,6 @@ export const enableSeeStudentList = () => {
 export const disableSeeStudentList = () => {
   localStorage.removeItem(IS_SEE_STUDENT_LIST);
   isSeeStudentListVar(false);
-};
-
-export const welcomeSectionVar = makeVar(
-  localStorage.getItem(WELCOME_SECTION)
-    ? localStorage.getItem(WELCOME_SECTION)
-    : "welcome"
-);
-export const moveWelcome = () => {
-  localStorage.setItem(WELCOME_SECTION, "welcome");
-  welcomeSectionVar("welcome");
-};
-export const moveNews = () => {
-  localStorage.setItem(WELCOME_SECTION, "news");
-  welcomeSectionVar("news");
 };
 
 export const bgThemeAniVar = makeVar(Boolean(localStorage.getItem(BG_ANI)));

@@ -8,3 +8,9 @@ export const CHECK_PASSWORD_QUERY = gql`
     }
   }
 `;
+
+export const VALIDATION_LINK_URL_QUERY = gql`
+  query Query($url: String!) {
+    validationLinkUrl(url: $url)
+  }
+`;

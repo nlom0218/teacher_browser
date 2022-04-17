@@ -18,9 +18,20 @@ export const ME_QUERY = gql`
       tag
       favoriteNews
       agreePolicy
-      link{
+      link {
         siteName
         memo
+      }
+      dDay {
+        title
+        date
+        ID
+      }
+      isMoveDDay
+      homeLinks {
+        title
+        link
+        ID
       }
     }
   }

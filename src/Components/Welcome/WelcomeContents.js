@@ -133,6 +133,16 @@ const WelcomeContents = () => {
           <ContentsItem
             onClick={() =>
               window.open(
+                "https://sparkly-corleggy-3e4.notion.site/22-4-17-7658f4a3675d454bb6ca10c1e8087a0d"
+              )
+            }
+          >
+            <FcCursor />
+            <div>22.4.17 공지사항</div>
+          </ContentsItem>
+          <ContentsItem
+            onClick={() =>
+              window.open(
                 "https://sparkly-corleggy-3e4.notion.site/22-4-10-671eb8757867429081ca91dc904ceff5"
               )
             }
@@ -169,16 +179,6 @@ const WelcomeContents = () => {
           >
             <FcCursor />
             <div>22.3.6 공지사항</div>
-          </ContentsItem>
-          <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-3-1-51a53ce9f6f84433b27fce1e1041f15e"
-              )
-            }
-          >
-            <FcCursor />
-            <div>22.3.1 공지사항</div>
           </ContentsItem>
         </Layout>
       </ContentsContainer>
@@ -275,22 +275,22 @@ const WelcomeContents = () => {
           <ContentsItem
             onClick={() =>
               window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-4-10-670526e6626942e78e52e87897ad228c"
-              )
-            }
-          >
-            <FcCursor />
-            <div>홈 화면 업데이트</div>
-          </ContentsItem>
-          <ContentsItem
-            onClick={() =>
-              window.open(
                 "https://sparkly-corleggy-3e4.notion.site/22-4-10-f4e4c1d714814e0faacd7180a2bb96d1"
               )
             }
           >
             <FcCursor />
             <div>배경화면만 보이기</div>
+          </ContentsItem>
+          <ContentsItem
+            onClick={() =>
+              window.open(
+                "https://sparkly-corleggy-3e4.notion.site/22-4-10-fc141248e47e4228bbeb0ffbbb5d851c"
+              )
+            }
+          >
+            <FcCursor />
+            <div>캘린더 출결 삭제 오류 해결</div>
           </ContentsItem>
         </Layout>
       </ContentsContainer>

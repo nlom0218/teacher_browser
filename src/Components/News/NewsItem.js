@@ -1,77 +1,99 @@
-import React from "react";
-import styled from "styled-components";
+import React from 'react';
+import styled from 'styled-components';
 
-const NewsListBlock = styled.div`
-    display:flex;
-    border:1px solid;
-    border-radius: 20px;
-    border-radius: 1.25rem;
-    .thumbnail {
-        margin-right:1rem;
-        img{
-            display:block;
-            width : 160px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 20px;
-    border-radius: 1.25rem;
-        }
+const Container = styled.div`
+  padding: 20px;
+  padding: 1.25rem;
+  cursor: pointer;
+  display: grid;
+  row-gap: 10px;
+  row-gap: 0.625rem;
+  line-height: 160%;
+  :not(:last-child) {
+    border-bottom: 1px solid ${props => props.theme.fontColor};
+    transition: border-bottom 1s ease;
+  }
+  :hover {
+    background-color: ${props => props.theme.bgColor};
+  }
+  .bold_text_news {
+    font-weight: 600;
+  }
+`
+
+const Title = styled.div`
+  font-size:  1.125em;
+  font-size:  1.125rem;
+`
+
+const Description = styled.div``
+
+const Date = styled.div`
+  justify-self: flex-end;
+`
+
+const NewsItem = ({ item }) => {
+  const date = new window.Date(item.pubDate)
+  const processSetDay = () => {
+    const day = date.getDay()
+    if (day === 1) {
+      return "월요일"
+    } else if (day === 2) {
+      return "화요일"
+    } else if (day === 3) {
+      return "수요일"
+    } else if (day === 4) {
+      return "목요일"
+    } else if (day === 5) {
+      return "금요일"
+    } else if (day === 6) {
+      return "토요일"
+    } else if (day === 0) {
+      return "일요일"
     }
-    .contents{
-        justify-self: center;
-        align-self: center;
-        overflow: hidden;
-        h2{
-            margin:0;
-            a{
-                color:black;
-                font-weight: bold ;
-                font-size: large;
-            
-            }
+  }
+  const processSetDate = () => {
+    return `${date.getFullYear()}년 ${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, 0)}월 ${date.getDate().toString().padStart(2, 0)}일`
+  }
+  const processSetTime = () => {
+    return `${date.getHours().toString().padStart(2, 0)}:${(date.getMinutes().toString().padStart(2, 0))}`
+  }
+
+  const title = item.title.replace(/&quot;/gi, "'").split("b>")
+  const description = item.description.replace(/&quot;/gi, "'").split("b>")
+
+  const onClickNews = () => {
+    window.open(item.link, "__blank")
+  }
+  return (<Container onClick={onClickNews}>
+    <Title>
+      {title.map((item, index) => {
+        if (item[item.length - 1] === "<") {
+          return <span key={index}>{item.slice(0, item.length - 1)}</span>
+        } else if (item[item.length - 1] === "/") {
+          return <span key={index} className="bold_text_news">{item.slice(0, item.length - 2)}</span>
+        } else {
+          return <span key={index}>{item}</span>
         }
-        p {
-            margin :0;
-            line-height:1.5;
-            margin-left: 1rem;
-            white-space: normal;
-            font-size : small;
-            overflow: hidden;
-            height: 40px;
-
-
-            
-            
-            
+      })}
+    </Title>
+    <Description>
+      {description.map((item, index) => {
+        if (item[item.length - 1] === "<") {
+          return <span key={index}>{item.slice(0, item.length - 1)}</span>
+        } else if (item[item.length - 1] === "/") {
+          return <span key={index} className="bold_text_news">{item.slice(0, item.length - 2)}</span>
+        } else {
+          return <span key={index}>{item}</span>
         }
-    }
-    & + & {
-        margin-top :3 rem;
-    }
-`;
-
-const NewsItem = ({article})=>{
-    const{title, description, url, urlToImage}=article;
-    return(
-        <NewsListBlock>
-            {urlToImage && (
-                <div className="thumbnail">
-                    <a href ={url} target="_blank" rel="noopener noreferrer">
-                        <img src={urlToImage} alt="thumbnail" />
-                    </a>
-                </div>
-            )}
-            <div className="contents">
-                <h2>
-                    <p>{title.split("-")[1]}</p>
-                    <a href={url} target="_blank" rel="noopener noreferrer">
-                        {title.split("- ")[0]}
-                    </a>
-                </h2>
-                {/* <p>{description}</p> */}
-            </div>
-        </NewsListBlock>
-    );
-};
+      })}
+    </Description>
+    <Date>
+      {processSetDate()} {processSetDay()} {processSetTime()}
+    </Date>
+  </Container>);
+}
 
 export default NewsItem;
