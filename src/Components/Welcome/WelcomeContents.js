@@ -117,66 +117,29 @@ const WelcomeContents = () => {
             <FcAdvertising />
             <div>최근 공지사항</div>
           </TitleLayout>
-          <TitleLayout
-            className="title_notion"
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/d8d13d9d93ab4026bef0c440ada24292"
-              )
-            }
-          >
+          <TitleLayout className="title_notion" onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/d8d13d9d93ab4026bef0c440ada24292")}>
             <SiNotion />
             <div>노션에서 더 보기</div>
           </TitleLayout>
         </Title>
         <Layout>
-          <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-4-10-671eb8757867429081ca91dc904ceff5"
-              )
-            }
-          >
+          <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-4-10-671eb8757867429081ca91dc904ceff5")}>
             <FcCursor />
             <div>22.4.10 공지사항</div>
           </ContentsItem>
-          <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-3-27-804caef574364f08befb3159588bdf6d"
-              )
-            }
-          >
+          <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-3-27-804caef574364f08befb3159588bdf6d")}>
             <FcCursor />
             <div>22.3.27 공지사항</div>
           </ContentsItem>
-          <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-3-13-2dbd49475afb4c4591e19cb6b88cafca"
-              )
-            }
-          >
+          <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-3-13-2dbd49475afb4c4591e19cb6b88cafca")}>
             <FcCursor />
             <div>22.3.13 공지사항</div>
           </ContentsItem>
-          <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-3-6-8a5cad61d1a745859c38a870f86918ad"
-              )
-            }
-          >
+          <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-3-6-8a5cad61d1a745859c38a870f86918ad")}>
             <FcCursor />
             <div>22.3.6 공지사항</div>
           </ContentsItem>
-          <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-3-1-51a53ce9f6f84433b27fce1e1041f15e"
-              )
-            }
-          >
+          <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-3-1-51a53ce9f6f84433b27fce1e1041f15e")}>
             <FcCursor />
             <div>22.3.1 공지사항</div>
           </ContentsItem>
@@ -188,36 +151,17 @@ const WelcomeContents = () => {
             <FcLike />
             <div>진행중인 이벤트</div>
           </TitleLayout>
-          <TitleLayout
-            className="title_notion"
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/1aa6fc8d7ec1492a8a24890ca1907549"
-              )
-            }
-          >
+          <TitleLayout className="title_notion" onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/1aa6fc8d7ec1492a8a24890ca1907549")}>
             <SiNotion />
             <div>노션에서 더 보기</div>
           </TitleLayout>
         </Title>
         <Layout>
-          <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/92792b7124f9455faa264f73778f0d58"
-              )
-            }
-          >
+          <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/92792b7124f9455faa264f73778f0d58")}>
             <FcCursor />
             <div>티처캔 캐릭터 이름 공모 이벤트 결과 안내</div>
           </ContentsItem>
-          <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/522744f7087644538dbf8d3d19eb5eca"
-              )
-            }
-          >
+          <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/522744f7087644538dbf8d3d19eb5eca")}>
             <FcCursor />
             <div>티처캔 캐릭터 이름 공모 이벤트(~3.31)</div>
           </ContentsItem>
@@ -229,66 +173,29 @@ const WelcomeContents = () => {
             <FcAreaChart />
             <div>진행중인 업데이트 및 오류해결</div>
           </TitleLayout>
-          <TitleLayout
-            className="title_notion"
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/a5b56d8122f444cd9e372674f57724b2"
-              )
-            }
-          >
+          <TitleLayout className="title_notion" onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/a5b56d8122f444cd9e372674f57724b2")}>
             <SiNotion />
             <div>노션에서 더 보기</div>
           </TitleLayout>
         </Title>
         <Layout>
-          <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-3-16-f321120bf0494d0b8ecb1915f0ff4cfd"
-              )
-            }
-          >
+          <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-3-16-f321120bf0494d0b8ecb1915f0ff4cfd")}>
             <FcCursor />
             <div>작품 전시(페이지 이름 미정)</div>
           </ContentsItem>
-          <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-3-27-ec408ce41a18490c980060d506ebadde"
-              )
-            }
-          >
+          <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-3-27-ec408ce41a18490c980060d506ebadde")}>
             <FcCursor />
             <div>출결 페이지</div>
           </ContentsItem>
-          <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-4-10-aeaf292f3ffb4140b04eae3841a0b01f"
-              )
-            }
-          >
+          <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-4-10-aeaf292f3ffb4140b04eae3841a0b01f")}>
             <FcCursor />
             <div>메뉴 페이지 커스튬</div>
           </ContentsItem>
-          <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-4-10-670526e6626942e78e52e87897ad228c"
-              )
-            }
-          >
+          <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-4-10-670526e6626942e78e52e87897ad228c")}>
             <FcCursor />
             <div>홈 화면 업데이트</div>
           </ContentsItem>
-          <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-4-10-f4e4c1d714814e0faacd7180a2bb96d1"
-              )
-            }
-          >
+          <ContentsItem onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/22-4-10-f4e4c1d714814e0faacd7180a2bb96d1")}>
             <FcCursor />
             <div>배경화면만 보이기</div>
           </ContentsItem>

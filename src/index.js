@@ -1,6 +1,6 @@
 import { ApolloProvider } from "@apollo/client";
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
 import { client } from "./apollo";
 import App from "./App";
@@ -8,7 +8,9 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { RecoilRoot } from "recoil";
 
-ReactDOM.render(
+const root = createRoot(document.getElementById("root"));
+
+root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <RecoilRoot>
@@ -19,6 +21,5 @@ ReactDOM.render(
         </DndProvider>
       </RecoilRoot>
     </ApolloProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
