@@ -34,6 +34,7 @@ const HomeSection = ({
         isMoveDDay={isMoveDDay}
         setMsg={setMsg}
         setErrMsg={setErrMsg}
+        userId={userId}
       />
       {media !== "Mobile" && (
         <LinkContents

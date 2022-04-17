@@ -91,10 +91,12 @@ const RegisterDDay = ({
   dDay,
   initMove,
   toggleIsMoveDDay,
+  userId,
 }) => {
   const dDayID = parseInt(localStorage.getItem("dDayID"));
   const [date, setDate] = useState(new Date());
-  const { register, handleSubmit, setValue } = useForm({
+  const [createID, setCreateID] = useState(undefined);
+  const { register, handleSubmit, setValue, getValues } = useForm({
     mode: "onChange",
   });
 
@@ -109,12 +111,36 @@ const RegisterDDay = ({
   };
 
   const [createDDay, { loading }] = useMutation(CREATE_DDAY, {
-    refetchQueries: [{ query: ME_QUERY }],
     onCompleted,
+    update(
+      cache,
+      {
+        data: {
+          createDDay: { ok },
+        },
+      }
+    ) {
+      if (ok) {
+        cache.modify({
+          id: `User:${userId}`,
+          fields: {
+            dDay(prev) {
+              return [
+                ...prev,
+                {
+                  date: new Date(date).setHours(0, 0, 0, 0),
+                  title: getValues("title"),
+                  ID: createID,
+                },
+              ];
+            },
+          },
+        });
+      }
+    },
   });
 
   const [editDDay, { loading: editLoading }] = useMutation(EDIT_DDAY_MUTATION, {
-    refetchQueries: [{ query: ME_QUERY }],
     onCompleted: (result) => {
       const {
         editDDay: { ok },
@@ -130,6 +156,37 @@ const RegisterDDay = ({
         setMsg("D-DAY가 수정되었습니다.😀");
       }
     },
+    update(
+      cache,
+      {
+        data: {
+          editDDay: { ok },
+        },
+      }
+    ) {
+      if (ok) {
+        cache.modify({
+          id: `User:${userId}`,
+          fields: {
+            dDay(prev) {
+              const copyDDay = [...prev];
+              const targetIndex = copyDDay.findIndex(
+                (item) => item.ID === dDayID
+              );
+              return [
+                ...copyDDay.slice(0, targetIndex),
+                {
+                  ID: dDayID,
+                  title: getValues("title"),
+                  date: new Date(date).setHours(0, 0, 0, 0),
+                },
+                ...copyDDay.slice(targetIndex + 1),
+              ];
+            },
+          },
+        });
+      }
+    },
   });
 
   const onSubmit = (data) => {
@@ -140,6 +197,7 @@ const RegisterDDay = ({
     }
     const numberDate = new Date(date).setHours(0, 0, 0, 0);
     const ID = new window.Date().getTime();
+    setCreateID(ID);
     if (dDayID) {
       editDDay({
         variables: {

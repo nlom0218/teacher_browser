@@ -94,6 +94,7 @@ const DDayLayout = ({
   isMoveDDay,
   initMove,
   setInitMove,
+  userId,
 }) => {
   const [deleteDDay, { loading }] = useMutation(DELETE_DDAY_MUTATION, {
     onCompleted: (result) => {
@@ -111,7 +112,26 @@ const DDayLayout = ({
         setSettingMode(false);
       }
     },
-    refetchQueries: [{ query: ME_QUERY }],
+    update(
+      cache,
+      {
+        data: {
+          deleteDDay: { ok },
+        },
+      }
+    ) {
+      if (ok) {
+        cache.modify({
+          id: `User:${userId}`,
+          fields: {
+            dDay(prev) {
+              const copyDDay = [...prev];
+              return copyDDay.filter((item) => item.ID !== dDay[index].ID);
+            },
+          },
+        });
+      }
+    },
   });
 
   const onClickDeleteBtn = () => {

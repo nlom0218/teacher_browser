@@ -69,7 +69,14 @@ const CountDot = styled.div`
   cursor: pointer;
 `;
 
-const DDayContents = ({ dDay, isMoveDDay, userEmail, setMsg, setErrMsg }) => {
+const DDayContents = ({
+  dDay,
+  isMoveDDay,
+  userEmail,
+  setMsg,
+  setErrMsg,
+  userId,
+}) => {
   const isPopup = useReactiveVar(isPopupVar);
 
   const [index, setIndex] = useState(0);
@@ -184,6 +191,7 @@ const DDayContents = ({ dDay, isMoveDDay, userEmail, setMsg, setErrMsg }) => {
           setMsg={setMsg}
           setInitMove={setInitMove}
           initMove={initMove}
+          userId={userId}
         />
       )}
       {isPopup === "registerDDay" && (
@@ -194,6 +202,7 @@ const DDayContents = ({ dDay, isMoveDDay, userEmail, setMsg, setErrMsg }) => {
           setMsg={setMsg}
           toggleIsMoveDDay={toggleIsMoveDDay}
           initMove={initMove}
+          userId={userId}
         />
       )}
     </Container>

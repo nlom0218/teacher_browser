@@ -153,7 +153,6 @@ const LinkItem = ({
   const onClickDeleteBtn = () => {
     setLinks((prev) => {
       const copyHomeLinks = [...prev];
-      console.log(copyHomeLinks);
       return copyHomeLinks.filter((item) => item?.ID !== ID);
     });
     deleteHomeLink({
