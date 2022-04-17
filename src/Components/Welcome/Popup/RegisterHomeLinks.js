@@ -213,15 +213,14 @@ const RegisterHomeLinks = ({
       });
     } else {
       setLinks((prev) => {
-        console.log(prev);
-        // return [
-        //   ...prev,
-        //   {
-        //     ID,
-        //     title: getValues("title"),
-        //     link: `https://www.${getValues("link")}`,
-        //   },
-        // ];
+        return [
+          ...prev,
+          {
+            ID,
+            title: getValues("title"),
+            link: `https://www.${getValues("link")}`,
+          },
+        ];
       });
       createHomeLinks({
         variables: {
