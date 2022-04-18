@@ -3,7 +3,6 @@ import styled from "styled-components";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import "react-datepicker/dist/react-datepicker.css";
 import { Date } from "../Components/Lunchmenu/Date";
-import dotenv from "dotenv";
 import { FaSchool } from "react-icons/fa";
 import SearchSchool from "../Components/Lunchmenu/SearchSchool";
 import { useReactiveVar } from "@apollo/client";
@@ -198,27 +197,16 @@ const Lunchmenu = () => {
   const { state } = useLocation();
 
   // localStorage에서 값 불러오기
-  const {
-    schoolCode: lmSchoolCode,
-    areaCode: lmAreaCode,
-    schoolName: lmSchoolName,
-    date: lmDate,
-  } = JSON.parse(localStorage.getItem("lmSetting"));
+  const { schoolCode: lmSchoolCode, areaCode: lmAreaCode, schoolName: lmSchoolName, date: lmDate } = JSON.parse(localStorage.getItem("lmSetting"));
 
   // popup reactiveVar => 파업창을 띄우기 위한 전역적으로 사용할 수 있는 변수
   const isPopup = useReactiveVar(isPopupVar);
 
   // localStorage에 저장된 값으로 state 지정
-  const [date, setDate] = useState(
-    lmDate ? new window.Date(lmDate) : new window.Date()
-  );
-  const [schoolCode, setSchoolCode] = useState(
-    lmSchoolCode ? lmSchoolCode : undefined
-  );
+  const [date, setDate] = useState(lmDate ? new window.Date(lmDate) : new window.Date());
+  const [schoolCode, setSchoolCode] = useState(lmSchoolCode ? lmSchoolCode : undefined);
   const [areaCode, setAreaCode] = useState(lmAreaCode ? lmAreaCode : undefined);
-  const [schoolName, setSchoolName] = useState(
-    lmSchoolName ? lmSchoolName : undefined
-  );
+  const [schoolName, setSchoolName] = useState(lmSchoolName ? lmSchoolName : undefined);
   const [menu, setMenu] = useState("loading");
   const [origin, setOrigin] = useState([]);
 
@@ -245,15 +233,11 @@ const Lunchmenu = () => {
     }
   };
   const processSetDate = () => {
-    return `${date.getFullYear()}년 ${(date.getMonth() + 1)
-      .toString()
-      .padStart(2, 0)}월 ${date.getDate().toString().padStart(2, 0)}일`;
+    return `${date.getFullYear()}년 ${(date.getMonth() + 1).toString().padStart(2, 0)}월 ${date.getDate().toString().padStart(2, 0)}일`;
   };
   //메뉴 받아오기
   const getMenu = () => {
-    const changedDate = `${date.getFullYear()}${(date.getMonth() + 1)
-      .toString()
-      .padStart(2, 0)}${date.getDate().toString().padStart(2, 0)}`;
+    const changedDate = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, 0)}${date.getDate().toString().padStart(2, 0)}`;
     fetch(
       `https://open.neis.go.kr/hub/mealServiceDietInfo` +
         `?KEY=954dac30b088454d9a95700f044ce620` +
@@ -271,14 +255,12 @@ const Lunchmenu = () => {
           setMenu(undefined);
         } else {
           setMenu(
-            json.mealServiceDietInfo[1].row[0].DDISH_NM.split("<br/>").map(
-              (item) => {
-                return {
-                  food: item.replace(/[0-9]/g, "").replace(/\./g, ""),
-                  allergy: item.split(/[^0-9]/g).filter((item) => item !== ""),
-                };
-              }
-            )
+            json.mealServiceDietInfo[1].row[0].DDISH_NM.split("<br/>").map((item) => {
+              return {
+                food: item.replace(/[0-9]/g, "").replace(/\./g, ""),
+                allergy: item.split(/[^0-9]/g).filter((item) => item !== ""),
+              };
+            })
           );
           setOrigin(
             json.mealServiceDietInfo[1].row[0].ORPLC_INFO.replace(/\:/g, "(")
@@ -349,17 +331,13 @@ const Lunchmenu = () => {
     <BasicContainer menuItem={true}>
       <LunchmenuContainer isPopup={isPopup}>
         <Title>
-          <SchoolName>
-            {schoolName ? `${schoolName} 식단표` : "학교를 검색해주세요."}
-          </SchoolName>
+          <SchoolName>{schoolName ? `${schoolName} 식단표` : "학교를 검색해주세요."}</SchoolName>
           <SearchedDate>{processSetDate()}</SearchedDate>
           <SearchedDay>{processSetDay()}</SearchedDay>
         </Title>
         <SearchIcons>
           <SchoolDate>
-            {media !== "Mobile" && (
-              <div>{schoolName ? schoolName : "학교검색"}</div>
-            )}
+            {media !== "Mobile" && <div>{schoolName ? schoolName : "학교검색"}</div>}
             <SchoolIcon onClick={onClickSchoolIcon}>
               <IcSchoolYellow />
             </SchoolIcon>
@@ -371,22 +349,16 @@ const Lunchmenu = () => {
             {menu === "loading" ? (
               <Loading page="subPage" />
             ) : menu ? (
-              menu.map((item, index) => (
-                <LunchmenuItem key={index} item={item} me={me}></LunchmenuItem>
-              ))
+              menu.map((item, index) => <LunchmenuItem key={index} item={item} me={me}></LunchmenuItem>)
             ) : (
-              <div className="lunch_errMsg lunch_subMsg">
-                급식 정보가 없습니다. 😢
-              </div>
+              <div className="lunch_errMsg lunch_subMsg">급식 정보가 없습니다. 😢</div>
             )}
           </SLunchmenus>
           <LunchmenuBtn>
             <div onClick={() => onClickBtn("yesterday")}>전날 식단표</div>
             <div onClick={() => onClickBtn("tomorrow")}>다음날 식단표</div>
             <div onClick={() => onClickBtn("today")}>오늘 식단표</div>
-            {me && (
-              <div onClick={() => onClickBtn("school")}>우리학교 식단표</div>
-            )}
+            {me && <div onClick={() => onClickBtn("school")}>우리학교 식단표</div>}
           </LunchmenuBtn>
           <LunchmenuDetail>
             {menu && (
@@ -398,22 +370,14 @@ const Lunchmenu = () => {
             <div>
               <div className="detail_title">✲ 알레르기정보</div>
               <div>
-                요리명에 표시된 번호는 알레르기를 유발할수 있는 식재료입니다
-                (1.난류, 2.우유, 3.메밀, 4.땅콩, 5.대두, 6.밀, 7.고등어, 8.게,
-                9.새우, 10.돼지고기, 11.복숭아, 12.토마토, 13.아황산염, 14.호두,
-                15.닭고기, 16.쇠고기, 17.오징어, 18.조개류(굴,전복,홍합 등)
+                요리명에 표시된 번호는 알레르기를 유발할수 있는 식재료입니다 (1.난류, 2.우유, 3.메밀, 4.땅콩, 5.대두, 6.밀, 7.고등어, 8.게, 9.새우, 10.돼지고기, 11.복숭아, 12.토마토, 13.아황산염,
+                14.호두, 15.닭고기, 16.쇠고기, 17.오징어, 18.조개류(굴,전복,홍합 등)
               </div>
             </div>
           </LunchmenuDetail>
         </LunchmenuInfo>
       </LunchmenuContainer>
-      {isPopup === "lmSearchSchool" && (
-        <SearchSchool
-          setAreaCode={setAreaCode}
-          setSchoolCode={setSchoolCode}
-          setSchoolName={setSchoolName}
-        />
-      )}
+      {isPopup === "lmSearchSchool" && <SearchSchool setAreaCode={setAreaCode} setSchoolCode={setSchoolCode} setSchoolName={setSchoolName} />}
       {isPopup === "seeAllergy" && <SeeAllergy />}
       {isPopup === "noSchoolData" && <NoSchoolData />}
     </BasicContainer>
