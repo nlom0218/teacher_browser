@@ -191,7 +191,7 @@ function App() {
           path={`${routes.pageLink}/:pageTitle`}
           element={<PageLinkDetail />}
         />
-        <Route pateh={routes.familyMonth} element={FamilyMonth} />
+        <Route path={routes.familyMonth} element={<FamilyMonth />} />
       </Routes>
     </ThemeProvider>
   );
