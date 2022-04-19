@@ -9,8 +9,6 @@ const STopContents = styled.div`
   column-gap: 10px;
   column-gap: 0.625rem;
   align-items: flex-start;
-  padding: 20px;
-  padding: 1.25rem;
 `;
 
 const LeftContents = styled.div`
