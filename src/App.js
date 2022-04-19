@@ -46,6 +46,7 @@ import TimerSecond from "./Pages/TimerSecond";
 import { stopMusicFn } from "./audio/BackgroundMusic/BackgroundMusic";
 import AgreePolicy from "./Pages/AgreePolicy";
 import News from "./Pages/News";
+import FamilyMonth from "./Pages/FamilyMonth";
 
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
@@ -190,6 +191,7 @@ function App() {
           path={`${routes.pageLink}/:pageTitle`}
           element={<PageLinkDetail />}
         />
+        <Route pateh={routes.familyMonth} element={FamilyMonth} />
       </Routes>
     </ThemeProvider>
   );

@@ -21,6 +21,7 @@ import IcNameTableOpened from "../../icons/NameTable/IcNameTableOpened";
 import { enableSeeStudent } from "../../apollo";
 import IcNewsClick from "../../icons/News/IcNewsClick";
 import IcNews from "../../icons/News/IcNews";
+import { MdFamilyRestroom } from "react-icons/md";
 
 const SMenu = styled.div`
   display: grid;
@@ -183,6 +184,22 @@ export const NewsLink = () => {
       >
         {isHover ? <IcNewsClick /> : <IcNews />}
         <Title>뉴스</Title>
+      </SMenu>
+    </Link>
+  );
+};
+
+export const FamilyMonthLink = () => {
+  const [isHover, setIsHover] = useState(false);
+  const onClickListLink = () => {};
+  return (
+    <Link to={routes.familyMonth} onClick={onClickListLink}>
+      <SMenu
+        onMouseEnter={() => setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
+      >
+        {isHover ? <MdFamilyRestroom /> : <MdFamilyRestroom />}
+        <Title>가정의 달</Title>
       </SMenu>
     </Link>
   );

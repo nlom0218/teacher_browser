@@ -14,6 +14,7 @@ const SCHEDULE = "/schedule";
 const JOURNAL = "/journal";
 const LIST = "/list";
 const NEWS = "/news";
+const FAMILYMONTH = "/family-month";
 
 // account link
 const LOGIN = "/login";
@@ -48,6 +49,7 @@ const routes = {
   journal: JOURNAL,
   list: LIST,
   news: NEWS,
+  familyMonth: FAMILYMONTH,
 
   // account link
   login: LOGIN,
