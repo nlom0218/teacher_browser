@@ -26,6 +26,8 @@ const Layout = styled.div`
   grid-template-rows: auto 1fr;
   row-gap: 20px;
   row-gap: 1.25rem;
+  font-size: 0.875em;
+  font-size: 0.875rem;
 `;
 
 const FamilyMonth = () => {
