@@ -3,36 +3,40 @@ import styled from "styled-components";
 import getYouTubeId from "get-youtube-id";
 
 const SYouTubeItem = styled.div`
-  min-height: 240px;
+  min-height: 300px;
   display: grid;
-  grid-template-rows: 5fr 1fr;
+  grid-template-rows: 4fr 1fr;
   cursor: pointer;
   transform: ${(props) => props.hover && "scale(1.1)"};
   transition: transform 0.4s ease;
   position: relative;
   border: 1px solid rgba(10, 10, 10);
-  border-radius: 5px;
-  box-shadow: 1px 1px 1px rgba(10, 10, 10, 0.6);
+  /* border-radius: 5px; */
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 1px 1px 5px rgba(80, 80, 80, 0.6);
 `;
 
 const YouTubeImg = styled.div`
   background: ${(props) => `url(${props.youtubeImg})`};
   background-position: center;
   /* background-size: cover; */
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  /* border-top-left-radius: 5px;
+  border-top-right-radius: 5px; */
 `;
 
 const YouTubeTitle = styled.div`
   background-color: rgba(40, 40, 40, 0.6);
-  color: rgb(200, 200, 200);
+  color: rgb(220, 220, 220);
+  font-weight: 600;
   text-align: center;
   display: grid;
   align-items: center;
   padding: 5px;
   padding: 0.3125rem;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  line-height: 120%;
 `;
 
 const HoverBackground = styled.div`
@@ -41,8 +45,10 @@ const HoverBackground = styled.div`
   left: 0;
   top: 0;
   bottom: 0;
-  border-radius: 5px;
-  border-radius: 0.3125rem;
+  /* border-radius: 10px; */
+  /* border-radius: 0.3125rem; */
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   background-color: rgba(20, 20, 20, 0.6);
   opacity: ${(props) => (props.hover ? 1 : 0)};
   transition: background-color 0.4s ease, opacity 0.4s ease;
