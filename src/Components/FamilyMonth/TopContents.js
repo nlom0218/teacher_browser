@@ -1,14 +1,16 @@
 import React from "react";
+import { AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
 import styled from "styled-components";
 import { HeaderHome, HeaderMenu } from "../Shared/HeaderLink";
-import LogoText from "../../image/LogoText.png";
 
-const STopContents = styled.div`
+const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;
-  column-gap: 10px;
-  column-gap: 0.625rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
   align-items: flex-start;
+  column-gap: 20px;
+  column-gap: 1.25rem;
 `;
 
 const LeftContents = styled.div`
@@ -17,17 +19,10 @@ const LeftContents = styled.div`
   align-items: center;
 `;
 
-const TeacherCanLogo = styled.img`
-  width: 120px;
-  width: 7.5rem;
-`;
 
 const Title = styled.div`
-  font-size: 2em;
-  font-size: 2rem;
-  font-weight: 600;
-  text-shadow: 1px 1px 1px ${(props) => props.theme.originBgColor};
-  transition: text-shadow 1s ease;
+  font-size: 1.5em;
+  font-size: 1.5rem;
 `;
 
 const RightContents = styled.div`
@@ -37,31 +32,33 @@ const RightContents = styled.div`
   grid-template-columns: 1fr auto;
 `;
 
-const LinkIcon = styled.div`
+const Icon = styled.div`
+  padding: 5px;
+  padding: 0.3125rem;
+  background-color: ${props=>props.theme.btnBgColor};
+  color: ${props=>props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
+  border-radius: 50%;
+  cursor: pointer;
   svg {
     display: flex;
-    font-size: 2em;
-    font-size: 2rem;
-    cursor: pointer;
-    filter: drop-shadow(1px 1px 1px rgb(0, 0, 0));
+    font-size: 1.5em;
+    font-size: 1.5rem;
   }
 `;
 
 const TopContents = () => {
+
   return (
-    <STopContents>
+    <Container>
       <LeftContents>
-        <TeacherCanLogo src={LogoText}></TeacherCanLogo>
+        <Title>가정의 달</Title>
       </LeftContents>
       <RightContents>
-        <LinkIcon>
-          <HeaderHome />
-        </LinkIcon>
-        <LinkIcon>
-          <HeaderMenu />
-        </LinkIcon>
+        <Icon><AiOutlinePlus/></Icon>
+        <Icon><AiOutlineSearch/></Icon>
       </RightContents>
-    </STopContents>
+    </Container>
   );
 };
 

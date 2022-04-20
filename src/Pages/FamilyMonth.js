@@ -1,31 +1,31 @@
 import React from "react";
 import styled from "styled-components";
+import { customMedia } from "../styles";
 import TopContents from "../Components/FamilyMonth/TopContents";
 import MainYouTube from "../Components/FamilyMonth/MainYouTube";
 import BasicContainer from "../Components/Shared/BasicContainer";
 
-const Layout = styled.div`
-  transition: background 1s ease;
-  min-height: 100vh;
-  max-height: 100vh;
-  min-width: 100vw;
-  max-width: 100vw;
-  padding: 20px 40px;
-  padding: 20px 2.5rem;
+const Container = styled.div`
+  min-height: 100%;
   display: grid;
+  padding: 40px 20px;
+  padding: 2.5rem 1.25rem;
   grid-template-rows: auto 1fr;
-  row-gap: 20px;
-  row-gap: 1.25rem;
-  font-size: 0.875em;
-  font-size: 0.875rem;
+  row-gap: 40px;
+  row-gap: 2.5rem;
+  ${customMedia.greaterThan("tablet")`
+    padding: 40px;
+    padding: 2.5rem;
+  `}
 `;
 
 const FamilyMonth = () => {
   return (
     <BasicContainer menuItem={true}>
-      <Layout>
+      <Container>
+        <TopContents />
         <MainYouTube />
-      </Layout>
+      </Container>
     </BasicContainer>
   );
 };
