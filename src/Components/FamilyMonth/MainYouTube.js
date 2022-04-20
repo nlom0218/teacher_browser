@@ -5,11 +5,10 @@ import YouTubeItem from "./YouTubeItem";
 const YouTubeList = styled.div`
   align-self: flex-start;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  column-gap: 40px;
-  column-gap: 2.5rem;
-  row-gap: 40px;
-  row-gap: 2.5rem;
+  grid-template-columns: 1fr;
+  row-gap: 1px;
+  border: 1px solid ${props=>props.theme.cardBorder};
+  background-color: ${props=>props.theme.cardBorder};
 `;
 
 const youtubeList = [

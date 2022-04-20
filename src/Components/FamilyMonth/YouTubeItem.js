@@ -3,59 +3,28 @@ import styled from "styled-components";
 import getYouTubeId from "get-youtube-id";
 
 const SYouTubeItem = styled.div`
-  min-height: 300px;
+  background-color: ${props=>props.theme.originBgColor};
   display: grid;
-  grid-template-rows: 4fr 1fr;
+  grid-template-columns: 1fr auto;
   cursor: pointer;
-  transform: ${(props) => props.hover && "scale(1.1)"};
-  transition: transform 0.4s ease;
   position: relative;
-  border: 1px solid rgba(10, 10, 10);
-  /* border-radius: 5px; */
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  box-shadow: 1px 1px 5px rgba(80, 80, 80, 0.6);
+  :hover {
+    background-color: ${props=>props.theme.hoverColor};
+  }
 `;
 
-const YouTubeImg = styled.div`
-  background: ${(props) => `url(${props.youtubeImg})`};
-  background-position: center;
-  /* background-size: cover; */
-  /* border-top-left-radius: 5px;
-  border-top-right-radius: 5px; */
+const YouTubeImg = styled.img`
+ object-fit: cover;
+  width: 120px;
+  height: 60px;
 `;
 
 const YouTubeTitle = styled.div`
-  background-color: rgba(40, 40, 40, 0.6);
-  color: rgb(220, 220, 220);
-  font-weight: 600;
-  text-align: center;
+  padding: 10px 20px;
+  padding: 0.625rem 1.5rem;
   display: grid;
   align-items: center;
-  padding: 5px;
-  padding: 0.3125rem;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
   line-height: 120%;
-`;
-
-const HoverBackground = styled.div`
-  position: absolute;
-  right: 0;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  /* border-radius: 10px; */
-  /* border-radius: 0.3125rem; */
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  background-color: rgba(20, 20, 20, 0.6);
-  opacity: ${(props) => (props.hover ? 1 : 0)};
-  transition: background-color 0.4s ease, opacity 0.4s ease;
-  color: rgb(220, 220, 220);
-  display: grid;
-  align-items: center;
-  justify-items: center;
 `;
 
 const YouTubeItem = ({ url, title }) => {
@@ -73,11 +42,9 @@ const YouTubeItem = ({ url, title }) => {
         setHover(false);
       }}
     >
-      <YouTubeImg youtubeImg={getYouTubeImg(url)}></YouTubeImg>
-      <YouTubeTitle>{title}</YouTubeTitle>
-      <HoverBackground hover={hover}>
-        <div>자세히 보기</div>
-      </HoverBackground>
+      <YouTubeTitle>{title}
+      </YouTubeTitle>
+      <YouTubeImg src={getYouTubeImg(url)} youtubeImg={getYouTubeImg(url)}></YouTubeImg>
     </SYouTubeItem>
   );
 };
