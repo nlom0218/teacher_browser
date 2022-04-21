@@ -5,7 +5,6 @@ import { ThemeProvider } from "styled-components";
 import {
   darkModeVar,
   disableBgThemeAni,
-  isPopupVar,
   isLoggedInVar,
   bgThemeVar,
   editBgTheme,
@@ -56,7 +55,6 @@ function App() {
   const media = useMedia();
 
   const navigate = useNavigate();
-  const isPopup = useReactiveVar(isPopupVar);
 
   // me 값을 불러오는데 시간이 걸려서 bgTheme의 디폴트 값으로 설정된 nature가 불려오다가 수정됨...
   // useMe() 값을 다 불러온 뒤에 return할 수 있을까?
@@ -117,6 +115,8 @@ function App() {
       navigate(routes.agreePolicy);
     }
   }, [me]);
+
+  console.log(media);
 
   useEffect(() => {
     if (media !== "Desktop") {

@@ -1,6 +1,6 @@
 import { useReactiveVar } from "@apollo/client";
 import getYouTubeID from "get-youtube-id";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { isFullScreenModeVar } from "../../apollo";
 import useMedia from "../../Hooks/useMedia";
@@ -18,31 +18,39 @@ const YouTubePlayer = styled.div`
 `;
 
 const DetailYouTube = ({ id }) => {
+  const [multiply, setMultiply] = useState();
   const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
   const media = useMedia();
   const youtubeContents = youtubeList.filter(
     (item) => item.id === parseInt(id)
   )[0];
 
-  const processMultiply = () => {
+  console.log(media);
+
+  useEffect(() => {
     if (media !== "Desktop") {
-      return 3.5;
+      setMultiply(3.5);
     }
     if (isFullScreenMode) {
-      return 3.5;
+      setMultiply(3.5);
+      console.log("gogo");
     }
-    return 2.5;
-  };
+    setMultiply(2.5);
+  }, [media, isFullScreenMode]);
+
+  console.log(isFullScreenMode);
+  console.log(multiply);
 
   return (
     <Container>
-      <YouTubePlayer multiply={processMultiply()}>
+      <YouTubePlayer multiply={multiply}>
         <iframe
           src={`https://www.youtube.com/embed/${getYouTubeID(
             youtubeContents.url
           )}?showinfo=0&enablejsapi=1`}
           width="100%"
           height="100%"
+          title={youtubeContents.title}
         ></iframe>
       </YouTubePlayer>
     </Container>
