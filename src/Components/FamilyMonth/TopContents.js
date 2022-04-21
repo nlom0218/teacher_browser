@@ -1,7 +1,5 @@
 import React from "react";
-import { AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
 import styled from "styled-components";
-import { HeaderHome, HeaderMenu } from "../Shared/HeaderLink";
 
 const Container = styled.div`
   display: grid;
@@ -19,7 +17,6 @@ const LeftContents = styled.div`
   align-items: center;
 `;
 
-
 const Title = styled.div`
   font-size: 1.5em;
   font-size: 1.5rem;
@@ -35,8 +32,8 @@ const RightContents = styled.div`
 const Icon = styled.div`
   padding: 5px;
   padding: 0.3125rem;
-  background-color: ${props=>props.theme.btnBgColor};
-  color: ${props=>props.theme.bgColor};
+  background-color: ${(props) => props.theme.btnBgColor};
+  color: ${(props) => props.theme.bgColor};
   transition: background-color 1s ease, color 1s ease;
   border-radius: 50%;
   cursor: pointer;
@@ -48,7 +45,6 @@ const Icon = styled.div`
 `;
 
 const TopContents = () => {
-
   return (
     <Container>
       <LeftContents>

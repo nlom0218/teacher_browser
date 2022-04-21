@@ -4,6 +4,7 @@ import { customMedia } from "../styles";
 import TopContents from "../Components/FamilyMonth/TopContents";
 import MainYouTube from "../Components/FamilyMonth/MainYouTube";
 import BasicContainer from "../Components/Shared/BasicContainer";
+import BtnContainer from "../Components/FamilyMonth/BtnContainer";
 
 const Container = styled.div`
   min-height: 100%;
@@ -22,9 +23,9 @@ const Container = styled.div`
 const BottomContents = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
+  column-gap: 40px;
+  column-gap: 2.5rem;
 `;
-
-const BtnLayout = styled.div``;
 
 const ContentsLayout = styled.div`
   position: relative;
@@ -50,12 +51,7 @@ const FamilyMonth = () => {
       <Container>
         <TopContents />
         <BottomContents>
-          <BtnLayout>
-            <div>btn1</div>
-            <div>btn2</div>
-            <div>btn3</div>
-            <div>btn4</div>
-          </BtnLayout>
+          <BtnContainer />
           <ContentsLayout>
             <ContentsScrollLayout>
               <MainYouTube />
