@@ -53,7 +53,7 @@ const FamilyMonth = () => {
       <Container>
         {/* <TopContents /> */}
         <BottomContents>
-          <BtnContainer />
+          <BtnContainer page={page} />
           <ContentsLayout>
             <ContentsScrollLayout>
               {page === "list" && <MainYouTube />}

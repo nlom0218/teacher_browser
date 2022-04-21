@@ -24,22 +24,30 @@ const Btn = styled.div`
   background-color: #f38181;
   border-radius: 50%;
   cursor: pointer;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   svg {
     color: rgba(255, 255, 255, 1);
     display: flex;
   }
+  :hover {
+    transform: scale(1.3);
+  }
+  transform: ${(props) => props.isPage && "scale(1.3)"};
+  transition: transform 0.4s ease;
 `;
 
-const BtnContainer = () => {
+const BtnContainer = ({ page }) => {
+  console.log(page);
   return (
     <Container>
       <Link to={routes.familyMonth}>
-        <Btn>
+        <Btn isPage={!page}>
           <AiFillHome />
         </Btn>
       </Link>
       <Link to={`${routes.familyMonth}/list`}>
-        <Btn>
+        <Btn isPage={page === "list"}>
           <AiFillYoutube />
         </Btn>
       </Link>
