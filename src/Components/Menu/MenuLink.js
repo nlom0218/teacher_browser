@@ -18,10 +18,11 @@ import IcOrder from "../../icons/Order/IcOrder";
 import IcJournal from "../../icons/Journal/IcJournal";
 import IcJournalClick from "../../icons/Journal/IcJournalClick";
 import IcNameTableOpened from "../../icons/NameTable/IcNameTableOpened";
-import { enableSeeStudent } from "../../apollo";
+import { enableSeeStudent, fullScreenMode } from "../../apollo";
 import IcNewsClick from "../../icons/News/IcNewsClick";
 import IcNews from "../../icons/News/IcNews";
 import { MdFamilyRestroom } from "react-icons/md";
+import useMedia from "../../Hooks/useMedia";
 
 const SMenu = styled.div`
   display: grid;
@@ -190,8 +191,13 @@ export const NewsLink = () => {
 };
 
 export const FamilyMonthLink = () => {
+  const media = useMedia();
   const [isHover, setIsHover] = useState(false);
-  const onClickListLink = () => {};
+  const onClickListLink = () => {
+    if (media === "Desktop") {
+      fullScreenMode();
+    }
+  };
   return (
     <Link to={routes.familyMonth} onClick={onClickListLink}>
       <SMenu
