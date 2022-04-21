@@ -1,7 +1,15 @@
 import React from "react";
-import { AiFillHome, AiFillLike, AiFillYoutube } from "react-icons/ai";
-import { FaHashtag, FaSearch } from "react-icons/fa";
+import {
+  AiFillHome,
+  AiFillLike,
+  AiFillYoutube,
+  AiOutlinePlus,
+} from "react-icons/ai";
+import { BsPlusLg } from "react-icons/bs";
+import { FaHashtag, FaHeart, FaSearch } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
+import routes from "../../routes";
 
 const Container = styled.div`
   align-self: center;
@@ -18,8 +26,6 @@ const Btn = styled.div`
   cursor: pointer;
   svg {
     color: rgba(255, 255, 255, 1);
-    font-size: 1.25em;
-    font-size: 1.25rem;
     display: flex;
   }
 `;
@@ -27,12 +33,16 @@ const Btn = styled.div`
 const BtnContainer = () => {
   return (
     <Container>
-      <Btn>
-        <AiFillHome />
-      </Btn>
-      <Btn>
-        <AiFillYoutube />
-      </Btn>
+      <Link to={routes.familyMonth}>
+        <Btn>
+          <AiFillHome />
+        </Btn>
+      </Link>
+      <Link to={`${routes.familyMonth}/list`}>
+        <Btn>
+          <AiFillYoutube />
+        </Btn>
+      </Link>
       <Btn>
         <FaHashtag />
       </Btn>
@@ -40,7 +50,13 @@ const BtnContainer = () => {
         <AiFillLike />
       </Btn>
       <Btn>
+        <FaHeart />
+      </Btn>
+      <Btn>
         <FaSearch />
+      </Btn>
+      <Btn>
+        <BsPlusLg />
       </Btn>
     </Container>
   );
