@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { customMedia } from "../../styles";
 import YouTubeItem from "./YouTubeItem";
 
 const YouTubeList = styled.div`
@@ -7,11 +8,17 @@ const YouTubeList = styled.div`
   padding: 1.25rem;
   align-self: flex-start;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
   row-gap: 40px;
   row-gap: 2.5rem;
   column-gap: 40px;
   column-gap: 2.5rem;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: 1fr 1fr;
+  `}
+  ${customMedia.greaterThan("desktop")`
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  `}
 `;
 
 const youtubeList = [

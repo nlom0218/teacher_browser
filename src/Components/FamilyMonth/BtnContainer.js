@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  AiFillHome,
-  AiFillLike,
-  AiFillYoutube,
-  AiOutlinePlus,
-} from "react-icons/ai";
+import { AiFillHome, AiFillLike, AiFillYoutube } from "react-icons/ai";
 import { BsPlusLg } from "react-icons/bs";
 import { FaHashtag, FaHeart, FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";

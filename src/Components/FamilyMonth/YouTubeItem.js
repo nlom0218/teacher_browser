@@ -5,10 +5,12 @@ import { format } from "date-fns";
 import { FaHeart } from "react-icons/fa";
 
 const SYouTubeItem = styled.div`
+  padding: 20px;
+  padding: 1.25rem;
   color: rgb(10, 10, 10);
   background-color: ${(props) => props.bgColor};
   display: grid;
-  grid-template-rows: 75px 225px;
+  grid-template-rows: 1fr 3fr;
   row-gap: 20px;
   row-gap: 1.25rem;
   cursor: pointer;
@@ -27,8 +29,6 @@ const SYouTubeItem = styled.div`
 `;
 
 const YouTubeInfo = styled.div`
-  padding: 20px;
-  padding: 1.25rem;
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
@@ -39,6 +39,7 @@ const YouTubeImg = styled.img`
   width: 60px;
   height: 60px;
   border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 `;
 
 const YouTubeType = styled.div`
@@ -55,8 +56,6 @@ const YouTubeType = styled.div`
 `;
 
 const ContentsInfo = styled.div`
-  padding: 20px;
-  padding: 1.25rem;
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-rows: 1fr auto;
@@ -67,7 +66,6 @@ const ContentsInfo = styled.div`
 `;
 
 const ContentsTitle = styled.div`
-  max-height: 100%;
   grid-column: 1 / -1;
   display: grid;
   align-items: flex-start;
