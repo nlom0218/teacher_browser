@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import getYouTubeId from "get-youtube-id";
+import { format } from "date-fns";
+import { FaHeart } from "react-icons/fa";
 
 const SYouTubeItem = styled.div`
   color: rgb(10, 10, 10);
   background-color: ${(props) => props.bgColor};
   display: grid;
-  grid-template-rows: 1fr 2fr;
+  grid-template-rows: 75px 225px;
+  row-gap: 20px;
+  row-gap: 1.25rem;
   cursor: pointer;
   position: relative;
   border-radius: 20px;
@@ -50,15 +54,53 @@ const YouTubeType = styled.div`
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 `;
 
-const YouTubeTitle = styled.div`
-  padding: 10px 20px;
-  padding: 0.625rem 1.5rem;
+const ContentsInfo = styled.div`
+  padding: 20px;
+  padding: 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 1fr auto;
+  column-gap: 10px;
+  column-gap: 0.625rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+`;
+
+const ContentsTitle = styled.div`
+  max-height: 100%;
+  grid-column: 1 / -1;
   display: grid;
   align-items: flex-start;
   line-height: 120%;
+  align-self: center;
+  text-align: center;
+  font-size: 1.25em;
+  font-size: 1.25rem;
+  overflow: scroll;
+  text-overflow: ellipsis;
+  /* white-space: nowrap; */
+  word-break: break-all;
 `;
 
-const YouTubeItem = ({ url, title, bgColor, type }) => {
+const ContentsLikedNum = styled.div`
+  justify-self: flex-start;
+  color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  svg {
+    display: flex;
+    color: #e84545;
+    margin-right: 5px;
+    margin-right: 0.3125rem;
+  }
+`;
+
+const CreatedAt = styled.div`
+  justify-self: flex-end;
+  color: rgba(0, 0, 0, 0.6);
+`;
+
+const YouTubeItem = ({ url, title, bgColor, type, createdAt, likeNum }) => {
   const [hover, setHover] = useState(false);
   const getYouTubeImg = (youTubeUrl) => {
     return `https://img.youtube.com/vi/${getYouTubeId(youTubeUrl)}/0.jpg`;
@@ -78,7 +120,14 @@ const YouTubeItem = ({ url, title, bgColor, type }) => {
         <YouTubeImg src={getYouTubeImg(url)}></YouTubeImg>
         <YouTubeType>{type}</YouTubeType>
       </YouTubeInfo>
-      <YouTubeTitle>{title}</YouTubeTitle>
+      <ContentsInfo>
+        <ContentsTitle>{title}</ContentsTitle>
+        <ContentsLikedNum>
+          <FaHeart />
+          {likeNum}개
+        </ContentsLikedNum>
+        <CreatedAt>{format(createdAt, "yy.MM.dd")}</CreatedAt>
+      </ContentsInfo>
     </SYouTubeItem>
   );
 };
