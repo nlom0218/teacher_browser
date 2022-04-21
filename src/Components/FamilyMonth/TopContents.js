@@ -54,10 +54,6 @@ const TopContents = () => {
       <LeftContents>
         <Title>가정의 달</Title>
       </LeftContents>
-      <RightContents>
-        <Icon><AiOutlinePlus/></Icon>
-        <Icon><AiOutlineSearch/></Icon>
-      </RightContents>
     </Container>
   );
 };

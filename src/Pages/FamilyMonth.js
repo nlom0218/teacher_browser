@@ -19,12 +19,49 @@ const Container = styled.div`
   `}
 `;
 
+const BottomContents = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr;
+`;
+
+const BtnLayout = styled.div``;
+
+const ContentsLayout = styled.div`
+  position: relative;
+`;
+
+const ContentsScrollLayout = styled.div`
+  position: absolute;
+  min-height: 100%;
+  max-height: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  overflow: scroll;
+  -ms-overflow-style: none; // IE and Edge
+  scrollbar-width: none; // Firefox
+  ::-webkit-scrollbar {
+    display: none; // Chrome, Safari, Opera
+  }
+`;
+
 const FamilyMonth = () => {
   return (
     <BasicContainer menuItem={true}>
       <Container>
         <TopContents />
-        <MainYouTube />
+        <BottomContents>
+          <BtnLayout>
+            <div>btn1</div>
+            <div>btn2</div>
+            <div>btn3</div>
+            <div>btn4</div>
+          </BtnLayout>
+          <ContentsLayout>
+            <ContentsScrollLayout>
+              <MainYouTube />
+            </ContentsScrollLayout>
+          </ContentsLayout>
+        </BottomContents>
       </Container>
     </BasicContainer>
   );
