@@ -21,7 +21,7 @@ const YouTubeList = styled.div`
   `}
 `;
 
-const youtubeList = [
+export const youtubeList = [
   {
     url: "https://www.youtube.com/watch?v=cS-IiArGmcU",
     title: "김진호-가족사진",
@@ -30,6 +30,7 @@ const youtubeList = [
     onwer: "nlom0218@naver.com",
     createdAt: 1650466800000,
     likeNum: 5,
+    id: 1,
   },
   {
     url: "https://www.youtube.com/watch?v=7c64qLxZUb4&t=536s",
@@ -39,6 +40,7 @@ const youtubeList = [
     onwer: "kwi0715@jr.naver.com",
     createdAt: 1650466800000,
     likeNum: 0,
+    id: 2,
   },
   {
     url: "https://www.youtube.com/watch?v=wFeFIN8CI0A",
@@ -49,6 +51,7 @@ const youtubeList = [
     onwer: "tendy424@jr.naver.com",
     createdAt: 1650466800000,
     likeNum: 24,
+    id: 3,
   },
   {
     url: "https://www.youtube.com/watch?v=G5kzUpWAusI&t=7s",
@@ -58,6 +61,7 @@ const youtubeList = [
     onwer: "superanomie89@gmail.com",
     createdAt: 1650466800000,
     likeNum: 3,
+    id: 4,
   },
   {
     url: "https://www.youtube.com/watch?v=IE8HIsIrq4o&t=37s",
@@ -67,6 +71,7 @@ const youtubeList = [
     onwer: "sksthsaudgml@naver.com",
     createdAt: 1650466800000,
     likeNum: 1,
+    id: 5,
   },
   {
     url: "https://www.youtube.com/watch?v=1z4NjPc4_i0",
@@ -76,6 +81,7 @@ const youtubeList = [
     onwer: "soave424@hanmail.net",
     createdAt: 1650466800000,
     likeNum: 12,
+    id: 6,
   },
   {
     url: "https://www.youtube.com/watch?v=P0ikE6tFbas",
@@ -85,6 +91,7 @@ const youtubeList = [
     onwer: "sksthsaudgml@gmail.com",
     createdAt: 1650466800000,
     likeNum: 20,
+    id: 7,
   },
   {
     url: "https://www.youtube.com/watch?v=G5kzUpWAusI&t=7s",
@@ -94,6 +101,7 @@ const youtubeList = [
     onwer: "soave424@nyjyangji.es.kr",
     createdAt: 1650466800000,
     likeNum: 7,
+    id: 8,
   },
   {
     url: "https://www.youtube.com/watch?v=IE8HIsIrq4o&t=37s",
@@ -103,6 +111,7 @@ const youtubeList = [
     onwer: "superanomie@naver.com",
     createdAt: 1650466800000,
     likeNum: 8,
+    id: 9,
   },
   {
     url: "https://www.youtube.com/watch?v=1z4NjPc4_i0",
@@ -112,6 +121,7 @@ const youtubeList = [
     onwer: "kwi07@hanmail.net",
     createdAt: 1650466800000,
     likeNum: 5,
+    id: 10,
   },
   {
     url: "https://www.youtube.com/watch?v=P0ikE6tFbas",
@@ -121,6 +131,7 @@ const youtubeList = [
     onwer: "teacher-browser@naver.com",
     createdAt: 1650466800000,
     likeNum: 5,
+    id: 11,
   },
 ];
 

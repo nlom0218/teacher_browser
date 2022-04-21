@@ -33,7 +33,6 @@ const Btn = styled.div`
 `;
 
 const BtnContainer = ({ page }) => {
-  console.log(page);
   return (
     <Container>
       <Link to={routes.familyMonth}>

@@ -193,6 +193,10 @@ function App() {
         />
         <Route path={routes.familyMonth} element={<FamilyMonth />} />
         <Route path={`${routes.familyMonth}/:page`} element={<FamilyMonth />} />
+        <Route
+          path={`${routes.familyMonth}/:page/:id`}
+          element={<FamilyMonth />}
+        />
       </Routes>
     </ThemeProvider>
   );

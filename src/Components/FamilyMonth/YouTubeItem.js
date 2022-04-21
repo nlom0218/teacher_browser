@@ -3,6 +3,8 @@ import styled from "styled-components";
 import getYouTubeId from "get-youtube-id";
 import { format } from "date-fns";
 import { FaHeart } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import routes from "../../routes";
 
 const SYouTubeItem = styled.div`
   padding: 20px;
@@ -98,13 +100,18 @@ const CreatedAt = styled.div`
   color: rgba(0, 0, 0, 0.6);
 `;
 
-const YouTubeItem = ({ url, title, bgColor, type, createdAt, likeNum }) => {
+const YouTubeItem = ({ url, title, bgColor, type, createdAt, likeNum, id }) => {
   const [hover, setHover] = useState(false);
+  const navigate = useNavigate();
   const getYouTubeImg = (youTubeUrl) => {
     return `https://img.youtube.com/vi/${getYouTubeId(youTubeUrl)}/0.jpg`;
   };
+  const onClickYouTubeItem = () => {
+    navigate(`${routes.familyMonth}/list/${id}`);
+  };
   return (
     <SYouTubeItem
+      onClick={onClickYouTubeItem}
       bgColor={bgColor}
       hover={hover}
       onMouseEnter={() => {

@@ -6,6 +6,7 @@ import MainYouTube from "../Components/FamilyMonth/MainYouTube";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import BtnContainer from "../Components/FamilyMonth/BtnContainer";
 import { useParams } from "react-router-dom";
+import DetailYouTube from "../Components/FamilyMonth/DetailYouTube";
 
 const Container = styled.div`
   min-height: 100%;
@@ -47,7 +48,7 @@ const ContentsScrollLayout = styled.div`
 `;
 
 const FamilyMonth = () => {
-  const { page } = useParams();
+  const { page, id } = useParams();
   return (
     <BasicContainer menuItem={true}>
       <Container>
@@ -56,7 +57,8 @@ const FamilyMonth = () => {
           <BtnContainer page={page} />
           <ContentsLayout>
             <ContentsScrollLayout>
-              {page === "list" && <MainYouTube />}
+              {id && <DetailYouTube id={id} />}
+              {!id && page === "list" && <MainYouTube />}
             </ContentsScrollLayout>
           </ContentsLayout>
         </BottomContents>
