@@ -12,8 +12,8 @@ const Container = styled.div`
   display: grid;
   grid-template-rows: auto 1fr;
   width: calc(${(props) => props.multiply} * 16vw);
-  row-gap: 20px;
-  row-gap: 1.25rem;
+  row-gap: 40px;
+  row-gap: 2.5rem;
 `;
 
 const YouTubePlayer = styled.div`
