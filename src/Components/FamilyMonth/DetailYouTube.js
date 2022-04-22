@@ -4,17 +4,24 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { isFullScreenModeVar } from "../../apollo";
 import useMedia from "../../Hooks/useMedia";
+import DetailYouTubeContents from "./DetailYouTubeContents";
 import { youtubeList } from "./MainYouTube";
 
 const Container = styled.div`
+  margin: 0 auto;
   display: grid;
   grid-template-rows: auto 1fr;
+  width: calc(${(props) => props.multiply} * 16vw);
+  row-gap: 20px;
+  row-gap: 1.25rem;
 `;
 
 const YouTubePlayer = styled.div`
+  width: 100%;
   justify-self: center;
-  width: calc(${(props) => props.multiply} * 16vw);
   height: calc(${(props) => props.multiply} * 9vw);
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 `;
 
 const DetailYouTube = ({ id }) => {
@@ -24,25 +31,22 @@ const DetailYouTube = ({ id }) => {
   const youtubeContents = youtubeList.filter(
     (item) => item.id === parseInt(id)
   )[0];
-
-  console.log(media);
+  console.log(youtubeContents);
 
   useEffect(() => {
     if (media !== "Desktop") {
       setMultiply(3.5);
+      return;
     }
     if (isFullScreenMode) {
       setMultiply(3.5);
-      console.log("gogo");
+      return;
     }
     setMultiply(2.5);
   }, [media, isFullScreenMode]);
 
-  console.log(isFullScreenMode);
-  console.log(multiply);
-
   return (
-    <Container>
+    <Container multiply={multiply}>
       <YouTubePlayer multiply={multiply}>
         <iframe
           src={`https://www.youtube.com/embed/${getYouTubeID(
@@ -53,6 +57,7 @@ const DetailYouTube = ({ id }) => {
           title={youtubeContents.title}
         ></iframe>
       </YouTubePlayer>
+      <DetailYouTubeContents {...youtubeContents} />
     </Container>
   );
 };

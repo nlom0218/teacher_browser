@@ -116,8 +116,6 @@ function App() {
     }
   }, [me]);
 
-  console.log(media);
-
   useEffect(() => {
     if (media !== "Desktop") {
       smallScreenMode();
