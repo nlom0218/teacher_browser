@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import MainContentsLayout from "./MainContentsLayout";
 import YouTubeInput from "./YouTubeInput";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
+import BasicInfoInput from "./BasicInfoInput";
 
 const FormContainer = styled.form`
   display: grid;
-  row-gap: 40px;
-  row-gap: 2.5rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
 `;
 
-const CreateYouTube = ({ multiply }) => {
-  const { register, watch, getValues } = useForm({
+// url, title, bgColor, type, onwer, tag, createAt
+
+const CreateYouTube = ({ multiply, userEmail }) => {
+  const { register, watch, getValues, setValue } = useForm({
     mode: "onChange",
   });
+  useEffect(() => {
+    setValue("email", userEmail);
+  }, [userEmail]);
   return (
     <MainContentsLayout>
       <FormContainer>
@@ -23,7 +29,7 @@ const CreateYouTube = ({ multiply }) => {
           watch={watch}
           getValues={getValues}
         />
-        sdfsdf
+        <BasicInfoInput register={register} userEmail={userEmail} />
       </FormContainer>
     </MainContentsLayout>
   );

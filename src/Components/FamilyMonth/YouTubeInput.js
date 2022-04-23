@@ -27,10 +27,11 @@ const Icon = styled.div`
 const Input = styled.input`
   background-color: ${(props) => props.theme.cardBg};
   transition: background-color 1s ease;
-  padding: 10px;
-  padding: 0.625rem;
+  padding: 15px 20px;
+  padding: 0.938rem 1.25rem;
   border-radius: 10px;
   border-radius: 0.625rem;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   ::placeholder {
     color: ${(props) => props.theme.fontColor};
     opacity: 0.6;
@@ -52,6 +53,7 @@ const ReviewBox = styled.div`
   height: 100%;
   background-color: ${(props) => props.theme.cardBg};
   transition: background-color 1s ease, border 1s ease;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   svg {
     display: flex;
     font-size: 5em;
@@ -92,8 +94,8 @@ const YouTubeInput = ({ register, multiply, watch, getValues }) => {
             <AiFillYoutube />
             <div className="reivew">유튜브 미리보기</div>
             <div>
-              정확한 주소를 입력하세요. 주소가 정확하지 않으면 미리보기 재생이
-              안됩니다.😭
+              정확한 주소를 입력하세요.
+              <br /> 주소가 정확하지 않으면 미리보기 재생이 안됩니다.😭
             </div>
           </ReviewBox>
         ) : (

@@ -1,9 +1,6 @@
-import { useReactiveVar } from "@apollo/client";
 import getYouTubeID from "get-youtube-id";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { isFullScreenModeVar } from "../../apollo";
-import useMedia from "../../Hooks/useMedia";
 import DetailYouTubeContents from "./DetailYouTubeContents";
 import { youtubeList } from "./ListYouTube";
 import MainContentsLayout from "./MainContentsLayout";

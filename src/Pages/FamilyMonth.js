@@ -10,6 +10,7 @@ import ListYouTube from "../Components/FamilyMonth/ListYouTube";
 import { useReactiveVar } from "@apollo/client";
 import { isFullScreenModeVar } from "../apollo";
 import useMedia from "../Hooks/useMedia";
+import useMe from "../Hooks/useMe";
 
 const Container = styled.div`
   min-height: 100%;
@@ -51,6 +52,7 @@ const ContentsScrollLayout = styled.div`
 `;
 
 const FamilyMonth = () => {
+  const me = useMe();
   const { page, id } = useParams();
   const [multiply, setMultiply] = useState();
   const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
@@ -77,7 +79,7 @@ const FamilyMonth = () => {
               {id && <DetailYouTube id={id} multiply={multiply} />}
               {!id && page === "list" && <ListYouTube />}
               {!id && page === "create" && (
-                <CreateYouTube multiply={multiply} />
+                <CreateYouTube multiply={multiply} userEmail={me?.email} />
               )}
             </ContentsScrollLayout>
           </ContentsLayout>
