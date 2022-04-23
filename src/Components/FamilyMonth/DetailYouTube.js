@@ -16,24 +16,10 @@ const YouTubePlayer = styled.div`
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 `;
 
-const DetailYouTube = ({ id }) => {
+const DetailYouTube = ({ id, multiply }) => {
   const youtubeContents = youtubeList.filter(
     (item) => item.id === parseInt(id)
   )[0];
-  const [multiply, setMultiply] = useState();
-  const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
-  const media = useMedia();
-  useEffect(() => {
-    if (media !== "Desktop") {
-      setMultiply(3.5);
-      return;
-    }
-    if (isFullScreenMode) {
-      setMultiply(3.5);
-      return;
-    }
-    setMultiply(2.5);
-  }, [media, isFullScreenMode]);
 
   return (
     <MainContentsLayout>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { customMedia } from "../styles";
 import BasicContainer from "../Components/Shared/BasicContainer";
@@ -7,6 +7,9 @@ import { useParams } from "react-router-dom";
 import DetailYouTube from "../Components/FamilyMonth/DetailYouTube";
 import CreateYouTube from "../Components/FamilyMonth/CreateYouTube";
 import ListYouTube from "../Components/FamilyMonth/ListYouTube";
+import { useReactiveVar } from "@apollo/client";
+import { isFullScreenModeVar } from "../apollo";
+import useMedia from "../Hooks/useMedia";
 
 const Container = styled.div`
   min-height: 100%;
@@ -49,6 +52,20 @@ const ContentsScrollLayout = styled.div`
 
 const FamilyMonth = () => {
   const { page, id } = useParams();
+  const [multiply, setMultiply] = useState();
+  const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
+  const media = useMedia();
+  useEffect(() => {
+    if (media !== "Desktop") {
+      setMultiply(3.5);
+      return;
+    }
+    if (isFullScreenMode) {
+      setMultiply(3.5);
+      return;
+    }
+    setMultiply(2.5);
+  }, [media, isFullScreenMode]);
   return (
     <BasicContainer menuItem={true}>
       <Container>
@@ -57,9 +74,11 @@ const FamilyMonth = () => {
           <BtnContainer page={page} />
           <ContentsLayout>
             <ContentsScrollLayout>
-              {id && <DetailYouTube id={id} />}
+              {id && <DetailYouTube id={id} multiply={multiply} />}
               {!id && page === "list" && <ListYouTube />}
-              {!id && page === "create" && <CreateYouTube />}
+              {!id && page === "create" && (
+                <CreateYouTube multiply={multiply} />
+              )}
             </ContentsScrollLayout>
           </ContentsLayout>
         </BottomContents>
