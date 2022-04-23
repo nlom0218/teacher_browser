@@ -2,15 +2,18 @@ import { format } from "date-fns";
 import React from "react";
 import styled from "styled-components";
 import { FaHeart } from "react-icons/fa";
+import YouTubeTag from "./YouTubeTag";
 
 const Container = styled.div`
   display: grid;
   row-gap: 20px;
+  row-gap: 1.25rem;
 `;
 
 const TopContents = styled.div`
   display: grid;
   row-gap: 20px;
+  row-gap: 1.25rem;
   grid-template-columns: 1fr auto;
   font-size: 1.25em;
   font-size: 1.25rem;
@@ -48,6 +51,14 @@ const Icon = styled.div`
 
 const LikedNum = styled.div``;
 
+const Tags = styled.div`
+  grid-column: 1 / -1;
+  font-size: 14px;
+  font-size: 0.875rem;
+  display: flex;
+  flex-wrap: wrap;
+`;
+
 const TextareaLayout = styled.div`
   height: 200px;
   background-color: ${(props) => props.theme.cardBg};
@@ -68,6 +79,7 @@ const DetailYouTubeContents = ({
   likeNum,
   onwer,
   bgColor,
+  tag,
 }) => {
   return (
     <Container>
@@ -83,6 +95,11 @@ const DetailYouTubeContents = ({
           </Icon>
           <LikedNum>{likeNum}개</LikedNum>
         </Liked>
+        <Tags>
+          {tag.map((item, index) => {
+            return <YouTubeTag key={index} tag={item} bgColor={bgColor} />;
+          })}
+        </Tags>
       </TopContents>
       <TextareaLayout bgColor={bgColor}>sdfsdfsdf</TextareaLayout>
     </Container>

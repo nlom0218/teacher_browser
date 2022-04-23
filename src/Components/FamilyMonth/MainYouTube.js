@@ -31,6 +31,29 @@ export const youtubeList = [
     createdAt: 1650466800000,
     likeNum: 5,
     id: 1,
+    tag: [
+      "가족",
+      "사랑",
+      "슬픔",
+      "사랑",
+      "슬픔",
+      "사랑",
+      "슬픔",
+      "사랑",
+      "슬픔",
+      "사랑",
+      "슬픔",
+      "사랑",
+      "슬픔",
+      "사랑",
+      "슬픔",
+      "사랑",
+      "슬픔",
+      "사랑",
+      "슬픔",
+      "사랑",
+      "슬픔",
+    ],
   },
   {
     url: "https://www.youtube.com/watch?v=7c64qLxZUb4&t=536s",
@@ -41,6 +64,7 @@ export const youtubeList = [
     createdAt: 1650466800000,
     likeNum: 0,
     id: 2,
+    tag: ["가족", "사랑", "슬픔"],
   },
   {
     url: "https://www.youtube.com/watch?v=wFeFIN8CI0A",
@@ -52,6 +76,7 @@ export const youtubeList = [
     createdAt: 1650466800000,
     likeNum: 24,
     id: 3,
+    tag: ["가족", "사랑", "슬픔"],
   },
   {
     url: "https://www.youtube.com/watch?v=G5kzUpWAusI&t=7s",
@@ -62,6 +87,7 @@ export const youtubeList = [
     createdAt: 1650466800000,
     likeNum: 3,
     id: 4,
+    tag: ["가족", "사랑", "슬픔"],
   },
   {
     url: "https://www.youtube.com/watch?v=IE8HIsIrq4o&t=37s",
@@ -72,6 +98,7 @@ export const youtubeList = [
     createdAt: 1650466800000,
     likeNum: 1,
     id: 5,
+    tag: ["가족", "사랑", "슬픔"],
   },
   {
     url: "https://www.youtube.com/watch?v=1z4NjPc4_i0",
@@ -82,6 +109,7 @@ export const youtubeList = [
     createdAt: 1650466800000,
     likeNum: 12,
     id: 6,
+    tag: ["가족", "사랑", "슬픔"],
   },
   {
     url: "https://www.youtube.com/watch?v=P0ikE6tFbas",
@@ -92,6 +120,7 @@ export const youtubeList = [
     createdAt: 1650466800000,
     likeNum: 20,
     id: 7,
+    tag: ["가족", "사랑", "슬픔"],
   },
   {
     url: "https://www.youtube.com/watch?v=G5kzUpWAusI&t=7s",
@@ -102,6 +131,7 @@ export const youtubeList = [
     createdAt: 1650466800000,
     likeNum: 7,
     id: 8,
+    tag: ["가족", "사랑", "슬픔"],
   },
   {
     url: "https://www.youtube.com/watch?v=IE8HIsIrq4o&t=37s",
@@ -112,6 +142,7 @@ export const youtubeList = [
     createdAt: 1650466800000,
     likeNum: 8,
     id: 9,
+    tag: ["가족", "사랑", "슬픔"],
   },
   {
     url: "https://www.youtube.com/watch?v=1z4NjPc4_i0",
@@ -122,6 +153,7 @@ export const youtubeList = [
     createdAt: 1650466800000,
     likeNum: 5,
     id: 10,
+    tag: ["가족", "사랑", "슬픔"],
   },
   {
     url: "https://www.youtube.com/watch?v=P0ikE6tFbas",
@@ -132,6 +164,7 @@ export const youtubeList = [
     createdAt: 1650466800000,
     likeNum: 5,
     id: 11,
+    tag: ["가족", "사랑", "슬픔"],
   },
 ];
 
