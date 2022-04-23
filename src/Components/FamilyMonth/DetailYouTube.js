@@ -5,16 +5,8 @@ import styled from "styled-components";
 import { isFullScreenModeVar } from "../../apollo";
 import useMedia from "../../Hooks/useMedia";
 import DetailYouTubeContents from "./DetailYouTubeContents";
-import { youtubeList } from "./MainYouTube";
-
-const Container = styled.div`
-  margin: 0 auto;
-  display: grid;
-  grid-template-rows: auto 1fr;
-  width: calc(${(props) => props.multiply} * 16vw);
-  row-gap: 40px;
-  row-gap: 2.5rem;
-`;
+import { youtubeList } from "./ListYouTube";
+import MainContentsLayout from "./MainContentsLayout";
 
 const YouTubePlayer = styled.div`
   width: 100%;
@@ -25,14 +17,12 @@ const YouTubePlayer = styled.div`
 `;
 
 const DetailYouTube = ({ id }) => {
-  const [multiply, setMultiply] = useState();
-  const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
-  const media = useMedia();
   const youtubeContents = youtubeList.filter(
     (item) => item.id === parseInt(id)
   )[0];
-  console.log(youtubeContents);
-
+  const [multiply, setMultiply] = useState();
+  const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
+  const media = useMedia();
   useEffect(() => {
     if (media !== "Desktop") {
       setMultiply(3.5);
@@ -46,7 +36,7 @@ const DetailYouTube = ({ id }) => {
   }, [media, isFullScreenMode]);
 
   return (
-    <Container multiply={multiply}>
+    <MainContentsLayout>
       <YouTubePlayer multiply={multiply}>
         <iframe
           src={`https://www.youtube.com/embed/${getYouTubeID(
@@ -58,7 +48,7 @@ const DetailYouTube = ({ id }) => {
         ></iframe>
       </YouTubePlayer>
       <DetailYouTubeContents {...youtubeContents} />
-    </Container>
+    </MainContentsLayout>
   );
 };
 

@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { customMedia } from "../styles";
-import TopContents from "../Components/FamilyMonth/TopContents";
-import MainYouTube from "../Components/FamilyMonth/MainYouTube";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import BtnContainer from "../Components/FamilyMonth/BtnContainer";
 import { useParams } from "react-router-dom";
 import DetailYouTube from "../Components/FamilyMonth/DetailYouTube";
+import CreateYouTube from "../Components/FamilyMonth/CreateYouTube";
+import ListYouTube from "../Components/FamilyMonth/ListYouTube";
 
 const Container = styled.div`
   min-height: 100%;
@@ -58,7 +58,8 @@ const FamilyMonth = () => {
           <ContentsLayout>
             <ContentsScrollLayout>
               {id && <DetailYouTube id={id} />}
-              {!id && page === "list" && <MainYouTube />}
+              {!id && page === "list" && <ListYouTube />}
+              {!id && page === "create" && <CreateYouTube />}
             </ContentsScrollLayout>
           </ContentsLayout>
         </BottomContents>

@@ -168,7 +168,7 @@ export const youtubeList = [
   },
 ];
 
-const MainYouTube = () => {
+const ListYouTube = () => {
   return (
     <YouTubeList>
       {youtubeList.map((item, index) => {
@@ -178,4 +178,4 @@ const MainYouTube = () => {
   );
 };
 
-export default MainYouTube;
+export default ListYouTube;

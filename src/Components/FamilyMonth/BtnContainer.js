@@ -57,9 +57,11 @@ const BtnContainer = ({ page }) => {
       <Btn>
         <FaSearch />
       </Btn>
-      <Btn>
-        <BsPlusLg />
-      </Btn>
+      <Link to={`${routes.familyMonth}/create`}>
+        <Btn isPage={page === "create"}>
+          <BsPlusLg />
+        </Btn>
+      </Link>
     </Container>
   );
 };
