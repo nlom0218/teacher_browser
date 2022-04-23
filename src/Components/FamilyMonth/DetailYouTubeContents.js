@@ -62,10 +62,15 @@ const Tags = styled.div`
 const TextareaLayout = styled.div`
   height: 200px;
   background-color: ${(props) => props.theme.cardBg};
+  transition: background-color 1s ease;
   border-radius: 20px;
   border-radius: 1.25rem;
   padding: 20px;
   padding: 1.25rem;
+  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 `;
 
 const Text = styled.div`

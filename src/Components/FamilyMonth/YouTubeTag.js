@@ -7,6 +7,7 @@ const Container = styled.div`
   margin-right: 10px;
   margin-right: 0.625rem;
   background-color: ${(props) => props.bgColor};
+  color: #000000;
   padding: 5px 10px;
   padding: 0.3125rem 0.625rem;
   border-radius: 20px;
