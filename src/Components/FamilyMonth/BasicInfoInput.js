@@ -1,7 +1,6 @@
 import React from "react";
-import { AiFillTags } from "react-icons/ai";
 import { BsFillCameraVideoFill, BsFillPencilFill } from "react-icons/bs";
-import { FaStickyNote, FaUserAlt } from "react-icons/fa";
+import { FaHashtag, FaStickyNote, FaUserAlt } from "react-icons/fa";
 import { IoColorFill } from "react-icons/io5";
 import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
@@ -156,7 +155,7 @@ const BasicInfoInput = ({ register, userEmail, bgColor, setBgColor }) => {
         </ColorContainer>
       </InputLayout>
       <InputLayout>
-        <AiFillTags />
+        <FaHashtag />
         <input
           {...register("tag")}
           type="text"
