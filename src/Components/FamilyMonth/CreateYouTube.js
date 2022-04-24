@@ -14,12 +14,36 @@ const FormContainer = styled.form`
 const SubmitInput = styled.input`
   background-color: ${(props) => props.theme.btnBgColor};
   color: ${(props) => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
   padding: 10px 0px;
   padding: 0.625rem 0rem;
   border-radius: 10px;
   border-radius: 0.625rem;
   text-align: center;
   cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+`;
+
+const SubmitMsg = styled.div`
+  text-align: center;
+  line-height: 120%;
+  font-size: 0.875em;
+  font-size: 0.875rem;
+  display: grid;
+  justify-items: center;
+  row-gap: 5px;
+  row-gap: 0.3125rem;
+`;
+
+const TeacherCanLink = styled.div`
+  padding: 5px 10px;
+  padding: 0.3125rem 0.625rem;
+  background-color: ${(props) => props.theme.green};
+  color: ${(props) => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
+  cursor: pointer;
+  border-radius: 10px;
+  border-radius: 0.625rem;
 `;
 
 // url-, title-, bgColor-, type-, onwer-, tag-, createAt-, contents-
@@ -54,6 +78,10 @@ const CreateYouTube = ({ multiply, userEmail, setErrMsg }) => {
     }
   };
 
+  const onCLickLink = () => {
+    window.open("https://www.instagram.com/teachercan_official/");
+  };
+
   return (
     <MainContentsLayout>
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
@@ -71,6 +99,14 @@ const CreateYouTube = ({ multiply, userEmail, setErrMsg }) => {
         />
         <SubmitInput type="submit" value="생성하기" />
       </FormContainer>
+      <SubmitMsg>
+        <div>
+          게시물은 모두에게 공개되며 적절하지 않은 게시물은 예고없이 삭제될 수
+          있습니다. <br />
+          또한 티처캔 인스타그램에서 콘텐츠로 활용될 수 있습니다.😃
+        </div>
+        <TeacherCanLink onClick={onCLickLink}>@티처캔</TeacherCanLink>
+      </SubmitMsg>
     </MainContentsLayout>
   );
 };

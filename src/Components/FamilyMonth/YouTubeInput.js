@@ -89,8 +89,8 @@ const YouTubeInput = ({ register, multiply, watch, getValues }) => {
         placeholder="유튜브 영상 주소를 입력하세요.😀 ex) https://www.youtube.com/watch?v=****"
         autoComplete="off"
       />
-      <Review multiply={multiply} isReview={watch("youtubeUrl") !== ""}>
-        {!getValues("youtubeUrl") ? (
+      <Review multiply={multiply} isReview={watch("url") !== ""}>
+        {!getValues("url") ? (
           <ReviewBox darkMode={darkMode}>
             <AiFillYoutube />
             <div className="reivew">유튜브 미리보기</div>
@@ -102,7 +102,7 @@ const YouTubeInput = ({ register, multiply, watch, getValues }) => {
         ) : (
           <iframe
             src={`https://www.youtube.com/embed/${getYouTubeID(
-              watch("youtubeUrl")
+              watch("url")
             )}?showinfo=0&enablejsapi=1`}
             width="100%"
             height="100%"
