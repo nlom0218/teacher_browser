@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -52,7 +52,7 @@ const SearchYouTube = ({ setErrMsg }) => {
   const { search } = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, setValue } = useForm({
     mode: "onChange",
   });
   const onSubmit = (data) => {
@@ -66,6 +66,10 @@ const SearchYouTube = ({ setErrMsg }) => {
       search: `?search=${search}&page=1`,
     });
   };
+
+  useEffect(() => {
+    setValue("search", search);
+  }, [search]);
   return (
     <Container>
       <Form onSubmit={handleSubmit(onSubmit)}>
