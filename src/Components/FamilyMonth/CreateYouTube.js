@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import MainContentsLayout from "./MainContentsLayout";
 import YouTubeInput from "./YouTubeInput";
 import styled from "styled-components";
@@ -11,9 +11,10 @@ const FormContainer = styled.form`
   row-gap: 1.25rem;
 `;
 
-// url, title, bgColor, type, onwer, tag, createAt, contents
+// url-, title-, bgColor, type-, onwer-, tag, createAt-, contents-
 
 const CreateYouTube = ({ multiply, userEmail }) => {
+  const [bgColor, setBgColor] = useState(undefined);
   const { register, watch, getValues, setValue } = useForm({
     mode: "onChange",
   });
@@ -29,7 +30,12 @@ const CreateYouTube = ({ multiply, userEmail }) => {
           watch={watch}
           getValues={getValues}
         />
-        <BasicInfoInput register={register} userEmail={userEmail} />
+        <BasicInfoInput
+          register={register}
+          userEmail={userEmail}
+          setBgColor={setBgColor}
+          bgColor={bgColor}
+        />
       </FormContainer>
     </MainContentsLayout>
   );

@@ -25,7 +25,7 @@ export const youtubeList = [
   {
     url: "https://www.youtube.com/watch?v=cS-IiArGmcU",
     title: "김진호-가족사진",
-    bgColor: "#F38181",
+    bgColor: "#62D2A2",
     type: "노래",
     onwer: "nlom0218@naver.com",
     createdAt: 1650466800000,
@@ -92,7 +92,7 @@ export const youtubeList = [
   {
     url: "https://www.youtube.com/watch?v=IE8HIsIrq4o&t=37s",
     title: "김진호-가족사진",
-    bgColor: "#A8E6CF",
+    bgColor: "#E4D1B9",
     type: "브이로그",
     onwer: "sksthsaudgml@naver.com",
     createdAt: 1650466800000,
@@ -104,7 +104,7 @@ export const youtubeList = [
     url: "https://www.youtube.com/watch?v=1z4NjPc4_i0",
     title: "김진호-가족사진",
     bgColor: "#AA96DA",
-    type: "드라마리뷰드라마리뷰",
+    type: "드라마리뷰드라마리뷰드라마리뷰",
     onwer: "soave424@hanmail.net",
     createdAt: 1650466800000,
     likeNum: 12,

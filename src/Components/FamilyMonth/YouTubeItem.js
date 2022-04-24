@@ -34,6 +34,8 @@ const YouTubeInfo = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
+  column-gap: 10px;
+  column-gap: 0.625rem;
 `;
 
 const YouTubeImg = styled.img`
@@ -55,6 +57,7 @@ const YouTubeType = styled.div`
   font-size: 0.875rem;
   font-weight: 600;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  text-align: center;
 `;
 
 const ContentsInfo = styled.div`

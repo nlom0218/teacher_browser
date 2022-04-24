@@ -1,18 +1,21 @@
 import React from "react";
 import { BsFillCameraVideoFill, BsFillPencilFill } from "react-icons/bs";
 import { FaStickyNote, FaUserAlt } from "react-icons/fa";
+import { IoColorFill } from "react-icons/io5";
 import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
+import { customMedia } from "../../styles";
+import ColorBox from "./ColorBox";
 
 const Container = styled.div`
   display: grid;
   row-gap: 20px;
   row-gap: 1.25rem;
-  .textarea {
+  .not-center {
     svg {
       align-self: flex-start;
-      margin-top: 15px;
-      margin-top: 0.938rem;
+      margin-top: 10px;
+      margin-top: 0.625rem;
     }
   }
 `;
@@ -66,8 +69,36 @@ const InputLayout = styled.div`
   }
 `;
 
-const BasicInfoInput = ({ register, userEmail }) => {
-  console.log(userEmail);
+const ColorContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 10px;
+  column-gap: 0.625rem;
+  row-gap: 10px;
+  row-gap: 0.625rem;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-columns: repeat(4, 1fr);  
+  `}
+  ${customMedia.greaterThan("desktop")`
+    grid-template-columns: repeat(6, 1fr);  
+  `}
+`;
+
+const BasicInfoInput = ({ register, userEmail, bgColor, setBgColor }) => {
+  const cardColor = [
+    "#FCBAD3",
+    "#FFE2E2",
+    "#AA96DA",
+    "#DBE2EF",
+    "#FCE38A",
+    "#62D2A2",
+    "#B6FFCE",
+    "#EAFFD0",
+    "#FFFFD2",
+    "#A8D8EA",
+    "#95E1D3",
+    "#E4D1B9",
+  ];
   return (
     <Container>
       {!userEmail && (
@@ -83,7 +114,7 @@ const BasicInfoInput = ({ register, userEmail }) => {
       <InputLayout>
         <BsFillCameraVideoFill />
         <input
-          placeholder="유튜브 영상의 종류를 적어주세요.😃 ex) 노래 / 영화리뷰 / 브이로그 등등"
+          placeholder="유튜브 영상의 종류를 적어주세요.😃(최대 10자) ex) 노래 / 영화리뷰 / 브이로그 등등"
           {...register("type")}
           autoComplete="off"
         />
@@ -96,7 +127,7 @@ const BasicInfoInput = ({ register, userEmail }) => {
           autoComplete="off"
         />
       </InputLayout>
-      <InputLayout className="textarea">
+      <InputLayout className="not-center">
         <FaStickyNote />
         <TextareaAutosize
           {...register("contents")}
@@ -104,6 +135,21 @@ const BasicInfoInput = ({ register, userEmail }) => {
           maxRows={10}
           placeholder="가정의 달 이야기를 적어주세요.😃"
         ></TextareaAutosize>
+      </InputLayout>
+      <InputLayout className="not-center">
+        <IoColorFill />
+        <ColorContainer>
+          {cardColor.map((item, index) => {
+            return (
+              <ColorBox
+                setBgColor={setBgColor}
+                bgColor={bgColor}
+                key={index}
+                color={item}
+              />
+            );
+          })}
+        </ColorContainer>
       </InputLayout>
     </Container>
   );
