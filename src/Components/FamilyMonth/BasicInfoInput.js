@@ -1,5 +1,5 @@
 import React from "react";
-import { BsFillPencilFill } from "react-icons/bs";
+import { BsFillCameraVideoFill, BsFillPencilFill } from "react-icons/bs";
 import { FaStickyNote, FaUserAlt } from "react-icons/fa";
 import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
@@ -81,6 +81,14 @@ const BasicInfoInput = ({ register, userEmail }) => {
         </InputLayout>
       )}
       <InputLayout>
+        <BsFillCameraVideoFill />
+        <input
+          placeholder="유튜브 영상의 종류를 적어주세요.😃 ex) 노래 / 영화리뷰 / 브이로그 등등"
+          {...register("type")}
+          autoComplete="off"
+        />
+      </InputLayout>
+      <InputLayout>
         <BsFillPencilFill />
         <input
           placeholder="제목을 입력하세요.😃(최대 40자)"
@@ -91,6 +99,7 @@ const BasicInfoInput = ({ register, userEmail }) => {
       <InputLayout className="textarea">
         <FaStickyNote />
         <TextareaAutosize
+          {...register("contents")}
           minRows={10}
           maxRows={10}
           placeholder="가정의 달 이야기를 적어주세요.😃"

@@ -104,7 +104,7 @@ export const youtubeList = [
     url: "https://www.youtube.com/watch?v=1z4NjPc4_i0",
     title: "김진호-가족사진",
     bgColor: "#AA96DA",
-    type: "드라마리뷰",
+    type: "드라마리뷰드라마리뷰",
     onwer: "soave424@hanmail.net",
     createdAt: 1650466800000,
     likeNum: 12,

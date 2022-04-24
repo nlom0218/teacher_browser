@@ -11,7 +11,7 @@ const FormContainer = styled.form`
   row-gap: 1.25rem;
 `;
 
-// url, title, bgColor, type, onwer, tag, createAt
+// url, title, bgColor, type, onwer, tag, createAt, contents
 
 const CreateYouTube = ({ multiply, userEmail }) => {
   const { register, watch, getValues, setValue } = useForm({
