@@ -1,7 +1,7 @@
 import React from "react";
 import { AiFillHome, AiFillLike, AiFillYoutube } from "react-icons/ai";
 import { BsPlusLg } from "react-icons/bs";
-import { FaHashtag, FaHeart, FaSearch } from "react-icons/fa";
+import { FaHashtag, FaHeart, FaSearch, FaUserAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import routes from "../../routes";
@@ -32,7 +32,7 @@ const Btn = styled.div`
   transition: transform 0.4s ease;
 `;
 
-const BtnContainer = ({ page }) => {
+const BtnContainer = ({ page, userEmail }) => {
   return (
     <Container>
       <Link to={routes.familyMonth}>
@@ -57,10 +57,15 @@ const BtnContainer = ({ page }) => {
         <FaHeart />
       </Btn>
       <Link to={`${routes.familyMonth}/search`}>
-        <Btn>
+        <Btn isPage={page === "search"}>
           <FaSearch />
         </Btn>
       </Link>
+      {userEmail && (
+        <Btn isPage={page === ""}>
+          <FaUserAlt />
+        </Btn>
+      )}
       <Link to={`${routes.familyMonth}/create`}>
         <Btn isPage={page === "create"}>
           <BsPlusLg />
