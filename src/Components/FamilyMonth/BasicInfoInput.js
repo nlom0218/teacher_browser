@@ -1,4 +1,5 @@
 import React from "react";
+import { AiFillTags } from "react-icons/ai";
 import { BsFillCameraVideoFill, BsFillPencilFill } from "react-icons/bs";
 import { FaStickyNote, FaUserAlt } from "react-icons/fa";
 import { IoColorFill } from "react-icons/io5";
@@ -150,6 +151,14 @@ const BasicInfoInput = ({ register, userEmail, bgColor, setBgColor }) => {
             );
           })}
         </ColorContainer>
+      </InputLayout>
+      <InputLayout>
+        <AiFillTags />
+        <input
+          {...register("tag")}
+          autoComplete="off"
+          placeholder="태그를 적어주세요.😃(태그는 ,로 구분됩니다.)"
+        ></input>
       </InputLayout>
     </Container>
   );
