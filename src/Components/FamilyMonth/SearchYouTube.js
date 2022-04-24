@@ -5,6 +5,7 @@ import styled from "styled-components";
 import qs from "qs";
 import routes from "../../routes";
 import ListYouTube from "./ListYouTube";
+import { customMedia } from "../../styles";
 
 const Container = styled.div`
   display: grid;
@@ -15,11 +16,21 @@ const Container = styled.div`
 
 const Form = styled.form`
   justify-self: center;
-  width: 60%;
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr auto;
   column-gap: 20px;
   column-gap: 1.25rem;
+  font-size: 0.875em;
+  font-size: 0.875rem;
+  ${customMedia.greaterThan("tablet")`
+    width: 80%;
+    font-size: 1em;
+    font-size: 1rem;
+  `}
+  ${customMedia.greaterThan("desktop")`
+    width: 60%;
+    `}
   .textInput {
     background-color: ${(props) => props.theme.cardBg};
     transition: background-color 1s ease;
