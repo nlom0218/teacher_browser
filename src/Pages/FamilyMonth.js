@@ -11,6 +11,7 @@ import { useReactiveVar } from "@apollo/client";
 import { isFullScreenModeVar } from "../apollo";
 import useMedia from "../Hooks/useMedia";
 import useMe from "../Hooks/useMe";
+import AlertMessage from "../Components/Shared/AlertMessage";
 
 const Container = styled.div`
   min-height: 100%;
@@ -54,6 +55,7 @@ const ContentsScrollLayout = styled.div`
 const FamilyMonth = () => {
   const me = useMe();
   const { page, id } = useParams();
+  const [errMsg, setErrMsg] = useState(undefined);
   const [multiply, setMultiply] = useState();
   const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
   const media = useMedia();
@@ -79,12 +81,24 @@ const FamilyMonth = () => {
               {id && <DetailYouTube id={id} multiply={multiply} />}
               {!id && page === "list" && <ListYouTube />}
               {!id && page === "create" && (
-                <CreateYouTube multiply={multiply} userEmail={me?.email} />
+                <CreateYouTube
+                  multiply={multiply}
+                  userEmail={me?.email}
+                  setErrMsg={setErrMsg}
+                />
               )}
             </ContentsScrollLayout>
           </ContentsLayout>
         </BottomContents>
       </Container>
+      {errMsg && (
+        <AlertMessage
+          msg={errMsg}
+          setMsg={setErrMsg}
+          type="error"
+          time={3000}
+        />
+      )}
     </BasicContainer>
   );
 };

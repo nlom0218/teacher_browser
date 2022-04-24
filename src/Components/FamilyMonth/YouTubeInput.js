@@ -85,7 +85,7 @@ const YouTubeInput = ({ register, multiply, watch, getValues }) => {
         <AiFillYoutube />
       </Icon>
       <Input
-        {...register("youtubeUrl")}
+        {...register("url")}
         placeholder="유튜브 영상 주소를 입력하세요.😀 ex) https://www.youtube.com/watch?v=****"
         autoComplete="off"
       />

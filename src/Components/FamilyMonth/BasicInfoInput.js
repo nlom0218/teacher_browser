@@ -115,7 +115,7 @@ const BasicInfoInput = ({ register, userEmail, bgColor, setBgColor }) => {
       <InputLayout>
         <BsFillCameraVideoFill />
         <input
-          placeholder="유튜브 영상의 종류를 적어주세요.😃(최대 10자) ex) 노래 / 영화리뷰 / 브이로그 등등"
+          placeholder="유튜브 영상의 종류를 입력하세요.😃(최대 10자) ex) 노래 / 영화리뷰 / 브이로그 등등"
           {...register("type")}
           autoComplete="off"
         />
@@ -134,7 +134,7 @@ const BasicInfoInput = ({ register, userEmail, bgColor, setBgColor }) => {
           {...register("contents")}
           minRows={10}
           maxRows={10}
-          placeholder="가정의 달 이야기를 적어주세요.😃"
+          placeholder="가정의 달 이야기를 입력하세요.😃"
         ></TextareaAutosize>
       </InputLayout>
       <InputLayout className="not-center">
@@ -157,7 +157,7 @@ const BasicInfoInput = ({ register, userEmail, bgColor, setBgColor }) => {
         <input
           {...register("tag")}
           autoComplete="off"
-          placeholder="태그를 적어주세요.😃(태그는 ,로 구분됩니다.)"
+          placeholder="태그를 입력하세요.😃(태그는 ,로 구분됩니다.)"
         ></input>
       </InputLayout>
     </Container>
