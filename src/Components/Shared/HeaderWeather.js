@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { WEATHER_QUERY } from "../../Graphql/Weather/query";
 
@@ -93,16 +93,12 @@ const HeaderWeather = () => {
   const [getWeather, { loading, error, data }] = useLazyQuery(WEATHER_QUERY);
 
   //위치 정보 수신 성공 시
-  function handleGeoSuccess(position) {
-    getWeather({ variables: { lat: position.coords.latitude, lng: position.coords.longitude } });
-  }
+  const handleGeoSuccess = useCallback((position) => getWeather({ variables: { lat: position.coords.latitude, lng: position.coords.longitude } }), [getWeather]);
 
   //위치 정보 수신 거부 시
   function handleGeoError() {
     console.log("위치 정보 없음");
-    window.alert(
-      "위치 정보 제공을 거부하였습니다.\n날씨 정보 수신을 원한다면 위치 정보 제공에 동의해주십시오.\n(설정 - 개인정보 및 보안 - 사이트 설정 - 위치 정보 제공 동의)"
-    );
+    window.alert("위치 정보 제공을 거부하였습니다.\n날씨 정보 수신을 원한다면 위치 정보 제공에 동의해주십시오.\n(설정 - 개인정보 및 보안 - 사이트 설정 - 위치 정보 제공 동의)");
   }
 
   //좌표 수집 함수
@@ -111,7 +107,7 @@ const HeaderWeather = () => {
   }
 
   //첫 렌더링 시 좌표 수집
-  useEffect(askForCoords, [askForCoords]);
+  useEffect(askForCoords, [handleGeoSuccess]);
 
   return (
     <Weather>
@@ -126,7 +122,7 @@ const HeaderWeather = () => {
         ) : data ? (
           <WeatherItems>
             <Temp>{Math.round(data.weather.temp)}℃</Temp>
-            <WeatherIcon src={require(`../../image/icons/weather/${data.weather.icon}.svg`).default} />
+            <WeatherIcon src={require(`./../../image/icons/weather/${data.weather.icon}.png`)} />
             <Dust>미세먼지</Dust>
             <DustIcon>
               {data.weather.pm10grade === "1" ? (
