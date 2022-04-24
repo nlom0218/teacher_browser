@@ -88,7 +88,9 @@ const FamilyMonth = () => {
                   setErrMsg={setErrMsg}
                 />
               )}
-              {!id && page === "search" && <SearchYouTube />}
+              {!id && page === "search" && (
+                <SearchYouTube setErrMsg={setErrMsg} />
+              )}
             </ContentsScrollLayout>
           </ContentsLayout>
         </BottomContents>

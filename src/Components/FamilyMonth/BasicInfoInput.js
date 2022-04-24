@@ -108,6 +108,7 @@ const BasicInfoInput = ({ register, userEmail, bgColor, setBgColor }) => {
           <input
             placeholder="로그인을 하지 않았습니다. 작성자의 닉네임을 입력하세요.😃"
             {...register("email")}
+            type="text"
             autoComplete="off"
           />
         </InputLayout>
@@ -117,6 +118,7 @@ const BasicInfoInput = ({ register, userEmail, bgColor, setBgColor }) => {
         <input
           placeholder="유튜브 영상의 종류를 입력하세요.😃(최대 10자) ex) 노래 / 영화리뷰 / 브이로그 등등"
           {...register("type")}
+          type="text"
           autoComplete="off"
         />
       </InputLayout>
@@ -125,6 +127,7 @@ const BasicInfoInput = ({ register, userEmail, bgColor, setBgColor }) => {
         <input
           placeholder="제목을 입력하세요.😃(최대 40자)"
           {...register("title")}
+          type="text"
           autoComplete="off"
         />
       </InputLayout>
@@ -156,6 +159,7 @@ const BasicInfoInput = ({ register, userEmail, bgColor, setBgColor }) => {
         <AiFillTags />
         <input
           {...register("tag")}
+          type="text"
           autoComplete="off"
           placeholder="태그를 입력하세요.😃(태그는 ,로 구분됩니다.)"
         ></input>

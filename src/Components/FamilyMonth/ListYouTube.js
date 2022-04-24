@@ -208,7 +208,9 @@ export const youtubeList = [
 
 const ListYouTube = () => {
   const location = useLocation();
-  const { page } = qs.parse(location.search, { ignoreQueryPrefix: true });
+  const { page, search } = qs.parse(location.search, {
+    ignoreQueryPrefix: true,
+  });
   const processFLPage = () => {
     if (parseInt(page) === 1) {
       return true;
@@ -221,8 +223,10 @@ const ListYouTube = () => {
         {parseInt(page) !== 1 && (
           <Link
             to={{
-              pathname: `${routes.familyMonth}/list`,
-              search: `?page=${parseInt(page) - 1}`,
+              pathname: `${routes.familyMonth}/${search ? "search" : "list"}`,
+              search: `?${search && `search=${search}&`}page=${
+                parseInt(page) - 1
+              }`,
             }}
           >
             <Btn>
@@ -232,8 +236,10 @@ const ListYouTube = () => {
         )}
         <Link
           to={{
-            pathname: `${routes.familyMonth}/list`,
-            search: `?page=${parseInt(page) + 1}`,
+            pathname: `${routes.familyMonth}/${search ? "search" : "list"}`,
+            search: `?${search && `search=${search}&`}page=${
+              parseInt(page) + 1
+            }`,
           }}
         >
           <Btn>
