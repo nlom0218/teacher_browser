@@ -87,6 +87,7 @@ const YouTubeInput = ({ register, multiply, watch, getValues }) => {
       <Input
         {...register("youtubeUrl")}
         placeholder="유튜브 영상 주소를 입력하세요.😀 ex) https://www.youtube.com/watch?v=****"
+        autoComplete="off"
       />
       <Review multiply={multiply} isReview={watch("youtubeUrl") !== ""}>
         {!getValues("youtubeUrl") ? (

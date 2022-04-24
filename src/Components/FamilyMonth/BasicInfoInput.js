@@ -1,12 +1,20 @@
 import React from "react";
 import { BsFillPencilFill } from "react-icons/bs";
-import { FaUserAlt } from "react-icons/fa";
+import { FaStickyNote, FaUserAlt } from "react-icons/fa";
+import TextareaAutosize from "react-textarea-autosize";
 import styled from "styled-components";
 
 const Container = styled.div`
   display: grid;
   row-gap: 20px;
   row-gap: 1.25rem;
+  .textarea {
+    svg {
+      align-self: flex-start;
+      margin-top: 15px;
+      margin-top: 0.938rem;
+    }
+  }
 `;
 
 const InputLayout = styled.div`
@@ -34,6 +42,28 @@ const InputLayout = styled.div`
       transition: color 1s ease;
     }
   }
+  textarea {
+    all: unset;
+    min-height: 100%;
+    max-height: 100%;
+    width: 100%;
+    resize: none;
+    padding: 15px 20px;
+    padding: 0.9375rem 1.25rem;
+    box-sizing: border-box;
+    background-color: ${(props) => props.theme.cardBg};
+    transition: background-color 1s ease;
+    padding: 15px 20px;
+    padding: 0.938rem 1.25rem;
+    border-radius: 10px;
+    border-radius: 0.625rem;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    ::placeholder {
+      color: ${(props) => props.theme.fontColor};
+      opacity: 0.6;
+      transition: color 1s ease;
+    }
+  }
 `;
 
 const BasicInfoInput = ({ register, userEmail }) => {
@@ -46,6 +76,7 @@ const BasicInfoInput = ({ register, userEmail }) => {
           <input
             placeholder="로그인을 하지 않았습니다. 작성자의 닉네임을 입력하세요.😃"
             {...register("email")}
+            autoComplete="off"
           />
         </InputLayout>
       )}
@@ -54,7 +85,16 @@ const BasicInfoInput = ({ register, userEmail }) => {
         <input
           placeholder="제목을 입력하세요.😃(최대 40자)"
           {...register("title")}
+          autoComplete="off"
         />
+      </InputLayout>
+      <InputLayout className="textarea">
+        <FaStickyNote />
+        <TextareaAutosize
+          minRows={10}
+          maxRows={10}
+          placeholder="가정의 달 이야기를 적어주세요.😃"
+        ></TextareaAutosize>
       </InputLayout>
     </Container>
   );
