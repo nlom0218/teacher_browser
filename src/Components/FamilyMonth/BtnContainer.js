@@ -40,7 +40,12 @@ const BtnContainer = ({ page }) => {
           <AiFillHome />
         </Btn>
       </Link>
-      <Link to={`${routes.familyMonth}/list`}>
+      <Link
+        to={{
+          pathname: `${routes.familyMonth}/list`,
+          search: "?page=1",
+        }}
+      >
         <Btn isPage={page === "list"}>
           <AiFillYoutube />
         </Btn>

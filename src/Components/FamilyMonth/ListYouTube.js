@@ -2,10 +2,22 @@ import React from "react";
 import styled from "styled-components";
 import { customMedia } from "../../styles";
 import YouTubeItem from "./YouTubeItem";
+import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import qs from "qs";
+import routes from "../../routes";
+
+const Container = styled.div`
+  display: grid;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+`;
 
 const YouTubeList = styled.div`
   padding: 20px;
   padding: 1.25rem;
+  padding-top: 0px;
+  padding-top: 0rem;
   align-self: flex-start;
   display: grid;
   grid-template-columns: 1fr;
@@ -19,6 +31,32 @@ const YouTubeList = styled.div`
   ${customMedia.greaterThan("desktop")`
     grid-template-columns: 1fr 1fr 1fr 1fr;
   `}
+`;
+
+const PageBtn = styled.div`
+  justify-self: flex-end;
+  display: grid;
+  grid-template-columns: ${(props) => (props.FLPage ? "1fr" : "1fr 1fr")};
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  padding: 0px 20px;
+  padding: 0rem 1.25rem;
+`;
+
+const Btn = styled.div`
+  background-color: #f38181;
+  padding: 5px;
+  padding: 0.3125rem;
+  border-radius: 50%;
+  cursor: pointer;
+  svg {
+    font-size: 1.25em;
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 1);
+    display: flex;
+  }
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 `;
 
 export const youtubeList = [
@@ -169,12 +207,46 @@ export const youtubeList = [
 ];
 
 const ListYouTube = () => {
+  const location = useLocation();
+  const { page } = qs.parse(location.search, { ignoreQueryPrefix: true });
+  const processFLPage = () => {
+    if (parseInt(page) === 1) {
+      return true;
+    }
+    return false;
+  };
   return (
-    <YouTubeList>
-      {youtubeList.map((item, index) => {
-        return <YouTubeItem key={index} {...item} />;
-      })}
-    </YouTubeList>
+    <Container>
+      <PageBtn FLPage={processFLPage()}>
+        {parseInt(page) !== 1 && (
+          <Link
+            to={{
+              pathname: `${routes.familyMonth}/list`,
+              search: `?page=${parseInt(page) - 1}`,
+            }}
+          >
+            <Btn>
+              <IoIosArrowBack />
+            </Btn>
+          </Link>
+        )}
+        <Link
+          to={{
+            pathname: `${routes.familyMonth}/list`,
+            search: `?page=${parseInt(page) + 1}`,
+          }}
+        >
+          <Btn>
+            <IoIosArrowForward />
+          </Btn>
+        </Link>
+      </PageBtn>
+      <YouTubeList>
+        {youtubeList.map((item, index) => {
+          return <YouTubeItem key={index} {...item} />;
+        })}
+      </YouTubeList>
+    </Container>
   );
 };
 
