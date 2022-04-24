@@ -51,17 +51,16 @@ const BtnContainer = ({ page }) => {
         </Btn>
       </Link>
       <Btn>
-        <FaHashtag />
-      </Btn>
-      <Btn>
         <AiFillLike />
       </Btn>
       <Btn>
         <FaHeart />
       </Btn>
-      <Btn>
-        <FaSearch />
-      </Btn>
+      <Link to={`${routes.familyMonth}/search`}>
+        <Btn>
+          <FaSearch />
+        </Btn>
+      </Link>
       <Link to={`${routes.familyMonth}/create`}>
         <Btn isPage={page === "create"}>
           <BsPlusLg />

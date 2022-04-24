@@ -12,6 +12,7 @@ import { isFullScreenModeVar } from "../apollo";
 import useMedia from "../Hooks/useMedia";
 import useMe from "../Hooks/useMe";
 import AlertMessage from "../Components/Shared/AlertMessage";
+import SearchYouTube from "../Components/FamilyMonth/SearchYouTube";
 
 const Container = styled.div`
   min-height: 100%;
@@ -87,6 +88,7 @@ const FamilyMonth = () => {
                   setErrMsg={setErrMsg}
                 />
               )}
+              {!id && page === "search" && <SearchYouTube />}
             </ContentsScrollLayout>
           </ContentsLayout>
         </BottomContents>
