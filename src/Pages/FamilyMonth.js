@@ -6,7 +6,7 @@ import BtnContainer from "../Components/FamilyMonth/BtnContainer";
 import { useParams } from "react-router-dom";
 import DetailYouTube from "../Components/FamilyMonth/DetailYouTube";
 import CreateYouTube from "../Components/FamilyMonth/CreateYouTube";
-import ListYouTube from "../Components/FamilyMonth/ListYouTube";
+import AllListYoutube from "../Components/FamilyMonth/AllListYouTube";
 import { useReactiveVar } from "@apollo/client";
 import { isFullScreenModeVar } from "../apollo";
 import useMedia from "../Hooks/useMedia";
@@ -80,7 +80,7 @@ const FamilyMonth = () => {
           <ContentsLayout>
             <ContentsScrollLayout>
               {id && <DetailYouTube id={id} multiply={multiply} />}
-              {!id && page === "list" && <ListYouTube />}
+              {!id && page === "list" && <AllListYoutube />}
               {!id && page === "create" && (
                 <CreateYouTube
                   multiply={multiply}

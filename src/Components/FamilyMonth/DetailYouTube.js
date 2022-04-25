@@ -2,7 +2,7 @@ import getYouTubeID from "get-youtube-id";
 import React from "react";
 import styled from "styled-components";
 import DetailYouTubeContents from "./DetailYouTubeContents";
-import { youtubeList } from "./ListYouTube";
+import { youtubeList } from "./AllListYouTube";
 import MainContentsLayout from "./MainContentsLayout";
 
 const YouTubePlayer = styled.div`

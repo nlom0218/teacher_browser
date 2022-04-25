@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import qs from "qs";
 import routes from "../../routes";
-import ListYouTube from "./ListYouTube";
+import ListYouTube from "./AllListYouTube";
 import { customMedia } from "../../styles";
 
 const Container = styled.div`
@@ -93,7 +93,7 @@ const SearchYouTube = ({ setErrMsg }) => {
         />
         <input type="submit" value="검색" className="submitInput" />
       </Form>
-      {search && <ListYouTube />}
+      {/* {search && <ListYouTube />} */}
     </Container>
   );
 };
