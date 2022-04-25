@@ -13,6 +13,7 @@ import useMedia from "../Hooks/useMedia";
 import useMe from "../Hooks/useMe";
 import AlertMessage from "../Components/Shared/AlertMessage";
 import SearchYouTube from "../Components/FamilyMonth/SearchYouTube";
+import LikedYouTube from "../Components/FamilyMonth/LikedYouTube";
 
 const Container = styled.div`
   min-height: 100%;
@@ -88,6 +89,7 @@ const FamilyMonth = () => {
                   setErrMsg={setErrMsg}
                 />
               )}
+              {!id && page === "liked" && <LikedYouTube />}
               {!id && page === "search" && (
                 <SearchYouTube setErrMsg={setErrMsg} />
               )}

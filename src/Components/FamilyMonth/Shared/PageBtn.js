@@ -43,7 +43,7 @@ const PageBtn = ({ page, pageType, search }) => {
         <Link
           to={{
             pathname: `${routes.familyMonth}/${pageType}`,
-            search: `?${pageType === "search" && `search=${search}&`}page=${
+            search: `?${pageType === "search" ? `search=${search}&` : ""}page=${
               parseInt(page) - 1
             }`,
           }}
@@ -56,7 +56,7 @@ const PageBtn = ({ page, pageType, search }) => {
       <Link
         to={{
           pathname: `${routes.familyMonth}/${pageType}`,
-          search: `?${pageType === "search" && `search=${search}&`}page=${
+          search: `?${pageType === "search" ? `search=${search}&` : ""}page=${
             parseInt(page) + 1
           }`,
         }}

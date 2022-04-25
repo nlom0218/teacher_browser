@@ -4,6 +4,7 @@ import { customMedia } from "../../../styles";
 import YouTubeItem from "../YouTubeItem";
 
 const SYouTubeList = styled.div`
+  grid-column: 1 / -1;
   padding: 20px;
   padding: 1.25rem;
   padding-top: 0px;
