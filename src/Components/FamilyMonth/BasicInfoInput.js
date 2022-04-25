@@ -29,6 +29,7 @@ const NotUserMsg = styled.div`
   font-size: 0.875rem;
   color: ${(props) => props.theme.redColor};
   transition: color 1s ease;
+  font-weight: 600;
 `;
 
 const InputLayout = styled.div`
