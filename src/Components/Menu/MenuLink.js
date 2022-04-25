@@ -21,8 +21,8 @@ import IcNameTableOpened from "../../icons/NameTable/IcNameTableOpened";
 import { enableSeeStudent, fullScreenMode } from "../../apollo";
 import IcNewsClick from "../../icons/News/IcNewsClick";
 import IcNews from "../../icons/News/IcNews";
-import { MdFamilyRestroom } from "react-icons/md";
 import useMedia from "../../Hooks/useMedia";
+import IcFamilyMonth from "../../icons/FamilyMonth/FamilyMonth";
 
 const SMenu = styled.div`
   display: grid;
@@ -204,7 +204,7 @@ export const FamilyMonthLink = () => {
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
       >
-        {isHover ? <MdFamilyRestroom /> : <MdFamilyRestroom />}
+        <IcFamilyMonth />
         <Title>가정의 달</Title>
       </SMenu>
     </Link>

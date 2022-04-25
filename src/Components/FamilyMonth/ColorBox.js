@@ -13,6 +13,9 @@ const Box = styled.div`
   align-items: center;
   justify-items: center;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  svg {
+    color: #000000;
+  }
 `;
 
 const ColorBox = ({ color, bgColor, setBgColor }) => {

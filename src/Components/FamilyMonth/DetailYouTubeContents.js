@@ -63,8 +63,8 @@ const TextareaLayout = styled.div`
   height: 200px;
   background-color: ${(props) => props.theme.cardBg};
   transition: background-color 1s ease;
-  border-radius: 20px;
-  border-radius: 1.25rem;
+  border-radius: 10px;
+  border-radius: 0.625rem;
   padding: 20px;
   padding: 1.25rem;
   margin-bottom: 20px;

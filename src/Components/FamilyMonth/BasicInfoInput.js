@@ -20,6 +20,17 @@ const Container = styled.div`
   }
 `;
 
+const NotUserMsg = styled.div`
+  grid-column: 2 / 3;
+  text-align: center;
+  margin-top: 10px;
+  margin-top: 0.625rem;
+  font-size: 0.875em;
+  font-size: 0.875rem;
+  color: ${(props) => props.theme.redColor};
+  transition: color 1s ease;
+`;
+
 const InputLayout = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
@@ -30,6 +41,7 @@ const InputLayout = styled.div`
     display: flex;
     font-size: 1.5em;
     font-size: 1.5rem;
+    /* color: #f38181; */
   }
   input {
     background-color: ${(props) => props.theme.cardBg};
@@ -110,6 +122,9 @@ const BasicInfoInput = ({ register, userEmail, bgColor, setBgColor }) => {
             type="text"
             autoComplete="off"
           />
+          <NotUserMsg>
+            로그인을 하지 않은 경우 게시물 수정, 삭제는 불가능합니다.
+          </NotUserMsg>
         </InputLayout>
       )}
       <InputLayout>
