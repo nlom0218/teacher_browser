@@ -4,8 +4,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import qs from "qs";
 import routes from "../../routes";
-import ListYouTube from "./AllListYouTube";
+import { youtubeList } from "./AllListYouTube";
 import { customMedia } from "../../styles";
+import PageBtn from "./Shared/PageBtn";
+import YouTubeList from "./Shared/YouTubeList";
 
 const Container = styled.div`
   display: grid;
@@ -60,7 +62,7 @@ const Form = styled.form`
 const SearchYouTube = ({ setErrMsg }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { search } = qs.parse(location.search, {
+  const { search, page } = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
   const { register, handleSubmit, setValue } = useForm({
@@ -93,7 +95,12 @@ const SearchYouTube = ({ setErrMsg }) => {
         />
         <input type="submit" value="검색" className="submitInput" />
       </Form>
-      {/* {search && <ListYouTube />} */}
+      {search && (
+        <React.Fragment>
+          <PageBtn page={page} pageType="search" search={search} />
+          <YouTubeList youtubeList={youtubeList} />
+        </React.Fragment>
+      )}
     </Container>
   );
 };

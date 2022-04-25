@@ -30,7 +30,7 @@ const Btn = styled.div`
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 `;
 
-const PageBtn = ({ page, pageType }) => {
+const PageBtn = ({ page, pageType, search }) => {
   const processFLPage = () => {
     if (parseInt(page) === 1) {
       return true;
@@ -43,7 +43,9 @@ const PageBtn = ({ page, pageType }) => {
         <Link
           to={{
             pathname: `${routes.familyMonth}/${pageType}`,
-            search: `?page=${parseInt(page) - 1}`,
+            search: `?${pageType === "search" && `search=${search}&`}page=${
+              parseInt(page) - 1
+            }`,
           }}
         >
           <Btn>
@@ -54,7 +56,9 @@ const PageBtn = ({ page, pageType }) => {
       <Link
         to={{
           pathname: `${routes.familyMonth}/${pageType}`,
-          search: `?page=${parseInt(page) + 1}`,
+          search: `?${pageType === "search" && `search=${search}&`}page=${
+            parseInt(page) + 1
+          }`,
         }}
       >
         <Btn>
