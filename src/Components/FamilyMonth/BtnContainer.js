@@ -53,16 +53,18 @@ const BtnContainer = ({ page, userEmail }) => {
       <Btn>
         <AiFillLike />
       </Btn>
-      <Link
-        to={{
-          pathname: `${routes.familyMonth}/liked`,
-          search: "?page=1",
-        }}
-      >
-        <Btn isPage={page === "liked"}>
-          <FaHeart />
-        </Btn>
-      </Link>
+      {userEmail && (
+        <Link
+          to={{
+            pathname: `${routes.familyMonth}/liked`,
+            search: "?page=1",
+          }}
+        >
+          <Btn isPage={page === "liked"}>
+            <FaHeart />
+          </Btn>
+        </Link>
+      )}
       <Link to={`${routes.familyMonth}/search`}>
         <Btn isPage={page === "search"}>
           <FaSearch />
