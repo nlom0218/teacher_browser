@@ -168,7 +168,6 @@ const AllListYoutube = () => {
   });
 
   const { data, loading } = useQuery(SeeAllFamilyStory);
-  console.log(data);
 
   if (loading) {
     return <Loading page="subPage" />;

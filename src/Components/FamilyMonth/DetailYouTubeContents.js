@@ -82,7 +82,7 @@ const DetailYouTubeContents = ({
   title,
   createdAt,
   likeNum,
-  onwer,
+  userEmail,
   bgColor,
   tag,
 }) => {
@@ -91,7 +91,7 @@ const DetailYouTubeContents = ({
       <TopContents>
         <Title>{title}</Title>
         <ContentsInfo>
-          <div>{onwer}</div>
+          <div>{userEmail}</div>
           <CreatedAt>{format(createdAt, "yy.MM.dd")}</CreatedAt>
         </ContentsInfo>
         <Liked>
@@ -106,7 +106,7 @@ const DetailYouTubeContents = ({
           })}
         </Tags>
       </TopContents>
-      <TextareaLayout bgColor={bgColor}>sdfsdfsdf</TextareaLayout>
+      <TextareaLayout>sdfsdfsdf</TextareaLayout>
     </Container>
   );
 };

@@ -15,3 +15,19 @@ export const SeeAllFamilyStory = gql`
     }
   }
 `;
+
+export const SeeFamilyStory = gql`
+  query SeeFamilyStory($id: String!) {
+    seeFamilyStory(id: $id) {
+      _id
+      userEmail
+      url
+      title
+      bgColor
+      videoType
+      tag
+      contents
+      createdAt
+    }
+  }
+`;

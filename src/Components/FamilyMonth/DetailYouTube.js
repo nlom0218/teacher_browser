@@ -4,6 +4,9 @@ import styled from "styled-components";
 import DetailYouTubeContents from "./DetailYouTubeContents";
 import { youtubeList } from "./AllListYouTube";
 import MainContentsLayout from "./MainContentsLayout";
+import { useQuery } from "@apollo/client";
+import { SeeFamilyStory } from "../../Graphql/FamilyStory/query";
+import Loading from "../Shared/Loading";
 
 const YouTubePlayer = styled.div`
   width: 100%;
@@ -14,23 +17,27 @@ const YouTubePlayer = styled.div`
 `;
 
 const DetailYouTube = ({ id, multiply }) => {
-  const youtubeContents = youtubeList.filter(
-    (item) => item.id === parseInt(id)
-  )[0];
+  const { data, loading } = useQuery(SeeFamilyStory, {
+    variables: { id },
+  });
+
+  if (loading) {
+    return <Loading page="subPage" />;
+  }
 
   return (
     <MainContentsLayout>
       <YouTubePlayer multiply={multiply}>
         <iframe
           src={`https://www.youtube.com/embed/${getYouTubeID(
-            youtubeContents.url
+            data?.seeFamilyStory?.url
           )}?showinfo=0&enablejsapi=1`}
           width="100%"
           height="100%"
-          title={youtubeContents.title}
+          title={data?.seeFamilyStory?.title}
         ></iframe>
       </YouTubePlayer>
-      <DetailYouTubeContents {...youtubeContents} />
+      <DetailYouTubeContents {...data?.seeFamilyStory} />
     </MainContentsLayout>
   );
 };

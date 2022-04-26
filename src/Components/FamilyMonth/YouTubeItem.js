@@ -110,7 +110,7 @@ const YouTubeItem = ({
   videoType,
   createdAt,
   likeNum,
-  id,
+  _id,
 }) => {
   const [hover, setHover] = useState(false);
   const navigate = useNavigate();
@@ -118,7 +118,7 @@ const YouTubeItem = ({
     return `https://img.youtube.com/vi/${getYouTubeId(youTubeUrl)}/0.jpg`;
   };
   const onClickYouTubeItem = () => {
-    navigate(`${routes.familyMonth}/list/${id}`);
+    navigate(`${routes.familyMonth}/list/${_id}`);
   };
   return (
     <SYouTubeItem
