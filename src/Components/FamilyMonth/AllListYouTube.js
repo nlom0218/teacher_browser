@@ -4,6 +4,9 @@ import { useLocation } from "react-router-dom";
 import qs from "qs";
 import PageBtn from "./Shared/PageBtn";
 import YouTubeList from "./Shared/YouTubeList";
+import { useQuery } from "@apollo/client";
+import { SeeAllFamilyStory } from "../../Graphql/FamilyStory/query";
+import Loading from "../Shared/Loading";
 
 const Container = styled.div`
   display: grid;
@@ -163,10 +166,17 @@ const AllListYoutube = () => {
   const { page } = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
+
+  const { data, loading } = useQuery(SeeAllFamilyStory);
+
+  if (loading) {
+    return <Loading page="subPage" />;
+  }
+
   return (
     <Container>
       <PageBtn page={page} pageType="list" />
-      <YouTubeList youtubeList={youtubeList} />
+      <YouTubeList youtubeList={data?.seeAllFamilyStory} />
     </Container>
   );
 };
