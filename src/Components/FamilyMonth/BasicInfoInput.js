@@ -132,7 +132,7 @@ const BasicInfoInput = ({ register, userEmail, bgColor, setBgColor }) => {
         <BsFillCameraVideoFill />
         <input
           placeholder="유튜브 영상의 종류를 입력하세요.😃(최대 10자) ex) 노래 / 영화리뷰 / 브이로그 등등"
-          {...register("type")}
+          {...register("videoType")}
           type="text"
           autoComplete="off"
         />

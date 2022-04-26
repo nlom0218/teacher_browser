@@ -8,10 +8,10 @@ export const SeeAllFamilyStory = gql`
       url
       title
       bgColor
-      videoType
       tag
+      videoType
       createdAt
-      contetns
+      contents
     }
   }
 `;

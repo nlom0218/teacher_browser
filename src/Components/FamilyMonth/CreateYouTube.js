@@ -4,6 +4,8 @@ import YouTubeInput from "./YouTubeInput";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import BasicInfoInput from "./BasicInfoInput";
+import { useMutation } from "@apollo/client";
+import { CreateFamilyStory } from "../../Graphql/FamilyStory/mutation";
 
 const FormContainer = styled.form`
   display: grid;
@@ -50,12 +52,15 @@ const TeacherCanLink = styled.div`
 
 const CreateYouTube = ({ multiply, userEmail, setErrMsg }) => {
   const [bgColor, setBgColor] = useState(undefined);
+
+  const [createFamilyStory, { loading }] = useMutation(CreateFamilyStory);
+
   const { register, watch, getValues, setValue, handleSubmit } = useForm({
     mode: "onChange",
   });
 
   const onSubmit = (data) => {
-    const { url, email, type, title, contents, tag } = data;
+    const { url, email, videoType, title, contents, tag } = data;
     if (!url) {
       setErrMsg("유튜브 주소를 입력하세요.😢");
       return;
@@ -64,7 +69,7 @@ const CreateYouTube = ({ multiply, userEmail, setErrMsg }) => {
       setErrMsg("로그인을 하지 않았습니다. 닉네임을 입력하세요.😢");
       return;
     }
-    if (!type) {
+    if (!videoType) {
       setErrMsg("유튜브 영상의 종류를 입력하세요.😢");
       return;
     }
@@ -72,10 +77,26 @@ const CreateYouTube = ({ multiply, userEmail, setErrMsg }) => {
       setErrMsg("제목을 입력하세요.😢");
       return;
     }
+    if (!contents) {
+      setErrMsg("가정의 달 이야기를 입력하세요.😢");
+      return;
+    }
     if (!bgColor) {
       setErrMsg("테마 색깔을 선탁하세요.😢");
       return;
     }
+    createFamilyStory({
+      variables: {
+        userEmail: userEmail ? userEmail : email,
+        url,
+        title,
+        bgColor,
+        videoType,
+        createdAt: new window.Date().getTime(),
+        contents,
+        ...(tag !== "" && { tag: tag.replace(/(\s*)/g, "").split(",") }),
+      },
+    });
   };
 
   const onCLickLink = () => {

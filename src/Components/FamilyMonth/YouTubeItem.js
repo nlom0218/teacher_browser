@@ -103,7 +103,15 @@ const CreatedAt = styled.div`
   color: rgba(0, 0, 0, 0.6);
 `;
 
-const YouTubeItem = ({ url, title, bgColor, type, createdAt, likeNum, id }) => {
+const YouTubeItem = ({
+  url,
+  title,
+  bgColor,
+  videoType,
+  createdAt,
+  likeNum,
+  id,
+}) => {
   const [hover, setHover] = useState(false);
   const navigate = useNavigate();
   const getYouTubeImg = (youTubeUrl) => {
@@ -126,7 +134,7 @@ const YouTubeItem = ({ url, title, bgColor, type, createdAt, likeNum, id }) => {
     >
       <YouTubeInfo>
         <YouTubeImg src={getYouTubeImg(url)}></YouTubeImg>
-        <YouTubeType>{type}</YouTubeType>
+        <YouTubeType>{videoType}</YouTubeType>
       </YouTubeInfo>
       <ContentsInfo>
         <ContentsTitle>{title}</ContentsTitle>
