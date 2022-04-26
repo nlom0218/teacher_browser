@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import MainContentsLayout from "./MainContentsLayout";
 import YouTubeInput from "./YouTubeInput";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import BasicInfoInput from "./BasicInfoInput";
 import { useMutation } from "@apollo/client";
-import { CreateFamilyStory } from "../../Graphql/FamilyStory/mutation";
+import { CREATE_FAMILY_STORY_MUTATION } from "../../Graphql/FamilyStory/mutation";
+import Loading from "../Shared/Loading";
+import { SEE_ALL_FAMILY_STORY_QEURY } from "../../Graphql/FamilyStory/query";
+import FinishCreated from "./FinishCreated";
 
 const FormContainer = styled.form`
   display: grid;
@@ -51,11 +54,29 @@ const TeacherCanLink = styled.div`
 // url-, title-, bgColor-, type-, onwer-, tag-, createAt-, contents-
 
 const CreateYouTube = ({ multiply, userEmail, setErrMsg }) => {
+  const [finish, setFinish] = useState(false);
+  const [createId, setCreateId] = useState(undefined);
   const [bgColor, setBgColor] = useState(undefined);
 
-  const [createFamilyStory, { loading }] = useMutation(CreateFamilyStory);
+  const onCompleted = (result) => {
+    const {
+      createFamilyStory: { ok, id },
+    } = result;
+    if (ok) {
+      setFinish(true);
+      setCreateId(id);
+    }
+  };
 
-  const { register, watch, getValues, setValue, handleSubmit } = useForm({
+  const [createFamilyStory, { loading }] = useMutation(
+    CREATE_FAMILY_STORY_MUTATION,
+    {
+      onCompleted,
+      refetchQueries: [{ query: SEE_ALL_FAMILY_STORY_QEURY }],
+    }
+  );
+
+  const { register, watch, getValues, handleSubmit } = useForm({
     mode: "onChange",
   });
 
@@ -103,7 +124,17 @@ const CreateYouTube = ({ multiply, userEmail, setErrMsg }) => {
     window.open("https://www.instagram.com/teachercan_official/");
   };
 
-  return (
+  if (loading && !finish) {
+    return <Loading page="subPage" />;
+  }
+
+  return finish ? (
+    <FinishCreated
+      createId={createId}
+      setFinish={setFinish}
+      setCreateId={setCreateId}
+    />
+  ) : (
     <MainContentsLayout>
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
         <YouTubeInput

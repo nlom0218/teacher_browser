@@ -5,7 +5,7 @@ import qs from "qs";
 import PageBtn from "./Shared/PageBtn";
 import YouTubeList from "./Shared/YouTubeList";
 import { useQuery } from "@apollo/client";
-import { SeeAllFamilyStory } from "../../Graphql/FamilyStory/query";
+import { SEE_ALL_FAMILY_STORY_QEURY } from "../../Graphql/FamilyStory/query";
 import Loading from "../Shared/Loading";
 
 const Container = styled.div`
@@ -167,7 +167,7 @@ const AllListYoutube = () => {
     ignoreQueryPrefix: true,
   });
 
-  const { data, loading } = useQuery(SeeAllFamilyStory);
+  const { data, loading } = useQuery(SEE_ALL_FAMILY_STORY_QEURY);
 
   if (loading) {
     return <Loading page="subPage" />;

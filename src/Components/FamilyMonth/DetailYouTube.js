@@ -2,10 +2,9 @@ import getYouTubeID from "get-youtube-id";
 import React from "react";
 import styled from "styled-components";
 import DetailYouTubeContents from "./DetailYouTubeContents";
-import { youtubeList } from "./AllListYouTube";
 import MainContentsLayout from "./MainContentsLayout";
 import { useQuery } from "@apollo/client";
-import { SeeFamilyStory } from "../../Graphql/FamilyStory/query";
+import { SEE_FAMILY_STORY_QERUY } from "../../Graphql/FamilyStory/query";
 import Loading from "../Shared/Loading";
 
 const YouTubePlayer = styled.div`
@@ -17,7 +16,7 @@ const YouTubePlayer = styled.div`
 `;
 
 const DetailYouTube = ({ id, multiply }) => {
-  const { data, loading } = useQuery(SeeFamilyStory, {
+  const { data, loading } = useQuery(SEE_FAMILY_STORY_QERUY, {
     variables: { id },
   });
 

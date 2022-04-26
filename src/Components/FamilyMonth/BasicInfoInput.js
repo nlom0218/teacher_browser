@@ -60,6 +60,7 @@ const InputLayout = styled.div`
   }
   textarea {
     all: unset;
+    line-height: 160%;
     min-height: 100%;
     max-height: 100%;
     width: 100%;
@@ -135,6 +136,7 @@ const BasicInfoInput = ({ register, userEmail, bgColor, setBgColor }) => {
           {...register("videoType")}
           type="text"
           autoComplete="off"
+          maxLength={10}
         />
       </InputLayout>
       <InputLayout>
@@ -144,6 +146,7 @@ const BasicInfoInput = ({ register, userEmail, bgColor, setBgColor }) => {
           {...register("title")}
           type="text"
           autoComplete="off"
+          maxLength={40}
         />
       </InputLayout>
       <InputLayout className="not-center">

@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const CreateFamilyStory = gql`
+export const CREATE_FAMILY_STORY_MUTATION = gql`
   mutation CreateFamilyStory(
     $userEmail: String!
     $url: String!

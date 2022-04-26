@@ -53,6 +53,9 @@ const ContentsScrollLayout = styled.div`
   ::-webkit-scrollbar {
     display: none; // Chrome, Safari, Opera
   }
+  display: grid;
+  grid-template-rows: 1fr;
+  align-items: flex-start;
 `;
 
 const FamilyMonth = () => {

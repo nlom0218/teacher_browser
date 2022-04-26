@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const SeeAllFamilyStory = gql`
+export const SEE_ALL_FAMILY_STORY_QEURY = gql`
   query SeeAllFamilyStory {
     seeAllFamilyStory {
       _id
@@ -16,7 +16,7 @@ export const SeeAllFamilyStory = gql`
   }
 `;
 
-export const SeeFamilyStory = gql`
+export const SEE_FAMILY_STORY_QERUY = gql`
   query SeeFamilyStory($id: String!) {
     seeFamilyStory(id: $id) {
       _id
