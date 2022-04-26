@@ -1,7 +1,12 @@
 import React from "react";
-import { AiFillHome, AiFillLike, AiFillYoutube } from "react-icons/ai";
+import {
+  AiFillFolderOpen,
+  AiFillHome,
+  AiFillLike,
+  AiFillYoutube,
+} from "react-icons/ai";
 import { BsPlusLg } from "react-icons/bs";
-import { FaHashtag, FaHeart, FaSearch, FaUserAlt } from "react-icons/fa";
+import { FaHeart, FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import routes from "../../routes";
@@ -71,9 +76,16 @@ const BtnContainer = ({ page, userEmail }) => {
         </Btn>
       </Link>
       {userEmail && (
-        <Btn isPage={page === ""}>
-          <FaUserAlt />
-        </Btn>
+        <Link
+          to={{
+            pathname: `${routes.familyMonth}/my`,
+            search: "?page=1",
+          }}
+        >
+          <Btn isPage={page === "my"}>
+            <AiFillFolderOpen />
+          </Btn>
+        </Link>
       )}
       <Link to={`${routes.familyMonth}/create`}>
         <Btn isPage={page === "create"}>
