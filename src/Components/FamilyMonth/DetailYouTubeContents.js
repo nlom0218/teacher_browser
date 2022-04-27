@@ -87,18 +87,21 @@ const DetailYouTubeContents = ({
   title,
   createdAt,
   likeNum,
-  userEmail: onwer,
+  userEmail,
   bgColor,
   tag,
   isLiked,
-  userEmail,
+  loggedInUserEmail,
   setErrMsg,
 }) => {
   const [toggleFamilyStoryLike, { loading }] = useMutation(
     TOGGLE_FAMILY_STORY_LIKE_MUTATION,
     {
       refetchQueries: [
-        { query: SEE_LIKE_FAMILY_STORY, variables: { userEmail } },
+        {
+          query: SEE_LIKE_FAMILY_STORY,
+          variables: { userEmail: loggedInUserEmail },
+        },
       ],
       update: (cache, data) => {
         const {
@@ -127,24 +130,25 @@ const DetailYouTubeContents = ({
     }
   );
   const onClickLikeBtn = () => {
-    if (!userEmail) {
+    if (!loggedInUserEmail) {
       setErrMsg("로그인이 필요합니다.😅");
     }
-    if (userEmail) {
+    if (loggedInUserEmail) {
       toggleFamilyStoryLike({
         variables: {
-          userEmail,
+          userEmail: loggedInUserEmail,
           familyStoryId: _id,
         },
       });
     }
   };
+  console.log(userEmail);
   return (
     <Container>
       <TopContents>
         <Title>{title}</Title>
         <ContentsInfo>
-          <div>{onwer}</div>
+          <div>{userEmail}</div>
           <CreatedAt>{format(createdAt, "yy.MM.dd")}</CreatedAt>
         </ContentsInfo>
         <Liked>

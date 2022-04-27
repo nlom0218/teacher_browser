@@ -38,7 +38,7 @@ const DetailYouTube = ({ id, multiply, userEmail, setErrMsg }) => {
       </YouTubePlayer>
       <DetailYouTubeContents
         {...data?.seeFamilyStory}
-        userEmail={userEmail}
+        loggedInUserEmail={userEmail}
         setErrMsg={setErrMsg}
       />
     </MainContentsLayout>
