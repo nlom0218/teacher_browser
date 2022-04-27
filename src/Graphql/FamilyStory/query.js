@@ -53,3 +53,26 @@ export const SEE_MY_FAMILY_STORY_QUERY = gql`
     }
   }
 `;
+
+export const SEE_LIKE_FAMILY_STORY = gql`
+  query SeeLikeFamilyStory($userEmail: String!) {
+    seeLikeFamilyStory(userEmail: $userEmail) {
+      _id
+      userEmail
+      familyStoryId
+      familyStory {
+        _id
+        userEmail
+        url
+        title
+        bgColor
+        videoType
+        tag
+        createdAt
+        contents
+        likeNum
+        isLiked
+      }
+    }
+  }
+`;

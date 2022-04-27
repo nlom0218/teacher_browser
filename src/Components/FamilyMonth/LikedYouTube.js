@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import qs from "qs";
 import PageBtn from "./Shared/PageBtn";
@@ -7,9 +7,12 @@ import YouTubeList from "./Shared/YouTubeList";
 import { youtubeList } from "./AllListYouTube";
 import { FaHeart } from "react-icons/fa";
 import { customMedia } from "../../styles";
+import { useQuery } from "@apollo/client";
+import { SEE_LIKE_FAMILY_STORY } from "../../Graphql/FamilyStory/query";
+import Loading from "../Shared/Loading";
 
 const Container = styled.div`
-  align-self: center;
+  align-self: flex-start;
   display: grid;
   row-gap: 20px;
   row-gap: 1.25rem;
@@ -34,11 +37,30 @@ const LikedMsg = styled.div`
   }
 `;
 
-const LikedYouTube = () => {
+const LikedYouTube = ({ userEmail }) => {
+  const [familyStoryArr, setFamilyStoryArr] = useState([]);
   const location = useLocation();
   const { page } = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
+  const { data, loading } = useQuery(SEE_LIKE_FAMILY_STORY, {
+    variables: {
+      userEmail,
+    },
+    skip: !userEmail,
+  });
+
+  useEffect(() => {
+    if (data) {
+      const newFamilyStoryArr = data?.seeLikeFamilyStory.map((item) => {
+        return item.familyStory;
+      });
+      setFamilyStoryArr(newFamilyStoryArr);
+    }
+  }, [data]);
+  if (loading) {
+    return <Loading page="subPage" />;
+  }
   return (
     <Container>
       <LikedMsg>
@@ -46,7 +68,7 @@ const LikedYouTube = () => {
         <FaHeart />
       </LikedMsg>
       <PageBtn page={page} pageType="liked" />
-      <YouTubeList youtubeList={youtubeList} />
+      <YouTubeList youtubeList={familyStoryArr} />
     </Container>
   );
 };

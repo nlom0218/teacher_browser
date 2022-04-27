@@ -99,7 +99,9 @@ const FamilyMonth = () => {
                   setErrMsg={setErrMsg}
                 />
               )}
-              {!id && page === "liked" && <LikedYouTube />}
+              {!id && page === "liked" && (
+                <LikedYouTube userEmail={me?.email} />
+              )}
               {!id && page === "search" && (
                 <SearchYouTube setErrMsg={setErrMsg} />
               )}

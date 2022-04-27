@@ -6,6 +6,7 @@ import YouTubeTag from "./YouTubeTag";
 import { useMutation } from "@apollo/client";
 import { TOGGLE_FAMILY_STORY_LIKE_MUTATION } from "../../Graphql/FamilyStory/mutation";
 import NeedLoginPopupContainer from "../Shared/NeedLoginPopupContainer";
+import { SEE_LIKE_FAMILY_STORY } from "../../Graphql/FamilyStory/query";
 
 const Container = styled.div`
   display: grid;
@@ -96,6 +97,9 @@ const DetailYouTubeContents = ({
   const [toggleFamilyStoryLike, { loading }] = useMutation(
     TOGGLE_FAMILY_STORY_LIKE_MUTATION,
     {
+      refetchQueries: [
+        { query: SEE_LIKE_FAMILY_STORY, variables: { userEmail } },
+      ],
       update: (cache, data) => {
         const {
           data: {
@@ -123,7 +127,9 @@ const DetailYouTubeContents = ({
     }
   );
   const onClickLikeBtn = () => {
-    setErrMsg("로그인이 필요합니다.😅");
+    if (!userEmail) {
+      setErrMsg("로그인이 필요합니다.😅");
+    }
     if (userEmail) {
       toggleFamilyStoryLike({
         variables: {
