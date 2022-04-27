@@ -11,6 +11,7 @@ import { useQuery } from "@apollo/client";
 import { SEE_MY_FAMILY_STORY_QUERY } from "../../Graphql/FamilyStory/query";
 import Loading from "../Shared/Loading";
 import NeedLoginPopupContainer from "../Shared/NeedLoginPopupContainer";
+import NotContentsMsgContainer from "./NotContentsMsgContainer";
 
 const Container = styled.div`
   align-self: flex-start;
@@ -50,6 +51,7 @@ const MyYouTube = ({ userEmail }) => {
   if (loading || !userEmail) {
     return <Loading page="subPage" />;
   }
+  console.log(data);
   return (
     <Container>
       <LikedMsg>
@@ -57,7 +59,11 @@ const MyYouTube = ({ userEmail }) => {
         <AiFillFolderOpen />
       </LikedMsg>
       <PageBtn page={page} pageType="liked" />
-      <YouTubeList youtubeList={data?.seeMyFamilyStory} />
+      {data?.seeMyFamilyStory?.length === 0 ? (
+        <NotContentsMsgContainer preText="내가 만든" />
+      ) : (
+        <YouTubeList youtubeList={data?.seeMyFamilyStory} />
+      )}
     </Container>
   );
 };

@@ -4,12 +4,12 @@ import qs from "qs";
 import PageBtn from "./Shared/PageBtn";
 import styled from "styled-components";
 import YouTubeList from "./Shared/YouTubeList";
-import { youtubeList } from "./AllListYouTube";
-import { FaHeart } from "react-icons/fa";
 import { customMedia } from "../../styles";
 import { useQuery } from "@apollo/client";
 import { SEE_LIKE_FAMILY_STORY } from "../../Graphql/FamilyStory/query";
 import Loading from "../Shared/Loading";
+import { BsSuitHeartFill } from "react-icons/bs";
+import NotContentsMsgContainer from "./NotContentsMsgContainer";
 
 const Container = styled.div`
   align-self: flex-start;
@@ -65,10 +65,14 @@ const LikedYouTube = ({ userEmail }) => {
     <Container>
       <LikedMsg>
         <div>좋아요 한 가정의 달 이야기</div>
-        <FaHeart />
+        <BsSuitHeartFill />
       </LikedMsg>
       <PageBtn page={page} pageType="liked" />
-      <YouTubeList youtubeList={familyStoryArr} />
+      {familyStoryArr.length === 0 ? (
+        <NotContentsMsgContainer preText="좋아요 한" />
+      ) : (
+        <YouTubeList youtubeList={familyStoryArr} />
+      )}
     </Container>
   );
 };
