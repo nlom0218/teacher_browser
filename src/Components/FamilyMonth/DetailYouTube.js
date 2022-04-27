@@ -15,7 +15,7 @@ const YouTubePlayer = styled.div`
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 `;
 
-const DetailYouTube = ({ id, multiply, userEmail }) => {
+const DetailYouTube = ({ id, multiply, userEmail, setErrMsg }) => {
   const { data, loading } = useQuery(SEE_FAMILY_STORY_QERUY, {
     variables: { id },
   });
@@ -36,7 +36,11 @@ const DetailYouTube = ({ id, multiply, userEmail }) => {
           title={data?.seeFamilyStory?.title}
         ></iframe>
       </YouTubePlayer>
-      <DetailYouTubeContents {...data?.seeFamilyStory} userEmail={userEmail} />
+      <DetailYouTubeContents
+        {...data?.seeFamilyStory}
+        userEmail={userEmail}
+        setErrMsg={setErrMsg}
+      />
     </MainContentsLayout>
   );
 };

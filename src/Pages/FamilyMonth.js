@@ -88,6 +88,7 @@ const FamilyMonth = () => {
                   id={id}
                   multiply={multiply}
                   userEmail={me?.email}
+                  setErrMsg={setErrMsg}
                 />
               )}
               {!id && page === "list" && <AllListYoutube />}

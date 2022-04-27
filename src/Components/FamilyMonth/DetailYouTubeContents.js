@@ -5,6 +5,7 @@ import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 import YouTubeTag from "./YouTubeTag";
 import { useMutation } from "@apollo/client";
 import { TOGGLE_FAMILY_STORY_LIKE_MUTATION } from "../../Graphql/FamilyStory/mutation";
+import NeedLoginPopupContainer from "../Shared/NeedLoginPopupContainer";
 
 const Container = styled.div`
   display: grid;
@@ -90,6 +91,7 @@ const DetailYouTubeContents = ({
   tag,
   isLiked,
   userEmail,
+  setErrMsg,
 }) => {
   const [toggleFamilyStoryLike, { loading }] = useMutation(
     TOGGLE_FAMILY_STORY_LIKE_MUTATION,
@@ -100,7 +102,6 @@ const DetailYouTubeContents = ({
             toggleFamilyStoryLike: { ok, message },
           },
         } = data;
-        console.log(ok, message);
         if (ok) {
           cache.modify({
             id: `FamilyStory:${_id}`,
@@ -122,12 +123,15 @@ const DetailYouTubeContents = ({
     }
   );
   const onClickLikeBtn = () => {
-    toggleFamilyStoryLike({
-      variables: {
-        userEmail,
-        familyStoryId: _id,
-      },
-    });
+    setErrMsg("로그인이 필요합니다.😅");
+    if (userEmail) {
+      toggleFamilyStoryLike({
+        variables: {
+          userEmail,
+          familyStoryId: _id,
+        },
+      });
+    }
   };
   return (
     <Container>
