@@ -83,7 +83,13 @@ const FamilyMonth = () => {
           <BtnContainer page={page} userEmail={me?.email} />
           <ContentsLayout>
             <ContentsScrollLayout>
-              {id && <DetailYouTube id={id} multiply={multiply} />}
+              {id && (
+                <DetailYouTube
+                  id={id}
+                  multiply={multiply}
+                  userEmail={me?.email}
+                />
+              )}
               {!id && page === "list" && <AllListYoutube />}
               {!id && page === "create" && (
                 <CreateYouTube

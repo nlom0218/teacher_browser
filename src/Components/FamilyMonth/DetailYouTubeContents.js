@@ -3,6 +3,8 @@ import React from "react";
 import styled from "styled-components";
 import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 import YouTubeTag from "./YouTubeTag";
+import { useMutation } from "@apollo/client";
+import { TOGGLE_FAMILY_STORY_LIKE_MUTATION } from "../../Graphql/FamilyStory/mutation";
 
 const Container = styled.div`
   display: grid;
@@ -79,24 +81,64 @@ const Text = styled.div`
 `;
 
 const DetailYouTubeContents = ({
+  _id,
   title,
   createdAt,
   likeNum,
-  userEmail,
+  userEmail: onwer,
   bgColor,
   tag,
   isLiked,
+  userEmail,
 }) => {
+  const [toggleFamilyStoryLike, { loading }] = useMutation(
+    TOGGLE_FAMILY_STORY_LIKE_MUTATION,
+    {
+      update: (cache, data) => {
+        const {
+          data: {
+            toggleFamilyStoryLike: { ok, message },
+          },
+        } = data;
+        console.log(ok, message);
+        if (ok) {
+          cache.modify({
+            id: `FamilyStory:${_id}`,
+            fields: {
+              likeNum: (prev) => {
+                if (message === "create") {
+                  return prev + 1;
+                } else {
+                  return prev - 1;
+                }
+              },
+              isLiked: (prev) => {
+                return !prev;
+              },
+            },
+          });
+        }
+      },
+    }
+  );
+  const onClickLikeBtn = () => {
+    toggleFamilyStoryLike({
+      variables: {
+        userEmail,
+        familyStoryId: _id,
+      },
+    });
+  };
   return (
     <Container>
       <TopContents>
         <Title>{title}</Title>
         <ContentsInfo>
-          <div>{userEmail}</div>
+          <div>{onwer}</div>
           <CreatedAt>{format(createdAt, "yy.MM.dd")}</CreatedAt>
         </ContentsInfo>
         <Liked>
-          <Icon>
+          <Icon onClick={onClickLikeBtn}>
             {isLiked ? (
               <BsSuitHeartFill style={{ color: "#e84545" }} />
             ) : (

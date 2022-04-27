@@ -27,3 +27,16 @@ export const CREATE_FAMILY_STORY_MUTATION = gql`
     }
   }
 `;
+
+export const TOGGLE_FAMILY_STORY_LIKE_MUTATION = gql`
+  mutation ToggleFamilyStoryLike($userEmail: String!, $familyStoryId: String!) {
+    toggleFamilyStoryLike(
+      userEmail: $userEmail
+      familyStoryId: $familyStoryId
+    ) {
+      ok
+      message
+      error
+    }
+  }
+`;
