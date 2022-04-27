@@ -12,6 +12,8 @@ export const SEE_ALL_FAMILY_STORY_QEURY = gql`
       videoType
       createdAt
       contents
+      likeNum
+      isLiked
     }
   }
 `;
@@ -28,6 +30,8 @@ export const SEE_FAMILY_STORY_QERUY = gql`
       tag
       contents
       createdAt
+      likeNum
+      isLiked
     }
   }
 `;
@@ -44,6 +48,8 @@ export const SEE_MY_FAMILY_STORY_QUERY = gql`
       tag
       createdAt
       contents
+      likeNum
+      isLiked
     }
   }
 `;

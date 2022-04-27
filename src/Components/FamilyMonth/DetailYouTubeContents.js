@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import React from "react";
 import styled from "styled-components";
-import { FaHeart } from "react-icons/fa";
+import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 import YouTubeTag from "./YouTubeTag";
 
 const Container = styled.div`
@@ -43,9 +43,9 @@ const Liked = styled.div`
 `;
 
 const Icon = styled.div`
+  cursor: pointer;
   svg {
     display: flex;
-    color: #e84545;
   }
 `;
 
@@ -85,6 +85,7 @@ const DetailYouTubeContents = ({
   userEmail,
   bgColor,
   tag,
+  isLiked,
 }) => {
   return (
     <Container>
@@ -96,7 +97,11 @@ const DetailYouTubeContents = ({
         </ContentsInfo>
         <Liked>
           <Icon>
-            <FaHeart />
+            {isLiked ? (
+              <BsSuitHeartFill style={{ color: "#e84545" }} />
+            ) : (
+              <BsSuitHeart />
+            )}
           </Icon>
           <LikedNum>{likeNum}개</LikedNum>
         </Liked>
