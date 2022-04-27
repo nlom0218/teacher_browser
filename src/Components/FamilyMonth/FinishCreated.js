@@ -35,6 +35,7 @@ const FinishCreated = ({ setFinish, setCreateId, createId }) => {
     navigate(`${routes.familyMonth}/list/${createId}`);
   };
   const onClickReset = () => {
+    window.location.reload();
     setFinish(false);
     setCreateId(undefined);
   };

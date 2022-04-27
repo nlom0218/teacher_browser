@@ -7,7 +7,10 @@ import BasicInfoInput from "./BasicInfoInput";
 import { useMutation } from "@apollo/client";
 import { CREATE_FAMILY_STORY_MUTATION } from "../../Graphql/FamilyStory/mutation";
 import Loading from "../Shared/Loading";
-import { SEE_ALL_FAMILY_STORY_QEURY } from "../../Graphql/FamilyStory/query";
+import {
+  SEE_ALL_FAMILY_STORY_QEURY,
+  SEE_MY_FAMILY_STORY_QUERY,
+} from "../../Graphql/FamilyStory/query";
 import FinishCreated from "./FinishCreated";
 
 const FormContainer = styled.form`
@@ -66,11 +69,20 @@ const CreateYouTube = ({ multiply, userEmail, setErrMsg }) => {
     }
   };
 
+  const refectchMyStory = () => {
+    if (userEmail) {
+      return { query: SEE_MY_FAMILY_STORY_QUERY, variables: { userEmail } };
+    }
+  };
+
   const [createFamilyStory, { loading }] = useMutation(
     CREATE_FAMILY_STORY_MUTATION,
     {
       onCompleted,
-      refetchQueries: [{ query: SEE_ALL_FAMILY_STORY_QEURY }],
+      refetchQueries: [
+        { query: SEE_ALL_FAMILY_STORY_QEURY },
+        refectchMyStory(),
+      ],
     }
   );
 

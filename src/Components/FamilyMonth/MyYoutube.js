@@ -10,9 +10,10 @@ import { AiFillFolderOpen } from "react-icons/ai";
 import { useQuery } from "@apollo/client";
 import { SEE_MY_FAMILY_STORY_QUERY } from "../../Graphql/FamilyStory/query";
 import Loading from "../Shared/Loading";
+import NeedLoginPopupContainer from "../Shared/NeedLoginPopupContainer";
 
 const Container = styled.div`
-  align-self: center;
+  align-self: flex-start;
   display: grid;
   row-gap: 20px;
   row-gap: 1.25rem;
@@ -46,7 +47,7 @@ const MyYouTube = ({ userEmail }) => {
     variables: { userEmail },
     skip: !userEmail,
   });
-  if (loading) {
+  if (loading || !userEmail) {
     return <Loading page="subPage" />;
   }
   return (
