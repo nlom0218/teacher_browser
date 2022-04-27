@@ -31,3 +31,19 @@ export const SEE_FAMILY_STORY_QERUY = gql`
     }
   }
 `;
+
+export const SEE_MY_FAMILY_STORY_QUERY = gql`
+  query SeeMyFamilyStory($userEmail: String!) {
+    seeMyFamilyStory(userEmail: $userEmail) {
+      _id
+      userEmail
+      url
+      title
+      bgColor
+      videoType
+      tag
+      createdAt
+      contents
+    }
+  }
+`;

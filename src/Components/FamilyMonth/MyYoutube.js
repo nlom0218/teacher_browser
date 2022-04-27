@@ -7,6 +7,9 @@ import YouTubeList from "./Shared/YouTubeList";
 import { youtubeList } from "./AllListYouTube";
 import { customMedia } from "../../styles";
 import { AiFillFolderOpen } from "react-icons/ai";
+import { useQuery } from "@apollo/client";
+import { SEE_MY_FAMILY_STORY_QUERY } from "../../Graphql/FamilyStory/query";
+import Loading from "../Shared/Loading";
 
 const Container = styled.div`
   align-self: center;
@@ -33,11 +36,19 @@ const LikedMsg = styled.div`
   }
 `;
 
-const MyYouTube = () => {
+const MyYouTube = ({ userEmail }) => {
   const location = useLocation();
   const { page } = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
+
+  const { data, loading } = useQuery(SEE_MY_FAMILY_STORY_QUERY, {
+    variables: { userEmail },
+    skip: !userEmail,
+  });
+  if (loading) {
+    return <Loading page="subPage" />;
+  }
   return (
     <Container>
       <LikedMsg>
@@ -45,7 +56,7 @@ const MyYouTube = () => {
         <AiFillFolderOpen />
       </LikedMsg>
       <PageBtn page={page} pageType="liked" />
-      <YouTubeList youtubeList={youtubeList} />
+      <YouTubeList youtubeList={data?.seeMyFamilyStory} />
     </Container>
   );
 };

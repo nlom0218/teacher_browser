@@ -51,8 +51,6 @@ const TeacherCanLink = styled.div`
   border-radius: 0.625rem;
 `;
 
-// url-, title-, bgColor-, type-, onwer-, tag-, createAt-, contents-
-
 const CreateYouTube = ({ multiply, userEmail, setErrMsg }) => {
   const [finish, setFinish] = useState(false);
   const [createId, setCreateId] = useState(undefined);
