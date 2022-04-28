@@ -5,7 +5,10 @@ import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 import YouTubeTag from "./YouTubeTag";
 import { useMutation } from "@apollo/client";
 import { TOGGLE_FAMILY_STORY_LIKE_MUTATION } from "../../Graphql/FamilyStory/mutation";
-import { SEE_LIKE_FAMILY_STORY } from "../../Graphql/FamilyStory/query";
+import {
+  MY_FAMILY_STORY_LIKE_NUM,
+  SEE_LIKE_FAMILY_STORY,
+} from "../../Graphql/FamilyStory/query";
 
 const Container = styled.div`
   display: grid;
@@ -99,6 +102,10 @@ const DetailYouTubeContents = ({
       refetchQueries: [
         {
           query: SEE_LIKE_FAMILY_STORY,
+          variables: { userEmail: loggedInUserEmail },
+        },
+        {
+          query: MY_FAMILY_STORY_LIKE_NUM,
           variables: { userEmail: loggedInUserEmail },
         },
       ],

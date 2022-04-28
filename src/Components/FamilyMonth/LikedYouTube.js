@@ -6,7 +6,10 @@ import styled from "styled-components";
 import YouTubeList from "./Shared/YouTubeList";
 import { customMedia } from "../../styles";
 import { useQuery } from "@apollo/client";
-import { SEE_LIKE_FAMILY_STORY } from "../../Graphql/FamilyStory/query";
+import {
+  MY_FAMILY_STORY_LIKE_NUM,
+  SEE_LIKE_FAMILY_STORY,
+} from "../../Graphql/FamilyStory/query";
 import Loading from "../Shared/Loading";
 import { BsSuitHeartFill } from "react-icons/bs";
 import NotContentsMsgContainer from "./NotContentsMsgContainer";
@@ -50,6 +53,14 @@ const LikedYouTube = ({ userEmail }) => {
     skip: !userEmail,
   });
 
+  const { data: num, loading: numLoading } = useQuery(
+    MY_FAMILY_STORY_LIKE_NUM,
+    {
+      variables: { userEmail },
+      skip: !userEmail,
+    }
+  );
+
   useEffect(() => {
     if (data) {
       const newFamilyStoryArr = data?.seeLikeFamilyStory.map((item) => {
@@ -67,7 +78,11 @@ const LikedYouTube = ({ userEmail }) => {
         <div>좋아요 한 가정의 달 이야기</div>
         <BsSuitHeartFill />
       </LikedMsg>
-      <PageBtn page={page} pageType="liked" />
+      <PageBtn
+        page={page}
+        pageType="liked"
+        itemNum={num?.myFamilyStoryLikeNum}
+      />
       {familyStoryArr.length === 0 ? (
         <NotContentsMsgContainer preText="좋아요 한" />
       ) : (
