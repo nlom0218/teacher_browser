@@ -75,6 +75,7 @@ const SearchYouTube = ({ setErrMsg }) => {
   const { data, loading } = useQuery(SEE_SEARCH_FAMILY_STORY, {
     variables: {
       tag: search,
+      page: parseInt(page),
     },
     skip: !search,
   });
