@@ -77,6 +77,24 @@ export const SEE_LIKE_FAMILY_STORY = gql`
   }
 `;
 
+export const SEE_SEARCH_FAMILY_STORY = gql`
+  query SeeSearchFamilyStory($tag: String!) {
+    seeSearchFamilyStory(tag: $tag) {
+      _id
+      userEmail
+      title
+      url
+      bgColor
+      videoType
+      tag
+      createdAt
+      contents
+      likeNum
+      isLiked
+    }
+  }
+`;
+
 export const ALL_FAMILY_STORY_NUM = gql`
   query Query {
     allFamilyStoryNum

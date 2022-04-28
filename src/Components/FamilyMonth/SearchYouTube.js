@@ -8,6 +8,9 @@ import { youtubeList } from "./AllListYouTube";
 import { customMedia } from "../../styles";
 import PageBtn from "./Shared/PageBtn";
 import YouTubeList from "./Shared/YouTubeList";
+import { useQuery } from "@apollo/client";
+import { SEE_SEARCH_FAMILY_STORY } from "../../Graphql/FamilyStory/query";
+import Loading from "../Shared/Loading";
 
 const Container = styled.div`
   display: grid;
@@ -65,6 +68,14 @@ const SearchYouTube = ({ setErrMsg }) => {
   const { search, page } = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
+
+  const { data, loading } = useQuery(SEE_SEARCH_FAMILY_STORY, {
+    variables: {
+      tag: search,
+    },
+    skip: !search,
+  });
+
   const { register, handleSubmit, setValue } = useForm({
     mode: "onChange",
   });
@@ -83,6 +94,11 @@ const SearchYouTube = ({ setErrMsg }) => {
   useEffect(() => {
     setValue("search", search);
   }, [search]);
+
+  if (loading) {
+    return <Loading page="subPage" />;
+  }
+
   return (
     <Container>
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -98,7 +114,7 @@ const SearchYouTube = ({ setErrMsg }) => {
       {search && (
         <React.Fragment>
           <PageBtn page={page} pageType="search" search={search} />
-          <YouTubeList youtubeList={youtubeList} />
+          <YouTubeList youtubeList={data?.seeSearchFamilyStory} />
         </React.Fragment>
       )}
     </Container>
