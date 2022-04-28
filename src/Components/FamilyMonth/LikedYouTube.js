@@ -49,6 +49,7 @@ const LikedYouTube = ({ userEmail }) => {
   const { data, loading } = useQuery(SEE_LIKE_FAMILY_STORY, {
     variables: {
       userEmail,
+      page: parseInt(page),
     },
     skip: !userEmail,
   });

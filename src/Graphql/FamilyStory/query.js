@@ -55,8 +55,8 @@ export const SEE_MY_FAMILY_STORY_QUERY = gql`
 `;
 
 export const SEE_LIKE_FAMILY_STORY = gql`
-  query SeeLikeFamilyStory($userEmail: String!) {
-    seeLikeFamilyStory(userEmail: $userEmail) {
+  query SeeLikeFamilyStory($userEmail: String!, $page: Int!) {
+    seeLikeFamilyStory(userEmail: $userEmail, page: $page) {
       _id
       userEmail
       familyStoryId
