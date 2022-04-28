@@ -8,7 +8,10 @@ import { youtubeList } from "./AllListYouTube";
 import { customMedia } from "../../styles";
 import { AiFillFolderOpen } from "react-icons/ai";
 import { useQuery } from "@apollo/client";
-import { SEE_MY_FAMILY_STORY_QUERY } from "../../Graphql/FamilyStory/query";
+import {
+  MY_FAMILY_STORY_NUM,
+  SEE_MY_FAMILY_STORY_QUERY,
+} from "../../Graphql/FamilyStory/query";
 import Loading from "../Shared/Loading";
 import NeedLoginPopupContainer from "../Shared/NeedLoginPopupContainer";
 import NotContentsMsgContainer from "./NotContentsMsgContainer";
@@ -48,6 +51,14 @@ const MyYouTube = ({ userEmail }) => {
     variables: { userEmail },
     skip: !userEmail,
   });
+
+  const { data: num, loading: NumLoading } = useQuery(MY_FAMILY_STORY_NUM, {
+    variables: {
+      userEmail,
+    },
+    skip: !userEmail,
+  });
+
   if (loading || !userEmail) {
     return <Loading page="subPage" />;
   }
@@ -58,7 +69,7 @@ const MyYouTube = ({ userEmail }) => {
         <div>내가 만든 가정의 달 이야기</div>
         <AiFillFolderOpen />
       </LikedMsg>
-      <PageBtn page={page} pageType="liked" />
+      <PageBtn page={page} pageType="liked" itemNum={num?.myFamilyStoryNum} />
       {data?.seeMyFamilyStory?.length === 0 ? (
         <NotContentsMsgContainer preText="내가 만든" />
       ) : (

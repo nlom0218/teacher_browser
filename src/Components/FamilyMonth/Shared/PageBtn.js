@@ -32,6 +32,7 @@ const Btn = styled.div`
 
 const PageBtn = ({ page, pageType, search, itemNum }) => {
   const [lastPage, setLastPage] = useState(1);
+
   const processFLPage = () => {
     if (lastPage === parseInt(page)) {
       return true;

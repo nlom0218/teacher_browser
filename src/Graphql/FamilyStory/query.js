@@ -82,3 +82,9 @@ export const ALL_FAMILY_STORY_NUM = gql`
     allFamilyStoryNum
   }
 `;
+
+export const MY_FAMILY_STORY_NUM = gql`
+  query Query($userEmail: String!) {
+    myFamilyStoryNum(userEmail: $userEmail)
+  }
+`;
