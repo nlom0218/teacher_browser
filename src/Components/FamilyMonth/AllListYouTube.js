@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import qs from "qs";
@@ -170,7 +170,11 @@ const AllListYoutube = () => {
     ignoreQueryPrefix: true,
   });
 
-  const { data, loading } = useQuery(SEE_ALL_FAMILY_STORY_QEURY);
+  const { data, loading } = useQuery(SEE_ALL_FAMILY_STORY_QEURY, {
+    variables: {
+      page: parseInt(page),
+    },
+  });
 
   const { data: num, loading: numLoading } = useQuery(ALL_FAMILY_STORY_NUM);
 

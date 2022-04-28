@@ -86,8 +86,6 @@ const SearchYouTube = ({ setErrMsg }) => {
     skip: !search,
   });
 
-  console.log(num);
-
   const { register, handleSubmit, setValue } = useForm({
     mode: "onChange",
   });
