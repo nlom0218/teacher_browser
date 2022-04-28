@@ -174,8 +174,6 @@ const AllListYoutube = () => {
 
   const { data: num, loading: numLoading } = useQuery(ALL_FAMILY_STORY_NUM);
 
-  console.log(num);
-
   if (loading) {
     return <Loading page="subPage" />;
   }

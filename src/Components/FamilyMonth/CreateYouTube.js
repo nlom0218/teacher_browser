@@ -8,6 +8,7 @@ import { useMutation } from "@apollo/client";
 import { CREATE_FAMILY_STORY_MUTATION } from "../../Graphql/FamilyStory/mutation";
 import Loading from "../Shared/Loading";
 import {
+  MY_FAMILY_STORY_NUM,
   SEE_ALL_FAMILY_STORY_QEURY,
   SEE_MY_FAMILY_STORY_QUERY,
 } from "../../Graphql/FamilyStory/query";
@@ -71,7 +72,13 @@ const CreateYouTube = ({ multiply, userEmail, setErrMsg }) => {
 
   const refectchMyStory = () => {
     if (userEmail) {
-      return { query: SEE_MY_FAMILY_STORY_QUERY, variables: { userEmail } };
+      return [
+        {
+          query: SEE_MY_FAMILY_STORY_QUERY,
+          variables: { userEmail },
+        },
+        { query: MY_FAMILY_STORY_NUM, variables: { userEmail } },
+      ];
     }
   };
 
@@ -81,7 +88,7 @@ const CreateYouTube = ({ multiply, userEmail, setErrMsg }) => {
       onCompleted,
       refetchQueries: [
         { query: SEE_ALL_FAMILY_STORY_QEURY },
-        refectchMyStory(),
+        ...refectchMyStory(),
       ],
     }
   );
