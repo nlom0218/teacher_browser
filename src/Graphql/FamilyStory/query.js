@@ -112,3 +112,9 @@ export const MY_FAMILY_STORY_LIKE_NUM = gql`
     myFamilyStoryLikeNum(userEmail: $userEmail)
   }
 `;
+
+export const SEARCH_FAMILY_STROY_NUM = gql`
+  query Query($tag: String!) {
+    searchFamilyStoryNum(tag: $tag)
+  }
+`;
