@@ -76,3 +76,9 @@ export const SEE_LIKE_FAMILY_STORY = gql`
     }
   }
 `;
+
+export const ALL_FAMILY_STORY_NUM = gql`
+  query Query {
+    allFamilyStoryNum
+  }
+`;

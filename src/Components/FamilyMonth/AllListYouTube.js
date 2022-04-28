@@ -5,7 +5,10 @@ import qs from "qs";
 import PageBtn from "./Shared/PageBtn";
 import YouTubeList from "./Shared/YouTubeList";
 import { useQuery } from "@apollo/client";
-import { SEE_ALL_FAMILY_STORY_QEURY } from "../../Graphql/FamilyStory/query";
+import {
+  ALL_FAMILY_STORY_NUM,
+  SEE_ALL_FAMILY_STORY_QEURY,
+} from "../../Graphql/FamilyStory/query";
 import Loading from "../Shared/Loading";
 
 const Container = styled.div`
@@ -169,13 +172,17 @@ const AllListYoutube = () => {
 
   const { data, loading } = useQuery(SEE_ALL_FAMILY_STORY_QEURY);
 
+  const { data: num, loading: numLoading } = useQuery(ALL_FAMILY_STORY_NUM);
+
+  console.log(num);
+
   if (loading) {
     return <Loading page="subPage" />;
   }
 
   return (
     <Container>
-      <PageBtn page={page} pageType="list" />
+      <PageBtn page={page} pageType="list" itemNum={num?.allFamilyStoryNum} />
       <YouTubeList youtubeList={data?.seeAllFamilyStory} />
     </Container>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -30,13 +30,22 @@ const Btn = styled.div`
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 `;
 
-const PageBtn = ({ page, pageType, search }) => {
+const PageBtn = ({ page, pageType, search, itemNum }) => {
+  const [lastPage, setLastPage] = useState(1);
   const processFLPage = () => {
+    if (lastPage === parseInt(page)) {
+      return true;
+    }
     if (parseInt(page) === 1) {
       return true;
     }
     return false;
   };
+  useEffect(() => {
+    if (itemNum) {
+      setLastPage(Math.ceil(itemNum / 12));
+    }
+  }, [itemNum]);
   return (
     <SPageBtn FLPage={processFLPage()}>
       {parseInt(page) !== 1 && (
@@ -53,18 +62,20 @@ const PageBtn = ({ page, pageType, search }) => {
           </Btn>
         </Link>
       )}
-      <Link
-        to={{
-          pathname: `${routes.familyMonth}/${pageType}`,
-          search: `?${pageType === "search" ? `search=${search}&` : ""}page=${
-            parseInt(page) + 1
-          }`,
-        }}
-      >
-        <Btn>
-          <IoIosArrowForward />
-        </Btn>
-      </Link>
+      {lastPage !== parseInt(page) && (
+        <Link
+          to={{
+            pathname: `${routes.familyMonth}/${pageType}`,
+            search: `?${pageType === "search" ? `search=${search}&` : ""}page=${
+              parseInt(page) + 1
+            }`,
+          }}
+        >
+          <Btn>
+            <IoIosArrowForward />
+          </Btn>
+        </Link>
+      )}
     </SPageBtn>
   );
 };

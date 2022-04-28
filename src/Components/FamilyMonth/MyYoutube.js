@@ -51,7 +51,7 @@ const MyYouTube = ({ userEmail }) => {
   if (loading || !userEmail) {
     return <Loading page="subPage" />;
   }
-  console.log(data);
+
   return (
     <Container>
       <LikedMsg>
