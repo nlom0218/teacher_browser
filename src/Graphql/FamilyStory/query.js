@@ -37,8 +37,8 @@ export const SEE_FAMILY_STORY_QERUY = gql`
 `;
 
 export const SEE_MY_FAMILY_STORY_QUERY = gql`
-  query SeeMyFamilyStory($userEmail: String!) {
-    seeMyFamilyStory(userEmail: $userEmail) {
+  query SeeMyFamilyStory($userEmail: String!, $page: Int!) {
+    seeMyFamilyStory(userEmail: $userEmail, page: $page) {
       _id
       userEmail
       url

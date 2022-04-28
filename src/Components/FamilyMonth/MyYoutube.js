@@ -48,7 +48,10 @@ const MyYouTube = ({ userEmail }) => {
   });
 
   const { data, loading } = useQuery(SEE_MY_FAMILY_STORY_QUERY, {
-    variables: { userEmail },
+    variables: {
+      userEmail,
+      page: parseInt(page),
+    },
     skip: !userEmail,
   });
 
