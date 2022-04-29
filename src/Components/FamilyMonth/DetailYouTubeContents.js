@@ -9,11 +9,38 @@ import {
   MY_FAMILY_STORY_LIKE_NUM,
   SEE_LIKE_FAMILY_STORY,
 } from "../../Graphql/FamilyStory/query";
+import TextareaAutosize from "react-textarea-autosize";
 
 const Container = styled.div`
   display: grid;
   row-gap: 20px;
   row-gap: 1.25rem;
+  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
+  textarea {
+    all: unset;
+    line-height: 160%;
+    min-height: 100%;
+    max-height: 100%;
+    width: 100%;
+    resize: none;
+    padding: 15px 20px;
+    padding: 0.9375rem 1.25rem;
+    box-sizing: border-box;
+    background-color: ${(props) => props.theme.cardBg};
+    transition: background-color 1s ease;
+    padding: 15px 20px;
+    padding: 0.938rem 1.25rem;
+    border-radius: 10px;
+    border-radius: 0.625rem;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    ::placeholder {
+      color: ${(props) => props.theme.fontColor};
+      opacity: 0.6;
+      transition: color 1s ease;
+    }
+  }
 `;
 
 const TopContents = styled.div`
@@ -65,20 +92,6 @@ const Tags = styled.div`
   flex-wrap: wrap;
 `;
 
-const TextareaLayout = styled.div`
-  height: 200px;
-  background-color: ${(props) => props.theme.cardBg};
-  transition: background-color 1s ease;
-  border-radius: 10px;
-  border-radius: 0.625rem;
-  padding: 20px;
-  padding: 1.25rem;
-  margin-bottom: 20px;
-  margin-bottom: 1.25rem;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-`;
-
 const Text = styled.div`
   background-color: rgba(255, 255, 255, 0.4);
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
@@ -95,6 +108,7 @@ const DetailYouTubeContents = ({
   isLiked,
   loggedInUserEmail,
   setErrMsg,
+  contents,
 }) => {
   const [toggleFamilyStoryLike, { loading }] = useMutation(
     TOGGLE_FAMILY_STORY_LIKE_MUTATION,
@@ -173,7 +187,7 @@ const DetailYouTubeContents = ({
           })}
         </Tags>
       </TopContents>
-      <TextareaLayout>sdfsdfsdf</TextareaLayout>
+      <TextareaAutosize value={contents} maxRows={10}></TextareaAutosize>
     </Container>
   );
 };
