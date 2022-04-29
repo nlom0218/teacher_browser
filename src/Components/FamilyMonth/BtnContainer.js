@@ -56,7 +56,7 @@ const BtnContainer = ({ page, userEmail }) => {
         </Btn>
       </Link>
       <Link to={`${routes.familyMonth}/recommend`}>
-        <Btn>
+        <Btn isPage={page === "recommend"}>
           <AiFillLike />
         </Btn>
       </Link>
