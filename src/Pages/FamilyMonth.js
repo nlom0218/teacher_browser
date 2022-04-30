@@ -15,6 +15,7 @@ import AlertMessage from "../Components/Shared/AlertMessage";
 import SearchYouTube from "../Components/FamilyMonth/SearchYouTube";
 import LikedYouTube from "../Components/FamilyMonth/LikedYouTube";
 import MyYouTube from "../Components/FamilyMonth/MyYoutube";
+import RecommendPage from "../Components/FamilyMonth/RecommendPage";
 
 const Container = styled.div`
   min-height: 100%;
@@ -92,13 +93,7 @@ const FamilyMonth = () => {
                 />
               )}
               {!id && page === "list" && <AllListYoutube />}
-              {!id && page === "create" && (
-                <CreateYouTube
-                  multiply={multiply}
-                  userEmail={me?.email}
-                  setErrMsg={setErrMsg}
-                />
-              )}
+              {!id && page === "reommend" && <RecommendPage />}
               {!id && page === "liked" && (
                 <LikedYouTube userEmail={me?.email} />
               )}
@@ -107,6 +102,13 @@ const FamilyMonth = () => {
               )}
               {!id && page === "my" && (
                 <MyYouTube setErrMsg={setErrMsg} userEmail={me?.email} />
+              )}
+              {!id && page === "create" && (
+                <CreateYouTube
+                  multiply={multiply}
+                  userEmail={me?.email}
+                  setErrMsg={setErrMsg}
+                />
               )}
             </ContentsScrollLayout>
           </ContentsLayout>
