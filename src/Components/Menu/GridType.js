@@ -11,6 +11,7 @@ import {
   SwapLink,
   TimerLink,
   NewsLink,
+  FamilyMonthLink,
 } from "./MenuLink";
 
 const Container = styled.div`
@@ -66,6 +67,7 @@ const GridType = ({ onClickLunchmenu }) => {
       <JournalLink />
       <ListLink />
       <NewsLink />
+      <FamilyMonthLink />
     </Container>
   );
 };

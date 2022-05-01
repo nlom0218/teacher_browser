@@ -18,9 +18,11 @@ import IcOrder from "../../icons/Order/IcOrder";
 import IcJournal from "../../icons/Journal/IcJournal";
 import IcJournalClick from "../../icons/Journal/IcJournalClick";
 import IcNameTableOpened from "../../icons/NameTable/IcNameTableOpened";
-import { enableSeeStudent } from "../../apollo";
+import { enableSeeStudent, fullScreenMode } from "../../apollo";
 import IcNewsClick from "../../icons/News/IcNewsClick";
 import IcNews from "../../icons/News/IcNews";
+import useMedia from "../../Hooks/useMedia";
+import IcFamilyMonth from "../../icons/FamilyMonth/FamilyMonth";
 
 const SMenu = styled.div`
   display: grid;
@@ -183,6 +185,27 @@ export const NewsLink = () => {
       >
         {isHover ? <IcNewsClick /> : <IcNews />}
         <Title>뉴스</Title>
+      </SMenu>
+    </Link>
+  );
+};
+
+export const FamilyMonthLink = () => {
+  const media = useMedia();
+  const [isHover, setIsHover] = useState(false);
+  const onClickListLink = () => {
+    if (media === "Desktop") {
+      fullScreenMode();
+    }
+  };
+  return (
+    <Link to={routes.familyMonth} onClick={onClickListLink}>
+      <SMenu
+        onMouseEnter={() => setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
+      >
+        <IcFamilyMonth />
+        <Title>가정의 달</Title>
       </SMenu>
     </Link>
   );

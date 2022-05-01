@@ -17,7 +17,7 @@ const News = () => {
   const [init, setInit] = useState(true);
 
   return (
-    <BasicContainer>
+    <BasicContainer menuItem={true}>
       <Container>
         <NewsSection
           init={init}
