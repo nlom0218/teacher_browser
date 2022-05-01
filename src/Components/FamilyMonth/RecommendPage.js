@@ -1,9 +1,14 @@
 import React from "react";
 import styled from "styled-components";
+import CardShuffle from "../Shared/CardShuffle";
 
 const Container = styled.div``;
 
 const PageText = styled.div``;
+
+const Shuffling = styled.div`
+  position: relative;
+`;
 
 const RecommendPage = () => {
   return (

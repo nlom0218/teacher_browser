@@ -118,3 +118,21 @@ export const SEARCH_FAMILY_STROY_NUM = gql`
     searchFamilyStoryNum(tag: $tag)
   }
 `;
+
+export const SEE_RANDOM_FAMILY_STORY = gql`
+  query SeeRandomFamilyStory {
+    seeRandomFamilyStory {
+      userEmail
+      url
+      title
+      bgColor
+      videoType
+      tag
+      createdAt
+      contents
+      likeNum
+      isLiked
+      _id
+    }
+  }
+`;
