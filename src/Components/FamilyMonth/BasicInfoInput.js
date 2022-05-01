@@ -30,6 +30,7 @@ const NotUserMsg = styled.div`
   color: ${(props) => props.theme.redColor};
   transition: color 1s ease;
   font-weight: 600;
+  line-height: 120%;
 `;
 
 const InputLayout = styled.div`
@@ -126,6 +127,8 @@ const BasicInfoInput = ({ register, userEmail, bgColor, setBgColor }) => {
           />
           <NotUserMsg>
             로그인을 하지 않은 경우 게시물 수정, 삭제는 불가능합니다.
+            <br />
+            또한 이벤트 참여가 불가능합니다.
           </NotUserMsg>
         </InputLayout>
       )}

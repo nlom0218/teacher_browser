@@ -79,6 +79,8 @@ const CreateYouTube = ({ multiply, userEmail, setErrMsg }) => {
         },
         { query: MY_FAMILY_STORY_NUM, variables: { userEmail } },
       ];
+    } else {
+      return [];
     }
   };
 

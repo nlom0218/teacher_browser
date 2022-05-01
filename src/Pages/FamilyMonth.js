@@ -93,7 +93,7 @@ const FamilyMonth = () => {
                 />
               )}
               {!id && page === "list" && <AllListYoutube />}
-              {!id && page === "reommend" && <RecommendPage />}
+              {!id && page === "recommend" && <RecommendPage />}
               {!id && page === "liked" && (
                 <LikedYouTube userEmail={me?.email} />
               )}
