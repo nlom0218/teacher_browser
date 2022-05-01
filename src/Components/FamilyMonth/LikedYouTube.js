@@ -76,7 +76,7 @@ const LikedYouTube = ({ userEmail }) => {
   return (
     <Container>
       <LikedMsg>
-        <div>좋아요 한 가정의 달 이야기</div>
+        <div>내가 좋아요 한 가정의 달 이야기</div>
         <BsSuitHeartFill />
       </LikedMsg>
       <PageBtn
@@ -86,7 +86,7 @@ const LikedYouTube = ({ userEmail }) => {
         itemNum={num?.myFamilyStoryLikeNum}
       />
       {familyStoryArr.length === 0 ? (
-        <NotContentsMsgContainer preText="좋아요 한" />
+        <NotContentsMsgContainer preText="내가 좋아요 한" />
       ) : (
         <YouTubeList youtubeList={familyStoryArr} />
       )}
