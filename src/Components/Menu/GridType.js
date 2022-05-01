@@ -58,6 +58,7 @@ const Title = styled.div`
 const GridType = ({ onClickLunchmenu }) => {
   return (
     <Container>
+      <FamilyMonthLink />
       <TimerLink />
       <DrawLink />
       <SwapLink />
@@ -67,7 +68,6 @@ const GridType = ({ onClickLunchmenu }) => {
       <JournalLink />
       <ListLink />
       <NewsLink />
-      <FamilyMonthLink />
     </Container>
   );
 };
