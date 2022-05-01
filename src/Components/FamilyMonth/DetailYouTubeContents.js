@@ -181,11 +181,13 @@ const DetailYouTubeContents = ({
           </Icon>
           <LikedNum>{likeNum}개</LikedNum>
         </Liked>
-        <Tags>
-          {tag.map((item, index) => {
-            return <YouTubeTag key={index} tag={item} bgColor={bgColor} />;
-          })}
-        </Tags>
+        {tag && (
+          <Tags>
+            {tag.map((item, index) => {
+              return <YouTubeTag key={index} tag={item} bgColor={bgColor} />;
+            })}
+          </Tags>
+        )}
       </TopContents>
       <TextareaAutosize value={contents} maxRows={10}></TextareaAutosize>
     </Container>

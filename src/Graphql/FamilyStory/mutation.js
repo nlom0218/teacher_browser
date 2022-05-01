@@ -49,3 +49,30 @@ export const DELETE_FAMILY_STORY_MUTATION = gql`
     }
   }
 `;
+
+export const EDIT_FAMILY_STORY_MUTATION = gql`
+  mutation EditFamilyStory(
+    $editFamilyStoryId: String!
+    $url: String!
+    $title: String!
+    $bgColor: String!
+    $videoType: String!
+    $contents: String!
+    $tag: [String]
+    $userEmail: String!
+  ) {
+    editFamilyStory(
+      id: $editFamilyStoryId
+      url: $url
+      title: $title
+      bgColor: $bgColor
+      videoType: $videoType
+      contents: $contents
+      tag: $tag
+      userEmail: $userEmail
+    ) {
+      ok
+      error
+    }
+  }
+`;
