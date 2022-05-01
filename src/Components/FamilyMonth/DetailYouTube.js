@@ -7,6 +7,7 @@ import { useQuery } from "@apollo/client";
 import { SEE_FAMILY_STORY_QERUY } from "../../Graphql/FamilyStory/query";
 import Loading from "../Shared/Loading";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { inPopup } from "../../apollo";
 
 const YouTubePlayer = styled.div`
   width: 100%;
@@ -38,6 +39,10 @@ const DetailYouTube = ({ id, multiply, userEmail, setErrMsg }) => {
     variables: { id },
   });
 
+  const onClickDelBtn = () => {
+    inPopup("deleteFamilyStory");
+  };
+
   if (loading) {
     return <Loading page="subPage" />;
   }
@@ -49,7 +54,7 @@ const DetailYouTube = ({ id, multiply, userEmail, setErrMsg }) => {
           <Btn>
             <AiFillEdit />
           </Btn>
-          <Btn>
+          <Btn onClick={onClickDelBtn}>
             <AiFillDelete />
           </Btn>
         </BtnContainer>
