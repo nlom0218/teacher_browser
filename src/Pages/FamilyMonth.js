@@ -8,7 +8,7 @@ import DetailYouTube from "../Components/FamilyMonth/DetailYouTube";
 import CreateYouTube from "../Components/FamilyMonth/CreateYouTube";
 import AllListYoutube from "../Components/FamilyMonth/AllListYouTube";
 import { useReactiveVar } from "@apollo/client";
-import { isFullScreenModeVar, isPopupVar } from "../apollo";
+import { isFullScreenModeVar } from "../apollo";
 import useMedia from "../Hooks/useMedia";
 import useMe from "../Hooks/useMe";
 import AlertMessage from "../Components/Shared/AlertMessage";
@@ -16,7 +16,6 @@ import SearchYouTube from "../Components/FamilyMonth/SearchYouTube";
 import LikedYouTube from "../Components/FamilyMonth/LikedYouTube";
 import MyYouTube from "../Components/FamilyMonth/MyYoutube";
 import RecommendPage from "../Components/FamilyMonth/RecommendPage";
-import DeleteFamilyStory from "../Components/FamilyMonth/Popup/DeleteFamilyStory";
 
 const Container = styled.div`
   min-height: 100%;
@@ -62,9 +61,9 @@ const ContentsScrollLayout = styled.div`
 
 const FamilyMonth = () => {
   const me = useMe();
-  const isPopup = useReactiveVar(isPopupVar);
   const { page, id } = useParams();
   const [errMsg, setErrMsg] = useState(undefined);
+  const [msg, setMsg] = useState(undefined);
   const [multiply, setMultiply] = useState();
   const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
   const media = useMedia();
@@ -92,6 +91,7 @@ const FamilyMonth = () => {
                   multiply={multiply}
                   userEmail={me?.email}
                   setErrMsg={setErrMsg}
+                  setMsg={setMsg}
                 />
               )}
               {!id && page === "list" && <AllListYoutube />}
@@ -124,7 +124,6 @@ const FamilyMonth = () => {
           time={3000}
         />
       )}
-      {isPopup === "deleteFamilyStory" && <DeleteFamilyStory />}
     </BasicContainer>
   );
 };

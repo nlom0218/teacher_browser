@@ -3,11 +3,12 @@ import React from "react";
 import styled from "styled-components";
 import DetailYouTubeContents from "./DetailYouTubeContents";
 import MainContentsLayout from "./MainContentsLayout";
-import { useQuery } from "@apollo/client";
+import { useQuery, useReactiveVar } from "@apollo/client";
 import { SEE_FAMILY_STORY_QERUY } from "../../Graphql/FamilyStory/query";
 import Loading from "../Shared/Loading";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
-import { inPopup } from "../../apollo";
+import { inPopup, isPopupVar } from "../../apollo";
+import DeleteFamilyStory from "./Popup/DeleteFamilyStory";
 
 const YouTubePlayer = styled.div`
   width: 100%;
@@ -34,7 +35,8 @@ const Btn = styled.div`
   }
 `;
 
-const DetailYouTube = ({ id, multiply, userEmail, setErrMsg }) => {
+const DetailYouTube = ({ id, multiply, userEmail, setErrMsg, setMsg }) => {
+  const isPopup = useReactiveVar(isPopupVar);
   const { data, loading } = useQuery(SEE_FAMILY_STORY_QERUY, {
     variables: { id },
   });
@@ -74,6 +76,14 @@ const DetailYouTube = ({ id, multiply, userEmail, setErrMsg }) => {
         loggedInUserEmail={userEmail}
         setErrMsg={setErrMsg}
       />
+      {isPopup === "deleteFamilyStory" && (
+        <DeleteFamilyStory
+          setErrMsg={setErrMsg}
+          setMsg={setMsg}
+          familyStoryId={data?.seeFamilyStory?._id}
+          userEmail={userEmail}
+        />
+      )}
     </MainContentsLayout>
   );
 };

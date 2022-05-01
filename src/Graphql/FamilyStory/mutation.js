@@ -40,3 +40,12 @@ export const TOGGLE_FAMILY_STORY_LIKE_MUTATION = gql`
     }
   }
 `;
+
+export const DELETE_FAMILY_STORY_MUTATION = gql`
+  mutation DeleteFamilyStory($userEmail: String!, $familyStoryId: String!) {
+    deleteFamilyStory(userEmail: $userEmail, familyStoryId: $familyStoryId) {
+      ok
+      error
+    }
+  }
+`;
