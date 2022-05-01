@@ -4,7 +4,6 @@ import qs from "qs";
 import PageBtn from "./Shared/PageBtn";
 import styled from "styled-components";
 import YouTubeList from "./Shared/YouTubeList";
-import { youtubeList } from "./AllListYouTube";
 import { customMedia } from "../../styles";
 import { AiFillFolderOpen } from "react-icons/ai";
 import { useQuery } from "@apollo/client";
@@ -13,7 +12,6 @@ import {
   SEE_MY_FAMILY_STORY_QUERY,
 } from "../../Graphql/FamilyStory/query";
 import Loading from "../Shared/Loading";
-import NeedLoginPopupContainer from "../Shared/NeedLoginPopupContainer";
 import NotContentsMsgContainer from "./NotContentsMsgContainer";
 
 const Container = styled.div`
