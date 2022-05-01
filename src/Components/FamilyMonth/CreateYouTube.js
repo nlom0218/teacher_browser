@@ -14,13 +14,13 @@ import {
 } from "../../Graphql/FamilyStory/query";
 import FinishCreated from "./FinishCreated";
 
-const FormContainer = styled.form`
+export const FormContainer = styled.form`
   display: grid;
   row-gap: 20px;
   row-gap: 1.25rem;
 `;
 
-const SubmitInput = styled.input`
+export const SubmitInput = styled.input`
   background-color: ${(props) => props.theme.btnBgColor};
   color: ${(props) => props.theme.bgColor};
   transition: background-color 1s ease, color 1s ease;
@@ -33,7 +33,7 @@ const SubmitInput = styled.input`
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 `;
 
-const SubmitMsg = styled.div`
+export const SubmitMsg = styled.div`
   text-align: center;
   line-height: 120%;
   font-size: 0.875em;
@@ -44,7 +44,7 @@ const SubmitMsg = styled.div`
   row-gap: 0.3125rem;
 `;
 
-const TeacherCanLink = styled.div`
+export const TeacherCanLink = styled.div`
   padding: 5px 10px;
   padding: 0.3125rem 0.625rem;
   background-color: ${(props) => props.theme.green};
