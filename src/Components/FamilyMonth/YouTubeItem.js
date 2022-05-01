@@ -142,7 +142,7 @@ const YouTubeItem = ({
           <FaHeart />
           {likeNum}개
         </ContentsLikedNum>
-        <CreatedAt>{format(createdAt, "yy.MM.dd")}</CreatedAt>
+        <CreatedAt>{createdAt && format(createdAt, "yy.MM.dd")}</CreatedAt>
       </ContentsInfo>
     </SYouTubeItem>
   );
