@@ -56,18 +56,22 @@ const TeacherCanLink = styled.div`
 `;
 
 const CreateYouTube = ({ multiply, userEmail, setErrMsg }) => {
+  const [loading, setLoading] = useState(false);
   const [finish, setFinish] = useState(false);
   const [createId, setCreateId] = useState(undefined);
   const [bgColor, setBgColor] = useState(undefined);
 
   const onCompleted = (result) => {
     const {
-      createFamilyStory: { ok, id },
+      createFamilyStory: { ok, id, error },
     } = result;
     if (ok) {
       setFinish(true);
       setCreateId(id);
+    } else {
+      setErrMsg(error);
     }
+    setLoading(false);
   };
 
   const refectchMyStory = () => {
@@ -84,16 +88,13 @@ const CreateYouTube = ({ multiply, userEmail, setErrMsg }) => {
     }
   };
 
-  const [createFamilyStory, { loading }] = useMutation(
-    CREATE_FAMILY_STORY_MUTATION,
-    {
-      onCompleted,
-      refetchQueries: [
-        { query: SEE_ALL_FAMILY_STORY_QEURY },
-        ...refectchMyStory(),
-      ],
-    }
-  );
+  const [createFamilyStory] = useMutation(CREATE_FAMILY_STORY_MUTATION, {
+    onCompleted,
+    refetchQueries: [
+      { query: SEE_ALL_FAMILY_STORY_QEURY, variables: { page: 1 } },
+      ...refectchMyStory(),
+    ],
+  });
 
   const { register, watch, getValues, handleSubmit } = useForm({
     mode: "onChange",
@@ -137,13 +138,14 @@ const CreateYouTube = ({ multiply, userEmail, setErrMsg }) => {
         ...(tag !== "" && { tag: tag.replace(/(\s*)/g, "").split(",") }),
       },
     });
+    setLoading(true);
   };
 
   const onCLickLink = () => {
     window.open("https://www.instagram.com/teachercan_official/");
   };
 
-  if (loading && !finish) {
+  if (loading) {
     return <Loading page="subPage" />;
   }
 
