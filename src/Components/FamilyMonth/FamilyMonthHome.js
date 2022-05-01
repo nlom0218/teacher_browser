@@ -22,6 +22,8 @@ const Container = styled.div`
 `;
 
 const ImgContainer = styled.img`
+  margin-top: 5px;
+  margin-top: 0.3125rem;
   width: 100%;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 `;
@@ -49,6 +51,7 @@ const Text = styled.div`
   text-align: center;
   line-height: 120%;
   font-weight: 600;
+  color: #000000;
 `;
 
 const Btn = styled.div`
@@ -60,6 +63,8 @@ const Btn = styled.div`
   border-radius: 0.3125rem;
   cursor: pointer;
   color: #ffffff;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;
 
 const FamilyMonthHome = () => {
