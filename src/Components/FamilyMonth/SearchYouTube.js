@@ -14,6 +14,7 @@ import {
   SEE_SEARCH_FAMILY_STORY,
 } from "../../Graphql/FamilyStory/query";
 import Loading from "../Shared/Loading";
+import NotContentsMsgContainer from "./NotContentsMsgContainer";
 
 const Container = styled.div`
   display: grid;
@@ -131,7 +132,11 @@ const SearchYouTube = ({ setErrMsg }) => {
             itemNum={num?.searchFamilyStoryNum}
             refetch={refetch}
           />
-          <YouTubeList youtubeList={data?.seeSearchFamilyStory} />
+          {data?.seeSearchFamilyStory?.length === 0 ? (
+            <NotContentsMsgContainer preText="검색된" />
+          ) : (
+            <YouTubeList youtubeList={data?.seeSearchFamilyStory} />
+          )}
         </React.Fragment>
       )}
     </Container>

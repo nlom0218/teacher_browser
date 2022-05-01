@@ -10,6 +10,7 @@ import {
   SEE_ALL_FAMILY_STORY_QEURY,
 } from "../../Graphql/FamilyStory/query";
 import Loading from "../Shared/Loading";
+import NotContentsMsgContainer from "./NotContentsMsgContainer";
 
 const Container = styled.div`
   display: grid;
@@ -190,7 +191,11 @@ const AllListYoutube = () => {
         itemNum={num?.allFamilyStoryNum}
         refetch={refetch}
       />
-      <YouTubeList youtubeList={data?.seeAllFamilyStory} />
+      {data?.seeAllFamilyStory?.length === 0 ? (
+        <NotContentsMsgContainer preText="생성된" />
+      ) : (
+        <YouTubeList youtubeList={data?.seeAllFamilyStory} />
+      )}
     </Container>
   );
 };
