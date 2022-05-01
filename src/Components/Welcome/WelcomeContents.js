@@ -133,6 +133,16 @@ const WelcomeContents = () => {
           <ContentsItem
             onClick={() =>
               window.open(
+                "https://sparkly-corleggy-3e4.notion.site/22-5-1-82e3b526ac1e4c5ab69b5d0d79cb1354"
+              )
+            }
+          >
+            <FcCursor />
+            <div>22.5.1 공지사항</div>
+          </ContentsItem>
+          <ContentsItem
+            onClick={() =>
+              window.open(
                 "https://sparkly-corleggy-3e4.notion.site/22-4-17-7658f4a3675d454bb6ca10c1e8087a0d"
               )
             }
@@ -170,16 +180,6 @@ const WelcomeContents = () => {
             <FcCursor />
             <div>22.3.13 공지사항</div>
           </ContentsItem>
-          <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-3-6-8a5cad61d1a745859c38a870f86918ad"
-              )
-            }
-          >
-            <FcCursor />
-            <div>22.3.6 공지사항</div>
-          </ContentsItem>
         </Layout>
       </ContentsContainer>
       <ContentsContainer>
@@ -201,6 +201,16 @@ const WelcomeContents = () => {
           </TitleLayout>
         </Title>
         <Layout>
+          <ContentsItem
+            onClick={() =>
+              window.open(
+                "https://sparkly-corleggy-3e4.notion.site/5-31-c25d5524210048a084830b8dab049187"
+              )
+            }
+          >
+            <FcCursor />
+            <div>가정의 달 이벤트(~5.31)</div>
+          </ContentsItem>
           <ContentsItem
             onClick={() =>
               window.open(
