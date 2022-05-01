@@ -1,5 +1,6 @@
 import { useReactiveVar } from "@apollo/client";
 import React from "react";
+import { BsInstagram } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { isFullScreenModeVar } from "../../apollo";
@@ -21,17 +22,39 @@ const Container = styled.div`
   `}
 `;
 
+const Instargram = styled.div`
+  justify-self: flex-end;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 10px;
+  column-gap: 0.625rem;
+  align-items: center;
+  background-color: #f38180;
+  color: #ffffff;
+  padding: 5px 10px;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  svg {
+    font-size: 1.25em;
+    font-size: 1.25rem;
+  }
+`;
+
 const ImgContainer = styled.img`
-  margin-top: 5px;
-  margin-top: 0.3125rem;
   width: 100%;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 `;
 
 const Layout = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+  `}
 `;
 
 const SubImg = styled.img`
@@ -72,6 +95,14 @@ const FamilyMonthHome = () => {
   const isfullScreenMode = useReactiveVar(isFullScreenModeVar);
   return (
     <Container isfullScreenMode={isfullScreenMode}>
+      <Instargram
+        onClick={() => {
+          window.open("https://www.instagram.com/teachercan_official");
+        }}
+      >
+        <div>인스타그램 바로가기</div>
+        <BsInstagram />
+      </Instargram>
       <ImgContainer src={mainImg} />
       <Layout>
         <SubImg

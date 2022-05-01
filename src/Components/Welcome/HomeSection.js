@@ -32,6 +32,8 @@ const EventBtn = styled.div`
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
+    column-gap: 5px;
+    column-gap: 0.3125rem;
   }
 `;
 
