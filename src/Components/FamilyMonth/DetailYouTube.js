@@ -9,6 +9,8 @@ import Loading from "../Shared/Loading";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { inPopup, isPopupVar } from "../../apollo";
 import DeleteFamilyStory from "./Popup/DeleteFamilyStory";
+import { useNavigate } from "react-router-dom";
+import routes from "../../routes";
 
 const YouTubePlayer = styled.div`
   width: 100%;
@@ -36,10 +38,15 @@ const Btn = styled.div`
 `;
 
 const DetailYouTube = ({ id, multiply, userEmail, setErrMsg, setMsg }) => {
+  const navigate = useNavigate();
   const isPopup = useReactiveVar(isPopupVar);
   const { data, loading } = useQuery(SEE_FAMILY_STORY_QERUY, {
     variables: { id },
   });
+
+  const onClickEditBtn = () => {
+    navigate(`${routes.familyMonth}/edit/${id}`);
+  };
 
   const onClickDelBtn = () => {
     inPopup("deleteFamilyStory");
@@ -53,7 +60,7 @@ const DetailYouTube = ({ id, multiply, userEmail, setErrMsg, setMsg }) => {
     <MainContentsLayout>
       {userEmail === data?.seeFamilyStory?.userEmail && (
         <BtnContainer>
-          <Btn>
+          <Btn onClick={onClickEditBtn}>
             <AiFillEdit />
           </Btn>
           <Btn onClick={onClickDelBtn}>

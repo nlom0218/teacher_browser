@@ -16,6 +16,7 @@ import SearchYouTube from "../Components/FamilyMonth/SearchYouTube";
 import LikedYouTube from "../Components/FamilyMonth/LikedYouTube";
 import MyYouTube from "../Components/FamilyMonth/MyYoutube";
 import RecommendPage from "../Components/FamilyMonth/RecommendPage";
+import EditFamilyStory from "../Components/FamilyMonth/EditFamilyStory";
 
 const Container = styled.div`
   min-height: 100%;
@@ -85,8 +86,17 @@ const FamilyMonth = () => {
           <BtnContainer page={page} userEmail={me?.email} />
           <ContentsLayout>
             <ContentsScrollLayout>
-              {id && (
+              {id && page === "list" && (
                 <DetailYouTube
+                  id={id}
+                  multiply={multiply}
+                  userEmail={me?.email}
+                  setErrMsg={setErrMsg}
+                  setMsg={setMsg}
+                />
+              )}
+              {id && page === "edit" && (
+                <EditFamilyStory
                   id={id}
                   multiply={multiply}
                   userEmail={me?.email}
