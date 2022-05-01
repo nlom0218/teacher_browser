@@ -124,6 +124,9 @@ const FamilyMonth = () => {
           time={3000}
         />
       )}
+      {msg && (
+        <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />
+      )}
     </BasicContainer>
   );
 };

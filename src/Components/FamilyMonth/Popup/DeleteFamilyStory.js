@@ -9,6 +9,7 @@ import routes from "../../../routes";
 import Loading from "../../Shared/Loading";
 import {
   SEE_ALL_FAMILY_STORY_QEURY,
+  SEE_LIKE_FAMILY_STORY,
   SEE_MY_FAMILY_STORY_QUERY,
 } from "../../../Graphql/FamilyStory/query";
 
@@ -64,6 +65,13 @@ const DeleteFamilyStory = ({ familyStoryId, userEmail, setMsg, setErrMsg }) => {
       refetchQueries: [
         {
           query: SEE_MY_FAMILY_STORY_QUERY,
+          variables: {
+            userEmail,
+            page: 1,
+          },
+        },
+        {
+          query: SEE_LIKE_FAMILY_STORY,
           variables: {
             userEmail,
             page: 1,
