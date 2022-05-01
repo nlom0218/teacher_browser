@@ -126,6 +126,8 @@ const CreateYouTube = ({ multiply, userEmail, setErrMsg }) => {
       setErrMsg("테마 색깔을 선탁하세요.😢");
       return;
     }
+    const submitTag = tag.replace(/(\s*)/g, "").split(",");
+    const submitTagUnique = [...new Set(submitTag)];
     createFamilyStory({
       variables: {
         userEmail: userEmail ? userEmail : email,
@@ -135,7 +137,7 @@ const CreateYouTube = ({ multiply, userEmail, setErrMsg }) => {
         videoType,
         createdAt: new window.Date().getTime(),
         contents,
-        ...(tag !== "" && { tag: tag.replace(/(\s*)/g, "").split(",") }),
+        ...(tag !== "" && { tag: submitTagUnique }),
       },
     });
     setLoading(true);

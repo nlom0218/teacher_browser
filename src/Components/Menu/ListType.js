@@ -4,6 +4,7 @@ import News from "../../Pages/News";
 import { customMedia } from "../../styles";
 import {
   DrawLink,
+  FamilyMonthLink,
   JournalLink,
   ListLink,
   LunchmenuLink,
@@ -109,6 +110,7 @@ const ListType = ({ onClickLunchmenu }) => {
           기타 메뉴 <UnderLine></UnderLine>
         </Title>
         <PageLink>
+          <FamilyMonthLink />
           <NewsLink />
         </PageLink>
       </Theme>

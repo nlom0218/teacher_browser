@@ -1,5 +1,6 @@
 import { useReactiveVar } from "@apollo/client";
 import React from "react";
+import { BsInstagram } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { isFullScreenModeVar } from "../../apollo";
@@ -21,6 +22,26 @@ const Container = styled.div`
   `}
 `;
 
+const Instargram = styled.div`
+  justify-self: flex-end;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 10px;
+  column-gap: 0.625rem;
+  align-items: center;
+  background-color: #f38180;
+  color: #ffffff;
+  padding: 5px 10px;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  svg {
+    font-size: 1.25em;
+    font-size: 1.25rem;
+  }
+`;
+
 const ImgContainer = styled.img`
   width: 100%;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
@@ -28,8 +49,12 @@ const ImgContainer = styled.img`
 
 const Layout = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  ${customMedia.greaterThan("tablet")`
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+  `}
 `;
 
 const SubImg = styled.img`
@@ -49,6 +74,7 @@ const Text = styled.div`
   text-align: center;
   line-height: 120%;
   font-weight: 600;
+  color: #000000;
 `;
 
 const Btn = styled.div`
@@ -60,6 +86,8 @@ const Btn = styled.div`
   border-radius: 0.3125rem;
   cursor: pointer;
   color: #ffffff;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;
 
 const FamilyMonthHome = () => {
@@ -67,6 +95,14 @@ const FamilyMonthHome = () => {
   const isfullScreenMode = useReactiveVar(isFullScreenModeVar);
   return (
     <Container isfullScreenMode={isfullScreenMode}>
+      <Instargram
+        onClick={() => {
+          window.open("https://www.instagram.com/teachercan_official");
+        }}
+      >
+        <div>인스타그램 바로가기</div>
+        <BsInstagram />
+      </Instargram>
       <ImgContainer src={mainImg} />
       <Layout>
         <SubImg
@@ -93,7 +129,7 @@ const FamilyMonthHome = () => {
         <TextContainer bgColor="#AA96DA">
           <Text>
             유튜브에서 이야기와 관련된 영상을 가져오면 티처캔에서 유튜브를
-            재생할 수 있습니다😁
+            재생할 수 있습니다.😁
           </Text>
           <Btn
             btnColor="#9166ff"
@@ -135,7 +171,7 @@ const FamilyMonthHome = () => {
         <TextContainer bgColor="#EAFFD0">
           <Text>
             자세한 사용방법 및 이벤트 내용은 티처캔 인스타에서 확인하세요!
-            팔오우 해주시면 너무 행복합니다😊
+            팔로우 해주시면 너무 행복합니다.😊
           </Text>
           <Btn
             btnColor="#8dd32c"
@@ -152,6 +188,7 @@ const FamilyMonthHome = () => {
           }
         />
       </Layout>
+      <div></div>
     </Container>
   );
 };

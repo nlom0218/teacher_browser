@@ -18,6 +18,7 @@ import MyYouTube from "../Components/FamilyMonth/MyYoutube";
 import RecommendPage from "../Components/FamilyMonth/RecommendPage";
 import EditFamilyStory from "../Components/FamilyMonth/EditFamilyStory";
 import FamilyMonthHome from "../Components/FamilyMonth/FamilyMonthHome";
+import useTitle from "../Hooks/useTitle";
 
 const Container = styled.div`
   min-height: 100%;
@@ -62,6 +63,7 @@ const ContentsScrollLayout = styled.div`
 `;
 
 const FamilyMonth = () => {
+  const titleUpdataer = useTitle("티처캔 | 가정의 달");
   const me = useMe();
   const { page, id } = useParams();
   const [errMsg, setErrMsg] = useState(undefined);

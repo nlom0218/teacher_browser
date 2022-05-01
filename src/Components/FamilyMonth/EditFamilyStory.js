@@ -74,6 +74,8 @@ const EditFamilyStory = ({ userEmail, setErrMsg, multiply, setMsg }) => {
       setErrMsg("테마 색깔을 선탁하세요.😢");
       return;
     }
+    const submitTag = tag.replace(/(\s*)/g, "").split(",");
+    const submitTagUnique = [...new Set(submitTag)];
 
     editFamilyStory({
       variables: {
@@ -84,7 +86,7 @@ const EditFamilyStory = ({ userEmail, setErrMsg, multiply, setMsg }) => {
         bgColor,
         videoType,
         contents,
-        tag: tag ? tag.replace(/(\s*)/g, "").split(",") : null,
+        tag: tag ? submitTagUnique : null,
       },
     });
   };

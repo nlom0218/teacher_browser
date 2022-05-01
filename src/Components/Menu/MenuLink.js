@@ -205,7 +205,7 @@ export const FamilyMonthLink = () => {
         onMouseLeave={() => setIsHover(false)}
       >
         <IcFamilyMonth />
-        <Title>가정의 달</Title>
+        <Title style={{ color: "#F7658E" }}>가정의 달</Title>
       </SMenu>
     </Link>
   );

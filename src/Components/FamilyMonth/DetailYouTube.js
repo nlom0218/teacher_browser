@@ -1,5 +1,5 @@
 import getYouTubeID from "get-youtube-id";
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import DetailYouTubeContents from "./DetailYouTubeContents";
 import MainContentsLayout from "./MainContentsLayout";
@@ -9,7 +9,7 @@ import Loading from "../Shared/Loading";
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { inPopup, isPopupVar } from "../../apollo";
 import DeleteFamilyStory from "./Popup/DeleteFamilyStory";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import routes from "../../routes";
 
 const YouTubePlayer = styled.div`
@@ -35,6 +35,25 @@ const Btn = styled.div`
   svg {
     display: flex;
   }
+`;
+
+const DeleteMsg = styled.div`
+  text-align: center;
+  display: grid;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  justify-items: center;
+`;
+
+const DeleteMsgBtn = styled.div`
+  background-color: ${(props) => props.theme.btnBgColor};
+  color: ${(props) => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
+  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
 `;
 
 const DetailYouTube = ({ id, multiply, userEmail, setErrMsg, setMsg }) => {
@@ -68,21 +87,32 @@ const DetailYouTube = ({ id, multiply, userEmail, setErrMsg, setMsg }) => {
           </Btn>
         </BtnContainer>
       )}
-      <YouTubePlayer multiply={multiply}>
-        <iframe
-          src={`https://www.youtube.com/embed/${getYouTubeID(
-            data?.seeFamilyStory?.url
-          )}?showinfo=0&enablejsapi=1`}
-          width="100%"
-          height="100%"
-          title={data?.seeFamilyStory?.title}
-        ></iframe>
-      </YouTubePlayer>
-      <DetailYouTubeContents
-        {...data?.seeFamilyStory}
-        loggedInUserEmail={userEmail}
-        setErrMsg={setErrMsg}
-      />
+      {data?.seeFamilyStory ? (
+        <React.Fragment>
+          <YouTubePlayer multiply={multiply}>
+            <iframe
+              src={`https://www.youtube.com/embed/${getYouTubeID(
+                data?.seeFamilyStory?.url
+              )}?showinfo=0&enablejsapi=1`}
+              width="100%"
+              height="100%"
+              title={data?.seeFamilyStory?.title}
+            ></iframe>
+          </YouTubePlayer>
+          <DetailYouTubeContents
+            {...data?.seeFamilyStory}
+            loggedInUserEmail={userEmail}
+            setErrMsg={setErrMsg}
+          />
+        </React.Fragment>
+      ) : (
+        <DeleteMsg>
+          <div>가정의 달 이야기가 존재하지 않습니다.</div>
+          <Link to={routes.familyMonth}>
+            <DeleteMsgBtn>가정의 달 메인으로 돌아가기</DeleteMsgBtn>
+          </Link>
+        </DeleteMsg>
+      )}
       {isPopup === "deleteFamilyStory" && (
         <DeleteFamilyStory
           setErrMsg={setErrMsg}

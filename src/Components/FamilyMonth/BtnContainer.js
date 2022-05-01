@@ -55,11 +55,11 @@ const BtnContainer = ({ page, userEmail }) => {
           <AiFillYoutube />
         </Btn>
       </Link>
-      <Link to={`${routes.familyMonth}/recommend`}>
+      {/* <Link to={`${routes.familyMonth}/recommend`}>
         <Btn isPage={page === "recommend"}>
           <AiFillLike />
         </Btn>
-      </Link>
+      </Link> */}
       {userEmail && (
         <Link
           to={{

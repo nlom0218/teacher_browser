@@ -7,7 +7,7 @@ const Container = styled.div`
 `;
 
 const NotContentsMsgContainer = ({ preText }) => {
-  return <Container>{preText} 가정의 달 이야기가 없습니다.🥹</Container>;
+  return <Container>{preText} 가정의 달 이야기가 없습니다.😅</Container>;
 };
 
 export default NotContentsMsgContainer;

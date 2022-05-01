@@ -169,7 +169,7 @@ const DetailYouTubeContents = ({
         <Title>{title}</Title>
         <ContentsInfo>
           <div>{userEmail}</div>
-          <CreatedAt>{format(createdAt, "yy.MM.dd")}</CreatedAt>
+          <CreatedAt>{createdAt && format(createdAt, "yy.MM.dd")}</CreatedAt>
         </ContentsInfo>
         <Liked>
           <Icon onClick={onClickLikeBtn}>
