@@ -72,7 +72,7 @@ const SearchYouTube = ({ setErrMsg }) => {
     ignoreQueryPrefix: true,
   });
 
-  const { data, loading } = useQuery(SEE_SEARCH_FAMILY_STORY, {
+  const { data, loading, refetch } = useQuery(SEE_SEARCH_FAMILY_STORY, {
     variables: {
       tag: search,
       page: parseInt(page),
@@ -129,6 +129,7 @@ const SearchYouTube = ({ setErrMsg }) => {
             pageType="search"
             search={search}
             itemNum={num?.searchFamilyStoryNum}
+            refetch={refetch}
           />
           <YouTubeList youtubeList={data?.seeSearchFamilyStory} />
         </React.Fragment>

@@ -170,7 +170,7 @@ const AllListYoutube = () => {
     ignoreQueryPrefix: true,
   });
 
-  const { data, loading } = useQuery(SEE_ALL_FAMILY_STORY_QEURY, {
+  const { data, loading, refetch } = useQuery(SEE_ALL_FAMILY_STORY_QEURY, {
     variables: {
       page: parseInt(page),
     },
@@ -184,7 +184,12 @@ const AllListYoutube = () => {
 
   return (
     <Container>
-      <PageBtn page={page} pageType="list" itemNum={num?.allFamilyStoryNum} />
+      <PageBtn
+        page={page}
+        pageType="list"
+        itemNum={num?.allFamilyStoryNum}
+        refetch={refetch}
+      />
       <YouTubeList youtubeList={data?.seeAllFamilyStory} />
     </Container>
   );

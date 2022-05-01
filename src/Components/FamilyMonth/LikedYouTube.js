@@ -46,7 +46,7 @@ const LikedYouTube = ({ userEmail }) => {
   const { page } = qs.parse(location.search, {
     ignoreQueryPrefix: true,
   });
-  const { data, loading } = useQuery(SEE_LIKE_FAMILY_STORY, {
+  const { data, loading, refetch } = useQuery(SEE_LIKE_FAMILY_STORY, {
     variables: {
       userEmail,
       page: parseInt(page),
@@ -80,6 +80,7 @@ const LikedYouTube = ({ userEmail }) => {
         <BsSuitHeartFill />
       </LikedMsg>
       <PageBtn
+        refetch={refetch}
         page={page}
         pageType="liked"
         itemNum={num?.myFamilyStoryLikeNum}

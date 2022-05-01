@@ -116,7 +116,7 @@ const DetailYouTubeContents = ({
       refetchQueries: [
         {
           query: SEE_LIKE_FAMILY_STORY,
-          variables: { userEmail: loggedInUserEmail },
+          variables: { userEmail: loggedInUserEmail, page: 1 },
         },
         {
           query: MY_FAMILY_STORY_LIKE_NUM,

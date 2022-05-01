@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { AiOutlineRedo } from "react-icons/ai";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -7,7 +8,8 @@ import routes from "../../../routes";
 const SPageBtn = styled.div`
   justify-self: flex-end;
   display: grid;
-  grid-template-columns: ${(props) => (props.FLPage ? "1fr" : "1fr 1fr")};
+  grid-template-columns: ${(props) =>
+    props.FLPage ? "1fr 1fr" : "1fr 1fr 1fr"};
   column-gap: 20px;
   column-gap: 1.25rem;
   padding: 0px 20px;
@@ -30,7 +32,7 @@ const Btn = styled.div`
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 `;
 
-const PageBtn = ({ page, pageType, search, itemNum }) => {
+const PageBtn = ({ page, pageType, search, itemNum, refetch }) => {
   const [lastPage, setLastPage] = useState(1);
 
   const processFLPage = () => {
@@ -42,6 +44,9 @@ const PageBtn = ({ page, pageType, search, itemNum }) => {
     }
     return false;
   };
+  const onClickRefetch = () => {
+    refetch();
+  };
   useEffect(() => {
     if (itemNum) {
       setLastPage(Math.ceil(itemNum / 12));
@@ -49,6 +54,9 @@ const PageBtn = ({ page, pageType, search, itemNum }) => {
   }, [itemNum]);
   return (
     <SPageBtn FLPage={processFLPage()}>
+      <Btn onClick={onClickRefetch}>
+        <AiOutlineRedo />
+      </Btn>
       {parseInt(page) !== 1 && (
         <Link
           to={{

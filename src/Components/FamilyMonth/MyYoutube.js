@@ -47,7 +47,7 @@ const MyYouTube = ({ userEmail }) => {
     ignoreQueryPrefix: true,
   });
 
-  const { data, loading } = useQuery(SEE_MY_FAMILY_STORY_QUERY, {
+  const { data, loading, refetch } = useQuery(SEE_MY_FAMILY_STORY_QUERY, {
     variables: {
       userEmail,
       page: parseInt(page),
@@ -72,7 +72,12 @@ const MyYouTube = ({ userEmail }) => {
         <div>내가 만든 가정의 달 이야기</div>
         <AiFillFolderOpen />
       </LikedMsg>
-      <PageBtn page={page} pageType="liked" itemNum={num?.myFamilyStoryNum} />
+      <PageBtn
+        page={page}
+        pageType="liked"
+        itemNum={num?.myFamilyStoryNum}
+        refetch={refetch}
+      />
       {data?.seeMyFamilyStory?.length === 0 ? (
         <NotContentsMsgContainer preText="내가 만든" />
       ) : (
