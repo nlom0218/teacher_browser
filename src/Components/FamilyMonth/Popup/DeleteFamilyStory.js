@@ -1,6 +1,7 @@
 import React from "react";
 import BtnPopupContainer from "../../Shared/BtnPopupContainer";
 import styled from "styled-components";
+import { outPopup } from "../../../apollo";
 
 const Container = styled.div`
   display: grid;
@@ -31,6 +32,10 @@ const CancelBtn = styled.div`
 `;
 
 const DeleteFamilyStory = () => {
+  const onClickCancelBtn = () => {
+    outPopup();
+  };
+
   return (
     <BtnPopupContainer>
       <Container>
@@ -39,7 +44,9 @@ const DeleteFamilyStory = () => {
           삭제하시겠습니까?
         </Msg>
         <DeleteBtn className="family_story_btn">삭제하기</DeleteBtn>
-        <CancelBtn className="family_story_btn">취소하기</CancelBtn>
+        <CancelBtn onClick={onClickCancelBtn} className="family_story_btn">
+          취소하기
+        </CancelBtn>
       </Container>
     </BtnPopupContainer>
   );
