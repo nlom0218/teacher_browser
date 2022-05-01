@@ -9,7 +9,7 @@ const SPageBtn = styled.div`
   justify-self: flex-end;
   display: grid;
   grid-template-columns: ${(props) =>
-    props.FLPage ? "1fr 1fr" : "1fr 1fr 1fr"};
+    props.JustOnePage ? "1fr" : props.FLPage ? "1fr 1fr" : "1fr 1fr 1fr"};
   column-gap: 20px;
   column-gap: 1.25rem;
   padding: 0px 20px;
@@ -53,7 +53,10 @@ const PageBtn = ({ page, pageType, search, itemNum, refetch }) => {
     }
   }, [itemNum]);
   return (
-    <SPageBtn FLPage={processFLPage()}>
+    <SPageBtn
+      FLPage={processFLPage()}
+      JustOnePage={itemNum < 13 ? true : false}
+    >
       <Btn onClick={onClickRefetch}>
         <AiOutlineRedo />
       </Btn>
