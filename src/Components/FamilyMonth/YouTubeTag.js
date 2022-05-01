@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import routes from "../../routes";
 
 const Container = styled.div`
   margin-bottom: 5px;
@@ -22,7 +24,11 @@ const Container = styled.div`
 `;
 
 const YouTubeTag = ({ tag, bgColor }) => {
+  const navigate = useNavigate();
   const [hover, setHover] = useState(false);
+  const onClickTag = () => {
+    navigate(`${routes.familyMonth}/search?search=${tag}&page=1`);
+  };
   return (
     <Container
       bgColor={bgColor}
@@ -33,6 +39,7 @@ const YouTubeTag = ({ tag, bgColor }) => {
         setHover(false);
       }}
       hover={hover}
+      onClick={onClickTag}
     >
       #{tag}
     </Container>
