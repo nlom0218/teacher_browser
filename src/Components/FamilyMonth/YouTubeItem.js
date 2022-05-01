@@ -79,10 +79,10 @@ const ContentsTitle = styled.div`
   text-align: center;
   font-size: 1.25em;
   font-size: 1.25rem;
-  overflow: scroll;
+  /* overflow: scroll;
   text-overflow: ellipsis;
-  /* white-space: nowrap; */
-  word-break: break-all;
+  white-space: nowrap;
+  word-break: break-all; */
 `;
 
 const ContentsLikedNum = styled.div`

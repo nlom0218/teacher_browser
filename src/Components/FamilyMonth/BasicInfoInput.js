@@ -145,11 +145,11 @@ const BasicInfoInput = ({ register, userEmail, bgColor, setBgColor }) => {
       <InputLayout>
         <BsFillPencilFill />
         <input
-          placeholder="제목을 입력하세요.😃(최대 40자)"
+          placeholder="제목을 입력하세요.😃(최대 30자)"
           {...register("title")}
           type="text"
           autoComplete="off"
-          maxLength={40}
+          maxLength={30}
         />
       </InputLayout>
       <InputLayout className="not-center">
