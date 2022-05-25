@@ -4,9 +4,13 @@ import { FcSettings } from "react-icons/fc";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { inPopup, isFullScreenModeVar, isPopupVar } from "../apollo";
+import {
+  fullScreenMode,
+  inPopup,
+  isFullScreenModeVar,
+  isPopupVar,
+} from "../apollo";
 import AlertMessage from "../Components/Shared/AlertMessage";
-import BasicContainer from "../Components/Shared/BasicContainer";
 import TimerSetting from "../Components/TimerSecond/Popup/TimerSetting";
 import TimerBtnContainer from "../Components/TimerSecond/TimerBtnContainer";
 import TimerContainer from "../Components/TimerSecond/TimerContainer";
@@ -21,7 +25,7 @@ import {
 import FinishCountdonw from "../Components/TimerSecond/Popup/FinishCountdonw";
 
 const Container = styled.div`
-  min-height: 100%;
+  min-height: 100vh;
   display: grid;
   grid-template-rows: auto auto 1fr auto;
   padding: 20px;
@@ -42,17 +46,6 @@ const TopContaner = styled.div`
   ${customMedia.greaterThan("tablet")`
     padding-top: 0px;
   `}
-`;
-
-const Title = styled.form`
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  column-gap: 20px;
-  column-gap: 1.25rem;
-  font-size: 1.5em;
-  font-size: 1.5rem;
-  opacity: ${(props) => (props.isFull ? 0 : 1)};
 `;
 
 const SettingIcon = styled.div`
@@ -137,16 +130,6 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
 
   const onClickSettingBtn = () => {
     inPopup("timerSetting");
-  };
-
-  const timerUrl =
-    process.env.NODE_ENV === "production"
-      ? `https://teachercan.com/timer_popup/${mode}`
-      : `http://localhost:3000/timer_popup/${mode}`;
-  const windowFeatures = "left=100,top=100,width=1280,height=640, popup";
-
-  const onClickNewWindow = () => {
-    window.open(timerUrl, "timer", windowFeatures);
   };
 
   useEffect(() => {
@@ -263,80 +246,77 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
     }
   }, [alarmAudio]);
 
+  useEffect(() => {
+    fullScreenMode();
+  }, []);
+
   return (
     <React.Fragment>
-      <BasicContainer menuItem={true} page="timer">
-        <Container>
-          <TopContaner>
-            <Title isFull={isFullScreenMode}>
-              {!isFullScreenMode ? "타이머" : "11"}
-            </Title>
-            {timerStatus === "pause" && (
-              <SettingIcon
-                isFullScreenMode={isFullScreenMode}
-                onClick={onClickSettingBtn}
-              >
-                <FcSettings />
-              </SettingIcon>
-            )}
-          </TopContaner>
-          <SetModeContainer>
-            <Link to={`${routes.timer}/countup`}>
-              <ModeBtn selected={mode === "countup"}>COUNT UP</ModeBtn>
-            </Link>
-            <Link to={`${routes.timer}/countdown`}>
-              <ModeBtn selected={mode === "countdown"}>COUNT DOWN</ModeBtn>
-            </Link>
-            <div onClick={onClickNewWindow}>새창으로 열기</div>
-          </SetModeContainer>
-          <TimerContainer
-            hours={hours}
-            minutes={minutes}
-            seconds={seconds}
-            isFullScreenMode={isFullScreenMode}
-          />
-          <TimerBtnContainer
-            timerStatus={timerStatus}
-            setTimerStatus={setTimerStatus}
-            setReset={setReset}
-            setErrMsg={setErrMsg}
-            localHours={localHours}
-            localMinutes={localMinutes}
-            localSeconds={localSeconds}
-            mode={mode}
-            bgMusic={bgMusic}
-            alarmAudio={alarmAudio}
-            isFullScreenMode={isFullScreenMode}
-          />
-        </Container>
-        {isPopup === "timerSetting" && (
-          <TimerSetting
-            mode={mode}
-            hours={hours}
-            setHours={setHours}
-            minutes={minutes}
-            setMinutes={setMinutes}
-            seconds={seconds}
-            setSeconds={setSeconds}
-            setErrMsg={setErrMsg}
-            setBgMusic={setBgMusic}
-            bgMusic={bgMusic}
-            alarmAudio={alarmAudio}
-            setAlarmAudio={setAlarmAudio}
-          />
-        )}
-        {isPopup === "finishCountdown" && (
-          <FinishCountdonw alremMp3={alremMp3} />
-        )}
-        {errMsg && (
-          <AlertMessage
-            msg={errMsg}
-            setMsg={setErrMsg}
-            time={3000}
-            type="error"
-          />
-        )}
-      </BasicContainer>
+      <Container>
+        <TopContaner>
+          {timerStatus === "pause" && (
+            <SettingIcon
+              isFullScreenMode={isFullScreenMode}
+              onClick={onClickSettingBtn}
+            >
+              <FcSettings />
+            </SettingIcon>
+          )}
+        </TopContaner>
+        <SetModeContainer>
+          <Link to={`${routes.timerPopup}/countup`}>
+            <ModeBtn selected={mode === "countup"}>COUNT UP</ModeBtn>
+          </Link>
+          <Link to={`${routes.timerPopup}/countdown`}>
+            <ModeBtn selected={mode === "countdown"}>COUNT DOWN</ModeBtn>
+          </Link>
+        </SetModeContainer>
+        <TimerContainer
+          hours={hours}
+          minutes={minutes}
+          seconds={seconds}
+          isFullScreenMode={isFullScreenMode}
+          isPopup={true}
+        />
+        <TimerBtnContainer
+          timerStatus={timerStatus}
+          setTimerStatus={setTimerStatus}
+          setReset={setReset}
+          setErrMsg={setErrMsg}
+          localHours={localHours}
+          localMinutes={localMinutes}
+          localSeconds={localSeconds}
+          mode={mode}
+          bgMusic={bgMusic}
+          alarmAudio={alarmAudio}
+          isFullScreenMode={isFullScreenMode}
+        />
+      </Container>
+      {isPopup === "timerSetting" && (
+        <TimerSetting
+          mode={mode}
+          hours={hours}
+          setHours={setHours}
+          minutes={minutes}
+          setMinutes={setMinutes}
+          seconds={seconds}
+          setSeconds={setSeconds}
+          setErrMsg={setErrMsg}
+          setBgMusic={setBgMusic}
+          bgMusic={bgMusic}
+          alarmAudio={alarmAudio}
+          setAlarmAudio={setAlarmAudio}
+        />
+      )}
+      {isPopup === "finishCountdown" && <FinishCountdonw alremMp3={alremMp3} />}
+      {errMsg && (
+        <AlertMessage
+          msg={errMsg}
+          setMsg={setErrMsg}
+          time={3000}
+          type="error"
+        />
+      )}
     </React.Fragment>
   );
 };

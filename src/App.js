@@ -46,6 +46,7 @@ import { stopMusicFn } from "./audio/BackgroundMusic/BackgroundMusic";
 import AgreePolicy from "./Pages/AgreePolicy";
 import News from "./Pages/News";
 import FamilyMonth from "./Pages/FamilyMonth";
+import TimerPopup from "./Pages/TimerPopup";
 
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
@@ -163,6 +164,12 @@ function App() {
               bgMusicMp3={bgMusicMp3}
               setBgMusicMp3={setBgMusicMp3}
             />
+          }
+        />
+        <Route
+          path={`${routes.timerPopup}/:mode`}
+          element={
+            <TimerPopup bgMusicMp3={bgMusicMp3} setBgMusicMp3={setBgMusicMp3} />
           }
         />
         <Route path={routes.draw} element={<Draw />} />
