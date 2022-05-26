@@ -39,9 +39,13 @@ const Container = styled.div`
 const SettingIcon = styled.div`
   svg {
     display: flex;
-    font-size: 2.5em;
-    font-size: 2.5rem;
+    font-size: 1.25em;
+    font-size: 1.25rem;
     cursor: pointer;
+    ${customMedia.greaterThan("desktop")`
+        font-size: 1.5em;
+        font-size: 1.5rem;
+    `}
   }
   justify-self: flex-end;
   background-color: ${(props) => props.isFullScreenMode && color.white};
@@ -60,10 +64,8 @@ const SetModeContainer = styled.div`
   row-gap: 1.25rem;
   align-items: center;
   /* padding-top: 20px; */
-  ${customMedia.greaterThan("tablet")`
-    grid-template-columns: auto auto 1fr;
-    padding-top: 0px;
-  `}
+  grid-template-columns: auto auto 1fr;
+  padding-top: 0px;
 `;
 
 const ModeBtn = styled.div`
@@ -80,6 +82,12 @@ const ModeBtn = styled.div`
     opacity: 1;
     transition: opacity 0.6s ease;
   }
+  font-size: 0.75em;
+  font-size: 0.75rem;
+  ${customMedia.greaterThan("desktop")`
+    font-size: 1em;
+    font-size: 1rem;
+  `}
 `;
 
 const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
@@ -244,7 +252,7 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
           </Link>
           <Link to={`${routes.timerPopup}/countdown`}>
             <ModeBtn selected={mode === "countdown"}>COUNT DOWN</ModeBtn>
-          </Link>{" "}
+          </Link>
           {timerStatus === "pause" && (
             <SettingIcon
               isFullScreenMode={isFullScreenMode}

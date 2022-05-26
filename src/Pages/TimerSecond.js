@@ -19,6 +19,9 @@ import {
   pauseMusicFn,
 } from "../audio/BackgroundMusic/BackgroundMusic";
 import FinishCountdonw from "../Components/TimerSecond/Popup/FinishCountdonw";
+import media from "styled-media-query";
+import useMedia from "../Hooks/useMedia";
+import { IoIosBrowsers } from "react-icons/io";
 
 const Container = styled.div`
   min-height: 100%;
@@ -82,8 +85,7 @@ const SetModeContainer = styled.div`
   row-gap: 1.25rem;
   /* padding-top: 20px; */
   ${customMedia.greaterThan("tablet")`
-    justify-self: flex-start;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto 1fr;
     padding-top: 0px;
   `}
 `;
@@ -104,8 +106,25 @@ const ModeBtn = styled.div`
   }
 `;
 
+const NewWindow = styled.div`
+  justify-self: flex-start;
+  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
+  background-color: ${(props) => props.theme.btnBgColor};
+  color: ${(props) => props.theme.bgColor};
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  transition: background-color 1s ease, color 1s ease;
+  cursor: pointer;
+  svg {
+    display: flex;
+  }
+`;
+
 const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
   const titleUpdataer = useTitle("티처캔 | 타이머");
+
+  const media = useMedia();
 
   const isPopup = useReactiveVar(isPopupVar);
   const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
@@ -287,7 +306,11 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
             <Link to={`${routes.timer}/countdown`}>
               <ModeBtn selected={mode === "countdown"}>COUNT DOWN</ModeBtn>
             </Link>
-            <div onClick={onClickNewWindow}>새창으로 열기</div>
+            {media === "Desktop" && (
+              <NewWindow onClick={onClickNewWindow}>
+                <IoIosBrowsers />
+              </NewWindow>
+            )}
           </SetModeContainer>
           <TimerContainer
             hours={hours}

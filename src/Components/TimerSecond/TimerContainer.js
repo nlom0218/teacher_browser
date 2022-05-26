@@ -15,22 +15,26 @@ const TimeBox = styled.div`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  font-size: ${(props) =>
+  /* font-size: ${(props) =>
     props.isFullScreenMode
       ? props.isHours
         ? "20vw"
         : "26vw"
       : props.isHours
       ? "12vw"
-      : "18vw"};
+      : "18vw"}; */
+  font-size: ${(props) => (props.isHours ? "22vw" : "28vw")};
   text-align: center;
   transition: font-size 0.4s ease;
-  cursor: ${(props) => props.isPopup !== true && "pointer"};
+  /* cursor: ${(props) => props.isPopup !== true && "pointer"};
   color: ${(props) => props.isFullScreenMode && color.white};
   text-shadow: ${(props) =>
     props.isFullScreenMode && "rgb(0, 0, 0) 5px 5px 5px"};
   text-shadow: ${(props) =>
-    props.isFullScreenMode && "rgb(0, 0, 0) 0.3125rem 0.3125rem 0.3125rem"};
+    props.isFullScreenMode && "rgb(0, 0, 0) 0.3125rem 0.3125rem 0.3125rem"}; */
+  color: ${color.white};
+  text-shadow: rgb(0, 0, 0) 5px 5px 5px;
+  text-shadow: rgb(0, 0, 0) 0.3125rem 0.3125rem 0.3125rem;
 `;
 
 const TimerContainer = ({
