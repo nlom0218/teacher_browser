@@ -27,31 +27,16 @@ import FinishCountdonw from "../Components/TimerSecond/Popup/FinishCountdonw";
 const Container = styled.div`
   min-height: 100vh;
   display: grid;
-  grid-template-rows: auto auto 1fr auto;
+  grid-template-rows: auto 1fr auto;
   padding: 20px;
   padding: 1.25rem;
   row-gap: 20px;
   row-gap: 1.25rem;
   align-items: flex-start;
   position: relative;
-  ${customMedia.greaterThan("tablet")`
-    padding: 40px;
-    padding: 2.5rem;
-  `}
-`;
-
-const TopContaner = styled.div`
-  position: relative;
-  padding-top: 20px;
-  ${customMedia.greaterThan("tablet")`
-    padding-top: 0px;
-  `}
 `;
 
 const SettingIcon = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
   svg {
     display: flex;
     font-size: 2.5em;
@@ -60,10 +45,10 @@ const SettingIcon = styled.div`
   }
   justify-self: flex-end;
   background-color: ${(props) => props.isFullScreenMode && color.white};
-  padding: ${(props) => props.isFullScreenMode && "5px"};
-  padding: ${(props) => props.isFullScreenMode && "0.3125rem"};
-  border-radius: ${(props) => props.isFullScreenMode && "5px"};
-  border-radius: ${(props) => props.isFullScreenMode && "0.3125rem"};
+  padding: 5px;
+  padding: 0.3125rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
 `;
 
 const SetModeContainer = styled.div`
@@ -73,10 +58,10 @@ const SetModeContainer = styled.div`
   column-gap: 1.25rem;
   row-gap: 20px;
   row-gap: 1.25rem;
+  align-items: center;
   /* padding-top: 20px; */
   ${customMedia.greaterThan("tablet")`
-    justify-self: flex-start;
-    grid-template-columns: auto auto;
+    grid-template-columns: auto auto 1fr;
     padding-top: 0px;
   `}
 `;
@@ -253,7 +238,13 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
   return (
     <React.Fragment>
       <Container>
-        <TopContaner>
+        <SetModeContainer>
+          <Link to={`${routes.timerPopup}/countup`}>
+            <ModeBtn selected={mode === "countup"}>COUNT UP</ModeBtn>
+          </Link>
+          <Link to={`${routes.timerPopup}/countdown`}>
+            <ModeBtn selected={mode === "countdown"}>COUNT DOWN</ModeBtn>
+          </Link>{" "}
           {timerStatus === "pause" && (
             <SettingIcon
               isFullScreenMode={isFullScreenMode}
@@ -262,14 +253,6 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
               <FcSettings />
             </SettingIcon>
           )}
-        </TopContaner>
-        <SetModeContainer>
-          <Link to={`${routes.timerPopup}/countup`}>
-            <ModeBtn selected={mode === "countup"}>COUNT UP</ModeBtn>
-          </Link>
-          <Link to={`${routes.timerPopup}/countdown`}>
-            <ModeBtn selected={mode === "countdown"}>COUNT DOWN</ModeBtn>
-          </Link>
         </SetModeContainer>
         <TimerContainer
           hours={hours}

@@ -25,7 +25,7 @@ const TimeBox = styled.div`
       : "18vw"};
   text-align: center;
   transition: font-size 0.4s ease;
-  cursor: pointer;
+  cursor: ${(props) => props.isPopup !== true && "pointer"};
   color: ${(props) => props.isFullScreenMode && color.white};
   text-shadow: ${(props) =>
     props.isFullScreenMode && "rgb(0, 0, 0) 5px 5px 5px"};
@@ -51,6 +51,7 @@ const TimerContainer = ({
   return (
     <Container>
       <TimeBox
+        isPopup={isPopup}
         onClick={onClickTiemBox}
         isFullScreenMode={isFullScreenMode}
         isHours={hours !== 0}
