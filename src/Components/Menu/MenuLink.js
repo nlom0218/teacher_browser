@@ -204,7 +204,6 @@ export const NewsLink = () => {
 
 export const FamilyMonthLink = () => {
   const media = useMedia();
-  const [isHover, setIsHover] = useState(false);
   const onClickListLink = () => {
     if (media === "Desktop") {
       fullScreenMode();
@@ -213,8 +212,8 @@ export const FamilyMonthLink = () => {
   return (
     <Link to={routes.familyMonth} onClick={onClickListLink}>
       <SMenu
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
+      // onMouseEnter={() => setIsHover(true)}
+      // onMouseLeave={() => setIsHover(false)}
       >
         <IcFamilyMonth />
         <Title style={{ color: "#F7658E" }}>가정의 달</Title>

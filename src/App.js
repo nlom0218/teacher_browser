@@ -158,15 +158,6 @@ function App() {
         <Route path={routes.pageLink} element={<PageLink />} />
         <Route path={routes.menu} element={<Menu />} />
         <Route
-          path={`${routes.timer}/:mode`}
-          element={
-            <TimerSecond
-              bgMusicMp3={bgMusicMp3}
-              setBgMusicMp3={setBgMusicMp3}
-            />
-          }
-        />
-        <Route
           path={`${routes.timerPopup}/:mode`}
           element={
             <TimerPopup bgMusicMp3={bgMusicMp3} setBgMusicMp3={setBgMusicMp3} />

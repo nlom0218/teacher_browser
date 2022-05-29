@@ -19,7 +19,6 @@ import {
   pauseMusicFn,
 } from "../audio/BackgroundMusic/BackgroundMusic";
 import FinishCountdonw from "../Components/TimerSecond/Popup/FinishCountdonw";
-import media from "styled-media-query";
 import useMedia from "../Hooks/useMedia";
 import { IoIosBrowsers } from "react-icons/io";
 

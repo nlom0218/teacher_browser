@@ -1,10 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import News from "../../Pages/News";
 import { customMedia } from "../../styles";
 import {
   DrawLink,
-  FamilyMonthLink,
   JournalLink,
   ListLink,
   LunchmenuLink,
