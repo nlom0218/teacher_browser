@@ -46,15 +46,27 @@ const SMenu = styled.div`
   }
 `;
 
+const STimerLink = styled.a``;
+
 const Title = styled.div`
   font-weight: 600;
   text-align: center;
 `;
 
 export const TimerLink = () => {
+  const timerUrl =
+    process.env.NODE_ENV === "production"
+      ? `https://teachercan.com/timer_popup/countup`
+      : `http://localhost:3000/timer_popup/countup`;
+  const windowFeatures = "left=100,top=100,width=1280,height=640, popup";
+
+  const onClickNewWindow = () => {
+    window.open(timerUrl, "timer", windowFeatures);
+  };
+
   const [isHover, setIsHover] = useState(false);
   return (
-    <Link to={`${routes.timer}/countup`}>
+    <STimerLink onClick={onClickNewWindow}>
       <SMenu
         onMouseEnter={() => setIsHover(true)}
         onMouseLeave={() => setIsHover(false)}
@@ -62,7 +74,7 @@ export const TimerLink = () => {
         {isHover ? <IcPressedStopwatch /> : <IcStopwatch />}
         <Title>타이머</Title>
       </SMenu>
-    </Link>
+    </STimerLink>
   );
 };
 
@@ -192,7 +204,6 @@ export const NewsLink = () => {
 
 export const FamilyMonthLink = () => {
   const media = useMedia();
-  const [isHover, setIsHover] = useState(false);
   const onClickListLink = () => {
     if (media === "Desktop") {
       fullScreenMode();
@@ -201,8 +212,8 @@ export const FamilyMonthLink = () => {
   return (
     <Link to={routes.familyMonth} onClick={onClickListLink}>
       <SMenu
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
+      // onMouseEnter={() => setIsHover(true)}
+      // onMouseLeave={() => setIsHover(false)}
       >
         <IcFamilyMonth />
         <Title style={{ color: "#F7658E" }}>가정의 달</Title>

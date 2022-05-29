@@ -6,6 +6,7 @@ const MENU = "/menu";
 
 // menu link
 const TIMER = "/timer";
+const TIMER_POPUP = "/timer_popup";
 const DRAW = "/draw";
 const SWAP = "/swap";
 const ORDER = "/order";
@@ -41,6 +42,7 @@ const routes = {
 
   // menu link
   timer: TIMER,
+  timerPopup: TIMER_POPUP,
   draw: DRAW,
   swap: SWAP,
   order: ORDER,
