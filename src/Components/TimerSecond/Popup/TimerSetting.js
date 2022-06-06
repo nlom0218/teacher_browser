@@ -8,6 +8,7 @@ import { stopMusicFn } from "../../../audio/BackgroundMusic/BackgroundMusic";
 import TimeSettingLayout from "./TimeSettingLayout";
 import BgMusicSettingLayout from "./BgMusicSettingLayout";
 import AlermSettingLayout from "./AlermSettingLayout";
+import MemoSettingLayout from "./MemoSettingLayout";
 
 const Container = styled.div`
   padding: 20px 0px;
@@ -141,6 +142,7 @@ const TimerSetting = ({
               setAlarmAudioMp3={setAlarmAudioMp3}
             />
           )}
+          <MemoSettingLayout register={register} />
           <SubmitInput type="submit" value="완료" />
         </TiemSettingContainer>
       </Container>
