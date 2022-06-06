@@ -41,12 +41,12 @@ const SettingIcon = styled.div`
     display: flex;
     font-size: 1.25em;
     font-size: 1.25rem;
-    cursor: pointer;
     ${customMedia.greaterThan("desktop")`
         font-size: 1.5em;
         font-size: 1.5rem;
-    `}
+        `}
   }
+  cursor: pointer;
   justify-self: flex-end;
   background-color: ${(props) => props.isFullScreenMode && color.white};
   padding: 5px;
