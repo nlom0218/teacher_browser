@@ -96,6 +96,8 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
   const isPopup = useReactiveVar(isPopupVar);
   const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
 
+  const localTimerMemo = localStorage.getItem("timerMemo");
+
   const { mode } = useParams();
 
   const localHours = parseInt(localStorage.getItem("countdownHours"))
@@ -268,6 +270,7 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
           seconds={seconds}
           isFullScreenMode={isFullScreenMode}
           isPopup={true}
+          localTimerMemo={localTimerMemo}
         />
         <TimerBtnContainer
           timerStatus={timerStatus}

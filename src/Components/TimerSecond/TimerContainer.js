@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { fullScreenMode, smallScreenMode } from "../../apollo";
 import { color, customMedia } from "../../styles";
+import { TiDelete } from "react-icons/ti";
 
 const Container = styled.div`
   min-height: 100%;
@@ -23,9 +24,24 @@ const MemoBox = styled.div`
     font-size: 6em;
     font-size: 6rem;
   `}
-  background-color: ${(props) => props.theme.bgColor};
-  border-radius: 20px;
+  background-color: ${(props) => props.theme.cardBg};
+  border-radius: 10px;
+  border-radius: 0.625rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  position: relative;
+`;
+
+const DelBtn = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: ${(props) => props.theme.redColor};
+  cursor: pointer;
+  svg {
+    font-size: 2em;
+    font-size: 2rem;
+    display: flex;
+  }
 `;
 
 const TimeBox = styled.div`
@@ -61,7 +77,15 @@ const TimerContainer = ({
   seconds,
   isFullScreenMode,
   isPopup,
+  localTimerMemo,
 }) => {
+  const [timerMemo, setTimerMemo] = useState(localStorage.getItem("timerMemo"));
+
+  const onClickDelBtn = () => {
+    localStorage.removeItem("timerMemo");
+    setTimerMemo(undefined);
+  };
+
   const onClickTiemBox = () => {
     if (isPopup) return;
     if (!isFullScreenMode) {
@@ -70,9 +94,23 @@ const TimerContainer = ({
       smallScreenMode();
     }
   };
+
+  useEffect(() => {
+    if (localTimerMemo) {
+      setTimerMemo(localTimerMemo);
+    }
+  }, [localTimerMemo]);
+
   return (
     <Container>
-      <MemoBox>4교시 국어 수업 준비, 준비물은</MemoBox>
+      {timerMemo && (
+        <MemoBox>
+          {timerMemo}
+          <DelBtn onClick={onClickDelBtn}>
+            <TiDelete />
+          </DelBtn>
+        </MemoBox>
+      )}
       <TimeBox
         isPopup={isPopup}
         onClick={onClickTiemBox}

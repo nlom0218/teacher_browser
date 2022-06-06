@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { SelectAudioContainer, SettingTitle } from "../styled/PopupStyled";
 
@@ -28,12 +28,30 @@ const MemoInput = styled.input`
   }
 `;
 
-const MemoSettingLayout = () => {
+const MemoSettingLayout = ({ register, setValue }) => {
+  const localTimerMemo = localStorage.getItem("timerMemo");
+
+  const onClickDelBtn = () => {
+    localStorage.removeItem("timerMemo");
+    setValue("timerMemo", "");
+  };
+
+  useEffect(() => {
+    if (localTimerMemo) {
+      setValue("timerMemo", localTimerMemo);
+    }
+  }, []);
+
   return (
     <SelectAudioContainer>
       <SettingTitle>메모</SettingTitle>
-      <DelBtn>삭제하기</DelBtn>
-      <MemoInput placeholder="메모를 입력하세요. 메모는 최대 20자까지 가능합니다." />
+      <DelBtn onClick={onClickDelBtn}>삭제하기</DelBtn>
+      <MemoInput
+        {...register("timerMemo")}
+        maxLength={20}
+        placeholder="메모를 입력하세요. 메모는 최대 20자까지 가능합니다."
+        autoComplete="off"
+      />
     </SelectAudioContainer>
   );
 };

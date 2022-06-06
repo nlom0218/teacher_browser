@@ -76,6 +76,10 @@ const TimerSetting = ({
   });
 
   const onSubmit = (data) => {
+    const { timerMemo } = data;
+    if (timerMemo !== "") {
+      localStorage.setItem("timerMemo", timerMemo);
+    }
     if (mode === "countdown") {
       const { hours, minutes, seconds } = data;
       localStorage.setItem("countdownHours", hours);
@@ -142,7 +146,7 @@ const TimerSetting = ({
               setAlarmAudioMp3={setAlarmAudioMp3}
             />
           )}
-          <MemoSettingLayout register={register} />
+          <MemoSettingLayout register={register} setValue={setValue} />
           <SubmitInput type="submit" value="완료" />
         </TiemSettingContainer>
       </Container>
