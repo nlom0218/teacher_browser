@@ -72,7 +72,7 @@ const TimerContainer = ({
   };
   return (
     <Container>
-      <MemoBox>4교시 국어 수업 준비, 준비물은 없음</MemoBox>
+      <MemoBox>4교시 국어 수업 준비, 준비물은</MemoBox>
       <TimeBox
         isPopup={isPopup}
         onClick={onClickTiemBox}
