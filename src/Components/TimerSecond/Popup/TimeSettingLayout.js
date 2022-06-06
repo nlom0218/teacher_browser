@@ -56,15 +56,18 @@ const TimeInput = styled.input`
   background-color: ${(props) => props.theme.originBgColor};
 `;
 
-const TimeSettingLayout = ({ register }) => {
+const TimeSettingLayout = ({ register, setValue }) => {
+  const setPreTime = (min) => {
+    setValue("minutes", min);
+  };
   return (
     <Container>
       <PreSetTime>
-        <TimeBox>30분</TimeBox>
-        <TimeBox>20분</TimeBox>
-        <TimeBox>10분</TimeBox>
-        <TimeBox>5분</TimeBox>
-        <TimeBox>3분</TimeBox>
+        <TimeBox onClick={() => setPreTime("30")}>30분</TimeBox>
+        <TimeBox onClick={() => setPreTime("20")}>20분</TimeBox>
+        <TimeBox onClick={() => setPreTime("10")}>10분</TimeBox>
+        <TimeBox onClick={() => setPreTime("5")}>5분</TimeBox>
+        <TimeBox onClick={() => setPreTime("3")}>3분</TimeBox>
       </PreSetTime>
       <Layout>
         <TimeInput

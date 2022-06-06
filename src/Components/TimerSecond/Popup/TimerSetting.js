@@ -122,7 +122,9 @@ const TimerSetting = ({
           {mode === "countdown" ? "카운트 다운 설정" : "카운트 업 설정"}
         </Title>
         <TiemSettingContainer onSubmit={handleSubmit(onSubmit)}>
-          {mode === "countdown" && <TimeSettingLayout register={register} />}
+          {mode === "countdown" && (
+            <TimeSettingLayout register={register} setValue={setValue} />
+          )}
           <BgMusicSettingLayout
             setErrMsg={setErrMsg}
             bgMusicMp3={bgMusicMp3}
