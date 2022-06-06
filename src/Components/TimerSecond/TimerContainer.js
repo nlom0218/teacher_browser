@@ -13,6 +13,7 @@ const Container = styled.div`
 `;
 
 const MemoBox = styled.div`
+  position: relative;
   font-size: 4em;
   font-size: 4rem;
   padding: 20px 40px;
@@ -20,15 +21,21 @@ const MemoBox = styled.div`
   line-height: 120%;
   font-weight: 600;
   text-align: center;
+  border-radius: 10px;
+  border-radius: 0.625rem;
   ${customMedia.greaterThan("desktop")`
     font-size: 6em;
     font-size: 6rem;
   `}
+
+  // 1
   background-color: ${(props) => props.theme.cardBg};
-  border-radius: 10px;
-  border-radius: 0.625rem;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  position: relative;
+
+  // 2
+  /* color: ${color.white};
+  text-shadow: rgb(0, 0, 0) 10px 10px 10px;
+  text-shadow: rgb(0, 0, 0) 0.625rem 0.625rem 0.625rem; */
 `;
 
 const DelBtn = styled.div`
