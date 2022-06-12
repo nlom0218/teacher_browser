@@ -84,10 +84,9 @@ const TimerContainer = ({
   seconds,
   isFullScreenMode,
   isPopup,
-  localTimerMemo,
+  timerMemo,
+  setTimerMemo,
 }) => {
-  const [timerMemo, setTimerMemo] = useState(localStorage.getItem("timerMemo"));
-
   const onClickDelBtn = () => {
     localStorage.removeItem("timerMemo");
     setTimerMemo(undefined);
@@ -101,12 +100,6 @@ const TimerContainer = ({
       smallScreenMode();
     }
   };
-
-  useEffect(() => {
-    if (localTimerMemo) {
-      setTimerMemo(localTimerMemo);
-    }
-  }, [localTimerMemo]);
 
   return (
     <Container>

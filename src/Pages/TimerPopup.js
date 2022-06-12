@@ -96,7 +96,8 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
   const isPopup = useReactiveVar(isPopupVar);
   const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
 
-  const localTimerMemo = localStorage.getItem("timerMemo");
+  const [timerMemo, setTimerMemo] = useState(localStorage.getItem("timerMemo"));
+  console.log(timerMemo);
 
   const { mode } = useParams();
 
@@ -270,7 +271,8 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
           seconds={seconds}
           isFullScreenMode={isFullScreenMode}
           isPopup={true}
-          localTimerMemo={localTimerMemo}
+          timerMemo={timerMemo}
+          setTimerMemo={setTimerMemo}
         />
         <TimerBtnContainer
           timerStatus={timerStatus}
@@ -300,6 +302,8 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
           bgMusic={bgMusic}
           alarmAudio={alarmAudio}
           setAlarmAudio={setAlarmAudio}
+          timerMemo={timerMemo}
+          setTimerMemo={setTimerMemo}
         />
       )}
       {isPopup === "finishCountdown" && <FinishCountdonw alremMp3={alremMp3} />}

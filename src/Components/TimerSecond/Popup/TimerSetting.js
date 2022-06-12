@@ -57,6 +57,8 @@ const TimerSetting = ({
   bgMusic,
   alarmAudio,
   setAlarmAudio,
+  timerMemo,
+  setTimerMemo,
 }) => {
   const [selectedBgMusic, setSelectedBgMusic] = useState(
     bgMusic ? bgMusic : undefined
@@ -79,6 +81,7 @@ const TimerSetting = ({
     const { timerMemo } = data;
     if (timerMemo !== "") {
       localStorage.setItem("timerMemo", timerMemo);
+      setTimerMemo(timerMemo);
     }
     if (mode === "countdown") {
       const { hours, minutes, seconds } = data;
@@ -146,7 +149,12 @@ const TimerSetting = ({
               setAlarmAudioMp3={setAlarmAudioMp3}
             />
           )}
-          <MemoSettingLayout register={register} setValue={setValue} />
+          <MemoSettingLayout
+            register={register}
+            setValue={setValue}
+            timerMemo={timerMemo}
+            setTimerMemo={setTimerMemo}
+          />
           <SubmitInput type="submit" value="완료" />
         </TiemSettingContainer>
       </Container>

@@ -28,17 +28,16 @@ const MemoInput = styled.input`
   }
 `;
 
-const MemoSettingLayout = ({ register, setValue }) => {
-  const localTimerMemo = localStorage.getItem("timerMemo");
-
+const MemoSettingLayout = ({ register, setValue, timerMemo, setTimerMemo }) => {
   const onClickDelBtn = () => {
     localStorage.removeItem("timerMemo");
     setValue("timerMemo", "");
+    setTimerMemo(undefined);
   };
 
   useEffect(() => {
-    if (localTimerMemo) {
-      setValue("timerMemo", localTimerMemo);
+    if (timerMemo) {
+      setValue("timerMemo", timerMemo);
     }
   }, []);
 
