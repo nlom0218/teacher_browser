@@ -58,7 +58,7 @@ export const TimerLink = () => {
     process.env.NODE_ENV === "production"
       ? `https://teachercan.com/timer_popup/countup`
       : `http://localhost:3000/timer_popup/countup`;
-  const windowFeatures = "left=100,top=100,width=1280,height=640, popup";
+  const windowFeatures = "left=100,top=100,width=1600,height=800, popup";
 
   const onClickNewWindow = () => {
     window.open(timerUrl, "timer", windowFeatures);

@@ -133,6 +133,16 @@ const WelcomeContents = () => {
           <ContentsItem
             onClick={() =>
               window.open(
+                "https://sparkly-corleggy-3e4.notion.site/22-6-12-c5087b5e768a4527a8b64d69bd96addd"
+              )
+            }
+          >
+            <FcCursor />
+            <div>22.6.12 공지사항</div>
+          </ContentsItem>
+          <ContentsItem
+            onClick={() =>
+              window.open(
                 "https://sparkly-corleggy-3e4.notion.site/22-5-29-51ae79a702d8481c8232ff44130a0fac"
               )
             }
@@ -169,16 +179,6 @@ const WelcomeContents = () => {
           >
             <FcCursor />
             <div>22.4.10 공지사항</div>
-          </ContentsItem>
-          <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-3-27-804caef574364f08befb3159588bdf6d"
-              )
-            }
-          >
-            <FcCursor />
-            <div>22.3.27 공지사항</div>
           </ContentsItem>
         </Layout>
       </ContentsContainer>

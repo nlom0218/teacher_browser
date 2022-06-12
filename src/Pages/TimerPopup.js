@@ -41,12 +41,12 @@ const SettingIcon = styled.div`
     display: flex;
     font-size: 1.25em;
     font-size: 1.25rem;
-    cursor: pointer;
     ${customMedia.greaterThan("desktop")`
         font-size: 1.5em;
         font-size: 1.5rem;
-    `}
+        `}
   }
+  cursor: pointer;
   justify-self: flex-end;
   background-color: ${(props) => props.isFullScreenMode && color.white};
   padding: 5px;
@@ -95,6 +95,9 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
 
   const isPopup = useReactiveVar(isPopupVar);
   const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
+
+  const [timerMemo, setTimerMemo] = useState(localStorage.getItem("timerMemo"));
+  console.log(timerMemo);
 
   const { mode } = useParams();
 
@@ -268,6 +271,8 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
           seconds={seconds}
           isFullScreenMode={isFullScreenMode}
           isPopup={true}
+          timerMemo={timerMemo}
+          setTimerMemo={setTimerMemo}
         />
         <TimerBtnContainer
           timerStatus={timerStatus}
@@ -297,6 +302,8 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
           bgMusic={bgMusic}
           alarmAudio={alarmAudio}
           setAlarmAudio={setAlarmAudio}
+          timerMemo={timerMemo}
+          setTimerMemo={setTimerMemo}
         />
       )}
       {isPopup === "finishCountdown" && <FinishCountdonw alremMp3={alremMp3} />}

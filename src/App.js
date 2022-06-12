@@ -41,7 +41,6 @@ import ChangBackground from "./Components/Shared/ChangBackground";
 import PageLinkRegister from "./Pages/PageLinkRegister";
 import PageLinkAllList from "./Pages/PageLinkAllList";
 import PageLinkDetail from "./Pages/PageLinkDetail";
-import TimerSecond from "./Pages/TimerSecond";
 import { stopMusicFn } from "./audio/BackgroundMusic/BackgroundMusic";
 import AgreePolicy from "./Pages/AgreePolicy";
 import News from "./Pages/News";

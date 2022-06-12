@@ -127,7 +127,7 @@ const BottomContents = () => {
         </Textarea>
         <SubText>
           <div>티처캔 © 2022-2022</div>
-          <div>version 1.7.0</div>
+          <div>version 1.8.0</div>
           <div>만든이 팀 초코</div>
         </SubText>
       </LayoutThree>
