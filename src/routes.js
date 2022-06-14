@@ -14,6 +14,7 @@ const SCHEDULE = "/schedule";
 const JOURNAL = "/journal";
 const LIST = "/list";
 const NEWS = "/news";
+const MANAGINGROLES = "/managingRoles";
 
 // account link
 const LOGIN = "/login";
@@ -48,6 +49,7 @@ const routes = {
   journal: JOURNAL,
   list: LIST,
   news: NEWS,
+  managingRoles: MANAGINGROLES,
 
   // account link
   login: LOGIN,

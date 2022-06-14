@@ -53,10 +53,7 @@ export const TimerLink = () => {
   const [isHover, setIsHover] = useState(false);
   return (
     <Link to={`${routes.timer}/countup`}>
-      <SMenu
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
+      <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <IcPressedStopwatch /> : <IcStopwatch />}
         <Title>타이머</Title>
       </SMenu>
@@ -68,10 +65,7 @@ export const DrawLink = () => {
   const [isHover, setIsHover] = useState(false);
   return (
     <Link to={routes.draw}>
-      <SMenu
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
+      <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <IcRandomClick /> : <IcRandom />}
         <Title>랜덤뽑기</Title>
       </SMenu>
@@ -83,10 +77,7 @@ export const SwapLink = () => {
   const [isHover, setIsHover] = useState(false);
   return (
     <Link to={routes.swap}>
-      <SMenu
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
+      <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <IcChangingSeatsClick /> : <IcChangingSeats />}
         <Title>자리바꾸기</Title>
       </SMenu>
@@ -98,10 +89,7 @@ export const OrderLink = () => {
   const [isHover, setIsHover] = useState(false);
   return (
     <Link to={routes.order}>
-      <SMenu
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
+      <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <IcOrderClick /> : <IcOrder />}
         <Title>순서정하기</Title>
       </SMenu>
@@ -113,10 +101,7 @@ export const LunchmenuLink = ({ onClickLunchmenu }) => {
   const [isHover, setIsHover] = useState(false);
   return (
     <Link to={routes.lunchmenu} onClick={onClickLunchmenu}>
-      <SMenu
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
+      <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <IcLunchmenuClick /> : <IcLunchmenu />}
         <Title>식단표</Title>
       </SMenu>
@@ -128,10 +113,7 @@ export const ScheduleLink = () => {
   const [isHover, setIsHover] = useState(false);
   return (
     <Link to={routes.schedule}>
-      <SMenu
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
+      <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <IcScheduleClick /> : <IcSchedule />}
         <Title>시간표</Title>
       </SMenu>
@@ -143,10 +125,7 @@ export const JournalLink = () => {
   const [isHover, setIsHover] = useState(false);
   return (
     <Link to={routes.journal}>
-      <SMenu
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
+      <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <IcJournalClick /> : <IcJournal />}
         <Title>학급일지</Title>
       </SMenu>
@@ -161,10 +140,7 @@ export const ListLink = () => {
   };
   return (
     <Link to={routes.list} onClick={onClickListLink}>
-      <SMenu
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
+      <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <IcNameTableOpened /> : <IcNameTable />}
         <Title>명렬표</Title>
       </SMenu>
@@ -177,12 +153,22 @@ export const NewsLink = () => {
   const onClickListLink = () => {};
   return (
     <Link to={routes.news} onClick={onClickListLink}>
-      <SMenu
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
+      <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <IcNewsClick /> : <IcNews />}
         <Title>뉴스</Title>
+      </SMenu>
+    </Link>
+  );
+};
+
+export const ManagingRolesLink = () => {
+  const [isHover, setIsHover] = useState(false);
+  const onClickListLink = () => {};
+  return (
+    <Link to={routes.managingRoles} onClick={onClickListLink}>
+      <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+        {isHover ? <IcOrderClick /> : <IcOrder />}
+        <Title>1인1역</Title>
       </SMenu>
     </Link>
   );

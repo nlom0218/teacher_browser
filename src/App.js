@@ -2,16 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useReactiveVar } from "@apollo/client";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
-import {
-  darkModeVar,
-  disableBgThemeAni,
-  isPopupVar,
-  isLoggedInVar,
-  bgThemeVar,
-  editBgTheme,
-  isFullScreenModeVar,
-  smallScreenMode,
-} from "./apollo";
+import { darkModeVar, disableBgThemeAni, isPopupVar, isLoggedInVar, bgThemeVar, editBgTheme, isFullScreenModeVar, smallScreenMode } from "./apollo";
 import { darkTheme, GlobalStyle, ligthTheme } from "./styles";
 import Calendar from "./Pages/Calendar";
 import PageLink from "./Pages/PageLink";
@@ -46,6 +37,7 @@ import TimerSecond from "./Pages/TimerSecond";
 import { stopMusicFn } from "./audio/BackgroundMusic/BackgroundMusic";
 import AgreePolicy from "./Pages/AgreePolicy";
 import News from "./Pages/News";
+import ManagingRoles from "./Pages/ManagingRoles";
 
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
@@ -125,10 +117,7 @@ function App() {
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : ligthTheme}>
-      <GlobalStyle
-        bgTheme={userBgTheme ? userBgTheme : me?.bgTheme}
-        isLoggedIn={isLoggedIn}
-      />
+      <GlobalStyle bgTheme={userBgTheme ? userBgTheme : me?.bgTheme} isLoggedIn={isLoggedIn} />
       <ChangBackground />
       {media !== "Mobile" && !fullScreen && <HeaderWeather />}
       <Routes>
@@ -138,18 +127,9 @@ function App() {
         <Route path={routes.fakeLogin} element={<FakeLogin />} />
         <Route path={routes.agreePolicy} element={<AgreePolicy />} />
         <Route path={routes.createAccount} element={<CreateAccount />} />
-        <Route
-          path={routes.naverLoginCallBack}
-          element={<NaverLoginCallBack />}
-        />
-        <Route
-          path={routes.googleLoginCallBack}
-          element={<GoogleLoginCallBack />}
-        />
-        <Route
-          path={routes.kakaoLoginCallBack}
-          element={<KakaoLoginCallBack />}
-        />
+        <Route path={routes.naverLoginCallBack} element={<NaverLoginCallBack />} />
+        <Route path={routes.googleLoginCallBack} element={<GoogleLoginCallBack />} />
+        <Route path={routes.kakaoLoginCallBack} element={<KakaoLoginCallBack />} />
         <Route path={routes.editAccount} element={<EditAccount />} />
         <Route path={routes.todo} element={<TodoList />} />
         <Route path={`${routes.todo}/:id`} element={<TodoList />} />
@@ -157,15 +137,7 @@ function App() {
         <Route path={`${routes.calendar}/:date`} element={<Calendar />} />
         <Route path={routes.pageLink} element={<PageLink />} />
         <Route path={routes.menu} element={<Menu />} />
-        <Route
-          path={`${routes.timer}/:mode`}
-          element={
-            <TimerSecond
-              bgMusicMp3={bgMusicMp3}
-              setBgMusicMp3={setBgMusicMp3}
-            />
-          }
-        />
+        <Route path={`${routes.timer}/:mode`} element={<TimerSecond bgMusicMp3={bgMusicMp3} setBgMusicMp3={setBgMusicMp3} />} />
         <Route path={routes.draw} element={<Draw />} />
         <Route path={`${routes.draw}/:id`} element={<Draw />} />
         <Route path={routes.swap} element={<Swap />} />
@@ -175,10 +147,7 @@ function App() {
         <Route path={routes.lunchmenu} element={<Lunchmenu />} />
         <Route path={routes.schedule} element={<Schedule />} />
         <Route path={routes.journal} element={<Journal me={me} />} />
-        <Route
-          path={`${routes.journal}/:type/:id`}
-          element={<Journal me={me} />}
-        />
+        <Route path={`${routes.journal}/:type/:id`} element={<Journal me={me} />} />
         <Route path={routes.list} element={<List />} />
         <Route path={`${routes.list}/:type/:id`} element={<List />} />
         <Route path={routes.trash} element={<Trash />} />
@@ -186,10 +155,8 @@ function App() {
         <Route path={routes.pageLinkRegister} element={<PageLinkRegister />} />
         <Route path={routes.pageLinkAllList} element={<PageLinkAllList />} />
         <Route path={routes.news} element={<News />} />
-        <Route
-          path={`${routes.pageLink}/:pageTitle`}
-          element={<PageLinkDetail />}
-        />
+        <Route path={`${routes.pageLink}/:pageTitle`} element={<PageLinkDetail />} />
+        <Route path={routes.managingRoles} element={<ManagingRoles me={me} />} />
       </Routes>
     </ThemeProvider>
   );

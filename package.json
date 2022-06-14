@@ -3,7 +3,7 @@
   "version": "1.4.0",
   "private": true,
   "dependencies": {
-    "@apollo/client": "^3.5.10",
+    "@apollo/client": "^3.6.8",
     "@craco/craco": "^6.4.3",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.4",
