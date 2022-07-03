@@ -2,4 +2,4 @@
 
 # create attend page
 
-hello
+hello world
