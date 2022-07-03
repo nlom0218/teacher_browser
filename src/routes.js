@@ -15,6 +15,7 @@ const SCHEDULE = "/schedule";
 const JOURNAL = "/journal";
 const LIST = "/list";
 const NEWS = "/news";
+const MANAGINGROLES = "/managingRoles";
 const FAMILYMONTH = "/family-month";
 
 // account link
@@ -51,6 +52,7 @@ const routes = {
   journal: JOURNAL,
   list: LIST,
   news: NEWS,
+  managingRoles: MANAGINGROLES,
   familyMonth: FAMILYMONTH,
 
   // account link
