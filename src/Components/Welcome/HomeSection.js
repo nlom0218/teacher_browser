@@ -14,6 +14,7 @@ const Container = styled.div`
   ${customMedia.greaterThan("tablet")`
     grid-template-rows: 1fr 1fr;
   `}
+  position: relative;
 `;
 
 const HomeSection = ({

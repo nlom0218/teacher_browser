@@ -133,6 +133,36 @@ const WelcomeContents = () => {
           <ContentsItem
             onClick={() =>
               window.open(
+                "https://sparkly-corleggy-3e4.notion.site/22-6-12-c5087b5e768a4527a8b64d69bd96addd"
+              )
+            }
+          >
+            <FcCursor />
+            <div>22.6.12 공지사항</div>
+          </ContentsItem>
+          <ContentsItem
+            onClick={() =>
+              window.open(
+                "https://sparkly-corleggy-3e4.notion.site/22-5-29-51ae79a702d8481c8232ff44130a0fac"
+              )
+            }
+          >
+            <FcCursor />
+            <div>22.5.29 공지사항</div>
+          </ContentsItem>
+          <ContentsItem
+            onClick={() =>
+              window.open(
+                "https://sparkly-corleggy-3e4.notion.site/22-5-1-82e3b526ac1e4c5ab69b5d0d79cb1354"
+              )
+            }
+          >
+            <FcCursor />
+            <div>22.5.1 공지사항</div>
+          </ContentsItem>
+          <ContentsItem
+            onClick={() =>
+              window.open(
                 "https://sparkly-corleggy-3e4.notion.site/22-4-17-7658f4a3675d454bb6ca10c1e8087a0d"
               )
             }
@@ -149,36 +179,6 @@ const WelcomeContents = () => {
           >
             <FcCursor />
             <div>22.4.10 공지사항</div>
-          </ContentsItem>
-          <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-3-27-804caef574364f08befb3159588bdf6d"
-              )
-            }
-          >
-            <FcCursor />
-            <div>22.3.27 공지사항</div>
-          </ContentsItem>
-          <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-3-13-2dbd49475afb4c4591e19cb6b88cafca"
-              )
-            }
-          >
-            <FcCursor />
-            <div>22.3.13 공지사항</div>
-          </ContentsItem>
-          <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-3-6-8a5cad61d1a745859c38a870f86918ad"
-              )
-            }
-          >
-            <FcCursor />
-            <div>22.3.6 공지사항</div>
           </ContentsItem>
         </Layout>
       </ContentsContainer>
@@ -201,6 +201,16 @@ const WelcomeContents = () => {
           </TitleLayout>
         </Title>
         <Layout>
+          <ContentsItem
+            onClick={() =>
+              window.open(
+                "https://sparkly-corleggy-3e4.notion.site/5-31-c25d5524210048a084830b8dab049187"
+              )
+            }
+          >
+            <FcCursor />
+            <div>가정의 달 이벤트(~5.31)</div>
+          </ContentsItem>
           <ContentsItem
             onClick={() =>
               window.open(
@@ -265,16 +275,6 @@ const WelcomeContents = () => {
           <ContentsItem
             onClick={() =>
               window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-4-10-aeaf292f3ffb4140b04eae3841a0b01f"
-              )
-            }
-          >
-            <FcCursor />
-            <div>메뉴 페이지 커스튬</div>
-          </ContentsItem>
-          <ContentsItem
-            onClick={() =>
-              window.open(
                 "https://sparkly-corleggy-3e4.notion.site/22-4-10-f4e4c1d714814e0faacd7180a2bb96d1"
               )
             }
@@ -285,12 +285,22 @@ const WelcomeContents = () => {
           <ContentsItem
             onClick={() =>
               window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-4-10-fc141248e47e4228bbeb0ffbbb5d851c"
+                "https://sparkly-corleggy-3e4.notion.site/22-4-14-c0f1ca03a60b44b59d276b0533330a57"
               )
             }
           >
             <FcCursor />
-            <div>캘린더 출결 삭제 오류 해결</div>
+            <div>시간표에서 출판사로 이동 추가</div>
+          </ContentsItem>
+          <ContentsItem
+            onClick={() =>
+              window.open(
+                "https://sparkly-corleggy-3e4.notion.site/22-5-15-1-1-1f81191418164ae8af6dbb99c98a35a1"
+              )
+            }
+          >
+            <FcCursor />
+            <div>1인1역 페이지</div>
           </ContentsItem>
         </Layout>
       </ContentsContainer>

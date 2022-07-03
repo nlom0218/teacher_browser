@@ -33,11 +33,12 @@ import ChangBackground from "./Components/Shared/ChangBackground";
 import PageLinkRegister from "./Pages/PageLinkRegister";
 import PageLinkAllList from "./Pages/PageLinkAllList";
 import PageLinkDetail from "./Pages/PageLinkDetail";
-import TimerSecond from "./Pages/TimerSecond";
 import { stopMusicFn } from "./audio/BackgroundMusic/BackgroundMusic";
 import AgreePolicy from "./Pages/AgreePolicy";
 import News from "./Pages/News";
 import ManagingRoles from "./Pages/ManagingRoles";
+import FamilyMonth from "./Pages/FamilyMonth";
+import TimerPopup from "./Pages/TimerPopup";
 
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
@@ -47,7 +48,6 @@ function App() {
   const media = useMedia();
 
   const navigate = useNavigate();
-  const isPopup = useReactiveVar(isPopupVar);
 
   // me 값을 불러오는데 시간이 걸려서 bgTheme의 디폴트 값으로 설정된 nature가 불려오다가 수정됨...
   // useMe() 값을 다 불러온 뒤에 return할 수 있을까?
@@ -155,8 +155,16 @@ function App() {
         <Route path={routes.pageLinkRegister} element={<PageLinkRegister />} />
         <Route path={routes.pageLinkAllList} element={<PageLinkAllList />} />
         <Route path={routes.news} element={<News />} />
-        <Route path={`${routes.pageLink}/:pageTitle`} element={<PageLinkDetail />} />
         <Route path={routes.managingRoles} element={<ManagingRoles me={me} />} />
+        <Route
+          path={`${routes.pageLink}/:pageTitle`}
+          element={<PageLinkDetail />}
+        <Route path={routes.familyMonth} element={<FamilyMonth />} />
+        <Route path={`${routes.familyMonth}/:page`} element={<FamilyMonth />} />
+        <Route
+          path={`${routes.familyMonth}/:page/:id`}
+          element={<FamilyMonth />}
+        />
       </Routes>
     </ThemeProvider>
   );

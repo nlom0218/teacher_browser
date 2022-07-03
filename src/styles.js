@@ -18,7 +18,7 @@ export const color = {
   red: "#db3a1e",
   ligthRed: "#fc8876",
   boxShadow: "0px 17px 6px -14px rgba(0,0,0,0.6)",
-  blurYelloColor: "rgba(255, 252, 86, 0.2)"
+  blurYelloColor: "rgba(255, 252, 86, 0.2)",
 };
 
 export const ligthTheme = {
@@ -40,7 +40,7 @@ export const ligthTheme = {
   originBgColor: "#ffffff",
   girdBorderColor: "rgb(181, 181, 181)",
   yelloColor: "rgba(244, 242, 90, 0.8)",
-  skyblue: "#CEECF5"
+  skyblue: "#CEECF5",
 };
 export const darkTheme = {
   originBgColor: "#222222",
@@ -61,7 +61,7 @@ export const darkTheme = {
   originBgColor: "#000000",
   girdBorderColor: color.maroon,
   yelloColor: "rgba(112, 108, 0, 0.8)",
-  skyblue: "#478b9e"
+  skyblue: "#478b9e",
 };
 
 export const GlobalStyle = createGlobalStyle`
@@ -71,8 +71,14 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 1em;
     font-size: 1rem;
     background: ${({ bgTheme, theme }) =>
-    bgTheme ? (bgTheme.substr(0, 1) === "#" ? bgTheme : `url("https://source.unsplash.com/random/1920x1080?${bgTheme}")`) : theme.bgColor};
-    background: ${props => !props.isLoggedIn && `url("https://source.unsplash.com/random/1920x1080?nature")`};
+      bgTheme
+        ? bgTheme.substr(0, 1) === "#"
+          ? bgTheme
+          : `url("https://source.unsplash.com/random/1920x1080?${bgTheme}")`
+        : theme.bgColor};
+    background: ${(props) =>
+      !props.isLoggedIn &&
+      `url("https://source.unsplash.com/random/1920x1080?nature")`};
     background-size: cover;
     background-position: center;
     font-family: 'Nanum Gothic', sans-serif;

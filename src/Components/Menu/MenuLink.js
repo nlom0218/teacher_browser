@@ -18,9 +18,11 @@ import IcOrder from "../../icons/Order/IcOrder";
 import IcJournal from "../../icons/Journal/IcJournal";
 import IcJournalClick from "../../icons/Journal/IcJournalClick";
 import IcNameTableOpened from "../../icons/NameTable/IcNameTableOpened";
-import { enableSeeStudent } from "../../apollo";
+import { enableSeeStudent, fullScreenMode } from "../../apollo";
 import IcNewsClick from "../../icons/News/IcNewsClick";
 import IcNews from "../../icons/News/IcNews";
+import useMedia from "../../Hooks/useMedia";
+import IcFamilyMonth from "../../icons/FamilyMonth/FamilyMonth";
 
 const SMenu = styled.div`
   display: grid;
@@ -44,20 +46,35 @@ const SMenu = styled.div`
   }
 `;
 
+const STimerLink = styled.a``;
+
 const Title = styled.div`
   font-weight: 600;
   text-align: center;
 `;
 
 export const TimerLink = () => {
+  const timerUrl =
+    process.env.NODE_ENV === "production"
+      ? `https://teachercan.com/timer_popup/countup`
+      : `http://localhost:3000/timer_popup/countup`;
+  const windowFeatures = "left=100,top=100,width=1600,height=800, popup";
+
+  const onClickNewWindow = () => {
+    window.open(timerUrl, "timer", windowFeatures);
+  };
+
   const [isHover, setIsHover] = useState(false);
   return (
-    <Link to={`${routes.timer}/countup`}>
-      <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+    <STimerLink onClick={onClickNewWindow}>
+      <SMenu
+        onMouseEnter={() => setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
+      >
         {isHover ? <IcPressedStopwatch /> : <IcStopwatch />}
         <Title>타이머</Title>
       </SMenu>
-    </Link>
+    </STimerLink>
   );
 };
 
@@ -169,6 +186,27 @@ export const ManagingRolesLink = () => {
       <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <IcOrderClick /> : <IcOrder />}
         <Title>1인1역</Title>
+       </SMenu>
+    </Link>
+  );
+};
+
+export const FamilyMonthLink = () => {
+  const media = useMedia();
+  const onClickListLink = () => {
+    if (media === "Desktop") {
+      fullScreenMode();
+    }
+  };
+  return (
+    <Link to={routes.familyMonth} onClick={onClickListLink}>
+      <SMenu
+      // onMouseEnter={() => setIsHover(true)}
+      // onMouseLeave={() => setIsHover(false)}
+      >
+        <IcFamilyMonth />
+        <Title style={{ color: "#F7658E" }}>가정의 달</Title>
+
       </SMenu>
     </Link>
   );

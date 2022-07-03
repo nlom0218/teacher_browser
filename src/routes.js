@@ -6,6 +6,7 @@ const MENU = "/menu";
 
 // menu link
 const TIMER = "/timer";
+const TIMER_POPUP = "/timer_popup";
 const DRAW = "/draw";
 const SWAP = "/swap";
 const ORDER = "/order";
@@ -15,6 +16,7 @@ const JOURNAL = "/journal";
 const LIST = "/list";
 const NEWS = "/news";
 const MANAGINGROLES = "/managingRoles";
+const FAMILYMONTH = "/family-month";
 
 // account link
 const LOGIN = "/login";
@@ -41,6 +43,7 @@ const routes = {
 
   // menu link
   timer: TIMER,
+  timerPopup: TIMER_POPUP,
   draw: DRAW,
   swap: SWAP,
   order: ORDER,
@@ -50,6 +53,7 @@ const routes = {
   list: LIST,
   news: NEWS,
   managingRoles: MANAGINGROLES,
+  familyMonth: FAMILYMONTH,
 
   // account link
   login: LOGIN,
