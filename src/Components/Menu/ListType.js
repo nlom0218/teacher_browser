@@ -11,6 +11,7 @@ import {
   ScheduleLink,
   SwapLink,
   TimerLink,
+  ManagingRolesLink,
 } from "./MenuLink";
 
 const Container = styled.div`
@@ -83,6 +84,7 @@ const ListType = ({ onClickLunchmenu }) => {
           <DrawLink />
           <SwapLink />
           <OrderLink />
+          {/* <ManagingRolesLink /> */}
         </PageLink>
       </Theme>
       <Theme>

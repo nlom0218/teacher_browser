@@ -5,6 +5,7 @@ import { ThemeProvider } from "styled-components";
 import {
   darkModeVar,
   disableBgThemeAni,
+  isPopupVar,
   isLoggedInVar,
   bgThemeVar,
   editBgTheme,
@@ -46,6 +47,7 @@ import AgreePolicy from "./Pages/AgreePolicy";
 import News from "./Pages/News";
 import FamilyMonth from "./Pages/FamilyMonth";
 import TimerPopup from "./Pages/TimerPopup";
+import ManagingRoles from "./Pages/ManagingRoles";
 
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
@@ -182,6 +184,10 @@ function App() {
         <Route path={routes.pageLinkRegister} element={<PageLinkRegister />} />
         <Route path={routes.pageLinkAllList} element={<PageLinkAllList />} />
         <Route path={routes.news} element={<News />} />
+        <Route
+          path={routes.managingRoles}
+          element={<ManagingRoles me={me} />}
+        />
         <Route
           path={`${routes.pageLink}/:pageTitle`}
           element={<PageLinkDetail />}
