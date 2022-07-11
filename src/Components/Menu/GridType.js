@@ -1,7 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import { customMedia } from "../../styles";
-import { ListLink, DrawLink, JournalLink, LunchmenuLink, OrderLink, ScheduleLink, SwapLink, TimerLink, NewsLink, ManagingRolesLink } from "./MenuLink";
+import {
+  ListLink,
+  DrawLink,
+  JournalLink,
+  LunchmenuLink,
+  OrderLink,
+  ScheduleLink,
+  SwapLink,
+  TimerLink,
+  NewsLink,
+  ManagingRolesLink,
+} from "./MenuLink";
 
 const Container = styled.div`
   width: 100%;
@@ -33,7 +44,7 @@ const GridType = ({ onClickLunchmenu }) => {
       <JournalLink />
       <ListLink />
       <NewsLink />
-      <ManagingRolesLink />
+      {/* <ManagingRolesLink /> */}
     </Container>
   );
 };
