@@ -4,13 +4,15 @@ module.exports = {
     commonjs: true,
     es2021: true,
   },
-  extends: ["plugin:prettier/recommended", "plugin:react/recommended"],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
     ecmaVersion: "latest",
   },
-  plugins: ["react"],
-  rules: {},
+  extends: ["react-app", "prettier"],
+  plugins: ["prettier"],
+  rules: {
+    "prettier/prettier": ["error", { endOfLine: "auto" }],
+  },
 };
