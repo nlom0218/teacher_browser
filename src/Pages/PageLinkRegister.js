@@ -223,12 +223,7 @@ const PageLinkRegister = () => {
             <Folder>
               {folder.map((item, index) => {
                 return (
-                  <FolderItem
-                    key={index}
-                    item={item}
-                    setSubmitFolder={setSubmitFolder}
-                    submitFolder={submitFolder}
-                  />
+                  <FolderItem key={index} item={item} setSubmitFolder={setSubmitFolder} submitFolder={submitFolder} />
                 );
               })}
             </Folder>
@@ -237,14 +232,7 @@ const PageLinkRegister = () => {
             <InputTitle>추천 페이지 종류(중복 불가능): 생략 가능</InputTitle>
             <Folder>
               {pageType.map((item, index) => {
-                return (
-                  <TypeItem
-                    key={index}
-                    item={item}
-                    setSubmitType={setSubmitType}
-                    submitType={submitType}
-                  />
-                );
+                return <TypeItem key={index} item={item} setSubmitType={setSubmitType} submitType={submitType} />;
               })}
             </Folder>
           </InputLayout>

@@ -1,7 +1,6 @@
 import { gql, useQuery, useReactiveVar } from "@apollo/client";
 import { useEffect } from "react";
 import { isLoggedInVar } from "../apollo";
-import Loading from "../Components/Shared/Loading";
 
 export const ME_QUERY = gql`
   query Me {

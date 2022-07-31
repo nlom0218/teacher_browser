@@ -110,37 +110,18 @@ const FamilyMonth = () => {
               )}
               {!id && page === "list" && <AllListYoutube />}
               {!id && page === "recommend" && <RecommendPage />}
-              {!id && page === "liked" && (
-                <LikedYouTube userEmail={me?.email} />
-              )}
-              {!id && page === "search" && (
-                <SearchYouTube setErrMsg={setErrMsg} />
-              )}
-              {!id && page === "my" && (
-                <MyYouTube setErrMsg={setErrMsg} userEmail={me?.email} />
-              )}
+              {!id && page === "liked" && <LikedYouTube userEmail={me?.email} />}
+              {!id && page === "search" && <SearchYouTube setErrMsg={setErrMsg} />}
+              {!id && page === "my" && <MyYouTube setErrMsg={setErrMsg} userEmail={me?.email} />}
               {!id && page === "create" && (
-                <CreateYouTube
-                  multiply={multiply}
-                  userEmail={me?.email}
-                  setErrMsg={setErrMsg}
-                />
+                <CreateYouTube multiply={multiply} userEmail={me?.email} setErrMsg={setErrMsg} />
               )}
             </ContentsScrollLayout>
           </ContentsLayout>
         </BottomContents>
       </Container>
-      {errMsg && (
-        <AlertMessage
-          msg={errMsg}
-          setMsg={setErrMsg}
-          type="error"
-          time={3000}
-        />
-      )}
-      {msg && (
-        <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />
-      )}
+      {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
+      {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
     </BasicContainer>
   );
 };

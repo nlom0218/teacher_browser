@@ -1,10 +1,7 @@
 import { useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  CREATE_HOME_LINKS_MUTATION,
-  EDIT_HOME_LINK_MUTATION,
-} from "../../../Graphql/User/mutation";
+import { CREATE_HOME_LINKS_MUTATION, EDIT_HOME_LINK_MUTATION } from "../../../Graphql/User/mutation";
 import { ME_QUERY } from "../../../Hooks/useMe";
 import PopupContainer from "../../Shared/PopupContainer";
 import styled from "styled-components";
@@ -74,106 +71,91 @@ const SubmitInput = styled.input`
   cursor: pointer;
 `;
 
-const RegisterHomeLinks = ({
-  setMsg,
-  setErrMsg,
-  userEmail,
-  links,
-  userId,
-  setLinks,
-}) => {
+const RegisterHomeLinks = ({ setMsg, setErrMsg, userEmail, links, userId, setLinks }) => {
   const homeLinkID = parseInt(localStorage.getItem("homeLinkID"));
   const [createID, setCreateID] = useState(undefined);
   const { register, handleSubmit, setValue, getValues } = useForm({
     mode: "onChange",
   });
-  const [createHomeLinks, { loading }] = useMutation(
-    CREATE_HOME_LINKS_MUTATION,
-    {
-      onCompleted: (result) => {
-        const {
+  const [createHomeLinks, { loading }] = useMutation(CREATE_HOME_LINKS_MUTATION, {
+    onCompleted: (result) => {
+      const {
+        createHomeLinks: { ok },
+      } = result;
+      if (ok) {
+        outPopup();
+        setMsg("즐겨찾기가 추가되었습니다.😀");
+      }
+    },
+    update(
+      cache,
+      {
+        data: {
           createHomeLinks: { ok },
-        } = result;
-        if (ok) {
-          outPopup();
-          setMsg("즐겨찾기가 추가되었습니다.😀");
-        }
+        },
       },
-      update(
-        cache,
-        {
-          data: {
-            createHomeLinks: { ok },
-          },
-        }
-      ) {
-        if (ok) {
-          cache.modify({
-            id: `User:${userId}`,
-            fields: {
-              homeLinks(prev) {
-                return [
-                  ...prev,
-                  {
-                    ID: createID,
-                    title: getValues("title"),
-                    link: `https://www.${getValues("link")}`,
-                  },
-                ];
-              },
+    ) {
+      if (ok) {
+        cache.modify({
+          id: `User:${userId}`,
+          fields: {
+            homeLinks(prev) {
+              return [
+                ...prev,
+                {
+                  ID: createID,
+                  title: getValues("title"),
+                  link: `https://www.${getValues("link")}`,
+                },
+              ];
             },
-          });
-        }
-      },
-    }
-  );
+          },
+        });
+      }
+    },
+  });
 
-  const [editHomeLink, { loading: editLoading }] = useMutation(
-    EDIT_HOME_LINK_MUTATION,
-    {
-      onCompleted: (result) => {
-        const {
+  const [editHomeLink, { loading: editLoading }] = useMutation(EDIT_HOME_LINK_MUTATION, {
+    onCompleted: (result) => {
+      const {
+        editHomeLink: { ok },
+      } = result;
+      if (ok) {
+        outPopup();
+        localStorage.removeItem("homeLinkID");
+        setMsg("즐겨찾기가 수정되었습니다.😀");
+      }
+    },
+    update(
+      cache,
+      {
+        data: {
           editHomeLink: { ok },
-        } = result;
-        if (ok) {
-          outPopup();
-          localStorage.removeItem("homeLinkID");
-          setMsg("즐겨찾기가 수정되었습니다.😀");
-        }
+        },
       },
-      update(
-        cache,
-        {
-          data: {
-            editHomeLink: { ok },
-          },
-        }
-      ) {
-        if (ok) {
-          cache.modify({
-            id: `User:${userId}`,
-            fields: {
-              homeLinks(prev) {
-                const copyHomeLinks = [...prev];
-                const targetIndex = copyHomeLinks.findIndex(
-                  (item) => item.ID === homeLinkID
-                );
-                return [
-                  ...copyHomeLinks.slice(0, targetIndex),
-                  {
-                    ID: homeLinkID,
-                    title: getValues("title"),
-                    link: `https://www.${getValues("link")}`,
-                  },
-                  ...copyHomeLinks.slice(targetIndex + 1),
-                ];
-              },
+    ) {
+      if (ok) {
+        cache.modify({
+          id: `User:${userId}`,
+          fields: {
+            homeLinks(prev) {
+              const copyHomeLinks = [...prev];
+              const targetIndex = copyHomeLinks.findIndex((item) => item.ID === homeLinkID);
+              return [
+                ...copyHomeLinks.slice(0, targetIndex),
+                {
+                  ID: homeLinkID,
+                  title: getValues("title"),
+                  link: `https://www.${getValues("link")}`,
+                },
+                ...copyHomeLinks.slice(targetIndex + 1),
+              ];
             },
-          });
-        }
-      },
-    }
-  );
+          },
+        });
+      }
+    },
+  });
 
   const onSubmit = (data) => {
     const { title, link } = data;
@@ -190,9 +172,7 @@ const RegisterHomeLinks = ({
     if (homeLinkID) {
       setLinks((prev) => {
         const copyHomeLinks = [...prev];
-        const targetIndex = copyHomeLinks.findIndex(
-          (item) => item.ID === homeLinkID
-        );
+        const targetIndex = copyHomeLinks.findIndex((item) => item.ID === homeLinkID);
         return [
           ...copyHomeLinks.slice(0, targetIndex),
           {
@@ -253,11 +233,7 @@ const RegisterHomeLinks = ({
           <Icon>
             <BsFillPencilFill />
           </Icon>
-          <Input
-            {...register("title")}
-            autoComplete="off"
-            placeholder="이름을 입력하세요."
-          />
+          <Input {...register("title")} autoComplete="off" placeholder="이름을 입력하세요." />
         </InputLayout>
         <InputLayout type="url">
           <Icon>
@@ -265,17 +241,10 @@ const RegisterHomeLinks = ({
           </Icon>
           <Warpper>
             <div>https://www.</div>
-            <Input
-              {...register("link")}
-              autoComplete="off"
-              placeholder="나머지 URL을 입력하세요."
-            />
+            <Input {...register("link")} autoComplete="off" placeholder="나머지 URL을 입력하세요." />
           </Warpper>
         </InputLayout>
-        <SubmitInput
-          type="submit"
-          value={homeLinkID ? "수정하기" : "추가하기"}
-        />
+        <SubmitInput type="submit" value={homeLinkID ? "수정하기" : "추가하기"} />
       </Container>
     </PopupContainer>
   );

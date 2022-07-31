@@ -1,4 +1,4 @@
-import { keyframes } from "styled-components"
+import { keyframes } from "styled-components";
 
 export const FadeIn = keyframes`
   from {
@@ -7,7 +7,7 @@ export const FadeIn = keyframes`
   to {
     opacity: 0.8;
   }
-`
+`;
 
 export const CardFadeIn = keyframes`
   from {
@@ -16,7 +16,7 @@ export const CardFadeIn = keyframes`
   to {
     opacity: 0.9;
   }
-`
+`;
 
 export const BtnFadeIn = keyframes`
   from {
@@ -25,4 +25,4 @@ export const BtnFadeIn = keyframes`
   to {
     opacity: 1;
   }
-`
+`;

@@ -1,5 +1,5 @@
-import styled from "styled-components"
-import { FadeIn } from "../../../Animations/Fade"
+import styled from "styled-components";
+import { FadeIn } from "../../../Animations/Fade";
 
 const SettingEmojiIconBtn = styled.div`
   grid-column: 1 / -1;
@@ -14,13 +14,13 @@ const SettingEmojiIconBtn = styled.div`
     padding: 5px;
     padding: 0.3125rem;
     :hover {
-    background-color: ${props => props.theme.blurColor};
-    transition: background-color 0.6s ease;
-    cursor: pointer;
-    border-radius: 5px;
-    border-radius: 0.3125rem;
+      background-color: ${(props) => props.theme.blurColor};
+      transition: background-color 0.6s ease;
+      cursor: pointer;
+      border-radius: 5px;
+      border-radius: 0.3125rem;
     }
   }
-`
+`;
 
-export default SettingEmojiIconBtn
+export default SettingEmojiIconBtn;

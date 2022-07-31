@@ -50,8 +50,7 @@ const Type = styled.div`
 const Background = styled.div`
   position: absolute;
   left: 0;
-  transform: ${(props) =>
-    props.seeType === "list" ? "translateX(0%)" : "translateX(100%)"};
+  transform: ${(props) => (props.seeType === "list" ? "translateX(0%)" : "translateX(100%)")};
   border-radius: 20px;
   border-radius: 1.25rem;
   background-color: ${(props) => props.theme.btnBgColor};
@@ -62,9 +61,7 @@ const Background = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: ${(props) =>
-      !props.init && (props.seeType === "list" ? ToLeft : ToRight)}
-    1s ease forwards;
+  animation: ${(props) => !props.init && (props.seeType === "list" ? ToLeft : ToRight)} 1s ease forwards;
 `;
 
 const ListTypeIcon = styled.div``;
@@ -89,7 +86,7 @@ const Menu = () => {
           schoolCode: me?.schoolCode,
           schoolName: me?.schoolName,
           date: new window.Date(),
-        })
+        }),
       );
     } else {
       localStorage.setItem(
@@ -99,7 +96,7 @@ const Menu = () => {
           schoolCode: undefined,
           schoolName: undefined,
           date: new window.Date(),
-        })
+        }),
       );
     }
   };
@@ -114,11 +111,7 @@ const Menu = () => {
       <Container>
         <SeeType>
           <Type>
-            <ListTypeIcon
-              seeType={menuType === "list"}
-              className="see_type_icon"
-              onClick={() => onClickType("list")}
-            >
+            <ListTypeIcon seeType={menuType === "list"} className="see_type_icon" onClick={() => onClickType("list")}>
               <BsFilterLeft />
             </ListTypeIcon>
             <GridTypeIcon

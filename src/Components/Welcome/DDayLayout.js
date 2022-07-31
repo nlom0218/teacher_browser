@@ -118,7 +118,7 @@ const DDayLayout = ({
         data: {
           deleteDDay: { ok },
         },
-      }
+      },
     ) {
       if (ok) {
         cache.modify({

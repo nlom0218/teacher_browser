@@ -15,23 +15,17 @@ const ClassTimeSet = ({ userEmail, setMsg }) => {
     } = result;
     if (ok) {
       outPopup();
-      setMsg("시간이 설정되었습니다. 😀")
+      setMsg("시간이 설정되었습니다. 😀");
     }
   };
 
-  const [setTimetableTime, { loading }] = useMutation(
-    SET_TIMETABLE_TIME_MUTATION,
-    {
-      onCompleted,
-      refetchQueries: [
-        { query: ME_QUERY },
-        { query: GET_TIMETABLE_TIME_QUERY, variables: { userEmail } },
-      ],
-    }
-  );
+  const [setTimetableTime, { loading }] = useMutation(SET_TIMETABLE_TIME_MUTATION, {
+    onCompleted,
+    refetchQueries: [{ query: ME_QUERY }, { query: GET_TIMETABLE_TIME_QUERY, variables: { userEmail } }],
+  });
 
   if (loading) {
-    return <Loading page="popupPage" />
+    return <Loading page="popupPage" />;
   }
 
   return (

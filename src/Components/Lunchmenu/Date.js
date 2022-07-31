@@ -35,11 +35,10 @@ const DateContainer = styled.div`
     column-gap: 10px;
     column-gap: 0.625rem;
   `}
-`
-
+`;
 
 const DateIcon = styled.div`
-  cursor: pointer;  
+  cursor: pointer;
   display: flex;
   font-size: 2em;
   font-size: 2rem;
@@ -48,20 +47,20 @@ const DateIcon = styled.div`
     font-size: 2.5rem;
     filter: drop-shadow(1px 1px 1px rgb(0, 0, 0));
   `}
-`
+`;
 
 export const Date = ({ date, setDate, processSetDate }) => {
-  const [isHover, setIsHover] = useState(false)
+  const [isHover, setIsHover] = useState(false);
 
   // 반응형
-  const media = useMedia()
+  const media = useMedia();
 
   //날짜 설정하기
   const getDate = (date) => {
-    const lmSetting = JSON.parse(localStorage.getItem("lmSetting"))
-    const newLmSetting = { ...lmSetting, date }
-    localStorage.setItem("lmSetting", JSON.stringify(newLmSetting))
-    setDate(date)
+    const lmSetting = JSON.parse(localStorage.getItem("lmSetting"));
+    const newLmSetting = { ...lmSetting, date };
+    localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
+    setDate(date);
   };
   const CustomInput = forwardRef(({ value, onClick }, ref) => (
     <DateContainer ref={ref}>
@@ -70,7 +69,7 @@ export const Date = ({ date, setDate, processSetDate }) => {
         {isHover ? <IcCalenderClick /> : <IcCalender />}
       </DateIcon>
     </DateContainer>
-  ))
+  ));
   return (
     <DatePickers
       dateFormat="yyyy/MM/dd"

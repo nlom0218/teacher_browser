@@ -1,13 +1,25 @@
 import gql from "graphql-tag";
 
 export const CREATE_PAGE_LINK_MUTATION = gql`
-  mutation CreatePageLink($pageTitle: String!, $pageDescription: String!, $pageURL: String!, $folder: [String]!, $type: String) {
-    createPageLink(pageTitle: $pageTitle, pageDescription: $pageDescription, pageURL: $pageURL, folder: $folder, type: $type) {
+  mutation CreatePageLink(
+    $pageTitle: String!
+    $pageDescription: String!
+    $pageURL: String!
+    $folder: [String]!
+    $type: String
+  ) {
+    createPageLink(
+      pageTitle: $pageTitle
+      pageDescription: $pageDescription
+      pageURL: $pageURL
+      folder: $folder
+      type: $type
+    ) {
       ok
       error
     }
   }
-`
+`;
 
 export const UPDATE_PAGE_LINK_MUTATION = gql`
   mutation Mutation($pageTitle: String!, $pageDescription: String, $folder: [String]) {
@@ -16,7 +28,7 @@ export const UPDATE_PAGE_LINK_MUTATION = gql`
       error
     }
   }
-`
+`;
 
 export const DELETE_PAGE_LINK_MUTATION = gql`
   mutation DeletePageLink($pageTitle: String!) {
@@ -25,7 +37,7 @@ export const DELETE_PAGE_LINK_MUTATION = gql`
       error
     }
   }
-`
+`;
 
 export const EDIT_PAGE_LINK_MEMO_MUTATION = gql`
   mutation EditPageLinkMemo($userEmail: String!, $memo: String!, $pageTitle: String!) {
@@ -34,4 +46,4 @@ export const EDIT_PAGE_LINK_MEMO_MUTATION = gql`
       error
     }
   }
-`
+`;

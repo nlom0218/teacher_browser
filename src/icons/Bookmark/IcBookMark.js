@@ -1,9 +1,8 @@
-import React from 'react';
-import { ReactComponent as BookMark } from "../../image/icons/Bookmark.svg"
+import React from "react";
+import { ReactComponent as BookMark } from "../../image/icons/Bookmark.svg";
 
 const IcBookMark = () => {
-  return (<BookMark />
-  );
-}
+  return <BookMark />;
+};
 
 export default IcBookMark;

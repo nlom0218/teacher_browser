@@ -116,16 +116,8 @@ export const DELETE_USER_MUTATION = gql`
 `;
 
 export const CHANGE_PASSWORD_MUTATION = gql`
-  mutation ChangePw(
-    $userEmail: String!
-    $password: String!
-    $newPassword: String!
-  ) {
-    changePw(
-      userEmail: $userEmail
-      password: $password
-      newPassword: $newPassword
-    ) {
+  mutation ChangePw($userEmail: String!, $password: String!, $newPassword: String!) {
+    changePw(userEmail: $userEmail, password: $password, newPassword: $newPassword) {
       ok
       error
     }
@@ -134,11 +126,7 @@ export const CHANGE_PASSWORD_MUTATION = gql`
 
 export const NEW_PASSWORD_MUTATION = gql`
   mutation NewPw($userEmail: String!, $certificate: String, $password: String) {
-    newPw(
-      userEmail: $userEmail
-      certificate: $certificate
-      password: $password
-    ) {
+    newPw(userEmail: $userEmail, certificate: $certificate, password: $password) {
       ok
       error
     }
@@ -154,12 +142,7 @@ export const SETTING_LINK_MUTATION = gql`
 `;
 
 export const CREATE_DDAY = gql`
-  mutation CreateDDay(
-    $userEmail: String!
-    $title: String!
-    $date: Float!
-    $ID: Float!
-  ) {
+  mutation CreateDDay($userEmail: String!, $title: String!, $date: Float!, $ID: Float!) {
     createDDay(userEmail: $userEmail, title: $title, date: $date, ID: $ID) {
       ok
       error
@@ -186,12 +169,7 @@ export const DELETE_DDAY_MUTATION = gql`
 `;
 
 export const EDIT_DDAY_MUTATION = gql`
-  mutation EditDDay(
-    $userEmail: String!
-    $ID: Float!
-    $title: String!
-    $date: Float!
-  ) {
+  mutation EditDDay($userEmail: String!, $ID: Float!, $title: String!, $date: Float!) {
     editDDay(userEmail: $userEmail, ID: $ID, title: $title, date: $date) {
       ok
       error
@@ -200,18 +178,8 @@ export const EDIT_DDAY_MUTATION = gql`
 `;
 
 export const CREATE_HOME_LINKS_MUTATION = gql`
-  mutation CreateHomeLinks(
-    $userEmail: String!
-    $title: String!
-    $link: String!
-    $ID: Float!
-  ) {
-    createHomeLinks(
-      userEmail: $userEmail
-      title: $title
-      link: $link
-      ID: $ID
-    ) {
+  mutation CreateHomeLinks($userEmail: String!, $title: String!, $link: String!, $ID: Float!) {
+    createHomeLinks(userEmail: $userEmail, title: $title, link: $link, ID: $ID) {
       ok
       error
     }
@@ -228,12 +196,7 @@ export const DELETE_HOME_LINK_MUTATION = gql`
 `;
 
 export const EDIT_HOME_LINK_MUTATION = gql`
-  mutation EditHomeLink(
-    $userEmail: String!
-    $ID: Float!
-    $title: String!
-    $link: String!
-  ) {
+  mutation EditHomeLink($userEmail: String!, $ID: Float!, $title: String!, $link: String!) {
     editHomeLink(userEmail: $userEmail, ID: $ID, title: $title, link: $link) {
       ok
       error
@@ -242,16 +205,8 @@ export const EDIT_HOME_LINK_MUTATION = gql`
 `;
 
 export const MOVE_HOME_LINK_MUTATION = gql`
-  mutation MoveHomeLink(
-    $userEmail: String!
-    $sourceIndex: Int!
-    $destinationIndex: Int!
-  ) {
-    moveHomeLink(
-      userEmail: $userEmail
-      sourceIndex: $sourceIndex
-      destinationIndex: $destinationIndex
-    ) {
+  mutation MoveHomeLink($userEmail: String!, $sourceIndex: Int!, $destinationIndex: Int!) {
+    moveHomeLink(userEmail: $userEmail, sourceIndex: $sourceIndex, destinationIndex: $destinationIndex) {
       ok
       error
     }

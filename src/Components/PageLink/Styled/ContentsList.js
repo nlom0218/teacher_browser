@@ -9,8 +9,8 @@ const ContentsList = styled.div`
   ${customMedia.greaterThan("desktop")`
   position: absolute;
   top: 4%;
-  right: ${props => !props.right && "4%"};
-  left : ${props => props.right && "4%"};
+  right: ${(props) => !props.right && "4%"};
+  left : ${(props) => props.right && "4%"};
   min-width: 65%;
   max-width: 65%;
   max-height: 92%;
@@ -18,6 +18,6 @@ const ContentsList = styled.div`
   grid-template-rows: auto auto 1fr;
   padding: 0;
   `}
-`
+`;
 
-export default ContentsList
+export default ContentsList;

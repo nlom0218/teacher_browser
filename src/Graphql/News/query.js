@@ -9,4 +9,4 @@ export const GET_NEWS_QUERY = gql`
       description
     }
   }
-`
+`;

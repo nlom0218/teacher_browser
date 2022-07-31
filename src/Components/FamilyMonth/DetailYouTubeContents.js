@@ -5,10 +5,7 @@ import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 import YouTubeTag from "./YouTubeTag";
 import { useMutation } from "@apollo/client";
 import { TOGGLE_FAMILY_STORY_LIKE_MUTATION } from "../../Graphql/FamilyStory/mutation";
-import {
-  MY_FAMILY_STORY_LIKE_NUM,
-  SEE_LIKE_FAMILY_STORY,
-} from "../../Graphql/FamilyStory/query";
+import { MY_FAMILY_STORY_LIKE_NUM, SEE_LIKE_FAMILY_STORY } from "../../Graphql/FamilyStory/query";
 import TextareaAutosize from "react-textarea-autosize";
 
 const Container = styled.div`
@@ -33,8 +30,7 @@ const Container = styled.div`
     padding: 0.938rem 1.25rem;
     border-radius: 10px;
     border-radius: 0.625rem;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     ::placeholder {
       color: ${(props) => props.theme.fontColor};
       opacity: 0.6;
@@ -110,45 +106,42 @@ const DetailYouTubeContents = ({
   setErrMsg,
   contents,
 }) => {
-  const [toggleFamilyStoryLike, { loading }] = useMutation(
-    TOGGLE_FAMILY_STORY_LIKE_MUTATION,
-    {
-      refetchQueries: [
-        {
-          query: SEE_LIKE_FAMILY_STORY,
-          variables: { userEmail: loggedInUserEmail, page: 1 },
-        },
-        {
-          query: MY_FAMILY_STORY_LIKE_NUM,
-          variables: { userEmail: loggedInUserEmail },
-        },
-      ],
-      update: (cache, data) => {
-        const {
-          data: {
-            toggleFamilyStoryLike: { ok, message },
-          },
-        } = data;
-        if (ok) {
-          cache.modify({
-            id: `FamilyStory:${_id}`,
-            fields: {
-              likeNum: (prev) => {
-                if (message === "create") {
-                  return prev + 1;
-                } else {
-                  return prev - 1;
-                }
-              },
-              isLiked: (prev) => {
-                return !prev;
-              },
-            },
-          });
-        }
+  const [toggleFamilyStoryLike, { loading }] = useMutation(TOGGLE_FAMILY_STORY_LIKE_MUTATION, {
+    refetchQueries: [
+      {
+        query: SEE_LIKE_FAMILY_STORY,
+        variables: { userEmail: loggedInUserEmail, page: 1 },
       },
-    }
-  );
+      {
+        query: MY_FAMILY_STORY_LIKE_NUM,
+        variables: { userEmail: loggedInUserEmail },
+      },
+    ],
+    update: (cache, data) => {
+      const {
+        data: {
+          toggleFamilyStoryLike: { ok, message },
+        },
+      } = data;
+      if (ok) {
+        cache.modify({
+          id: `FamilyStory:${_id}`,
+          fields: {
+            likeNum: (prev) => {
+              if (message === "create") {
+                return prev + 1;
+              } else {
+                return prev - 1;
+              }
+            },
+            isLiked: (prev) => {
+              return !prev;
+            },
+          },
+        });
+      }
+    },
+  });
   const onClickLikeBtn = () => {
     if (!loggedInUserEmail) {
       setErrMsg("로그인이 필요합니다.😅");
@@ -173,11 +166,7 @@ const DetailYouTubeContents = ({
         </ContentsInfo>
         <Liked>
           <Icon onClick={onClickLikeBtn}>
-            {isLiked ? (
-              <BsSuitHeartFill style={{ color: "#e84545" }} />
-            ) : (
-              <BsSuitHeart />
-            )}
+            {isLiked ? <BsSuitHeartFill style={{ color: "#e84545" }} /> : <BsSuitHeart />}
           </Icon>
           <LikedNum>{likeNum}개</LikedNum>
         </Liked>

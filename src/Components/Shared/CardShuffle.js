@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import styled, { keyframes } from 'styled-components';
-import IcCardShuffleBefore from '../../icons/CardShuffle/IcCardShuffleBefore';
-import IcCardShuffleFour from '../../icons/CardShuffle/IcCardShuffleFour';
-import IcCardShuffleOne from '../../icons/CardShuffle/IcCardShuffleOne';
-import IcCardShuffleThree from '../../icons/CardShuffle/IcCardShuffleThree';
-import IcCardShuffleTwo from '../../icons/CardShuffle/IcCardShuffleTwo';
+import React, { useEffect, useState } from "react";
+import styled, { keyframes } from "styled-components";
+import IcCardShuffleBefore from "../../icons/CardShuffle/IcCardShuffleBefore";
+import IcCardShuffleFour from "../../icons/CardShuffle/IcCardShuffleFour";
+import IcCardShuffleOne from "../../icons/CardShuffle/IcCardShuffleOne";
+import IcCardShuffleThree from "../../icons/CardShuffle/IcCardShuffleThree";
+import IcCardShuffleTwo from "../../icons/CardShuffle/IcCardShuffleTwo";
 
 const IconOneAni = keyframes`
   0%{
@@ -27,7 +27,7 @@ const IconOneAni = keyframes`
     left: -2.5rem;
     opacity: 0;
   }
-`
+`;
 
 const Container = styled.div`
   position: absolute;
@@ -48,63 +48,70 @@ const Container = styled.div`
   .shuffleIcon {
     position: absolute;
   }
-`
+`;
 
 const ShuffleStartIcon = styled.div`
   width: 100%;
   position: absolute;
   left: 80px;
   left: 5rem;
-`
+`;
 
 const ShuffeIcon = styled.div`
   animation: ${IconOneAni} 1.5s ease infinite;
-`
+`;
 
 const CardShuffle = () => {
   const cardShuffleArr = [
     { order: "one", icon: <IcCardShuffleOne /> },
     { order: "two", icon: <IcCardShuffleTwo /> },
     { order: "three", icon: <IcCardShuffleThree /> },
-    { order: "four", icon: <IcCardShuffleFour /> }
-  ]
+    { order: "four", icon: <IcCardShuffleFour /> },
+  ];
 
-  const [isShuffle, setIsShuffle] = useState(false)
-  const [shuffleIcon, setShuffleIcon] = useState(cardShuffleArr[0])
+  const [isShuffle, setIsShuffle] = useState(false);
+  const [shuffleIcon, setShuffleIcon] = useState(cardShuffleArr[0]);
 
   useEffect(() => {
     const setShuffle = setTimeout(() => {
-      setIsShuffle(true)
-      setShuffleIcon(cardShuffleArr[0])
-    }, [1500])
+      setIsShuffle(true);
+      setShuffleIcon(cardShuffleArr[0]);
+    }, [1500]);
     return () => {
-      clearTimeout(setShuffle)
-    }
-  }, [])
+      clearTimeout(setShuffle);
+    };
+  }, []);
 
   useEffect(() => {
     const iconShuffle = setTimeout(() => {
       if (shuffleIcon.order === "one") {
-        setShuffleIcon(cardShuffleArr[1])
+        setShuffleIcon(cardShuffleArr[1]);
       } else if (shuffleIcon.order === "two") {
-        setShuffleIcon(cardShuffleArr[2])
+        setShuffleIcon(cardShuffleArr[2]);
       } else if (shuffleIcon.order === "three") {
-        setShuffleIcon(cardShuffleArr[3])
+        setShuffleIcon(cardShuffleArr[3]);
       } else if (shuffleIcon.order === "four") {
-        setShuffleIcon(cardShuffleArr[0])
+        setShuffleIcon(cardShuffleArr[0]);
       }
-    }, [1500])
-    return () => { setTimeout(iconShuffle) }
-  }, [shuffleIcon])
+    }, [1500]);
+    return () => {
+      setTimeout(iconShuffle);
+    };
+  }, [shuffleIcon]);
 
-  return (<Container>
-    {!isShuffle ? <ShuffleStartIcon><IcCardShuffleBefore /></ShuffleStartIcon>
-      :
-      <React.Fragment>
-        <ShuffeIcon className="shuffleIcon">{shuffleIcon?.icon}</ShuffeIcon>
-      </React.Fragment>
-    }
-  </Container>);
-}
+  return (
+    <Container>
+      {!isShuffle ? (
+        <ShuffleStartIcon>
+          <IcCardShuffleBefore />
+        </ShuffleStartIcon>
+      ) : (
+        <React.Fragment>
+          <ShuffeIcon className="shuffleIcon">{shuffleIcon?.icon}</ShuffeIcon>
+        </React.Fragment>
+      )}
+    </Container>
+  );
+};
 
 export default CardShuffle;

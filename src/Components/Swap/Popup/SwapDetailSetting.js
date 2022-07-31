@@ -1,24 +1,24 @@
-import React from 'react';
-import styled from 'styled-components';
-import { outPopup } from '../../../apollo';
-import { customMedia } from '../../../styles';
-import PopupContainer from '../../Shared/PopupContainer';
-import DetailPickNum from './DetailPickNum';
-import DetailSeatType from './DetailSeatType';
-import MateGender from './MateGender';
+import React from "react";
+import styled from "styled-components";
+import { outPopup } from "../../../apollo";
+import { customMedia } from "../../../styles";
+import PopupContainer from "../../Shared/PopupContainer";
+import DetailPickNum from "./DetailPickNum";
+import DetailSeatType from "./DetailSeatType";
+import MateGender from "./MateGender";
 
 const Container = styled.div`
   padding: 20px 0px;
   display: grid;
   row-gap: 20px;
   row-gap: 1.25rem;
-`
+`;
 
 const Title = styled.div`
   justify-self: flex-end;
   font-size: 1.25em;
   font-size: 1.25rem;
-`
+`;
 
 const SettingType = styled.div`
   display: grid;
@@ -29,70 +29,66 @@ const SettingType = styled.div`
   ${customMedia.greaterThan("tablet")`
     grid-template-columns: 1fr 5fr;
   `}
-`
+`;
 
 const TypeName = styled.div`
   padding-top: 15px;
   padding-top: 0.9375rem;
   font-weight: 600;
-`
+`;
 
 const SettingLayout = styled.div`
-  background-color: ${props => props.theme.originBgColor};
+  background-color: ${(props) => props.theme.originBgColor};
   border-radius: 5px;
   border-radius: 0.3125rem;
   padding: 10px;
   padding: 0.625rem;
-`
+`;
 
 const CompleteBtn = styled.div`
-  background-color: ${props => props.theme.btnBgColor};
-  color: ${props => props.theme.bgColor};
+  background-color: ${(props) => props.theme.btnBgColor};
+  color: ${(props) => props.theme.bgColor};
   text-align: center;
   padding: 10px 20px;
   border-radius: 5px;
   border-radius: 0.3125rem;
   cursor: pointer;
-`
+`;
 
 const SwapDetailSetting = ({ pickNum, setPickNum, setErrMsg, setSeatType, seatType, mateGender, setMateGender }) => {
-  const onClickCompleteBtn = () => outPopup()
+  const onClickCompleteBtn = () => outPopup();
 
-  return (<PopupContainer>
-    <Container>
-      <Title>자리 설정</Title>
-      <SettingType>
-        <TypeName>자리 대형</TypeName>
-        <SettingLayout>
-          <DetailSeatType
-            seatType={seatType}
-            setSeatType={setSeatType}
-            setErrMsg={setErrMsg}
-            setPickNum={setPickNum}
-          />
-        </SettingLayout>
-      </SettingType>
-      <SettingType>
-        <TypeName>첫 줄 설정</TypeName>
-        <SettingLayout>
-          <DetailPickNum
-            seatType={seatType}
-            pickNum={pickNum}
-            setPickNum={setPickNum}
-          />
-        </SettingLayout>
-      </SettingType>
-      {seatType === 2 && <SettingType>
-        <TypeName>짝궁 성별</TypeName>
-        <SettingLayout>
-          <MateGender
-            mateGender={mateGender}
-            setMateGender={setMateGender}
-          />
-        </SettingLayout>
-      </SettingType>}
-      <CompleteBtn onClick={onClickCompleteBtn}>완료</CompleteBtn>
-      {/*
+  return (
+    <PopupContainer>
+      <Container>
+        <Title>자리 설정</Title>
+        <SettingType>
+          <TypeName>자리 대형</TypeName>
+          <SettingLayout>
+            <DetailSeatType
+              seatType={seatType}
+              setSeatType={setSeatType}
+              setErrMsg={setErrMsg}
+              setPickNum={setPickNum}
+            />
+          </SettingLayout>
+        </SettingType>
+        <SettingType>
+          <TypeName>첫 줄 설정</TypeName>
+          <SettingLayout>
+            <DetailPickNum seatType={seatType} pickNum={pickNum} setPickNum={setPickNum} />
+          </SettingLayout>
+        </SettingType>
+        {seatType === 2 && (
+          <SettingType>
+            <TypeName>짝궁 성별</TypeName>
+            <SettingLayout>
+              <MateGender mateGender={mateGender} setMateGender={setMateGender} />
+            </SettingLayout>
+          </SettingType>
+        )}
+        <CompleteBtn onClick={onClickCompleteBtn}>완료</CompleteBtn>
+        {/*
       <SettingType>
         <TypeName>학생 분리</TypeName>
         <SettingLayout>
@@ -105,8 +101,9 @@ const SwapDetailSetting = ({ pickNum, setPickNum, setErrMsg, setSeatType, seatTy
 
         </SettingLayout>
       </SettingType>  */}
-    </Container>
-  </PopupContainer>);
-}
+      </Container>
+    </PopupContainer>
+  );
+};
 
 export default SwapDetailSetting;

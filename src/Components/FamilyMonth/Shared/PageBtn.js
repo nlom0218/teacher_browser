@@ -8,8 +8,7 @@ import routes from "../../../routes";
 const SPageBtn = styled.div`
   justify-self: flex-end;
   display: grid;
-  grid-template-columns: ${(props) =>
-    props.JustOnePage ? "1fr" : props.FLPage ? "1fr 1fr" : "1fr 1fr 1fr"};
+  grid-template-columns: ${(props) => (props.JustOnePage ? "1fr" : props.FLPage ? "1fr 1fr" : "1fr 1fr 1fr")};
   column-gap: 20px;
   column-gap: 1.25rem;
   padding: 0px 20px;
@@ -28,8 +27,7 @@ const Btn = styled.div`
     color: rgba(255, 255, 255, 1);
     display: flex;
   }
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 `;
 
 const PageBtn = ({ page, pageType, search, itemNum, refetch }) => {
@@ -53,10 +51,7 @@ const PageBtn = ({ page, pageType, search, itemNum, refetch }) => {
     }
   }, [itemNum]);
   return (
-    <SPageBtn
-      FLPage={processFLPage()}
-      JustOnePage={itemNum < 13 ? true : false}
-    >
+    <SPageBtn FLPage={processFLPage()} JustOnePage={itemNum < 13 ? true : false}>
       <Btn onClick={onClickRefetch}>
         <AiOutlineRedo />
       </Btn>
@@ -64,9 +59,7 @@ const PageBtn = ({ page, pageType, search, itemNum, refetch }) => {
         <Link
           to={{
             pathname: `${routes.familyMonth}/${pageType}`,
-            search: `?${pageType === "search" ? `search=${search}&` : ""}page=${
-              parseInt(page) - 1
-            }`,
+            search: `?${pageType === "search" ? `search=${search}&` : ""}page=${parseInt(page) - 1}`,
           }}
         >
           <Btn>
@@ -78,9 +71,7 @@ const PageBtn = ({ page, pageType, search, itemNum, refetch }) => {
         <Link
           to={{
             pathname: `${routes.familyMonth}/${pageType}`,
-            search: `?${pageType === "search" ? `search=${search}&` : ""}page=${
-              parseInt(page) + 1
-            }`,
+            search: `?${pageType === "search" ? `search=${search}&` : ""}page=${parseInt(page) + 1}`,
           }}
         >
           <Btn>

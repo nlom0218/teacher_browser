@@ -41,7 +41,7 @@ const Description = styled.div`
     border-radius: 5px;
     border-radius: 0.3125rem;
     border: ${(props) => props.isEdit && `${props.theme.fontColor} 1px solid`};
-    background-color: ${props => props.theme.originBgColor};
+    background-color: ${(props) => props.theme.originBgColor};
     transition: border 1s ease, background-color 1s ease;
     line-height: 160%;
   }
@@ -65,7 +65,7 @@ const PageURLLayout = styled.div`
 const PageURL = styled.div`
   padding: 20px;
   padding: 1.25rem;
-  background-color: ${props => props.theme.originBgColor};
+  background-color: ${(props) => props.theme.originBgColor};
   border-radius: 40px;
   border-radius: 2.5rem;
   font-family: Arial, Helvetica, sans-serif;
@@ -87,7 +87,7 @@ const SeePageLink = () => {
   };
 
   if (loading) {
-    return <Loading page="popupPage" />
+    return <Loading page="popupPage" />;
   }
 
   return (
@@ -99,17 +99,13 @@ const SeePageLink = () => {
             <Icon>
               <MdOutlineDescription />
             </Icon>
-            <TextareaAutosize
-              value={data?.seePageLink[0].pageDescription}
-            ></TextareaAutosize>
+            <TextareaAutosize value={data?.seePageLink[0].pageDescription}></TextareaAutosize>
           </Description>
           <PageURLLayout>
             <Icon>
               <FiLink />
             </Icon>
-            <PageURL onClick={onClickPageURL}>
-              {data?.seePageLink[0].pageURL}
-            </PageURL>
+            <PageURL onClick={onClickPageURL}>{data?.seePageLink[0].pageURL}</PageURL>
           </PageURLLayout>
         </Container>
       )}

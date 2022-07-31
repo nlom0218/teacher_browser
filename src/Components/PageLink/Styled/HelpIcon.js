@@ -7,4 +7,4 @@ export default styled.div`
     font-size: 2rem;
     cursor: pointer;
   }
-`
+`;

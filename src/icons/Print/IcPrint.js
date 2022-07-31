@@ -1,9 +1,8 @@
-import React from 'react';
-import { ReactComponent as Print } from "../../image/icons/Print.svg"
+import React from "react";
+import { ReactComponent as Print } from "../../image/icons/Print.svg";
 
 const IcPrint = () => {
-  return (<Print />
-  );
-}
+  return <Print />;
+};
 
 export default IcPrint;

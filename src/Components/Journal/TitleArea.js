@@ -49,25 +49,31 @@ const ListIcon = styled.div`
 const ListName = styled.div``;
 
 const TitleArea = ({ studentListName, type, studentName }) => {
-  const me = useMe()
+  const me = useMe();
   const [IconListIsHover, setIconListIsHover] = useState(false);
   const onClickListIcon = () => {
     if (me) {
-      inPopup("seeStudentList")
+      inPopup("seeStudentList");
     } else {
-      inPopup("needLogin")
+      inPopup("needLogin");
     }
   };
 
   return (
     <Container>
       <Title>{studentName && studentName} 학급일지</Title>
-      {type !== "student" && <ListIcon>
-        <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다."}</ListName>
-        <div onClick={onClickListIcon} onMouseEnter={() => setIconListIsHover(true)} onMouseLeave={() => setIconListIsHover(false)}>
-          {IconListIsHover ? <IcNameTableClick /> : <IcNameTable />}
-        </div>
-      </ListIcon>}
+      {type !== "student" && (
+        <ListIcon>
+          <ListName>{studentListName ? studentListName : "선택된 명렬표가 없습니다."}</ListName>
+          <div
+            onClick={onClickListIcon}
+            onMouseEnter={() => setIconListIsHover(true)}
+            onMouseLeave={() => setIconListIsHover(false)}
+          >
+            {IconListIsHover ? <IcNameTableClick /> : <IcNameTable />}
+          </div>
+        </ListIcon>
+      )}
     </Container>
   );
 };

@@ -1,6 +1,6 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
-const SectionTitle = styled.div`  
+const SectionTitle = styled.div`
   display: grid;
   grid-template-columns: auto 1fr auto;
   column-gap: 10px;
@@ -14,6 +14,6 @@ const SectionTitle = styled.div`
   svg {
     display: flex;
   }
-`
+`;
 
-export default SectionTitle
+export default SectionTitle;

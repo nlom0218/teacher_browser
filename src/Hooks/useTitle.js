@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
-
-const useTitle = iniitialTitle => {
+const useTitle = (iniitialTitle) => {
   const [title, setTitle] = useState(iniitialTitle); // useTitle의 매개변수 iniitialTitle를 초기값으로 설정
   const updateTitle = () => {
     const htmlTitle = document.querySelector("title");
@@ -11,4 +10,4 @@ const useTitle = iniitialTitle => {
   return setTitle;
 };
 
-export default useTitle
+export default useTitle;

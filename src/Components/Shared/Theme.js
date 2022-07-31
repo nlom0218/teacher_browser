@@ -13,13 +13,7 @@ import {
 import { FaSun, FaMoon } from "react-icons/fa";
 import { BiExitFullscreen, BiFullscreen } from "react-icons/bi";
 import useMedia from "../../Hooks/useMedia";
-import {
-  HeaderToDo,
-  HeaderBookMark,
-  HedaerCalender,
-  HeaderMenu,
-  HeaderHome,
-} from "./HeaderLink";
+import { HeaderToDo, HeaderBookMark, HedaerCalender, HeaderMenu, HeaderHome } from "./HeaderLink";
 import routes from "../../routes";
 import { useNavigate } from "react-router-dom";
 import { customMedia } from "../../styles";
@@ -31,8 +25,7 @@ const Wrapper = styled.div`
   right: 20px;
   right: 1.25rem;
   display: grid;
-  grid-template-columns: ${(props) =>
-    props.isFullScreen ? "auto auto auto" : "auto auto"};
+  grid-template-columns: ${(props) => (props.isFullScreen ? "auto auto auto" : "auto auto")};
   z-index: 15;
   svg {
     font-size: 1.5em;
@@ -158,16 +151,10 @@ const Theme = () => {
           <MenuItem className="menu_btn" onClick={() => onClickRoutes("todo")}>
             <HeaderToDo />
           </MenuItem>
-          <MenuItem
-            className="menu_btn"
-            onClick={() => onClickRoutes("calendar")}
-          >
+          <MenuItem className="menu_btn" onClick={() => onClickRoutes("calendar")}>
             <HedaerCalender />
           </MenuItem>
-          <MenuItem
-            className="menu_btn"
-            onClick={() => onClickRoutes("pageLink")}
-          >
+          <MenuItem className="menu_btn" onClick={() => onClickRoutes("pageLink")}>
             <HeaderBookMark />
           </MenuItem>
           <MenuItem className="menu_btn" onClick={() => onClickRoutes("menu")}>

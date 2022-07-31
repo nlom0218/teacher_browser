@@ -35,7 +35,6 @@ const Input = styled.input`
   padding: 0.625rem 0rem;
 `;
 
-
 const LineBox = styled.div`
   position: relative;
 `;
@@ -54,11 +53,11 @@ const Line = styled.div`
 
 const Eles = styled.div`
   display: grid;
-  grid-template-columns: ${props => props.isEdit ? "auto auto" : "auto"};
+  grid-template-columns: ${(props) => (props.isEdit ? "auto auto" : "auto")};
   column-gap: 20px;
   column-gap: 1.25rem;
   align-self: flex-end;
-`
+`;
 
 const SubmitInput = styled.input`
   background-color: ${(props) => props.theme.btnBgColor};
@@ -76,9 +75,10 @@ const TimeTableTitle = ({ setTitle }) => {
   const media = useMedia();
   const date = new Date();
   const processSetDate = () => {
-    return `${date.getFullYear()}년 ${(date.getMonth() + 1)
+    return `${date.getFullYear()}년 ${(date.getMonth() + 1).toString().padStart(2, 0)}월 ${date
+      .getDate()
       .toString()
-      .padStart(2, 0)}월 ${date.getDate().toString().padStart(2, 0)}일`;
+      .padStart(2, 0)}일`;
   };
   const [isEdit, setIsEdit] = useState(false);
 
@@ -104,7 +104,9 @@ const TimeTableTitle = ({ setTitle }) => {
   return (
     <TopContents>
       <Title onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
-        <h2>{processSetDate(date)} {processSetDay(date)}요일</h2>
+        <h2>
+          {processSetDate(date)} {processSetDay(date)}요일
+        </h2>
         <Input
           {...register("title", {
             required: true,

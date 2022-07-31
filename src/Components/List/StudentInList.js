@@ -46,14 +46,7 @@ const Container = styled.div`
   `}
 `;
 
-const StudentInList = ({
-  students,
-  listId,
-  setSort,
-  sort,
-  setSuccessMsg,
-  listName,
-}) => {
+const StudentInList = ({ students, listId, setSort, sort, setSuccessMsg, listName }) => {
   const onClickSortBtn = (type) => {
     if (type === "none") {
       setSort(undefined);

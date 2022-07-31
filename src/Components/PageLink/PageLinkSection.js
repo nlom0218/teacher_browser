@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { inPopup, moveLinkPick, pageLinkFolderVar } from "../../apollo";
-import {
-  hideWelcomeSection,
-  seeWelcomSection,
-} from "../../Animations/WelcomeSectionAni";
+import { hideWelcomeSection, seeWelcomSection } from "../../Animations/WelcomeSectionAni";
 import { FaArrowCircleRight } from "react-icons/fa";
 import FolderList from "./FolderList";
 import ContentsList from "./Styled/ContentsList";
@@ -24,11 +21,7 @@ const MoveContainer = styled.div`
   bottom: 0;
   right: ${(props) => (props.pageLinkSection === "pageLink" ? 0 : "100%")};
   left: ${(props) => (props.pageLinkSection === "pageLink" ? 0 : "-100%")};
-  animation: ${(props) =>
-    !props.init &&
-    (props.pageLinkSection === "pageLink"
-      ? seeWelcomSection
-      : hideWelcomeSection)}
+  animation: ${(props) => !props.init && (props.pageLinkSection === "pageLink" ? seeWelcomSection : hideWelcomeSection)}
     1s ease forwards;
   padding: 20px;
   padding: 1.25rem;
@@ -69,15 +62,13 @@ const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit, media }) =
     }
   }, [data]);
 
-  const found = myPageLink.filter((item) =>
-    item.folder.includes(pageLinkFolder)
-  );
+  const found = myPageLink.filter((item) => item.folder.includes(pageLinkFolder));
   const allNotFound = !pageLinkFolder && myPageLink.length === 0;
   const folderNotFound = pageLinkFolder && found.length === 0;
 
   const onClickHelper = () => {
-    inPopup("pageLinkHelper")
-  }
+    inPopup("pageLinkHelper");
+  };
 
   useEffect(() => {
     {
@@ -95,7 +86,7 @@ const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit, media }) =
   });
 
   if (loading) {
-    return <Loading page="subPage" />
+    return <Loading page="subPage" />;
   }
 
   return (
@@ -107,7 +98,9 @@ const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit, media }) =
       <ContentsList right={true}>
         <PageLinkTitle left={true}>
           <div>나의 즐겨찾기 페이지</div>
-          <HelpIcon onClick={onClickHelper}><IcHelper /></HelpIcon>
+          <HelpIcon onClick={onClickHelper}>
+            <IcHelper />
+          </HelpIcon>
         </PageLinkTitle>
         {media !== "Desktop" && <FolderList right={true} />}
         <PageLinkList none={none}>
@@ -120,8 +113,7 @@ const PageLinkSection = ({ userEmail, pageLinkSection, init, setInit, media }) =
               })
             ))}
           {pageLinkFolder &&
-            (myPageLink.filter((item) => item.folder.includes(pageLinkFolder))
-              .length === 0 ? (
+            (myPageLink.filter((item) => item.folder.includes(pageLinkFolder)).length === 0 ? (
               <div>등록된 즐겨찾기 페이지가 없습니다.</div>
             ) : (
               myPageLink

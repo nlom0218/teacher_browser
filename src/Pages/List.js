@@ -59,9 +59,7 @@ const List = () => {
   const [selectedTag, setSelectedTag] = useState([]);
   const [selectedSort, setSelectedSort] = useState(undefined);
   const [seeNum, setSeeNum] = useState(Boolean(localStorage.getItem("seeNum")));
-  const [seeStudentIcon, setSeeStudentIcon] = useState(
-    Boolean(localStorage.getItem("seeStudentIcon"))
-  );
+  const [seeStudentIcon, setSeeStudentIcon] = useState(Boolean(localStorage.getItem("seeStudentIcon")));
 
   // 드래그 중일 때와 아닐 때를 나타내기 위한 값
   const [someDragging, setSomeDragging] = useState(false);
@@ -123,9 +121,7 @@ const List = () => {
   // 학생 정보가 불러와지면 existStudentArray 값 생성
   useEffect(() => {
     if (data) {
-      const newExistStudentArray = data?.seeAllStudent.map(
-        (item) => item.studentName
-      );
+      const newExistStudentArray = data?.seeAllStudent.map((item) => item.studentName);
       setExistStudentArray(newExistStudentArray);
     }
   }, [data]);
@@ -186,18 +182,8 @@ const List = () => {
           </StudentIcon>
         )}
       </Container>
-      <AlertMessage
-        msg={successMsg}
-        setMsg={setSuccessMsg}
-        time={3000}
-        type="success"
-      />
-      <AlertMessage
-        msg={errorMsg}
-        setMsg={setErrorMsg}
-        time={3000}
-        type="error"
-      />
+      <AlertMessage msg={successMsg} setMsg={setSuccessMsg} time={3000} type="success" />
+      <AlertMessage msg={errorMsg} setMsg={setErrorMsg} time={3000} type="error" />
 
       {/* 데스크탑이 아닐 때 학생 전체 리스트를 팝업으로 띄우기 */}
       {isPopup === "students" && (
@@ -224,9 +210,7 @@ const List = () => {
           setSeeStudentIcon={setSeeStudentIcon}
         />
       )}
-      {isPopup === "createList" && (
-        <CreateList setErrorMsg={setErrorMsg} setSuccessMsg={setSuccessMsg} />
-      )}
+      {isPopup === "createList" && <CreateList setErrorMsg={setErrorMsg} setSuccessMsg={setSuccessMsg} />}
       {isPopup === "createStudent" && (
         <CreateStudent
           existStudentArray={existStudentArray}

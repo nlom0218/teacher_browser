@@ -1,4 +1,4 @@
-import { keyframes } from "styled-components"
+import { keyframes } from "styled-components";
 
 export const weatherDown = keyframes`
   from {
@@ -9,7 +9,7 @@ export const weatherDown = keyframes`
     top: 20px;
     top: 1.25rem;
   }
-`
+`;
 
 export const weatherUp = keyframes`
   from {
@@ -20,7 +20,7 @@ export const weatherUp = keyframes`
     top: -30px;
     top: -1.875rem;
   }
-`
+`;
 
 export const weatherBtnDown = keyframes`
   from {
@@ -31,7 +31,7 @@ export const weatherBtnDown = keyframes`
     top: 70px;
     top: 4.375rem;
   }
-`
+`;
 
 export const weatherBtnUp = keyframes`
   from {
@@ -42,4 +42,4 @@ export const weatherBtnUp = keyframes`
     top: 20px;
     top: 1.25rem;
   }
-`
+`;

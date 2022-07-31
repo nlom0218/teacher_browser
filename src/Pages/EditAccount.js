@@ -123,12 +123,7 @@ const EditAccount = () => {
         <Changes>
           <List>배경화면 테마</List>
           <Item>
-            <EditBgTheme
-              setMsg={setMsg}
-              userEmail={me?.email}
-              bgTheme={me?.bgTheme}
-              userId={me?._id}
-            />
+            <EditBgTheme setMsg={setMsg} userEmail={me?.email} bgTheme={me?.bgTheme} userId={me?._id} />
           </Item>
         </Changes>
         {data?.checkPw.ok && (
@@ -146,17 +141,8 @@ const EditAccount = () => {
       </Container>
       {isPopup === "registerSchool" && <RegisterSchool setMsg={setMsg} />}
       {isPopup === "changePw" && <Pop_ChangePw userEmail={me?.email} />}
-      {msg && (
-        <AlertMessage msg={msg} setMsg={setMsg} time={3000} type="success" />
-      )}
-      {errMsg && (
-        <AlertMessage
-          msg={errMsg}
-          setMsg={setErrMsg}
-          time={3000}
-          type="error"
-        />
-      )}
+      {msg && <AlertMessage msg={msg} setMsg={setMsg} time={3000} type="success" />}
+      {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} time={3000} type="error" />}
     </BasicContainer>
   );
 };

@@ -13,4 +13,4 @@ export const SEE_ATTENDANCE_QUERY = gql`
       studentName
     }
   }
-`
+`;

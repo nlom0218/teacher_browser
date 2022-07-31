@@ -48,7 +48,7 @@ const KakaoLoginBtn = styled.div`
     font-size: 1.25em;
     font-size: 1.25rem;
   }
-  color: ${props => color.black};
+  color: ${(props) => color.black};
 `;
 const GoogleLoginBtn = styled.div`
   background-color: white;
@@ -68,7 +68,7 @@ const GoogleLoginBtn = styled.div`
     font-size: 1.25em;
     font-size: 1.25rem;
   }
-  color: ${props => color.black};
+  color: ${(props) => color.black};
 `;
 
 const SocialLogin = () => {

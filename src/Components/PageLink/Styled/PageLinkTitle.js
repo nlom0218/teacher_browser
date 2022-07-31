@@ -6,7 +6,7 @@ const PageLinkTitle = styled.div`
   align-items: center;
   column-gap: 5px;
   column-gap: 0.3125rem;
-  justify-self: ${(props) => !props.left ? "flex-end" : "flex-start"};
+  justify-self: ${(props) => (!props.left ? "flex-end" : "flex-start")};
   font-size: 1.5em;
   font-size: 1.5rem;
 `;

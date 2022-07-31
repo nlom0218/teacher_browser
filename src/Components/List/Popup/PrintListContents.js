@@ -5,10 +5,7 @@ import PopupPrintContainer from "../../Shared/PopupPrintContainer";
 import IcPrint from "../../../icons/Print/IcPrint";
 import { useReactToPrint } from "react-to-print";
 import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
-import {
-  BsFillCaretDownSquareFill,
-  BsFillCaretUpSquareFill,
-} from "react-icons/bs";
+import { BsFillCaretDownSquareFill, BsFillCaretUpSquareFill } from "react-icons/bs";
 
 const PrintTopContents = styled.div`
   display: grid;
@@ -153,28 +150,20 @@ const PrintListContents = ({ printRef, studentList }) => {
     return studentList?.map((item, index) => {
       return (
         <React.Fragment key={index}>
-          {item.studentNumber ? (
-            <Number>{item.studentNumber}</Number>
-          ) : (
-            <Number>{index + 1}</Number>
-          )}
+          {item.studentNumber ? <Number>{item.studentNumber}</Number> : <Number>{index + 1}</Number>}
           <Name>{item.studentName}</Name>
         </React.Fragment>
       );
     });
   };
   const checklistMap = [...Array(num)].map((item, index) => {
-    return <CheckIn key={index}/>;
+    return <CheckIn key={index} />;
   });
   const checkCount = studentList?.map((item, index) => {
     return (
       <React.Fragment key={index}>
         <Item>
-          {item.studentNumber ? (
-            <Number>{item.studentNumber}</Number>
-          ) : (
-            <Number>{index + 1}</Number>
-          )}
+          {item.studentNumber ? <Number>{item.studentNumber}</Number> : <Number>{index + 1}</Number>}
           <Name>{item.studentName}</Name>
         </Item>
         <Check num={num}>{checklistMap}</Check>
@@ -186,29 +175,15 @@ const PrintListContents = ({ printRef, studentList }) => {
       <PrintTopContents>
         <PrintType>
           <PrintTypeItem onClick={() => onClickPrintType("table")}>
-            {printType === "table" ? (
-              <RiCheckboxLine />
-            ) : (
-              <RiCheckboxBlankLine />
-            )}
+            {printType === "table" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
             <div>명단 출력</div>
           </PrintTypeItem>
           <PrintTypeItem onClick={() => onClickPrintType("checklist")}>
-            {printType === "checklist" ? (
-              <RiCheckboxLine />
-            ) : (
-              <RiCheckboxBlankLine />
-            )}
+            {printType === "checklist" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
             <div>체크리스트</div>
-            <div>
-              {num > 1 && (
-                <BsFillCaretDownSquareFill onClick={onClickListDown} />
-              )}
-            </div>
+            <div>{num > 1 && <BsFillCaretDownSquareFill onClick={onClickListDown} />}</div>
             <div>{num}</div>
-            <div>
-              {num < 20 && <BsFillCaretUpSquareFill onClick={onClickListUp} />}
-            </div>
+            <div>{num < 20 && <BsFillCaretUpSquareFill onClick={onClickListUp} />}</div>
           </PrintTypeItem>
         </PrintType>
         <PrintIcon onClick={onClickPrint}>

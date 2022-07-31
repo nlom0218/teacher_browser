@@ -7,7 +7,7 @@ export const CREATE_STUDENT_LIST_MUTATION = gql`
       error
     }
   }
-`
+`;
 
 export const EDIT_STUDENT_LIST = gql`
   mutation Mutation($teacherEmail: String!, $listId: ID!, $listIcon: String, $listName: String) {
@@ -16,7 +16,7 @@ export const EDIT_STUDENT_LIST = gql`
       error
     }
   }
-`
+`;
 
 export const ADD_STUDENT_MUTATION = gql`
   mutation AddStudent($teacherEmail: String!, $studentId: [ID!], $listId: ID!) {
@@ -25,7 +25,7 @@ export const ADD_STUDENT_MUTATION = gql`
       error
     }
   }
-`
+`;
 
 export const EDIT_STUDENT_LIST_ORDER = gql`
   mutation Mutation($teacherEmail: String!, $listId: ID!, $listOrder: Int) {
@@ -34,7 +34,7 @@ export const EDIT_STUDENT_LIST_ORDER = gql`
       error
     }
   }
-`
+`;
 
 export const DELETE_STUDENT_LIST_MUTATION = gql`
   mutation Mutation($teacherEmail: String!, $listId: ID!) {
@@ -43,4 +43,4 @@ export const DELETE_STUDENT_LIST_MUTATION = gql`
       error
     }
   }
-`
+`;

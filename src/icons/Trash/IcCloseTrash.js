@@ -1,9 +1,8 @@
-import React from 'react';
-import { ReactComponent as CloseTransh } from "../../image/icons/ClosedTrashCan.svg"
+import React from "react";
+import { ReactComponent as CloseTransh } from "../../image/icons/ClosedTrashCan.svg";
 
 const IcCloseTrash = () => {
-  return (<CloseTransh />
-  );
-}
+  return <CloseTransh />;
+};
 
 export default IcCloseTrash;

@@ -95,17 +95,8 @@ const TableInItem = ({ num, subName, index, color, memo, fontSize }) => {
   };
 
   return (
-    <TableItem
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      index={index}
-      color={color}
-    >
-      <SubjectName
-        fontSize={fontSize}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}
-      >
+    <TableItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} index={index} color={color}>
+      <SubjectName fontSize={fontSize} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
         <Span color={color}>&nbsp;{subName}&nbsp;</Span>
         {/* <Color color={color} fontSize={fontSize}></Color> */}
       </SubjectName>

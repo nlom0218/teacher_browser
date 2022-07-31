@@ -1,4 +1,4 @@
-import { keyframes } from "styled-components"
+import { keyframes } from "styled-components";
 
 export const ToLeft = keyframes`
   from {
@@ -7,7 +7,7 @@ export const ToLeft = keyframes`
   to {
     transform: translateX(0%);
   }
-`
+`;
 
 export const ToRight = keyframes`
   from {
@@ -16,4 +16,4 @@ export const ToRight = keyframes`
   to {
     transform: translateX(100%);
   }
-`
+`;

@@ -4,12 +4,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useNavigate, useParams } from "react-router-dom";
 import { SEE_FAMILY_STORY_QERUY } from "../../Graphql/FamilyStory/query";
 import routes from "../../routes";
-import {
-  FormContainer,
-  SubmitInput,
-  SubmitMsg,
-  TeacherCanLink,
-} from "./CreateYouTube";
+import { FormContainer, SubmitInput, SubmitMsg, TeacherCanLink } from "./CreateYouTube";
 import { useForm } from "react-hook-form";
 import YouTubeInput from "./YouTubeInput";
 import BasicInfoInput from "./BasicInfoInput";
@@ -36,13 +31,10 @@ const EditFamilyStory = ({ userEmail, setErrMsg, multiply, setMsg }) => {
     }
   };
 
-  const [editFamilyStory, { loading: editLoading }] = useMutation(
-    EDIT_FAMILY_STORY_MUTATION,
-    {
-      onCompleted,
-      refetchQueries: [{ query: SEE_FAMILY_STORY_QERUY, variables: { id } }],
-    }
-  );
+  const [editFamilyStory, { loading: editLoading }] = useMutation(EDIT_FAMILY_STORY_MUTATION, {
+    onCompleted,
+    refetchQueries: [{ query: SEE_FAMILY_STORY_QERUY, variables: { id } }],
+  });
 
   const { register, watch, getValues, setValue, handleSubmit } = useForm({
     mode: "onChange",
@@ -115,24 +107,13 @@ const EditFamilyStory = ({ userEmail, setErrMsg, multiply, setMsg }) => {
   return (
     <MainContentsLayout>
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
-        <YouTubeInput
-          register={register}
-          multiply={multiply}
-          watch={watch}
-          getValues={getValues}
-        />
-        <BasicInfoInput
-          register={register}
-          userEmail={userEmail}
-          setBgColor={setBgColor}
-          bgColor={bgColor}
-        />
+        <YouTubeInput register={register} multiply={multiply} watch={watch} getValues={getValues} />
+        <BasicInfoInput register={register} userEmail={userEmail} setBgColor={setBgColor} bgColor={bgColor} />
         <SubmitInput type="submit" value="수정하기" />
       </FormContainer>
       <SubmitMsg>
         <div>
-          게시물은 모두에게 공개되며 적절하지 않은 게시물은 예고없이 삭제될 수
-          있습니다. <br />
+          게시물은 모두에게 공개되며 적절하지 않은 게시물은 예고없이 삭제될 수 있습니다. <br />
           또한 티처캔 인스타그램에서 콘텐츠로 활용될 수 있습니다.😃
         </div>
         <TeacherCanLink onClick={onCLickLink}>@티처캔</TeacherCanLink>

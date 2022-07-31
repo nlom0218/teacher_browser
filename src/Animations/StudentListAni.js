@@ -1,4 +1,4 @@
-import { keyframes } from "styled-components"
+import { keyframes } from "styled-components";
 
 export const FadeInBtn = keyframes`
   from {
@@ -7,7 +7,7 @@ export const FadeInBtn = keyframes`
   to {
     right: 26%;
   }
-`
+`;
 
 export const FadeOutBtn = keyframes`
   from {
@@ -16,7 +16,7 @@ export const FadeOutBtn = keyframes`
   to {
     right: 1%;
   }
-`
+`;
 
 export const FadeInList = keyframes`
   from {
@@ -25,7 +25,7 @@ export const FadeInList = keyframes`
   to {
     right: 1%;
   }
-`
+`;
 
 export const FadeOutList = keyframes`
   from {
@@ -34,4 +34,4 @@ export const FadeOutList = keyframes`
   to {
     right: -24%;
   }
-`
+`;

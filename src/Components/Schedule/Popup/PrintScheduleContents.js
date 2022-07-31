@@ -59,7 +59,6 @@ const UPDOWN = styled.div`
   row-gap: 0.3125rem;
 `;
 
-
 const RIGHTLEFT = styled.div`
   display: grid;
   grid-template-columns: 1fr 5fr;
@@ -106,7 +105,7 @@ const TableItem = styled.div`
   align-items: center;
   padding: 20px 10px;
   padding: 1.25rem 0.625rem;
-  background-color: ${props => props.theme.color};
+  background-color: ${(props) => props.theme.color};
 `;
 
 const TableOutItem = styled.div`
@@ -210,7 +209,11 @@ const PrintScheduleContents = ({ printRef, title, viewTime, timeResult, tableDat
             )}
             <GridDay>
               {tableData?.getTimetableData.map((item, index) => {
-                return <TableItem key={index} color={item.color}>{item.subName}</TableItem>;
+                return (
+                  <TableItem key={index} color={item.color}>
+                    {item.subName}
+                  </TableItem>
+                );
               })}
             </GridDay>
           </RIGHTLEFT>

@@ -104,17 +104,9 @@ const HomeBtnBackground = styled.div`
   color: ${(props) => props.theme.bgColor};
   transition: background-color 1s ease, color 1s ease;
   cursor: pointer;
-  animation: ${(props) =>
-      props.typeAniInit
-        ? "none"
-        : props.welcomePage === "home"
-        ? ToLeft
-        : ToRight}
-    1s ease forwards;
-  transform: ${(props) =>
-    props.typeAniInit && props.welcomePage === "home"
-      ? "translateX(0%)"
-      : "translateX(100%)"};
+  animation: ${(props) => (props.typeAniInit ? "none" : props.welcomePage === "home" ? ToLeft : ToRight)} 1s ease
+    forwards;
+  transform: ${(props) => (props.typeAniInit && props.welcomePage === "home" ? "translateX(0%)" : "translateX(100%)")};
 `;
 
 const TopContents = ({ me, welcomePage, setWelComPage }) => {
@@ -148,11 +140,7 @@ const TopContents = ({ me, welcomePage, setWelComPage }) => {
           <Btn onClick={onClickHomeBtn}>
             <FcAdvertising />
           </Btn>
-          <HomeBtnBackground
-            welcomePage={welcomePage}
-            onClick={onClickHomeBtn}
-            typeAniInit={typeAniInit}
-          >
+          <HomeBtnBackground welcomePage={welcomePage} onClick={onClickHomeBtn} typeAniInit={typeAniInit}>
             {welcomePage === "home" ? (
               <div>
                 <FcHome />

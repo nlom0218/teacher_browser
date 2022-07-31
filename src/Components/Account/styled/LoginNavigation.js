@@ -10,7 +10,7 @@ const LoginNavigation = styled.div`
     font-weight: 600;
   }
   a {
-    color: ${props => props.theme.btnBgColor};
+    color: ${(props) => props.theme.btnBgColor};
     transition: color 1s ease;
     font-weight: 900;
     cursor: pointer;
@@ -22,6 +22,6 @@ const LoginNavigation = styled.div`
     font-weight: 500;
     cursor: pointer;
   }
-`
+`;
 
-export default LoginNavigation
+export default LoginNavigation;

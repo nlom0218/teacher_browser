@@ -44,27 +44,18 @@ const AddTagBtn = styled.input`
   cursor: pointer;
 `;
 const DetailStartTime = ({ userEmail, setTimetableTime }) => {
-
   const { register, handleSubmit, getValues } = useForm({
     mode: "onChange",
   });
   const onSubmit = (data) => {
-    const { hour, minutes, classtime, resttime, lunchhour, lunchminutes } =
-      data;
+    const { hour, minutes, classtime, resttime, lunchhour, lunchminutes } = data;
     const thour = parseInt(hour);
     const tminutes = parseInt(minutes);
     const tclasstime = parseInt(classtime);
     const tresttime = parseInt(resttime);
     const tlunchhour = parseInt(lunchhour);
     const tlunchminutes = parseInt(lunchminutes);
-    const timeResult = timeSetCal(
-      thour,
-      tminutes,
-      tclasstime,
-      tresttime,
-      tlunchhour,
-      tlunchminutes
-    );
+    const timeResult = timeSetCal(thour, tminutes, tclasstime, tresttime, tlunchhour, tlunchminutes);
     setTimetableTime({
       variables: {
         teacherEmail: userEmail,

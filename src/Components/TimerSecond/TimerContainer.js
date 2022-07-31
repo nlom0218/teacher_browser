@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { fullScreenMode, smallScreenMode } from "../../apollo";
 import { color, customMedia } from "../../styles";
@@ -57,36 +57,20 @@ const TimeBox = styled.div`
   -ms-user-select: none;
   user-select: none;
   /* font-size: ${(props) =>
-    props.isFullScreenMode
-      ? props.isHours
-        ? "20vw"
-        : "26vw"
-      : props.isHours
-      ? "12vw"
-      : "18vw"}; */
+    props.isFullScreenMode ? (props.isHours ? "20vw" : "26vw") : props.isHours ? "12vw" : "18vw"}; */
   font-size: ${(props) => (props.isHours ? "22vw" : "28vw")};
   text-align: center;
   transition: font-size 0.4s ease;
   /* cursor: ${(props) => props.isPopup !== true && "pointer"};
   color: ${(props) => props.isFullScreenMode && color.white};
-  text-shadow: ${(props) =>
-    props.isFullScreenMode && "rgb(0, 0, 0) 5px 5px 5px"};
-  text-shadow: ${(props) =>
-    props.isFullScreenMode && "rgb(0, 0, 0) 0.3125rem 0.3125rem 0.3125rem"}; */
+  text-shadow: ${(props) => props.isFullScreenMode && "rgb(0, 0, 0) 5px 5px 5px"};
+  text-shadow: ${(props) => props.isFullScreenMode && "rgb(0, 0, 0) 0.3125rem 0.3125rem 0.3125rem"}; */
   color: ${color.white};
   text-shadow: rgb(0, 0, 0) 10px 10px 10px;
   text-shadow: rgb(0, 0, 0) 0.625rem 0.625rem 0.625rem;
 `;
 
-const TimerContainer = ({
-  hours,
-  minutes,
-  seconds,
-  isFullScreenMode,
-  isPopup,
-  timerMemo,
-  setTimerMemo,
-}) => {
+const TimerContainer = ({ hours, minutes, seconds, isFullScreenMode, isPopup, timerMemo, setTimerMemo }) => {
   const onClickDelBtn = () => {
     localStorage.removeItem("timerMemo");
     setTimerMemo(undefined);
@@ -111,15 +95,9 @@ const TimerContainer = ({
           </DelBtn>
         </MemoBox>
       )}
-      <TimeBox
-        isPopup={isPopup}
-        onClick={onClickTiemBox}
-        isFullScreenMode={isFullScreenMode}
-        isHours={hours !== 0}
-      >
+      <TimeBox isPopup={isPopup} onClick={onClickTiemBox} isFullScreenMode={isFullScreenMode} isHours={hours !== 0}>
         {hours !== 0 && (hours < 10 ? `0${hours}:` : `${hours}:`)}
-        {minutes < 10 ? `0${minutes}` : minutes}:
-        {seconds < 10 ? `0${seconds}` : seconds}
+        {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}
       </TimeBox>
     </Container>
   );

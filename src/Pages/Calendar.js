@@ -179,10 +179,8 @@ const CalendarList = styled.div`
   row-gap: 1px;
   column-gap: 1px;
   ${customMedia.greaterThan("tablet")`
-    grid-template-rows: ${(props) =>
-      `repeat(${props.weekLength}, minmax(100px, auto))`};
-    grid-template-rows: ${(props) =>
-      `repeat(${props.weekLength}, minmax(6.25rem, auto))`};
+    grid-template-rows: ${(props) => `repeat(${props.weekLength}, minmax(100px, auto))`};
+    grid-template-rows: ${(props) => `repeat(${props.weekLength}, minmax(6.25rem, auto))`};
   `}
 `;
 
@@ -232,17 +230,10 @@ const CalendarTypeBackground = styled.div`
   color: ${(props) => props.theme.bgColor};
   transition: background-color 1s ease, color 1s ease;
   cursor: pointer;
-  animation: ${(props) =>
-      props.typeAniInit
-        ? "none"
-        : props.calendarType === "calendar"
-        ? MoveLeft
-        : MoveRight}
-    1s ease forwards;
+  animation: ${(props) => (props.typeAniInit ? "none" : props.calendarType === "calendar" ? MoveLeft : MoveRight)} 1s
+    ease forwards;
   transform: ${(props) =>
-    props.typeAniInit && props.calendarType === "calendar"
-      ? "translateX(0%)"
-      : "translateX(100%)"};
+    props.typeAniInit && props.calendarType === "calendar" ? "translateX(0%)" : "translateX(100%)"};
 `;
 
 const Calendar = () => {
@@ -254,9 +245,7 @@ const Calendar = () => {
 
   const me = useMe();
 
-  const [date, setDate] = useState(
-    new Date(localStorage.getItem("calendarDate"))
-  );
+  const [date, setDate] = useState(new Date(localStorage.getItem("calendarDate")));
 
   const [calendarType, setCalendarType] = useState("calendar");
   const [attendOption, setAttendOption] = useState([]);
@@ -378,18 +367,14 @@ const Calendar = () => {
 
   useEffect(() => {
     if (attendData) {
-      const attendType = [
-        ...new Set(attendData?.seeAttendance?.map((item) => item.type)),
-      ].map((item) => {
+      const attendType = [...new Set(attendData?.seeAttendance?.map((item) => item.type))].map((item) => {
         return { option: item, subject: "attendType" };
       });
-      const studentName = [
-        ...new Set(
-          attendData?.seeAttendance?.map((item) => item.studentName).sort()
-        ),
-      ].map((item) => {
-        return { option: item, subject: "studentName" };
-      });
+      const studentName = [...new Set(attendData?.seeAttendance?.map((item) => item.studentName).sort())].map(
+        (item) => {
+          return { option: item, subject: "studentName" };
+        },
+      );
       const newAttendOption = [...attendType, ...studentName];
       setAttendOption(newAttendOption);
     }
@@ -398,12 +383,7 @@ const Calendar = () => {
   return (
     <BasicContainer>
       {urlDate ? (
-        <CalendarDetail
-          userEmail={me?.email}
-          urlDate={urlDate}
-          refetchQuery={refetchQuery}
-          me={me}
-        />
+        <CalendarDetail userEmail={me?.email} urlDate={urlDate} refetchQuery={refetchQuery} me={me} />
       ) : (
         <Container>
           <TopContainer>
@@ -411,22 +391,14 @@ const Calendar = () => {
             <BtnContainer>
               {media !== "Mobile" && (
                 <CalendarType>
-                  <CalendarTypeBtn onClick={onClickCalendarTypeBtn}>
-                    일정
-                  </CalendarTypeBtn>
-                  <CalendarTypeBtn onClick={onClickCalendarTypeBtn}>
-                    출결
-                  </CalendarTypeBtn>
+                  <CalendarTypeBtn onClick={onClickCalendarTypeBtn}>일정</CalendarTypeBtn>
+                  <CalendarTypeBtn onClick={onClickCalendarTypeBtn}>출결</CalendarTypeBtn>
                   <CalendarTypeBackground
                     calendarType={calendarType}
                     onClick={onClickCalendarTypeBtn}
                     typeAniInit={typeAniInit}
                   >
-                    {calendarType === "calendar" ? (
-                      <div>일정</div>
-                    ) : (
-                      <div>출결</div>
-                    )}
+                    {calendarType === "calendar" ? <div>일정</div> : <div>출결</div>}
                   </CalendarTypeBackground>
                 </CalendarType>
               )}
@@ -461,15 +433,13 @@ const Calendar = () => {
           ) : (
             <BottomContainerLayout>
               <BottomContainer>
-                {["일", "월", "화", "수", "목", "금", "토"].map(
-                  (item, index) => {
-                    return (
-                      <Day key={index} sun={item === "일"}>
-                        {item}
-                      </Day>
-                    );
-                  }
-                )}
+                {["일", "월", "화", "수", "목", "금", "토"].map((item, index) => {
+                  return (
+                    <Day key={index} sun={item === "일"}>
+                      {item}
+                    </Day>
+                  );
+                })}
                 <CalendarList weekLength={weekLength}>
                   {dateArr &&
                     dateArr?.map((item, index) => {
@@ -493,20 +463,9 @@ const Calendar = () => {
         </Container>
       )}
       {isPopup === "addSchedule" && (
-        <AddSchedule
-          setErrMsg={setErrMsg}
-          userEmail={me?.email}
-          setMsg={setMsg}
-          urlDate={urlDate}
-        />
+        <AddSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} urlDate={urlDate} />
       )}
-      {isPopup === "editSchedule" && (
-        <EditSchedule
-          setErrMsg={setErrMsg}
-          userEmail={me?.email}
-          setMsg={setMsg}
-        />
-      )}
+      {isPopup === "editSchedule" && <EditSchedule setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} />}
       {isPopup === "createToDo" && (
         <TodoCreate
           setErrMsg={setErrMsg}
@@ -517,12 +476,7 @@ const Calendar = () => {
         />
       )}
       {isPopup === "detailToDo" && (
-        <DetailToDo
-          setErrMsg={setErrMsg}
-          userEmail={me?.email}
-          setMsg={setMsg}
-          setRefetchQuery={setRefetchQuery}
-        />
+        <DetailToDo setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} />
       )}
       {isPopup === "seeAllergy" && <SeeAllergy />}
       {isPopup === "moveToStudentPage" && (
@@ -561,27 +515,13 @@ const Calendar = () => {
         />
       )}
       {isPopup === "eidtAttend" && (
-        <EditAttend
-          setErrMsg={setErrMsg}
-          userEmail={me?.email}
-          setMsg={setMsg}
-          setRefetchQuery={setRefetchQuery}
-        />
+        <EditAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} />
       )}
       {isPopup === "selectedStudent" && <AttendSelectedStudent />}
       {isPopup === "needLogin" && <NeedLoginPopupContainer />}
       {isPopup === "CalendarHelper" && <CalendarHelper />}
-      {errMsg && (
-        <AlertMessage
-          msg={errMsg}
-          setMsg={setErrMsg}
-          type="error"
-          time={3000}
-        />
-      )}
-      {msg && (
-        <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />
-      )}
+      {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
+      {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
     </BasicContainer>
   );
 };

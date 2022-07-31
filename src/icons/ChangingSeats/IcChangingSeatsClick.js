@@ -1,9 +1,8 @@
-import React from 'react';
-import { ReactComponent as ChangingSeatsClick } from "../../image/icons/ChangingSeatsClick.svg"
+import React from "react";
+import { ReactComponent as ChangingSeatsClick } from "../../image/icons/ChangingSeatsClick.svg";
 
 const IcChangingSeatsClick = () => {
-  return (<ChangingSeatsClick />
-  );
-}
+  return <ChangingSeatsClick />;
+};
 
 export default IcChangingSeatsClick;

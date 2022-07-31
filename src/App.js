@@ -5,7 +5,6 @@ import { ThemeProvider } from "styled-components";
 import {
   darkModeVar,
   disableBgThemeAni,
-  isPopupVar,
   isLoggedInVar,
   bgThemeVar,
   editBgTheme,
@@ -126,10 +125,7 @@ function App() {
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : ligthTheme}>
-      <GlobalStyle
-        bgTheme={userBgTheme ? userBgTheme : me?.bgTheme}
-        isLoggedIn={isLoggedIn}
-      />
+      <GlobalStyle bgTheme={userBgTheme ? userBgTheme : me?.bgTheme} isLoggedIn={isLoggedIn} />
       <ChangBackground />
       {media !== "Mobile" && !fullScreen && <HeaderWeather />}
       <Routes>
@@ -139,18 +135,9 @@ function App() {
         <Route path={routes.fakeLogin} element={<FakeLogin />} />
         <Route path={routes.agreePolicy} element={<AgreePolicy />} />
         <Route path={routes.createAccount} element={<CreateAccount />} />
-        <Route
-          path={routes.naverLoginCallBack}
-          element={<NaverLoginCallBack />}
-        />
-        <Route
-          path={routes.googleLoginCallBack}
-          element={<GoogleLoginCallBack />}
-        />
-        <Route
-          path={routes.kakaoLoginCallBack}
-          element={<KakaoLoginCallBack />}
-        />
+        <Route path={routes.naverLoginCallBack} element={<NaverLoginCallBack />} />
+        <Route path={routes.googleLoginCallBack} element={<GoogleLoginCallBack />} />
+        <Route path={routes.kakaoLoginCallBack} element={<KakaoLoginCallBack />} />
         <Route path={routes.editAccount} element={<EditAccount />} />
         <Route path={routes.todo} element={<TodoList />} />
         <Route path={`${routes.todo}/:id`} element={<TodoList />} />
@@ -160,9 +147,7 @@ function App() {
         <Route path={routes.menu} element={<Menu />} />
         <Route
           path={`${routes.timerPopup}/:mode`}
-          element={
-            <TimerPopup bgMusicMp3={bgMusicMp3} setBgMusicMp3={setBgMusicMp3} />
-          }
+          element={<TimerPopup bgMusicMp3={bgMusicMp3} setBgMusicMp3={setBgMusicMp3} />}
         />
         <Route path={routes.draw} element={<Draw />} />
         <Route path={`${routes.draw}/:id`} element={<Draw />} />
@@ -173,10 +158,7 @@ function App() {
         <Route path={routes.lunchmenu} element={<Lunchmenu />} />
         <Route path={routes.schedule} element={<Schedule />} />
         <Route path={routes.journal} element={<Journal me={me} />} />
-        <Route
-          path={`${routes.journal}/:type/:id`}
-          element={<Journal me={me} />}
-        />
+        <Route path={`${routes.journal}/:type/:id`} element={<Journal me={me} />} />
         <Route path={routes.list} element={<List />} />
         <Route path={`${routes.list}/:type/:id`} element={<List />} />
         <Route path={routes.trash} element={<Trash />} />
@@ -184,20 +166,11 @@ function App() {
         <Route path={routes.pageLinkRegister} element={<PageLinkRegister />} />
         <Route path={routes.pageLinkAllList} element={<PageLinkAllList />} />
         <Route path={routes.news} element={<News />} />
-        <Route
-          path={routes.managingRoles}
-          element={<ManagingRoles me={me} />}
-        />
-        <Route
-          path={`${routes.pageLink}/:pageTitle`}
-          element={<PageLinkDetail />}
-        />
+        <Route path={routes.managingRoles} element={<ManagingRoles me={me} />} />
+        <Route path={`${routes.pageLink}/:pageTitle`} element={<PageLinkDetail />} />
         <Route path={routes.familyMonth} element={<FamilyMonth />} />
         <Route path={`${routes.familyMonth}/:page`} element={<FamilyMonth />} />
-        <Route
-          path={`${routes.familyMonth}/:page/:id`}
-          element={<FamilyMonth />}
-        />
+        <Route path={`${routes.familyMonth}/:page/:id`} element={<FamilyMonth />} />
       </Routes>
     </ThemeProvider>
   );

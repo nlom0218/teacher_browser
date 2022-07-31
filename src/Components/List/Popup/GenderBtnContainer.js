@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
-import styled from 'styled-components';
-import { customMedia } from '../../../styles';
+import styled from "styled-components";
+import { customMedia } from "../../../styles";
 
 const SGengerBtnContainer = styled.div`
   display: grid;
@@ -12,7 +12,7 @@ const SGengerBtnContainer = styled.div`
     font-size: 1.25rem;
     font-size: 1.25em;
   }
-`
+`;
 
 const GengerBtn = styled.div`
   cursor: pointer;
@@ -30,26 +30,24 @@ const GengerBtn = styled.div`
     justify-items: center;
     column-gap: 0;
   `}
-`
+`;
 
 const GenderBtnContainer = ({ gender, setGender }) => {
   const onClickGender = (type) => {
-    setGender(type)
-  }
-  return (<SGengerBtnContainer>
-    <GengerBtn gender={gender} onClick={() => onClickGender("male")}>
-      <div className="gender_icon">
-        {gender === "male" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
-      </div>
-      <div>남자</div>
-    </GengerBtn>
-    <GengerBtn gender={gender} onClick={() => onClickGender("female")}>
-      <div className="gender_icon">
-        {gender === "female" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
-      </div>
-      <div>여자</div>
-    </GengerBtn>
-  </SGengerBtnContainer>);
-}
+    setGender(type);
+  };
+  return (
+    <SGengerBtnContainer>
+      <GengerBtn gender={gender} onClick={() => onClickGender("male")}>
+        <div className="gender_icon">{gender === "male" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+        <div>남자</div>
+      </GengerBtn>
+      <GengerBtn gender={gender} onClick={() => onClickGender("female")}>
+        <div className="gender_icon">{gender === "female" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+        <div>여자</div>
+      </GengerBtn>
+    </SGengerBtnContainer>
+  );
+};
 
 export default GenderBtnContainer;

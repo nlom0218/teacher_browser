@@ -31,22 +31,22 @@ const Container = styled.div`
     padding: 40px;
     padding: 2.5rem;
   `}
-`
+`;
 
 const Journal = ({ me }) => {
-  const titleUpdataer = useTitle("티처캔 | 학급일지")
+  const titleUpdataer = useTitle("티처캔 | 학급일지");
   const { type, id } = useParams();
 
   const isPopup = useReactiveVar(isPopupVar);
   const [studentListName, setStudentListName] = useState(undefined);
-  const [studentName, setStudentName] = useState(undefined)
+  const [studentName, setStudentName] = useState(undefined);
   const [students, setStudents] = useState([]);
   const [sort, setSort] = useState("num");
 
-  const [refetchQuery, setRefetchQuery] = useState(1)
+  const [refetchQuery, setRefetchQuery] = useState(1);
 
-  const [msg, setMsg] = useState(undefined)
-  const [errMsg, setErrMsg] = useState(undefined)
+  const [msg, setMsg] = useState(undefined);
+  const [errMsg, setErrMsg] = useState(undefined);
 
   const { data, loading, error } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: {
@@ -56,15 +56,20 @@ const Journal = ({ me }) => {
     skip: !id || type === "student",
   });
 
-  const { data: studentData, loading: studentLoading, refetch } = useQuery(SEE_ONE_STUDENT_QUERY, {
+  const {
+    data: studentData,
+    loading: studentLoading,
+    refetch,
+  } = useQuery(SEE_ONE_STUDENT_QUERY, {
     variables: {
-      studentId: id
+      studentId: id,
     },
-    skip: !id || type !== "student"
-  })
+    skip: !id || type !== "student",
+  });
 
   // 팝업 닫으면 localstorage의 학생 정보 삭제
-  if (!localStorage.getItem("popup") && localStorage.getItem("selectedStudent")) localStorage.removeItem("selectedStudent");
+  if (!localStorage.getItem("popup") && localStorage.getItem("selectedStudent"))
+    localStorage.removeItem("selectedStudent");
 
   useEffect(() => {
     if (data) {
@@ -75,27 +80,53 @@ const Journal = ({ me }) => {
 
   useEffect(() => {
     if (studentData) {
-      setStudentName(studentData?.seeAllStudent[0]?.studentName)
+      setStudentName(studentData?.seeAllStudent[0]?.studentName);
     } else {
-      setStudentName(undefined)
+      setStudentName(undefined);
     }
-  }, [studentData])
+  }, [studentData]);
 
   useEffect(() => {
-    refetch()
-  }, [refetchQuery])
+    refetch();
+  }, [refetchQuery]);
 
   return (
     <BasicContainer menuItem={true}>
       <Container>
         <TitleArea studentListName={studentListName} type={type} studentName={studentName} />
-        {type === "list" && <MainArea me={me} students={students} loading={loading} error={error} setSort={setSort} sort={sort} listId={id} />}
+        {type === "list" && (
+          <MainArea
+            me={me}
+            students={students}
+            loading={loading}
+            error={error}
+            setSort={setSort}
+            sort={sort}
+            listId={id}
+          />
+        )}
         {type === "student" && <JournalDetail studentId={id} refetchQuery={refetchQuery} studentName={studentName} />}
       </Container>
       {isPopup === "seeStudentList" && <StudentList me={me} page="journal" />}
       {isPopup === "deleteJournal" && <DeleteJournal />}
-      {isPopup === "addJournal" && <AddJournal setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} urlDate={undefined} />}
-      {isPopup === "editJournal" && <EditJournal setErrMsg={setErrMsg} setRefetchQuery={setRefetchQuery} userEmail={me?.email} setMsg={setMsg} urlDate={undefined} />}
+      {isPopup === "addJournal" && (
+        <AddJournal
+          setErrMsg={setErrMsg}
+          userEmail={me?.email}
+          setMsg={setMsg}
+          setRefetchQuery={setRefetchQuery}
+          urlDate={undefined}
+        />
+      )}
+      {isPopup === "editJournal" && (
+        <EditJournal
+          setErrMsg={setErrMsg}
+          setRefetchQuery={setRefetchQuery}
+          userEmail={me?.email}
+          setMsg={setMsg}
+          urlDate={undefined}
+        />
+      )}
       {isPopup === "selectedStudent" && <AttendSelectedStudent />}
       {isPopup === "needLogin" && <NeedLoginPopupContainer />}
       {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}

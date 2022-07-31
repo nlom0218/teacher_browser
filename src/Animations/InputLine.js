@@ -1,4 +1,4 @@
-import { keyframes } from "styled-components"
+import { keyframes } from "styled-components";
 
 export const inputLine = keyframes`
   from {
@@ -7,4 +7,4 @@ export const inputLine = keyframes`
   to {
     width: 100%;
   }
-`
+`;

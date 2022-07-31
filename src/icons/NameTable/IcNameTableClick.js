@@ -1,9 +1,8 @@
-import React from 'react';
-import { ReactComponent as NameTableClick } from "../../image/icons/NameTableClick.svg"
+import React from "react";
+import { ReactComponent as NameTableClick } from "../../image/icons/NameTableClick.svg";
 
 const IcNameTableClick = () => {
-  return (<NameTableClick />
-  );
-}
+  return <NameTableClick />;
+};
 
 export default IcNameTableClick;

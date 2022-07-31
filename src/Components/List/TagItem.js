@@ -1,6 +1,6 @@
-import React from 'react';
-import { IoIosRemoveCircleOutline } from 'react-icons/io';
-import styled from 'styled-components';
+import React from "react";
+import { IoIosRemoveCircleOutline } from "react-icons/io";
+import styled from "styled-components";
 
 const STagItem = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ const STagItem = styled.div`
   padding: 0.3215rem 0.625rem;
   border-radius: 5px;
   border-radius: 0.3125rem;
-  background-color: ${props => props.theme.purple};
+  background-color: ${(props) => props.theme.purple};
   transition: background-color 1s ease;
   svg {
     display: flex;
@@ -23,13 +23,15 @@ const STagItem = styled.div`
     font-size: 1.25em;
     font-size: 1.25rem;
   }
-`
+`;
 
 const TagItem = ({ item, onClickDelTag }) => {
-  return (<STagItem>
-    <div>{item}</div>
-    <IoIosRemoveCircleOutline onClick={() => onClickDelTag(item)} />
-  </STagItem>);
-}
+  return (
+    <STagItem>
+      <div>{item}</div>
+      <IoIosRemoveCircleOutline onClick={() => onClickDelTag(item)} />
+    </STagItem>
+  );
+};
 
 export default TagItem;

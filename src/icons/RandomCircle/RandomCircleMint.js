@@ -1,9 +1,8 @@
-import React from 'react';
-import { ReactComponent as RandomCircleMint } from "../../image/icons/randomCircle/randomCircleMint.svg"
+import React from "react";
+import { ReactComponent as RandomCircleMint } from "../../image/icons/randomCircle/randomCircleMint.svg";
 
 const IcRandomCircleMint = () => {
-  return (<RandomCircleMint />
-  );
-}
+  return <RandomCircleMint />;
+};
 
 export default IcRandomCircleMint;

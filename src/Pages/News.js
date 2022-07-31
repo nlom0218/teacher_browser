@@ -19,12 +19,7 @@ const News = () => {
   return (
     <BasicContainer menuItem={true}>
       <Container>
-        <NewsSection
-          init={init}
-          setInit={setInit}
-          userEmail={me?.email}
-          favoriteNews={me?.favoriteNews}
-        />
+        <NewsSection init={init} setInit={setInit} userEmail={me?.email} favoriteNews={me?.favoriteNews} />
       </Container>
     </BasicContainer>
   );

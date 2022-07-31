@@ -1,10 +1,6 @@
 import styled from "styled-components";
 import { useReactiveVar } from "@apollo/client";
-import {
-  movePageLinkFolder,
-  pageLinkFolderVar,
-  removePageLinkFolder,
-} from "../../apollo";
+import { movePageLinkFolder, pageLinkFolderVar, removePageLinkFolder } from "../../apollo";
 import { linkPickFolderVar } from "../../apollo";
 import { removeLinkPickFolder } from "../../apollo";
 import { moveLinkPickFolder } from "../../apollo";
@@ -169,11 +165,7 @@ const FolderList = ({ right }) => {
       <SFolderList listnum={listnum}>
         {pageLinkFolderName.map((item, index) => {
           return (
-            <Folder
-              selected={processSelected(item)}
-              key={index}
-              onClick={() => onClickPickFolder(item)}
-            >
+            <Folder selected={processSelected(item)} key={index} onClick={() => onClickPickFolder(item)}>
               {item}
             </Folder>
           );

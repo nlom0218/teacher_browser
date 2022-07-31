@@ -1,9 +1,8 @@
-import React from 'react';
-import { ReactComponent as Helper } from "../../image/icons/Helper.svg"
+import React from "react";
+import { ReactComponent as Helper } from "../../image/icons/Helper.svg";
 
 const IcHelper = () => {
-  return (<Helper />
-  );
-}
+  return <Helper />;
+};
 
 export default IcHelper;

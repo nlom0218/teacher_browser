@@ -92,13 +92,7 @@ const BottomContents = () => {
             <br /> 방법을 알려드립니다. 😍
           </div>
         </Textarea>
-        <Btn
-          onClick={() =>
-            window.open(
-              "https://sparkly-corleggy-3e4.notion.site/718aaed6e5e54babb7efb97384bab836"
-            )
-          }
-        >
+        <Btn onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/718aaed6e5e54babb7efb97384bab836")}>
           설명서 바로가기
         </Btn>
       </LayoutOne>
@@ -114,7 +108,7 @@ const BottomContents = () => {
         <Btn
           onClick={() =>
             window.open(
-              "https://docs.google.com/forms/d/e/1FAIpQLSebZY_Z3Rtt573TmQ_TIwme7heipIfgGFjSZx5eKl-0bH9F5g/viewform"
+              "https://docs.google.com/forms/d/e/1FAIpQLSebZY_Z3Rtt573TmQ_TIwme7heipIfgGFjSZx5eKl-0bH9F5g/viewform",
             )
           }
         >

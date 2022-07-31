@@ -1,8 +1,7 @@
-import { useReactiveVar } from '@apollo/client';
-import React from 'react';
-import { FcSettings } from 'react-icons/fc';
-import styled from 'styled-components';
-import { inPopup, isPopupVar } from '../../apollo';
+import React from "react";
+import { FcSettings } from "react-icons/fc";
+import styled from "styled-components";
+import { inPopup } from "../../apollo";
 
 const Container = styled.div`
   justify-self: flex-end;
@@ -13,21 +12,22 @@ const Container = styled.div`
     display: flex;
     cursor: pointer;
   }
-`
+`;
 
 const SortTagBtn = ({ me }) => {
-
   const onClickStudentSetting = () => {
     if (me) {
-      inPopup("seeStudentSetting")
+      inPopup("seeStudentSetting");
     } else {
-      inPopup("needLogin")
+      inPopup("needLogin");
     }
-  }
+  };
 
-  return (<Container>
-    <FcSettings onClick={onClickStudentSetting} />
-  </Container>);
-}
+  return (
+    <Container>
+      <FcSettings onClick={onClickStudentSetting} />
+    </Container>
+  );
+};
 
 export default SortTagBtn;

@@ -165,14 +165,7 @@ const BasicInfoInput = ({ register, userEmail, bgColor, setBgColor }) => {
         <IoColorFill />
         <ColorContainer>
           {cardColor.map((item, index) => {
-            return (
-              <ColorBox
-                setBgColor={setBgColor}
-                bgColor={bgColor}
-                key={index}
-                color={item}
-              />
-            );
+            return <ColorBox setBgColor={setBgColor} bgColor={bgColor} key={index} color={item} />;
           })}
         </ColorContainer>
       </InputLayout>

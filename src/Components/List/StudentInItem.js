@@ -25,14 +25,14 @@ const Student = styled.div`
   border-radius: 5px;
   border-radius: 0.3125rem;
   display: grid;
-  grid-template-rows: ${props => props.page === "journal" ? "1fr 1fr 1fr 1fr" : "1fr 1fr 1fr"};
+  grid-template-rows: ${(props) => (props.page === "journal" ? "1fr 1fr 1fr 1fr" : "1fr 1fr 1fr")};
   padding: 10px;
   padding: 0.625rem;
   opacity: ${(props) => (props.hoverContainer ? 0.6 : 1)};
   ${customMedia.greaterThan("tablet")`
   `}
   ${customMedia.greaterThan("desktop")`
-    grid-template-rows: ${props => props.page === "journal" ? "1fr 1fr 1fr" : "1fr 1fr"};
+    grid-template-rows: ${(props) => (props.page === "journal" ? "1fr 1fr 1fr" : "1fr 1fr")};
   `}
 `;
 
@@ -47,7 +47,7 @@ const StudentJournal = styled.div`
   align-self: center;
   text-align: center;
   font-size: 0.875rem;
-`
+`;
 
 const HoverContainer = styled.div`
   display: grid;
@@ -73,7 +73,7 @@ const HoverContainer = styled.div`
 const FnBtn = styled.div`
   justify-self: stretch;
   display: grid;
-  grid-template-columns: ${props => props.page === "journal" ? "1fr 1fr" : "1fr 1fr 1fr"};
+  grid-template-columns: ${(props) => (props.page === "journal" ? "1fr 1fr" : "1fr 1fr 1fr")};
   justify-items: center;
   padding: 0px 10px;
   padding: 0rem 0.625rem;
@@ -107,25 +107,33 @@ const StudentInItem = ({ item, listId, page, setSuccessMsg, listName, sort }) =>
   const [hoverContainer, setHoverContainer] = useState(false);
 
   const onCompleted = (result) => {
-    const { deleteStudent: { ok } } = result
+    const {
+      deleteStudent: { ok },
+    } = result;
     if (ok) {
-      setSuccessMsg(`${item.studentName}이 ${listName}에서 제거되었습니다. 😀`)
+      setSuccessMsg(`${item.studentName}이 ${listName}에서 제거되었습니다. 😀`);
     }
-  }
+  };
 
   const [deleteStudent, { loading }] = useMutation(DELETE_STUDENT_MUTATION, {
     onCompleted,
-    update: (cache, { data: { deleteStudent: { ok } } }) => {
+    update: (
+      cache,
+      {
+        data: {
+          deleteStudent: { ok },
+        },
+      },
+    ) => {
       if (ok) {
         cache.modify({
           id: "ROOT_QUERY",
           fields: {
-            seeStudentList() {
-            }
-          }
-        })
+            seeStudentList() {},
+          },
+        });
       }
-    }
+    },
   });
 
   const onMouseEnter = () => {
@@ -142,10 +150,10 @@ const StudentInItem = ({ item, listId, page, setSuccessMsg, listName, sort }) =>
   };
 
   const onClickProfile = () => {
-    navigate(`${routes.list}/student/${item._id}`)
+    navigate(`${routes.list}/student/${item._id}`);
   };
   const onClickJournal = () => {
-    navigate(`${routes.journal}/student/${item._id}`)
+    navigate(`${routes.journal}/student/${item._id}`);
   };
   const onClickDel = () => {
     deleteStudent({
@@ -172,9 +180,11 @@ const StudentInItem = ({ item, listId, page, setSuccessMsg, listName, sort }) =>
             <div className="fnBtn_icon" onClick={onClickProfile}>
               <BsPerson />
             </div>
-            {page !== "journal" && <div className="fnBtn_icon" onClick={onClickDel}>
-              <BsPersonDash />
-            </div>}
+            {page !== "journal" && (
+              <div className="fnBtn_icon" onClick={onClickDel}>
+                <BsPersonDash />
+              </div>
+            )}
           </FnBtn>
         </HoverContainer>
       ) : (
@@ -187,9 +197,11 @@ const StudentInItem = ({ item, listId, page, setSuccessMsg, listName, sort }) =>
               <div className="fnBtn_icon" onClick={onClickProfile}>
                 <BsPerson />
               </div>
-              {page !== "journal" && <div className="fnBtn_icon" onClick={onClickDel}>
-                <BsPersonDash />
-              </div>}
+              {page !== "journal" && (
+                <div className="fnBtn_icon" onClick={onClickDel}>
+                  <BsPersonDash />
+                </div>
+              )}
             </FnBtn>
           </HoverContainer>
         )

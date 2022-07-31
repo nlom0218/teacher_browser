@@ -4,15 +4,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import qs from "qs";
 import routes from "../../routes";
-import { youtubeList } from "./AllListYouTube";
 import { customMedia } from "../../styles";
 import PageBtn from "./Shared/PageBtn";
 import YouTubeList from "./Shared/YouTubeList";
 import { useQuery } from "@apollo/client";
-import {
-  SEARCH_FAMILY_STROY_NUM,
-  SEE_SEARCH_FAMILY_STORY,
-} from "../../Graphql/FamilyStory/query";
+import { SEARCH_FAMILY_STROY_NUM, SEE_SEARCH_FAMILY_STORY } from "../../Graphql/FamilyStory/query";
 import Loading from "../Shared/Loading";
 import NotContentsMsgContainer from "./NotContentsMsgContainer";
 

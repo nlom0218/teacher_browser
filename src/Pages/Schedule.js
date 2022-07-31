@@ -69,8 +69,8 @@ const Schedule = () => {
   const titleUpdataer = useTitle("티처캔 | 시간표");
   const [timeResult, setTimeResult] = useState([]);
   const [timetableTime, setTimetableTime] = useState([]);
-  const [errMsg, setErrMsg] = useState(undefined)
-  const [msg, setMsg] = useState(undefined)
+  const [errMsg, setErrMsg] = useState(undefined);
+  const [msg, setMsg] = useState(undefined);
   const { data: tableData, loading: tableLoading } = useQuery(GET_TIMETABLE_DATA_QUERY);
 
   const { data, loading, error } = useQuery(GET_TIMETABLE_TIME_QUERY, {
@@ -118,7 +118,7 @@ const Schedule = () => {
   };
 
   if (loading || tableLoading) {
-    return <Loading page="mainPage" />
+    return <Loading page="mainPage" />;
   }
 
   return (
@@ -128,16 +128,10 @@ const Schedule = () => {
         <OptionContents>
           <OptionBtn onClick={onClickTimeSetBtn}> 시간설정 </OptionBtn>
           <TypeBtn onClick={onClickTimeviewBtn}>
-            {viewTime === true ? (
-              <RiCheckboxLine />
-            ) : (
-              <RiCheckboxBlankLine />
-            )}
+            {viewTime === true ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
             <div> 시간 보기 </div>
           </TypeBtn>
-          {media !== "Mobile" && (
-            <TimeTableFont fontSize={fontSize} setFontSize={setFontSize} />
-          )}
+          {media !== "Mobile" && <TimeTableFont fontSize={fontSize} setFontSize={setFontSize} />}
         </OptionContents>
         <ScheduleForm
           fontSize={fontSize}
@@ -149,16 +143,8 @@ const Schedule = () => {
         />
       </Container>
 
-      {isPopup === "registerClass" && (
-        <ClassRegisterPage
-          userEmail={me?.email}
-          setErrMsg={setErrMsg}
-          setMsg={setMsg}
-        />
-      )}
-      {isPopup === "registerTime" && (
-        <TimeRegisterPage timeResult={timeResult} userEmail={me?.email} setMsg={setMsg} />
-      )}
+      {isPopup === "registerClass" && <ClassRegisterPage userEmail={me?.email} setErrMsg={setErrMsg} setMsg={setMsg} />}
+      {isPopup === "registerTime" && <TimeRegisterPage timeResult={timeResult} userEmail={me?.email} setMsg={setMsg} />}
       {isPopup === "registerTimeSet" && <ClassTimeSet userEmail={me?.email} setMsg={setMsg} />}
       {isPopup === "print" && (
         <PrintScheduleContents

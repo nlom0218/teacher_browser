@@ -81,9 +81,7 @@ const AllList = ({
     if (data) {
       const initStudentList = [];
       for (let order = 1; order < 14; order++) {
-        const existStudentList = data?.seeStudentList.filter(
-          (item) => item.listOrder === order
-        )[0];
+        const existStudentList = data?.seeStudentList.filter((item) => item.listOrder === order)[0];
         if (existStudentList) {
           initStudentList.push(existStudentList);
         } else {

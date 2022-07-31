@@ -43,8 +43,7 @@ const Review = styled.div`
   grid-column: 1 / -1;
   height: calc(${(props) => props.multiply} * 9vw);
   box-shadow: ${(props) =>
-    props.isReview &&
-    "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px"};
+    props.isReview && "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px"};
 `;
 
 const ReviewBox = styled.div`
@@ -101,9 +100,7 @@ const YouTubeInput = ({ register, multiply, watch, getValues }) => {
           </ReviewBox>
         ) : (
           <iframe
-            src={`https://www.youtube.com/embed/${getYouTubeID(
-              watch("url")
-            )}?showinfo=0&enablejsapi=1`}
+            src={`https://www.youtube.com/embed/${getYouTubeID(watch("url"))}?showinfo=0&enablejsapi=1`}
             width="100%"
             height="100%"
             title="미리보기"

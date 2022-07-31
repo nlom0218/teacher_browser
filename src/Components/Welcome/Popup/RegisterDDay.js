@@ -5,11 +5,7 @@ import { ko } from "date-fns/esm/locale";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 import PopupContainer from "../../Shared/PopupContainer";
-import {
-  CREATE_DDAY,
-  EDIT_DDAY_MUTATION,
-} from "../../../Graphql/User/mutation";
-import { ME_QUERY } from "../../../Hooks/useMe";
+import { CREATE_DDAY, EDIT_DDAY_MUTATION } from "../../../Graphql/User/mutation";
 import { BsCalendarDate, BsFillPencilFill } from "react-icons/bs";
 import { outPopup } from "../../../apollo";
 import Loading from "../../Shared/Loading";
@@ -84,15 +80,7 @@ const Submit = styled.input`
   cursor: pointer;
 `;
 
-const RegisterDDay = ({
-  setErrMsg,
-  userEmail,
-  setMsg,
-  dDay,
-  initMove,
-  toggleIsMoveDDay,
-  userId,
-}) => {
+const RegisterDDay = ({ setErrMsg, userEmail, setMsg, dDay, initMove, toggleIsMoveDDay, userId }) => {
   const dDayID = parseInt(localStorage.getItem("dDayID"));
   const [date, setDate] = useState(new Date());
   const [createID, setCreateID] = useState(undefined);
@@ -118,7 +106,7 @@ const RegisterDDay = ({
         data: {
           createDDay: { ok },
         },
-      }
+      },
     ) {
       if (ok) {
         cache.modify({
@@ -162,7 +150,7 @@ const RegisterDDay = ({
         data: {
           editDDay: { ok },
         },
-      }
+      },
     ) {
       if (ok) {
         cache.modify({
@@ -170,9 +158,7 @@ const RegisterDDay = ({
           fields: {
             dDay(prev) {
               const copyDDay = [...prev];
-              const targetIndex = copyDDay.findIndex(
-                (item) => item.ID === dDayID
-              );
+              const targetIndex = copyDDay.findIndex((item) => item.ID === dDayID);
               return [
                 ...copyDDay.slice(0, targetIndex),
                 {
@@ -239,11 +225,7 @@ const RegisterDDay = ({
           <Icon>
             <BsFillPencilFill />
           </Icon>
-          <TitleInput
-            {...register("title")}
-            placeholder="내용을 입력하세요."
-            autoComplete="off"
-          />
+          <TitleInput {...register("title")} placeholder="내용을 입력하세요." autoComplete="off" />
         </InputLayout>
         <InputLayout className="dateInput">
           <Icon>

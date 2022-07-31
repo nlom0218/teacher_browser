@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import qs from "qs";
 import PageBtn from "./Shared/PageBtn";
 import YouTubeList from "./Shared/YouTubeList";
 import { useQuery } from "@apollo/client";
-import {
-  ALL_FAMILY_STORY_NUM,
-  SEE_ALL_FAMILY_STORY_QEURY,
-} from "../../Graphql/FamilyStory/query";
+import { ALL_FAMILY_STORY_NUM, SEE_ALL_FAMILY_STORY_QEURY } from "../../Graphql/FamilyStory/query";
 import Loading from "../Shared/Loading";
 import NotContentsMsgContainer from "./NotContentsMsgContainer";
 
@@ -65,8 +62,7 @@ export const youtubeList = [
   },
   {
     url: "https://www.youtube.com/watch?v=wFeFIN8CI0A",
-    title:
-      "김진호가족사진김진호가족사진김진호가족사진김진호가족사진김진호가족사진김진호가족사진",
+    title: "김진호가족사진김진호가족사진김진호가족사진김진호가족사진김진호가족사진김진호가족사진",
     bgColor: "#EAFFD0",
     type: "다큐",
     onwer: "tendy424@jr.naver.com",
@@ -185,12 +181,7 @@ const AllListYoutube = () => {
 
   return (
     <Container>
-      <PageBtn
-        page={page}
-        pageType="list"
-        itemNum={num?.allFamilyStoryNum}
-        refetch={refetch}
-      />
+      <PageBtn page={page} pageType="list" itemNum={num?.allFamilyStoryNum} refetch={refetch} />
       {data?.seeAllFamilyStory?.length === 0 ? (
         <NotContentsMsgContainer preText="생성된" />
       ) : (

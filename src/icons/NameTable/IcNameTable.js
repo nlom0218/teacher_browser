@@ -1,9 +1,8 @@
-import React from 'react';
-import { ReactComponent as NameTable } from "../../image/icons/NameTable.svg"
+import React from "react";
+import { ReactComponent as NameTable } from "../../image/icons/NameTable.svg";
 
 const IcNameTable = () => {
-  return (<NameTable />
-  );
-}
+  return <NameTable />;
+};
 
 export default IcNameTable;

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
-import StudentInItem from "../List/StudentInItem"
+import StudentInItem from "../List/StudentInItem";
 import { customMedia } from "../../styles";
 import Loading from "../Shared/Loading";
 import NoStudentMsg from "../Shared/styled/NoStudentMsg";
@@ -49,7 +49,6 @@ const StudentList = styled.div`
 
 //
 const MainArea = ({ me, students, loading, error, sort, setSort, listId }) => {
-
   if (loading) return <Loading page="subPage" />;
   if (error)
     return (
@@ -61,24 +60,32 @@ const MainArea = ({ me, students, loading, error, sort, setSort, listId }) => {
 
   return (
     <Container>
-      {students?.length === 0 ? <NoStudentMsg>명렬표에 학생이 없습니다. 😅 <br />명렬표에서 학생을 추가하세요!</NoStudentMsg> : <SortContainer>
-        <SortBtn onClick={() => setSort("num")}>
-          <div>{sort === "num" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
-          <div>번호 순</div>
-        </SortBtn>
-        <SortBtn onClick={() => setSort("name")}>
-          <div>{sort === "name" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
-          <div>이름 순</div>
-        </SortBtn>
-        <SortBtn onClick={() => setSort("id")}>
-          <div>{sort === "id" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
-          <div>생성일 순</div>
-        </SortBtn>
-      </SortContainer>}
+      {students?.length === 0 ? (
+        <NoStudentMsg>
+          명렬표에 학생이 없습니다. 😅 <br />
+          명렬표에서 학생을 추가하세요!
+        </NoStudentMsg>
+      ) : (
+        <SortContainer>
+          <SortBtn onClick={() => setSort("num")}>
+            <div>{sort === "num" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+            <div>번호 순</div>
+          </SortBtn>
+          <SortBtn onClick={() => setSort("name")}>
+            <div>{sort === "name" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+            <div>이름 순</div>
+          </SortBtn>
+          <SortBtn onClick={() => setSort("id")}>
+            <div>{sort === "id" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
+            <div>생성일 순</div>
+          </SortBtn>
+        </SortContainer>
+      )}
       <StudentList>
-        {students?.length !== 0 && students?.map((item, index) => {
-          return <StudentInItem key={index} item={item} listId={listId} page="journal" />
-        })}
+        {students?.length !== 0 &&
+          students?.map((item, index) => {
+            return <StudentInItem key={index} item={item} listId={listId} page="journal" />;
+          })}
       </StudentList>
     </Container>
   );

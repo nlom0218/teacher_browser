@@ -58,34 +58,31 @@ const DeleteFamilyStory = ({ familyStoryId, userEmail, setMsg, setErrMsg }) => {
     }
   };
 
-  const [deleteFamilyStory, { loading }] = useMutation(
-    DELETE_FAMILY_STORY_MUTATION,
-    {
-      onCompleted,
-      refetchQueries: [
-        {
-          query: SEE_MY_FAMILY_STORY_QUERY,
-          variables: {
-            userEmail,
-            page: 1,
-          },
+  const [deleteFamilyStory, { loading }] = useMutation(DELETE_FAMILY_STORY_MUTATION, {
+    onCompleted,
+    refetchQueries: [
+      {
+        query: SEE_MY_FAMILY_STORY_QUERY,
+        variables: {
+          userEmail,
+          page: 1,
         },
-        {
-          query: SEE_LIKE_FAMILY_STORY,
-          variables: {
-            userEmail,
-            page: 1,
-          },
+      },
+      {
+        query: SEE_LIKE_FAMILY_STORY,
+        variables: {
+          userEmail,
+          page: 1,
         },
-        {
-          query: SEE_ALL_FAMILY_STORY_QEURY,
-          variables: {
-            page: 1,
-          },
+      },
+      {
+        query: SEE_ALL_FAMILY_STORY_QEURY,
+        variables: {
+          page: 1,
         },
-      ],
-    }
-  );
+      },
+    ],
+  });
 
   const onClickDelBtn = () => {
     deleteFamilyStory({

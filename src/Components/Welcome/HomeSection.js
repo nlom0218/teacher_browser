@@ -17,16 +17,7 @@ const Container = styled.div`
   position: relative;
 `;
 
-const HomeSection = ({
-  dDay,
-  userEmail,
-  isMoveDDay,
-  setMsg,
-  setErrMsg,
-  links,
-  setLinks,
-  userId,
-}) => {
+const HomeSection = ({ dDay, userEmail, isMoveDDay, setMsg, setErrMsg, links, setLinks, userId }) => {
   const media = useMedia();
   return (
     <Container>

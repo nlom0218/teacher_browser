@@ -14,11 +14,8 @@ import {
 import { BsFillPersonCheckFill, BsFillPersonFill } from "react-icons/bs";
 import { customMedia } from "../../../styles";
 import IcNameTableClick from "../../../icons/NameTable/IcNameTableClick";
-import {
-  CREATE_ATTENDANCE_MUTATION,
-  CREATE_MANY_ATTENDANCE_MUTATION,
-} from "../../../Graphql/Attendance/mutation";
-import { format, getDay, isWeekend } from "date-fns";
+import { CREATE_ATTENDANCE_MUTATION, CREATE_MANY_ATTENDANCE_MUTATION } from "../../../Graphql/Attendance/mutation";
+import { format, isWeekend } from "date-fns";
 import Loading from "../../Shared/Loading";
 import { SEE_ATTENDANCE_QUERY } from "../../../Graphql/Attendance/query";
 
@@ -127,13 +124,7 @@ const SubmitInput = styled.input`
   cursor: pointer;
 `;
 
-const AddAttend = ({
-  userEmail,
-  setErrMsg,
-  setMsg,
-  setRefetchQuery,
-  urlDate,
-}) => {
+const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) => {
   const [type, setType] = useState(undefined);
   const [startDate, setStartDate] = useState(undefined);
   const [endDate, setEndDate] = useState(undefined);
@@ -164,39 +155,33 @@ const AddAttend = ({
     setRefetchQuery((prev) => prev + 1);
   };
 
-  const [createAttendance, { loading }] = useMutation(
-    CREATE_ATTENDANCE_MUTATION,
-    {
-      onCompleted: (result) => {
-        const {
-          createAttendance: { ok, error },
-        } = result;
-        if (ok) {
-          onCompleted();
-        } else {
-          setErrMsg(error);
-        }
-      },
-      refetchQueries: refetchCalendarAttendance(),
-    }
-  );
+  const [createAttendance, { loading }] = useMutation(CREATE_ATTENDANCE_MUTATION, {
+    onCompleted: (result) => {
+      const {
+        createAttendance: { ok, error },
+      } = result;
+      if (ok) {
+        onCompleted();
+      } else {
+        setErrMsg(error);
+      }
+    },
+    refetchQueries: refetchCalendarAttendance(),
+  });
 
-  const [createManyAttendance, { loading: manyLoading }] = useMutation(
-    CREATE_MANY_ATTENDANCE_MUTATION,
-    {
-      onCompleted: (result) => {
-        const {
-          createManyAttendance: { ok, error },
-        } = result;
-        if (ok) {
-          onCompleted();
-        } else {
-          setErrMsg(error);
-        }
-      },
-      refetchQueries: refetchCalendarAttendance(),
-    }
-  );
+  const [createManyAttendance, { loading: manyLoading }] = useMutation(CREATE_MANY_ATTENDANCE_MUTATION, {
+    onCompleted: (result) => {
+      const {
+        createManyAttendance: { ok, error },
+      } = result;
+      if (ok) {
+        onCompleted();
+      } else {
+        setErrMsg(error);
+      }
+    },
+    refetchQueries: refetchCalendarAttendance(),
+  });
 
   const onSubmit = (data) => {
     const { contents } = data;
@@ -233,17 +218,12 @@ const AddAttend = ({
       });
     } else {
       // 여러 날을 중복하여 출결을 생성할 때
-      const term =
-        (endDateMillisecond - startDateMillisecond) / 24 / 60 / 60 / 1000 + 1;
+      const term = (endDateMillisecond - startDateMillisecond) / 24 / 60 / 60 / 1000 + 1;
       const dateMonthArr = [];
       const newMonthArr = [];
       for (let index = 0; index < term; index++) {
-        const date = new window.Date(
-          startDateMillisecond + 86400000 * index
-        ).setHours(0, 0, 0, 0);
-        const month = parseInt(
-          format(startDateMillisecond + 86400000 * index, "yyMM")
-        );
+        const date = new window.Date(startDateMillisecond + 86400000 * index).setHours(0, 0, 0, 0);
+        const month = parseInt(format(startDateMillisecond + 86400000 * index, "yyMM"));
         if (!isWeekend(date)) {
           dateMonthArr.push({ date, month });
           newMonthArr.push(month);
@@ -294,9 +274,7 @@ const AddAttend = ({
             <BsFillPersonFill />
           </Icon>
           <SelectedStudent>
-            <StudentName selected={studentName}>
-              {studentName ? studentName : "선택된 학생이 없습니다."}
-            </StudentName>
+            <StudentName selected={studentName}>{studentName ? studentName : "선택된 학생이 없습니다."}</StudentName>
             <SelectBtn onClick={onClickSelectBtn}>
               <IcNameTableClick />
             </SelectBtn>
@@ -307,28 +285,16 @@ const AddAttend = ({
             <BsFillPersonCheckFill />
           </Icon>
           <AttendType>
-            <Type
-              onClick={() => setType("인정 결석")}
-              selected={type === "인정 결석"}
-            >
+            <Type onClick={() => setType("인정 결석")} selected={type === "인정 결석"}>
               인정 결석
             </Type>
-            <Type
-              onClick={() => setType("질병 결석")}
-              selected={type === "질병 결석"}
-            >
+            <Type onClick={() => setType("질병 결석")} selected={type === "질병 결석"}>
               질병 결석
             </Type>
-            <Type
-              onClick={() => setType("미인정 결석")}
-              selected={type === "미인정 결석"}
-            >
+            <Type onClick={() => setType("미인정 결석")} selected={type === "미인정 결석"}>
               미인정 결석
             </Type>
-            <Type
-              onClick={() => setType("기타 결석")}
-              selected={type === "기타 결석"}
-            >
+            <Type onClick={() => setType("기타 결석")} selected={type === "기타 결석"}>
               기타 결석
             </Type>
             <Type onClick={() => setType("지각")} selected={type === "지각"}>

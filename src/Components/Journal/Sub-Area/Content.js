@@ -183,7 +183,10 @@ const Content = ({ me, studentId, journal }) => {
   });
 
   const processSetDate = (date) => {
-    return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, 0)}-${date.getDate().toString().padStart(2, 0)}`;
+    return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, 0)}-${date
+      .getDate()
+      .toString()
+      .padStart(2, 0)}`;
   };
 
   function onSubmit(data) {
@@ -248,7 +251,11 @@ const Content = ({ me, studentId, journal }) => {
       </RightContainer>
       <LeftContainer>
         <TextareaLayout>
-          <TextareaAutosize {...register("text", { onChange: onChangeTextarea })} maxRows="2" minRows="2"></TextareaAutosize>
+          <TextareaAutosize
+            {...register("text", { onChange: onChangeTextarea })}
+            maxRows="2"
+            minRows="2"
+          ></TextareaAutosize>
           {!isEditing && (
             <EditIcon onClick={() => setIsEditing(true)}>
               <BiEdit />

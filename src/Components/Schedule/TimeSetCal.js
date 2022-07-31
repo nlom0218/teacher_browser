@@ -1,11 +1,4 @@
-const timeSetCal = (
-  thour,
-  tminutes,
-  tclasstime,
-  tresttime,
-  tlunchhour,
-  tlunchminutes
-) => {
+const timeSetCal = (thour, tminutes, tclasstime, tresttime, tlunchhour, tlunchminutes) => {
   const timeResult = [];
   function timePush() {
     timeResult.push(tDate.toTimeString().slice(0, 5));

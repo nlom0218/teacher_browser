@@ -1,9 +1,8 @@
-import React from 'react';
-import { ReactComponent as ToDoListClick } from "../../image/icons/ToDoListClick.svg"
+import React from "react";
+import { ReactComponent as ToDoListClick } from "../../image/icons/ToDoListClick.svg";
 
 const IcToDoListClick = () => {
-  return (<ToDoListClick />
-  );
-}
+  return <ToDoListClick />;
+};
 
 export default IcToDoListClick;

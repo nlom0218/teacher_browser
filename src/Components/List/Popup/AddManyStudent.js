@@ -48,9 +48,7 @@ const AddManyStudent = ({ inStudent, listId, setSuccessMsg, listName }) => {
   const selectedTag = JSON.parse(localStorage.getItem("selectedTag"))
     ? JSON.parse(localStorage.getItem("selectedTag"))
     : [];
-  const selectedSort = localStorage.getItem("selectedSort")
-    ? localStorage.getItem("selectedSort")
-    : undefined;
+  const selectedSort = localStorage.getItem("selectedSort") ? localStorage.getItem("selectedSort") : undefined;
   const me = useMe();
   const [addStudentId, setAddStudentId] = useState([]);
   const [outStudent, setOutStudent] = useState([]);
@@ -68,35 +66,30 @@ const AddManyStudent = ({ inStudent, listId, setSuccessMsg, listName }) => {
     } = result;
     if (ok) {
       outPopup();
-      setSuccessMsg(
-        `${addStudentId.length}명의 학생이 ${listName}에 추가되었습니다. 😅`
-      );
+      setSuccessMsg(`${addStudentId.length}명의 학생이 ${listName}에 추가되었습니다. 😅`);
     }
   };
 
-  const [addStudent, { loading: addLoading }] = useMutation(
-    ADD_STUDENT_MUTATION,
-    {
-      onCompleted,
-      update: (
-        cache,
-        {
-          data: {
-            addStudent: { ok },
-          },
-        }
-      ) => {
-        if (ok) {
-          cache.modify({
-            id: "ROOT_QUERY",
-            fields: {
-              seeStudentList() {},
-            },
-          });
-        }
+  const [addStudent, { loading: addLoading }] = useMutation(ADD_STUDENT_MUTATION, {
+    onCompleted,
+    update: (
+      cache,
+      {
+        data: {
+          addStudent: { ok },
+        },
       },
-    }
-  );
+    ) => {
+      if (ok) {
+        cache.modify({
+          id: "ROOT_QUERY",
+          fields: {
+            seeStudentList() {},
+          },
+        });
+      }
+    },
+  });
 
   const checkStudent = (id) => {
     if (addStudentId.length === 0) {
@@ -184,29 +177,13 @@ const AddManyStudent = ({ inStudent, listId, setSuccessMsg, listName }) => {
               <React.Fragment>
                 <SelectedAll onClick={onClickSeletedAllBtn}>
                   <div>모두 선택하기</div>
-                  <SelectedAllBtn>
-                    {processSeleteAll() ? (
-                      <RiCheckboxLine />
-                    ) : (
-                      <RiCheckboxBlankLine />
-                    )}
-                  </SelectedAllBtn>
+                  <SelectedAllBtn>{processSeleteAll() ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</SelectedAllBtn>
                 </SelectedAll>
                 {outStudent.map((item, index) => {
                   return (
-                    <Item
-                      key={index}
-                      addStudent={true}
-                      onClick={() => onClickStudent(item._id)}
-                    >
+                    <Item key={index} addStudent={true} onClick={() => onClickStudent(item._id)}>
                       <div>{item.studentName}</div>
-                      <div>
-                        {addStudentId.includes(item._id) ? (
-                          <RiCheckboxLine />
-                        ) : (
-                          <RiCheckboxBlankLine />
-                        )}
-                      </div>
+                      <div>{addStudentId.includes(item._id) ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
                     </Item>
                   );
                 })}
@@ -216,9 +193,7 @@ const AddManyStudent = ({ inStudent, listId, setSuccessMsg, listName }) => {
             <div className="noStudnet">생성된 학생이 없습니다.</div>
           )}
         </List>
-        {outStudent.length !== 0 && (
-          <Btn onClick={onClickAddBtn}>학생 추가하기</Btn>
-        )}
+        {outStudent.length !== 0 && <Btn onClick={onClickAddBtn}>학생 추가하기</Btn>}
       </Container>
     </PopupContainer>
   );

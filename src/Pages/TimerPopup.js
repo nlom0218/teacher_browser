@@ -4,12 +4,7 @@ import { FcSettings } from "react-icons/fc";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import {
-  fullScreenMode,
-  inPopup,
-  isFullScreenModeVar,
-  isPopupVar,
-} from "../apollo";
+import { fullScreenMode, inPopup, isFullScreenModeVar, isPopupVar } from "../apollo";
 import AlertMessage from "../Components/Shared/AlertMessage";
 import TimerSetting from "../Components/TimerSecond/Popup/TimerSetting";
 import TimerBtnContainer from "../Components/TimerSecond/TimerBtnContainer";
@@ -17,11 +12,7 @@ import TimerContainer from "../Components/TimerSecond/TimerContainer";
 import useTitle from "../Hooks/useTitle";
 import routes from "../routes";
 import { color, customMedia } from "../styles";
-import {
-  stopMusicFn,
-  playMusicFn,
-  pauseMusicFn,
-} from "../audio/BackgroundMusic/BackgroundMusic";
+import { stopMusicFn, playMusicFn, pauseMusicFn } from "../audio/BackgroundMusic/BackgroundMusic";
 import FinishCountdonw from "../Components/TimerSecond/Popup/FinishCountdonw";
 
 const Container = styled.div`
@@ -257,10 +248,7 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
             <ModeBtn selected={mode === "countdown"}>COUNT DOWN</ModeBtn>
           </Link>
           {timerStatus === "pause" && (
-            <SettingIcon
-              isFullScreenMode={isFullScreenMode}
-              onClick={onClickSettingBtn}
-            >
+            <SettingIcon isFullScreenMode={isFullScreenMode} onClick={onClickSettingBtn}>
               <FcSettings />
             </SettingIcon>
           )}
@@ -307,14 +295,7 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
         />
       )}
       {isPopup === "finishCountdown" && <FinishCountdonw alremMp3={alremMp3} />}
-      {errMsg && (
-        <AlertMessage
-          msg={errMsg}
-          setMsg={setErrMsg}
-          time={3000}
-          type="error"
-        />
-      )}
+      {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} time={3000} type="error" />}
     </React.Fragment>
   );
 };

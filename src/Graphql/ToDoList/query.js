@@ -13,10 +13,10 @@ export const SEE_TO_DO_LIST_QUERY = gql`
       star
     }
   }
-`
+`;
 
 export const SEE_TO_DO_LIST_ONLY_LENGTH_QUERY = gql`
   query Query($userEmail: String!, $date: Float) {
     seeToDoListOnlyLength(userEmail: $userEmail, date: $date)
-  } 
-`
+  }
+`;

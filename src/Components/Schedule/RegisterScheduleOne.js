@@ -3,9 +3,7 @@ import styled from "styled-components";
 import { inPopup } from "../../apollo";
 import { AiOutlineEdit } from "react-icons/ai";
 
-const Container = styled.div`
-`;
-
+const Container = styled.div``;
 
 const RegisterClassOneBtn = styled.div`
   justify-self: center;

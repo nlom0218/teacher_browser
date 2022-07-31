@@ -38,20 +38,8 @@ export const SET_TIMETABLE_TIME_MUTATION = gql`
 `;
 
 export const SET_TIMETABLE_DATA_MUTATION = gql`
-  mutation Mutation(
-    $teacherEmail: String!
-    $index: [Int]!
-    $subName: String!
-    $color: String
-    $memo: String
-  ) {
-    setTimetableData(
-      teacherEmail: $teacherEmail
-      index: $index
-      subName: $subName
-      color: $color
-      memo: $memo
-    ) {
+  mutation Mutation($teacherEmail: String!, $index: [Int]!, $subName: String!, $color: String, $memo: String) {
+    setTimetableData(teacherEmail: $teacherEmail, index: $index, subName: $subName, color: $color, memo: $memo) {
       ok
       error
     }
@@ -60,9 +48,9 @@ export const SET_TIMETABLE_DATA_MUTATION = gql`
 
 export const RESET_TIMETABLE_DATA_MUTATION = gql`
   mutation Mutation($teacherEmail: String!, $resetIndex: Int!) {
-    resetTimetableData(teacherEmail: $teacherEmail, resetIndex: $resetIndex){
+    resetTimetableData(teacherEmail: $teacherEmail, resetIndex: $resetIndex) {
       ok
       error
     }
   }
-`
+`;

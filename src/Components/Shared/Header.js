@@ -2,13 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { customMedia } from "../../styles";
 import HeaderSideBtn from "./HeaderSideBtn";
-import {
-  HeaderBookMark,
-  HeaderHome,
-  HeaderMenu,
-  HeaderToDo,
-  HedaerCalender,
-} from "./HeaderLink";
+import { HeaderBookMark, HeaderHome, HeaderMenu, HeaderToDo, HedaerCalender } from "./HeaderLink";
 
 const Container = styled.div`
   width: 100%;
@@ -62,10 +56,7 @@ const Header = ({ seeSideMenu, setSeeSideMenu, isFullScreenMode }) => {
           <HeaderMenu />
         </PageBtn>
       )}
-      <HeaderSideBtn
-        seeSideMenu={seeSideMenu}
-        setSeeSideMenu={setSeeSideMenu}
-      />
+      <HeaderSideBtn seeSideMenu={seeSideMenu} setSeeSideMenu={setSeeSideMenu} />
     </Container>
   );
 };

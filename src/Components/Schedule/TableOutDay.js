@@ -7,7 +7,7 @@ const TableItem = styled.div`
   height: 100%;
   width: 100%;
   border: 1px solid ${(props) => props.theme.cardBorder};
-  background-color: ${props => props.theme.skyblue};
+  background-color: ${(props) => props.theme.skyblue};
   transition: border 1s ease, background-color 1s ease;
   border-radius: 5px;
   border-radius: 0.3125rem;
@@ -52,12 +52,7 @@ const TableOutItem = ({ item, index, color, tag, fontSize, setFontSize }) => {
   };
 
   return (
-    <TableItem
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      index={index}
-      color={color}
-    >
+    <TableItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} index={index} color={color}>
       <SubjectName
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
@@ -65,9 +60,7 @@ const TableOutItem = ({ item, index, color, tag, fontSize, setFontSize }) => {
         setFontSize={setFontSize}
       >
         {item}
-        {hoverContainer === true ? (
-          <HoverContainer>{tag}</HoverContainer>
-        ) : null}
+        {hoverContainer === true ? <HoverContainer>{tag}</HoverContainer> : null}
       </SubjectName>
     </TableItem>
   );

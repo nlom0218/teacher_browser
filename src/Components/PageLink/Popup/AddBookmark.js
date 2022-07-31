@@ -27,7 +27,7 @@ const Container = styled.form`
     border-radius: 5px;
     border-radius: 0.3125rem;
     border: ${(props) => props.isEdit && `${props.theme.fontColor} 1px solid`};
-    background-color: ${props => props.theme.originBgColor};
+    background-color: ${(props) => props.theme.originBgColor};
     transition: border 1s ease, background-color 1s ease;
     line-height: 160%;
     ::placeholder {
@@ -59,7 +59,7 @@ const Icon = styled.div`
   }
 `;
 const Title = styled.div`
-  background-color: ${props => props.theme.originBgColor};
+  background-color: ${(props) => props.theme.originBgColor};
   padding: 20px;
   padding: 1.25rem;
   border-radius: 5px;
@@ -88,17 +88,14 @@ const AddBookmark = ({ userEmail, setMsg }) => {
     } = result;
     if (ok) {
       outPopup();
-      localStorage.removeItem("addBookmark")
-      setMsg(`즐겨찾기에 등록되었습니다. 😀`)
+      localStorage.removeItem("addBookmark");
+      setMsg(`즐겨찾기에 등록되었습니다. 😀`);
     }
   };
 
   const [settingLink, { loading }] = useMutation(SETTING_LINK_MUTATION, {
     onCompleted,
-    refetchQueries: [
-      { query: ME_QUERY },
-      { query: SEE_MY_PAGE_LINK_QUERY, variables: { userEmail } },
-    ],
+    refetchQueries: [{ query: ME_QUERY }, { query: SEE_MY_PAGE_LINK_QUERY, variables: { userEmail } }],
   });
 
   const onSubmit = (data) => {
@@ -113,7 +110,7 @@ const AddBookmark = ({ userEmail, setMsg }) => {
   };
 
   if (loading) {
-    return <Loading page="popupPage" />
+    return <Loading page="popupPage" />;
   }
 
   return (

@@ -15,9 +15,7 @@ const EditDDay = ({ dDay, setErrMsg, userEmail }) => {
           dDay.map((item, index) => {
             return <EditDDayItem key={index} {...item} />;
           })}
-        {dDay.length !== 5 && (
-          <CreateDDay setErrMsg={setErrMsg} userEmail={userEmail} />
-        )}
+        {dDay.length !== 5 && <CreateDDay setErrMsg={setErrMsg} userEmail={userEmail} />}
       </DDayList>
     </Container>
   );

@@ -9,10 +9,10 @@ export const DetailStudentLayout = styled.div`
   column-gap: 1.25rem;
   row-gap: 20px;
   row-gap: 1.25rem;
-`
+`;
 
 export const DetailTitle = styled.div`
   font-weight: 600;
   padding: 20px 0px;
   padding: 1.25rem 0rem;
-`
+`;

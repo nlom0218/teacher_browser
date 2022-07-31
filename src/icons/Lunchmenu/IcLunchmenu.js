@@ -1,9 +1,8 @@
-import React from 'react';
-import { ReactComponent as Lunchmenu } from "../../image/icons/Meal.svg"
+import React from "react";
+import { ReactComponent as Lunchmenu } from "../../image/icons/Meal.svg";
 
 const IcLunchmenu = () => {
-  return (<Lunchmenu />
-  );
-}
+  return <Lunchmenu />;
+};
 
 export default IcLunchmenu;

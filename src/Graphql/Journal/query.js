@@ -10,4 +10,4 @@ export const SEE_JOURNAL_QUERY = gql`
       teacherEmail
     }
   }
-`
+`;

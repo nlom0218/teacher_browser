@@ -108,17 +108,7 @@ const SettingItem = styled.div`
   }
 `;
 
-const LinkItem = ({
-  magic,
-  info,
-  link,
-  title,
-  userEmail,
-  ID,
-  setMsg,
-  userId,
-  setLinks,
-}) => {
+const LinkItem = ({ magic, info, link, title, userEmail, ID, setMsg, userId, setLinks }) => {
   const [settingMode, setSettingMode] = useState(false);
   const [hover, setHover] = useState(false);
   const [faviconUrl, setFaviconUrl] = useState(undefined);
@@ -145,7 +135,7 @@ const LinkItem = ({
         data: {
           deleteHomeLink: { ok },
         },
-      }
+      },
     ) {
       if (ok) {
         cache.modify({
@@ -227,9 +217,7 @@ const LinkItem = ({
           {settingMode && (
             <SettingList settingMode={settingMode}>
               <SettingItem onClick={onClickEditBtn}>바로가기 수정</SettingItem>
-              <SettingItem onClick={onClickDeleteBtn}>
-                바로가기 삭제
-              </SettingItem>
+              <SettingItem onClick={onClickDeleteBtn}>바로가기 삭제</SettingItem>
             </SettingList>
           )}
         </LinkSetting>

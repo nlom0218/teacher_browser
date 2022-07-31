@@ -86,8 +86,7 @@ const Btn = styled.div`
   border-radius: 0.3125rem;
   cursor: pointer;
   color: #ffffff;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
-    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;
 
 const FamilyMonthHome = () => {
@@ -111,10 +110,7 @@ const FamilyMonthHome = () => {
           }
         />
         <TextContainer bgColor="#ffe2e2">
-          <Text>
-            부모님, 자녀, 할머니, 할아버지 등 가족에 대한 여러분들의 가정의 달
-            이야기를 적어주세요!🥳
-          </Text>
+          <Text>부모님, 자녀, 할머니, 할아버지 등 가족에 대한 여러분들의 가정의 달 이야기를 적어주세요!🥳</Text>
           <Btn
             btnColor="#ff8989"
             onClick={() => {
@@ -127,10 +123,7 @@ const FamilyMonthHome = () => {
       </Layout>
       <Layout>
         <TextContainer bgColor="#AA96DA">
-          <Text>
-            유튜브에서 이야기와 관련된 영상을 가져오면 티처캔에서 유튜브를
-            재생할 수 있습니다.😁
-          </Text>
+          <Text>유튜브에서 이야기와 관련된 영상을 가져오면 티처캔에서 유튜브를 재생할 수 있습니다.😁</Text>
           <Btn
             btnColor="#9166ff"
             onClick={() => {
@@ -153,10 +146,7 @@ const FamilyMonthHome = () => {
           }
         />
         <TextContainer bgColor="#FCE38A">
-          <Text>
-            다른 선생님들의 가정의 달 이야기도 함께 나누어 봐요! 좋아요도
-            가능합니다.😍
-          </Text>
+          <Text>다른 선생님들의 가정의 달 이야기도 함께 나누어 봐요! 좋아요도 가능합니다.😍</Text>
           <Btn
             btnColor="#eab710"
             onClick={() => {
@@ -169,10 +159,7 @@ const FamilyMonthHome = () => {
       </Layout>
       <Layout>
         <TextContainer bgColor="#EAFFD0">
-          <Text>
-            자세한 사용방법 및 이벤트 내용은 티처캔 인스타에서 확인하세요!
-            팔로우 해주시면 너무 행복합니다.😊
-          </Text>
+          <Text>자세한 사용방법 및 이벤트 내용은 티처캔 인스타에서 확인하세요! 팔로우 해주시면 너무 행복합니다.😊</Text>
           <Btn
             btnColor="#8dd32c"
             onClick={() => {

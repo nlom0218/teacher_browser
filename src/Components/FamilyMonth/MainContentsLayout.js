@@ -29,9 +29,7 @@ const MainContentsLayout = ({ children }) => {
     }
     setMultiply(2.5);
   }, [media, isFullScreenMode]);
-  return (
-    <SMainContentsLayout multiply={multiply}>{children}</SMainContentsLayout>
-  );
+  return <SMainContentsLayout multiply={multiply}>{children}</SMainContentsLayout>;
 };
 
 export default MainContentsLayout;

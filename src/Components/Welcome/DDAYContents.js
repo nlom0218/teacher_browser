@@ -1,10 +1,6 @@
 import { useMutation, useReactiveVar } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import {
-  AiFillPauseCircle,
-  AiFillPlayCircle,
-  AiFillPlusCircle,
-} from "react-icons/ai";
+import { AiFillPauseCircle, AiFillPlayCircle, AiFillPlusCircle } from "react-icons/ai";
 import styled from "styled-components";
 import { inPopup, isPopupVar } from "../../apollo";
 import { TOGGLE_IS_MOVE_DDAY_MTUATION } from "../../Graphql/User/mutation";
@@ -69,14 +65,7 @@ const CountDot = styled.div`
   cursor: pointer;
 `;
 
-const DDayContents = ({
-  dDay,
-  isMoveDDay,
-  userEmail,
-  setMsg,
-  setErrMsg,
-  userId,
-}) => {
+const DDayContents = ({ dDay, isMoveDDay, userEmail, setMsg, setErrMsg, userId }) => {
   const isPopup = useReactiveVar(isPopupVar);
 
   const [index, setIndex] = useState(0);
@@ -84,10 +73,9 @@ const DDayContents = ({
   const [hover, setHover] = useState(false);
   const [initMove, setInitMove] = useState();
 
-  const [toggleIsMoveDDay, { loading }] = useMutation(
-    TOGGLE_IS_MOVE_DDAY_MTUATION,
-    { refetchQueries: [{ query: ME_QUERY }] }
-  );
+  const [toggleIsMoveDDay, { loading }] = useMutation(TOGGLE_IS_MOVE_DDAY_MTUATION, {
+    refetchQueries: [{ query: ME_QUERY }],
+  });
 
   const initSettingHoverMode = () => {
     setSettingMode(false);
@@ -156,11 +144,7 @@ const DDayContents = ({
         <DDayCount>
           {dDay?.length !== 1 && (
             <DDayBtn onClick={onClickToggleBtn}>
-              {Boolean(isMoveDDay) ? (
-                <AiFillPauseCircle />
-              ) : (
-                <AiFillPlayCircle />
-              )}
+              {Boolean(isMoveDDay) ? <AiFillPauseCircle /> : <AiFillPlayCircle />}
             </DDayBtn>
           )}
           {dDay?.length !== 5 && (
@@ -170,13 +154,7 @@ const DDayContents = ({
           )}
           {dDay?.length !== 1 &&
             dDay.map((item, i) => {
-              return (
-                <CountDot
-                  key={i}
-                  index={i === index}
-                  onClick={() => onClickDot(i)}
-                ></CountDot>
-              );
+              return <CountDot key={i} index={i === index} onClick={() => onClickDot(i)}></CountDot>;
             })}
         </DDayCount>
       )}

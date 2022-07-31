@@ -121,14 +121,7 @@ const OutBtn = styled.div`
   }
 `;
 
-const PopupContainer = ({
-  children,
-  emojiPopup,
-  maxHeight,
-  sound1,
-  sound2,
-  needAlert,
-}) => {
+const PopupContainer = ({ children, emojiPopup, maxHeight, sound1, sound2, needAlert }) => {
   const [alertPopup, setAlertPoup] = useState(false);
 
   const processOutPopup = () => {
@@ -186,10 +179,7 @@ const PopupContainer = ({
           </Btn>
         </AlertPopup>
       ) : (
-        <SRegisterContainer
-          onClick={(e) => e.stopPropagation()}
-          maxHeight={maxHeight}
-        >
+        <SRegisterContainer onClick={(e) => e.stopPropagation()} maxHeight={maxHeight}>
           <OutBtn onClick={onClickBackground}>
             <IoCloseOutline />
           </OutBtn>

@@ -67,10 +67,7 @@ export const TimerLink = () => {
   const [isHover, setIsHover] = useState(false);
   return (
     <STimerLink onClick={onClickNewWindow}>
-      <SMenu
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-      >
+      <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <IcPressedStopwatch /> : <IcStopwatch />}
         <Title>타이머</Title>
       </SMenu>
@@ -186,7 +183,7 @@ export const ManagingRolesLink = () => {
       <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <IcOrderClick /> : <IcOrder />}
         <Title>1인1역</Title>
-       </SMenu>
+      </SMenu>
     </Link>
   );
 };
@@ -206,7 +203,6 @@ export const FamilyMonthLink = () => {
       >
         <IcFamilyMonth />
         <Title style={{ color: "#F7658E" }}>가정의 달</Title>
-
       </SMenu>
     </Link>
   );

@@ -9,10 +9,7 @@ import { BtnFadeIn } from "../../Animations/Fade";
 import { customMedia } from "../../styles";
 import AddStudentBox from "./AddStudentBox";
 import InputUnderLine from "./InputUnderLine";
-import {
-  SEE_ALL_STUDENT_LIST_QUERY,
-  SEE_ONE_STUDENT_LIST_QUERY,
-} from "../../Graphql/StudentList/query";
+import { SEE_ALL_STUDENT_LIST_QUERY, SEE_ONE_STUDENT_LIST_QUERY } from "../../Graphql/StudentList/query";
 import { EDIT_STUDENT_LIST } from "../../Graphql/StudentList/mutation";
 import useMedia from "../../Hooks/useMedia";
 import DeleteList from "./Popup/DeleteList";
@@ -120,16 +117,13 @@ const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
   };
 
   // 리스트 아이콘, 이름 수정을 위한
-  const [editStudentList, { loading: editLoading }] = useMutation(
-    EDIT_STUDENT_LIST,
-    {
-      onCompleted,
-      refetchQueries: [
-        { query: SEE_ONE_STUDENT_LIST_QUERY, variables: { listId } },
-        { query: SEE_ALL_STUDENT_LIST_QUERY },
-      ],
-    }
-  );
+  const [editStudentList, { loading: editLoading }] = useMutation(EDIT_STUDENT_LIST, {
+    onCompleted,
+    refetchQueries: [
+      { query: SEE_ONE_STUDENT_LIST_QUERY, variables: { listId } },
+      { query: SEE_ALL_STUDENT_LIST_QUERY },
+    ],
+  });
 
   const { register, setValue, handleSubmit, setFocus, getValues } = useForm({
     mode: "onChange",
@@ -214,16 +208,9 @@ const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
 
   return (
     <Container>
-      <DetailNameContainer
-        onMouseEnter={onMouseEnterName}
-        onMouseLeave={onMouseLeaveName}
-      >
+      <DetailNameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName}>
         <form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurName}>
-          {chosenEmoji && (
-            <DetailEomjiIcon onClick={onClickEmojiBtn}>
-              {chosenEmoji}
-            </DetailEomjiIcon>
-          )}
+          {chosenEmoji && <DetailEomjiIcon onClick={onClickEmojiBtn}>{chosenEmoji}</DetailEomjiIcon>}
           <InputUnderLine isEdit={isEditName}>
             <ListName
               {...register("name", {
@@ -266,9 +253,7 @@ const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
       </DetailNameContainer>
       {data?.seeStudentList[0]?.students && (
         <StudentInList
-          students={data?.seeStudentList[0]?.students.filter(
-            (item) => !item.trash
-          )}
+          students={data?.seeStudentList[0]?.students.filter((item) => !item.trash)}
           listId={listId}
           setSort={setSort}
           sort={sort}
@@ -286,9 +271,7 @@ const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
           inStudent={data?.seeStudentList[0]?.students}
         />
       )}
-      {!loading && (
-        <DelBtn onClick={onClickDeleteListBtn}>명렬표 삭제하기</DelBtn>
-      )}
+      {!loading && <DelBtn onClick={onClickDeleteListBtn}>명렬표 삭제하기</DelBtn>}
       {isPopup === "emoji" && (
         <SetEmoji
           setChosenEmoji={setChosenEmoji}
@@ -302,9 +285,7 @@ const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
       {isPopup === "printList" && (
         <PrintListContents
           printRef={componentRef}
-          studentList={data?.seeStudentList[0]?.students.filter(
-            (item) => !item.trash
-          )}
+          studentList={data?.seeStudentList[0]?.students.filter((item) => !item.trash)}
         />
       )}
     </Container>

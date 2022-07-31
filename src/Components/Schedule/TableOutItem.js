@@ -7,7 +7,7 @@ const TableItem = styled.div`
   position: relative;
   height: 100%;
   border: 1px solid ${(props) => props.theme.cardBorder};
-  background-color: ${props => props.theme.skyblue};
+  background-color: ${(props) => props.theme.skyblue};
   transition: border 1s ease, background-color 1s ease;
   border-radius: 5px;
   border-radius: 0.3125rem;
@@ -64,15 +64,7 @@ const HoverContainer = styled.div`
   color: ${(props) => props.theme.bgColor};
 `;
 
-const TableOutItem = ({
-  item,
-  index,
-  color,
-  tag,
-  fontSize,
-  setFontSize,
-  viewTime,
-}) => {
+const TableOutItem = ({ item, index, color, tag, fontSize, setFontSize, viewTime }) => {
   const [hoverContainer, setHoverContainer] = useState(false);
 
   const onMouseEnter = () => {
@@ -85,12 +77,7 @@ const TableOutItem = ({
     inPopup("registerTime");
   };
   return (
-    <TableItem
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      index={index}
-      color={color}
-    >
+    <TableItem onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} index={index} color={color}>
       {viewTime === true ? (
         <React.Fragment>
           <TimeUp>{tag[0]}</TimeUp>
@@ -106,9 +93,7 @@ const TableOutItem = ({
         setFontSize={setFontSize}
       >
         {item}
-        {hoverContainer === true ? (
-          <HoverContainer>{tag[0]}</HoverContainer>
-        ) : null}
+        {hoverContainer === true ? <HoverContainer>{tag[0]}</HoverContainer> : null}
       </SubjectName>
     </TableItem>
   );

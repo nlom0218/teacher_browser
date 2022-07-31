@@ -1,9 +1,8 @@
-import React from 'react';
-import { ReactComponent as DustVeryBad } from "../../image/icons/dust/DustVeryBad.svg"
+import React from "react";
+import { ReactComponent as DustVeryBad } from "../../image/icons/dust/DustVeryBad.svg";
 
 const IcDustVeryBad = () => {
-  return (<DustVeryBad />
-  );
-}
+  return <DustVeryBad />;
+};
 
 export default IcDustVeryBad;

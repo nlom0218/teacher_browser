@@ -49,11 +49,7 @@ const Welcome = () => {
   return (
     <BasicContainer>
       <Container welcomePage={welcomePage}>
-        <TopContents
-          me={me}
-          welcomePage={welcomePage}
-          setWelComPage={setWelComPage}
-        />
+        <TopContents me={me} welcomePage={welcomePage} setWelComPage={setWelComPage} />
         {welcomePage === "home" && (
           <HomeSection
             dDay={me?.dDay}
@@ -68,23 +64,8 @@ const Welcome = () => {
         )}
         {welcomePage === "notice" && <WelcomeSection />}
       </Container>
-      {errMsg && (
-        <AlertMessage
-          msg={errMsg}
-          setMsg={setErrMsg}
-          type="error"
-          time={3000}
-        />
-      )}
-      {msg && (
-        <AlertMessage
-          msg={msg}
-          setMsg={setMsg}
-          type="success"
-          time={3000}
-          isMoveDDay={me?.isMoveDDay}
-        />
-      )}
+      {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
+      {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} isMoveDDay={me?.isMoveDDay} />}
       {isPopup === "needLogin" && <NeedLoginPopupContainer />}
     </BasicContainer>
   );

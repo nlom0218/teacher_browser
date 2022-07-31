@@ -1,21 +1,21 @@
-import { useMutation } from '@apollo/client';
-import React from 'react';
-import styled from 'styled-components';
-import { outPopup } from '../../../apollo';
-import { RESTORE_STUDENT_MUTATION } from '../../../Graphql/Student/mutation';
-import { SEE_ALL_STUDENT_IN_TRASH_QUERY, SEE_ALL_STUDENT_QUERY } from '../../../Graphql/Student/query';
-import { customMedia } from '../../../styles';
-import BtnPopupContainer from '../../Shared/BtnPopupContainer';
-import Loading from '../../Shared/Loading';
+import { useMutation } from "@apollo/client";
+import React from "react";
+import styled from "styled-components";
+import { outPopup } from "../../../apollo";
+import { RESTORE_STUDENT_MUTATION } from "../../../Graphql/Student/mutation";
+import { SEE_ALL_STUDENT_IN_TRASH_QUERY, SEE_ALL_STUDENT_QUERY } from "../../../Graphql/Student/query";
+import { customMedia } from "../../../styles";
+import BtnPopupContainer from "../../Shared/BtnPopupContainer";
+import Loading from "../../Shared/Loading";
 
 const Container = styled.div`
   display: grid;
   row-gap: 20px;
   row-gap: 1.25rem;
-  color: ${props => props.theme.bgColor};
+  color: ${(props) => props.theme.bgColor};
   text-align: center;
   line-height: 120%;
-`
+`;
 
 const Btn = styled.div`
   display: grid;
@@ -27,27 +27,29 @@ const Btn = styled.div`
     border-radius: 5px;
     border-radius: 0.3125rem;
     cursor: pointer;
-    background-color: ${props => props.theme.btnBgColor};
+    background-color: ${(props) => props.theme.btnBgColor};
   }
   ${customMedia.greaterThan("tablet")`
     grid-template-columns: 1fr 1fr;
     column-gap: 20px;
     column-gap: 1.25rem;
   `}
-`
+`;
 
-const RestoreBtn = styled.div``
+const RestoreBtn = styled.div``;
 
-const CancelBtn = styled.div``
+const CancelBtn = styled.div``;
 
 const RestoreAllStudent = ({ teacherEmail, selectedSort, selectedTag, setSuccessMsg }) => {
   const onCompleted = (result) => {
-    const { editStudent: { ok } } = result
+    const {
+      editStudent: { ok },
+    } = result;
     if (ok) {
-      outPopup()
-      setSuccessMsg("학생이 모두 복구되었습니다. 😀")
+      outPopup();
+      setSuccessMsg("학생이 모두 복구되었습니다. 😀");
     }
-  }
+  };
 
   const [restoreStudent, { loading }] = useMutation(RESTORE_STUDENT_MUTATION, {
     onCompleted,
@@ -58,38 +60,39 @@ const RestoreAllStudent = ({ teacherEmail, selectedSort, selectedTag, setSuccess
         variables: {
           ...(selectedTag.length !== 0 && { tag: selectedTag }),
           ...(selectedSort && { sort: selectedSort }),
-          trash: false
-        }
-      }
-    ]
-  })
-
+          trash: false,
+        },
+      },
+    ],
+  });
 
   const onClickRestoreBtn = () => {
     restoreStudent({
       variables: {
         teacherEmail,
-        restoreAll: true
-      }
-    })
-  }
+        restoreAll: true,
+      },
+    });
+  };
 
-  const onClickCancelBtn = () => outPopup()
+  const onClickCancelBtn = () => outPopup();
 
   if (loading) {
-    return <Loading page="btnPopupPage" />
+    return <Loading page="btnPopupPage" />;
   }
 
-  return (<BtnPopupContainer>
-    <Container>
-      <Btn>
-        <RestoreBtn onClick={onClickRestoreBtn}>복구하기</RestoreBtn>
-        <CancelBtn onClick={onClickCancelBtn}>취소하기</CancelBtn>
-      </Btn>
-      <div>휴지통에 있는 전체 학생을 복구하시겠습니까?</div>
-      <div>복구된 학생은 학생 목록에서 볼 수 있습니다.</div>
-    </Container>
-  </BtnPopupContainer>);
-}
+  return (
+    <BtnPopupContainer>
+      <Container>
+        <Btn>
+          <RestoreBtn onClick={onClickRestoreBtn}>복구하기</RestoreBtn>
+          <CancelBtn onClick={onClickCancelBtn}>취소하기</CancelBtn>
+        </Btn>
+        <div>휴지통에 있는 전체 학생을 복구하시겠습니까?</div>
+        <div>복구된 학생은 학생 목록에서 볼 수 있습니다.</div>
+      </Container>
+    </BtnPopupContainer>
+  );
+};
 
 export default RestoreAllStudent;

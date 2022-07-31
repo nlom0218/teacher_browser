@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const TimerContainer = styled.div`
   width: 100%;
@@ -12,19 +12,19 @@ export const TimerContainer = styled.div`
 `;
 
 export const TimerOuterFrame = styled.div`
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   width: 420px;
   height: 420px;
   border: 1px solid red;
   border-radius: 200px;
-  background: conic-gradient(red ${props => props.gauge * 6}deg, white ${props => props.gauge}deg);
+  background: conic-gradient(red ${(props) => props.gauge * 6}deg, white ${(props) => props.gauge}deg);
   box-shadow: 0 0 40px 7px black;
 `;
 
 export const TimerInnerFrame = styled.div`
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
   font-size: 50px;

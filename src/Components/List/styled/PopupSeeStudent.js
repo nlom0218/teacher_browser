@@ -13,7 +13,7 @@ export const Container = styled.div`
   left: 50%;
   width: 90%;
   transform: translate(-50%, 0);
-`
+`;
 
 export const List = styled.div`
   max-height: 100%;
@@ -33,9 +33,9 @@ export const List = styled.div`
   .noStudnet {
     grid-column: 1 / -1;
     text-align: center;
-    color: ${props => props.theme.redColor};
+    color: ${(props) => props.theme.redColor};
   }
-`
+`;
 
 // student Item
 export const Item = styled.div`
@@ -43,13 +43,13 @@ export const Item = styled.div`
   padding: 0.625rem;
   cursor: pointer;
   :hover {
-    background-color: ${props => props.theme.hoverColor};
+    background-color: ${(props) => props.theme.hoverColor};
     transition: background-color 0.6s ease;
     border-radius: 5px;
     border-radius: 0.3125rem;
   }
   display: grid;
-  grid-template-columns: ${props => props.addStudent ? "1fr auto" : "auto 1fr"};
+  grid-template-columns: ${(props) => (props.addStudent ? "1fr auto" : "auto 1fr")};
   svg {
     font-size: 1.25rem;
     font-size: 1.25em;
@@ -60,16 +60,16 @@ export const Item = styled.div`
   column-gap: 0.3125rem;
   row-gap: 5px;
   row-gap: 0.3125rem;
-`
+`;
 
 export const Btn = styled.div`
   text-align: center;
   cursor: pointer;
   padding: 10px 20px;
   padding: 0.625rem 1.25rem;
-  background-color: ${props => props.theme.btnBgColor};
-  color: ${props => props.theme.bgColor};
+  background-color: ${(props) => props.theme.btnBgColor};
+  color: ${(props) => props.theme.bgColor};
   border-radius: 5px;
   border-radius: 0.3125rem;
   transition: background-color 1s ease, color 1s ease;
-`
+`;

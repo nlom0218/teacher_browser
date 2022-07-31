@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  AiFillFolderOpen,
-  AiFillHome,
-  AiFillLike,
-  AiFillYoutube,
-} from "react-icons/ai";
+import { AiFillFolderOpen, AiFillHome, AiFillLike, AiFillYoutube } from "react-icons/ai";
 import { BsPlusLg } from "react-icons/bs";
 import { FaHeart, FaSearch } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -24,8 +19,7 @@ const Btn = styled.div`
   background-color: #f38181;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   svg {
     color: rgba(255, 255, 255, 1);
     display: flex;

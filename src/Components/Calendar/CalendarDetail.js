@@ -1,19 +1,19 @@
-import { format } from 'date-fns';
-import React from 'react';
-import { useNavigate } from 'react-router';
-import styled from 'styled-components';
-import { customMedia } from '../../styles';
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
-import routes from '../../routes';
-import ScheduleSection from './ScheduleSection';
-import ToDoListSection from './ToDoListSection';
-import LunchmenuSection from './LunchmenuSection';
-import JournalSection from './JournalSection';
-import AttendSection from './AttendSection';
-import { processSetDay } from '../../shared';
-import { BiExitFullscreen, BiFullscreen } from 'react-icons/bi';
-import useMedia from '../../Hooks/useMedia';
-import { BsCalendarDate } from 'react-icons/bs';
+import { format } from "date-fns";
+import React from "react";
+import { useNavigate } from "react-router";
+import styled from "styled-components";
+import { customMedia } from "../../styles";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import routes from "../../routes";
+import ScheduleSection from "./ScheduleSection";
+import ToDoListSection from "./ToDoListSection";
+import LunchmenuSection from "./LunchmenuSection";
+import JournalSection from "./JournalSection";
+import AttendSection from "./AttendSection";
+import { processSetDay } from "../../shared";
+import { BiExitFullscreen, BiFullscreen } from "react-icons/bi";
+import useMedia from "../../Hooks/useMedia";
+import { BsCalendarDate } from "react-icons/bs";
 
 const Container = styled.div`
   display: grid;
@@ -23,7 +23,7 @@ const Container = styled.div`
   padding: 1.25rem;
   row-gap: 40px;
   row-gap: 2.5rem;
-`
+`;
 
 const TopContents = styled.div`
   display: grid;
@@ -36,22 +36,22 @@ const TopContents = styled.div`
   ${customMedia.greaterThan("tablet")`
     grid-template-columns: 1fr auto auto auto auto;
   `}
-    ${customMedia.greaterThan("desktop")`
+  ${customMedia.greaterThan("desktop")`
     grid-template-columns: 1fr auto auto auto auto;
   `}
-`
+`;
 
 const Title = styled.div`
   grid-column: 1 / -1;
-  font-size : 1.25em;
-  font-size : 1.25rem;
+  font-size: 1.25em;
+  font-size: 1.25rem;
   text-transform: uppercase;
   ${customMedia.greaterThan("tablet")`
     grid-column: 1 / 2;
     font-size: 2em;
     font-size: 2rem;
   `}
-`
+`;
 
 const TodayBtn = styled.div`
   cursor: pointer;
@@ -61,10 +61,10 @@ const TodayBtn = styled.div`
   border-radius: 1.25rem;
   display: flex;
   align-items: center;
-  color: ${props => props.theme.bgColor};
-  background-color: ${props => props.theme.btnBgColor};
+  color: ${(props) => props.theme.bgColor};
+  background-color: ${(props) => props.theme.btnBgColor};
   transition: color 1s ease, background-color 1s ease;
-`
+`;
 
 const Btn = styled.div`
   justify-self: flex-end;
@@ -72,15 +72,15 @@ const Btn = styled.div`
   padding: 0.3125rem;
   border-radius: 50%;
   cursor: pointer;
-  color: ${props => props.theme.bgColor};
-  background-color: ${props => props.theme.btnBgColor};
+  color: ${(props) => props.theme.bgColor};
+  background-color: ${(props) => props.theme.btnBgColor};
   transition: color 1s ease, background-color 1s ease;
   svg {
     font-size: 1.25em;
     font-size: 1.25rem;
     display: flex;
   }
-`
+`;
 
 const BottomContainer = styled.div`
   min-height: 100%;
@@ -93,7 +93,7 @@ const BottomContainer = styled.div`
   ${customMedia.greaterThan("desktop")`
     grid-template-columns: 1fr 1fr;
   `}
-`
+`;
 
 const LeftSection = styled.div`
   display: grid;
@@ -101,7 +101,7 @@ const LeftSection = styled.div`
   grid-template-rows: repeat(2, minmax(10rem, auto));
   row-gap: 20px;
   row-gap: 1.25rem;
-`
+`;
 
 const RightSection = styled.div`
   display: grid;
@@ -109,52 +109,64 @@ const RightSection = styled.div`
   grid-template-rows: minmax(10rem, auto) repeat(2, minmax(10rem, auto));
   row-gap: 20px;
   row-gap: 1.25rem;
-`
+`;
 
 const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery, me }) => {
-  const navigate = useNavigate()
-  const media = useMedia()
+  const navigate = useNavigate();
+  const media = useMedia();
 
   const onClickTodayBtn = () => {
-    const newDate = new Date().setHours(0, 0, 0, 0)
-    navigate(`${routes.calendar}/${newDate}`)
-  }
+    const newDate = new Date().setHours(0, 0, 0, 0);
+    navigate(`${routes.calendar}/${newDate}`);
+  };
 
   const onClickBtnMinus = () => {
-    const newDate = parseInt(urlDate) - 86400000
-    navigate(`${routes.calendar}/${newDate}`)
-  }
+    const newDate = parseInt(urlDate) - 86400000;
+    navigate(`${routes.calendar}/${newDate}`);
+  };
 
   const onClickBtn = () => {
-    const newDate = parseInt(urlDate) + 86400000
-    navigate(`${routes.calendar}/${newDate}`)
-  }
+    const newDate = parseInt(urlDate) + 86400000;
+    navigate(`${routes.calendar}/${newDate}`);
+  };
 
   const onClickCalendar = () => {
-    navigate(routes.calendar)
-  }
+    navigate(routes.calendar);
+  };
 
-  return (<Container>
-    <TopContents>
-      <Title>{format(new Date(parseInt(urlDate)), "yyyy년 MM월 dd일")} {processSetDay(new Date(parseInt(urlDate)))}요일</Title>
-      {media === "Mobile" && <div></div>}
-      <TodayBtn className="calendar_btn" onClick={onClickTodayBtn}>TODAY</TodayBtn>
-      <Btn className="calendar_btn" onClick={onClickBtnMinus}><IoIosArrowBack /></Btn>
-      <Btn className="calendar_btn" onClick={onClickBtn}><IoIosArrowForward /></Btn>
-      <Btn className="calendar_btn" onClick={onClickCalendar}><BsCalendarDate /></Btn>
-    </TopContents>
-    <BottomContainer>
-      <LeftSection>
-        <ScheduleSection urlDate={urlDate} refetchQuery={refetchQuery}></ScheduleSection>
-        <ToDoListSection urlDate={urlDate} refetchQuery={refetchQuery}></ToDoListSection>
-      </LeftSection>
-      <RightSection>
-        <LunchmenuSection urlDate={urlDate} me={me}></LunchmenuSection>
-        <JournalSection urlDate={urlDate} refetchQuery={refetchQuery}></JournalSection>
-        <AttendSection urlDate={urlDate} refetchQuery={refetchQuery}></AttendSection>
-      </RightSection>
-    </BottomContainer>
-  </Container>);
-}
+  return (
+    <Container>
+      <TopContents>
+        <Title>
+          {format(new Date(parseInt(urlDate)), "yyyy년 MM월 dd일")} {processSetDay(new Date(parseInt(urlDate)))}요일
+        </Title>
+        {media === "Mobile" && <div></div>}
+        <TodayBtn className="calendar_btn" onClick={onClickTodayBtn}>
+          TODAY
+        </TodayBtn>
+        <Btn className="calendar_btn" onClick={onClickBtnMinus}>
+          <IoIosArrowBack />
+        </Btn>
+        <Btn className="calendar_btn" onClick={onClickBtn}>
+          <IoIosArrowForward />
+        </Btn>
+        <Btn className="calendar_btn" onClick={onClickCalendar}>
+          <BsCalendarDate />
+        </Btn>
+      </TopContents>
+      <BottomContainer>
+        <LeftSection>
+          <ScheduleSection urlDate={urlDate} refetchQuery={refetchQuery}></ScheduleSection>
+          <ToDoListSection urlDate={urlDate} refetchQuery={refetchQuery}></ToDoListSection>
+        </LeftSection>
+        <RightSection>
+          <LunchmenuSection urlDate={urlDate} me={me}></LunchmenuSection>
+          <JournalSection urlDate={urlDate} refetchQuery={refetchQuery}></JournalSection>
+          <AttendSection urlDate={urlDate} refetchQuery={refetchQuery}></AttendSection>
+        </RightSection>
+      </BottomContainer>
+    </Container>
+  );
+};
 
 export default CalendarDetail;

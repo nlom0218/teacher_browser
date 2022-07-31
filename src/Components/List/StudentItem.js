@@ -20,8 +20,7 @@ const Layout = styled.div`
     padding: 10px;
     padding: 0.625rem;
     display: grid;
-    grid-template-columns: ${(props) =>
-      props.icon ? "auto 1fr auto" : "1fr auto"};
+    grid-template-columns: ${(props) => (props.icon ? "auto 1fr auto" : "1fr auto")};
     row-gap: 5px;
     row-gap: 0.3125rem;
     column-gap: 5px;
@@ -42,8 +41,7 @@ const StudentNum = styled.div`
 `;
 
 const ExistedDot = styled.div`
-  background-color: ${(props) =>
-    props.isExisted ? props.theme.green : props.theme.redColor};
+  background-color: ${(props) => (props.isExisted ? props.theme.green : props.theme.redColor)};
   width: 10px;
   width: 0.625rem;
   height: 10px;
@@ -55,15 +53,7 @@ const ExistedDot = styled.div`
   transition: background-color 1s ease;
 `;
 
-const StudentItem = ({
-  item,
-  setSomeDragging,
-  studentId,
-  seeNum,
-  setDragType,
-  seeStudentIcon,
-  isExisted,
-}) => {
+const StudentItem = ({ item, setSomeDragging, studentId, seeNum, setDragType, seeStudentIcon, isExisted }) => {
   // 학생 이름 drag를 위해 필요한 것
   // 아래의 두번째 인자를 드래그 할 곳에 참조로 넣는다.
   const [{ isDragging }, drag] = useDrag(
@@ -80,7 +70,7 @@ const StudentItem = ({
         isDragging: monitor.isDragging(),
       }),
     }),
-    [item]
+    [item],
   );
 
   const { type } = useParams();
@@ -93,18 +83,10 @@ const StudentItem = ({
   return (
     <Layout ref={drag} isSeleted={studentId === item._id} icon={item.icon}>
       <Link to={`${routes.list}/student/${item._id}`}>
-        {seeStudentIcon && item.icon && (
-          <StudentIcon>{processStudentIcon(item.icon)}</StudentIcon>
-        )}
+        {seeStudentIcon && item.icon && <StudentIcon>{processStudentIcon(item.icon)}</StudentIcon>}
         <StudentName>{item.studentName}</StudentName>
         {type === "detail" && <ExistedDot isExisted={isExisted}></ExistedDot>}
-        {seeNum && (
-          <StudentNum>
-            {item.studentNumber
-              ? `${item.studentNumber}번`
-              : "번호가 없습니다."}
-          </StudentNum>
-        )}
+        {seeNum && <StudentNum>{item.studentNumber ? `${item.studentNumber}번` : "번호가 없습니다."}</StudentNum>}
       </Link>
     </Layout>
   );

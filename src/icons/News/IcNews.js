@@ -1,9 +1,8 @@
-import React from 'react';
-import { ReactComponent as News } from "../../image/icons/News.svg"
+import React from "react";
+import { ReactComponent as News } from "../../image/icons/News.svg";
 
 const IcNews = () => {
-  return (<News />
-  );
-}
+  return <News />;
+};
 
 export default IcNews;

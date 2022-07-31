@@ -6,10 +6,6 @@ const Container = styled.div``;
 
 const PageText = styled.div``;
 
-const Shuffling = styled.div`
-  position: relative;
-`;
-
 const RecommendPage = () => {
   return (
     <Container>

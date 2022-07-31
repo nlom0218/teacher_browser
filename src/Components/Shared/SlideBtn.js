@@ -36,28 +36,13 @@ const SlideBtnBackground = styled.div`
   color: ${(props) => props.theme.bgColor};
   transition: background-color 1s ease, color 1s ease;
   cursor: pointer;
-  animation: ${(props) =>
-      props.typeAniInit
-        ? "none"
-        : props.state === props.leftContents
-        ? ToLeft
-        : ToRight}
-    1s ease forwards;
+  animation: ${(props) => (props.typeAniInit ? "none" : props.state === props.leftContents ? ToLeft : ToRight)} 1s ease
+    forwards;
   transform: ${(props) =>
-    props.typeAniInit && props.state === props.leftContents
-      ? "translateX(0%)"
-      : "translateX(100%)"};
+    props.typeAniInit && props.state === props.leftContents ? "translateX(0%)" : "translateX(100%)"};
 `;
 
-const SlideBtn = ({
-  state,
-  setState,
-  leftContents,
-  rigthContents,
-  leftIcon,
-  rigthIcon,
-  darkMode,
-}) => {
+const SlideBtn = ({ state, setState, leftContents, rigthContents, leftIcon, rigthIcon, darkMode }) => {
   const [typeAniInit, setTypeAniInit] = useState(true);
   const onClickHomeBtn = () => {
     if (state === leftContents) {
@@ -82,17 +67,8 @@ const SlideBtn = ({
     <Cotainer>
       <Btn onClick={onClickHomeBtn}>{leftIcon}</Btn>
       <Btn onClick={onClickHomeBtn}>{rigthIcon}</Btn>
-      <SlideBtnBackground
-        state={state}
-        onClick={onClickHomeBtn}
-        typeAniInit={typeAniInit}
-        leftContents={leftContents}
-      >
-        {state === leftContents ? (
-          <div>{leftIcon}</div>
-        ) : (
-          <div>{rigthIcon}</div>
-        )}
+      <SlideBtnBackground state={state} onClick={onClickHomeBtn} typeAniInit={typeAniInit} leftContents={leftContents}>
+        {state === leftContents ? <div>{leftIcon}</div> : <div>{rigthIcon}</div>}
       </SlideBtnBackground>
     </Cotainer>
   );

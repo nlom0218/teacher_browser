@@ -9,8 +9,6 @@ import IcCalender from "../../icons/Calender/IcCalender";
 import IcCalenderClick from "../../icons/Calender/IcCalenderClick";
 import IcHome from "../../icons/Home/IcHome";
 import IcHomeClick from "../../icons/Home/IcHomeClick";
-import IcNews from "../../icons/News/IcNews";
-import IcNewsClick from "../../icons/News/IcNewsClick";
 import IcTeacherTool from "../../icons/TeacherTool/TeacherTool";
 import IcTeacherToolClick from "../../icons/TeacherTool/TeacherToolClick";
 import IcToDoList from "../../icons/ToDoList/IcToDoList";
@@ -37,11 +35,7 @@ export const HeaderToDo = () => {
 
   const [isHover, setIsHover] = useState(false);
   return (
-    <Link
-      to={routes.todo}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
-    >
+    <Link to={routes.todo} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
       {isHover ? <IcToDoListClick /> : <IcToDoList />}
       {isHover && !isFullScreenMode && <LinkName>할일목록</LinkName>}
     </Link>
@@ -64,9 +58,7 @@ export const HeaderBookMark = () => {
       onClick={onClickMyLink}
     >
       {isHover ? <IcBookMarkClick /> : <IcBookMark />}
-      {isHover && !isFullScreenMode && !isFullScreenMode && (
-        <LinkName>링크페이지</LinkName>
-      )}
+      {isHover && !isFullScreenMode && !isFullScreenMode && <LinkName>링크페이지</LinkName>}
     </Link>
   );
 };
@@ -96,11 +88,7 @@ export const HeaderMenu = () => {
 
   const [isHover, setIsHover] = useState(false);
   return (
-    <Link
-      to={routes.menu}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
-    >
+    <Link to={routes.menu} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
       {isHover ? <IcTeacherToolClick /> : <IcTeacherTool />}
       {isHover && !isFullScreenMode && <LinkName>메뉴</LinkName>}
     </Link>
@@ -112,11 +100,7 @@ export const HeaderHome = () => {
 
   const [isHover, setIsHover] = useState(false);
   return (
-    <Link
-      to={routes.home}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
-    >
+    <Link to={routes.home} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
       {isHover ? <IcHomeClick /> : <IcHome />}
       {isHover && !isFullScreenMode && <LinkName>홈</LinkName>}
     </Link>

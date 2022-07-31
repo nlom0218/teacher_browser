@@ -119,11 +119,7 @@ const WelcomeContents = () => {
           </TitleLayout>
           <TitleLayout
             className="title_notion"
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/d8d13d9d93ab4026bef0c440ada24292"
-              )
-            }
+            onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/d8d13d9d93ab4026bef0c440ada24292")}
           >
             <SiNotion />
             <div>노션에서 더 보기</div>
@@ -132,9 +128,7 @@ const WelcomeContents = () => {
         <Layout>
           <ContentsItem
             onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-6-12-c5087b5e768a4527a8b64d69bd96addd"
-              )
+              window.open("https://sparkly-corleggy-3e4.notion.site/22-6-12-c5087b5e768a4527a8b64d69bd96addd")
             }
           >
             <FcCursor />
@@ -142,9 +136,7 @@ const WelcomeContents = () => {
           </ContentsItem>
           <ContentsItem
             onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-5-29-51ae79a702d8481c8232ff44130a0fac"
-              )
+              window.open("https://sparkly-corleggy-3e4.notion.site/22-5-29-51ae79a702d8481c8232ff44130a0fac")
             }
           >
             <FcCursor />
@@ -152,9 +144,7 @@ const WelcomeContents = () => {
           </ContentsItem>
           <ContentsItem
             onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-5-1-82e3b526ac1e4c5ab69b5d0d79cb1354"
-              )
+              window.open("https://sparkly-corleggy-3e4.notion.site/22-5-1-82e3b526ac1e4c5ab69b5d0d79cb1354")
             }
           >
             <FcCursor />
@@ -162,9 +152,7 @@ const WelcomeContents = () => {
           </ContentsItem>
           <ContentsItem
             onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-4-17-7658f4a3675d454bb6ca10c1e8087a0d"
-              )
+              window.open("https://sparkly-corleggy-3e4.notion.site/22-4-17-7658f4a3675d454bb6ca10c1e8087a0d")
             }
           >
             <FcCursor />
@@ -172,9 +160,7 @@ const WelcomeContents = () => {
           </ContentsItem>
           <ContentsItem
             onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-4-10-671eb8757867429081ca91dc904ceff5"
-              )
+              window.open("https://sparkly-corleggy-3e4.notion.site/22-4-10-671eb8757867429081ca91dc904ceff5")
             }
           >
             <FcCursor />
@@ -190,11 +176,7 @@ const WelcomeContents = () => {
           </TitleLayout>
           <TitleLayout
             className="title_notion"
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/1aa6fc8d7ec1492a8a24890ca1907549"
-              )
-            }
+            onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/1aa6fc8d7ec1492a8a24890ca1907549")}
           >
             <SiNotion />
             <div>노션에서 더 보기</div>
@@ -203,30 +185,20 @@ const WelcomeContents = () => {
         <Layout>
           <ContentsItem
             onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/5-31-c25d5524210048a084830b8dab049187"
-              )
+              window.open("https://sparkly-corleggy-3e4.notion.site/5-31-c25d5524210048a084830b8dab049187")
             }
           >
             <FcCursor />
             <div>가정의 달 이벤트(~5.31)</div>
           </ContentsItem>
           <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/92792b7124f9455faa264f73778f0d58"
-              )
-            }
+            onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/92792b7124f9455faa264f73778f0d58")}
           >
             <FcCursor />
             <div>티처캔 캐릭터 이름 공모 이벤트 결과 안내</div>
           </ContentsItem>
           <ContentsItem
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/522744f7087644538dbf8d3d19eb5eca"
-              )
-            }
+            onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/522744f7087644538dbf8d3d19eb5eca")}
           >
             <FcCursor />
             <div>티처캔 캐릭터 이름 공모 이벤트(~3.31)</div>
@@ -241,11 +213,7 @@ const WelcomeContents = () => {
           </TitleLayout>
           <TitleLayout
             className="title_notion"
-            onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/a5b56d8122f444cd9e372674f57724b2"
-              )
-            }
+            onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/a5b56d8122f444cd9e372674f57724b2")}
           >
             <SiNotion />
             <div>노션에서 더 보기</div>
@@ -254,9 +222,7 @@ const WelcomeContents = () => {
         <Layout>
           <ContentsItem
             onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-3-16-f321120bf0494d0b8ecb1915f0ff4cfd"
-              )
+              window.open("https://sparkly-corleggy-3e4.notion.site/22-3-16-f321120bf0494d0b8ecb1915f0ff4cfd")
             }
           >
             <FcCursor />
@@ -264,9 +230,7 @@ const WelcomeContents = () => {
           </ContentsItem>
           <ContentsItem
             onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-3-27-ec408ce41a18490c980060d506ebadde"
-              )
+              window.open("https://sparkly-corleggy-3e4.notion.site/22-3-27-ec408ce41a18490c980060d506ebadde")
             }
           >
             <FcCursor />
@@ -274,9 +238,7 @@ const WelcomeContents = () => {
           </ContentsItem>
           <ContentsItem
             onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-4-10-f4e4c1d714814e0faacd7180a2bb96d1"
-              )
+              window.open("https://sparkly-corleggy-3e4.notion.site/22-4-10-f4e4c1d714814e0faacd7180a2bb96d1")
             }
           >
             <FcCursor />
@@ -284,9 +246,7 @@ const WelcomeContents = () => {
           </ContentsItem>
           <ContentsItem
             onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-4-14-c0f1ca03a60b44b59d276b0533330a57"
-              )
+              window.open("https://sparkly-corleggy-3e4.notion.site/22-4-14-c0f1ca03a60b44b59d276b0533330a57")
             }
           >
             <FcCursor />
@@ -294,9 +254,7 @@ const WelcomeContents = () => {
           </ContentsItem>
           <ContentsItem
             onClick={() =>
-              window.open(
-                "https://sparkly-corleggy-3e4.notion.site/22-5-15-1-1-1f81191418164ae8af6dbb99c98a35a1"
-              )
+              window.open("https://sparkly-corleggy-3e4.notion.site/22-5-15-1-1-1f81191418164ae8af6dbb99c98a35a1")
             }
           >
             <FcCursor />

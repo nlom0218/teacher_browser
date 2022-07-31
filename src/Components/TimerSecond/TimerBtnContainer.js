@@ -58,10 +58,8 @@ const BgMusic = styled.div`
   grid-template-columns: auto auto;
   align-items: center;
   color: ${(props) => props.isFullScreenMode && color.white};
-  text-shadow: ${(props) =>
-    props.isFullScreenMode && "rgb(0, 0, 0) 5px 5px 5px"};
-  text-shadow: ${(props) =>
-    props.isFullScreenMode && "rgb(0, 0, 0) 0.3125rem 0.3125rem 0.3125rem"};
+  text-shadow: ${(props) => props.isFullScreenMode && "rgb(0, 0, 0) 5px 5px 5px"};
+  text-shadow: ${(props) => props.isFullScreenMode && "rgb(0, 0, 0) 0.3125rem 0.3125rem 0.3125rem"};
   ${customMedia.greaterThan("desktop")`
     position: absolute;
     bottom: 2%;
@@ -105,27 +103,15 @@ const TimerBtnContainer = ({
   return (
     <Container timerStatus={timerStatus}>
       {timerStatus === "pause" ? (
-        <PlayBtn
-          isFullScreenMode={isFullScreenMode}
-          className="timerBtn"
-          onClick={onClickBtn}
-        >
+        <PlayBtn isFullScreenMode={isFullScreenMode} className="timerBtn" onClick={onClickBtn}>
           <FaPlay />
         </PlayBtn>
       ) : (
-        <PauseBtn
-          isFullScreenMode={isFullScreenMode}
-          className="timerBtn"
-          onClick={onClickBtn}
-        >
+        <PauseBtn isFullScreenMode={isFullScreenMode} className="timerBtn" onClick={onClickBtn}>
           <FaPause />
         </PauseBtn>
       )}
-      <StopBtn
-        isFullScreenMode={isFullScreenMode}
-        className="timerBtn"
-        onClick={onClickStopBtn}
-      >
+      <StopBtn isFullScreenMode={isFullScreenMode} className="timerBtn" onClick={onClickStopBtn}>
         <FaStop />
       </StopBtn>
       {bgMusic && (

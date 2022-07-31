@@ -14,7 +14,7 @@ const DetailEomjiIcon = styled.div`
   transform: background-color 0.6s ease;
   justify-self: flex-start;
   :hover {
-    background-color: ${props => props.theme.blurColor};
+    background-color: ${(props) => props.theme.blurColor};
     transition: background-color 0.6s ease;
   }
   ${customMedia.greaterThan("tablet")`
@@ -29,6 +29,6 @@ const DetailEomjiIcon = styled.div`
       display: flex;
     }
   }
-`
+`;
 
-export default DetailEomjiIcon
+export default DetailEomjiIcon;

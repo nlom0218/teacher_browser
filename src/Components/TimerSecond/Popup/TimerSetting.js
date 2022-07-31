@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { outPopup } from "../../../apollo";
-import { customMedia } from "../../../styles";
 import PopupContainer from "../../Shared/PopupContainer";
 import { stopMusicFn } from "../../../audio/BackgroundMusic/BackgroundMusic";
 import TimeSettingLayout from "./TimeSettingLayout";
@@ -60,18 +59,10 @@ const TimerSetting = ({
   timerMemo,
   setTimerMemo,
 }) => {
-  const [selectedBgMusic, setSelectedBgMusic] = useState(
-    bgMusic ? bgMusic : undefined
-  );
-  const [bgMusicMp3, setBgMusicMp3] = useState(
-    bgMusic ? new Audio(bgMusic.audio) : undefined
-  );
-  const [selectedAlarmAudio, setSelectedAlarmAudio] = useState(
-    alarmAudio ? alarmAudio : undefined
-  );
-  const [alarmAudioMp3, setAlarmAudioMp3] = useState(
-    alarmAudio ? new Audio(alarmAudio.audio) : undefined
-  );
+  const [selectedBgMusic, setSelectedBgMusic] = useState(bgMusic ? bgMusic : undefined);
+  const [bgMusicMp3, setBgMusicMp3] = useState(bgMusic ? new Audio(bgMusic.audio) : undefined);
+  const [selectedAlarmAudio, setSelectedAlarmAudio] = useState(alarmAudio ? alarmAudio : undefined);
+  const [alarmAudioMp3, setAlarmAudioMp3] = useState(alarmAudio ? new Audio(alarmAudio.audio) : undefined);
 
   const { register, setValue, handleSubmit } = useForm({
     mode: "onChange",
@@ -126,13 +117,9 @@ const TimerSetting = ({
   return (
     <PopupContainer sound1={bgMusicMp3} sound2={alarmAudioMp3}>
       <Container>
-        <Title>
-          {mode === "countdown" ? "카운트 다운 설정" : "카운트 업 설정"}
-        </Title>
+        <Title>{mode === "countdown" ? "카운트 다운 설정" : "카운트 업 설정"}</Title>
         <TiemSettingContainer onSubmit={handleSubmit(onSubmit)}>
-          {mode === "countdown" && (
-            <TimeSettingLayout register={register} setValue={setValue} />
-          )}
+          {mode === "countdown" && <TimeSettingLayout register={register} setValue={setValue} />}
           <BgMusicSettingLayout
             setErrMsg={setErrMsg}
             bgMusicMp3={bgMusicMp3}

@@ -52,7 +52,7 @@ const InputLayout = styled.input`
   align-items: center;
   ::-webkit-calendar-picker-indicator {
     cursor: pointer;
-    filter:${props => props.darkMode ? "invert(1)" : "invert(0)"}
+    filter: ${(props) => (props.darkMode ? "invert(1)" : "invert(0)")};
   }
 `;
 
@@ -75,39 +75,20 @@ const TimeRegisterPage = ({ userEmail, timeResult, setMsg }) => {
     } = result;
     if (ok) {
       outPopup();
-      setMsg("시간이 설정되었습니다. 😀")
+      setMsg("시간이 설정되었습니다. 😀");
     }
   };
 
-  const [setTimetableTime, { loading }] = useMutation(
-    SET_TIMETABLE_TIME_MUTATION,
-    {
-      onCompleted,
-      refetchQueries: [
-        { query: ME_QUERY },
-        { query: GET_TIMETABLE_TIME_QUERY, variables: { userEmail } },
-      ],
-    }
-  );
+  const [setTimetableTime, { loading }] = useMutation(SET_TIMETABLE_TIME_MUTATION, {
+    onCompleted,
+    refetchQueries: [{ query: ME_QUERY }, { query: GET_TIMETABLE_TIME_QUERY, variables: { userEmail } }],
+  });
 
   const { register, handleSubmit, setValue, getValues } = useForm({
     mode: "onChange",
   });
   const onSubmit = (data) => {
-    const {
-      start1,
-      end1,
-      start2,
-      end2,
-      start3,
-      end3,
-      start4,
-      end4,
-      start5,
-      end5,
-      start6,
-      end6,
-    } = data;
+    const { start1, end1, start2, end2, start3, end3, start4, end4, start5, end5, start6, end6 } = data;
     setTimetableTime({
       variables: {
         teacherEmail: userEmail,
@@ -128,7 +109,7 @@ const TimeRegisterPage = ({ userEmail, timeResult, setMsg }) => {
   };
 
   if (loading) {
-    return <Loading page="popupPage" />
+    return <Loading page="popupPage" />;
   }
 
   return (

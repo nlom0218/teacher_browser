@@ -1,9 +1,8 @@
-import React from 'react';
-import { ReactComponent as RandomCircleOrange } from "../../image/icons/randomCircle/randomCircleOrange.svg"
+import React from "react";
+import { ReactComponent as RandomCircleOrange } from "../../image/icons/randomCircle/randomCircleOrange.svg";
 
 const IcRandomCircleOrange = () => {
-  return (<RandomCircleOrange />
-  );
-}
+  return <RandomCircleOrange />;
+};
 
 export default IcRandomCircleOrange;

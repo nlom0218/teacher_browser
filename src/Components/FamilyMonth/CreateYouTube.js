@@ -90,10 +90,7 @@ const CreateYouTube = ({ multiply, userEmail, setErrMsg }) => {
 
   const [createFamilyStory] = useMutation(CREATE_FAMILY_STORY_MUTATION, {
     onCompleted,
-    refetchQueries: [
-      { query: SEE_ALL_FAMILY_STORY_QEURY, variables: { page: 1 } },
-      ...refectchMyStory(),
-    ],
+    refetchQueries: [{ query: SEE_ALL_FAMILY_STORY_QEURY, variables: { page: 1 } }, ...refectchMyStory()],
   });
 
   const { register, watch, getValues, handleSubmit } = useForm({
@@ -152,32 +149,17 @@ const CreateYouTube = ({ multiply, userEmail, setErrMsg }) => {
   }
 
   return finish ? (
-    <FinishCreated
-      createId={createId}
-      setFinish={setFinish}
-      setCreateId={setCreateId}
-    />
+    <FinishCreated createId={createId} setFinish={setFinish} setCreateId={setCreateId} />
   ) : (
     <MainContentsLayout>
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
-        <YouTubeInput
-          register={register}
-          multiply={multiply}
-          watch={watch}
-          getValues={getValues}
-        />
-        <BasicInfoInput
-          register={register}
-          userEmail={userEmail}
-          setBgColor={setBgColor}
-          bgColor={bgColor}
-        />
+        <YouTubeInput register={register} multiply={multiply} watch={watch} getValues={getValues} />
+        <BasicInfoInput register={register} userEmail={userEmail} setBgColor={setBgColor} bgColor={bgColor} />
         <SubmitInput type="submit" value="생성하기" />
       </FormContainer>
       <SubmitMsg>
         <div>
-          게시물은 모두에게 공개되며 적절하지 않은 게시물은 예고없이 삭제될 수
-          있습니다. <br />
+          게시물은 모두에게 공개되며 적절하지 않은 게시물은 예고없이 삭제될 수 있습니다. <br />
           또한 티처캔 인스타그램에서 콘텐츠로 활용될 수 있습니다.😃
         </div>
         <TeacherCanLink onClick={onCLickLink}>@티처캔</TeacherCanLink>

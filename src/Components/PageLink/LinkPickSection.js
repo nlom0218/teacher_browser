@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { FaArrowCircleLeft } from "react-icons/fa";
-import {
-  hideNewsSection,
-  seeNewsSection,
-} from "../../Animations/WelcomeSectionAni";
-import {
-  linkPickFolderVar,
-  movePageLink,
-  pageLinkSectionVar,
-} from "../../apollo";
+import { hideNewsSection, seeNewsSection } from "../../Animations/WelcomeSectionAni";
+import { linkPickFolderVar, movePageLink, pageLinkSectionVar } from "../../apollo";
 import FolderList from "./FolderList";
 import ContentsItem from "./ContentsItem";
 import { useQuery, useReactiveVar } from "@apollo/client";
@@ -32,10 +25,8 @@ const MoveContainer = styled.div`
   bottom: 0;
   right: ${(props) => (props.pageLinkSection === "pageLink" ? "-100%" : 0)};
   left: ${(props) => (props.pageLinkSection === "pageLink" ? "100%" : 0)};
-  animation: ${(props) =>
-    !props.init &&
-    (props.pageLinkSection === "pageLink" ? hideNewsSection : seeNewsSection)}
-    1s ease forwards;
+  animation: ${(props) => !props.init && (props.pageLinkSection === "pageLink" ? hideNewsSection : seeNewsSection)} 1s
+    ease forwards;
 `;
 
 const MoveIcon = styled.div`
@@ -51,18 +42,8 @@ const MoveIcon = styled.div`
   }
 `;
 
-const LinkPickSection = ({
-  userEmail,
-  pageLinkSection,
-  init,
-  setInit,
-  link,
-  setMsg,
-  media
-}) => {
-  const [isSeeDisplay, setIsSeeDisplay] = useState(
-    pageLinkSection === "pageLink" ? "none" : "block"
-  );
+const LinkPickSection = ({ userEmail, pageLinkSection, init, setInit, link, setMsg, media }) => {
+  const [isSeeDisplay, setIsSeeDisplay] = useState(pageLinkSection === "pageLink" ? "none" : "block");
 
   const [userLinkTitleArr, setUserLinkTitleArr] = useState([]);
 
@@ -92,35 +73,37 @@ const LinkPickSection = ({
   }, [link]);
 
   return (
-    <MoveContainer
-      pageLinkSection={pageLinkSection}
-      init={init}
-      isSeeDisplay={isSeeDisplay}
-    >
+    <MoveContainer pageLinkSection={pageLinkSection} init={init} isSeeDisplay={isSeeDisplay}>
       <MoveIcon onClick={onClickMoveIcon}>
         <FaArrowCircleLeft />
       </MoveIcon>
       {media === "Desktop" && <FolderList />}
       <ContentsList>
         <PageLinkTitle>
-          <HelpIcon><IcHelper /></HelpIcon>
+          <HelpIcon>
+            <IcHelper />
+          </HelpIcon>
           <div>추천 페이지</div>
         </PageLinkTitle>
         {media !== "Desktop" && <FolderList />}
-        {loading ? <Loading page="subPage" /> : <PageLinkList>
-          {data &&
-            data?.seePageLink.map((item, index) => {
-              return (
-                <ContentsItem
-                  item={item}
-                  key={index}
-                  userEmail={userEmail}
-                  userLinkTitleArr={userLinkTitleArr}
-                  setMsg={setMsg}
-                />
-              );
-            })}
-        </PageLinkList>}
+        {loading ? (
+          <Loading page="subPage" />
+        ) : (
+          <PageLinkList>
+            {data &&
+              data?.seePageLink.map((item, index) => {
+                return (
+                  <ContentsItem
+                    item={item}
+                    key={index}
+                    userEmail={userEmail}
+                    userLinkTitleArr={userLinkTitleArr}
+                    setMsg={setMsg}
+                  />
+                );
+              })}
+          </PageLinkList>
+        )}
       </ContentsList>
     </MoveContainer>
   );

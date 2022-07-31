@@ -53,7 +53,7 @@ export const SchoolNameForm = ({ schoolName, setSchoolCode, setMenu }) => {
   const [check, setCheck] = useState(true);
 
   const { register, handleSubmit, setValue } = useForm({
-    mode: "onChange"
+    mode: "onChange",
   });
 
   //학교 정보가 넘어오면 처음에 한번만 학교 표시
@@ -66,11 +66,11 @@ export const SchoolNameForm = ({ schoolName, setSchoolCode, setMenu }) => {
   const searchSchool = ({ schoolName }) => {
     fetch(
       `https://open.neis.go.kr/hub/schoolInfo` +
-      `?KEY=954dac30b088454d9a95700f044ce620` +
-      `&Type=json` +
-      `&pIndex=1` +
-      `&pSize=100` +
-      `&SCHUL_NM=${schoolName}`
+        `?KEY=954dac30b088454d9a95700f044ce620` +
+        `&Type=json` +
+        `&pIndex=1` +
+        `&pSize=100` +
+        `&SCHUL_NM=${schoolName}`,
     )
       .then((response) => response.json())
       .then((json) => {
@@ -82,10 +82,7 @@ export const SchoolNameForm = ({ schoolName, setSchoolCode, setMenu }) => {
           //검색 결과가 1개일 경우 바로 setSchoolCode
         } else if (json.schoolInfo[1].row.length === 1) {
           setValue("schoolName", `${json.schoolInfo[1].row[0].SCHUL_NM}`);
-          setSchoolCode([
-            json.schoolInfo[1].row[0].ATPT_OFCDC_SC_CODE,
-            json.schoolInfo[1].row[0].SD_SCHUL_CODE,
-          ]);
+          setSchoolCode([json.schoolInfo[1].row[0].ATPT_OFCDC_SC_CODE, json.schoolInfo[1].row[0].SD_SCHUL_CODE]);
           //검색 결과가 2개 이상일 경우
         } else if (json.schoolInfo) {
           setSchoolList(json.schoolInfo[1].row);
@@ -122,13 +119,7 @@ export const SchoolNameForm = ({ schoolName, setSchoolCode, setMenu }) => {
         schoolList.map((element, index) => (
           <School
             key={index}
-            onClick={() =>
-              onClickSchool(
-                element.SCHUL_NM,
-                element.ATPT_OFCDC_SC_CODE,
-                element.SD_SCHUL_CODE
-              )
-            }
+            onClick={() => onClickSchool(element.SCHUL_NM, element.ATPT_OFCDC_SC_CODE, element.SD_SCHUL_CODE)}
           >
             {element.SCHUL_NM}({element.ORG_RDNMA})
           </School>

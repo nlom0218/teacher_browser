@@ -197,7 +197,12 @@ const Lunchmenu = () => {
   const { state } = useLocation();
 
   // localStorage에서 값 불러오기
-  const { schoolCode: lmSchoolCode, areaCode: lmAreaCode, schoolName: lmSchoolName, date: lmDate } = JSON.parse(localStorage.getItem("lmSetting"));
+  const {
+    schoolCode: lmSchoolCode,
+    areaCode: lmAreaCode,
+    schoolName: lmSchoolName,
+    date: lmDate,
+  } = JSON.parse(localStorage.getItem("lmSetting"));
 
   // popup reactiveVar => 파업창을 띄우기 위한 전역적으로 사용할 수 있는 변수
   const isPopup = useReactiveVar(isPopupVar);
@@ -233,11 +238,17 @@ const Lunchmenu = () => {
     }
   };
   const processSetDate = () => {
-    return `${date.getFullYear()}년 ${(date.getMonth() + 1).toString().padStart(2, 0)}월 ${date.getDate().toString().padStart(2, 0)}일`;
+    return `${date.getFullYear()}년 ${(date.getMonth() + 1).toString().padStart(2, 0)}월 ${date
+      .getDate()
+      .toString()
+      .padStart(2, 0)}일`;
   };
   //메뉴 받아오기
   const getMenu = () => {
-    const changedDate = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, 0)}${date.getDate().toString().padStart(2, 0)}`;
+    const changedDate = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, 0)}${date
+      .getDate()
+      .toString()
+      .padStart(2, 0)}`;
     fetch(
       `https://open.neis.go.kr/hub/mealServiceDietInfo` +
         `?KEY=954dac30b088454d9a95700f044ce620` +
@@ -246,7 +257,7 @@ const Lunchmenu = () => {
         `&pSize=100` +
         `&ATPT_OFCDC_SC_CODE=${areaCode}` +
         `&SD_SCHUL_CODE=${schoolCode}` +
-        `&MLSV_YMD=${changedDate}`
+        `&MLSV_YMD=${changedDate}`,
     )
       .then((response) => response.json())
       .then((json) => {
@@ -260,13 +271,13 @@ const Lunchmenu = () => {
                 food: item.replace(/[0-9]/g, "").replace(/\./g, ""),
                 allergy: item.split(/[^0-9]/g).filter((item) => item !== ""),
               };
-            })
+            }),
           );
           setOrigin(
             json.mealServiceDietInfo[1].row[0].ORPLC_INFO.replace(/\:/g, "(")
               .replace(/\s/gi, "")
               .split("<br/>")
-              .map((item) => item + ")")
+              .map((item) => item + ")"),
           );
         }
       });
@@ -370,14 +381,17 @@ const Lunchmenu = () => {
             <div>
               <div className="detail_title">✲ 알레르기정보</div>
               <div>
-                요리명에 표시된 번호는 알레르기를 유발할수 있는 식재료입니다 (1.난류, 2.우유, 3.메밀, 4.땅콩, 5.대두, 6.밀, 7.고등어, 8.게, 9.새우, 10.돼지고기, 11.복숭아, 12.토마토, 13.아황산염,
-                14.호두, 15.닭고기, 16.쇠고기, 17.오징어, 18.조개류(굴,전복,홍합 등)
+                요리명에 표시된 번호는 알레르기를 유발할수 있는 식재료입니다 (1.난류, 2.우유, 3.메밀, 4.땅콩, 5.대두,
+                6.밀, 7.고등어, 8.게, 9.새우, 10.돼지고기, 11.복숭아, 12.토마토, 13.아황산염, 14.호두, 15.닭고기,
+                16.쇠고기, 17.오징어, 18.조개류(굴,전복,홍합 등)
               </div>
             </div>
           </LunchmenuDetail>
         </LunchmenuInfo>
       </LunchmenuContainer>
-      {isPopup === "lmSearchSchool" && <SearchSchool setAreaCode={setAreaCode} setSchoolCode={setSchoolCode} setSchoolName={setSchoolName} />}
+      {isPopup === "lmSearchSchool" && (
+        <SearchSchool setAreaCode={setAreaCode} setSchoolCode={setSchoolCode} setSchoolName={setSchoolName} />
+      )}
       {isPopup === "seeAllergy" && <SeeAllergy />}
       {isPopup === "noSchoolData" && <NoSchoolData />}
     </BasicContainer>

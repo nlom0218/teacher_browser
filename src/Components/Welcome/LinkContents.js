@@ -12,22 +12,14 @@ import { MOVE_HOME_LINK_MUTATION } from "../../Graphql/User/mutation";
 const Container = styled.div`
   max-width: 100%;
   /* min-width: ${(props) =>
-    props.linksNum === 1
-      ? "30"
-      : props.linksNum !== 0 &&
-        (props.linksNum > 4 ? "80" : props.linksNum * 20)}%; */
+    props.linksNum === 1 ? "30" : props.linksNum !== 0 && (props.linksNum > 4 ? "80" : props.linksNum * 20)}%; */
   /* max-width: ${(props) =>
-    props.linksNum === 1
-      ? "30"
-      : props.linksNum !== 0 &&
-        (props.linksNum > 4 ? "80" : props.linksNum * 20)}%; */
+    props.linksNum === 1 ? "30" : props.linksNum !== 0 && (props.linksNum > 4 ? "80" : props.linksNum * 20)}%; */
   justify-self: center;
   align-self: center;
   display: grid;
   grid-template-columns: ${(props) =>
-    props.linksNum === 0 || props.linksNum === 5
-      ? "1fr"
-      : `${props.linksNum}fr 1fr`};
+    props.linksNum === 0 || props.linksNum === 5 ? "1fr" : `${props.linksNum}fr 1fr`};
   column-gap: 40px;
   column-gap: 2.5rem;
   row-gap: 10px;
@@ -78,14 +70,7 @@ const PlusBtn = styled.div`
   }
 `;
 
-const LinkContents = ({
-  links,
-  setMsg,
-  setErrMsg,
-  userEmail,
-  userId,
-  setLinks,
-}) => {
+const LinkContents = ({ links, setMsg, setErrMsg, userEmail, userId, setLinks }) => {
   const isPopup = useReactiveVar(isPopupVar);
 
   let sourceIndex;
@@ -98,7 +83,7 @@ const LinkContents = ({
         data: {
           moveHomeLink: { ok },
         },
-      }
+      },
     ) {
       if (ok) {
         cache.modify({
@@ -167,11 +152,7 @@ const LinkContents = ({
               >
                 {links.map((item, index) => {
                   return (
-                    <Draggable
-                      key={item.ID + ""}
-                      draggableId={item.ID + ""}
-                      index={index}
-                    >
+                    <Draggable key={item.ID + ""} draggableId={item.ID + ""} index={index}>
                       {(magic, info) => (
                         <LinkItem
                           magic={magic}

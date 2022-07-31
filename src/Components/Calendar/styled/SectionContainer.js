@@ -5,6 +5,6 @@ const SectionContainer = styled.div`
   grid-template-rows: auto 1fr;
   row-gap: 10px;
   row-gap: 0.625rem;
-`
+`;
 
-export default SectionContainer
+export default SectionContainer;

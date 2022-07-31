@@ -1,9 +1,9 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 const PopupTitle = styled.div`
-    justify-self: flex-end;
-    font-size: 1.25em;
-    font-size: 1.25rem;
-`
+  justify-self: flex-end;
+  font-size: 1.25em;
+  font-size: 1.25rem;
+`;
 
-export default PopupTitle
+export default PopupTitle;

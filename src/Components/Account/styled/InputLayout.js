@@ -10,6 +10,6 @@ const InputLayout = styled.div`
     font-size: 24px;
     font-size: 1.5rem;
   }
-`
+`;
 
-export default InputLayout
+export default InputLayout;

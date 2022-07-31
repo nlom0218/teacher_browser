@@ -158,7 +158,8 @@ const ManagingRoles = ({ me }) => {
 
   const isPopup = useReactiveVar(isPopupVar);
 
-  const [getStudents, { data: students, loading: studentsLoading, error: studentsError }] = useLazyQuery(SEE_ONE_STUDENTLIST);
+  const [getStudents, { data: students, loading: studentsLoading, error: studentsError }] =
+    useLazyQuery(SEE_ONE_STUDENTLIST);
   const {
     data: studentList,
     loading: listLoading,
@@ -171,7 +172,9 @@ const ManagingRoles = ({ me }) => {
       }
     },
   });
-  const [editRole, { loading: roleLoading, error: roleError }] = useMutation(EDIT_ROLE, { refetchQueries: [{ query: SEE_ONE_STUDENTLIST, variables: { listId: selectedList } }] });
+  const [editRole, { loading: roleLoading, error: roleError }] = useMutation(EDIT_ROLE, {
+    refetchQueries: [{ query: SEE_ONE_STUDENTLIST, variables: { listId: selectedList } }],
+  });
 
   const createNewList = () => {
     window.localStorage.setItem("popup", "createList");
@@ -225,7 +228,12 @@ const ManagingRoles = ({ me }) => {
             <ListBtn onClick={() => createNewList()}>새로운 명렬표 만들기</ListBtn>
           ) : (
             studentList?.seeStudentList?.map((list) => (
-              <ListBtn key={list.listId} listId={list.listId} selected={selectedList} onClick={() => onClickListBtn(list.listId)}>
+              <ListBtn
+                key={list.listId}
+                listId={list.listId}
+                selected={selectedList}
+                onClick={() => onClickListBtn(list.listId)}
+              >
                 {list.listName}
               </ListBtn>
             ))

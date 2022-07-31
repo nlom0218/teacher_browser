@@ -2,17 +2,9 @@ import { useReactiveVar } from "@apollo/client";
 import React, { useState } from "react";
 import { FcNext, FcPrevious } from "react-icons/fc";
 import styled from "styled-components";
-import {
-  disableSeeStudent,
-  inPopup,
-  isSeeStudentVar,
-  enableSeeStudent,
-} from "../../apollo";
+import { disableSeeStudent, inPopup, isSeeStudentVar, enableSeeStudent } from "../../apollo";
 import { useRecoilValue } from "recoil";
-import {
-  DivideRightContents,
-  SeeRightContentsBtn,
-} from "../Shared/styled/DivideContents";
+import { DivideRightContents, SeeRightContentsBtn } from "../Shared/styled/DivideContents";
 import SortTagBtn from "./SortTagBtn";
 import StudentItem from "./StudentItem";
 import { existStudentsInListAtom } from "../../atom";
@@ -48,15 +40,7 @@ const AddStudentBtn = styled.div`
   transition: background-color 1s ease, color 1s ease;
 `;
 
-const StudentList = ({
-  setSomeDragging,
-  studentId,
-  seeNum,
-  setDragType,
-  allStudent,
-  seeStudentIcon,
-  me,
-}) => {
+const StudentList = ({ setSomeDragging, studentId, seeNum, setDragType, allStudent, seeStudentIcon, me }) => {
   const existStudentsInList = useRecoilValue(existStudentsInListAtom);
 
   // 초기 로드 시 에니메이션 작동 안하게 하기
@@ -91,18 +75,10 @@ const StudentList = ({
 
   return (
     <React.Fragment>
-      <SeeRightContentsBtn
-        onClick={onClickSeeBtn}
-        isSeeList={isSeeList}
-        initLoad={initLoad}
-      >
+      <SeeRightContentsBtn onClick={onClickSeeBtn} isSeeList={isSeeList} initLoad={initLoad}>
         {isSeeList ? <FcNext /> : <FcPrevious />}
       </SeeRightContentsBtn>
-      <DivideRightContents
-        isSeeList={isSeeList}
-        initLoad={initLoad}
-        isSeedisplay={isSeedisplay}
-      >
+      <DivideRightContents isSeeList={isSeeList} initLoad={initLoad} isSeedisplay={isSeedisplay}>
         <SStudentList>
           <SortTagBtn me={me} />
           {allStudent?.length === 0 ? (
@@ -118,9 +94,7 @@ const StudentList = ({
                   seeNum={seeNum}
                   setDragType={setDragType}
                   seeStudentIcon={seeStudentIcon}
-                  isExisted={existStudentsInList
-                    .map((item) => item._id)
-                    .includes(item._id)}
+                  isExisted={existStudentsInList.map((item) => item._id).includes(item._id)}
                 />
               );
             })

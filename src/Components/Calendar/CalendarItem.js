@@ -37,12 +37,10 @@ const Date = styled.div`
   color: ${(props) => props.isToday && props.theme.bgColor};
   border-radius: 20px;
   border-radius: 1.25rem;
-  transition: ${(props) =>
-    props.isToday && "background-color 1s ease, color 1s ease"};
+  transition: ${(props) => props.isToday && "background-color 1s ease, color 1s ease"};
   cursor: pointer;
   :hover {
-    background-color: ${(props) =>
-      !props.isToday ? props.theme.hoverColor : props.theme.redColor};
+    background-color: ${(props) => (!props.isToday ? props.theme.hoverColor : props.theme.redColor)};
     transition: ${(props) => !props.isToday && "background-color 0.4s ease"};
   }
 `;
@@ -70,16 +68,13 @@ const ScheduleItem = styled.div`
   margin-right: ${(props) => props.dateType === "end" && "5px"};
   margin-right: ${(props) => props.dateType === "end" && "0.3125rem"};
   border-top-left-radius: ${(props) => props.dateType === "start" && "10px"};
-  border-top-left-radius: ${(props) =>
-    props.dateType === "start" && "0.625rem"};
+  border-top-left-radius: ${(props) => props.dateType === "start" && "0.625rem"};
   border-bottom-left-radius: ${(props) => props.dateType === "start" && "10px"};
-  border-bottom-left-radius: ${(props) =>
-    props.dateType === "start" && "0.625rem"};
+  border-bottom-left-radius: ${(props) => props.dateType === "start" && "0.625rem"};
   border-top-right-radius: ${(props) => props.dateType === "end" && "10px"};
   border-top-right-radius: ${(props) => props.dateType === "end" && "0.625rem"};
   border-bottom-right-radius: ${(props) => props.dateType === "end" && "10px"};
-  border-bottom-right-radius: ${(props) =>
-    props.dateType === "end" && "0.625rem"};
+  border-bottom-right-radius: ${(props) => props.dateType === "end" && "0.625rem"};
   border-top-right-radius: ${(props) => props.isEndDate && "10px"};
   border-top-right-radius: ${(props) => props.isEndDate && "0.625rem"};
   border-bottom-right-radius: ${(props) => props.isEndDate && "10px"};
@@ -148,15 +143,7 @@ const DotIcon = styled.div`
   border-radius: 50%;
 `;
 
-const CalendarItem = ({
-  item,
-  media,
-  userEmail,
-  schedule,
-  calendarType,
-  attendData,
-  selectedAttendOption,
-}) => {
+const CalendarItem = ({ item, media, userEmail, schedule, calendarType, attendData, selectedAttendOption }) => {
   const navigate = useNavigate();
 
   const [dateSchedule, setDateSchedule] = useState([]);
@@ -226,9 +213,7 @@ const CalendarItem = ({
         return;
       }
       const newDateSchedule = schedule?.filter((scheduleItem) =>
-        scheduleItem.allDate.includes(
-          new window.Date(item.date).setHours(0, 0, 0, 0)
-        )
+        scheduleItem.allDate.includes(new window.Date(item.date).setHours(0, 0, 0, 0)),
       );
       const lastSort = Math.max(...newDateSchedule?.map((item) => item.sort));
       if (!lastSort === -Infinity) {
@@ -236,9 +221,7 @@ const CalendarItem = ({
       }
       const reallyDateSchedule = [];
       for (let i = 0; i < lastSort; i++) {
-        const sortSchedule = newDateSchedule.filter(
-          (item) => item.sort === i + 1
-        );
+        const sortSchedule = newDateSchedule.filter((item) => item.sort === i + 1);
         if (sortSchedule.length === 0) {
           reallyDateSchedule.push(undefined);
         } else {
@@ -277,29 +260,16 @@ const CalendarItem = ({
                           onClick={() => onClickSchedule(scheduleItem._id)}
                           key={index}
                           color={scheduleItem.color}
-                          dateType={processDateType(
-                            scheduleItem.startDate,
-                            scheduleItem.endDate
-                          )}
+                          dateType={processDateType(scheduleItem.startDate, scheduleItem.endDate)}
                           isEndDate={isEndDate(scheduleItem.endDate)}
                         >
-                          {processDateType(
-                            scheduleItem.startDate,
-                            scheduleItem.endDate
-                          ) === "start" && (
-                            <StartDate className="schedule_date">
-                              {scheduleItem.schedule}
-                            </StartDate>
+                          {processDateType(scheduleItem.startDate, scheduleItem.endDate) === "start" && (
+                            <StartDate className="schedule_date">{scheduleItem.schedule}</StartDate>
                           )}
-                          {processDateType(
-                            scheduleItem.startDate,
-                            scheduleItem.endDate
-                          ) === "end" && (
+                          {processDateType(scheduleItem.startDate, scheduleItem.endDate) === "end" && (
                             <EndDate className="schedule_date">end</EndDate>
                           )}
-                          {processTerm(scheduleItem.term) && (
-                            <TermDate className="schedule_date">term</TermDate>
-                          )}
+                          {processTerm(scheduleItem.term) && <TermDate className="schedule_date">term</TermDate>}
                         </ScheduleItem>
                       );
                     }
@@ -321,17 +291,11 @@ const CalendarItem = ({
               </Summary>
             </React.Fragment>
           ) : (
-            <AttendCalendar
-              attendData={attendData}
-              item={item}
-              selectedAttendOption={selectedAttendOption}
-            />
+            <AttendCalendar attendData={attendData} item={item} selectedAttendOption={selectedAttendOption} />
           )}
         </React.Fragment>
       ) : (
-        <React.Fragment>
-          {dateSchedule.length !== 0 && <DotIcon></DotIcon>}
-        </React.Fragment>
+        <React.Fragment>{dateSchedule.length !== 0 && <DotIcon></DotIcon>}</React.Fragment>
       )}
     </Container>
   );

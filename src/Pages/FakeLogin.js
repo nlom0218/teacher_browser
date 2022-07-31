@@ -20,7 +20,7 @@ import { LOGIN_USER_MUTATION } from "../Graphql/User/mutation";
 import useTitle from "../Hooks/useTitle";
 
 const FakeLogin = () => {
-  const titleUpdataer = useTitle("티처캔 | 로그인")
+  const titleUpdataer = useTitle("티처캔 | 로그인");
   const [errMsg, setErrMsg] = useState(undefined);
   const { state } = useLocation();
   const navigate = useNavigate();

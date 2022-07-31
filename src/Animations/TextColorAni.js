@@ -7,4 +7,4 @@ export const welcomeTitleAni = keyframes`
   to {
     -webkit-filter: hue-rotate(-360deg);
   }
-`
+`;

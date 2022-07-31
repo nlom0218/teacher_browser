@@ -39,19 +39,11 @@ const StudentName = styled.span`
 
 const AttendType = styled.span`
   /* font-weight: 600; */
-  color: ${(props) =>
-    props.attendType.includes("결석")
-      ? props.theme.redColor
-      : props.theme.btnBgColor};
+  color: ${(props) => (props.attendType.includes("결석") ? props.theme.redColor : props.theme.btnBgColor)};
   transition: color 1s ease;
 `;
 
-const AttendCalendar = ({
-  attendData,
-  item,
-  selectedAttendOption,
-  refetchQuery,
-}) => {
+const AttendCalendar = ({ attendData, item, selectedAttendOption, refetchQuery }) => {
   const [attendInfo, setAttendInfo] = useState([]);
 
   const onClickAttendInfo = (id, studentName) => {
@@ -65,18 +57,12 @@ const AttendCalendar = ({
     if (attend === "전체보기" && studentName === "전체보기") {
       return attendInfo.sort(compare("studentName"));
     } else if (attend === "전체보기") {
-      return attendInfo
-        .filter((item) => item.studentName === studentName)
-        .sort(compare("studentName"));
+      return attendInfo.filter((item) => item.studentName === studentName).sort(compare("studentName"));
     } else if (studentName === "전체보기") {
-      return attendInfo
-        .filter((item) => item.type === attend)
-        .sort(compare("studentName"));
+      return attendInfo.filter((item) => item.type === attend).sort(compare("studentName"));
     } else {
       return attendInfo
-        .filter(
-          (item) => item.studentName === studentName && item.type === attend
-        )
+        .filter((item) => item.studentName === studentName && item.type === attend)
         .sort(compare("studentName"));
     }
   };
@@ -84,10 +70,7 @@ const AttendCalendar = ({
   useEffect(() => {
     if (attendData) {
       const newAttendInfo = attendData?.seeAttendance
-        ?.filter(
-          (attend) =>
-            attend.date === new window.Date(item.date).setHours(0, 0, 0, 0)
-        )
+        ?.filter((attend) => attend.date === new window.Date(item.date).setHours(0, 0, 0, 0))
         .sort(compare("studentName"));
       setAttendInfo(newAttendInfo);
     }
@@ -98,10 +81,7 @@ const AttendCalendar = ({
       <AttendInfoList>
         {processAttendInfo().map((item, index) => {
           return (
-            <AttendInfoItem
-              key={index}
-              onClick={() => onClickAttendInfo(item._id, item.studentName)}
-            >
+            <AttendInfoItem key={index} onClick={() => onClickAttendInfo(item._id, item.studentName)}>
               <StudentName>{item.studentName}</StudentName>
               <AttendType attendType={item.type}>{item.type}</AttendType>
             </AttendInfoItem>

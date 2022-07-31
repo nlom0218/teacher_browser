@@ -7,4 +7,4 @@ export const SET_FAVORITE_NEWS_MUTATION = gql`
       error
     }
   }
-`
+`;

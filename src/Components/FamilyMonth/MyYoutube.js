@@ -7,10 +7,7 @@ import YouTubeList from "./Shared/YouTubeList";
 import { customMedia } from "../../styles";
 import { AiFillFolderOpen } from "react-icons/ai";
 import { useQuery } from "@apollo/client";
-import {
-  MY_FAMILY_STORY_NUM,
-  SEE_MY_FAMILY_STORY_QUERY,
-} from "../../Graphql/FamilyStory/query";
+import { MY_FAMILY_STORY_NUM, SEE_MY_FAMILY_STORY_QUERY } from "../../Graphql/FamilyStory/query";
 import Loading from "../Shared/Loading";
 import NotContentsMsgContainer from "./NotContentsMsgContainer";
 
@@ -70,12 +67,7 @@ const MyYouTube = ({ userEmail }) => {
         <div>내가 만든 가정의 달 이야기</div>
         <AiFillFolderOpen />
       </LikedMsg>
-      <PageBtn
-        page={page}
-        pageType="liked"
-        itemNum={num?.myFamilyStoryNum}
-        refetch={refetch}
-      />
+      <PageBtn page={page} pageType="liked" itemNum={num?.myFamilyStoryNum} refetch={refetch} />
       {data?.seeMyFamilyStory?.length === 0 ? (
         <NotContentsMsgContainer preText="내가 만든" />
       ) : (

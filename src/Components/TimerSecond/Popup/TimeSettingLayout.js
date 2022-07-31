@@ -70,30 +70,15 @@ const TimeSettingLayout = ({ register, setValue }) => {
         <TimeBox onClick={() => setPreTime("3")}>3분</TimeBox>
       </PreSetTime>
       <Layout>
-        <TimeInput
-          {...register("hours", { required: true })}
-          type="number"
-          min="0"
-          max="24"
-        />
+        <TimeInput {...register("hours", { required: true })} type="number" min="0" max="24" />
         <div>시간</div>
       </Layout>
       <Layout>
-        <TimeInput
-          {...register("minutes", { required: true })}
-          type="number"
-          min="0"
-          max="59"
-        />
+        <TimeInput {...register("minutes", { required: true })} type="number" min="0" max="59" />
         <div>분</div>
       </Layout>
       <Layout>
-        <TimeInput
-          {...register("seconds", { required: true })}
-          type="number"
-          min="0"
-          max="59"
-        />
+        <TimeInput {...register("seconds", { required: true })} type="number" min="0" max="59" />
         <div>초</div>
       </Layout>
     </Container>

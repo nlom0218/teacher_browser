@@ -41,20 +41,18 @@ const BookMarkBtn = styled.div`
 const BookmarkIcon = styled.div``;
 
 const ContentsItem = ({ item, userEmail, userLinkTitleArr, setMsg }) => {
-
   const onCompleted = (result) => {
-    const { settingLink: { ok } } = result
+    const {
+      settingLink: { ok },
+    } = result;
     if (ok) {
-      setMsg(`즐겨찾기에서 제거되었습니다. 😀`)
+      setMsg(`즐겨찾기에서 제거되었습니다. 😀`);
     }
-  }
+  };
 
   const [settingLink, { loading }] = useMutation(SETTING_LINK_MUTATION, {
     onCompleted,
-    refetchQueries: [
-      { query: ME_QUERY },
-      { query: SEE_MY_PAGE_LINK_QUERY, variables: { userEmail } },
-    ],
+    refetchQueries: [{ query: ME_QUERY }, { query: SEE_MY_PAGE_LINK_QUERY, variables: { userEmail } }],
   });
 
   const onClickLinkBtn = () => {
@@ -65,7 +63,7 @@ const ContentsItem = ({ item, userEmail, userLinkTitleArr, setMsg }) => {
       inPopup("addBookmark");
       localStorage.setItem("addBookmark", item.pageTitle);
     } else {
-      inPopup("needLogin")
+      inPopup("needLogin");
     }
   };
   const onClickDelBookmark = () => {

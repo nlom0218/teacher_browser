@@ -11,6 +11,6 @@ const SectionList = styled.div`
     padding: 20px;
     padding: 1.25rem;
   `}
-`
+`;
 
-export default SectionList
+export default SectionList;

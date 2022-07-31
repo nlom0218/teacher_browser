@@ -33,7 +33,7 @@ const Title = styled.div`
   justify-self: flex-end;
   font-size: 1.25em;
   font-size: 1.25rem;
-`
+`;
 
 const LayOut = styled.div`
   display: grid;
@@ -51,7 +51,7 @@ const DetailTitle = styled.div`
   font-weight: 600;
   padding: 20px 0px;
   padding: 1.25rem 0rem;
-`
+`;
 
 const Input = styled.input`
   width: 100%;
@@ -156,26 +156,22 @@ const ResetBtn = styled.div`
   border-radius: 5px;
   border-radius: 0.3125rem;
   cursor: pointer;
-`
+`;
 
 const timeday = ["", "월", "화", "수", "목", "금"];
 const timelist = ["1", "2", "3", "4", "5", "6"];
 
-const ClassRegisterPage = ({
-  setErrMsg,
-  userEmail,
-  setMsg
-}) => {
+const ClassRegisterPage = ({ setErrMsg, userEmail, setMsg }) => {
   const [pickColor, setPickColor] = useState(undefined);
   const [isEditMemo, setIsEditMemo] = useState(false);
   const [isEditName, setIsEditName] = useState(false);
-  const [pickIndexArr, setPickIndexArr] = useState([parseInt(localStorage.getItem("classPick"))])
+  const [pickIndexArr, setPickIndexArr] = useState([parseInt(localStorage.getItem("classPick"))]);
 
   const { data, loading: queryLoading } = useQuery(GET_TIMETABLE_DATA_QUERY, {
     variables: {
-      index: parseInt(localStorage.getItem("classPick"))
-    }
-  })
+      index: parseInt(localStorage.getItem("classPick")),
+    },
+  });
 
   const onCompleted = (result) => {
     const {
@@ -183,7 +179,7 @@ const ClassRegisterPage = ({
     } = result;
     if (ok) {
       outPopup();
-      setMsg("시간표가 등록되었습니다. 😀")
+      setMsg("시간표가 등록되었습니다. 😀");
     }
   };
 
@@ -193,28 +189,19 @@ const ClassRegisterPage = ({
     } = result;
     if (ok) {
       outPopup();
-      setMsg("시간표가 삭제되었습니다. 😀")
+      setMsg("시간표가 삭제되었습니다. 😀");
     }
   };
 
-  const [setTimetableData, { loading }] = useMutation(
-    SET_TIMETABLE_DATA_MUTATION,
-    {
-      onCompleted,
-      refetchQueries: [
-        { query: ME_QUERY },
-        { query: GET_TIMETABLE_DATA_QUERY, variables: { userEmail } },
-      ],
-    }
-  );
+  const [setTimetableData, { loading }] = useMutation(SET_TIMETABLE_DATA_MUTATION, {
+    onCompleted,
+    refetchQueries: [{ query: ME_QUERY }, { query: GET_TIMETABLE_DATA_QUERY, variables: { userEmail } }],
+  });
 
   const [resetTimetableData, { loading: resetLoading }] = useMutation(RESET_TIMETABLE_DATA_MUTATION, {
     onCompleted: resetOnCompleted,
-    refetchQueries: [
-      { query: ME_QUERY },
-      { query: GET_TIMETABLE_DATA_QUERY, variables: { userEmail } },
-    ],
-  })
+    refetchQueries: [{ query: ME_QUERY }, { query: GET_TIMETABLE_DATA_QUERY, variables: { userEmail } }],
+  });
 
   const { register, handleSubmit, setValue, getValues } = useForm({
     mode: "onChange",
@@ -222,7 +209,7 @@ const ClassRegisterPage = ({
 
   const onClickColorBtn = (item) => {
     if (pickColor == item) {
-      setPickColor(undefined)
+      setPickColor(undefined);
     } else {
       setPickColor(item);
     }
@@ -239,8 +226,8 @@ const ClassRegisterPage = ({
   const onSubmit = (data) => {
     const { subName, memo } = data;
     if (!subName) {
-      setErrMsg("과목명을 입력해주세요. 😅")
-      return
+      setErrMsg("과목명을 입력해주세요. 😅");
+      return;
     }
 
     setTimetableData({
@@ -249,44 +236,44 @@ const ClassRegisterPage = ({
         subName,
         color: pickColor,
         memo,
-        index: pickIndexArr
+        index: pickIndexArr,
       },
     });
   };
 
   const onClickTimeIndex = (index) => {
-    let newPickIndexArr
+    let newPickIndexArr;
     if (pickIndexArr.includes(index)) {
       if (pickIndexArr.length === 1) {
-        setErrMsg("최소 한 개의 시간을 포함해야 합니다. 😅")
-        return
+        setErrMsg("최소 한 개의 시간을 포함해야 합니다. 😅");
+        return;
       }
-      newPickIndexArr = pickIndexArr.filter(item => item !== index)
+      newPickIndexArr = pickIndexArr.filter((item) => item !== index);
     } else {
-      newPickIndexArr = [...pickIndexArr, index]
+      newPickIndexArr = [...pickIndexArr, index];
     }
-    setPickIndexArr(newPickIndexArr)
-  }
+    setPickIndexArr(newPickIndexArr);
+  };
 
   const onClickResetBtn = () => {
     resetTimetableData({
       variables: {
         teacherEmail: userEmail,
-        resetIndex: parseInt(localStorage.getItem("classPick"))
-      }
-    })
-  }
+        resetIndex: parseInt(localStorage.getItem("classPick")),
+      },
+    });
+  };
 
   useEffect(() => {
     if (data) {
-      setValue("subName", data?.getTimetableData[0]?.subName)
-      setPickColor(data?.getTimetableData[0]?.color)
-      setValue("memo", data?.getTimetableData[0]?.memo)
+      setValue("subName", data?.getTimetableData[0]?.subName);
+      setPickColor(data?.getTimetableData[0]?.color);
+      setValue("memo", data?.getTimetableData[0]?.memo);
     }
-  }, [data])
+  }, [data]);
 
   if (queryLoading || loading || resetLoading) {
-    return <Loading page="popupPage" />
+    return <Loading page="popupPage" />;
   }
 
   return (
@@ -317,11 +304,7 @@ const ClassRegisterPage = ({
           <ColorBox>
             {bgColorArr.map((item, index) => {
               return (
-                <ColorBgThemeItem
-                  key={index}
-                  color={item}
-                  onClick={() => onClickColorBtn(item)}
-                >
+                <ColorBgThemeItem key={index} color={item} onClick={() => onClickColorBtn(item)}>
                   {pickColor === item && <BsCheck />}
                 </ColorBgThemeItem>
               );
@@ -378,9 +361,7 @@ const ClassRegisterPage = ({
                           <BsCheck />
                         </TimeTable>
                       ) : (
-                        <TimeTable onClick={() => onClickTimeIndex(index)}>
-                          {/* {index + 1} */}
-                        </TimeTable>
+                        <TimeTable onClick={() => onClickTimeIndex(index)}>{/* {index + 1} */}</TimeTable>
                       )}
                     </React.Fragment>
                   );

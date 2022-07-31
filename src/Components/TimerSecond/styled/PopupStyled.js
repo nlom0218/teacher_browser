@@ -1,15 +1,14 @@
-import styled from "styled-components"
-import { customMedia } from "../../../styles"
+import styled from "styled-components";
+import { customMedia } from "../../../styles";
 
 export const SelectAudioContainer = styled.div`
   grid-column: 1 / -1;
   grid-template-columns: 1fr auto;
   display: grid;
   row-gap: 10px;
-`
+`;
 
-export const SettingTitle = styled.div`
-`
+export const SettingTitle = styled.div``;
 
 export const BgMusicList = styled.div`
   grid-column: 1 / -1;
@@ -22,11 +21,11 @@ export const BgMusicList = styled.div`
   row-gap: 0.625rem;
   column-gap: 10px;
   column-gap: 0.625rem;
-  background-color: ${props => props.theme.originBgColor};
+  background-color: ${(props) => props.theme.originBgColor};
   ${customMedia.greaterThan("tablet")`
     grid-template-columns: repeat(2, 1fr);
   `}
-`
+`;
 
 export const BgMusicItem = styled.div`
   display: grid;
@@ -34,17 +33,17 @@ export const BgMusicItem = styled.div`
   column-gap: 10px;
   column-gap: 0.625rem;
   cursor: pointer;
-`
+`;
 
 export const Icon = styled.div`
   svg {
     display: flex;
   }
-`
+`;
 
 export const BgMusicName = styled.div`
-  font-weight: ${props => props.selected && 600};
-`
+  font-weight: ${(props) => props.selected && 600};
+`;
 
 export const PlaySound = styled.div`
   cursor: pointer;
@@ -58,9 +57,9 @@ export const PlaySound = styled.div`
   padding: 0.3125rem 0.625rem;
   border-radius: 5px;
   border-radius: 0.3125rem;
-  background-color: ${props => props.theme.green};
-  color: ${props => props.theme.bgColor};
-`
+  background-color: ${(props) => props.theme.green};
+  color: ${(props) => props.theme.bgColor};
+`;
 
 export const License = styled.div`
   grid-column: 1 / -1;
@@ -68,4 +67,4 @@ export const License = styled.div`
   font-size: 0.875rem;
   opacity: 0.8;
   cursor: pointer;
-`
+`;

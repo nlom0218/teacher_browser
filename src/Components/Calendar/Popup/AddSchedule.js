@@ -55,7 +55,7 @@ const AddSchedule = ({ userEmail, setErrMsg, setMsg, urlDate }) => {
         data: {
           createSchedule: { ok, schedule },
         },
-      }
+      },
     ) {
       if (ok) {
         cache.modify({

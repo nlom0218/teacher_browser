@@ -1,9 +1,8 @@
-import React from 'react';
-import { ReactComponent as Random } from "../../image/icons/Random.svg"
+import React from "react";
+import { ReactComponent as Random } from "../../image/icons/Random.svg";
 
 const IcRandom = () => {
-  return (<Random />
-  );
-}
+  return <Random />;
+};
 
 export default IcRandom;

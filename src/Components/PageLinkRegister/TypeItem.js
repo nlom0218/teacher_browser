@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import { GrCheckbox, GrCheckboxSelected } from 'react-icons/gr';
+import React from "react";
+import styled from "styled-components";
+import { GrCheckbox, GrCheckboxSelected } from "react-icons/gr";
 
 const SFolderItem = styled.div`
   font-size: 1.2em;
@@ -10,8 +10,7 @@ const SFolderItem = styled.div`
   column-gap: 10px;
   column-gap: 0.625rem;
   align-items: center;
-`
-
+`;
 
 const BoxIcon = styled.div`
   cursor: pointer;
@@ -20,20 +19,22 @@ const BoxIcon = styled.div`
     font-size: 1em;
     font-size: 1rem;
   }
-`
+`;
 
 const TypeItem = ({ item, setSubmitType, submitType }) => {
   const onClickIcon = () => {
     if (submitType === item) {
-      setSubmitType(undefined)
+      setSubmitType(undefined);
     } else {
-      setSubmitType(item)
+      setSubmitType(item);
     }
-  }
-  return (<SFolderItem>
-    <BoxIcon onClick={onClickIcon}>{submitType === item ? <GrCheckboxSelected /> : <GrCheckbox />}</BoxIcon>
-    <div>{item}</div>
-  </SFolderItem>);
-}
+  };
+  return (
+    <SFolderItem>
+      <BoxIcon onClick={onClickIcon}>{submitType === item ? <GrCheckboxSelected /> : <GrCheckbox />}</BoxIcon>
+      <div>{item}</div>
+    </SFolderItem>
+  );
+};
 
 export default TypeItem;

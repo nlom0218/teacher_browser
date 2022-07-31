@@ -22,5 +22,5 @@ root.render(
         </DndProvider>
       </RecoilRoot>
     </ApolloProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

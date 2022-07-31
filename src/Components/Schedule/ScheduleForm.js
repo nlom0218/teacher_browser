@@ -25,7 +25,6 @@ const DayTop = styled.div`
   grid-template-columns: repeat(6, 1fr);
 `;
 
-
 const DayOne = styled.div`
   display: grid;
   text-align: center;
@@ -53,7 +52,14 @@ for (var i = 0; i < 6; i++) {
   myDate.setDate(myDate.getDate() + 1);
   result.push(myDate.toLocaleDateString().slice(5));
 }
-const dayValue = [[], ["월", , result[0]], ["화", , result[1]], ["수", , result[2]], ["목", , result[3]], ["금", , result[4]],];
+const dayValue = [
+  [],
+  ["월", , result[0]],
+  ["화", , result[1]],
+  ["수", , result[2]],
+  ["목", , result[3]],
+  ["금", , result[4]],
+];
 
 const ScheduleForm = ({ timetableTime, fontSize, setFontSize, viewTime, tableData }) => {
   useEffect(() => {
@@ -61,33 +67,16 @@ const ScheduleForm = ({ timetableTime, fontSize, setFontSize, viewTime, tableDat
     }
   }, [tableData]);
 
-
   return (
     <Container>
       <DayTop>
         {dayValue.map((item, index) => {
-          return (
-            <TableOutDay
-              key={index}
-              item={item[0]}
-              index={index}
-              color={item[1]}
-              tag={item[2]}
-            />
-          );
+          return <TableOutDay key={index} item={item[0]} index={index} color={item[1]} tag={item[2]} />;
         })}
       </DayTop>
       <DayOne>
         {timetableTime.map((item, index) => {
-          return (
-            <TableOutItem
-              key={index}
-              viewTime={viewTime}
-              item={item[0]}
-              index={index}
-              tag={item[1]}
-            />
-          );
+          return <TableOutItem key={index} viewTime={viewTime} item={item[0]} index={index} tag={item[1]} />;
         })}
       </DayOne>
       <DayAll>

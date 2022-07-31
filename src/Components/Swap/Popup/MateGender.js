@@ -1,6 +1,6 @@
-import React from 'react';
-import { RiCheckboxBlankLine, RiCheckboxLine } from 'react-icons/ri';
-import styled from 'styled-components';
+import React from "react";
+import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
+import styled from "styled-components";
 
 const Container = styled.div`
   display: grid;
@@ -9,7 +9,7 @@ const Container = styled.div`
   column-gap: 0.625rem;
   padding: 5px;
   padding: 0.3125rem;
-`
+`;
 
 const Item = styled.div`
   display: grid;
@@ -21,25 +21,27 @@ const Item = styled.div`
   svg {
     display: flex;
   }
-`
+`;
 
-const Type = styled.div``
+const Type = styled.div``;
 
 const MateGender = ({ mateGender, setMateGender }) => {
-  return (<Container>
-    <Item onClick={() => setMateGender("random")}>
-      {mateGender === "random" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
-      <Type>랜덤</Type>
-    </Item>
-    <Item onClick={() => setMateGender("same")}>
-      {mateGender === "same" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
-      <Type>동성</Type>
-    </Item>
-    <Item onClick={() => setMateGender("other")}>
-      {mateGender === "other" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
-      <Type>이성</Type>
-    </Item>
-  </Container>);
-}
+  return (
+    <Container>
+      <Item onClick={() => setMateGender("random")}>
+        {mateGender === "random" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
+        <Type>랜덤</Type>
+      </Item>
+      <Item onClick={() => setMateGender("same")}>
+        {mateGender === "same" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
+        <Type>동성</Type>
+      </Item>
+      <Item onClick={() => setMateGender("other")}>
+        {mateGender === "other" ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
+        <Type>이성</Type>
+      </Item>
+    </Container>
+  );
+};
 
 export default MateGender;

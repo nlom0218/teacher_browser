@@ -1,10 +1,7 @@
 import { useMutation, useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import {
-  SEE_MY_PAGE_LINK_QUERY,
-  SEE_PAGE_LINK_QUERY,
-} from "../../../Graphql/PageLink/query";
+import { SEE_MY_PAGE_LINK_QUERY, SEE_PAGE_LINK_QUERY } from "../../../Graphql/PageLink/query";
 import PopupContainer from "../../Shared/PopupContainer";
 import { BsPencil } from "react-icons/bs";
 import TextareaAutosize from "react-textarea-autosize";
@@ -33,7 +30,7 @@ const Container = styled.form`
     border-radius: 5px;
     border-radius: 0.3125rem;
     border: ${(props) => props.isEdit && `${props.theme.fontColor} 1px solid`};
-    background-color: ${props => props.theme.originBgColor};
+    background-color: ${(props) => props.theme.originBgColor};
     transition: border 1s ease, background-color 1s ease;
     line-height: 160%;
     ::placeholder {
@@ -87,7 +84,7 @@ const PageURLLayout = styled.div`
 const PageURL = styled.div`
   padding: 20px;
   padding: 1.25rem;
-  background-color: ${props => props.theme.originBgColor};
+  background-color: ${(props) => props.theme.originBgColor};
   border-radius: 40px;
   border-radius: 2.5rem;
   font-family: Arial, Helvetica, sans-serif;
@@ -125,17 +122,14 @@ const DetailPageLink = ({ link, userEmail, setMsg }) => {
     } = result;
     if (ok) {
       setIsEdit(false);
-      setMsg(`메모가 수정되었습니다. 😀`)
+      setMsg(`메모가 수정되었습니다. 😀`);
     }
   };
 
   const [editPageLINKMemo, { loading: editLoading }] = useMutation(EDIT_PAGE_LINK_MEMO_MUTATION, {
     onCompleted,
-    refetchQueries: [
-      { query: ME_QUERY },
-    ],
-  }
-  );
+    refetchQueries: [{ query: ME_QUERY }],
+  });
 
   const onCompletedDel = (result) => {
     const {
@@ -143,21 +137,15 @@ const DetailPageLink = ({ link, userEmail, setMsg }) => {
     } = result;
     if (ok) {
       outPopup();
-      localStorage.removeItem("addBookmark")
-      setMsg(`즐겨찾기에서 제거되었습니다. 😀`)
+      localStorage.removeItem("addBookmark");
+      setMsg(`즐겨찾기에서 제거되었습니다. 😀`);
     }
   };
 
-  const [settingLink, { loading: settingLoading }] = useMutation(
-    SETTING_LINK_MUTATION,
-    {
-      onCompleted: onCompletedDel,
-      refetchQueries: [
-        { query: SEE_MY_PAGE_LINK_QUERY, variables: { userEmail } },
-        { query: ME_QUERY },
-      ],
-    }
-  );
+  const [settingLink, { loading: settingLoading }] = useMutation(SETTING_LINK_MUTATION, {
+    onCompleted: onCompletedDel,
+    refetchQueries: [{ query: SEE_MY_PAGE_LINK_QUERY, variables: { userEmail } }, { query: ME_QUERY }],
+  });
 
   const onSubmit = (data) => {
     const { memo } = data;
@@ -183,9 +171,7 @@ const DetailPageLink = ({ link, userEmail, setMsg }) => {
   };
   useEffect(() => {
     if (link) {
-      const myMemo = link
-        ? link.filter((item) => item.siteName === pageTitle)[0].memo
-        : undefined;
+      const myMemo = link ? link.filter((item) => item.siteName === pageTitle)[0].memo : undefined;
       if (myMemo) {
         setValue("memo", myMemo);
       }
@@ -193,7 +179,7 @@ const DetailPageLink = ({ link, userEmail, setMsg }) => {
   }, [link]);
 
   if (loading || editLoading || settingLoading) {
-    return <Loading page="popupPage" />
+    return <Loading page="popupPage" />;
   }
 
   return (
@@ -219,19 +205,13 @@ const DetailPageLink = ({ link, userEmail, setMsg }) => {
             <Icon>
               <MdOutlineDescription />
             </Icon>
-            <TextareaAutosize
-              minRows={5}
-              maxRows={5}
-              value={data?.seePageLink[0].pageDescription}
-            ></TextareaAutosize>
+            <TextareaAutosize minRows={5} maxRows={5} value={data?.seePageLink[0].pageDescription}></TextareaAutosize>
           </Layout>
           <PageURLLayout>
             <Icon>
               <FiLink />
             </Icon>
-            <PageURL onClick={onClickPageURL}>
-              {data?.seePageLink[0].pageURL}
-            </PageURL>
+            <PageURL onClick={onClickPageURL}>{data?.seePageLink[0].pageURL}</PageURL>
           </PageURLLayout>
           <DelBtn onClick={onClickDelBtn}>즐겨찾기 목록에서 제거</DelBtn>
         </Container>

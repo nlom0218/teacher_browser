@@ -9,7 +9,7 @@ export const hideWelcomeSection = keyframes`
     right: 100%;
     left: -100%;
   }
-`
+`;
 
 export const seeWelcomSection = keyframes`
   from {
@@ -20,7 +20,7 @@ export const seeWelcomSection = keyframes`
     right: 0;
     left: 0;
   }
-`
+`;
 
 export const hideNewsSection = keyframes`
   from {
@@ -31,7 +31,7 @@ export const hideNewsSection = keyframes`
     right: -100%;
     left: 100%;
   }
-`
+`;
 
 export const seeNewsSection = keyframes`
   from {
@@ -42,4 +42,4 @@ export const seeNewsSection = keyframes`
     right: 0;
     left: 0;
   }
-`
+`;

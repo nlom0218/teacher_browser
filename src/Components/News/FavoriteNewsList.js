@@ -1,14 +1,13 @@
-import React from 'react';
-import styled from 'styled-components';
-import { color } from '../../styles';
+import React from "react";
+import styled from "styled-components";
+import { color } from "../../styles";
 
-const Container = styled.div`
-`
+const Container = styled.div``;
 
 const List = styled.div`
   display: flex;
   flex-wrap: wrap;
-`
+`;
 
 const Items = styled.div`
   cursor: pointer;
@@ -24,25 +23,31 @@ const Items = styled.div`
   border-radius: 5px;
   border-radius: 0.3125rem;
   color: ${color.black};
-`
+`;
 
 const FavoriteNewsList = ({ favoriteNews, setSeacrh, setStart }) => {
   const onClickFavoiteItem = (item) => {
-    setSeacrh(item)
-    setStart(1)
-  }
+    setSeacrh(item);
+    setStart(1);
+  };
 
-  return (<Container>
-    {favoriteNews?.length === 0 ? <div>즐겨찾기 검색어가 없습니다. 😭</div>
-      : <List>
-        {favoriteNews?.map((item, index) => {
-          return <Items key={index} onClick={() => onClickFavoiteItem(item)}>
-            {item}
-          </Items>
-        })}
-      </List>
-    }
-  </Container>);
-}
+  return (
+    <Container>
+      {favoriteNews?.length === 0 ? (
+        <div>즐겨찾기 검색어가 없습니다. 😭</div>
+      ) : (
+        <List>
+          {favoriteNews?.map((item, index) => {
+            return (
+              <Items key={index} onClick={() => onClickFavoiteItem(item)}>
+                {item}
+              </Items>
+            );
+          })}
+        </List>
+      )}
+    </Container>
+  );
+};
 
 export default FavoriteNewsList;
