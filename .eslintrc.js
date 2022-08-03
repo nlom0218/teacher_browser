@@ -10,9 +10,5 @@ module.exports = {
     },
     ecmaVersion: "latest",
   },
-  extends: ["react-app", "prettier"],
-  plugins: ["prettier"],
-  rules: {
-    "prettier/prettier": ["error", { endOfLine: "auto" }],
-  },
+  extends: ["react-app", "plugin:prettier/recommended"],
 };
