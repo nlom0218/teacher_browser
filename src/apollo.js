@@ -2,7 +2,6 @@ import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { makeVar } from "@apollo/client";
 
-// 주석을 달았습니다.
 const FULL_SCREEN = "fullScreen";
 const BG_THEME = "bgTheme";
 const DARK = "dark";
@@ -11,7 +10,6 @@ const POPUP = "popup";
 const IS_SEE_STUDENT = "isSeeStudent";
 const MENU_TYPE = "menuType";
 const IS_SEE_STUDENT_LIST = "isSeeStudentList";
-const WELCOME_SECTION = "welcomeSection";
 const BG_ANI = "bgAni";
 const PAGELINK_SECTION = "pageLinkSection";
 const PAGE_LINK_FOLDER = "pageLinkFolder";
