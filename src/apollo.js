@@ -10,7 +10,6 @@ const POPUP = "popup";
 const IS_SEE_STUDENT = "isSeeStudent";
 const MENU_TYPE = "menuType";
 const IS_SEE_STUDENT_LIST = "isSeeStudentList";
-const WELCOME_SECTION = "welcomeSection";
 const BG_ANI = "bgAni";
 const PAGELINK_SECTION = "pageLinkSection";
 const PAGE_LINK_FOLDER = "pageLinkFolder";
