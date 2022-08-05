@@ -2,6 +2,7 @@ import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { makeVar } from "@apollo/client";
 
+// 주석을 달았습니다.
 const FULL_SCREEN = "fullScreen";
 const BG_THEME = "bgTheme";
 const DARK = "dark";
