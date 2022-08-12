@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { SEE_ALLERGY_STUDENT_QUERY } from "../../../Graphql/Student/query";
@@ -99,7 +99,6 @@ const SeeAllergy = () => {
     <PopupContainer>
       <Container>
         <AllergyName>{processAllergyInfo()}</AllergyName>
-        {/* <RefetchBtn onClick={onClickRefetch}><FcSynchronize /></RefetchBtn> */}
         <AllergyStudent>
           {data?.seeAllStudent
             .filter((item) => !item.trash)

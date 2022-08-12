@@ -56,13 +56,11 @@ export const SchoolNameForm = ({ schoolName, setSchoolCode, setMenu }) => {
     mode: "onChange",
   });
 
-  //학교 정보가 넘어오면 처음에 한번만 학교 표시
   if (schoolName && check) {
     setCheck(false);
     setValue("schoolName", schoolName);
   }
 
-  //학교 검색하기
   const searchSchool = ({ schoolName }) => {
     fetch(
       `https://open.neis.go.kr/hub/schoolInfo` +
@@ -92,7 +90,6 @@ export const SchoolNameForm = ({ schoolName, setSchoolCode, setMenu }) => {
       });
   };
 
-  // 검색 결과 학교가 여러 개일 경우 학교 선택 기능
   const onClickSchool = (SCHUL_NM, ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE) => {
     setSchoolCode([ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE]);
     setValue("schoolName", `${SCHUL_NM}`);
