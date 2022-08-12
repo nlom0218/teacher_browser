@@ -2,19 +2,17 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import "react-datepicker/dist/react-datepicker.css";
-import { Date } from "../Components/Lunchmenu/Date";
 import SearchSchool from "../Components/Lunchmenu/SearchSchool";
 import { useReactiveVar } from "@apollo/client";
-import { inPopup, isPopupVar } from "../apollo";
-import useMedia from "../Hooks/useMedia";
+import { isPopupVar } from "../apollo";
 import { customMedia } from "../styles";
 import SeeAllergy from "../Components/Lunchmenu/Popup/SeeAllergy";
-import IcSchoolYellow from "../icons/School/IcSchoolYellow";
 import { useLocation } from "react-router";
 import useTitle from "../Hooks/useTitle";
 import NoSchoolData from "../Components/Lunchmenu/Popup/NoSchoolData";
 import LunchmenuInfo from "../Components/Lunchmenu/LunchmenuInfo";
 import BasicInfo from "../Components/Lunchmenu/BasicInfo";
+import SearchContainer from "../Components/Lunchmenu/SearchContainer";
 
 const LunchmenuContainer = styled.div`
   min-height: 100%;
@@ -40,44 +38,9 @@ const LunchmenuContainer = styled.div`
   `}
 `;
 
-const SearchIcons = styled.div`
-  display: grid;
-  align-items: flex-end;
-  row-gap: 10px;
-  row-gap: 0.625rem;
-`;
-
-const SchoolDate = styled.div`
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  justify-items: end;
-  ${customMedia.greaterThan("tablet")`
-    column-gap: 10px;
-    column-gap: 0.625rem;
-  `}
-`;
-
-const SchoolIcon = styled.div`
-  align-self: flex-start;
-  font-size: 2em;
-  font-size: 2rem;
-  display: flex;
-  cursor: pointer;
-  ${customMedia.greaterThan("tablet")`
-    font-size: 2.5em;
-    font-size: 2.5rem;
-    filter: drop-shadow(1px 1px 1px rgb(0, 0, 0));
-  `}
-`;
-
 const Lunchmenu = () => {
   const titleUpdataer = useTitle("티처캔 | 식단표");
-
-  const media = useMedia();
-
   const { state } = useLocation();
-
   const {
     schoolCode: lmSchoolCode,
     areaCode: lmAreaCode,
@@ -99,8 +62,6 @@ const Lunchmenu = () => {
       .padStart(2, 0)}일`;
   };
 
-  const onClickSchoolIcon = () => inPopup("lmSearchSchool");
-
   useEffect(() => {
     if (state) {
       const newDate = new window.Date(parseInt(state?.urlDate));
@@ -112,15 +73,7 @@ const Lunchmenu = () => {
     <BasicContainer menuItem={true}>
       <LunchmenuContainer isPopup={isPopup}>
         <BasicInfo schoolName={schoolName} processSetDate={processSetDate} date={date} />
-        <SearchIcons>
-          <SchoolDate>
-            {media !== "Mobile" && <div>{schoolName ? schoolName : "학교검색"}</div>}
-            <SchoolIcon onClick={onClickSchoolIcon}>
-              <IcSchoolYellow />
-            </SchoolIcon>
-          </SchoolDate>
-          <Date date={date} setDate={setDate} processSetDate={processSetDate} />
-        </SearchIcons>
+        <SearchContainer schoolName={schoolName} date={date} setDate={setDate} processSetDate={processSetDate} />
         <LunchmenuInfo
           date={date}
           setDate={setDate}
