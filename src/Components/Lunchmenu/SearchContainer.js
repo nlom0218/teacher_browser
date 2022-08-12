@@ -4,7 +4,7 @@ import { inPopup } from "../../apollo";
 import useMedia from "../../Hooks/useMedia";
 import IcSchoolYellow from "../../icons/School/IcSchoolYellow";
 import { customMedia } from "../../styles";
-import { Date } from "./Date";
+import { SearchDate } from "./SearchDate";
 
 const SSearchContainer = styled.div`
   display: grid;
@@ -48,7 +48,7 @@ const SearchContainer = ({ schoolName, date, setDate, processSetDate }) => {
           <IcSchoolYellow />
         </SchoolIcon>
       </SchoolDate>
-      <Date date={date} setDate={setDate} processSetDate={processSetDate} />
+      <SearchDate date={date} setDate={setDate} processSetDate={processSetDate} />
     </SSearchContainer>
   );
 };
