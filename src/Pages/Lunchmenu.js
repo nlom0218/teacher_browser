@@ -6,7 +6,6 @@ import { Date } from "../Components/Lunchmenu/Date";
 import SearchSchool from "../Components/Lunchmenu/SearchSchool";
 import { useReactiveVar } from "@apollo/client";
 import { inPopup, isPopupVar } from "../apollo";
-import useMe from "../Hooks/useMe";
 import useMedia from "../Hooks/useMedia";
 import { customMedia } from "../styles";
 import SeeAllergy from "../Components/Lunchmenu/Popup/SeeAllergy";
@@ -15,6 +14,7 @@ import { useLocation } from "react-router";
 import useTitle from "../Hooks/useTitle";
 import NoSchoolData from "../Components/Lunchmenu/Popup/NoSchoolData";
 import LunchmenuInfo from "../Components/Lunchmenu/LunchmenuInfo";
+import BasicInfo from "../Components/Lunchmenu/BasicInfo";
 
 const LunchmenuContainer = styled.div`
   min-height: 100%;
@@ -38,31 +38,6 @@ const LunchmenuContainer = styled.div`
     margin-top: 0px;
     margin-top: 0rem;
   `}
-`;
-
-const Title = styled.h1`
-  display: grid;
-  row-gap: 10px;
-  row-gap: 0.625rem;
-  font-size: 1.25em;
-  font-size: 1.25rem;
-  ${customMedia.greaterThan("tablet")`
-  `}
-`;
-
-const SchoolName = styled.div``;
-
-const SearchedDate = styled.div`
-  font-size: 1.5em;
-  font-size: 1.5rem;
-  ${customMedia.greaterThan("tablet")`
-    font-size: 2em;
-    font-size: 2rem; 
-  `}
-`;
-
-const SearchedDay = styled.div`
-  opacity: 0.7;
 `;
 
 const SearchIcons = styled.div`
@@ -117,24 +92,6 @@ const Lunchmenu = () => {
   const [areaCode, setAreaCode] = useState(lmAreaCode ? lmAreaCode : undefined);
   const [schoolName, setSchoolName] = useState(lmSchoolName ? lmSchoolName : undefined);
 
-  const processSetDay = () => {
-    const day = date.getDay();
-    if (day === 1) {
-      return "월요일";
-    } else if (day === 2) {
-      return "화요일";
-    } else if (day === 3) {
-      return "수요일";
-    } else if (day === 4) {
-      return "목요일";
-    } else if (day === 5) {
-      return "금요일";
-    } else if (day === 6) {
-      return "토요일";
-    } else if (day === 0) {
-      return "일요일";
-    }
-  };
   const processSetDate = () => {
     return `${date.getFullYear()}년 ${(date.getMonth() + 1).toString().padStart(2, 0)}월 ${date
       .getDate()
@@ -154,11 +111,7 @@ const Lunchmenu = () => {
   return (
     <BasicContainer menuItem={true}>
       <LunchmenuContainer isPopup={isPopup}>
-        <Title>
-          <SchoolName>{schoolName ? `${schoolName} 식단표` : "학교를 검색해주세요."}</SchoolName>
-          <SearchedDate>{processSetDate()}</SearchedDate>
-          <SearchedDay>{processSetDay()}</SearchedDay>
-        </Title>
+        <BasicInfo schoolName={schoolName} processSetDate={processSetDate} date={date} />
         <SearchIcons>
           <SchoolDate>
             {media !== "Mobile" && <div>{schoolName ? schoolName : "학교검색"}</div>}
