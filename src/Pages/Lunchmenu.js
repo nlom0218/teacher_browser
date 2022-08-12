@@ -3,7 +3,6 @@ import styled from "styled-components";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import "react-datepicker/dist/react-datepicker.css";
 import { Date } from "../Components/Lunchmenu/Date";
-import { FaSchool } from "react-icons/fa";
 import SearchSchool from "../Components/Lunchmenu/SearchSchool";
 import { useReactiveVar } from "@apollo/client";
 import { inPopup, isPopupVar } from "../apollo";
@@ -189,18 +188,13 @@ const LunchmenuDetail = styled.div`
 
 const LunchmenuOrigin = styled.div``;
 
-// 리팩토링 시작!!!!
-
-// 보호 규칙 설정 다시
-
 const Lunchmenu = () => {
   const titleUpdataer = useTitle("티처캔 | 식단표");
-  // 반응형
+
   const media = useMedia();
 
   const { state } = useLocation();
 
-  // localStorage에서 값 불러오기
   const {
     schoolCode: lmSchoolCode,
     areaCode: lmAreaCode,
@@ -208,18 +202,14 @@ const Lunchmenu = () => {
     date: lmDate,
   } = JSON.parse(localStorage.getItem("lmSetting"));
 
-  // popup reactiveVar => 파업창을 띄우기 위한 전역적으로 사용할 수 있는 변수
   const isPopup = useReactiveVar(isPopupVar);
 
-  // localStorage에 저장된 값으로 state 지정
   const [date, setDate] = useState(lmDate ? new window.Date(lmDate) : new window.Date());
   const [schoolCode, setSchoolCode] = useState(lmSchoolCode ? lmSchoolCode : undefined);
   const [areaCode, setAreaCode] = useState(lmAreaCode ? lmAreaCode : undefined);
   const [schoolName, setSchoolName] = useState(lmSchoolName ? lmSchoolName : undefined);
   const [menu, setMenu] = useState("loading");
   const [origin, setOrigin] = useState([]);
-
-  console.log("hello");
 
   const me = useMe();
 
@@ -247,7 +237,7 @@ const Lunchmenu = () => {
       .toString()
       .padStart(2, 0)}일`;
   };
-  //메뉴 받아오기
+
   const getMenu = () => {
     const changedDate = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, 0)}${date
       .getDate()
@@ -266,7 +256,6 @@ const Lunchmenu = () => {
       .then((response) => response.json())
       .then((json) => {
         if (json.RESULT) {
-          // setMenu([json.RESULT.MESSAGE])
           setMenu(undefined);
         } else {
           setMenu(
@@ -327,12 +316,9 @@ const Lunchmenu = () => {
 
   const onClickSchoolIcon = () => inPopup("lmSearchSchool");
 
-  //로그인 정보 있으면 반영
   useEffect(() => {
     getMenu();
   }, [date, schoolCode]);
-  //맨처음 제외하고 state값 변경 시 rerender
-  // useDidMountEffect(getMenu, [date, schoolCode]);
 
   useEffect(() => {
     if (state) {
@@ -341,7 +327,6 @@ const Lunchmenu = () => {
     }
   }, []);
 
-  //리턴
   return (
     <BasicContainer menuItem={true}>
       <LunchmenuContainer isPopup={isPopup}>

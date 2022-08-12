@@ -22,10 +22,6 @@ const SchoolList = styled.div`
   row-gap: 1.25rem;
   padding-bottom: 10px;
   padding-bottom: 0.625rem;
-  /* padding-top: 20px;
-  padding-top: 1.25rem;
-  border-top: 1px solid ${(props) => props.theme.fontColor};
-  transition: border-top 1s ease; */
 `;
 
 const SchoolItem = styled.div`
@@ -46,7 +42,7 @@ const SearchSchool = ({ setSchoolCode, setSchoolName, setAreaCode }) => {
   const [schoolInfo, setSchoolInfo] = useState(undefined);
   const [errMsg, setErrMsg] = useState(undefined);
   const [preventSubmit, setPreventSubmit] = useState(false);
-  // 다음페이지로 넘기기 위해서는 '다음 페이지'버튼 이용, 엔터로 다음페이지 넘기기 하지 않기
+
   const findSchool = (school) => {
     fetch(
       `https://open.neis.go.kr/hub/schoolInfo?KEY=8bd04fadaf4d480792216f84d92fb1f9&Type=json&pIndex=${page}&pSize=5&SCHUL_NM=${school}`,
@@ -102,7 +98,6 @@ const SearchSchool = ({ setSchoolCode, setSchoolName, setAreaCode }) => {
     findSchool(getValues("school"));
   };
   return (
-    // 현재 이곳이 파업창이라면 꼭 PopupContainer를 최상위 부모로 가져야 한다. Components => shared 에 있음
     <PopupContainer>
       <RegisterForm onSubmit={handleSubmit(onSubmit)}>
         <SearchInput

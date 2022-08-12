@@ -52,17 +52,15 @@ const DateIcon = styled.div`
 export const Date = ({ date, setDate, processSetDate }) => {
   const [isHover, setIsHover] = useState(false);
 
-  // 반응형
   const media = useMedia();
 
-  //날짜 설정하기
   const getDate = (date) => {
     const lmSetting = JSON.parse(localStorage.getItem("lmSetting"));
     const newLmSetting = { ...lmSetting, date };
     localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
     setDate(date);
   };
-  const CustomInput = forwardRef(({ value, onClick }, ref) => (
+  const CustomInput = forwardRef(({ onClick }, ref) => (
     <DateContainer ref={ref}>
       {media !== "Mobile" && <div>{processSetDate()}</div>}
       <DateIcon onClick={onClick} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>

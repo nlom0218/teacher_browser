@@ -37,13 +37,12 @@ const AllergyItem = ({ item, me }) => {
   const [isHover, setIsHover] = useState(false);
   const [hoverContent, setHoverContent] = useState(undefined);
 
-  const { data, loading, refetch } = useQuery(SEE_ALLERGY_STUDENT_QUERY, {
+  const { data, refetch } = useQuery(SEE_ALLERGY_STUDENT_QUERY, {
     variables: {
       allergy: parseInt(item),
     },
   });
 
-  // 알러지를 가지고 있는 학생 보기 팝업
   const onClickAllergy = (allergy) => {
     if (me?.allergy.includes(parseInt(allergy))) {
       inPopup("seeAllergy");
