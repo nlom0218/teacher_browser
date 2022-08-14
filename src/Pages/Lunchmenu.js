@@ -39,6 +39,7 @@ const LunchmenuContainer = styled.div`
 `;
 
 const Lunchmenu = () => {
+  console.log("Hello world");
   const titleUpdataer = useTitle("티처캔 | 식단표");
   const { state } = useLocation();
   const {
