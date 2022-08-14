@@ -49,7 +49,7 @@ const DateIcon = styled.div`
   `}
 `;
 
-export const Date = ({ date, setDate, processSetDate }) => {
+export const SearchDate = ({ date, setDate, processSetDate }) => {
   const [isHover, setIsHover] = useState(false);
 
   const media = useMedia();
