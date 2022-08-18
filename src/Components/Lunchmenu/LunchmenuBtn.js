@@ -30,27 +30,42 @@ const SLunchmenuBtn = styled.div`
   }
 `;
 
-const LunchmenuBtn = ({ date, setDate, me, setAreaCode, setSchoolCode, setSchoolName }) => {
+const LunchmenuBtn = ({ date, me, setSearchData }) => {
   const onClickBtn = (mode) => {
     const lmSetting = JSON.parse(localStorage.getItem("lmSetting"));
     if (mode === "yesterday") {
       const yesterdayDate = new window.Date(date.setDate(date.getDate() - 1));
       const newLmSetting = { ...lmSetting, date: yesterdayDate };
       localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
-      setDate(new window.Date(yesterdayDate));
+      setSearchData((prev) => {
+        return {
+          ...prev,
+          date: new window.Date(yesterdayDate),
+        };
+      });
       return;
     }
     if (mode === "tomorrow") {
       const tomorrowDate = new window.Date(date.setDate(date.getDate() + 1));
       const newLmSetting = { ...lmSetting, date: tomorrowDate };
       localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
-      setDate(new window.Date(tomorrowDate));
+      setSearchData((prev) => {
+        return {
+          ...prev,
+          date: new window.Date(tomorrowDate),
+        };
+      });
       return;
     }
     if (mode === "today") {
       const newLmSetting = { ...lmSetting, date: new window.Date() };
       localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
-      setDate(new window.Date());
+      setSearchData((prev) => {
+        return {
+          ...prev,
+          date: new window.Date(),
+        };
+      });
       return;
     }
     if (mode === "school" && me?.schoolName) {
@@ -60,10 +75,15 @@ const LunchmenuBtn = ({ date, setDate, me, setAreaCode, setSchoolCode, setSchool
         schoolName: me?.schoolName,
         schoolCode: me?.schoolCode,
       };
-      setAreaCode(me?.areaCode);
-      setSchoolCode(me?.schoolCode);
-      setSchoolName(me?.schoolName);
       localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
+      setSearchData((prev) => {
+        return {
+          ...prev,
+          areaCode: me?.areaCode,
+          schoolName: me?.schoolName,
+          schoolCode: me?.schoolCode,
+        };
+      });
     } else {
       inPopup("noSchoolData");
     }

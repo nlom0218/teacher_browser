@@ -70,7 +70,7 @@ const LunchmenuDetail = styled.div`
 
 const LunchmenuOrigin = styled.div``;
 
-const LunchmenuInfo = ({ date, setDate, areaCode, schoolCode, setAreaCode, setSchoolCode, setSchoolName }) => {
+const LunchmenuInfo = ({ date, areaCode, schoolCode, setSearchData }) => {
   const [menu, setMenu] = useState("loading");
   const [origin, setOrigin] = useState([]);
 
@@ -129,14 +129,7 @@ const LunchmenuInfo = ({ date, setDate, areaCode, schoolCode, setAreaCode, setSc
           <div className="lunch_errMsg lunch_subMsg">급식 정보가 없습니다. 😢</div>
         )}
       </SLunchmenus>
-      <LunchmenuBtn
-        date={date}
-        setDate={setDate}
-        me={me}
-        setAreaCode={setAreaCode}
-        setSchoolCode={setSchoolCode}
-        setSchoolName={setSchoolName}
-      />
+      <LunchmenuBtn date={date} me={me} setSearchData={setSearchData} />
       <LunchmenuDetail>
         {menu && (
           <LunchmenuOrigin>

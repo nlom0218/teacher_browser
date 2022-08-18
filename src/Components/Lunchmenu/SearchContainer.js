@@ -37,7 +37,7 @@ const SchoolIcon = styled.div`
   `}
 `;
 
-const SearchContainer = ({ schoolName, date, setDate, processSetDate }) => {
+const SearchContainer = ({ schoolName, date, setSearchData, processSetDate }) => {
   const media = useMedia();
   const onClickSchoolIcon = () => inPopup("lmSearchSchool");
   return (
@@ -48,7 +48,7 @@ const SearchContainer = ({ schoolName, date, setDate, processSetDate }) => {
           <IcSchoolYellow />
         </SchoolIcon>
       </SchoolDate>
-      <SearchDate date={date} setDate={setDate} processSetDate={processSetDate} />
+      <SearchDate date={date} setSearchData={setSearchData} processSetDate={processSetDate} />
     </SSearchContainer>
   );
 };

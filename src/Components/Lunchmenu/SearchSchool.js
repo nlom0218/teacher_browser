@@ -37,7 +37,7 @@ const PageBtn = styled.div`
   cursor: pointer;
 `;
 
-const SearchSchool = ({ setSchoolCode, setSchoolName, setAreaCode }) => {
+const SearchSchool = ({ setSearchData }) => {
   const [page, setPage] = useState(1);
   const [schoolInfo, setSchoolInfo] = useState(undefined);
   const [errMsg, setErrMsg] = useState(undefined);
@@ -80,9 +80,14 @@ const SearchSchool = ({ setSchoolCode, setSchoolName, setAreaCode }) => {
     findSchool(school);
   };
   const onClickSchool = (areaCode, schoolCode, schoolName) => {
-    setAreaCode(areaCode);
-    setSchoolCode(schoolCode);
-    setSchoolName(schoolName);
+    setSearchData((prev) => {
+      return {
+        ...prev,
+        areaCode,
+        schoolCode,
+        schoolName,
+      };
+    });
     const lmSetting = JSON.parse(localStorage.getItem("lmSetting"));
     const newLmSetting = { ...lmSetting, areaCode, schoolName, schoolCode };
     localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));

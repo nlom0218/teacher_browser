@@ -49,7 +49,7 @@ const DateIcon = styled.div`
   `}
 `;
 
-export const SearchDate = ({ date, setDate, processSetDate }) => {
+export const SearchDate = ({ date, setSearchData, processSetDate }) => {
   const [isHover, setIsHover] = useState(false);
 
   const media = useMedia();
@@ -58,7 +58,12 @@ export const SearchDate = ({ date, setDate, processSetDate }) => {
     const lmSetting = JSON.parse(localStorage.getItem("lmSetting"));
     const newLmSetting = { ...lmSetting, date };
     localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
-    setDate(date);
+    setSearchData((prev) => {
+      return {
+        ...prev,
+        date,
+      };
+    });
   };
   const CustomInput = forwardRef(({ onClick }, ref) => (
     <DateContainer ref={ref}>
