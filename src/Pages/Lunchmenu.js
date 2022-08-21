@@ -39,7 +39,6 @@ const LunchmenuContainer = styled.div`
 `;
 
 const Lunchmenu = () => {
-  console.log("Hello world");
   const titleUpdataer = useTitle("티처캔 | 식단표");
   const { state } = useLocation();
   const {
@@ -51,43 +50,39 @@ const Lunchmenu = () => {
 
   const isPopup = useReactiveVar(isPopupVar);
 
-  const [date, setDate] = useState(lmDate ? new window.Date(lmDate) : new window.Date());
-  const [schoolCode, setSchoolCode] = useState(lmSchoolCode ? lmSchoolCode : undefined);
-  const [areaCode, setAreaCode] = useState(lmAreaCode ? lmAreaCode : undefined);
-  const [schoolName, setSchoolName] = useState(lmSchoolName ? lmSchoolName : undefined);
+  const [searchData, setSearchData] = useState({
+    date: lmDate ? new window.Date(lmDate) : new window.Date(),
+    schoolCode: lmSchoolCode ? lmSchoolCode : undefined,
+    areaCode: lmAreaCode ? lmAreaCode : undefined,
+    schoolName: lmSchoolName ? lmSchoolName : undefined,
+  });
 
   const processSetDate = () => {
-    return `${date.getFullYear()}년 ${(date.getMonth() + 1).toString().padStart(2, 0)}월 ${date
-      .getDate()
+    return `${searchData.date.getFullYear()}년 ${(searchData.date.getMonth() + 1)
       .toString()
-      .padStart(2, 0)}일`;
+      .padStart(2, 0)}월 ${searchData.date.getDate().toString().padStart(2, 0)}일`;
   };
 
   useEffect(() => {
     if (state) {
       const newDate = new window.Date(parseInt(state?.urlDate));
-      setDate(newDate);
+      setSearchData((prev) => {
+        return {
+          ...prev,
+          date: newDate,
+        };
+      });
     }
   }, []);
 
   return (
     <BasicContainer menuItem={true}>
       <LunchmenuContainer isPopup={isPopup}>
-        <BasicInfo schoolName={schoolName} processSetDate={processSetDate} date={date} />
-        <SearchContainer schoolName={schoolName} date={date} setDate={setDate} processSetDate={processSetDate} />
-        <LunchmenuInfo
-          date={date}
-          setDate={setDate}
-          areaCode={areaCode}
-          schoolCode={schoolCode}
-          setAreaCode={setAreaCode}
-          setSchoolCode={setSchoolCode}
-          setSchoolName={setSchoolName}
-        />
+        <BasicInfo {...searchData} processSetDate={processSetDate} />
+        <SearchContainer {...searchData} setSearchData={setSearchData} processSetDate={processSetDate} />
+        <LunchmenuInfo {...searchData} setSearchData={setSearchData} />
       </LunchmenuContainer>
-      {isPopup === "lmSearchSchool" && (
-        <SearchSchool setAreaCode={setAreaCode} setSchoolCode={setSchoolCode} setSchoolName={setSchoolName} />
-      )}
+      {isPopup === "lmSearchSchool" && <SearchSchool setSearchData={setSearchData} />}
       {isPopup === "seeAllergy" && <SeeAllergy />}
       {isPopup === "noSchoolData" && <NoSchoolData />}
     </BasicContainer>
