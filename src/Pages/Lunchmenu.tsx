@@ -38,15 +38,21 @@ const LunchmenuContainer = styled.div`
   `}
 `;
 
+interface ILoaction {
+  state: {
+    urlDate: string;
+  };
+}
+
 const Lunchmenu = () => {
   const titleUpdataer = useTitle("티처캔 | 식단표");
-  const { state } = useLocation();
+  const { state } = useLocation() as ILoaction;
   const {
     schoolCode: lmSchoolCode,
     areaCode: lmAreaCode,
     schoolName: lmSchoolName,
     date: lmDate,
-  } = JSON.parse(localStorage.getItem("lmSetting"));
+  } = JSON.parse(localStorage.getItem("lmSetting") || "");
 
   const isPopup = useReactiveVar(isPopupVar);
 
@@ -60,7 +66,7 @@ const Lunchmenu = () => {
   const processSetDate = () => {
     return `${searchData.date.getFullYear()}년 ${(searchData.date.getMonth() + 1)
       .toString()
-      .padStart(2, 0)}월 ${searchData.date.getDate().toString().padStart(2, 0)}일`;
+      .padStart(2, "0")}월 ${searchData.date.getDate().toString().padStart(2, "0")}일`;
   };
 
   useEffect(() => {
@@ -77,7 +83,7 @@ const Lunchmenu = () => {
 
   return (
     <BasicContainer menuItem={true}>
-      <LunchmenuContainer isPopup={isPopup}>
+      <LunchmenuContainer>
         <BasicInfo {...searchData} processSetDate={processSetDate} />
         <SearchContainer {...searchData} setSearchData={setSearchData} processSetDate={processSetDate} />
         <LunchmenuInfo {...searchData} setSearchData={setSearchData} />
