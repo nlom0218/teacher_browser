@@ -12,6 +12,7 @@ import {
   TimerLink,
   NewsLink,
   ManagingRolesLink,
+  Qrcode,
 } from "./MenuLink";
 
 const Container = styled.div`
@@ -45,6 +46,7 @@ const GridType = ({ onClickLunchmenu }) => {
       <ListLink />
       <NewsLink />
       {/* <ManagingRolesLink /> */}
+      <Qrcode />
     </Container>
   );
 };

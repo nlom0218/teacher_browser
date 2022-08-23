@@ -17,6 +17,7 @@ const LIST = "/list";
 const NEWS = "/news";
 const MANAGINGROLES = "/managingRoles";
 const FAMILYMONTH = "/family-month";
+const QRCODE = "/qrcode";
 
 // account link
 const LOGIN = "/login";
@@ -54,6 +55,7 @@ const routes = {
   news: NEWS,
   managingRoles: MANAGINGROLES,
   familyMonth: FAMILYMONTH,
+  qrcode: QRCODE,
 
   // account link
   login: LOGIN,

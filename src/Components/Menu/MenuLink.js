@@ -207,3 +207,23 @@ export const FamilyMonthLink = () => {
     </Link>
   );
 };
+
+export const Qrcode = () => {
+  const media = useMedia();
+  const [isHover, setIsHover] = useState(false);
+  const onClickListLink = () => {
+    // if (media === "Desktop") {
+    //   fullScreenMode();
+    // }
+    // 회의때 화면을 크게 한다고 했었던거 같은데
+  };
+  return (
+    <Link to={routes.qrcode} onClick={onClickListLink}>
+      <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+        {isHover ? <IcScheduleClick /> : <IcSchedule />}
+        {/* 아이콘 만들어 달라고 디자인팀에 요청하기 */}
+        <Title>QR코드</Title>
+      </SMenu>
+    </Link>
+  );
+};
