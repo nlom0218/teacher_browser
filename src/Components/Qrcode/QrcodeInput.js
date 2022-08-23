@@ -104,13 +104,8 @@ const QrcodeInput = () => {
           autoComplete="off"
           onClick={onClickInput}
         />
-        {isEdit && (
-          <LineBox>
-            <Line></Line>
-          </LineBox>
-        )}
         <LineBox>
-          <Line></Line>
+          <Line />
         </LineBox>
       </Url>
       <Eles isEdit={isEdit}>{isEdit && <SubmitInput type="submit" value="QR생성" />}</Eles>
