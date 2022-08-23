@@ -1,8 +1,9 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import { inPopup } from "../../apollo";
 import useMedia from "../../Hooks/useMedia";
 import IcSchoolYellow from "../../icons/School/IcSchoolYellow";
+import { ISearchDate } from "../../Pages/Lunchmenu";
 import { customMedia } from "../../styles";
 import { SearchDate } from "./SearchDate";
 
@@ -37,7 +38,14 @@ const SchoolIcon = styled.div`
   `}
 `;
 
-const SearchContainer = ({ schoolName, date, setSearchData, processSetDate }) => {
+interface IProps {
+  schoolName: string;
+  date: Date;
+  setSearchData: Dispatch<SetStateAction<ISearchDate>>;
+  processSetDate: () => string;
+}
+
+const SearchContainer = ({ schoolName, date, setSearchData, processSetDate }: IProps) => {
   const media = useMedia();
   const onClickSchoolIcon = () => inPopup("lmSearchSchool");
   return (

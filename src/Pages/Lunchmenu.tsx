@@ -44,6 +44,13 @@ interface ILoaction {
   };
 }
 
+export interface ISearchDate {
+  date: Date;
+  schoolCode: string;
+  areaCode: string;
+  schoolName: string;
+}
+
 const Lunchmenu = () => {
   const titleUpdataer = useTitle("티처캔 | 식단표");
   const { state } = useLocation() as ILoaction;
@@ -56,7 +63,7 @@ const Lunchmenu = () => {
 
   const isPopup = useReactiveVar(isPopupVar);
 
-  const [searchData, setSearchData] = useState({
+  const [searchData, setSearchData] = useState<ISearchDate>({
     date: lmDate ? new window.Date(lmDate) : new window.Date(),
     schoolCode: lmSchoolCode ? lmSchoolCode : undefined,
     areaCode: lmAreaCode ? lmAreaCode : undefined,
