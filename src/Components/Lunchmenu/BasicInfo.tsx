@@ -27,7 +27,13 @@ const SearchedDay = styled.div`
   opacity: 0.7;
 `;
 
-const BasicInfo = ({ schoolName, processSetDate, date }) => {
+interface IProps {
+  schoolName: string;
+  date: Date;
+  processSetDate: () => string;
+}
+
+const BasicInfo = ({ schoolName, processSetDate, date }: IProps) => {
   const processSetDay = () => {
     const day = date.getDay();
     if (day === 1) {
