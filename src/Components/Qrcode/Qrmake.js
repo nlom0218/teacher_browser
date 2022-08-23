@@ -1,5 +1,4 @@
-import React, { useState, useRef } from "react";
-
+import React from "react";
 import styled from "styled-components";
 import QrcodeInput from "./QrcodeInput";
 
@@ -7,9 +6,17 @@ const Container = styled.div`
   display: grid;
   width: 100%;
   height: 100%;
-  grid-template-rows: 2fr 1fr;
+  grid-template-rows: 1fr 3fr 1fr;
 `;
-
+const Title = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  padding: 40px;
+  padding: 2.5rem;
+  font-size: 1.875em;
+  font-size: 1.875rem;
+`;
 const Icon = styled.div``;
 
 const Main = styled.div`
@@ -39,17 +46,23 @@ const Btn = styled.div`
   cursor: pointer;
 `;
 
-const Qrcodemake = () => {
+const Qrcodemake = ({ mode, setMode }) => {
+  const onClickBtn = () => {
+    setMode("storage");
+  };
+
   return (
     <Container>
+      <Title>티처캔 QR코드 생성 도우미</Title>
+
       <Main>
         <IN>
           <Icon>캐릭터 위치</Icon>
-          <QrcodeInput />
+          <QrcodeInput mode={mode} setMode={setMode} />
           <div>바르게 입력해주세요.(예) https://www.teachercan.com </div>
         </IN>
       </Main>
-      <Btn>QR코드 보관함</Btn>
+      <Btn onClick={onClickBtn}>QR코드 보관함</Btn>
     </Container>
   );
 };

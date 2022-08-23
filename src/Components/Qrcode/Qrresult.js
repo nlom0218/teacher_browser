@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 import { inputLine } from "../../Animations/InputLine";
 
@@ -6,9 +6,17 @@ const Container = styled.div`
   display: grid;
   width: 100%;
   height: 100%;
-  grid-template-rows: 2fr 1fr;
+  grid-template-rows: 1fr 3fr 1fr;
 `;
-
+const Title = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  padding: 40px;
+  padding: 2.5rem;
+  font-size: 1.875em;
+  font-size: 1.875rem;
+`;
 const Main = styled.div`
   display: grid;
   grid-template-rows: 3fr 1fr;
@@ -28,6 +36,7 @@ const IN = styled.div`
   padding: 10px 0px;
   padding: 0.625rem 0rem;
   text-align: center;
+  overflow: hidden;
 `;
 const LineBox = styled.div`
   position: relative;
@@ -60,7 +69,7 @@ const Btn = styled.div`
   cursor: pointer;
 `;
 
-const TodoBody = styled.div`
+const Body = styled.div`
   display: grid;
   width: 250px;
   height: 250px;
@@ -71,11 +80,12 @@ const TodoBody = styled.div`
   border-radius: 0.3125rem;
 `;
 
-const Qrresult = () => {
+const Qrresult = ({ mode, setMode }) => {
   return (
     <Container>
+      <Title>티처캔 QR코드 생성 도우미</Title>
       <Main>
-        <TodoBody></TodoBody>
+        <Body></Body>
         <IN>
           url 주소 입력값{" "}
           <LineBox>

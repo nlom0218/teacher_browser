@@ -12,22 +12,16 @@ import AlertMessage from "../Components/Shared/AlertMessage";
 import Loading from "../Components/Shared/Loading";
 import Qrcodemake from "../Components/Qrcode/Qrmake";
 import Qrresult from "../Components/Qrcode/Qrresult";
+import Qrstorage from "../Components/Qrcode/Qrstorage";
 
-const Title = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  align-items: center;
-  padding: 40px;
-  padding: 2.5rem;
-  font-size: 1.875em;
-  font-size: 1.875rem;
-`;
 const Qrcode = () => {
+  const [mode, setMode] = useState("make");
+
   return (
     <BasicContainer menuItem={true}>
-      <Title>티처캔 QR코드 생성 도우미</Title>
-      {/* <Qrcodemake /> */}
-      <Qrresult />
+      {mode === "make" && <Qrcodemake mode={mode} setMode={setMode} />}
+      {mode === "result" && <Qrresult mode={mode} setMode={setMode} />}
+      {mode === "storage" && <Qrstorage mode={mode} setMode={setMode} />}
     </BasicContainer>
   );
 };

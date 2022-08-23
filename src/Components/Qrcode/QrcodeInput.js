@@ -65,7 +65,7 @@ const SubmitInput = styled.input`
   animation: ${BtnFadeIn} 0.6s ease;
 `;
 
-const QrcodeInput = () => {
+const QrcodeInput = ({ mode, setMode }) => {
   const media = useMedia();
   const date = new Date();
 
@@ -84,6 +84,7 @@ const QrcodeInput = () => {
     const { url } = data;
     setUrl(url);
     setIsEdit(false);
+    setMode("result");
   };
 
   const onBlurForm = () => {
