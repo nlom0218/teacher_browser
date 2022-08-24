@@ -71,7 +71,6 @@ const QrcodeInput = ({ mode, setMode }) => {
 
   const { register, handleSubmit, getValues } = useForm({
     mode: "onChange",
-    defaultValues: {},
   });
 
   const onClickInput = () => {
@@ -84,14 +83,9 @@ const QrcodeInput = ({ mode, setMode }) => {
     setMode("result");
   };
 
-  const onBlurForm = () => {
-    const url = getValues("url");
-    onSubmit({ url });
-  };
-
   return (
     <TopContents>
-      <Url onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
+      <Url onSubmit={handleSubmit(onSubmit)}>
         <Input
           {...register("url", {
             required: true,

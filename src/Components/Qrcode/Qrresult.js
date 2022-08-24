@@ -95,7 +95,7 @@ const Qrresult = ({ mode, setMode }) => {
       <Main>
         <Body></Body>
         <IN>
-          url 주소 입력값{" "}
+          url 주소 입력값
           <LineBox>
             <Line />
           </LineBox>

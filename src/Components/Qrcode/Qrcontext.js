@@ -69,7 +69,6 @@ const Qrcontext = () => {
   };
   return (
     <Storages>
-      {" "}
       <Check onClick={onClickPick}>
         <div>{pick === true ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
       </Check>
