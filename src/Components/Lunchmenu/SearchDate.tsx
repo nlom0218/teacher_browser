@@ -2,11 +2,12 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
-import { forwardRef, useState } from "react";
+import React, { Dispatch, forwardRef, SetStateAction, useState } from "react";
 import useMedia from "../../Hooks/useMedia";
 import { customMedia } from "../../styles";
 import IcCalender from "../../icons/Calender/IcCalender";
 import IcCalenderClick from "../../icons/Calender/IcCalenderClick";
+import { ISearchDate } from "../../Pages/Lunchmenu";
 
 const DatePickers = styled(DatePicker)`
   font-size: 2em;
@@ -49,13 +50,23 @@ const DateIcon = styled.div`
   `}
 `;
 
-export const SearchDate = ({ date, setSearchData, processSetDate }) => {
+interface IProps {
+  date: Date;
+  setSearchData: Dispatch<SetStateAction<ISearchDate>>;
+  processSetDate: () => string;
+}
+
+interface IForwardRef {
+  onClick?: () => void;
+}
+
+export const SearchDate = ({ date, setSearchData, processSetDate }: IProps) => {
   const [isHover, setIsHover] = useState(false);
 
   const media = useMedia();
 
-  const getDate = (date) => {
-    const lmSetting = JSON.parse(localStorage.getItem("lmSetting"));
+  const getDate = (date: Date) => {
+    const lmSetting = JSON.parse(localStorage.getItem("lmSetting") || "");
     const newLmSetting = { ...lmSetting, date };
     localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
     setSearchData((prev) => {
@@ -65,7 +76,7 @@ export const SearchDate = ({ date, setSearchData, processSetDate }) => {
       };
     });
   };
-  const CustomInput = forwardRef(({ onClick }, ref) => (
+  const CustomInput = forwardRef(({ onClick }: IForwardRef, ref: React.ForwardedRef<HTMLDivElement>) => (
     <DateContainer ref={ref}>
       {media !== "Mobile" && <div>{processSetDate()}</div>}
       <DateIcon onClick={onClick} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
@@ -77,7 +88,7 @@ export const SearchDate = ({ date, setSearchData, processSetDate }) => {
     <DatePickers
       dateFormat="yyyy/MM/dd"
       selected={date}
-      onChange={(date) => getDate(date)}
+      onChange={(date: Date) => getDate(date)}
       todayButton="오늘"
       locale={ko}
       customInput={<CustomInput />}
