@@ -1,33 +1,45 @@
 import React from "react";
 import styled from "styled-components";
+import { IMe } from "../../Hooks/useMe";
 import { customMedia } from "../../styles";
 import AllergyItem from "./AllergyItem";
 
-const SLunchmenu = styled.div`
+interface IStyled {
+  summary?: string;
+}
+
+const SLunchmenu = styled.div<IStyled>`
   display: grid;
-  ${customMedia.greaterThan("tablet")`
-    row-gap: ${(props) => (props.summary ? "5px" : "10px")};
-    row-gap: ${(props) => (props.summary ? "0.3125rem" : "0.625rem")};
+  ${({ summary }) => customMedia.greaterThan("tablet")`
+    row-gap: ${summary ? "5px" : "10px"};
+    row-gap: ${summary ? "0.3125rem" : "0.625rem"};
   `}
 `;
 
-const Food = styled.div`
+const Food = styled.div<IStyled>`
   font-size: ${(props) => (props.summary ? "1em" : "1.25em")};
   font-size: ${(props) => (props.summary ? "1rem" : "1.25rem")};
 `;
 
-const Allergy = styled.div`
+const Allergy = styled.div<IStyled>`
   display: flex;
   font-size: ${(props) => (props.summary ? "0.875em" : "1em")};
   font-size: ${(props) => (props.summary ? "0.875rem" : "1rem")};
 `;
 
-const LunchmenuItem = ({ item, me, summary }) => {
+interface IProps extends IMe {
+  key: Number;
+  summary?: string;
+  food: string;
+  allergy: string[];
+}
+
+const LunchmenuItem = ({ me, food, allergy, summary }: IProps) => {
   return (
     <SLunchmenu summary={summary}>
-      <Food summary={summary}>{item.food}</Food>
+      <Food summary={summary}>{food}</Food>
       <Allergy summary={summary}>
-        {item.allergy.map((item, index) => {
+        {allergy.map((item, index) => {
           return <AllergyItem key={index} item={item} me={me} />;
         })}
       </Allergy>

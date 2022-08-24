@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styled from "styled-components";
 import useMe from "../../Hooks/useMe";
+import { ISearchDate } from "../../Pages/Lunchmenu";
 import { customMedia } from "../../styles";
 import Loading from "../Shared/Loading";
 import LunchmenuBtn from "./LunchmenuBtn";
@@ -70,17 +71,30 @@ const LunchmenuDetail = styled.div`
 
 const LunchmenuOrigin = styled.div``;
 
-const LunchmenuInfo = ({ date, areaCode, schoolCode, setSearchData }) => {
-  const [menu, setMenu] = useState("loading");
-  const [origin, setOrigin] = useState([]);
+interface IProps {
+  areaCode: string;
+  schoolCode: string;
+  date: Date;
+  setSearchData: Dispatch<SetStateAction<ISearchDate>>;
+}
+
+interface IMenu {
+  food: string;
+  allergy: string[];
+}
+
+const LunchmenuInfo = ({ date, areaCode, schoolCode, setSearchData }: IProps) => {
+  const [loading, setLoading] = useState(true);
+  const [menu, setMenu] = useState<undefined | IMenu[]>();
+  const [origin, setOrigin] = useState<string[] | []>([]);
 
   const me = useMe();
 
   const getMenu = () => {
-    const changedDate = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, 0)}${date
+    const changedDate = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, "0")}${date
       .getDate()
       .toString()
-      .padStart(2, 0)}`;
+      .padStart(2, "0")}`;
     fetch(
       `https://open.neis.go.kr/hub/mealServiceDietInfo` +
         `?KEY=954dac30b088454d9a95700f044ce620` +
@@ -96,8 +110,9 @@ const LunchmenuInfo = ({ date, areaCode, schoolCode, setSearchData }) => {
         if (json.RESULT) {
           setMenu(undefined);
         } else {
+          setLoading(false);
           setMenu(
-            json.mealServiceDietInfo[1].row[0].DDISH_NM.split("<br/>").map((item) => {
+            json.mealServiceDietInfo[1].row[0].DDISH_NM.split("<br/>").map((item: string) => {
               return {
                 food: item.replace(/[0-9]/g, "").replace(/\./g, ""),
                 allergy: item.split(/[^0-9]/g).filter((item) => item !== ""),
@@ -108,7 +123,7 @@ const LunchmenuInfo = ({ date, areaCode, schoolCode, setSearchData }) => {
             json.mealServiceDietInfo[1].row[0].ORPLC_INFO.replace(/\:/g, "(")
               .replace(/\s/gi, "")
               .split("<br/>")
-              .map((item) => item + ")"),
+              .map((item: string) => item + ")"),
           );
         }
       });
@@ -121,10 +136,10 @@ const LunchmenuInfo = ({ date, areaCode, schoolCode, setSearchData }) => {
   return (
     <SLunchmenuInfo>
       <SLunchmenus>
-        {menu === "loading" ? (
+        {loading ? (
           <Loading page="subPage" />
         ) : menu ? (
-          menu.map((item, index) => <LunchmenuItem key={index} item={item} me={me}></LunchmenuItem>)
+          menu.map((item, index) => <LunchmenuItem key={index} {...item} me={me}></LunchmenuItem>)
         ) : (
           <div className="lunch_errMsg lunch_subMsg">급식 정보가 없습니다. 😢</div>
         )}
