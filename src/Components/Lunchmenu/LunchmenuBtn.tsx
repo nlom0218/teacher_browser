@@ -1,6 +1,8 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import { inPopup } from "../../apollo";
+import { IMe } from "../../Hooks/useMe";
+import { ISearchDate } from "../../Pages/Lunchmenu";
 import { customMedia } from "../../styles";
 
 const SLunchmenuBtn = styled.div`
@@ -30,9 +32,14 @@ const SLunchmenuBtn = styled.div`
   }
 `;
 
-const LunchmenuBtn = ({ date, me, setSearchData }) => {
-  const onClickBtn = (mode) => {
-    const lmSetting = JSON.parse(localStorage.getItem("lmSetting"));
+interface IProps extends IMe {
+  date: Date;
+  setSearchData: Dispatch<SetStateAction<ISearchDate>>;
+}
+
+const LunchmenuBtn = ({ date, me, setSearchData }: IProps) => {
+  const onClickBtn = (mode: string) => {
+    const lmSetting = JSON.parse(localStorage.getItem("lmSetting") || "");
     if (mode === "yesterday") {
       const yesterdayDate = new window.Date(date.setDate(date.getDate() - 1));
       const newLmSetting = { ...lmSetting, date: yesterdayDate };
