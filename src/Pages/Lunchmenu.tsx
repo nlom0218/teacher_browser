@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import "react-datepicker/dist/react-datepicker.css";
-import SearchSchool from "../Components/Lunchmenu/SearchSchool";
+import SearchSchool from "../Components/Lunchmenu/Popup/SearchSchool";
 import { useReactiveVar } from "@apollo/client";
 import { isPopupVar } from "../apollo";
 import { customMedia } from "../styles";

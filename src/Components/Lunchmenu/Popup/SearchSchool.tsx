@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Dispatch, SetStateAction, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { FcSearch } from "react-icons/fc";
 import styled from "styled-components";
-import { outPopup } from "../../apollo";
-import PopupContainer from "../Shared/PopupContainer";
-import RegisterErrMsg from "../Account/styled/RegisterErrMsg";
-import RegisterForm from "../Account/styled/RegisterForm";
+import { outPopup } from "../../../apollo";
+import PopupContainer from "../../Shared/PopupContainer";
+import RegisterErrMsg from "../../Account/styled/RegisterErrMsg";
+import RegisterForm from "../../Account/styled/RegisterForm";
+import { ISearchDate } from "../../../Pages/Lunchmenu";
 
 const SearchInput = styled.input`
   width: 100%;
@@ -37,13 +38,37 @@ const PageBtn = styled.div`
   cursor: pointer;
 `;
 
-const SearchSchool = ({ setSearchData }) => {
+interface IProps {
+  setSearchData: Dispatch<SetStateAction<ISearchDate>>;
+}
+
+interface ISchoolInfo {
+  areaCode: string;
+  areaName: string;
+  schoolCode: string;
+  schoolName: string;
+  schoolAdress: string;
+}
+
+interface IShcoolData {
+  ATPT_OFCDC_SC_CODE: string;
+  ATPT_OFCDC_SC_NM: string;
+  SD_SCHUL_CODE: string;
+  SCHUL_NM: string;
+  ORG_RDNMA: string;
+}
+
+interface FormValues {
+  school: string;
+}
+
+const SearchSchool = ({ setSearchData }: IProps) => {
   const [page, setPage] = useState(1);
-  const [schoolInfo, setSchoolInfo] = useState(undefined);
-  const [errMsg, setErrMsg] = useState(undefined);
+  const [schoolInfo, setSchoolInfo] = useState<ISchoolInfo[] | undefined>(undefined);
+  const [errMsg, setErrMsg] = useState<string | undefined>(undefined);
   const [preventSubmit, setPreventSubmit] = useState(false);
 
-  const findSchool = (school) => {
+  const findSchool = (school: string) => {
     fetch(
       `https://open.neis.go.kr/hub/schoolInfo?KEY=8bd04fadaf4d480792216f84d92fb1f9&Type=json&pIndex=${page}&pSize=5&SCHUL_NM=${school}`,
     )
@@ -54,7 +79,7 @@ const SearchSchool = ({ setSearchData }) => {
           setSchoolInfo(undefined);
           return;
         }
-        const schoolInfo = data.schoolInfo[1].row.map((item) => {
+        const schoolInfo = data.schoolInfo[1].row.map((item: IShcoolData) => {
           const areaCode = item.ATPT_OFCDC_SC_CODE;
           const areaName = item.ATPT_OFCDC_SC_NM;
           const schoolCode = item.SD_SCHUL_CODE;
@@ -66,8 +91,8 @@ const SearchSchool = ({ setSearchData }) => {
         setPage((prev) => prev + 1);
       });
   };
-  const { register, handleSubmit, getValues } = useForm();
-  const onSubmit = (data) => {
+  const { register, handleSubmit, getValues } = useForm<FormValues>();
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
     const { school } = data;
     if (preventSubmit) {
       return;
@@ -79,7 +104,7 @@ const SearchSchool = ({ setSearchData }) => {
     setPreventSubmit(true);
     findSchool(school);
   };
-  const onClickSchool = (areaCode, schoolCode, schoolName) => {
+  const onClickSchool = (areaCode: string, schoolCode: string, schoolName: string) => {
     setSearchData((prev) => {
       return {
         ...prev,
@@ -88,7 +113,7 @@ const SearchSchool = ({ setSearchData }) => {
         schoolName,
       };
     });
-    const lmSetting = JSON.parse(localStorage.getItem("lmSetting"));
+    const lmSetting = JSON.parse(localStorage.getItem("lmSetting") || "");
     const newLmSetting = { ...lmSetting, areaCode, schoolName, schoolCode };
     localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
     outPopup();
