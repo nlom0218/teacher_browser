@@ -66,9 +66,6 @@ const SubmitInput = styled.input`
 `;
 
 const QrcodeInput = ({ mode, setMode }) => {
-  const media = useMedia();
-  const date = new Date();
-
   const [url, setUrl] = useState(undefined);
   const [isEdit, setIsEdit] = useState(false);
 

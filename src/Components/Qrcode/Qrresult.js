@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { inputLine } from "../../Animations/InputLine";
+import { inPopup, isPopupVar, outPopup } from "../../apollo";
+import Qrname from "./Qrname";
+import { useReactiveVar } from "@apollo/client";
 
 const Container = styled.div`
   display: grid;
@@ -81,6 +84,11 @@ const Body = styled.div`
 `;
 
 const Qrresult = ({ mode, setMode }) => {
+  const onClickBtn = () => {
+    inPopup("registerQR");
+  };
+  const isPopup = useReactiveVar(isPopupVar);
+
   return (
     <Container>
       <Title>티처캔 QR코드 생성 도우미</Title>
@@ -93,7 +101,8 @@ const Qrresult = ({ mode, setMode }) => {
           </LineBox>
         </IN>
       </Main>
-      <Btn> 저장하기 </Btn>
+      <Btn onClick={onClickBtn}> 저장하기 </Btn>
+      {isPopup === "registerQR" && <Qrname setMode={setMode} />}
     </Container>
   );
 };
