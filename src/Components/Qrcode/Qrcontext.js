@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
 
@@ -22,8 +22,8 @@ const Check = styled.div`
 
 const Body = styled.div`
   display: grid;
-  width: 100px;
-  height: 100px;
+  width: 130px;
+  height: 130px;
   row-gap: 40px;
   row-gap: 2.5rem;
   background-color: ${(props) => props.theme.cardBg};
@@ -63,12 +63,15 @@ const Url = styled.div`
 `;
 
 const Qrcontext = () => {
+  const [pick, setPick] = useState(false);
+  const onClickPick = () => {
+    setPick(!pick);
+  };
   return (
     <Storages>
       {" "}
-      <Check>
-        {" "}
-        <RiCheckboxBlankLine />
+      <Check onClick={onClickPick}>
+        <div>{pick === true ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
       </Check>
       <Body />
       <Subject>
