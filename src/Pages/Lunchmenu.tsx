@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import "react-datepicker/dist/react-datepicker.css";
-import SearchSchool from "../Components/Lunchmenu/SearchSchool";
+import SearchSchool from "../Components/Lunchmenu/Popup/SearchSchool";
 import { useReactiveVar } from "@apollo/client";
 import { isPopupVar } from "../apollo";
 import { customMedia } from "../styles";
@@ -38,19 +38,32 @@ const LunchmenuContainer = styled.div`
   `}
 `;
 
+interface ILoaction {
+  state: {
+    urlDate: string;
+  };
+}
+
+export interface ISearchDate {
+  date: Date;
+  schoolCode: string;
+  areaCode: string;
+  schoolName: string;
+}
+
 const Lunchmenu = () => {
   const titleUpdataer = useTitle("티처캔 | 식단표");
-  const { state } = useLocation();
+  const { state } = useLocation() as ILoaction;
   const {
     schoolCode: lmSchoolCode,
     areaCode: lmAreaCode,
     schoolName: lmSchoolName,
     date: lmDate,
-  } = JSON.parse(localStorage.getItem("lmSetting"));
+  } = JSON.parse(localStorage.getItem("lmSetting") || "");
 
   const isPopup = useReactiveVar(isPopupVar);
 
-  const [searchData, setSearchData] = useState({
+  const [searchData, setSearchData] = useState<ISearchDate>({
     date: lmDate ? new window.Date(lmDate) : new window.Date(),
     schoolCode: lmSchoolCode ? lmSchoolCode : undefined,
     areaCode: lmAreaCode ? lmAreaCode : undefined,
@@ -60,7 +73,7 @@ const Lunchmenu = () => {
   const processSetDate = () => {
     return `${searchData.date.getFullYear()}년 ${(searchData.date.getMonth() + 1)
       .toString()
-      .padStart(2, 0)}월 ${searchData.date.getDate().toString().padStart(2, 0)}일`;
+      .padStart(2, "0")}월 ${searchData.date.getDate().toString().padStart(2, "0")}일`;
   };
 
   useEffect(() => {
@@ -77,7 +90,7 @@ const Lunchmenu = () => {
 
   return (
     <BasicContainer menuItem={true}>
-      <LunchmenuContainer isPopup={isPopup}>
+      <LunchmenuContainer>
         <BasicInfo {...searchData} processSetDate={processSetDate} />
         <SearchContainer {...searchData} setSearchData={setSearchData} processSetDate={processSetDate} />
         <LunchmenuInfo {...searchData} setSearchData={setSearchData} />

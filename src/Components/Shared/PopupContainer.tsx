@@ -15,7 +15,12 @@ const Background = styled.div`
   z-index: 20;
 `;
 
-const SRegisterContainer = styled.div`
+interface IStyled {
+  maxHeight?: boolean;
+  emojiPopup?: boolean;
+}
+
+const SRegisterContainer = styled.div<IStyled>`
   width: 90%;
   position: fixed;
   left: 50%;
@@ -35,7 +40,7 @@ const SRegisterContainer = styled.div`
   `}
 `;
 
-const RegisterPage = styled.div`
+const RegisterPage = styled.div<IStyled>`
   overflow: auto;
   -ms-overflow-style: none; // IE and Edge
   scrollbar-width: none; // Firefox
@@ -63,10 +68,10 @@ const RegisterPage = styled.div`
   .active-category-indicator-wrapper {
     display: none;
   }
-  ${customMedia.greaterThan(`tablet`)`
+  ${({ emojiPopup }) => customMedia.greaterThan(`tablet`)`
     padding: 10px 30px;
     padding: 0.625rem 1.875rem;
-    padding: ${(props) => props.emojiPopup && 0};
+    padding: ${emojiPopup && 0};
   `}
 `;
 
@@ -121,7 +126,16 @@ const OutBtn = styled.div`
   }
 `;
 
-const PopupContainer = ({ children, emojiPopup, maxHeight, sound1, sound2, needAlert }) => {
+interface IProps {
+  children?: React.ReactNode;
+  emojiPopup?: boolean;
+  maxHeight?: boolean;
+  sound1?: HTMLAudioElement;
+  sound2?: HTMLAudioElement;
+  needAlert?: boolean;
+}
+
+const PopupContainer = ({ children, emojiPopup, maxHeight, sound1, sound2, needAlert }: IProps) => {
   const [alertPopup, setAlertPoup] = useState(false);
 
   const processOutPopup = () => {
