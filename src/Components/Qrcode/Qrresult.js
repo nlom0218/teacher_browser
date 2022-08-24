@@ -101,6 +101,7 @@ const Qrresult = ({ mode, setMode }) => {
           </LineBox>
         </IN>
       </Main>
+      <Btn> 공유? 복사? 다운?</Btn>
       <Btn onClick={onClickBtn}> 저장하기 </Btn>
       {isPopup === "registerQR" && <Qrname setMode={setMode} />}
     </Container>

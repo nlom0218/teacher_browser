@@ -3,7 +3,9 @@ import styled from "styled-components";
 import Qroptionbtn from "./Qroptionbtn";
 import { customMedia } from "../../styles";
 import Qrcontext from "./Qrcontext";
-
+import { isPopupVar } from "../../apollo";
+import { useReactiveVar } from "@apollo/client";
+import QrPrintMain from "./QrPrint/QrPrintMain";
 const Container = styled.div`
   display: grid;
   width: 100%;
@@ -85,6 +87,8 @@ const Subject = styled.div`
 `;
 
 const Qrstorage = ({ mode, setMode }) => {
+  const isPopup = useReactiveVar(isPopupVar);
+
   return (
     <Container>
       <Title>내 QR코드 보관함</Title>
@@ -99,6 +103,7 @@ const Qrstorage = ({ mode, setMode }) => {
         <Qrcontext />
         <Qrcontext />
       </Table>
+      {isPopup === "printQR" && <QrPrintMain />}
     </Container>
   );
 };

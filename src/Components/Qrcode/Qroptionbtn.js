@@ -7,6 +7,7 @@
 import React from "react";
 import styled from "styled-components";
 import { customMedia } from "../../styles";
+import { inPopup } from "../../apollo";
 
 const Btn = styled.div`
   display: grid;
@@ -51,11 +52,15 @@ const Qroptionbtn = ({ mode, setMode }) => {
   const onClickBtn = () => {
     setMode("make");
   };
+  const onClickPrintBtn = () => {
+    inPopup("printQR");
+  };
+
   return (
     <Btn>
       <div onClick={onClickBtn}>QR코드 추가</div>
-      <div>순서 바꾸기</div>
-      <div>인쇄 하기</div>
+      <div>순서 바꾸기??</div>
+      <div onClick={onClickPrintBtn}>인쇄 하기</div>
       <del>삭제 하기</del>
     </Btn>
   );
