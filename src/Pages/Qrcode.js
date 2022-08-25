@@ -6,7 +6,7 @@ import Qrstorage from "../Components/Qrcode/Qrstorage";
 
 const Qrcode = () => {
   const [mode, setMode] = useState("make");
-  const [url, setUrl] = useState("https://www.teachercan.com");
+  const [url, setUrl] = useState(undefined);
   const [imageUrl, setImageUrl] = useState(undefined);
 
   return (

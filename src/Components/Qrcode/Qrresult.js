@@ -96,10 +96,11 @@ const Body = styled.div`
   }
 `;
 
-const Qrresult = ({ setMode, imageUrl }) => {
+const Qrresult = ({ setMode, imageUrl, setUrl, url }) => {
   const onClickBig = () => {};
   const onClickPrint = () => {};
   const onClickMake = () => {
+    setUrl(undefined);
     setMode("make");
   };
   const onClickBtn = () => {
@@ -119,7 +120,7 @@ const Qrresult = ({ setMode, imageUrl }) => {
           ) : null}
         </Body>
         <IN>
-          url 주소 입력값
+          <div>{url}</div>
           <LineBox>
             <Line />
           </LineBox>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { inputLine } from "../../Animations/InputLine";
 import { BtnFadeIn } from "../../Animations/Fade";
@@ -85,13 +85,16 @@ const QrcodeInput = ({ setMode, setUrl, url, setImageUrl }) => {
     setIsEdit(true);
   };
   const onSubmit = (data) => {
-    const { url } = data;
-    setUrl(url);
-    // 이 아래부터 실행이 안 됨, 바깥으로 url 값이 전달이 안 됨
+    const { urllink } = data;
+    setUrl(urllink);
     setIsEdit(false);
     setMode("result");
-    generateQrCode();
   };
+  useEffect(() => {
+    if (url) {
+      generateQrCode();
+    }
+  }, [url]);
 
   return (
     <TopContents>
@@ -109,9 +112,9 @@ const QrcodeInput = ({ setMode, setUrl, url, setImageUrl }) => {
         <LineBox>
           <Line />
         </LineBox>
+        <Eles isEdit={isEdit}>{isEdit && <SubmitInput type="submit" value="QR생성" />}</Eles>
       </Url>
       {/* 엔터치면 onSubmit실행되는데 버튼 누르는 걸로는 안 됨. */}
-      <Eles isEdit={isEdit}>{isEdit && <SubmitInput type="submit" value="QR생성" />}</Eles>
     </TopContents>
   );
 };
