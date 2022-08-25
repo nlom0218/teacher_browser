@@ -40,52 +40,6 @@ const Table = styled.div`
   row-gap: 1.25rem;
 `;
 
-const Storages = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 3fr 5fr;
-  background: ${(props) => props.theme.cardBg};
-  width: 100%;
-  height: 150px;
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  padding: 10px;
-  padding: 0.625rem;
-`;
-
-const Check = styled.div`
-  display: grid;
-  justify-items: center;
-  align-items: center;
-`;
-
-const Body = styled.div`
-  display: grid;
-  width: 100px;
-  height: 100px;
-  row-gap: 40px;
-  row-gap: 2.5rem;
-  background-color: ${(props) => props.theme.cardBg};
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  justify-self: center;
-  align-self: center;
-`;
-
-const Subject = styled.div`
-  display: grid;
-  width: 90%;
-  height: 100px;
-  row-gap: 40px;
-  row-gap: 2.5rem;
-  background-color: ${(props) => props.theme.cardBg};
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  justify-self: center;
-  align-self: center;
-  padding: 10px;
-  padding: 0.625rem;
-`;
-
 const Qrstorage = ({ mode, setMode }) => {
   const isPopup = useReactiveVar(isPopupVar);
 

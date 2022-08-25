@@ -68,10 +68,8 @@ const Qrcontext = () => {
     setPick(!pick);
   };
   return (
-    <Storages>
-      <Check onClick={onClickPick}>
-        <div>{pick === true ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}</div>
-      </Check>
+    <Storages onClick={onClickPick}>
+      {pick === true ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
       <Body />
       <Subject>
         <Title>티처캔</Title>

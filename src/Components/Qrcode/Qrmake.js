@@ -17,7 +17,16 @@ const Title = styled.div`
   font-size: 1.875em;
   font-size: 1.875rem;
 `;
-const Icon = styled.div``;
+const Icon = styled.div`
+  width: 100px;
+  height: 100px;
+  border: 1px solid;
+`;
+const Head = styled.div`
+  font-size: 1.5em;
+  font-size: 1.5rem;
+  font-weight: 600;
+`;
 
 const Main = styled.div`
   display: grid;
@@ -46,7 +55,7 @@ const Btn = styled.div`
   cursor: pointer;
 `;
 
-const Qrcodemake = ({ mode, setMode }) => {
+const Qrcodemake = ({ mode, setMode, url, setImageUrl, setUrl }) => {
   const onClickBtn = () => {
     setMode("storage");
   };
@@ -58,8 +67,9 @@ const Qrcodemake = ({ mode, setMode }) => {
       <Main>
         <IN>
           <Icon>캐릭터 위치</Icon>
-          <QrcodeInput mode={mode} setMode={setMode} />
-          <div>바르게 입력해주세요.(예) https://www.teachercan.com </div>
+          <Head>URL 주소 입력 </Head>
+          <QrcodeInput mode={mode} setMode={setMode} url={url} setUrl={setUrl} setImageUrl={setImageUrl} />
+          <div>URL 주소를 입력하면 QR코드가 생성됩니다. 바르게 입력해주세요. </div>
         </IN>
       </Main>
       <Btn onClick={onClickBtn}>QR코드 보관함</Btn>

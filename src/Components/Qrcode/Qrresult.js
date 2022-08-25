@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { inputLine } from "../../Animations/InputLine";
-import { inPopup, isPopupVar, outPopup } from "../../apollo";
+import { inPopup, isPopupVar } from "../../apollo";
 import Qrname from "./Qrname";
 import { useReactiveVar } from "@apollo/client";
 
@@ -56,7 +56,14 @@ const Line = styled.div`
   transition: background 1s ease, opacity 1s ease;
   animation: ${inputLine} 0.6s ease forwards;
 `;
-
+const BtnSpace = styled.div`
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  column-gap: 10px;
+  column-gap: 0.625rem;
+  padding: 20px;
+  padding: 1.25rem;
+`;
 const Btn = styled.div`
   padding: 10px;
   padding: 0.625rem;
@@ -74,6 +81,8 @@ const Btn = styled.div`
 
 const Body = styled.div`
   display: grid;
+  justify-items: center;
+  align-items: center;
   width: 250px;
   height: 250px;
   row-gap: 40px;
@@ -81,9 +90,18 @@ const Body = styled.div`
   background-color: ${(props) => props.theme.cardBg};
   border-radius: 5px;
   border-radius: 0.3125rem;
+  img {
+    width: 250px;
+    height: 250px;
+  }
 `;
 
-const Qrresult = ({ mode, setMode }) => {
+const Qrresult = ({ setMode, imageUrl }) => {
+  const onClickBig = () => {};
+  const onClickPrint = () => {};
+  const onClickMake = () => {
+    setMode("make");
+  };
   const onClickBtn = () => {
     inPopup("registerQR");
   };
@@ -93,16 +111,27 @@ const Qrresult = ({ mode, setMode }) => {
     <Container>
       <Title>티처캔 QR코드 생성 도우미</Title>
       <Main>
-        <Body></Body>
+        <Body>
+          {imageUrl ? (
+            <a href={imageUrl} download>
+              <img src={imageUrl} alt="img" />
+            </a>
+          ) : null}
+        </Body>
         <IN>
           url 주소 입력값
           <LineBox>
             <Line />
           </LineBox>
         </IN>
+        <BtnSpace>
+          <Btn onClick={onClickBig}>크게 보기</Btn>
+          <Btn onClick={onClickPrint}>인쇄하기</Btn>
+          <Btn onClick={onClickBtn}> 저장하기 </Btn>
+          <Btn onClick={onClickMake}>새로 만들기</Btn>
+        </BtnSpace>
       </Main>
-      <Btn> 공유? 복사? 다운?</Btn>
-      <Btn onClick={onClickBtn}> 저장하기 </Btn>
+
       {isPopup === "registerQR" && <Qrname setMode={setMode} />}
     </Container>
   );

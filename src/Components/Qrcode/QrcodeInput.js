@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { inputLine } from "../../Animations/InputLine";
 import { BtnFadeIn } from "../../Animations/Fade";
-import useMedia from "../../Hooks/useMedia";
 import { useForm } from "react-hook-form";
+import QRCode from "qrcode";
 
 const TopContents = styled.div`
   display: grid;
@@ -23,8 +23,8 @@ const Url = styled.form`
 
 const Input = styled.input`
   width: 100%;
-  font-size: 1.5em;
-  font-size: 1.5rem;
+  font-size: 1.25em;
+  font-size: 1.25rem;
   padding: 10px 0px;
   padding: 0.625rem 0rem;
 `;
@@ -65,13 +65,21 @@ const SubmitInput = styled.input`
   animation: ${BtnFadeIn} 0.6s ease;
 `;
 
-const QrcodeInput = ({ mode, setMode }) => {
-  const [url, setUrl] = useState(undefined);
+const QrcodeInput = ({ setMode, setUrl, url, setImageUrl }) => {
   const [isEdit, setIsEdit] = useState(false);
 
-  const { register, handleSubmit, getValues } = useForm({
+  const { register, handleSubmit } = useForm({
     mode: "onChange",
   });
+
+  const generateQrCode = async () => {
+    try {
+      const response = await QRCode.toDataURL(url);
+      setImageUrl(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const onClickInput = () => {
     setIsEdit(true);
@@ -79,20 +87,22 @@ const QrcodeInput = ({ mode, setMode }) => {
   const onSubmit = (data) => {
     const { url } = data;
     setUrl(url);
+    // 이 아래부터 실행이 안 됨, 바깥으로 url 값이 전달이 안 됨
     setIsEdit(false);
     setMode("result");
+    generateQrCode();
   };
 
   return (
     <TopContents>
       <Url onSubmit={handleSubmit(onSubmit)}>
         <Input
-          {...register("url", {
+          {...register("urllink", {
             required: true,
             onChange: () => setIsEdit(true),
           })}
           type="url"
-          placeholder="URL주소를 입력하면 QR코드가 생성됩니다."
+          placeholder="(예) https://www.teachercan.com"
           autoComplete="off"
           onClick={onClickInput}
         />
@@ -100,6 +110,7 @@ const QrcodeInput = ({ mode, setMode }) => {
           <Line />
         </LineBox>
       </Url>
+      {/* 엔터치면 onSubmit실행되는데 버튼 누르는 걸로는 안 됨. */}
       <Eles isEdit={isEdit}>{isEdit && <SubmitInput type="submit" value="QR생성" />}</Eles>
     </TopContents>
   );
