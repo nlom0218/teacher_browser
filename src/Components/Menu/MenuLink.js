@@ -212,10 +212,9 @@ export const Qrcode = () => {
   const media = useMedia();
   const [isHover, setIsHover] = useState(false);
   const onClickListLink = () => {
-    // if (media === "Desktop") {
-    //   fullScreenMode();
-    // }
-    // 회의때 화면을 크게 한다고 했었던거 같은데
+    if (media === "Desktop") {
+      fullScreenMode();
+    }
   };
   return (
     <Link to={routes.qrcode} onClick={onClickListLink}>

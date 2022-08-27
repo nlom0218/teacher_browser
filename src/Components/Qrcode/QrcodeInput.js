@@ -1,9 +1,6 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
 import styled from "styled-components";
-import { inputLine } from "../../Animations/InputLine";
-import { BtnFadeIn } from "../../Animations/Fade";
 import { useForm } from "react-hook-form";
-import QRCode from "qrcode";
 
 const TopContents = styled.div`
   display: grid;
@@ -17,6 +14,7 @@ const TopContents = styled.div`
 
 const Url = styled.form`
   display: grid;
+  grid-template-columns: 1fr auto;
   column-gap: 20px;
   column-gap: 1.25rem;
 `;
@@ -27,30 +25,7 @@ const Input = styled.input`
   font-size: 1.25rem;
   padding: 10px 0px;
   padding: 0.625rem 0rem;
-`;
-
-const LineBox = styled.div`
-  position: relative;
-`;
-
-const Line = styled.div`
-  position: absolute;
-  height: 2px;
-  top: 0px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: ${(props) => props.theme.fontColor};
-  opacity: 0.6;
-  transition: background 1s ease, opacity 1s ease;
-  animation: ${inputLine} 0.6s ease forwards;
-`;
-
-const Eles = styled.div`
-  display: grid;
-  grid-template-columns: ${(props) => (props.isEdit ? "auto auto" : "auto")};
-  column-gap: 20px;
-  column-gap: 1.25rem;
-  align-self: flex-end;
+  border-bottom: 1px solid;
 `;
 
 const SubmitInput = styled.input`
@@ -62,39 +37,18 @@ const SubmitInput = styled.input`
   color: ${(props) => props.theme.bgColor};
   border-radius: 5px;
   border-radius: 0.3125rem;
-  animation: ${BtnFadeIn} 0.6s ease;
 `;
 
-const QrcodeInput = ({ setMode, setUrl, url, setImageUrl }) => {
-  const [isEdit, setIsEdit] = useState(false);
-
+const QrcodeInput = ({ setMode, setUrl }) => {
   const { register, handleSubmit } = useForm({
     mode: "onChange",
   });
 
-  const generateQrCode = async () => {
-    try {
-      const response = await QRCode.toDataURL(url);
-      setImageUrl(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const onClickInput = () => {
-    setIsEdit(true);
-  };
   const onSubmit = (data) => {
     const { urllink } = data;
     setUrl(urllink);
-    setIsEdit(false);
     setMode("result");
   };
-  useEffect(() => {
-    if (url) {
-      generateQrCode();
-    }
-  }, [url]);
 
   return (
     <TopContents>
@@ -102,19 +56,13 @@ const QrcodeInput = ({ setMode, setUrl, url, setImageUrl }) => {
         <Input
           {...register("urllink", {
             required: true,
-            onChange: () => setIsEdit(true),
           })}
           type="url"
           placeholder="(예) https://www.teachercan.com"
           autoComplete="off"
-          onClick={onClickInput}
         />
-        <LineBox>
-          <Line />
-        </LineBox>
-        <Eles isEdit={isEdit}>{isEdit && <SubmitInput type="submit" value="QR생성" />}</Eles>
+        <SubmitInput type="submit" value="QR생성" />
       </Url>
-      {/* 엔터치면 onSubmit실행되는데 버튼 누르는 걸로는 안 됨. */}
     </TopContents>
   );
 };

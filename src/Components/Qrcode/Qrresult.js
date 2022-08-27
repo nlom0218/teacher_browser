@@ -1,31 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { inputLine } from "../../Animations/InputLine";
 import { inPopup, isPopupVar } from "../../apollo";
 import Qrname from "./Qrname";
 import { useReactiveVar } from "@apollo/client";
+import QRCode from "qrcode";
 
 const Container = styled.div`
   display: grid;
   width: 100%;
   height: 100%;
-  grid-template-rows: 1fr 3fr 1fr;
+  grid-template-rows: 1fr 1fr 6fr;
 `;
 const Title = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   align-items: center;
-  padding: 40px;
-  padding: 2.5rem;
+  padding: 40px 40px 10px 40px;
+  padding: 2.5rem 2.5rem 0.625rem 2.5rem;
   font-size: 1.875em;
   font-size: 1.875rem;
 `;
 const Main = styled.div`
   display: grid;
-  grid-template-rows: 3fr 1fr;
+  grid-template-rows: 4fr 1fr 1fr;
   width: 100%;
-
-  align-items: center;
+  align-items: flex-start;
   justify-items: center;
 `;
 const IN = styled.div`
@@ -61,8 +61,6 @@ const BtnSpace = styled.div`
   grid-template-columns: auto auto auto auto;
   column-gap: 10px;
   column-gap: 0.625rem;
-  padding: 20px;
-  padding: 1.25rem;
 `;
 const Btn = styled.div`
   padding: 10px;
@@ -78,7 +76,22 @@ const Btn = styled.div`
   color: ${(props) => props.theme.bgColor};
   cursor: pointer;
 `;
-
+const BtnMy = styled.div`
+  padding: 10px;
+  padding: 0.625rem;
+  margin-right: 40px;
+  margin-right: 2.5rem;
+  width: 150px;
+  height: 40px;
+  display: grid;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  text-align: center;
+  justify-self: right;
+  background-color: ${(props) => props.theme.btnBgColor};
+  color: ${(props) => props.theme.bgColor};
+  cursor: pointer;
+`;
 const Body = styled.div`
   display: grid;
   justify-items: center;
@@ -96,29 +109,54 @@ const Body = styled.div`
   }
 `;
 
-const Qrresult = ({ setMode, imageUrl, setUrl, url }) => {
-  const onClickBig = () => {};
-  const onClickPrint = () => {};
+const Qrresult = ({ setMode, imageUrl, setImageUrl, setUrl, url }) => {
+  const qrcodeUrl =
+    process.env.NODE_ENV === "production"
+      ? `https://teachercan.com/qrcode_popup`
+      : `http://localhost:3000/qrcode_popup`;
+  const windowFeatures = "popup";
+
+  const sendMessage = ({ imageUrl }) => {
+    window.postMessage("qrcodeimg", { imageUrl });
+  };
+  const onClickBig = () => {
+    window.open(qrcodeUrl, "qrcodePopup", windowFeatures);
+    sendMessage();
+  };
+
   const onClickMake = () => {
     setUrl(undefined);
     setMode("make");
   };
-  const onClickBtn = () => {
+  const onClickRegister = () => {
     inPopup("registerQR");
   };
+  const onClickMy = () => {
+    setMode("storage");
+  };
+  const generateQrCode = async () => {
+    try {
+      const response = await QRCode.toDataURL(url);
+      setImageUrl(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (url) {
+      generateQrCode();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [url]);
+
   const isPopup = useReactiveVar(isPopupVar);
 
   return (
     <Container>
-      <Title>티처캔 QR코드 생성 도우미</Title>
+      <Title>QR코드 생성 도우미</Title>
+      <BtnMy onClick={onClickMy}>QR코드 보관함</BtnMy>
       <Main>
-        <Body>
-          {imageUrl ? (
-            <a href={imageUrl} download>
-              <img src={imageUrl} alt="img" />
-            </a>
-          ) : null}
-        </Body>
+        <Body>{imageUrl ? <img src={imageUrl} alt="img" value="qrImgValue" /> : null}</Body>
         <IN>
           <div>{url}</div>
           <LineBox>
@@ -127,9 +165,14 @@ const Qrresult = ({ setMode, imageUrl, setUrl, url }) => {
         </IN>
         <BtnSpace>
           <Btn onClick={onClickBig}>크게 보기</Btn>
-          <Btn onClick={onClickPrint}>인쇄하기</Btn>
-          <Btn onClick={onClickBtn}> 저장하기 </Btn>
-          <Btn onClick={onClickMake}>새로 만들기</Btn>
+          {imageUrl ? (
+            <a href={imageUrl} download>
+              <Btn>다운로드</Btn>
+            </a>
+          ) : null}
+
+          <Btn onClick={onClickRegister}> 저장하기 </Btn>
+          <Btn onClick={onClickMake}>새 QR코드</Btn>
         </BtnSpace>
       </Main>
 

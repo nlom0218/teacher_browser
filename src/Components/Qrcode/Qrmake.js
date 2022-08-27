@@ -6,14 +6,14 @@ const Container = styled.div`
   display: grid;
   width: 100%;
   height: 100%;
-  grid-template-rows: 1fr 3fr 1fr;
+  grid-template-rows: 1fr 1fr 10fr;
 `;
 const Title = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   align-items: center;
-  padding: 40px;
-  padding: 2.5rem;
+  padding: 40px 40px 10px 40px;
+  padding: 2.5rem 2.5rem 0.625rem 2.5rem;
   font-size: 1.875em;
   font-size: 1.875rem;
 `;
@@ -33,6 +33,8 @@ const Main = styled.div`
   width: 80%;
   align-items: center;
   justify-self: center;
+  padding-bottom: 20px;
+  padding-bottom: 1.25rem;
 `;
 const IN = styled.div`
   display: grid;
@@ -43,27 +45,29 @@ const IN = styled.div`
 const Btn = styled.div`
   padding: 10px;
   padding: 0.625rem;
+  margin-right: 40px;
+  margin-right: 2.5rem;
   width: 150px;
   height: 40px;
   display: grid;
   border-radius: 5px;
   border-radius: 0.3125rem;
   text-align: center;
-  justify-self: center;
+  justify-self: right;
   background-color: ${(props) => props.theme.btnBgColor};
   color: ${(props) => props.theme.bgColor};
   cursor: pointer;
 `;
 
 const Qrcodemake = ({ mode, setMode, url, setImageUrl, setUrl }) => {
-  const onClickBtn = () => {
+  const onClickMy = () => {
     setMode("storage");
   };
 
   return (
     <Container>
-      <Title>티처캔 QR코드 생성 도우미</Title>
-
+      <Title>QR코드 생성 도우미</Title>
+      <Btn onClick={onClickMy}>QR코드 보관함</Btn>
       <Main>
         <IN>
           <Icon>캐릭터 위치</Icon>
@@ -72,7 +76,6 @@ const Qrcodemake = ({ mode, setMode, url, setImageUrl, setUrl }) => {
           <div>URL 주소를 입력하면 QR코드가 생성됩니다. 바르게 입력해주세요. </div>
         </IN>
       </Main>
-      <Btn onClick={onClickBtn}>QR코드 보관함</Btn>
     </Container>
   );
 };

@@ -40,7 +40,7 @@ const Table = styled.div`
   row-gap: 1.25rem;
 `;
 
-const Qrstorage = ({ mode, setMode }) => {
+const Qrstorage = ({ mode, setMode, url, imageUrl }) => {
   const isPopup = useReactiveVar(isPopupVar);
 
   return (
@@ -50,7 +50,7 @@ const Qrstorage = ({ mode, setMode }) => {
         <Qroptionbtn mode={mode} setMode={setMode} />
       </div>
       <Table>
-        <Qrcontext />
+        <Qrcontext url={url} imageUrl={imageUrl} />
         <Qrcontext />
         <Qrcontext />
         <Qrcontext />

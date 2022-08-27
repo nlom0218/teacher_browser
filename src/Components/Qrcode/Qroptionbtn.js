@@ -56,7 +56,7 @@ const Qroptionbtn = ({ mode, setMode }) => {
 
   return (
     <Btn>
-      <div onClick={onClickBtn}>QR코드 추가</div>
+      <div onClick={onClickBtn}> 새 QR코드 추가</div>
       <div>순서 바꾸기??</div>
       <div onClick={onClickPrintBtn}>인쇄 하기</div>
       <del>삭제 하기</del>
