@@ -212,3 +212,12 @@ export const MOVE_HOME_LINK_MUTATION = gql`
     }
   }
 `;
+
+export const CHANGE_USER_NICKNAME_MUTATION = gql`
+  mutation ChangeUserNickname($userNickname: String!) {
+    changeUserNickname(userNickname: $userNickname) {
+      ok
+      error
+    }
+  }
+`;
