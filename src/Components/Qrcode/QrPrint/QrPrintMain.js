@@ -81,7 +81,6 @@ const QrPrintMain = () => {
     <PopupPrintContainer>
       <PrintTopContents>
         <PrintTypeItem>
-          <div>몇개 인쇄? 버튼? 숫자?</div>
           <div>{num > 1 && <BsFillCaretDownSquareFill onClick={onClickListDown} />}</div>
           <div>{num}</div>
           <BsFillCaretUpSquareFill onClick={onClickListUp} />

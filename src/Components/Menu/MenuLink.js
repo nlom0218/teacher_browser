@@ -208,7 +208,7 @@ export const FamilyMonthLink = () => {
   );
 };
 
-export const Qrcode = () => {
+export const QrcodeLink = () => {
   const media = useMedia();
   const [isHover, setIsHover] = useState(false);
   const onClickListLink = () => {

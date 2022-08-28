@@ -72,7 +72,7 @@ const Qrcontext = ({ url, imageUrl }) => {
         <img src={imageUrl} alt="img" />
       </Body>
       <Subject>
-        <Title>제목</Title>
+        <Title>티처캔</Title>
         <div>url주소:</div>
         <Url>{url}</Url>
       </Subject>
