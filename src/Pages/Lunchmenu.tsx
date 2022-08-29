@@ -70,12 +70,6 @@ const Lunchmenu = () => {
     schoolName: lmSchoolName ? lmSchoolName : undefined,
   });
 
-  const processSetDate = () => {
-    return `${searchData.date.getFullYear()}년 ${(searchData.date.getMonth() + 1)
-      .toString()
-      .padStart(2, "0")}월 ${searchData.date.getDate().toString().padStart(2, "0")}일`;
-  };
-
   useEffect(() => {
     if (state) {
       const newDate = new window.Date(parseInt(state?.urlDate));
@@ -91,8 +85,8 @@ const Lunchmenu = () => {
   return (
     <BasicContainer menuItem={true}>
       <LunchmenuContainer>
-        <BasicInfo {...searchData} processSetDate={processSetDate} />
-        <SearchContainer {...searchData} setSearchData={setSearchData} processSetDate={processSetDate} />
+        <BasicInfo {...searchData} />
+        <SearchContainer {...searchData} setSearchData={setSearchData} />
         <LunchmenuInfo {...searchData} setSearchData={setSearchData} />
       </LunchmenuContainer>
       {isPopup === "lmSearchSchool" && <SearchSchool setSearchData={setSearchData} />}

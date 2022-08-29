@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import styled from "styled-components";
 import { customMedia } from "../../styles";
 
@@ -29,10 +30,9 @@ const SearchedDay = styled.div`
 interface IProps {
   schoolName: string;
   date: Date;
-  processSetDate: () => string;
 }
 
-const BasicInfo = ({ schoolName, processSetDate, date }: IProps) => {
+const BasicInfo = ({ schoolName, date }: IProps) => {
   const processSetDay = () => {
     const day = date.getDay();
     if (day === 1) {
@@ -54,7 +54,7 @@ const BasicInfo = ({ schoolName, processSetDate, date }: IProps) => {
   return (
     <Title>
       <SchoolName>{schoolName ? `${schoolName} 식단표` : "학교를 검색해주세요."}</SchoolName>
-      <SearchedDate>{processSetDate()}</SearchedDate>
+      <SearchedDate>{format(date, "yyyy년 MM월 dd일")}</SearchedDate>
       <SearchedDay>{processSetDay()}</SearchedDay>
     </Title>
   );

@@ -42,10 +42,9 @@ interface IProps {
   schoolName: string;
   date: Date;
   setSearchData: Dispatch<SetStateAction<ISearchDate>>;
-  processSetDate: () => string;
 }
 
-const SearchContainer = ({ schoolName, date, setSearchData, processSetDate }: IProps) => {
+const SearchContainer = ({ schoolName, date, setSearchData }: IProps) => {
   const media = useMedia();
   const onClickSchoolIcon = () => inPopup("lmSearchSchool");
   return (
@@ -56,7 +55,7 @@ const SearchContainer = ({ schoolName, date, setSearchData, processSetDate }: IP
           <IcSchoolYellow />
         </SchoolIcon>
       </SchoolDate>
-      <SearchDate date={date} setSearchData={setSearchData} processSetDate={processSetDate} />
+      <SearchDate date={date} setSearchData={setSearchData} />
     </SSearchContainer>
   );
 };
