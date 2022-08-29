@@ -34,22 +34,24 @@ interface IProps {
 
 const BasicInfo = ({ schoolName, date }: IProps) => {
   const processSetDay = () => {
-    const day = date.getDay();
-    if (day === 1) {
-      return "월요일";
-    } else if (day === 2) {
-      return "화요일";
-    } else if (day === 3) {
-      return "수요일";
-    } else if (day === 4) {
-      return "목요일";
-    } else if (day === 5) {
-      return "금요일";
-    } else if (day === 6) {
-      return "토요일";
-    } else if (day === 0) {
-      return "일요일";
+    const dayNum = date.getDay();
+    let day = "";
+    if (dayNum === 1) {
+      day = "월요일";
+    } else if (dayNum === 2) {
+      day = "화요일";
+    } else if (dayNum === 3) {
+      day = "수요일";
+    } else if (dayNum === 4) {
+      day = "목요일";
+    } else if (dayNum === 5) {
+      day = "금요일";
+    } else if (dayNum === 6) {
+      day = "토요일";
+    } else if (dayNum === 0) {
+      day = "일요일";
     }
+    return day;
   };
   return (
     <Title>
