@@ -60,19 +60,22 @@ const LunchmenuBtn = ({ date, me, setSearchData }: IProps) => {
   const onClickSchoolBtn = () => {
     const lmSetting = JSON.parse(localStorage.getItem("lmSetting") || "");
     if (me?.schoolName) {
-      const newLmSetting = {
-        ...lmSetting,
+      const mySchoolInfo = {
         areaCode: me?.areaCode,
         schoolName: me?.schoolName,
         schoolCode: me?.schoolCode,
       };
-      localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
+      localStorage.setItem(
+        "lmSetting",
+        JSON.stringify({
+          ...lmSetting,
+          ...mySchoolInfo,
+        }),
+      );
       setSearchData((prev) => {
         return {
           ...prev,
-          areaCode: me?.areaCode,
-          schoolName: me?.schoolName,
-          schoolCode: me?.schoolCode,
+          ...mySchoolInfo,
         };
       });
     } else {
