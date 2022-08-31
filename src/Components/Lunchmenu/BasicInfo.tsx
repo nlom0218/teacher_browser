@@ -35,23 +35,8 @@ interface IProps {
 const BasicInfo = ({ schoolName, date }: IProps) => {
   const processSetDay = () => {
     const dayNum = date.getDay();
-    let day = "";
-    if (dayNum === 1) {
-      day = "월요일";
-    } else if (dayNum === 2) {
-      day = "화요일";
-    } else if (dayNum === 3) {
-      day = "수요일";
-    } else if (dayNum === 4) {
-      day = "목요일";
-    } else if (dayNum === 5) {
-      day = "금요일";
-    } else if (dayNum === 6) {
-      day = "토요일";
-    } else if (dayNum === 0) {
-      day = "일요일";
-    }
-    return day;
+    const day = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+    return day[dayNum];
   };
   return (
     <Title>
