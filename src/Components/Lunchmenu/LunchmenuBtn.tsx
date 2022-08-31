@@ -38,69 +38,55 @@ interface IProps extends IMe {
 }
 
 const LunchmenuBtn = ({ date, me, setSearchData }: IProps) => {
-  const onClickBtn = (mode: string) => {
+  const onClickDateBtn = (mode: string) => {
     const lmSetting = JSON.parse(localStorage.getItem("lmSetting") || "");
+    let newDate = new window.Date();
     if (mode === "yesterday") {
-      const yesterdayDate = new window.Date(date.setDate(date.getDate() - 1));
-      const newLmSetting = { ...lmSetting, date: yesterdayDate };
-      localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
-      setSearchData((prev) => {
-        return {
-          ...prev,
-          date: new window.Date(yesterdayDate),
-        };
-      });
-      return;
+      newDate = new window.Date(date.setDate(date.getDate() - 1));
     }
     if (mode === "tomorrow") {
-      const tomorrowDate = new window.Date(date.setDate(date.getDate() + 1));
-      const newLmSetting = { ...lmSetting, date: tomorrowDate };
-      localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
-      setSearchData((prev) => {
-        return {
-          ...prev,
-          date: new window.Date(tomorrowDate),
-        };
-      });
-      return;
+      newDate = new window.Date(date.setDate(date.getDate() + 1));
     }
-    if (mode === "today") {
-      const newLmSetting = { ...lmSetting, date: new window.Date() };
-      localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
-      setSearchData((prev) => {
-        return {
-          ...prev,
-          date: new window.Date(),
-        };
-      });
-      return;
-    }
-    if (mode === "school" && me?.schoolName) {
-      const newLmSetting = {
-        ...lmSetting,
+    const newLmSetting = { ...lmSetting, date: newDate };
+    localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
+    setSearchData((prev) => ({
+      ...prev,
+      date: newDate,
+    }));
+  };
+
+  const onClickSchoolBtn = () => {
+    const lmSetting = JSON.parse(localStorage.getItem("lmSetting") || "");
+    if (me?.schoolName) {
+      const mySchoolInfo = {
         areaCode: me?.areaCode,
         schoolName: me?.schoolName,
         schoolCode: me?.schoolCode,
       };
-      localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
+      localStorage.setItem(
+        "lmSetting",
+        JSON.stringify({
+          ...lmSetting,
+          ...mySchoolInfo,
+        }),
+      );
       setSearchData((prev) => {
         return {
           ...prev,
-          areaCode: me?.areaCode,
-          schoolName: me?.schoolName,
-          schoolCode: me?.schoolCode,
+          ...mySchoolInfo,
         };
       });
     } else {
       inPopup("noSchoolData");
     }
   };
+
   return (
     <SLunchmenuBtn>
-      <div onClick={() => onClickBtn("yesterday")}>전날 식단표</div>
-      <div onClick={() => onClickBtn("tomorrow")}>다음날 식단표</div>
-      <div onClick={() => onClickBtn("today")}>오늘 식단표</div>
-      {me && <div onClick={() => onClickBtn("school")}>우리학교 식단표</div>}
+      <div onClick={() => onClickDateBtn("yesterday")}>전날 식단표</div>
+      <div onClick={() => onClickDateBtn("tomorrow")}>다음날 식단표</div>
+      <div onClick={() => onClickDateBtn("today")}>오늘 식단표</div>
+      {me && <div onClick={onClickSchoolBtn}>우리학교 식단표</div>}
     </SLunchmenuBtn>
   );
 };

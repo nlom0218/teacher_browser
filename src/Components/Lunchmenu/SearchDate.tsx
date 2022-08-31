@@ -8,6 +8,7 @@ import { customMedia } from "../../styles";
 import IcCalender from "../../icons/Calender/IcCalender";
 import IcCalenderClick from "../../icons/Calender/IcCalenderClick";
 import { ISearchDate } from "../../Pages/Lunchmenu";
+import { format } from "date-fns";
 
 const DatePickers = styled(DatePicker)`
   font-size: 2em;
@@ -53,14 +54,13 @@ const DateIcon = styled.div`
 interface IProps {
   date: Date;
   setSearchData: Dispatch<SetStateAction<ISearchDate>>;
-  processSetDate: () => string;
 }
 
 interface IForwardRef {
   onClick?: () => void;
 }
 
-export const SearchDate = ({ date, setSearchData, processSetDate }: IProps) => {
+export const SearchDate = ({ date, setSearchData }: IProps) => {
   const [isHover, setIsHover] = useState(false);
 
   const media = useMedia();
@@ -78,7 +78,7 @@ export const SearchDate = ({ date, setSearchData, processSetDate }: IProps) => {
   };
   const CustomInput = forwardRef(({ onClick }: IForwardRef, ref: React.ForwardedRef<HTMLDivElement>) => (
     <DateContainer ref={ref}>
-      {media !== "Mobile" && <div>{processSetDate()}</div>}
+      {media !== "Mobile" && <div>{format(date, "yyyy년 MM월 dd일")}</div>}
       <DateIcon onClick={onClick} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <IcCalenderClick /> : <IcCalender />}
       </DateIcon>

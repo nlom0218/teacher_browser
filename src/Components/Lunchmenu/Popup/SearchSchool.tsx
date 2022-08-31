@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FcSearch } from "react-icons/fc";
 import styled from "styled-components";
@@ -79,16 +79,17 @@ const SearchSchool = ({ setSearchData }: IProps) => {
           setSchoolInfo(undefined);
           return;
         }
-        const schoolInfo = data.schoolInfo[1].row.map((item: IShcoolData) => {
-          const areaCode = item.ATPT_OFCDC_SC_CODE;
-          const areaName = item.ATPT_OFCDC_SC_NM;
-          const schoolCode = item.SD_SCHUL_CODE;
-          const schoolName = item.SCHUL_NM;
-          const schoolAdress = item.ORG_RDNMA;
-          return { areaCode, areaName, schoolCode, schoolName, schoolAdress };
+        const { row } = data.schoolInfo[1];
+        const schoolInfo = row.map((item: IShcoolData) => {
+          return {
+            areaCode: item.ATPT_OFCDC_SC_CODE,
+            areaName: item.ATPT_OFCDC_SC_NM,
+            schoolCode: item.SD_SCHUL_CODE,
+            schoolName: item.SCHUL_NM,
+            schoolAdress: item.ORG_RDNMA,
+          };
         });
         setSchoolInfo(schoolInfo);
-        setPage((prev) => prev + 1);
       });
   };
   const { register, handleSubmit, getValues } = useForm<FormValues>();
@@ -125,8 +126,13 @@ const SearchSchool = ({ setSearchData }: IProps) => {
     setPage(1);
   };
   const onClickPageBtn = () => {
-    findSchool(getValues("school"));
+    setPage((prev) => prev + 1);
   };
+
+  useEffect(() => {
+    if (page === 1) return;
+    findSchool(getValues("school"));
+  }, [page]);
   return (
     <PopupContainer>
       <RegisterForm onSubmit={handleSubmit(onSubmit)}>

@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styled from "styled-components";
 import useMe from "../../Hooks/useMe";
@@ -91,19 +92,9 @@ const LunchmenuInfo = ({ date, areaCode, schoolCode, setSearchData }: IProps) =>
   const me = useMe();
 
   const getMenu = () => {
-    const changedDate = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, "0")}${date
-      .getDate()
-      .toString()
-      .padStart(2, "0")}`;
     fetch(
-      `https://open.neis.go.kr/hub/mealServiceDietInfo` +
-        `?KEY=954dac30b088454d9a95700f044ce620` +
-        `&Type=json` +
-        `&pIndex=1` +
-        `&pSize=100` +
-        `&ATPT_OFCDC_SC_CODE=${areaCode}` +
-        `&SD_SCHUL_CODE=${schoolCode}` +
-        `&MLSV_YMD=${changedDate}`,
+      `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=954dac30b088454d9a95700f044ce620&Type=json&pIndex=1&pSize=100&` +
+        `ATPT_OFCDC_SC_CODE=${areaCode}&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${format(date, "yyyyMMdd")}`,
     )
       .then((response) => response.json())
       .then((json) => {
@@ -111,16 +102,17 @@ const LunchmenuInfo = ({ date, areaCode, schoolCode, setSearchData }: IProps) =>
           setMenu(undefined);
         } else {
           setLoading(false);
+          const { DDISH_NM, ORPLC_INFO } = json.mealServiceDietInfo[1].row[0];
           setMenu(
-            json.mealServiceDietInfo[1].row[0].DDISH_NM.split("<br/>").map((item: string) => {
+            DDISH_NM.split("<br/>").map((item: string) => {
               return {
-                food: item.replace(/[0-9]/g, "").replace(/\./g, ""),
+                food: item.replace(/[0-9\.()\s]/g, ""),
                 allergy: item.split(/[^0-9]/g).filter((item) => item !== ""),
               };
             }),
           );
           setOrigin(
-            json.mealServiceDietInfo[1].row[0].ORPLC_INFO.replace(/\:/g, "(")
+            ORPLC_INFO.replace(/\:/g, "(")
               .replace(/\s/gi, "")
               .split("<br/>")
               .map((item: string) => item + ")"),
