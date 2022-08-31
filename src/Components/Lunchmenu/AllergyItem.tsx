@@ -76,7 +76,7 @@ const AllergyItem = ({ item, me }: IProps) => {
     if (data?.seeAllStudent) {
       const students = data?.seeAllStudent?.map((item) => item.studentName);
       if (students.length !== 0) {
-        const studentName = [students[0], students[1], students[2]].filter((item) => item).join(", ");
+        const studentName = students.slice(0, 3).join(", ");
         const studentNum = students.length;
         setHoverContent({ studentName, studentNum });
       }
@@ -97,7 +97,7 @@ const AllergyItem = ({ item, me }: IProps) => {
         <SeeAlleryStudent>
           <HoverContent>
             {hoverContent.studentName}
-            {hoverContent.studentNum > 3 && `, +${hoverContent.studentNum - 3}`}
+            {hoverContent.studentNum > 3 && ` +${hoverContent.studentNum - 3}`}
           </HoverContent>
         </SeeAlleryStudent>
       )}

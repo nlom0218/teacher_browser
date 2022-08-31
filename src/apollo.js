@@ -131,7 +131,7 @@ const httpLink = createHttpLink({
   uri:
     process.env.NODE_ENV === "production"
       ? "https://teachercan.herokuapp.com/graphql"
-      : process.env.REACT_APP_AMAZON_EC2,
+      : "http://localhost:4000/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
