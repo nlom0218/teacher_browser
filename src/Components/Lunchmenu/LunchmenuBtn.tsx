@@ -49,12 +49,10 @@ const LunchmenuBtn = ({ date, me, setSearchData }: IProps) => {
     }
     const newLmSetting = { ...lmSetting, date: newDate };
     localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
-    setSearchData((prev) => {
-      return {
-        ...prev,
-        date: newDate,
-      };
-    });
+    setSearchData((prev) => ({
+      ...prev,
+      date: newDate,
+    }));
   };
 
   const onClickSchoolBtn = () => {
