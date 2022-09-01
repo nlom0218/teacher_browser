@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import QrcodeInput from "./QrcodeInput"; // url 주소 입력창
+import { QrcodeUrlContext } from "./QrcodeUrlContext";
 
 const Container = styled.div`
   display: grid;
@@ -59,7 +60,8 @@ const Btn = styled.div`
   cursor: pointer;
 `;
 
-const Qrcodemake = ({ mode, setMode, url, setUrl, setImageUrl }) => {
+const Qrcodemake = () => {
+  const { url, setUrl, setImageUrl, mode, setMode } = useContext(QrcodeUrlContext);
   const onClickMyStorage = () => {
     setMode("storage");
   };

@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import PopupPrintContainer from "../../Shared/PopupPrintContainer";
 import IcPrint from "../../../icons/Print/IcPrint";
-// import { useReactToPrint } from "react-to-print";
+import { useReactToPrint } from "react-to-print";
 import { BsFillCaretDownSquareFill } from "react-icons/bs";
 import { BsFillCaretUpSquareFill } from "react-icons/bs";
 import { useState } from "react";
-import { useReactToPrint } from "react-to-print";
+import { QrcodeUrlContext } from "../QrcodeUrlContext";
 import QrPrintContext from "./QrPrintContext";
 
 const PrintTopContents = styled.div`
@@ -53,7 +53,8 @@ const PrintContainer = styled.div`
   }
 `;
 
-const QrPrintMain = ({ printRef, url }) => {
+const QrPrintMain = ({ printRef }) => {
+  const { url, imageUrl } = useContext(QrcodeUrlContext);
   const [num, setNum] = useState(1);
 
   // constructor(props){
@@ -71,13 +72,7 @@ const QrPrintMain = ({ printRef, url }) => {
   const onClickListDown = () => {
     setNum(num - 1);
   };
-  // const handlePrint = useReactToPrint({
-  //   content: () => printRef.current,
-  // });
 
-  // const onClickPrint = () => {
-  //   handlePrint();
-  // };
   const handlePrint = useReactToPrint({
     content: () => printRef.current,
   });
@@ -92,16 +87,14 @@ const QrPrintMain = ({ printRef, url }) => {
           <div>{num > 1 && <BsFillCaretDownSquareFill onClick={onClickListDown} />}</div>
           <div>{num}</div>
           <BsFillCaretUpSquareFill onClick={onClickListUp} />
-          {/* <BsFillCaretUpSquareFill count={this.state.count} onAdd={this.increaseCount} onClick={onClickListUp} /> */}
         </PrintTypeItem>
-        {/* <PrintIcon onClick={onClickPrint}> */}
         <PrintIcon onClick={onClickPrint}>
           <div>인쇄하기</div>
           <IcPrint />
         </PrintIcon>
       </PrintTopContents>
       <PrintContainer ref={printRef}>
-        <QrPrintContext url={url} />
+        <QrPrintContext num={num} />
       </PrintContainer>
     </PopupPrintContainer>
   );

@@ -2,10 +2,11 @@
 // 순서바꾸기 -> 드래그앤 드롭
 // 모바일인 경우에는 QR코드 추가만 넣어도 되나?
 
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { customMedia } from "../../styles";
 import { inPopup } from "../../apollo";
+import { QrcodeUrlContext } from "./QrcodeUrlContext";
 
 const Btn = styled.div`
   display: grid;
@@ -46,7 +47,9 @@ const Btn = styled.div`
     text-decoration: none;
   }
 `;
-const Qroptionbtn = ({ setMode }) => {
+const Qroptionbtn = () => {
+  const { setMode } = useContext(QrcodeUrlContext);
+
   const onClickBtn = () => {
     setMode("make");
   };

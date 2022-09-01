@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import styled from "styled-components";
 import { inputLine } from "../../Animations/InputLine";
 import { inPopup, isPopupVar } from "../../apollo";
@@ -6,6 +6,7 @@ import Qrname from "./Qrname";
 import { useReactiveVar } from "@apollo/client";
 import QRCode from "qrcode";
 import QrPrintMain from "./QrPrint/QrPrintMain";
+import { QrcodeUrlContext } from "./QrcodeUrlContext";
 
 const Container = styled.div`
   display: grid;
@@ -115,7 +116,9 @@ const Body = styled.div`
   }
 `;
 
-const Qrresult = ({ setMode, imageUrl, setImageUrl, setUrl, url, setQrtitle }) => {
+const Qrresult = () => {
+  const { setMode, imageUrl, setImageUrl, setUrl, url } = useContext(QrcodeUrlContext);
+
   //윈도우 팝업창 불러오기 세팅.....데이터 전달이 잘 안 됨.
   const qrcodeUrl =
     process.env.NODE_ENV === "production"
@@ -198,8 +201,8 @@ const Qrresult = ({ setMode, imageUrl, setImageUrl, setUrl, url, setQrtitle }) =
         </BtnSpace>
       </Main>
       {/* 팝업에 이메일주소도 넘기기  */}
-      {isPopup === "registerQR" && <Qrname setMode={setMode} url={url} setQrtitle={setQrtitle} />}
-      {isPopup === "print" && <QrPrintMain printRef={componentRef} url={url} />}
+      {isPopup === "registerQR" && <Qrname />}
+      {isPopup === "print" && <QrPrintMain printRef={componentRef} />}
     </Container>
   );
 };

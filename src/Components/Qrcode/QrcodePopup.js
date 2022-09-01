@@ -7,10 +7,7 @@ const BigQr = styled.div`
   height: 1000px;
 `;
 const QrcodePopup = () => {
-  <BigQr>
-    {/* <img src={imageUrl} alt="img" /> */}
-    <div>QR</div>
-  </BigQr>;
+  // <BigQr>{url}</BigQr>;
 };
 
 export default QrcodePopup;

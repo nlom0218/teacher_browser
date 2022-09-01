@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { outPopup } from "../../apollo";
 import PopupContainer from "../Shared/PopupContainer";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
+import { QrcodeUrlContext } from "./QrcodeUrlContext";
 
 const Frame = styled.form`
   display: grid;
@@ -46,7 +47,9 @@ const TitleSubmitBtn = styled.input`
   cursor: pointer;
 `;
 
-const Qrname = ({ setMode, setQrtitle }) => {
+const Qrname = () => {
+  const { setMode, setQrtitle } = useContext(QrcodeUrlContext);
+
   const { register, handleSubmit } = useForm({
     mode: "onChange",
   });

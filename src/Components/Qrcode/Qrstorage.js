@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import Qroptionbtn from "./Qroptionbtn";
 import { customMedia } from "../../styles";
@@ -6,7 +6,7 @@ import Qrcontext from "./Qrcontext";
 import { isPopupVar } from "../../apollo";
 import { useReactiveVar } from "@apollo/client";
 import QrPrintMain from "./QrPrint/QrPrintMain";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { QrcodeUrlContext } from "./QrcodeUrlContext";
 
 const Container = styled.div`
   display: grid;
@@ -42,38 +42,22 @@ const Table = styled.div`
   row-gap: 1.25rem;
 `;
 
-const Qrstorage = ({ mode, setMode, setUrl, dummy }) => {
+const Qrstorage = () => {
   const isPopup = useReactiveVar(isPopupVar);
+  const { mode, dummy } = useContext(QrcodeUrlContext);
   return (
     <Container>
       <Title>내 QR코드 보관함</Title>
       <div>
-        <Qroptionbtn mode={mode} setMode={setMode} />
+        <Qroptionbtn />
       </div>
-      {/* <DragDropContext> */}
-      {/* <Droppable droppableId="myqrcodes" direction="horizontal"> */}
-      {/* {(provided) => ( */}
+
       <Table>
-        {/* <Table className="myqrcodes" {...provided.droppableProps} ref={provided.innerRef}> */}
         {dummy.qrcode.map((index) => (
-          // <Draggable key={index.id} draggableId={index.id} index={index}>
-          <Qrcontext
-            // {...provided.draggableProps}
-            // {...provided.dragHandleProps}
-            // ref={provided.innerRef}
-            key={index.id}
-            title={index.title}
-            urlOne={index.url}
-            setUrl={setUrl}
-            setMode={setMode}
-          />
-          // </Draggable>
+          <Qrcontext key={index.id} title={index.title} urlOne={index.url} />
         ))}
-        {/* <Qrcontext url={url} imageUrl={imageUrl} setMode={setMode} /> */}
       </Table>
-      )}
-      {/* </Droppable> */}
-      {/* </DragDropContext> */}
+
       {isPopup === "printQR" && <QrPrintMain />}
     </Container>
   );

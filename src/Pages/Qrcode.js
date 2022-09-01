@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { QrcodeUrlContext } from "../Components/Qrcode/QrcodeUrlContext";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import Qrcodemake from "../Components/Qrcode/Qrmake"; //생성화면
 import Qrresult from "../Components/Qrcode/Qrresult"; //결과화면
@@ -23,38 +24,13 @@ const Qrcode = () => {
 
   return (
     <BasicContainer menuItem={true}>
-      {mode === "make" && (
-        <Qrcodemake
-          mode={mode}
-          setMode={setMode}
-          url={url}
-          setUrl={setUrl}
-          imageUrl={imageUrl}
-          setImageUrl={setImageUrl}
-        />
-      )}
-      {mode === "result" && (
-        <Qrresult
-          mode={mode}
-          setMode={setMode}
-          url={url}
-          setUrl={setUrl}
-          imageUrl={imageUrl}
-          setImageUrl={setImageUrl}
-          setQrtitle={setQrtitle}
-        />
-      )}
-      {mode === "storage" && (
-        <Qrstorage
-          mode={mode}
-          setMode={setMode}
-          url={url}
-          setUrl={setUrl}
-          imageUrl={imageUrl}
-          setImageUrl={setImageUrl}
-          dummy={dummy}
-        />
-      )}
+      <QrcodeUrlContext.Provider
+        value={{ dummy, mode, setMode, url, setUrl, imageUrl, setImageUrl, setQrtitle, qrtitle }}
+      >
+        {mode === "make" && <Qrcodemake />}
+        {mode === "result" && <Qrresult />}
+        {mode === "storage" && <Qrstorage />}
+      </QrcodeUrlContext.Provider>
     </BasicContainer>
   );
 };

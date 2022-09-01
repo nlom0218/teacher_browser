@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
+import { QrcodeUrlContext } from "./QrcodeUrlContext";
 
 const TopContents = styled.div`
   display: grid;
@@ -41,7 +42,9 @@ const SubmitInput = styled.input`
 
 //https 확인 절차 필요
 
-const QrcodeInput = ({ setMode, setUrl }) => {
+const QrcodeInput = () => {
+  const { setMode, setUrl } = useContext(QrcodeUrlContext);
+
   const { register, handleSubmit } = useForm({
     mode: "onChange",
   });

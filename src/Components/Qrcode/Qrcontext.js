@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import QRCode from "qrcode";
 import { GrCheckbox, GrCheckboxSelected } from "react-icons/gr";
+import { QrcodeUrlContext } from "./QrcodeUrlContext";
+
 const Storages = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr 5fr;
@@ -61,7 +63,9 @@ const Url = styled.div`
   overflow: hidden;
   cursor: pointer;
 `;
-const Qrcontext = ({ title, urlOne, setUrl, setMode }) => {
+const Qrcontext = ({ title, urlOne }) => {
+  const { setMode, setUrl } = useContext(QrcodeUrlContext);
+
   const [pick, setPick] = useState(false);
   const [imageUrlOne, setImageUrlOne] = useState(undefined);
   const onClickPick = () => {
