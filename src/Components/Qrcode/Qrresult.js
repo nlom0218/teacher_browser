@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { inputLine } from "../../Animations/InputLine";
 import { inPopup, isPopupVar } from "../../apollo";
 import Qrname from "./Qrname";
 import { useReactiveVar } from "@apollo/client";
 import QRCode from "qrcode";
+import QrPrintMain from "./QrPrint/QrPrintMain";
 
 const Container = styled.div`
   display: grid;
@@ -122,8 +123,8 @@ const Qrresult = ({ setMode, imageUrl, setImageUrl, setUrl, url, setQrtitle }) =
       : `http://localhost:3000/qrcode_popup`;
   const windowFeatures = "popup";
 
-  const sendMessage = ({ imageUrl }) => {
-    window.postMessage("qrcodeimg", { imageUrl });
+  const sendMessage = ({ url }) => {
+    window.postMessage("qrcodeimg", { url });
   };
   // 크게 보기 누르면 윈도우 창으로 열리게 함
   const onClickBig = () => {
@@ -143,7 +144,9 @@ const Qrresult = ({ setMode, imageUrl, setImageUrl, setUrl, url, setQrtitle }) =
     setMode("storage");
   };
   //인쇄하기 화면으로 이동 - 여기서는 qr이미지만 보내서 출력하고 그 화면에서 제목 정도는 입력할 수 있도록 함.
-  const onClickPrint = () => {};
+  const onClickPrint = () => {
+    inPopup("print");
+  };
 
   //qr 생성
   const generateQrCode = async () => {
@@ -163,6 +166,7 @@ const Qrresult = ({ setMode, imageUrl, setImageUrl, setUrl, url, setQrtitle }) =
 
   //팝업창 (타이틀 입력)
   const isPopup = useReactiveVar(isPopupVar);
+  const componentRef = useRef(null);
 
   return (
     <Container>
@@ -195,6 +199,7 @@ const Qrresult = ({ setMode, imageUrl, setImageUrl, setUrl, url, setQrtitle }) =
       </Main>
       {/* 팝업에 이메일주소도 넘기기  */}
       {isPopup === "registerQR" && <Qrname setMode={setMode} url={url} setQrtitle={setQrtitle} />}
+      {isPopup === "print" && <QrPrintMain printRef={componentRef} url={url} />}
     </Container>
   );
 };

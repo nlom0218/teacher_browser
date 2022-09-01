@@ -6,6 +6,8 @@ import IcPrint from "../../../icons/Print/IcPrint";
 import { BsFillCaretDownSquareFill } from "react-icons/bs";
 import { BsFillCaretUpSquareFill } from "react-icons/bs";
 import { useState } from "react";
+import { useReactToPrint } from "react-to-print";
+import QrPrintContext from "./QrPrintContext";
 
 const PrintTopContents = styled.div`
   display: grid;
@@ -51,7 +53,7 @@ const PrintContainer = styled.div`
   }
 `;
 
-const QrPrintMain = () => {
+const QrPrintMain = ({ printRef, url }) => {
   const [num, setNum] = useState(1);
 
   // constructor(props){
@@ -76,9 +78,15 @@ const QrPrintMain = () => {
   // const onClickPrint = () => {
   //   handlePrint();
   // };
+  const handlePrint = useReactToPrint({
+    content: () => printRef.current,
+  });
 
+  const onClickPrint = () => {
+    handlePrint();
+  };
   return (
-    <PopupPrintContainer>
+    <PopupPrintContainer printRef={printRef}>
       <PrintTopContents>
         <PrintTypeItem>
           <div>{num > 1 && <BsFillCaretDownSquareFill onClick={onClickListDown} />}</div>
@@ -87,12 +95,14 @@ const QrPrintMain = () => {
           {/* <BsFillCaretUpSquareFill count={this.state.count} onAdd={this.increaseCount} onClick={onClickListUp} /> */}
         </PrintTypeItem>
         {/* <PrintIcon onClick={onClickPrint}> */}
-        <PrintIcon>
+        <PrintIcon onClick={onClickPrint}>
           <div>인쇄하기</div>
           <IcPrint />
         </PrintIcon>
       </PrintTopContents>
-      {/* <PrintContainer ref={printRef}></PrintContainer> */}
+      <PrintContainer ref={printRef}>
+        <QrPrintContext url={url} />
+      </PrintContainer>
     </PopupPrintContainer>
   );
 };
