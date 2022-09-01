@@ -6,6 +6,8 @@ import Qrcontext from "./Qrcontext";
 import { isPopupVar } from "../../apollo";
 import { useReactiveVar } from "@apollo/client";
 import QrPrintMain from "./QrPrint/QrPrintMain";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
 const Container = styled.div`
   display: grid;
   width: 100%;
@@ -40,23 +42,38 @@ const Table = styled.div`
   row-gap: 1.25rem;
 `;
 
-const Qrstorage = ({ mode, setMode, url, imageUrl }) => {
+const Qrstorage = ({ mode, setMode, setUrl, dummy }) => {
   const isPopup = useReactiveVar(isPopupVar);
-
   return (
     <Container>
       <Title>내 QR코드 보관함</Title>
       <div>
         <Qroptionbtn mode={mode} setMode={setMode} />
       </div>
+      {/* <DragDropContext> */}
+      {/* <Droppable droppableId="myqrcodes" direction="horizontal"> */}
+      {/* {(provided) => ( */}
       <Table>
-        <Qrcontext url={url} imageUrl={imageUrl} />
-        <Qrcontext />
-        <Qrcontext />
-        <Qrcontext />
-        <Qrcontext />
-        <Qrcontext />
+        {/* <Table className="myqrcodes" {...provided.droppableProps} ref={provided.innerRef}> */}
+        {dummy.qrcode.map((index) => (
+          // <Draggable key={index.id} draggableId={index.id} index={index}>
+          <Qrcontext
+            // {...provided.draggableProps}
+            // {...provided.dragHandleProps}
+            // ref={provided.innerRef}
+            key={index.id}
+            title={index.title}
+            urlOne={index.url}
+            setUrl={setUrl}
+            setMode={setMode}
+          />
+          // </Draggable>
+        ))}
+        {/* <Qrcontext url={url} imageUrl={imageUrl} setMode={setMode} /> */}
       </Table>
+      )}
+      {/* </Droppable> */}
+      {/* </DragDropContext> */}
       {isPopup === "printQR" && <QrPrintMain />}
     </Container>
   );

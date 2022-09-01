@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { outPopup } from "../../apollo";
 import PopupContainer from "../Shared/PopupContainer";
 import styled from "styled-components";
+import { useForm } from "react-hook-form";
 
-const Frame = styled.div`
+const Frame = styled.form`
   display: grid;
   grid-template-rows: repeat(1fr 3);
   height: 200px;
@@ -17,7 +18,7 @@ const Name = styled.div`
   margin-top: 40px;
   margin-top: 2.5rem;
 `;
-const InputName = styled.input`
+const InputTitle = styled.input`
   width: 100%;
   font-size: 1.25em;
   font-size: 1.25rem;
@@ -28,7 +29,7 @@ const InputName = styled.input`
   border-radius: 5px;
   background-color: ${(props) => props.theme.cardBg};
 `;
-const NameBtn = styled.div`
+const TitleSubmitBtn = styled.input`
   padding: 10px;
   padding: 0.625rem;
   margin: 10px;
@@ -45,17 +46,30 @@ const NameBtn = styled.div`
   cursor: pointer;
 `;
 
-const Qrname = ({ setMode }) => {
-  const onClickBtn = () => {
+const Qrname = ({ setMode, setQrtitle }) => {
+  const { register, handleSubmit } = useForm({
+    mode: "onChange",
+  });
+  const onSubmit = (data) => {
+    const { inputTitle } = data;
+    setQrtitle(inputTitle);
     setMode("storage");
     outPopup();
   };
+
   return (
     <PopupContainer>
-      <Frame>
+      <Frame onSubmit={handleSubmit(onSubmit)}>
         <Name>QR코드 이름</Name>
-        <InputName placeholder="(예)티처캔" autoComplete="off" />
-        <NameBtn onClick={onClickBtn}>저장</NameBtn>
+        <InputTitle
+          {...register("inputTitle", {
+            required: true,
+          })}
+          type="text"
+          placeholder="(예)티처캔"
+          autoComplete="off"
+        />
+        <TitleSubmitBtn type="submit" value="저장" />
       </Frame>
     </PopupContainer>
   );

@@ -28,6 +28,12 @@ const Main = styled.div`
   align-items: flex-start;
   justify-items: center;
 `;
+const Message = styled.div`
+  font-size: 0.8em;
+  color: #222;
+  padding-top: 5px;
+  padding-top: 0.3125rem;
+`;
 const IN = styled.div`
   display: grid;
   row-gap: 10px;
@@ -98,18 +104,18 @@ const Body = styled.div`
   align-items: center;
   width: 250px;
   height: 250px;
-  row-gap: 40px;
-  row-gap: 2.5rem;
   background-color: ${(props) => props.theme.cardBg};
   border-radius: 5px;
   border-radius: 0.3125rem;
+  cursor: pointer;
   img {
     width: 250px;
     height: 250px;
   }
 `;
 
-const Qrresult = ({ setMode, imageUrl, setImageUrl, setUrl, url }) => {
+const Qrresult = ({ setMode, imageUrl, setImageUrl, setUrl, url, setQrtitle }) => {
+  //윈도우 팝업창 불러오기 세팅.....데이터 전달이 잘 안 됨.
   const qrcodeUrl =
     process.env.NODE_ENV === "production"
       ? `https://teachercan.com/qrcode_popup`
@@ -119,21 +125,27 @@ const Qrresult = ({ setMode, imageUrl, setImageUrl, setUrl, url }) => {
   const sendMessage = ({ imageUrl }) => {
     window.postMessage("qrcodeimg", { imageUrl });
   };
+  // 크게 보기 누르면 윈도우 창으로 열리게 함
   const onClickBig = () => {
     window.open(qrcodeUrl, "qrcodePopup", windowFeatures);
     sendMessage();
   };
-
+  // 생성 페이지로 이동, url값 초기화
   const onClickMake = () => {
-    setUrl(undefined);
     setMode("make");
   };
+  //보관함에 저장 전 title입력창
   const onClickRegister = () => {
     inPopup("registerQR");
   };
-  const onClickMy = () => {
+  //보관함으로 이동
+  const onClickMyStorage = () => {
     setMode("storage");
   };
+  //인쇄하기 화면으로 이동 - 여기서는 qr이미지만 보내서 출력하고 그 화면에서 제목 정도는 입력할 수 있도록 함.
+  const onClickPrint = () => {};
+
+  //qr 생성
   const generateQrCode = async () => {
     try {
       const response = await QRCode.toDataURL(url);
@@ -149,14 +161,18 @@ const Qrresult = ({ setMode, imageUrl, setImageUrl, setUrl, url }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
+  //팝업창 (타이틀 입력)
   const isPopup = useReactiveVar(isPopupVar);
 
   return (
     <Container>
       <Title>QR코드 생성 도우미</Title>
-      <BtnMy onClick={onClickMy}>QR코드 보관함</BtnMy>
+      <BtnMy onClick={onClickMyStorage}>QR코드 보관함</BtnMy>
       <Main>
-        <Body>{imageUrl ? <img src={imageUrl} alt="img" value="qrImgValue" /> : null}</Body>
+        <Body>
+          {imageUrl ? <img src={imageUrl} alt="img" value="qrImgValue" onClick={onClickBig} /> : null}{" "}
+          <Message>이미지를 클릭하면 크게 볼 수 있습니다.</Message>
+        </Body>
         <IN>
           <div>{url}</div>
           <LineBox>
@@ -164,19 +180,21 @@ const Qrresult = ({ setMode, imageUrl, setImageUrl, setUrl, url }) => {
           </LineBox>
         </IN>
         <BtnSpace>
-          <Btn onClick={onClickBig}>크게 보기</Btn>
+          <Btn onClick={onClickPrint}>인쇄하기</Btn>
+
           {imageUrl ? (
             <a href={imageUrl} download>
-              <Btn>다운로드</Btn>
+              <Btn>내 컴퓨터에 저장</Btn>
             </a>
           ) : null}
 
-          <Btn onClick={onClickRegister}> 저장하기 </Btn>
+          <Btn onClick={onClickRegister}> 보관함에 저장 </Btn>
+
           <Btn onClick={onClickMake}>새 QR코드</Btn>
         </BtnSpace>
       </Main>
-
-      {isPopup === "registerQR" && <Qrname setMode={setMode} />}
+      {/* 팝업에 이메일주소도 넘기기  */}
+      {isPopup === "registerQR" && <Qrname setMode={setMode} url={url} setQrtitle={setQrtitle} />}
     </Container>
   );
 };

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { RiCheckboxBlankLine, RiCheckboxLine } from "react-icons/ri";
-
+import QRCode from "qrcode";
+import { GrCheckbox, GrCheckboxSelected } from "react-icons/gr";
 const Storages = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr 5fr;
@@ -29,6 +29,7 @@ const Body = styled.div`
   align-self: center;
   justify-items: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 const Subject = styled.div`
@@ -58,23 +59,46 @@ const Url = styled.div`
   font-size: 1rem;
   text-align: left;
   overflow: hidden;
+  cursor: pointer;
 `;
-
-const Qrcontext = ({ url, imageUrl }) => {
+const Qrcontext = ({ title, urlOne, setUrl, setMode }) => {
   const [pick, setPick] = useState(false);
+  const [imageUrlOne, setImageUrlOne] = useState(undefined);
   const onClickPick = () => {
     setPick(!pick);
   };
+  const onClickResult = () => {
+    setMode("result");
+    setUrl(urlOne);
+  };
+  const onClickUrl = () => {
+    window.open(urlOne, "width=500, height=600");
+  };
+
+  const generateQrCode = async () => {
+    try {
+      const response = await QRCode.toDataURL(urlOne);
+      setImageUrlOne(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (urlOne) {
+      generateQrCode();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlOne]);
+
   return (
     <Storages onClick={onClickPick}>
-      {pick === true ? <RiCheckboxLine /> : <RiCheckboxBlankLine />}
-      <Body>
-        <img src={imageUrl} alt="img" />
+      {pick === true ? <GrCheckboxSelected /> : <GrCheckbox />}
+      <Body onClick={onClickResult}>
+        <img src={imageUrlOne} alt="img" />
       </Body>
       <Subject>
-        <Title>티처캔</Title>
-        <div>url주소:</div>
-        <Url>{url}</Url>
+        <Title>{title}</Title>
+        <Url onClick={onClickUrl}>{urlOne}</Url>
       </Subject>
     </Storages>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import QrcodeInput from "./QrcodeInput";
+import QrcodeInput from "./QrcodeInput"; // url 주소 입력창
 
 const Container = styled.div`
   display: grid;
@@ -59,15 +59,15 @@ const Btn = styled.div`
   cursor: pointer;
 `;
 
-const Qrcodemake = ({ mode, setMode, url, setImageUrl, setUrl }) => {
-  const onClickMy = () => {
+const Qrcodemake = ({ mode, setMode, url, setUrl, setImageUrl }) => {
+  const onClickMyStorage = () => {
     setMode("storage");
   };
 
   return (
     <Container>
       <Title>QR코드 생성 도우미</Title>
-      <Btn onClick={onClickMy}>QR코드 보관함</Btn>
+      <Btn onClick={onClickMyStorage}>QR코드 보관함</Btn>
       <Main>
         <IN>
           <Icon>캐릭터 위치</Icon>

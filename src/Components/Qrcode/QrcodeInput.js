@@ -39,11 +39,14 @@ const SubmitInput = styled.input`
   border-radius: 0.3125rem;
 `;
 
+//https 확인 절차 필요
+
 const QrcodeInput = ({ setMode, setUrl }) => {
   const { register, handleSubmit } = useForm({
     mode: "onChange",
   });
 
+  //입력 데이터를 url값으로 지정하고 결과 화면으로 이동
   const onSubmit = (data) => {
     const { urllink } = data;
     setUrl(urllink);
