@@ -117,7 +117,7 @@ const Body = styled.div`
 `;
 
 const Qrresult = () => {
-  const { setMode, imageUrl, setImageUrl, setUrl, url } = useContext(QrcodeUrlContext);
+  const { setMode, imageUrl, setImageUrl, url } = useContext(QrcodeUrlContext);
 
   //윈도우 팝업창 불러오기 세팅.....데이터 전달이 잘 안 됨.
   const qrcodeUrl =

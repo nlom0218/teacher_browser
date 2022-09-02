@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import GenerateQrCode from "./QrcodeImage";
 
 const BigQr = styled.div`
   background-color: white;
@@ -7,7 +8,10 @@ const BigQr = styled.div`
   height: 1000px;
 `;
 const QrcodePopup = () => {
-  // <BigQr>{url}</BigQr>;
+  return (
+    <div>
+      <GenerateQrCode />; ;
+    </div>
+  );
 };
-
 export default QrcodePopup;

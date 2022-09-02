@@ -44,7 +44,7 @@ const Table = styled.div`
 
 const Qrstorage = () => {
   const isPopup = useReactiveVar(isPopupVar);
-  const { mode, dummy } = useContext(QrcodeUrlContext);
+  const { dummy } = useContext(QrcodeUrlContext);
   return (
     <Container>
       <Title>내 QR코드 보관함</Title>
