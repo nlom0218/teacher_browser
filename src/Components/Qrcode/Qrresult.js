@@ -1,12 +1,14 @@
-import React, { useEffect, useRef, useContext } from "react";
+import React, { useRef, useContext, useState } from "react";
 import styled from "styled-components";
 import { inputLine } from "../../Animations/InputLine";
 import { inPopup, isPopupVar } from "../../apollo";
 import Qrname from "./Qrname";
 import { useReactiveVar } from "@apollo/client";
-import QRCode from "qrcode";
 import QrPrintMain from "./QrPrint/QrPrintMain";
 import { QrcodeUrlContext } from "./QrcodeUrlContext";
+import GenerateQrCode from "./QrcodeImage";
+import { useMutation } from "@apollo/client";
+import { CREATE_QRCODE_MUTATION } from "../../Graphql/Qrcode/mutation";
 
 const Container = styled.div`
   display: grid;
@@ -117,22 +119,23 @@ const Body = styled.div`
 `;
 
 const Qrresult = () => {
-  const { setMode, imageUrl, setImageUrl, url } = useContext(QrcodeUrlContext);
+  const { setMode, imageUrl, url } = useContext(QrcodeUrlContext);
 
   //윈도우 팝업창 불러오기 세팅.....데이터 전달이 잘 안 됨.
   const qrcodeUrl =
     process.env.NODE_ENV === "production"
       ? `https://teachercan.com/qrcode_popup`
       : `http://localhost:3000/qrcode_popup`;
-  const windowFeatures = "popup";
 
   const sendMessage = ({ url }) => {
     window.postMessage("qrcodeimg", { url });
   };
   // 크게 보기 누르면 윈도우 창으로 열리게 함
   const onClickBig = () => {
-    window.open(qrcodeUrl, "qrcodePopup", windowFeatures);
-    sendMessage();
+    console.log("Big");
+
+    window.open(qrcodeUrl, "qrcodePopup");
+    // sendMessage();
   };
   // 생성 페이지로 이동, url값 초기화
   const onClickMake = () => {
@@ -151,22 +154,6 @@ const Qrresult = () => {
     inPopup("print");
   };
 
-  //qr 생성
-  const generateQrCode = async () => {
-    try {
-      const response = await QRCode.toDataURL(url);
-      setImageUrl(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    if (url) {
-      generateQrCode();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url]);
-
   //팝업창 (타이틀 입력)
   const isPopup = useReactiveVar(isPopupVar);
   const componentRef = useRef(null);
@@ -176,9 +163,9 @@ const Qrresult = () => {
       <Title>QR코드 생성 도우미</Title>
       <BtnMy onClick={onClickMyStorage}>QR코드 보관함</BtnMy>
       <Main>
-        <Body>
-          {imageUrl ? <img src={imageUrl} alt="img" value="qrImgValue" onClick={onClickBig} /> : null}{" "}
-          <Message>이미지를 클릭하면 크게 볼 수 있습니다.</Message>
+        <Body onClick={onClickBig}>
+          {/* {imageUrl ? <img src={imageUrl} alt="img" value="qrImgValue" onClick={onClickBig} /> : null}{" "} */}
+          <GenerateQrCode /> <Message>이미지를 클릭하면 크게 볼 수 있습니다.</Message>
         </Body>
         <IN>
           <div>{url}</div>
