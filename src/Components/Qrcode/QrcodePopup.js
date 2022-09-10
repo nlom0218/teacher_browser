@@ -9,9 +9,9 @@ const BigQr = styled.div`
 `;
 const QrcodePopup = () => {
   return (
-    <div>
+    <BigQr>
       <GenerateQrCode />; ;
-    </div>
+    </BigQr>
   );
 };
 export default QrcodePopup;

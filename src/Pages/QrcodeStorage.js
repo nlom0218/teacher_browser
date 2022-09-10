@@ -11,6 +11,7 @@ import { isPopupVar } from "../apollo";
 import { useReactiveVar } from "@apollo/client";
 import QrPrintMain from "../Components/Qrcode/QrPrint/QrPrintMain";
 import Qrcontext from "../Components/Qrcode/Qrcontext";
+
 const Container = styled.div`
   display: grid;
   width: 100%;
@@ -44,9 +45,8 @@ const Table = styled.div`
   row-gap: 1.25rem;
 `;
 const QrcodeStorage = () => {
-  const isPopup = useReactiveVar(isPopupVar);
+  // const isPopup = useReactiveVar(isPopupVar);
   const me = useMe();
-
   const { data, loading } = useQuery(QRCODES_QUERY, {
     variables: { userEmail: me?.email },
     skip: !me,
@@ -60,12 +60,12 @@ const QrcodeStorage = () => {
       <Container>
         <Title>내 QR코드 보관함</Title>
         <div>
-          <Qroptionbtn />
+          <Qroptionbtn data={data} me={me} />
         </div>
 
         <Table>
           {data?.qrcodes.map((qrcode, index) => (
-            <Qrcontext key={index} title={qrcode.title} urlOne={qrcode.url} />
+            <Qrcontext key={index} title={qrcode.title} urlOne={qrcode.url} id={qrcode._id} />
           ))}
         </Table>
 

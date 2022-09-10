@@ -62,12 +62,20 @@ const Url = styled.div`
   overflow: hidden;
   cursor: pointer;
 `;
-const Qrcontext = ({ title, urlOne }) => {
+const Qrcontext = ({ title, urlOne, id }) => {
   const [pick, setPick] = useState(false);
   const [imageUrlOne, setImageUrlOne] = useState(undefined);
+
   const onClickPick = () => {
     setPick(!pick);
   };
+  if (pick == true) {
+    localStorage.setItem("pickQR", id);
+  }
+  if (pick == false) {
+    localStorage.removeItem("pickQR", id);
+  }
+
   const onClickResult = () => {};
   const onClickUrl = () => {
     window.open(urlOne, "width=500, height=600");
