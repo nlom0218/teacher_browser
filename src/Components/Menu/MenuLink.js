@@ -23,6 +23,8 @@ import IcNewsClick from "../../icons/News/IcNewsClick";
 import IcNews from "../../icons/News/IcNews";
 import useMedia from "../../Hooks/useMedia";
 import IcFamilyMonth from "../../icons/FamilyMonth/FamilyMonth";
+import IcQrcode from "../../icons/Qrcod/IcQrcode";
+import IcQrcodeClick from "../../icons/Qrcod/IcQrcodeClick";
 
 const SMenu = styled.div`
   display: grid;
@@ -219,8 +221,7 @@ export const QrcodeLink = () => {
   return (
     <Link to={routes.qrcode} onClick={onClickListLink}>
       <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
-        {isHover ? <IcScheduleClick /> : <IcSchedule />}
-        {/* 아이콘 만들어 달라고 디자인팀에 요청하기 */}
+        {isHover ? <IcQrcodeClick /> : <IcQrcode />}
         <Title>QR코드</Title>
       </SMenu>
     </Link>

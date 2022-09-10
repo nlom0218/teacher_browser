@@ -12,7 +12,6 @@ import {
   TimerLink,
   NewsLink,
   ManagingRolesLink,
-  Qrcode,
   QrcodeLink,
 } from "./MenuLink";
 

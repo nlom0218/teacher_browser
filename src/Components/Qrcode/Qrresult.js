@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useState } from "react";
+import React, { useRef, useContext } from "react";
 import styled from "styled-components";
 import { inputLine } from "../../Animations/InputLine";
 import { inPopup, isPopupVar } from "../../apollo";
@@ -7,8 +7,8 @@ import { useReactiveVar } from "@apollo/client";
 import QrPrintMain from "./QrPrint/QrPrintMain";
 import { QrcodeUrlContext } from "./QrcodeUrlContext";
 import GenerateQrCode from "./QrcodeImage";
-import { useMutation } from "@apollo/client";
-import { CREATE_QRCODE_MUTATION } from "../../Graphql/Qrcode/mutation";
+import routes from "../../routes";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: grid;
@@ -119,6 +119,8 @@ const Body = styled.div`
 `;
 
 const Qrresult = () => {
+  const navigate = useNavigate();
+
   const { setMode, imageUrl, url } = useContext(QrcodeUrlContext);
 
   //윈도우 팝업창 불러오기 세팅.....데이터 전달이 잘 안 됨.
@@ -127,9 +129,6 @@ const Qrresult = () => {
       ? `https://teachercan.com/qrcode_popup`
       : `http://localhost:3000/qrcode_popup`;
 
-  const sendMessage = ({ url }) => {
-    window.postMessage("qrcodeimg", { url });
-  };
   // 크게 보기 누르면 윈도우 창으로 열리게 함
   const onClickBig = () => {
     console.log("Big");
@@ -147,7 +146,7 @@ const Qrresult = () => {
   };
   //보관함으로 이동
   const onClickMyStorage = () => {
-    setMode("storage");
+    navigate(routes.qrcodeStorage);
   };
   //인쇄하기 화면으로 이동 - 여기서는 qr이미지만 보내서 출력하고 그 화면에서 제목 정도는 입력할 수 있도록 함.
   const onClickPrint = () => {

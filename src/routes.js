@@ -19,6 +19,7 @@ const MANAGINGROLES = "/managingRoles";
 const FAMILYMONTH = "/family-month";
 const QRCODE = "/qrcode";
 const QRCODE_POPUP = "/qrcode_popup";
+const QRCODE_STORAGE = "/qrcode_storage";
 
 // account link
 const LOGIN = "/login";
@@ -58,6 +59,7 @@ const routes = {
   familyMonth: FAMILYMONTH,
   qrcode: QRCODE,
   qrcodePopup: QRCODE_POPUP,
+  qrcodeStorage: QRCODE_STORAGE,
 
   // account link
   login: LOGIN,

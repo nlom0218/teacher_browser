@@ -1,7 +1,10 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import QrcodeInput from "./QrcodeInput"; // url 주소 입력창
-import { QrcodeUrlContext } from "./QrcodeUrlContext";
+import { QrcodeUrlContext } from "./QrcodeUrlContext"; //useContext
+//url이동
+import routes from "../../routes";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: grid;
@@ -61,9 +64,11 @@ const Btn = styled.div`
 `;
 
 const Qrcodemake = () => {
+  const navigate = useNavigate();
+
   const { url, setUrl, setImageUrl, mode, setMode } = useContext(QrcodeUrlContext);
   const onClickMyStorage = () => {
-    setMode("storage");
+    navigate(routes.qrcodeStorage);
   };
 
   return (
@@ -72,7 +77,7 @@ const Qrcodemake = () => {
       <Btn onClick={onClickMyStorage}>QR코드 보관함</Btn>
       <Main>
         <IN>
-          <Icon>캐릭터 위치</Icon>
+          <Icon></Icon>
           <Head>URL 주소 입력 </Head>
           <QrcodeInput mode={mode} setMode={setMode} url={url} setUrl={setUrl} setImageUrl={setImageUrl} />
           <div>URL 주소를 입력하면 QR코드가 생성됩니다. 바르게 입력해주세요. </div>

@@ -4,6 +4,12 @@ import PopupContainer from "../Shared/PopupContainer";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { QrcodeUrlContext } from "./QrcodeUrlContext";
+import { useMutation } from "@apollo/client";
+import { CREATE_QRCODE_MUTATION } from "../../Graphql/Qrcode/mutation";
+import { ME_QUERY } from "../../Hooks/useMe";
+import Loading from "../Shared/Loading";
+import routes from "../../routes";
+import { useNavigate } from "react-router-dom";
 
 const Frame = styled.form`
   display: grid;
@@ -48,7 +54,9 @@ const TitleSubmitBtn = styled.input`
 `;
 
 const Qrname = () => {
-  const { setMode, setQrtitle } = useContext(QrcodeUrlContext);
+  const navigate = useNavigate();
+
+  const { me, url, setMode, setQrtitle } = useContext(QrcodeUrlContext);
 
   const { register, handleSubmit } = useForm({
     mode: "onChange",
@@ -56,9 +64,33 @@ const Qrname = () => {
   const onSubmit = (data) => {
     const { inputTitle } = data;
     setQrtitle(inputTitle);
-    setMode("storage");
-    outPopup();
+    createQrcode({
+      variables: {
+        userEmail: me?.email,
+        title: inputTitle,
+        url,
+      },
+    });
   };
+
+  const onCompleted = (result) => {
+    const {
+      createQrcode: { ok },
+    } = result;
+    console.log(result);
+    if (ok) {
+      navigate(routes.qrcodeStorage);
+      outPopup();
+    }
+  };
+
+  const [createQrcode, { loading }] = useMutation(CREATE_QRCODE_MUTATION, {
+    onCompleted,
+    refetchQueries: [{ query: ME_QUERY }],
+  });
+  if (loading) {
+    return <Loading page="popupPage" />;
+  }
 
   return (
     <PopupContainer>
