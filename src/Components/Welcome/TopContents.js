@@ -127,7 +127,7 @@ const TopContents = ({ me, welcomePage, setWelComPage }) => {
       <TeacherCanLogo src={LogoText}></TeacherCanLogo>
       <LeftContainer>
         {me ? (
-          <WelcomeTitle>{me?.userNickname ? me?.userNickname : me?.email}님 환영합니다. 😆</WelcomeTitle>
+          <WelcomeTitle>{me?.nickname ? me?.nickname : me?.email}님 환영합니다. 😆</WelcomeTitle>
         ) : (
           <LoginMsg>
             <Link to={routes.login}>로그인하기</Link>

@@ -68,6 +68,7 @@ export const DELETE_SCHOOL_INFO_MUTATION = gql`
 export const UPDATE_USER_MUTATION = gql`
   mutation UpdateUser(
     $userEmail: String!
+    $nickname: String
     $schoolName: String
     $schoolCode: String
     $areaCode: String
@@ -76,6 +77,7 @@ export const UPDATE_USER_MUTATION = gql`
   ) {
     updateUser(
       userEmail: $userEmail
+      nickname: $nickname
       schoolName: $schoolName
       schoolCode: $schoolCode
       areaCode: $areaCode
@@ -207,15 +209,6 @@ export const EDIT_HOME_LINK_MUTATION = gql`
 export const MOVE_HOME_LINK_MUTATION = gql`
   mutation MoveHomeLink($userEmail: String!, $sourceIndex: Int!, $destinationIndex: Int!) {
     moveHomeLink(userEmail: $userEmail, sourceIndex: $sourceIndex, destinationIndex: $destinationIndex) {
-      ok
-      error
-    }
-  }
-`;
-
-export const CHANGE_USER_NICKNAME_MUTATION = gql`
-  mutation ChangeUserNickname($userNickname: String!) {
-    changeUserNickname(userNickname: $userNickname) {
       ok
       error
     }

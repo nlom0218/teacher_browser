@@ -18,17 +18,17 @@ const EditBtn = styled.div`
   cursor: pointer;
 `;
 
-const ChangeUserNickname = ({ userNickname }) => {
+const ChangeNickname = ({ nickname }) => {
   const onClickBtn = () => {
-    inPopup("changeUserNickname");
+    inPopup("changeNickname");
   };
 
   return (
     <Container>
-      <div>{userNickname}</div>
-      <EditBtn onClick={onClickBtn}>{userNickname ? "닉네임 수정" : "닉네임 등록"}</EditBtn>
+      <div>{nickname}</div>
+      <EditBtn onClick={onClickBtn}>{nickname ? "닉네임 수정" : "닉네임 등록"}</EditBtn>
     </Container>
   );
 };
 
-export default ChangeUserNickname;
+export default ChangeNickname;

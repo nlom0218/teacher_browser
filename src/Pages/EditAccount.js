@@ -7,12 +7,12 @@ import RegisterSchool from "../Components/Account/RegisterSchool";
 import Withdrawal from "../Components/Account/Withdrawal";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import ChangePw from "../Components/Account/ChangePw";
-import ChangeUserNickname from "../Components/Account/ChangeUserNickname";
+import ChangeNickname from "../Components/Account/ChangeNickname";
 import useMe from "../Hooks/useMe";
 import { color, customMedia } from "../styles";
 import { useReactiveVar } from "@apollo/client";
 import Pop_ChangePw from "../Components/Account/Popup/Pop_ChangePw";
-import Pop_ChangeUserNickname from "../Components/Account/Popup/Pop_ChangeUserNickname";
+import Pop_ChangeNickname from "../Components/Account/Popup/Pop_ChangeNickname";
 import { CHECK_PASSWORD_QUERY } from "../Graphql/User/query";
 import { useQuery } from "@apollo/client";
 import useTitle from "../Hooks/useTitle";
@@ -104,8 +104,8 @@ const EditAccount = () => {
         <Changes>
           <List>닉네임</List>
           <Item>
-            {me?.userNickname || "닉네임을 등록해 주세요"}
-            {<ChangeUserNickname userNickname={me?.userNickname}></ChangeUserNickname>}
+            {me?.nickname || "닉네임을 등록해 주세요"}
+            {<ChangeNickname nickname={me?.nickname}></ChangeNickname>}
           </Item>
         </Changes>
         <Changes>
@@ -150,7 +150,7 @@ const EditAccount = () => {
       </Container>
       {isPopup === "registerSchool" && <RegisterSchool setMsg={setMsg} />}
       {isPopup === "changePw" && <Pop_ChangePw userEmail={me?.email} />}
-      {isPopup === "changeUserNickname" && <Pop_ChangeUserNickname userNickname={me?.userNickname} />}
+      {isPopup === "changeNickname" && <Pop_ChangeNickname nickname={me?.nickname} />}
       {msg && <AlertMessage msg={msg} setMsg={setMsg} time={3000} type="success" />}
       {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} time={3000} type="error" />}
     </BasicContainer>

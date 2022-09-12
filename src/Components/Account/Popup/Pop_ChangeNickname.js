@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { logOutUser, outPopup } from "../../../apollo";
-import { CHANGE_PASSWORD_MUTATION, CHANGE_USER_NICKNAME_MUTATION } from "../../../Graphql/User/mutation";
+import { CHANGE_PASSWORD_MUTATION, UPDATE_USER_MUTATION } from "../../../Graphql/User/mutation";
 import routes from "../../../routes";
 import { customMedia } from "../../../styles";
 import { useForm } from "react-hook-form";
@@ -74,7 +74,7 @@ const Msg = styled.div`
   color: red;
 `;
 
-const Pop_ChangeUserNickname = ({ userNickname }) => {
+const Pop_ChangeNickname = ({ nickname }) => {
   const [errMsg, setErrMsg] = useState(null);
 
   const { register, handleSubmit } = useForm({
@@ -83,16 +83,16 @@ const Pop_ChangeUserNickname = ({ userNickname }) => {
   });
 
   const onSubmit = (data) => {
-    const { userNickname } = data;
+    const { nickname } = data;
 
-    changeUserNickname({ variables: { userNickname } });
+    changeNickname({ variables: { nickname } });
   };
 
   const navigate = useNavigate();
 
   const onCompleted = (result) => {
     const {
-      changeUserNickname: { ok, error },
+      changeNickname: { ok, error },
     } = result;
     if (ok) {
       outPopup();
@@ -101,7 +101,7 @@ const Pop_ChangeUserNickname = ({ userNickname }) => {
     }
   };
 
-  const [changeUserNickname, { loading }] = useMutation(CHANGE_USER_NICKNAME_MUTATION, { onCompleted });
+  const [changeNickname, { loading }] = useMutation(UPDATE_USER_MUTATION, { onCompleted });
 
   return (
     <PopupContainer>
@@ -110,7 +110,7 @@ const Pop_ChangeUserNickname = ({ userNickname }) => {
           <InputLayout>
             <FaLock />
             <AccountInput
-              {...register("userNickname", {
+              {...register("nickname", {
                 required: true,
                 onChange: () => setErrMsg(undefined),
               })}
@@ -129,4 +129,4 @@ const Pop_ChangeUserNickname = ({ userNickname }) => {
   );
 };
 
-export default Pop_ChangeUserNickname;
+export default Pop_ChangeNickname;
