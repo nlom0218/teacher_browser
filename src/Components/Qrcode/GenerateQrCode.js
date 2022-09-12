@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import QRCode from "qrcode";
 
-const GenerateQrCode = ({ url }) => {
-  const [imageUrl, setImageUrl] = useState(undefined); //현재 선택된 url의 QR코드 이미지
-
+const Title = styled.div`
+  display: grid;
+  text-align: center;
+`;
+const GenerateQrCode = ({ url, setImageUrl, imageUrl, title }) => {
   //qr 생성
+
   const generateQrCode = async () => {
     try {
       const response = await QRCode.toDataURL(url);
@@ -20,7 +24,12 @@ const GenerateQrCode = ({ url }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
-  return <div>{imageUrl ? <img src={imageUrl} alt="img" value="qrImgValue" /> : null}</div>;
+  return (
+    <div>
+      {title ? <Title>{title}</Title> : null}
+      {imageUrl ? <img src={imageUrl} alt="img" value="qrImgValue" /> : null}
+    </div>
+  );
 };
 
 export default GenerateQrCode;

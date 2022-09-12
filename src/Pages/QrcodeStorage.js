@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import { useQuery } from "@apollo/client";
@@ -46,8 +46,10 @@ const Table = styled.div`
 `;
 const QrcodeStorage = () => {
   const [addPickQr, setAddPickQr] = useState([]);
+  const [picklist, setpicklist] = useState([]);
 
-  // const isPopup = useReactiveVar(isPopupVar);
+  const componentRef = useRef(null);
+  const isPopup = useReactiveVar(isPopupVar);
   const me = useMe();
   const { data, loading } = useQuery(QRCODES_QUERY, {
     variables: { userEmail: me?.email },
@@ -56,13 +58,24 @@ const QrcodeStorage = () => {
   if (loading) {
     return <Loading page="mainPage" />;
   }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (addPickQr) {
+      const list = data?.qrcodes
+        .filter((item) => addPickQr.includes(item._id))
+        .map((item, index) => {
+          return { title: item.title, url: item.url, id: item._id };
+        });
+      setpicklist(list);
+    }
+  }, [addPickQr]);
 
   return (
     <BasicContainer menuItem={true}>
       <Container>
         <Title>내 QR코드 보관함</Title>
         <div>
-          <Qroptionbtn data={data} me={me} />
+          <Qroptionbtn data={data} me={me} picklist={picklist} />
         </div>
 
         <Table>
@@ -78,7 +91,7 @@ const QrcodeStorage = () => {
           ))}
         </Table>
 
-        {/* {isPopup === "printQR" && <QrPrintMain />} */}
+        {isPopup === "printQR" && <QrPrintMain printRef={componentRef} picklist={picklist} />}
       </Container>
     </BasicContainer>
   );

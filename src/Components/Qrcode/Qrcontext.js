@@ -86,11 +86,10 @@ const Qrcontext = ({ addPickQr, setAddPickQr, title, urlOne, id }) => {
     } else {
       checkId(id);
     }
-    localStorage.setItem("pickQR", addPickQr);
   };
-
   const onClickResult = () => {
-    localStorage.setItem("pickUrl", urlOne);
+    localStorage.setItem("qrmode", "result");
+    localStorage.setItem("resultUrl", urlOne);
     navigate(routes.qrcode);
   };
   const onClickUrl = () => {
@@ -106,7 +105,6 @@ const Qrcontext = ({ addPickQr, setAddPickQr, title, urlOne, id }) => {
     }
   };
 
-  console.log(addPickQr);
   useEffect(() => {
     if (urlOne) {
       generateQrCode();

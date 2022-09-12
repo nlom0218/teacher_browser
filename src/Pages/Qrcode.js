@@ -7,10 +7,10 @@ import Qrresult from "../Components/Qrcode/Qrresult"; //결과화면
 import useMe from "../Hooks/useMe";
 
 const Qrcode = () => {
-  const [mode, setMode] = useState("make"); //페이지 전환 QR코드 생성(make), 결과화면(result)
+  const [mode, setMode] = useState(localStorage.getItem("qrmode"));
   const [url, setUrl] = useState(undefined); //생성화면 입력 혹은 보관함에서 클릭한 url주소
+
   const me = useMe();
-  const pickstate = localStorage.getItem("pickUrl") !== 0;
 
   return (
     <BasicContainer menuItem={true}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import GenerateQrCode from "./GenerateQrCode";
 
@@ -14,9 +14,11 @@ const BigQr = styled.div`
 const url = localStorage.getItem("pickUrl");
 
 const QrcodePopup = () => {
+  const [imageUrl, setImageUrl] = useState(""); //현재 선택된 url의 QR코드 이미지
+
   return (
     <BigQr>
-      <GenerateQrCode url={url} />
+      <GenerateQrCode url={url} setImageUrl={setImageUrl} imageUrl={imageUrl} />
     </BigQr>
   );
 };

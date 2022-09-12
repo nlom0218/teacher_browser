@@ -53,8 +53,7 @@ const PrintContainer = styled.div`
   }
 `;
 
-const QrPrintMain = ({ printRef }) => {
-  const { url, imageUrl } = useContext(QrcodeUrlContext);
+const QrPrintMain = ({ printRef, imageUrl, picklist }) => {
   const [num, setNum] = useState(1);
 
   // constructor(props){
@@ -94,7 +93,7 @@ const QrPrintMain = ({ printRef }) => {
         </PrintIcon>
       </PrintTopContents>
       <PrintContainer ref={printRef}>
-        <QrPrintContext num={num} />
+        <QrPrintContext num={num} imageUrl={imageUrl} picklist={picklist} />
       </PrintContainer>
     </PopupPrintContainer>
   );

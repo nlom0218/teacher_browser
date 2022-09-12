@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
 import QrcodeInput from "./QrcodeInput"; // url 주소 입력창
-import { QrcodeUrlContext } from "./QrcodeUrlContext"; //useContext
 //url이동
 import routes from "../../routes";
 import { useNavigate } from "react-router-dom";

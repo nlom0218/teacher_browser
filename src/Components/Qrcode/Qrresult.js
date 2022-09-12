@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from "react";
+import React, { useRef, useContext, useState } from "react";
 import styled from "styled-components";
 import { inputLine } from "../../Animations/InputLine";
 import { inPopup, isPopupVar } from "../../apollo";
@@ -119,16 +119,20 @@ const Body = styled.div`
 `;
 
 const Qrresult = () => {
+  const { setMode, url } = useContext(QrcodeUrlContext);
   const navigate = useNavigate();
-
-  const { setMode, imageUrl, url } = useContext(QrcodeUrlContext);
-  localStorage.setItem("pickUrl", url);
+  const [pickUrl, setPickUrl] = useState(url);
+  const [imageUrl, setImageUrl] = useState(""); //현재 선택된 url의 QR코드 이미지
+  const resultUrl = localStorage.getItem("resultUrl");
+  if (localStorage.getItem("pickUrl") === "undefined") {
+    setPickUrl(resultUrl);
+  }
+  localStorage.setItem("pickUrl", pickUrl);
   //윈도우 팝업창 불러오기 세팅.....데이터 전달이 잘 안 됨.
   const qrcodeUrl =
     process.env.NODE_ENV === "production"
       ? `https://teachercan.com/qrcode_popup`
       : `http://localhost:3000/qrcode_popup`;
-
   // 크게 보기 누르면 윈도우 창으로 열리게 함
   const onClickBig = () => {
     window.open(qrcodeUrl, "qrcodePopup");
@@ -136,8 +140,10 @@ const Qrresult = () => {
   };
   // 생성 페이지로 이동, url값 초기화
   const onClickMake = () => {
+    localStorage.setItem("qrmode", "make");
     setMode("make");
     localStorage.removeItem("pickUrl");
+    localStorage.removeItem("resultUrl");
   };
   //보관함에 저장 전 title입력창
   const onClickRegister = () => {
@@ -147,6 +153,7 @@ const Qrresult = () => {
   const onClickMyStorage = () => {
     navigate(routes.qrcodeStorage);
     localStorage.removeItem("pickUrl");
+    localStorage.removeItem("resultUrl");
   };
   //인쇄하기 화면으로 이동 - 여기서는 qr이미지만 보내서 출력하고 그 화면에서 제목 정도는 입력할 수 있도록 함.
   const onClickPrint = () => {
@@ -163,10 +170,11 @@ const Qrresult = () => {
       <BtnMy onClick={onClickMyStorage}>QR코드 보관함</BtnMy>
       <Main>
         <Body onClick={onClickBig}>
-          <GenerateQrCode url={url} /> <Message>이미지를 클릭하면 크게 볼 수 있습니다.</Message>
+          <GenerateQrCode url={pickUrl} setImageUrl={setImageUrl} imageUrl={imageUrl} />
+          <Message>이미지를 클릭하면 크게 볼 수 있습니다.</Message>
         </Body>
         <IN>
-          <div>{url}</div>
+          <div>{pickUrl}</div>
           <LineBox>
             <Line />
           </LineBox>
@@ -174,20 +182,19 @@ const Qrresult = () => {
         <BtnSpace>
           <Btn onClick={onClickPrint}>인쇄하기</Btn>
 
-          {imageUrl ? (
+          {url ? (
             <a href={imageUrl} download>
               <Btn>내 컴퓨터에 저장</Btn>
             </a>
           ) : null}
-
-          <Btn onClick={onClickRegister}> 보관함에 저장 </Btn>
+          {localStorage.getItem("qrmode") === "make" && <Btn onClick={onClickRegister}> 보관함에 저장 </Btn>}
 
           <Btn onClick={onClickMake}>새 QR코드</Btn>
         </BtnSpace>
       </Main>
       {/* 팝업에 이메일주소도 넘기기  */}
       {isPopup === "registerQR" && <Qrname />}
-      {isPopup === "print" && <QrPrintMain printRef={componentRef} />}
+      {isPopup === "print" && <QrPrintMain printRef={componentRef} imageUrl={imageUrl} />}
     </Container>
   );
 };

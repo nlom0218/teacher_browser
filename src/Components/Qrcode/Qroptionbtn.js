@@ -51,11 +51,10 @@ const Btn = styled.div`
     text-decoration: none;
   }
 `;
-const Qroptionbtn = ({ data, me }) => {
+const Qroptionbtn = ({ me, picklist }) => {
   const userEmail = me?.email;
-  const qrcodeIdList = localStorage.getItem("pickQR");
-  const qrcodeId = qrcodeIdList[0];
-
+  const qrcodeId = "";
+  console.log(qrcodeId);
   const onCompletedDel = (result) => {
     const {
       delqrcode: { ok },
@@ -66,6 +65,7 @@ const Qroptionbtn = ({ data, me }) => {
   const navigate = useNavigate();
 
   const onClickBtn = () => {
+    localStorage.setItem("qrmode", "make");
     navigate(routes.qrcode);
   };
   const onClickPrintBtn = () => {
