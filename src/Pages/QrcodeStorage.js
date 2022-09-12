@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import { useQuery } from "@apollo/client";
@@ -45,6 +45,8 @@ const Table = styled.div`
   row-gap: 1.25rem;
 `;
 const QrcodeStorage = () => {
+  const [addPickQr, setAddPickQr] = useState([]);
+
   // const isPopup = useReactiveVar(isPopupVar);
   const me = useMe();
   const { data, loading } = useQuery(QRCODES_QUERY, {
@@ -65,7 +67,14 @@ const QrcodeStorage = () => {
 
         <Table>
           {data?.qrcodes.map((qrcode, index) => (
-            <Qrcontext key={index} title={qrcode.title} urlOne={qrcode.url} id={qrcode._id} />
+            <Qrcontext
+              addPickQr={addPickQr}
+              setAddPickQr={setAddPickQr}
+              key={index}
+              title={qrcode.title}
+              urlOne={qrcode.url}
+              id={qrcode._id}
+            />
           ))}
         </Table>
 

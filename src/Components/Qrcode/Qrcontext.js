@@ -64,11 +64,10 @@ const Url = styled.div`
   overflow: hidden;
   cursor: pointer;
 `;
-const Qrcontext = ({ title, urlOne, id }) => {
+const Qrcontext = ({ addPickQr, setAddPickQr, title, urlOne, id }) => {
   const navigate = useNavigate();
 
   const [pick, setPick] = useState(false);
-  const [addPickQr, setAddPickQr] = useState([]);
   const [imageUrlOne, setImageUrlOne] = useState(undefined);
 
   const deleteId = (id) => {

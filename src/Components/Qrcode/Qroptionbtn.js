@@ -54,6 +54,8 @@ const Btn = styled.div`
 const Qroptionbtn = ({ data, me }) => {
   const userEmail = me?.email;
   const qrcodeIdList = localStorage.getItem("pickQR");
+  const qrcodeId = qrcodeIdList[0];
+
   const onCompletedDel = (result) => {
     const {
       delqrcode: { ok },
@@ -69,20 +71,21 @@ const Qroptionbtn = ({ data, me }) => {
   const onClickPrintBtn = () => {
     inPopup("printQR");
   };
-  const onClickDelQr = () => {
-    delqrcode({
-      variables: { userEmail },
-    });
-  };
-  // qrcodeId
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [delqrcode, { loading: delqrLoading }] = useMutation(DELETE_QRCODE_MUTATION, {
     onCompleted: onCompletedDel,
-    refetchQueries: [{ query: QRCODES_QUERY, variables: { userEmail } }],
+    refetchQueries: [{ query: QRCODES_QUERY, variables: { userEmail, qrcodeId } }],
   });
   if (delqrLoading) {
     return <Loading page="btnPopupPage" />;
   }
+
+  const onClickDelQr = () => {
+    delqrcode({
+      variables: { userEmail, qrcodeId },
+    });
+  };
   return (
     <Btn>
       <div onClick={onClickBtn}> 새 QR코드 추가</div>
