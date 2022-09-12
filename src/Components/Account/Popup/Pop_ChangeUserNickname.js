@@ -115,7 +115,7 @@ const Pop_ChangeUserNickname = ({ userNickname }) => {
                 onChange: () => setErrMsg(undefined),
               })}
               type="text"
-              placeholder="기존 비밀번호를 입력해주세요."
+              placeholder="닉네임을 입력해 주세요."
               autoComplete="off"
             />
           </InputLayout>
