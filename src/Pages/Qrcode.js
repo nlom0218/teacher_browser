@@ -12,6 +12,7 @@ const Qrcode = () => {
   const [imageUrl, setImageUrl] = useState(undefined); //현재 선택된 url의 QR코드 이미지
   const [qrtitle, setQrtitle] = useState(undefined);
   const me = useMe();
+  const pickstate = localStorage.getItem("pickUrl") !== 0;
 
   return (
     <BasicContainer menuItem={true}>

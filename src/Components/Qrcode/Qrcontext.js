@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import QRCode from "qrcode";
 import { GrCheckbox, GrCheckboxSelected } from "react-icons/gr";
+import routes from "../../routes";
+import { useNavigate } from "react-router-dom";
 
 const Storages = styled.div`
   display: grid;
@@ -63,20 +65,35 @@ const Url = styled.div`
   cursor: pointer;
 `;
 const Qrcontext = ({ title, urlOne, id }) => {
+  const navigate = useNavigate();
+
   const [pick, setPick] = useState(false);
+  const [addPickQr, setAddPickQr] = useState([]);
   const [imageUrlOne, setImageUrlOne] = useState(undefined);
 
+  const deleteId = (id) => {
+    const newAddId = addPickQr.filter((item) => item !== id);
+    setAddPickQr(newAddId);
+  };
+  const checkId = (id) => {
+    const newAddId = [...addPickQr, id];
+    setAddPickQr(newAddId);
+  };
   const onClickPick = () => {
     setPick(!pick);
+    const exist = addPickQr.includes(id);
+    if (exist) {
+      deleteId(id);
+    } else {
+      checkId(id);
+    }
+    localStorage.setItem("pickQR", addPickQr);
   };
-  if (pick == true) {
-    localStorage.setItem("pickQR", id);
-  }
-  if (pick == false) {
-    localStorage.removeItem("pickQR", id);
-  }
 
-  const onClickResult = () => {};
+  const onClickResult = () => {
+    localStorage.setItem("pickUrl", urlOne);
+    navigate(routes.qrcode);
+  };
   const onClickUrl = () => {
     window.open(urlOne, "width=500, height=600");
   };
@@ -89,6 +106,8 @@ const Qrcontext = ({ title, urlOne, id }) => {
       console.log(error);
     }
   };
+
+  console.log(addPickQr);
   useEffect(() => {
     if (urlOne) {
       generateQrCode();
@@ -96,7 +115,7 @@ const Qrcontext = ({ title, urlOne, id }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlOne]);
   return (
-    <Storages onClick={onClickPick}>
+    <Storages onClick={() => onClickPick(id)}>
       {pick === true ? <GrCheckboxSelected /> : <GrCheckbox />}
       <Body onClick={onClickResult}>
         <img src={imageUrlOne} alt="img" />

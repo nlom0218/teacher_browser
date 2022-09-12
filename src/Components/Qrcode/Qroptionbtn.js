@@ -53,7 +53,7 @@ const Btn = styled.div`
 `;
 const Qroptionbtn = ({ data, me }) => {
   const userEmail = me?.email;
-  const qrcodeId = localStorage.getItem("pickQR");
+  const qrcodeIdList = localStorage.getItem("pickQR");
   const onCompletedDel = (result) => {
     const {
       delqrcode: { ok },
@@ -71,21 +71,22 @@ const Qroptionbtn = ({ data, me }) => {
   };
   const onClickDelQr = () => {
     delqrcode({
-      variables: { userEmail, qrcodeId },
+      variables: { userEmail },
     });
   };
-  if (delqrLoading) {
-    return <Loading page="btnPopupPage" />;
-  }
+  // qrcodeId
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [delqrcode, { loading: delqrLoading }] = useMutation(DELETE_QRCODE_MUTATION, {
     onCompleted: onCompletedDel,
-    refetchQueries: [{ query: QRCODES_QUERY, variables: { userEmail, qrcodeId } }, { query: ME_QUERY }],
+    refetchQueries: [{ query: QRCODES_QUERY, variables: { userEmail } }],
   });
+  if (delqrLoading) {
+    return <Loading page="btnPopupPage" />;
+  }
   return (
     <Btn>
       <div onClick={onClickBtn}> 새 QR코드 추가</div>
-      <div>순서 바꾸기</div>
+      {/* <div>순서 바꾸기</div> */}
       <div onClick={onClickPrintBtn}>인쇄 하기</div>
       <del onClick={onClickDelQr}>삭제 하기</del>
     </Btn>

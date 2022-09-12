@@ -131,14 +131,13 @@ const Qrresult = () => {
 
   // 크게 보기 누르면 윈도우 창으로 열리게 함
   const onClickBig = () => {
-    console.log("Big");
-
     window.open(qrcodeUrl, "qrcodePopup");
     // sendMessage();
   };
   // 생성 페이지로 이동, url값 초기화
   const onClickMake = () => {
     setMode("make");
+    localStorage.removeItem("pickUrl");
   };
   //보관함에 저장 전 title입력창
   const onClickRegister = () => {
@@ -147,6 +146,7 @@ const Qrresult = () => {
   //보관함으로 이동
   const onClickMyStorage = () => {
     navigate(routes.qrcodeStorage);
+    localStorage.removeItem("pickUrl");
   };
   //인쇄하기 화면으로 이동 - 여기서는 qr이미지만 보내서 출력하고 그 화면에서 제목 정도는 입력할 수 있도록 함.
   const onClickPrint = () => {
