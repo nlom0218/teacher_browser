@@ -66,7 +66,6 @@ const Btn = styled.div`
 const Qrcodemake = () => {
   const navigate = useNavigate();
 
-  const { url, setUrl, setImageUrl, mode, setMode } = useContext(QrcodeUrlContext);
   const onClickMyStorage = () => {
     navigate(routes.qrcodeStorage);
   };
@@ -79,7 +78,7 @@ const Qrcodemake = () => {
         <IN>
           <Icon></Icon>
           <Head>URL 주소 입력 </Head>
-          <QrcodeInput mode={mode} setMode={setMode} url={url} setUrl={setUrl} setImageUrl={setImageUrl} />
+          <QrcodeInput />
           <div>URL 주소를 입력하면 QR코드가 생성됩니다. 바르게 입력해주세요. </div>
         </IN>
       </Main>

@@ -1,16 +1,22 @@
 import React from "react";
 import styled from "styled-components";
-import GenerateQrCode from "./QrcodeImage";
+import GenerateQrCode from "./GenerateQrCode";
 
 const BigQr = styled.div`
   background-color: white;
-  width: 2000px;
-  height: 1000px;
+  img {
+    margin: auto;
+    display: block;
+    width: 800px;
+  }
 `;
+
+const url = localStorage.getItem("pickUrl");
+
 const QrcodePopup = () => {
   return (
     <BigQr>
-      <GenerateQrCode />; ;
+      <GenerateQrCode url={url} />
     </BigQr>
   );
 };

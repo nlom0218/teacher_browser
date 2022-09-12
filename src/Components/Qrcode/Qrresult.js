@@ -6,7 +6,7 @@ import Qrname from "./Qrname";
 import { useReactiveVar } from "@apollo/client";
 import QrPrintMain from "./QrPrint/QrPrintMain";
 import { QrcodeUrlContext } from "./QrcodeUrlContext";
-import GenerateQrCode from "./QrcodeImage";
+import GenerateQrCode from "./GenerateQrCode";
 import routes from "../../routes";
 import { useNavigate } from "react-router-dom";
 
@@ -122,7 +122,7 @@ const Qrresult = () => {
   const navigate = useNavigate();
 
   const { setMode, imageUrl, url } = useContext(QrcodeUrlContext);
-
+  localStorage.setItem("pickUrl", url);
   //윈도우 팝업창 불러오기 세팅.....데이터 전달이 잘 안 됨.
   const qrcodeUrl =
     process.env.NODE_ENV === "production"
@@ -163,8 +163,7 @@ const Qrresult = () => {
       <BtnMy onClick={onClickMyStorage}>QR코드 보관함</BtnMy>
       <Main>
         <Body onClick={onClickBig}>
-          {/* {imageUrl ? <img src={imageUrl} alt="img" value="qrImgValue" onClick={onClickBig} /> : null}{" "} */}
-          <GenerateQrCode /> <Message>이미지를 클릭하면 크게 볼 수 있습니다.</Message>
+          <GenerateQrCode url={url} /> <Message>이미지를 클릭하면 크게 볼 수 있습니다.</Message>
         </Body>
         <IN>
           <div>{url}</div>

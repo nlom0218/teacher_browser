@@ -1,10 +1,8 @@
-import React, { useContext, useEffect } from "react";
-import styled from "styled-components";
-import { QrcodeUrlContext } from "./QrcodeUrlContext";
+import React, { useState, useEffect } from "react";
 import QRCode from "qrcode";
 
-const GenerateQrCode = () => {
-  const { url, setImageUrl, imageUrl } = useContext(QrcodeUrlContext);
+const GenerateQrCode = ({ url }) => {
+  const [imageUrl, setImageUrl] = useState(undefined); //현재 선택된 url의 QR코드 이미지
 
   //qr 생성
   const generateQrCode = async () => {
