@@ -5,6 +5,8 @@ import GenerateQrCode from "../GenerateQrCode";
 
 const GridList = styled.div`
   display: grid;
+  text-align: center;
+
   grid-template-columns: repeat(6, 1fr);
   row-gap: 20px;
   row-gap: 1.25rem;
