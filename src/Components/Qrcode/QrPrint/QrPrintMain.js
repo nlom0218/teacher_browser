@@ -21,6 +21,7 @@ const PrintIcon = styled.div`
   column-gap: 5px;
   column-gap: 0.3125rem;
   font-weight: 600;
+  padding-right: 10px;
   cursor: pointer;
   svg {
     font-size: 2.25em;
@@ -45,6 +46,7 @@ const PrintContainer = styled.div`
   row-gap: 2.5rem;
   padding: 20px;
   padding: 1.25rem;
+
   @media print {
     @page {
       size: A4;
