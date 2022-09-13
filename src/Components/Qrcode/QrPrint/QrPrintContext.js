@@ -1,4 +1,3 @@
-import { isNonEmptyArray } from "@apollo/client/utilities";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { color } from "../../../styles";
@@ -12,6 +11,9 @@ const GridList = styled.div`
   column-gap: 10px;
   column-gap: 0.625rem;
   color: ${color.black};
+  img {
+    width: 100px;
+  }
 `;
 const QrPrintContext = ({ num, imageUrl, picklist }) => {
   const [imgUrl, setImgUrl] = useState("");
