@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import QRCode from "qrcode";
 
@@ -6,6 +6,7 @@ const Title = styled.div`
   display: grid;
   text-align: center;
 `;
+
 const GenerateQrCode = ({ url, setImageUrl, imageUrl, title }) => {
   //qr 생성
 

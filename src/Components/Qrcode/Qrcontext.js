@@ -33,6 +33,10 @@ const Body = styled.div`
   justify-items: center;
   align-items: center;
   cursor: pointer;
+  img {
+    width: 130px;
+    height: 130px;
+  }
 `;
 
 const Subject = styled.div`
