@@ -66,6 +66,7 @@ const Qrcodemake = () => {
   const navigate = useNavigate();
 
   const onClickMyStorage = () => {
+    localStorage.setItem("qrmode", "make");
     navigate(routes.qrcodeStorage);
   };
 

@@ -51,10 +51,10 @@ const Btn = styled.div`
     text-decoration: none;
   }
 `;
-const Qroptionbtn = ({ me, picklist }) => {
+const Qroptionbtn = ({ data, me, picklist }) => {
   const userEmail = me?.email;
-  const qrcodeId = "";
-  console.log(qrcodeId);
+  const pickalllist = [...picklist];
+  const qrcodeId = pickalllist[0].id;
   const onCompletedDel = (result) => {
     const {
       delqrcode: { ok },

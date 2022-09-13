@@ -151,6 +151,7 @@ const Qrresult = () => {
   };
   //보관함으로 이동
   const onClickMyStorage = () => {
+    localStorage.setItem("qrmode", "make");
     navigate(routes.qrcodeStorage);
     localStorage.removeItem("pickUrl");
     localStorage.removeItem("resultUrl");

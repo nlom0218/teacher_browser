@@ -69,7 +69,6 @@ const QrcodeStorage = () => {
       setpicklist(list);
     }
   }, [addPickQr]);
-
   return (
     <BasicContainer menuItem={true}>
       <Container>

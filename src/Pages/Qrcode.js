@@ -8,6 +8,7 @@ import useMe from "../Hooks/useMe";
 
 const Qrcode = () => {
   const [mode, setMode] = useState(localStorage.getItem("qrmode"));
+
   const [url, setUrl] = useState(undefined); //생성화면 입력 혹은 보관함에서 클릭한 url주소
 
   const me = useMe();
