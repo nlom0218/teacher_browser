@@ -16,7 +16,7 @@ const QrPrintContext = ({ num, imageUrl, picklist }) => {
   const [imgUrl, setImgUrl] = useState("");
   const qrImg = [];
   for (let i = 0; i < num; i++) {
-    qrImg.push(<img src={imageUrl} alt="img" value="qrImgValue" />);
+    qrImg.push(<img src={imageUrl} alt="img" value="qrImgValue" width="100px" />);
   }
 
   return (
