@@ -59,12 +59,12 @@ const DelBtn = styled.input`
   border-radius: 0.3125rem;
   cursor: pointer;
   text-align: center;
-  background-color: ${(props) => props.theme.redColor};
+  background-color: ${(props) => props.theme.btnBgColor};
   color: ${(props) => props.theme.bgColor};
 `;
 
 const CancleBtn = styled.div`
-  background-color: ${(props) => props.theme.btnBgColor};
+  background-color: ${(props) => props.theme.redColor};
 `;
 
 const Msg = styled.div`
@@ -74,7 +74,7 @@ const Msg = styled.div`
   color: red;
 `;
 
-const Pop_ChangeNickname = ({ nickname }) => {
+const Pop_ChangeNickname = ({ userEmail, nickname }) => {
   const [errMsg, setErrMsg] = useState(null);
 
   const { register, handleSubmit } = useForm({
@@ -84,8 +84,7 @@ const Pop_ChangeNickname = ({ nickname }) => {
 
   const onSubmit = (data) => {
     const { nickname } = data;
-
-    changeNickname({ variables: { nickname } });
+    changeNickname({ variables: { userEmail, nickname } });
   };
 
   const navigate = useNavigate();
@@ -115,7 +114,7 @@ const Pop_ChangeNickname = ({ nickname }) => {
                 onChange: () => setErrMsg(undefined),
               })}
               type="text"
-              placeholder="닉네임을 입력해 주세요."
+              placeholder="닉네임을 입력해 주세요"
               autoComplete="off"
             />
           </InputLayout>

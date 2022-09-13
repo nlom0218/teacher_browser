@@ -105,7 +105,7 @@ const EditAccount = () => {
           <List>닉네임</List>
           <Item>
             {me?.nickname || "닉네임을 등록해 주세요"}
-            {<ChangeNickname nickname={me?.nickname}></ChangeNickname>}
+            {<ChangeNickname userEmail={me?.email}></ChangeNickname>}
           </Item>
         </Changes>
         <Changes>
@@ -150,7 +150,7 @@ const EditAccount = () => {
       </Container>
       {isPopup === "registerSchool" && <RegisterSchool setMsg={setMsg} />}
       {isPopup === "changePw" && <Pop_ChangePw userEmail={me?.email} />}
-      {isPopup === "changeNickname" && <Pop_ChangeNickname nickname={me?.nickname} />}
+      {isPopup === "changeNickname" && <Pop_ChangeNickname userEmail={me?.email} nickname={me?.nickname} />}
       {msg && <AlertMessage msg={msg} setMsg={setMsg} time={3000} type="success" />}
       {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} time={3000} type="error" />}
     </BasicContainer>
