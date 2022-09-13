@@ -55,12 +55,10 @@ const QrcodeStorage = () => {
     variables: { userEmail: me?.email },
     skip: !me,
   });
-  if (loading) {
-    return <Loading page="mainPage" />;
-  }
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
-    if (addPickQr) {
+    if (addPickQr.length !== 0) {
       const list = data?.qrcodes
         .filter((item) => addPickQr.includes(item._id))
         .map((item, index) => {
@@ -69,12 +67,16 @@ const QrcodeStorage = () => {
       setpicklist(list);
     }
   }, [addPickQr]);
+
+  if (loading) {
+    return <Loading page="mainPage" />;
+  }
   return (
     <BasicContainer menuItem={true}>
       <Container>
         <Title>내 QR코드 보관함</Title>
         <div>
-          <Qroptionbtn data={data} me={me} picklist={picklist} />
+          <Qroptionbtn data={data} me={me} picklist={picklist} addPickQr={addPickQr} setAddPickQr={setAddPickQr} />
         </div>
 
         <Table>

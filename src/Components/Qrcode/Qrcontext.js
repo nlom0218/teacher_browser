@@ -111,6 +111,12 @@ const Qrcontext = ({ addPickQr, setAddPickQr, title, urlOne, id }) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlOne]);
+  useEffect(() => {
+    if (addPickQr.length === 0) {
+      setPick(false);
+    }
+  }, [addPickQr]);
+
   return (
     <Storages onClick={() => onClickPick(id)}>
       {pick === true ? <GrCheckboxSelected /> : <GrCheckbox />}

@@ -17,8 +17,8 @@ export const UPDATE_QRCODE_MUTATION = gql`
   }
 `;
 export const DELETE_QRCODE_MUTATION = gql`
-  mutation DeleteQrcode($userEmail: String!, $_id: ID!) {
-    deleteQrcode(userEmail: $userEmail, qrcodeId: $_id) {
+  mutation DeleteQrcode($userEmail: String!, $qrcodeId: ID!) {
+    deleteQrcode(userEmail: $userEmail, qrcodeId: $qrcodeId) {
       ok
       error
     }

@@ -6,10 +6,10 @@ import { useForm } from "react-hook-form";
 import { QrcodeUrlContext } from "./QrcodeUrlContext";
 import { useMutation } from "@apollo/client";
 import { CREATE_QRCODE_MUTATION } from "../../Graphql/Qrcode/mutation";
-import { ME_QUERY } from "../../Hooks/useMe";
 import Loading from "../Shared/Loading";
 import routes from "../../routes";
 import { useNavigate } from "react-router-dom";
+import { QRCODES_QUERY } from "../../Graphql/Qrcode/query";
 
 const Frame = styled.form`
   display: grid;
@@ -78,7 +78,6 @@ const Qrname = () => {
     const {
       createQrcode: { ok },
     } = result;
-    console.log(result);
     if (ok) {
       navigate(routes.qrcodeStorage);
       outPopup();
@@ -87,7 +86,7 @@ const Qrname = () => {
 
   const [createQrcode, { loading }] = useMutation(CREATE_QRCODE_MUTATION, {
     onCompleted,
-    refetchQueries: [{ query: ME_QUERY }],
+    refetchQueries: [{ query: QRCODES_QUERY, variables: { userEmail: me?.email } }],
   });
   if (loading) {
     return <Loading page="popupPage" />;

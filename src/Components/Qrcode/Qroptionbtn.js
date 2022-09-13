@@ -51,13 +51,11 @@ const Btn = styled.div`
     text-decoration: none;
   }
 `;
-const Qroptionbtn = ({ data, me, picklist }) => {
+const Qroptionbtn = ({ data, me, picklist, addPickQr, setAddPickQr }) => {
   const userEmail = me?.email;
-  const pickalllist = [...picklist];
-  const qrcodeId = pickalllist[0].id;
   const onCompletedDel = (result) => {
     const {
-      delqrcode: { ok },
+      deleteQrcode: { ok },
     } = result;
     if (ok) {
     }
@@ -75,22 +73,25 @@ const Qroptionbtn = ({ data, me, picklist }) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [delqrcode, { loading: delqrLoading }] = useMutation(DELETE_QRCODE_MUTATION, {
     onCompleted: onCompletedDel,
-    refetchQueries: [{ query: QRCODES_QUERY, variables: { userEmail, qrcodeId } }],
+    refetchQueries: [{ query: QRCODES_QUERY, variables: { userEmail } }],
   });
   if (delqrLoading) {
     return <Loading page="btnPopupPage" />;
   }
 
   const onClickDelQr = () => {
-    delqrcode({
-      variables: { userEmail, qrcodeId },
+    addPickQr.forEach((item) => {
+      delqrcode({
+        variables: { userEmail, qrcodeId: item },
+      });
     });
+    setAddPickQr([]);
   };
   return (
     <Btn>
       <div onClick={onClickBtn}> 새 QR코드 추가</div>
       {/* <div>순서 바꾸기</div> */}
-      <div onClick={onClickPrintBtn}>인쇄 하기</div>
+      {/* <div onClick={onClickPrintBtn}>인쇄 하기</div> */}
       <del onClick={onClickDelQr}>삭제 하기</del>
     </Btn>
   );
