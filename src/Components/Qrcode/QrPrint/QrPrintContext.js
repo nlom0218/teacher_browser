@@ -25,23 +25,19 @@ const QrPrintContext = ({ num, imageUrl, picklist }) => {
 
   if (imageUrl) {
     for (let i = 0; i < num; i++) {
-      qrImgR.push(<img src={imageUrl} alt="img" value="qrImgValue" width="100px" />);
+      // 오류2. 아래의 JSX에도 key props가 필요함. 반복을 통해 생성되는 JSX이기 때문
+      qrImgR.push(<img src={imageUrl} key={i} alt="img" value="qrImgValue" width="100px" />);
     }
   }
   if (picklist) {
     for (let i = 0; i < num; i++) {
       qrImg.push(
-        <div>
+        // 오류2. 아래의 JSX에도 key props가 필요함. 반복을 통해 생성되는 JSX이기 때문
+        <div key={i}>
           {picklist.map((item, index) => {
             return (
               <div key={index}>
-                <GenerateQrCode
-                  key={index}
-                  imageUrl={imgUrl}
-                  setImageUrl={setImgUrl}
-                  url={item.url}
-                  title={item.title}
-                />
+                <GenerateQrCode imageUrl={imgUrl} setImageUrl={setImgUrl} url={item.url} title={item.title} />
               </div>
             );
           })}
