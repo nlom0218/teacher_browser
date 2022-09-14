@@ -23,6 +23,8 @@ import IcNewsClick from "../../icons/News/IcNewsClick";
 import IcNews from "../../icons/News/IcNews";
 import useMedia from "../../Hooks/useMedia";
 import IcFamilyMonth from "../../icons/FamilyMonth/FamilyMonth";
+import IcQrcode from "../../icons/Qrcod/IcQrcode";
+import IcQrcodeClick from "../../icons/Qrcod/IcQrcodeClick";
 
 const SMenu = styled.div`
   display: grid;
@@ -203,6 +205,24 @@ export const FamilyMonthLink = () => {
       >
         <IcFamilyMonth />
         <Title style={{ color: "#F7658E" }}>가정의 달</Title>
+      </SMenu>
+    </Link>
+  );
+};
+
+export const QrcodeLink = () => {
+  const media = useMedia();
+  const [isHover, setIsHover] = useState(false);
+  const onClickListLink = () => {
+    if (media === "Desktop") {
+      fullScreenMode();
+    }
+  };
+  return (
+    <Link to={routes.qrcode} onClick={onClickListLink}>
+      <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+        {isHover ? <IcQrcodeClick /> : <IcQrcode />}
+        <Title>QR코드</Title>
       </SMenu>
     </Link>
   );
