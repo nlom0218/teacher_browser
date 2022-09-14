@@ -54,6 +54,7 @@ const Welcome = () => {
           <HomeSection
             dDay={me?.dDay}
             userEmail={me?.email}
+            nickname={me?.nickname}
             isMoveDDay={me?.isMoveDDay}
             setMsg={setMsg}
             setErrMsg={setErrMsg}
