@@ -16,11 +16,6 @@ import NeedLoginPopupContainer from "../Components/Shared/NeedLoginPopupContaine
 import PageLinkHelper from "../Components/PageLink/Popup/PageLinkHelper";
 import useMedia from "../Hooks/useMedia";
 
-//추천사이트 목록 정리하기
-//즐겨찾기 없을 경우 설명하는 페이지 추가
-//반응형 화면 구성
-// 즐겨찾기 삭제 시 바로 안 됨
-//refactoring start
 const Container = styled.div``;
 
 const PageLink = () => {

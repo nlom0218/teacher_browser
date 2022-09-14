@@ -68,6 +68,7 @@ export const DELETE_SCHOOL_INFO_MUTATION = gql`
 export const UPDATE_USER_MUTATION = gql`
   mutation UpdateUser(
     $userEmail: String!
+    $nickname: String
     $schoolName: String
     $schoolCode: String
     $areaCode: String
@@ -76,6 +77,7 @@ export const UPDATE_USER_MUTATION = gql`
   ) {
     updateUser(
       userEmail: $userEmail
+      nickname: $nickname
       schoolName: $schoolName
       schoolCode: $schoolCode
       areaCode: $areaCode

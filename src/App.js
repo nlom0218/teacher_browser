@@ -47,7 +47,9 @@ import News from "./Pages/News";
 import FamilyMonth from "./Pages/FamilyMonth";
 import TimerPopup from "./Pages/TimerPopup";
 import ManagingRoles from "./Pages/ManagingRoles";
-
+import Qrcode from "./Pages/Qrcode";
+import QrcodePopup from "./Components/Qrcode/QrcodePopup";
+import QrcodeStorage from "./Pages/QrcodeStorage";
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
   const bgTheme = useReactiveVar(bgThemeVar);
@@ -171,6 +173,9 @@ function App() {
         <Route path={routes.familyMonth} element={<FamilyMonth />} />
         <Route path={`${routes.familyMonth}/:page`} element={<FamilyMonth />} />
         <Route path={`${routes.familyMonth}/:page/:id`} element={<FamilyMonth />} />
+        <Route path={routes.qrcode} element={<Qrcode />} />
+        <Route path={routes.qrcodePopup} element={<QrcodePopup />} />
+        <Route path={routes.qrcodeStorage} element={<QrcodeStorage />} />
       </Routes>
     </ThemeProvider>
   );
