@@ -2,11 +2,13 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
-import { forwardRef, useState } from "react";
+import React, { Dispatch, forwardRef, SetStateAction, useState } from "react";
 import useMedia from "../../Hooks/useMedia";
 import { customMedia } from "../../styles";
 import IcCalender from "../../icons/Calender/IcCalender";
 import IcCalenderClick from "../../icons/Calender/IcCalenderClick";
+import { ISearchDate } from "../../Pages/Lunchmenu";
+import { format } from "date-fns";
 
 const DatePickers = styled(DatePicker)`
   font-size: 2em;
@@ -49,22 +51,34 @@ const DateIcon = styled.div`
   `}
 `;
 
-export const Date = ({ date, setDate, processSetDate }) => {
+interface IProps {
+  date: Date;
+  setSearchData: Dispatch<SetStateAction<ISearchDate>>;
+}
+
+interface IForwardRef {
+  onClick?: () => void;
+}
+
+export const SearchDate = ({ date, setSearchData }: IProps) => {
   const [isHover, setIsHover] = useState(false);
 
-  // 반응형
   const media = useMedia();
 
-  //날짜 설정하기
-  const getDate = (date) => {
-    const lmSetting = JSON.parse(localStorage.getItem("lmSetting"));
+  const getDate = (date: Date) => {
+    const lmSetting = JSON.parse(localStorage.getItem("lmSetting") || "");
     const newLmSetting = { ...lmSetting, date };
     localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
-    setDate(date);
+    setSearchData((prev) => {
+      return {
+        ...prev,
+        date,
+      };
+    });
   };
-  const CustomInput = forwardRef(({ value, onClick }, ref) => (
+  const CustomInput = forwardRef(({ onClick }: IForwardRef, ref: React.ForwardedRef<HTMLDivElement>) => (
     <DateContainer ref={ref}>
-      {media !== "Mobile" && <div>{processSetDate()}</div>}
+      {media !== "Mobile" && <div>{format(date, "yyyy년 MM월 dd일")}</div>}
       <DateIcon onClick={onClick} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <IcCalenderClick /> : <IcCalender />}
       </DateIcon>
@@ -74,7 +88,7 @@ export const Date = ({ date, setDate, processSetDate }) => {
     <DatePickers
       dateFormat="yyyy/MM/dd"
       selected={date}
-      onChange={(date) => getDate(date)}
+      onChange={(date: Date) => getDate(date)}
       todayButton="오늘"
       locale={ko}
       customInput={<CustomInput />}

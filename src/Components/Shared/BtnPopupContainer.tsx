@@ -18,7 +18,12 @@ const Container = styled.div`
   transform: translate(-50%, -50%);
 `;
 
-const BtnPopupContainer = ({ children, preventOutPoup }) => {
+interface IProps {
+  children: React.ReactNode;
+  preventOutPoup?: boolean;
+}
+
+const BtnPopupContainer = ({ children, preventOutPoup }: IProps) => {
   // 팝업창의 배경을 클릭하게 되면 팝업창에서 벗어나게 된다.
   const onClickBackground = () => {
     if (preventOutPoup) {
