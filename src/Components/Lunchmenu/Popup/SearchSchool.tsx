@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { FcSearch } from "react-icons/fc";
 import styled from "styled-components";
-import { outPopup } from "../../apollo";
-import PopupContainer from "../Shared/PopupContainer";
-import RegisterErrMsg from "../Account/styled/RegisterErrMsg";
-import RegisterForm from "../Account/styled/RegisterForm";
+import { outPopup } from "../../../apollo";
+import PopupContainer from "../../Shared/PopupContainer";
+import RegisterErrMsg from "../../Account/styled/RegisterErrMsg";
+import RegisterForm from "../../Account/styled/RegisterForm";
+import { ISearchDate } from "../../../Pages/Lunchmenu";
 
 const SearchInput = styled.input`
   width: 100%;
@@ -22,10 +23,6 @@ const SchoolList = styled.div`
   row-gap: 1.25rem;
   padding-bottom: 10px;
   padding-bottom: 0.625rem;
-  /* padding-top: 20px;
-  padding-top: 1.25rem;
-  border-top: 1px solid ${(props) => props.theme.fontColor};
-  transition: border-top 1s ease; */
 `;
 
 const SchoolItem = styled.div`
@@ -41,13 +38,37 @@ const PageBtn = styled.div`
   cursor: pointer;
 `;
 
-const SearchSchool = ({ setSchoolCode, setSchoolName, setAreaCode }) => {
+interface IProps {
+  setSearchData: Dispatch<SetStateAction<ISearchDate>>;
+}
+
+interface ISchoolInfo {
+  areaCode: string;
+  areaName: string;
+  schoolCode: string;
+  schoolName: string;
+  schoolAdress: string;
+}
+
+interface IShcoolData {
+  ATPT_OFCDC_SC_CODE: string;
+  ATPT_OFCDC_SC_NM: string;
+  SD_SCHUL_CODE: string;
+  SCHUL_NM: string;
+  ORG_RDNMA: string;
+}
+
+interface FormValues {
+  school: string;
+}
+
+const SearchSchool = ({ setSearchData }: IProps) => {
   const [page, setPage] = useState(1);
-  const [schoolInfo, setSchoolInfo] = useState(undefined);
-  const [errMsg, setErrMsg] = useState(undefined);
+  const [schoolInfo, setSchoolInfo] = useState<ISchoolInfo[] | undefined>(undefined);
+  const [errMsg, setErrMsg] = useState<string | undefined>(undefined);
   const [preventSubmit, setPreventSubmit] = useState(false);
-  // 다음페이지로 넘기기 위해서는 '다음 페이지'버튼 이용, 엔터로 다음페이지 넘기기 하지 않기
-  const findSchool = (school) => {
+
+  const findSchool = (school: string) => {
     fetch(
       `https://open.neis.go.kr/hub/schoolInfo?KEY=8bd04fadaf4d480792216f84d92fb1f9&Type=json&pIndex=${page}&pSize=5&SCHUL_NM=${school}`,
     )
@@ -58,20 +79,21 @@ const SearchSchool = ({ setSchoolCode, setSchoolName, setAreaCode }) => {
           setSchoolInfo(undefined);
           return;
         }
-        const schoolInfo = data.schoolInfo[1].row.map((item) => {
-          const areaCode = item.ATPT_OFCDC_SC_CODE;
-          const areaName = item.ATPT_OFCDC_SC_NM;
-          const schoolCode = item.SD_SCHUL_CODE;
-          const schoolName = item.SCHUL_NM;
-          const schoolAdress = item.ORG_RDNMA;
-          return { areaCode, areaName, schoolCode, schoolName, schoolAdress };
+        const { row } = data.schoolInfo[1];
+        const schoolInfo = row.map((item: IShcoolData) => {
+          return {
+            areaCode: item.ATPT_OFCDC_SC_CODE,
+            areaName: item.ATPT_OFCDC_SC_NM,
+            schoolCode: item.SD_SCHUL_CODE,
+            schoolName: item.SCHUL_NM,
+            schoolAdress: item.ORG_RDNMA,
+          };
         });
         setSchoolInfo(schoolInfo);
-        setPage((prev) => prev + 1);
       });
   };
-  const { register, handleSubmit, getValues } = useForm();
-  const onSubmit = (data) => {
+  const { register, handleSubmit, getValues } = useForm<FormValues>();
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
     const { school } = data;
     if (preventSubmit) {
       return;
@@ -83,11 +105,16 @@ const SearchSchool = ({ setSchoolCode, setSchoolName, setAreaCode }) => {
     setPreventSubmit(true);
     findSchool(school);
   };
-  const onClickSchool = (areaCode, schoolCode, schoolName) => {
-    setAreaCode(areaCode);
-    setSchoolCode(schoolCode);
-    setSchoolName(schoolName);
-    const lmSetting = JSON.parse(localStorage.getItem("lmSetting"));
+  const onClickSchool = (areaCode: string, schoolCode: string, schoolName: string) => {
+    setSearchData((prev) => {
+      return {
+        ...prev,
+        areaCode,
+        schoolCode,
+        schoolName,
+      };
+    });
+    const lmSetting = JSON.parse(localStorage.getItem("lmSetting") || "");
     const newLmSetting = { ...lmSetting, areaCode, schoolName, schoolCode };
     localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
     outPopup();
@@ -99,10 +126,14 @@ const SearchSchool = ({ setSchoolCode, setSchoolName, setAreaCode }) => {
     setPage(1);
   };
   const onClickPageBtn = () => {
-    findSchool(getValues("school"));
+    setPage((prev) => prev + 1);
   };
+
+  useEffect(() => {
+    if (page === 1) return;
+    findSchool(getValues("school"));
+  }, [page]);
   return (
-    // 현재 이곳이 파업창이라면 꼭 PopupContainer를 최상위 부모로 가져야 한다. Components => shared 에 있음
     <PopupContainer>
       <RegisterForm onSubmit={handleSubmit(onSubmit)}>
         <SearchInput

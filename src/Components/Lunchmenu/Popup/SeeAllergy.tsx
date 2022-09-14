@@ -1,5 +1,4 @@
 import { useQuery } from "@apollo/client";
-import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { SEE_ALLERGY_STUDENT_QUERY } from "../../../Graphql/Student/query";
@@ -43,9 +42,17 @@ const AllergyStudent = styled.div`
   `}
 `;
 
+interface IData {
+  seeAllStudent: {
+    _id: string;
+    trash: boolean;
+    studentName: string;
+  }[];
+}
+
 const SeeAllergy = () => {
-  const allergyNum = parseInt(localStorage.getItem("AllergyNum"));
-  const { data, loading, refetch } = useQuery(SEE_ALLERGY_STUDENT_QUERY, {
+  const allergyNum = parseInt(localStorage.getItem("AllergyNum") || "");
+  const { data, loading } = useQuery<IData>(SEE_ALLERGY_STUDENT_QUERY, {
     variables: {
       allergy: allergyNum,
     },
@@ -99,7 +106,6 @@ const SeeAllergy = () => {
     <PopupContainer>
       <Container>
         <AllergyName>{processAllergyInfo()}</AllergyName>
-        {/* <RefetchBtn onClick={onClickRefetch}><FcSynchronize /></RefetchBtn> */}
         <AllergyStudent>
           {data?.seeAllStudent
             .filter((item) => !item.trash)

@@ -1,10 +1,15 @@
 import { useQuery } from "@apollo/client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { inPopup } from "../../apollo";
 import { SEE_ALLERGY_STUDENT_QUERY } from "../../Graphql/Student/query";
+import { IMe } from "../../Hooks/useMe";
 
-const SAllergyItem = styled.div`
+interface IStyled {
+  myAllergy: boolean;
+}
+
+const SAllergyItem = styled.div<IStyled>`
   margin-right: 10px;
   margin-right: 0.625rem;
   opacity: ${(props) => (props.myAllergy ? 1 : 0.6)};
@@ -33,18 +38,30 @@ const HoverContent = styled.div`
   border-radius: 0.3125rem;
 `;
 
-const AllergyItem = ({ item, me }) => {
-  const [isHover, setIsHover] = useState(false);
-  const [hoverContent, setHoverContent] = useState(undefined);
+interface IProps extends IMe {
+  item: string;
+}
 
-  const { data, loading, refetch } = useQuery(SEE_ALLERGY_STUDENT_QUERY, {
+interface IHoverContent {
+  studentName: string;
+  studentNum: number;
+}
+
+interface IData {
+  seeAllStudent: [{ studentName: string }];
+}
+
+const AllergyItem = ({ item, me }: IProps) => {
+  const [isHover, setIsHover] = useState(false);
+  const [hoverContent, setHoverContent] = useState<IHoverContent>();
+
+  const { data, refetch } = useQuery<IData>(SEE_ALLERGY_STUDENT_QUERY, {
     variables: {
       allergy: parseInt(item),
     },
   });
 
-  // 알러지를 가지고 있는 학생 보기 팝업
-  const onClickAllergy = (allergy) => {
+  const onClickAllergy = (allergy: string) => {
     if (me?.allergy.includes(parseInt(allergy))) {
       inPopup("seeAllergy");
       localStorage.setItem("AllergyNum", allergy);
@@ -59,7 +76,7 @@ const AllergyItem = ({ item, me }) => {
     if (data?.seeAllStudent) {
       const students = data?.seeAllStudent?.map((item) => item.studentName);
       if (students.length !== 0) {
-        const studentName = [students[0], students[1], students[2]].filter((item) => item).join(", ");
+        const studentName = students.slice(0, 3).join(", ");
         const studentNum = students.length;
         setHoverContent({ studentName, studentNum });
       }
@@ -80,7 +97,7 @@ const AllergyItem = ({ item, me }) => {
         <SeeAlleryStudent>
           <HoverContent>
             {hoverContent.studentName}
-            {hoverContent.studentNum > 3 && `, +${hoverContent.studentNum - 3}`}
+            {hoverContent.studentNum > 3 && ` +${hoverContent.studentNum - 3}`}
           </HoverContent>
         </SeeAlleryStudent>
       )}

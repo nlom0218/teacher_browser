@@ -7,6 +7,7 @@ export const ME_QUERY = gql`
     me {
       _id
       email
+      nickname
       schoolName
       schoolCode
       areaCode
@@ -36,9 +37,41 @@ export const ME_QUERY = gql`
   }
 `;
 
+export interface IMe {
+  me?: {
+    _id: string;
+    email: string;
+    schoolName: string;
+    schoolCode: string;
+    areaCode: string;
+    schoolAdress: string;
+    studentNum: number;
+    bgTheme: string;
+    allergy: number[];
+    tag: string[];
+    favoriteNews: string[];
+    agreePolicy: boolean;
+    link: {
+      siteName: string;
+      memo: string;
+    };
+    dDay: {
+      title: string;
+      date: number;
+      ID: number;
+    };
+    isMoveDDay: boolean;
+    homeLinks: {
+      title: string;
+      link: string;
+      ID: number;
+    };
+  };
+}
+
 const useMe = () => {
   const hasToken = useReactiveVar(isLoggedInVar);
-  const { data, loading } = useQuery(ME_QUERY, {
+  const { data, loading } = useQuery<IMe>(ME_QUERY, {
     skip: !hasToken,
   });
   useEffect(() => {
