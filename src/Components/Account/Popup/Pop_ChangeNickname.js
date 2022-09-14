@@ -12,6 +12,8 @@ import InputLayout from "../styled/InputLayout";
 import AccountInput from "../styled/AccountInput";
 import { FaLock } from "react-icons/fa";
 import PopupContainer from "../../Shared/PopupContainer";
+import { ME_QUERY } from "../../../Hooks/useMe";
+import { BsPersonCircle } from "react-icons/bs";
 
 const Container = styled.div`
   display: grid;
@@ -91,7 +93,8 @@ const Pop_ChangeNickname = ({ userEmail, nickname }) => {
 
   const onCompleted = (result) => {
     const {
-      changeNickname: { ok, error },
+      // 오류 3. result 객체 내의 프로퍼티 수정
+      updateUser: { ok, error },
     } = result;
     if (ok) {
       outPopup();
@@ -100,14 +103,19 @@ const Pop_ChangeNickname = ({ userEmail, nickname }) => {
     }
   };
 
-  const [changeNickname, { loading }] = useMutation(UPDATE_USER_MUTATION, { onCompleted });
+  const [changeNickname, { loading }] = useMutation(UPDATE_USER_MUTATION, {
+    onCompleted,
+    // 개선 1. 닉네임이 변경되면 내 데이터를 다시 불러와 최신으로 유지하기
+    refetchQueries: [{ query: ME_QUERY }],
+  });
 
   return (
     <PopupContainer>
       <Container>
         <AccountForm onSubmit={handleSubmit(onSubmit)}>
           <InputLayout>
-            <FaLock />
+            {/* 개선 2. 아이콘을 자물쇠에서 사람 모양으로 바꿈 */}
+            <BsPersonCircle />
             <AccountInput
               {...register("nickname", {
                 required: true,
