@@ -85,23 +85,25 @@ interface IMenu {
 }
 
 const LunchmenuInfo = ({ date, areaCode, schoolCode, setSearchData }: IProps) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [menu, setMenu] = useState<undefined | IMenu[]>();
   const [origin, setOrigin] = useState<string[] | []>([]);
 
   const me = useMe();
 
   const getMenu = () => {
+    if (!schoolCode) return;
+    setLoading(true);
     fetch(
       `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=954dac30b088454d9a95700f044ce620&Type=json&pIndex=1&pSize=100&` +
         `ATPT_OFCDC_SC_CODE=${areaCode}&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${format(date, "yyyyMMdd")}`,
     )
       .then((response) => response.json())
       .then((json) => {
+        setLoading(false);
         if (json.RESULT) {
           setMenu(undefined);
         } else {
-          setLoading(false);
           const { DDISH_NM, ORPLC_INFO } = json.mealServiceDietInfo[1].row[0];
           setMenu(
             DDISH_NM.split("<br/>").map((item: string) => {
