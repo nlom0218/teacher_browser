@@ -10,9 +10,10 @@ import SectionList from "./styled/SectionList";
 import SectionNoDateText from "./styled/SectionNoDateText";
 import SectionTitle from "./styled/SectionTitle";
 import { compare } from "../../shared";
-import ToDoListSectionItem from "./ToDoListSectionItem";
+// import Item from "./Item";
 import { AiOutlinePlus } from "react-icons/ai";
 import { inPopup } from "../../apollo";
+import ToDoListSectionItem from "./ToDoListSectionItem";
 
 const PlusToDoBtn = styled.div`
   padding: 5px;
@@ -86,6 +87,7 @@ const ToDoListSection = ({ urlDate, refetchQuery }) => {
       date: parseInt(urlDate),
     },
   });
+  console.log(data);
 
   const onClickPlusBtn = () => {
     inPopup("createToDo");

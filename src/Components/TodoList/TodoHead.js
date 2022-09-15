@@ -135,19 +135,25 @@ const TodoHead = ({ userEmail }) => {
   };
 
   const onClickCreateBtn = () => {
-    if (userEmail) {
-      inPopup("todoCreate");
-    } else {
-      inPopup("needLogin");
-    }
+    window.alert(
+      "현재 투 두 리스트에 오류가 있습니다. 불편을 끼쳐 죄송합니다. 얼른 수정하여 업데이트를 하도록 하겠습니다.😭",
+    );
+    // if (userEmail) {
+    //   inPopup("todoCreate");
+    // } else {
+    //   inPopup("needLogin");
+    // }
   };
 
   const onClickCompleteBtn = () => {
-    if (userEmail) {
-      inPopup("toDoComplete");
-    } else {
-      inPopup("needLogin");
-    }
+    window.alert(
+      "현재 투 두 리스트에 오류가 있습니다. 불편을 끼쳐 죄송합니다. 얼른 수정하여 업데이트를 하도록 하겠습니다.😭",
+    );
+    // if (userEmail) {
+    //   inPopup("toDoComplete");
+    // } else {
+    //   inPopup("needLogin");
+    // }
   };
 
   const onClickHelper = () => {

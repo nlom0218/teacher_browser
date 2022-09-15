@@ -30,6 +30,7 @@ const TodoCreate = ({ setErrMsg, userEmail, setRefetchQuery, urlDate, setMsg }) 
   const [star, setStar] = useState(3);
 
   const onCompleted = (result) => {
+    console.log(result);
     const {
       createToDoList: { ok },
     } = result;
