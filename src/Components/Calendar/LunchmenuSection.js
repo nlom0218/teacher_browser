@@ -153,7 +153,7 @@ const LunchmenuSection = ({ urlDate, me }) => {
             {loading ? (
               <Loading page="subPage" />
             ) : menu ? (
-              menu?.map((item, index) => <LunchmenuItem key={index} item={item} me={me} summary="true"></LunchmenuItem>)
+              menu?.map((item, index) => <LunchmenuItem key={index} {...item} me={me} summary="true"></LunchmenuItem>)
             ) : (
               <div className="lunch_errMsg lunch_subMsg">급식 정보가 없습니다. 😢</div>
             )}
