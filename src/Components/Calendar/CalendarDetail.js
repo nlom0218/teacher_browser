@@ -157,7 +157,7 @@ const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery, m
       <BottomContainer>
         <LeftSection>
           <ScheduleSection urlDate={urlDate} refetchQuery={refetchQuery}></ScheduleSection>
-          <ToDoListSection urlDate={urlDate} refetchQuery={refetchQuery}></ToDoListSection>
+          {/* <ToDoListSection urlDate={urlDate} refetchQuery={refetchQuery}></ToDoListSection> */}
         </LeftSection>
         <RightSection>
           <LunchmenuSection urlDate={urlDate} me={me}></LunchmenuSection>
