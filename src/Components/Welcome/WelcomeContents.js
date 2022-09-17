@@ -107,6 +107,13 @@ const TTTitle = styled.div`
   transition: text-shadow 1s ease;
 `;
 
+const UpdateMsg = styled.div`
+  justify-self: center;
+  grid-row: 1 / -1;
+  display: flex;
+  align-items: center;
+`;
+
 const WelcomeContents = () => {
   const media = useMedia();
   return (
@@ -209,7 +216,7 @@ const WelcomeContents = () => {
         <Title>
           <TitleLayout>
             <FcAreaChart />
-            <div>진행중인 업데이트 및 오류해결</div>
+            <div>앞으로의 업데이트 내용</div>
           </TitleLayout>
           <TitleLayout
             className="title_notion"
@@ -220,7 +227,8 @@ const WelcomeContents = () => {
           </TitleLayout>
         </Title>
         <Layout>
-          <ContentsItem
+          <UpdateMsg>새로운 내용으로 찾아뵙겠습니다.😋</UpdateMsg>
+          {/* <ContentsItem
             onClick={() =>
               window.open("https://sparkly-corleggy-3e4.notion.site/22-3-16-f321120bf0494d0b8ecb1915f0ff4cfd")
             }
@@ -259,7 +267,7 @@ const WelcomeContents = () => {
           >
             <FcCursor />
             <div>1인1역 페이지</div>
-          </ContentsItem>
+          </ContentsItem> */}
         </Layout>
       </ContentsContainer>
       {/* <ContentsContainer>
