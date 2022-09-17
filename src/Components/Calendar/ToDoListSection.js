@@ -87,7 +87,6 @@ const ToDoListSection = ({ urlDate, refetchQuery }) => {
       date: parseInt(urlDate),
     },
   });
-  console.log(data);
 
   const onClickPlusBtn = () => {
     inPopup("createToDo");
