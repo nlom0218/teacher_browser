@@ -13,6 +13,7 @@ import {
   NewsLink,
   ManagingRolesLink,
   QrcodeLink,
+  HeaderBookMark,
 } from "./MenuLink";
 
 const Container = styled.div`
@@ -45,6 +46,7 @@ const GridType = ({ onClickLunchmenu }) => {
       <JournalLink />
       <ListLink />
       <NewsLink />
+      <HeaderBookMark />
       {/* <ManagingRolesLink /> */}
       <QrcodeLink />
     </Container>

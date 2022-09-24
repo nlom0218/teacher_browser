@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { movePageLink, isFullScreenModeVar } from "../../apollo";
+import IcAttendance from "../../icons/Attendance/IcAttendance";
+import IcAttendanceClick from "../../icons/Attendance/IcAttendanceClick";
 import IcBookMark from "../../icons/Bookmark/IcBookMark";
 import IcBookMarkClick from "../../icons/Bookmark/IcBookMarkClick";
 import IcCalender from "../../icons/Calender/IcCalender";
@@ -42,23 +44,15 @@ export const HeaderToDo = () => {
   );
 };
 
-export const HeaderBookMark = () => {
+export const HeaderAttend = () => {
   const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
 
   const [isHover, setIsHover] = useState(false);
 
-  const onClickMyLink = () => {
-    movePageLink();
-  };
   return (
-    <Link
-      to={routes.pageLink}
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
-      onClick={onClickMyLink}
-    >
-      {isHover ? <IcBookMarkClick /> : <IcBookMark />}
-      {isHover && !isFullScreenMode && !isFullScreenMode && <LinkName>링크페이지</LinkName>}
+    <Link to={routes.attend} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+      {isHover ? <IcAttendanceClick /> : <IcAttendance />}
+      {isHover && !isFullScreenMode && !isFullScreenMode && <LinkName>출석부</LinkName>}
     </Link>
   );
 };

@@ -13,7 +13,7 @@ import {
 import { FaSun, FaMoon } from "react-icons/fa";
 import { BiExitFullscreen, BiFullscreen } from "react-icons/bi";
 import useMedia from "../../Hooks/useMedia";
-import { HeaderToDo, HeaderBookMark, HedaerCalender, HeaderMenu, HeaderHome } from "./HeaderLink";
+import { HeaderToDo, HedaerCalender, HeaderMenu, HeaderHome, HeaderAttend } from "./HeaderLink";
 import routes from "../../routes";
 import { useNavigate } from "react-router-dom";
 import { customMedia } from "../../styles";
@@ -155,7 +155,7 @@ const Theme = () => {
             <HedaerCalender />
           </MenuItem>
           <MenuItem className="menu_btn" onClick={() => onClickRoutes("pageLink")}>
-            <HeaderBookMark />
+            <HeaderAttend />
           </MenuItem>
           <MenuItem className="menu_btn" onClick={() => onClickRoutes("menu")}>
             <HeaderMenu />
