@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import MainBottom from "../Components/Attend/MainBottom";
 import MainTop from "../Components/Attend/MainTop";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import useTitle from "../Hooks/useTitle";
@@ -15,6 +16,7 @@ const Attend = () => {
     <BasicContainer>
       <Container>
         <MainTop />
+        <MainBottom />
       </Container>
     </BasicContainer>
   );
