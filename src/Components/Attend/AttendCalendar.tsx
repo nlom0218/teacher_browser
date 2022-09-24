@@ -1,6 +1,7 @@
 import { addDays, addWeeks, getMonth, getWeeksInMonth, startOfMonth, startOfWeek } from "date-fns";
 import styled from "styled-components";
 import { customMedia } from "../../styles";
+import AttendCalendarItem from "./AttendCalendarItem";
 
 interface IDay {
   sun: boolean;
@@ -110,15 +111,15 @@ const AttendCalendar = () => {
           {dateArr &&
             dateArr?.map((item, index) => {
               return (
-                <div
-                //   media={media}
-                //   key={index}
-                //   item={item}
-                //   userEmail={me?.email}
-                //   schedule={schedule?.seeSchedule}
-                //   calendarType={calendarType}
-                //   attendData={attendData}
-                //   selectedAttendOption={selectedAttendOption}
+                <AttendCalendarItem
+                  //   media={media}
+                  key={index}
+                  {...item}
+                  //   userEmail={me?.email}
+                  //   schedule={schedule?.seeSchedule}
+                  //   calendarType={calendarType}
+                  //   attendData={attendData}
+                  //   selectedAttendOption={selectedAttendOption}
                 />
               );
             })}
