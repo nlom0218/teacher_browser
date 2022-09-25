@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import AttendCalendar from "./AttendCalendar";
+import AttendRegister from "./AttendRegister";
 
 const Layout = styled.div`
   display: grid;
@@ -10,6 +11,7 @@ const MainBottom = () => {
   return (
     <Layout>
       <AttendCalendar />
+      <AttendRegister />
     </Layout>
   );
 };

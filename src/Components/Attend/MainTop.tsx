@@ -28,7 +28,7 @@ const Title = styled.div`
 
 const BtnContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, auto);
+  grid-template-columns: repeat(6, auto);
   align-items: center;
   column-gap: 20px;
   column-gap: 1.25rem;
@@ -67,6 +67,22 @@ const MoveBtn = styled.div`
   }
 `;
 
+const Select = styled.div`
+  font-size: 0.875rem;
+  font-size: 0.875em;
+  padding: 5px 20px;
+  padding: 0.313rem 1.25rem;
+  transition: color 1s ease, background-color 1s ease;
+  border: none;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  text-align: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+`;
+
 const MainTop = () => {
   return (
     <Layout>
@@ -79,6 +95,9 @@ const MainTop = () => {
         <MoveBtn className="calendar_btn">
           <IoIosArrowForward />
         </MoveBtn>
+        <Select className="calendar_btn">종류 별 출결</Select>
+        <Select className="calendar_btn">학생 별 출결</Select>
+        <Select className="calendar_btn">명렬표로 보기</Select>
       </BtnContainer>
     </Layout>
   );
