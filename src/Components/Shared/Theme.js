@@ -116,9 +116,8 @@ const Theme = () => {
       navigate(routes.home);
     } else if (page === "todo") {
       navigate(routes.todo);
-    } else if (page === "pageLink") {
-      movePageLink();
-      navigate(routes.pageLink);
+    } else if (page === "attend") {
+      navigate(routes.attend);
     } else if (page === "calendar") {
       localStorage.setItem("calendarDate", new Date());
       navigate(routes.calendar);
@@ -154,7 +153,7 @@ const Theme = () => {
           <MenuItem className="menu_btn" onClick={() => onClickRoutes("calendar")}>
             <HedaerCalender />
           </MenuItem>
-          <MenuItem className="menu_btn" onClick={() => onClickRoutes("pageLink")}>
+          <MenuItem className="menu_btn" onClick={() => onClickRoutes("attend")}>
             <HeaderAttend />
           </MenuItem>
           <MenuItem className="menu_btn" onClick={() => onClickRoutes("menu")}>
