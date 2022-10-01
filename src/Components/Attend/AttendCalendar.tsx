@@ -11,33 +11,16 @@ interface ICalendarList {
   weekLength: number;
 }
 
-const Container = styled.div`
-  position: relative;
-`;
-
 const Layout = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
-  right: 0;
+  right: 40%;
   display: grid;
   min-height: 100%;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: auto 1fr;
-  padding: 20px;
-  padding: 1.25rem;
-  padding-top: 0px;
-  padding-top: 0rem;
-  -ms-overflow-style: none; // IE and Edge
-  scrollbar-width: none; // Firefox
-  ::-webkit-scrollbar {
-    display: none; // Chrome, Safari, Opera
-  }
-  ${customMedia.greaterThan("tablet")`
-    padding-top: 20px;
-    padding-top: 1.25rem;
-  `}
 `;
 
 const Day = styled.div<IDay>`
@@ -98,34 +81,32 @@ const AttendCalendar = () => {
   const dateArr = newDateArr;
 
   return (
-    <Container>
-      <Layout>
-        {["일", "월", "화", "수", "목", "금", "토"].map((item, index) => {
-          return (
-            <Day key={index} sun={item === "일"}>
-              {item}
-            </Day>
-          );
-        })}
-        <CalendarList weekLength={weekLength}>
-          {dateArr &&
-            dateArr?.map((item, index) => {
-              return (
-                <AttendCalendarItem
-                  //   media={media}
-                  key={index}
-                  {...item}
-                  //   userEmail={me?.email}
-                  //   schedule={schedule?.seeSchedule}
-                  //   calendarType={calendarType}
-                  //   attendData={attendData}
-                  //   selectedAttendOption={selectedAttendOption}
-                />
-              );
-            })}
-        </CalendarList>
-      </Layout>
-    </Container>
+    <Layout>
+      {["일", "월", "화", "수", "목", "금", "토"].map((item, index) => {
+        return (
+          <Day key={index} sun={item === "일"}>
+            {item}
+          </Day>
+        );
+      })}
+      <CalendarList weekLength={weekLength}>
+        {dateArr &&
+          dateArr?.map((item, index) => {
+            return (
+              <AttendCalendarItem
+                //   media={media}
+                key={index}
+                {...item}
+                //   userEmail={me?.email}
+                //   schedule={schedule?.seeSchedule}
+                //   calendarType={calendarType}
+                //   attendData={attendData}
+                //   selectedAttendOption={selectedAttendOption}
+              />
+            );
+          })}
+      </CalendarList>
+    </Layout>
   );
 };
 
