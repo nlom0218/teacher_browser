@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import AttendDetail from "./AttendDetail";
+import AttendType from "./AttendType";
 import SeletedDate from "./SeletedDate";
 import StudentList from "./StudentList";
 
@@ -37,10 +38,10 @@ const AttendRegister = () => {
   const [seletedStudent, setSeletedStudent] = useState<string[]>([]);
   const [startDate, setStartDate] = useState(new window.Date());
   const [endDate, setEndDate] = useState(new window.Date());
+  const [type, setType] = useState<string>("");
   const { register, getValues, watch } = useForm<IForm>({
     mode: "onChange",
   });
-  console.log(watch("contents"));
   return (
     <Layout>
       <Title>출결등록</Title>
@@ -48,6 +49,7 @@ const AttendRegister = () => {
         <StudentList seletedStudent={seletedStudent} setSeletedStudent={setSeletedStudent} />
         <SeletedDate startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} />
         <AttendDetail register={register("contents")} />
+        <AttendType type={type} setType={setType} />
       </RegisterContainer>
     </Layout>
   );
