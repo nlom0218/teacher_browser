@@ -1,4 +1,6 @@
+import { useState } from "react";
 import styled from "styled-components";
+import SeletedDate from "./SeletedDate";
 import StudentList from "./StudentList";
 
 const Layout = styled.div`
@@ -13,6 +15,11 @@ const Title = styled.div`
 `;
 
 const RegisterContainer = styled.div`
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  align-items: flex-start;
+  row-gap: 20px;
+  row-gap: 1.25rem;
   padding: 20px;
   padding: 1.25rem;
   background-color: ${(props) => props.theme.bgColor};
@@ -21,11 +28,16 @@ const RegisterContainer = styled.div`
 `;
 
 const AttendRegister = () => {
+  const [seletedStudent, setSeletedStudent] = useState<string[]>([]);
+  const [startDate, setStartDate] = useState(new window.Date());
+  const [endDate, setEndDate] = useState(new window.Date());
+  console.log(seletedStudent, startDate, endDate);
   return (
     <Layout>
       <Title>출결등록</Title>
       <RegisterContainer>
-        <StudentList />
+        <StudentList seletedStudent={seletedStudent} setSeletedStudent={setSeletedStudent} />
+        <SeletedDate startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} />
       </RegisterContainer>
     </Layout>
   );

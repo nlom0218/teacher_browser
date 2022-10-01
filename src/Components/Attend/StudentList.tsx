@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { BsFillPersonFill } from "react-icons/bs";
 import styled from "styled-components";
 import { SEE_ALL_STUDENT_QUERY } from "../../Graphql/Student/query";
@@ -36,8 +36,12 @@ interface IStudentData {
   index: number;
 }
 
-const StudentList = () => {
-  const [seletedStudent, setSeletedStudent] = useState<string[]>([]);
+interface IProps {
+  setSeletedStudent: Dispatch<SetStateAction<string[]>>;
+  seletedStudent: string[];
+}
+
+const StudentList = ({ setSeletedStudent, seletedStudent }: IProps) => {
   const { data, loading } = useQuery<IData>(SEE_ALL_STUDENT_QUERY, {
     variables: { sort: "name", trash: false },
   });
