@@ -13,7 +13,6 @@ interface ICalendarList {
 
 const Layout = styled.div`
   display: grid;
-  /* min-height: 100%; */
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: auto 1fr;
 `;
