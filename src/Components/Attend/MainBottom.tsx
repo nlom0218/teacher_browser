@@ -15,13 +15,21 @@ const Layout = styled.div`
   ::-webkit-scrollbar {
     display: none; // Chrome, Safari, Opera
   }
+  .main_bottom_layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    column-gap: 20px;
+    column-gap: 1.25rem;
+  }
 `;
 
 const MainBottom = () => {
   return (
     <Layout>
-      <AttendCalendar />
-      <AttendRegister />
+      <div className="main_bottom_layout">
+        <AttendCalendar />
+        <AttendRegister />
+      </div>
     </Layout>
   );
 };

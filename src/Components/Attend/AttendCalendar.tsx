@@ -12,13 +12,8 @@ interface ICalendarList {
 }
 
 const Layout = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 40%;
   display: grid;
-  min-height: 100%;
+  /* min-height: 100%; */
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: auto 1fr;
 `;
