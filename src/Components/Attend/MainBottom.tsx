@@ -8,8 +8,8 @@ const Layout = styled.div`
   right: 0;
   top: 0;
   bottom: 0;
-  min-height: 100%;
   overflow: scroll;
+  min-height: 100%;
   -ms-overflow-style: none; // IE and Edge
   scrollbar-width: none; // Firefox
   ::-webkit-scrollbar {
@@ -20,6 +20,7 @@ const Layout = styled.div`
     grid-template-columns: 2fr 1fr;
     column-gap: 20px;
     column-gap: 1.25rem;
+    min-height: 100%;
   }
 `;
 
