@@ -18,7 +18,7 @@ const Student = styled.div<IStudent>`
   border-radius: 0.3125rem;
   background-color: ${(props) => props.isSeleted && props.theme.green};
   color: ${(props) => props.isSeleted && props.theme.originBgColor};
-  transition: background-color 1s ease, color 1s ease;
+  transition: background-color 1s ease;
   cursor: pointer;
   :hover {
     background-color: ${(props) => (props.isSeleted ? props.theme.green : props.theme.bgColor)};

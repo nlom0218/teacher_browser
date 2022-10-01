@@ -23,6 +23,7 @@ const Container = styled.div`
     border-radius: 0.3125rem;
     background-color: ${(props) => props.theme.originBgColor};
     line-height: 160%;
+    transition: background-color 1s ease;
     ::placeholder {
       color: ${(props) => props.theme.fontColor};
       opacity: 0.6;
