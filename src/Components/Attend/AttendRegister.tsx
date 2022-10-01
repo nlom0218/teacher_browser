@@ -17,6 +17,7 @@ const RegisterContainer = styled.div`
   padding: 1.25rem;
   background-color: ${(props) => props.theme.bgColor};
   border: 1px solid ${(props) => props.theme.girdBorderColor};
+  transition: background-color 1s ease, border 1s ease;
 `;
 
 const AttendRegister = () => {

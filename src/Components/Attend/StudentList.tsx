@@ -1,8 +1,10 @@
 import { useQuery } from "@apollo/client";
+import { useState } from "react";
 import { BsFillPersonFill } from "react-icons/bs";
 import styled from "styled-components";
 import { SEE_ALL_STUDENT_QUERY } from "../../Graphql/Student/query";
 import { Icon } from "../Calendar/Popup/PopupLayout";
+import StudentListItem from "./StudentListItem";
 
 const Container = styled.div`
   display: grid;
@@ -16,18 +18,13 @@ const SStudentList = styled.div`
   background-color: ${(props) => props.theme.originBgColor};
   padding: 10px;
   padding: 0.625rem;
+  padding-bottom: 5px;
+  padding-bottom: 0.3125rem;
   border-radius: 5px;
   border-radius: 0.3125rem;
   display: flex;
   flex-wrap: wrap;
-  div {
-    font-size: 0.875em;
-    font-size: 0.875rem;
-    padding: 5px;
-    padding: 0.3125rem;
-    margin-right: 5px;
-    margin-right: 0.3125rem;
-  }
+  transition: background-color 1s ease;
 `;
 
 interface IData {
@@ -40,6 +37,7 @@ interface IStudentData {
 }
 
 const StudentList = () => {
+  const [seletedStudent, setSeletedStudent] = useState<string[]>([]);
   const { data, loading } = useQuery<IData>(SEE_ALL_STUDENT_QUERY, {
     variables: { sort: "name", trash: false },
   });
@@ -50,7 +48,14 @@ const StudentList = () => {
       </Icon>
       <SStudentList>
         {data?.seeAllStudent.map((item, index) => {
-          return <div key={index}>{item.studentName}</div>;
+          return (
+            <StudentListItem
+              key={index}
+              {...item}
+              setSeletedStudent={setSeletedStudent}
+              seletedStudent={seletedStudent}
+            />
+          );
         })}
       </SStudentList>
     </Container>
