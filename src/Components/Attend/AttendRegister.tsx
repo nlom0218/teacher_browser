@@ -49,7 +49,7 @@ const AttendRegister = () => {
         <StudentList seletedStudent={seletedStudent} setSeletedStudent={setSeletedStudent} />
         <SeletedDate startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} />
         <AttendDetail register={register("contents")} />
-        <AttendType type={type} setType={setType} />
+        <AttendType type={type} setType={setType} seletedStudent={seletedStudent} />
       </RegisterContainer>
     </Layout>
   );

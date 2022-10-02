@@ -1,8 +1,9 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { BsFillPersonCheckFill } from "react-icons/bs";
 import styled from "styled-components";
 import { customMedia } from "../../styles";
 import { Icon } from "../Calendar/Popup/PopupLayout";
+import AlertMessage from "../Shared/AlertMessage";
 
 const Container = styled.div`
   display: grid;
@@ -54,37 +55,32 @@ const Type = styled.div<ITypeStyled>`
 interface IProps {
   type: string;
   setType: Dispatch<SetStateAction<string>>;
+  seletedStudent: string[];
 }
 
-const AttendType = ({ type, setType }: IProps) => {
+const AttendType = ({ type, setType, seletedStudent }: IProps) => {
+  const [error, setError] = useState<string | undefined>(undefined);
+  const types = ["인정 결석", "질병 결석", "미인정 결석", "기타 결석", "지각", "조퇴", "결과"];
+  const onClickType = (type: string) => {
+    if (seletedStudent.length === 0) setError("학생을 선택하세요.");
+    else setType(type);
+  };
+  useEffect(() => {
+    if (seletedStudent.length === 0) setType("");
+  }, [seletedStudent]);
   return (
     <Container>
       <Icon>
         <BsFillPersonCheckFill />
       </Icon>
       <SAttendType>
-        <Type onClick={() => setType("인정 결석")} selected={type === "인정 결석"}>
-          인정 결석
-        </Type>
-        <Type onClick={() => setType("질병 결석")} selected={type === "질병 결석"}>
-          질병 결석
-        </Type>
-        <Type onClick={() => setType("미인정 결석")} selected={type === "미인정 결석"}>
-          미인정 결석
-        </Type>
-        <Type onClick={() => setType("기타 결석")} selected={type === "기타 결석"}>
-          기타 결석
-        </Type>
-        <Type onClick={() => setType("지각")} selected={type === "지각"}>
-          지각
-        </Type>
-        <Type onClick={() => setType("조퇴")} selected={type === "조퇴"}>
-          조퇴
-        </Type>
-        <Type onClick={() => setType("결과")} selected={type === "결과"}>
-          결과
-        </Type>
+        {types.map((item, index) => (
+          <Type key={index} selected={type === item} onClick={() => onClickType(item)}>
+            {item}
+          </Type>
+        ))}
       </SAttendType>
+      {error && <AlertMessage msg={error} setMsg={setError} type="error" time={3000} />}
     </Container>
   );
 };
