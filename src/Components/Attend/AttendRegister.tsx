@@ -98,11 +98,9 @@ const AttendRegister = () => {
     }
   }, [type]);
 
-  if (loading) {
-    return <Loading page="subPage" />;
-  }
   return (
     <Layout>
+      {loading && <Loading page="center" />}
       <Title>출결등록</Title>
       <RegisterContainer>
         <StudentList seletedStudent={seletedStudent} setSeletedStudent={setSeletedStudent} />
