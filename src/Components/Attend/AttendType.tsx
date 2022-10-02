@@ -12,12 +12,11 @@ const Container = styled.div`
 `;
 
 const SAttendType = styled.div`
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   grid-template-columns: repeat(2, 1fr);
   padding: 10px;
   padding: 0.625rem;
-  row-gap: 10px;
-  row-gap: 0.625rem;
   background-color: ${(props) => props.theme.originBgColor};
   border-radius: 5px;
   border-radius: 0.3125rem;
