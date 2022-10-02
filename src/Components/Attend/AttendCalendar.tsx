@@ -1,5 +1,8 @@
-import { addDays, addWeeks, getMonth, getWeeksInMonth, startOfMonth, startOfWeek } from "date-fns";
+import { useQuery } from "@apollo/client";
+import { addDays, addWeeks, format, getMonth, getWeeksInMonth, startOfMonth, startOfWeek } from "date-fns";
 import styled from "styled-components";
+import { SEE_ATTENDANCE_QUERY } from "../../Graphql/Attendance/query";
+import useMe from "../../Hooks/useMe";
 import { customMedia } from "../../styles";
 import AttendCalendarItem from "./AttendCalendarItem";
 
@@ -42,8 +45,18 @@ const CalendarList = styled.div<ICalendarList>`
 `;
 
 const AttendCalendar = () => {
+  const me = useMe();
   // 부모에서 받아 올것
   const date = new Date();
+
+  const { data, loading, refetch } = useQuery(SEE_ATTENDANCE_QUERY, {
+    variables: {
+      month: parseInt(format(date, "yyMM")),
+    },
+    skip: !me,
+  });
+
+  console.log(data);
 
   // useEffect()로 처리할 것
   const newDateArr = [];
