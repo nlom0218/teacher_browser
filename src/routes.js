@@ -1,10 +1,11 @@
 const HOME = "/";
 const TODO = "/todo";
 const CALENDAR = "/calendar";
-const PAGELINK = "/pageLink";
 const MENU = "/menu";
+const ATTEND = "/attend";
 
 // menu link
+const PAGELINK = "/pageLink";
 const TIMER = "/timer";
 const TIMER_POPUP = "/timer_popup";
 const DRAW = "/draw";
@@ -41,10 +42,11 @@ const routes = {
   home: HOME,
   todo: TODO,
   calendar: CALENDAR,
-  pageLink: PAGELINK,
   menu: MENU,
+  attend: ATTEND,
 
   // menu link
+  pageLink: PAGELINK,
   timer: TIMER,
   timerPopup: TIMER_POPUP,
   draw: DRAW,

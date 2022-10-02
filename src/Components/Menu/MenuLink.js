@@ -18,13 +18,15 @@ import IcOrder from "../../icons/Order/IcOrder";
 import IcJournal from "../../icons/Journal/IcJournal";
 import IcJournalClick from "../../icons/Journal/IcJournalClick";
 import IcNameTableOpened from "../../icons/NameTable/IcNameTableOpened";
-import { enableSeeStudent, fullScreenMode } from "../../apollo";
+import { enableSeeStudent, fullScreenMode, movePageLink } from "../../apollo";
 import IcNewsClick from "../../icons/News/IcNewsClick";
 import IcNews from "../../icons/News/IcNews";
 import useMedia from "../../Hooks/useMedia";
 import IcFamilyMonth from "../../icons/FamilyMonth/FamilyMonth";
 import IcQrcode from "../../icons/Qrcod/IcQrcode";
 import IcQrcodeClick from "../../icons/Qrcod/IcQrcodeClick";
+import IcBookMark from "../../icons/Bookmark/IcBookMark";
+import IcBookMarkClick from "../../icons/Bookmark/IcBookMarkClick";
 
 const SMenu = styled.div`
   display: grid;
@@ -223,6 +225,21 @@ export const QrcodeLink = () => {
       <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <IcQrcodeClick /> : <IcQrcode />}
         <Title>QR코드</Title>
+      </SMenu>
+    </Link>
+  );
+};
+
+export const HeaderBookMark = () => {
+  const [isHover, setIsHover] = useState(false);
+  const onClickListLink = () => {
+    movePageLink();
+  };
+  return (
+    <Link to={routes.pageLink} onClick={onClickListLink}>
+      <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+        {isHover ? <IcBookMarkClick /> : <IcBookMark />}
+        <Title>링크페이지</Title>
       </SMenu>
     </Link>
   );
