@@ -1,21 +1,42 @@
 import gql from "graphql-tag";
 
+// export const CREATE_ATTENDANCE_MUTATION = gql`
+//   mutation CreateAttendance(
+//     $userEmail: String!
+//     $studentId: String!
+//     $type: String!
+//     $date: Float!
+//     $contents: String
+//     $month: Int!
+//   ) {
+//     createAttendance(
+//       userEmail: $userEmail
+//       studentId: $studentId
+//       type: $type
+//       date: $date
+//       contents: $contents
+//       month: $month
+//     ) {
+//       ok
+//       error
+//     }
+//   }
+// `;
+
 export const CREATE_ATTENDANCE_MUTATION = gql`
   mutation CreateAttendance(
     $userEmail: String!
-    $studentId: String!
+    $studentId: [String!]!
     $type: String!
-    $date: Float!
     $contents: String
-    $month: Int!
+    $dateMonthArr: [DateMonth]!
   ) {
     createAttendance(
       userEmail: $userEmail
       studentId: $studentId
       type: $type
-      date: $date
       contents: $contents
-      month: $month
+      dateMonthArr: $dateMonthArr
     ) {
       ok
       error

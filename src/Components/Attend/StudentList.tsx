@@ -34,6 +34,7 @@ interface IData {
 interface IStudentData {
   studentName: string;
   index: number;
+  _id: string;
 }
 
 interface IProps {

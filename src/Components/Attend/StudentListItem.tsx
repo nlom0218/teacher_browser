@@ -28,22 +28,23 @@ const Student = styled.div<IStudent>`
 
 interface IProps {
   studentName: string;
+  _id: string;
   setSeletedStudent: Dispatch<SetStateAction<string[]>>;
   seletedStudent: string[];
 }
 
-const StudentListItem = ({ studentName, setSeletedStudent, seletedStudent }: IProps) => {
+const StudentListItem = ({ studentName, setSeletedStudent, seletedStudent, _id }: IProps) => {
   const onClickStudent = () => {
     setSeletedStudent((prev) => {
-      if (seletedStudent.includes(studentName)) {
-        return prev.filter((item) => item !== studentName);
+      if (seletedStudent.includes(_id)) {
+        return prev.filter((item) => item !== _id);
       } else {
-        return [...prev, studentName];
+        return [...prev, _id];
       }
     });
   };
   return (
-    <Student isSeleted={seletedStudent.includes(studentName)} onClick={onClickStudent}>
+    <Student isSeleted={seletedStudent.includes(_id)} onClick={onClickStudent}>
       {studentName}
     </Student>
   );
