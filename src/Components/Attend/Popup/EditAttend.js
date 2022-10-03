@@ -4,7 +4,13 @@ import styled from "styled-components";
 import PopupContainer from "../../Shared/PopupContainer";
 import { outPopup } from "../../../apollo";
 import { useMutation, useQuery } from "@apollo/client";
-import { Icon, CalenderPopupTextareaLayout, CalenderPopupTitle, InputLayout, DateContainer } from "./PopupLayout";
+import {
+  Icon,
+  CalenderPopupTextareaLayout,
+  CalenderPopupTitle,
+  InputLayout,
+  DateContainer,
+} from "../../Calendar/Popup/PopupLayout";
 import { BsCalendarDate, BsFillPersonCheckFill, BsFillPersonFill } from "react-icons/bs";
 import { customMedia } from "../../../styles";
 import { ko } from "date-fns/esm/locale";
@@ -119,7 +125,7 @@ const DelBtn = styled.div`
   cursor: pointer;
 `;
 
-const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery }) => {
+const EditAttend = ({ userEmail, setErrMsg, setMsg }) => {
   const attendId = localStorage.getItem("summaryAttendId");
   const attendName = localStorage.getItem("summaryAttendName");
 
@@ -147,7 +153,6 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery }) => {
       localStorage.removeItem("attendStudentId");
       localStorage.removeItem("summaryAttendId");
       localStorage.removeItem("summaryAttendName");
-      setRefetchQuery((prev) => prev + 1);
     } else {
       setErrMsg(error);
     }
@@ -164,7 +169,6 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery }) => {
       localStorage.removeItem("attendStudentId");
       localStorage.removeItem("summaryAttendId");
       localStorage.removeItem("summaryAttendName");
-      setRefetchQuery((prev) => prev + 1);
     } else {
       setErrMsg(error);
     }

@@ -32,7 +32,7 @@ import SeeAllergy from "../Components/Lunchmenu/Popup/SeeAllergy";
 import MoveStudentPage from "../Components/Calendar/Popup/MoveStudentPage";
 import AddAttend from "../Components/Calendar/Popup/AddAttend";
 import AttendSelectedStudent from "../Components/Calendar/Popup/AttendSelectedStudent";
-import EditAttend from "../Components/Calendar/Popup/EditAttend";
+import EditAttend from "../Components/Attend/Popup/EditAttend";
 import TodoCreate from "../Components/TodoList/Popup/TodoCreate";
 import useTitle from "../Hooks/useTitle";
 import IcHelper from "../icons/Helper/IcHelper";
@@ -514,9 +514,7 @@ const Calendar = () => {
           urlDate={urlDate}
         />
       )}
-      {isPopup === "eidtAttend" && (
-        <EditAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} />
-      )}
+      {isPopup === "eidtAttend" && <EditAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} />}
       {isPopup === "selectedStudent" && <AttendSelectedStudent />}
       {isPopup === "needLogin" && <NeedLoginPopupContainer />}
       {isPopup === "CalendarHelper" && <CalendarHelper />}

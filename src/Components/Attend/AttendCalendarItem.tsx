@@ -1,5 +1,6 @@
 import { getDate, getDay, isToday } from "date-fns";
 import styled from "styled-components";
+import { inPopup } from "../../apollo";
 import { customMedia } from "../../styles";
 
 interface IDay {
@@ -106,8 +107,11 @@ interface IProps {
 }
 
 const AttendCalendarItem = ({ date, month, attend }: IProps) => {
-  console.log(attend);
-  const onClickAttendInfo = (id: string, name: string) => {};
+  const onClickAttendInfo = (id: string, name: string) => {
+    inPopup("eidtAttend");
+    localStorage.setItem("summaryAttendId", id);
+    localStorage.setItem("summaryAttendName", name);
+  };
   return (
     <Container>
       <Day sun={getDay(date) === 0} curMonth={month === "cur"}>
