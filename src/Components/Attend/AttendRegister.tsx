@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { CREATE_ATTENDANCE_MUTATION, CREATE_MANY_ATTENDANCE_MUTATION } from "../../Graphql/Attendance/mutation";
+import { SEE_ATTENDANCE_QUERY } from "../../Graphql/Attendance/query";
 import useMe from "../../Hooks/useMe";
 import AlertMessage from "../Shared/AlertMessage";
 import Loading from "../Shared/Loading";
@@ -52,6 +53,18 @@ const AttendRegister = () => {
     mode: "onChange",
   });
 
+  const refetchCalendarAttendance = () => {
+    return monthArr.map((item) => {
+      return {
+        query: SEE_ATTENDANCE_QUERY,
+        variables: {
+          month: item,
+          userEmail: me?.email,
+        },
+      };
+    });
+  };
+
   const [createAttendance, { loading }] = useMutation(CREATE_ATTENDANCE_MUTATION, {
     onCompleted: (result) => {
       const {
@@ -66,6 +79,17 @@ const AttendRegister = () => {
       } else {
         // setErrMsg(error);
       }
+    },
+    refetchQueries: refetchCalendarAttendance(),
+    update: (
+      cache,
+      {
+        data: {
+          createAttendance: { ok },
+        },
+      },
+    ) => {
+      console.log(ok);
     },
   });
 
@@ -86,6 +110,7 @@ const AttendRegister = () => {
           !newMonthArr.includes(month) && newMonthArr.push(month);
         }
       }
+      setMonthArr(newMonthArr);
       createAttendance({
         variables: {
           userEmail: me?.email,
