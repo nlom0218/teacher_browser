@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { addDays, addWeeks, format, getMonth, getWeeksInMonth, startOfMonth, startOfWeek } from "date-fns";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { SEE_ATTENDANCE_QUERY } from "../../Graphql/Attendance/query";
 import useMe from "../../Hooks/useMe";
@@ -11,7 +12,7 @@ interface IDay {
 }
 
 interface ICalendarList {
-  weekLength: number;
+  weekLength: number | undefined;
 }
 
 const Layout = styled.div`
@@ -48,46 +49,75 @@ interface IProps {
   date: Date;
 }
 
+interface IDateArr {
+  date: Date;
+  month: string;
+  attend: ISeeAttendance[] | undefined;
+}
+
+interface ISeeAttendance {
+  contents: null | string;
+  date: number;
+  month: number;
+  studentId: string;
+  studentName: string;
+  type: string;
+  _id: string;
+}
+
+interface IDate {
+  seeAttendance: ISeeAttendance[];
+}
+
 const AttendCalendar = ({ date }: IProps) => {
   const me = useMe();
+  const [dateArr, setDateArr] = useState<IDateArr[] | undefined>(undefined);
+  const [weekLength, setWeekLength] = useState<number | undefined>(undefined);
 
-  const { data, loading, refetch } = useQuery(SEE_ATTENDANCE_QUERY, {
+  const { data, loading, refetch } = useQuery<IDate>(SEE_ATTENDANCE_QUERY, {
     variables: {
       month: parseInt(format(date, "yyMM")),
     },
     skip: !me,
   });
 
-  console.log(data);
-
-  // useEffect()로 처리할 것
-  const newDateArr = [];
-  const monthStart = startOfMonth(date);
-  const weekStart = startOfWeek(monthStart, { weekStartsOn: 0 });
-  const weekLength = getWeeksInMonth(date);
-  for (let i = 0; i < weekLength; i++) {
-    const tempWeekStart = addWeeks(weekStart, i);
-    for (let i = 0; i < 7; i++) {
-      const tempDate = addDays(tempWeekStart, i);
-      if (getMonth(tempDate) === getMonth(date)) {
-        newDateArr.push({
-          date: tempDate,
-          month: "cur",
-        });
-      } else if (getMonth(tempDate) < getMonth(date)) {
-        newDateArr.push({
-          date: tempDate,
-          month: "pre",
-        });
-      } else if (getMonth(tempDate) > getMonth(date)) {
-        newDateArr.push({
-          date: tempDate,
-          month: "next",
-        });
+  useEffect(() => {
+    if (data) {
+      const newDateArr = [];
+      const monthStart = startOfMonth(date);
+      const weekStart = startOfWeek(monthStart, { weekStartsOn: 0 });
+      const weekLength = getWeeksInMonth(date);
+      for (let i = 0; i < weekLength; i++) {
+        const tempWeekStart = addWeeks(weekStart, i);
+        for (let i = 0; i < 7; i++) {
+          const tempDate = addDays(tempWeekStart, i);
+          const tempDateNumber = new window.Date(tempDate).setHours(0, 0, 0, 0);
+          const attend = data?.seeAttendance?.filter((item) => item.date === tempDateNumber);
+          if (getMonth(tempDate) === getMonth(date)) {
+            newDateArr.push({
+              date: tempDate,
+              month: "cur",
+              attend,
+            });
+          } else if (getMonth(tempDate) < getMonth(date)) {
+            newDateArr.push({
+              date: tempDate,
+              month: "pre",
+              attend,
+            });
+          } else if (getMonth(tempDate) > getMonth(date)) {
+            newDateArr.push({
+              date: tempDate,
+              month: "next",
+              attend,
+            });
+          }
+        }
       }
+      setDateArr(newDateArr);
+      setWeekLength(weekLength);
     }
-  }
-  const dateArr = newDateArr;
+  }, [data]);
 
   return (
     <Layout>
