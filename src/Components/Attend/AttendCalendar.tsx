@@ -112,7 +112,7 @@ const AttendCalendar = ({ date }: IProps) => {
     }
     setDateArr(newDateArr);
     setWeekLength(weekLength);
-  }, []);
+  }, [date]);
 
   useEffect(() => {
     if (data) {

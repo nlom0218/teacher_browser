@@ -96,13 +96,15 @@ const AttendRegister = ({ date }: { date: Date }) => {
             query: SEE_ATTENDANCE_QUERY,
             variables: { month: item },
           });
-          cache.writeQuery({
-            query: SEE_ATTENDANCE_QUERY,
-            variables: { month: item },
-            data: {
-              seeAttendance: [...attends?.seeAttendance, ...newAttends],
-            },
-          });
+          if (attends) {
+            cache.writeQuery({
+              query: SEE_ATTENDANCE_QUERY,
+              variables: { month: item },
+              data: {
+                seeAttendance: [...attends?.seeAttendance, ...newAttends],
+              },
+            });
+          }
         });
       }
     },
