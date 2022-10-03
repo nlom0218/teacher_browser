@@ -103,6 +103,7 @@ const Qrname = () => {
           type="text"
           placeholder="(예)티처캔"
           autoComplete="off"
+          maxLength="10"
         />
         <TitleSubmitBtn type="submit" value="저장" />
       </Frame>

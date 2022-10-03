@@ -51,6 +51,7 @@ import Qrcode from "./Pages/Qrcode";
 import QrcodePopup from "./Components/Qrcode/QrcodePopup";
 import QrcodeStorage from "./Pages/QrcodeStorage";
 import Attend from "./Pages/Attend";
+import QrcodeResult from "./Pages/QrcodeResult";
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
   const bgTheme = useReactiveVar(bgThemeVar);
@@ -178,6 +179,8 @@ function App() {
         <Route path={routes.qrcodePopup} element={<QrcodePopup />} />
         <Route path={routes.qrcodeStorage} element={<QrcodeStorage />} />
         <Route path={routes.attend} element={<Attend />} />
+        <Route path={routes.qrcodeResult} element={<QrcodeResult />} />
+        <Route path={`${routes.qrcodeResult}/:id`} element={<QrcodeResult />} />
       </Routes>
     </ThemeProvider>
   );
