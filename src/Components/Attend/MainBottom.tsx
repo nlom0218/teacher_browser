@@ -33,7 +33,7 @@ const MainBottom = ({ date }: IProps) => {
     <Layout>
       <div className="main_bottom_layout">
         <AttendCalendar date={date} />
-        <AttendRegister />
+        <AttendRegister date={date} />
       </div>
     </Layout>
   );

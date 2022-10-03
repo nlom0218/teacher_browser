@@ -1,8 +1,9 @@
-import { useMutation } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 import { format, isWeekend } from "date-fns";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { client } from "../../apollo";
 import { CREATE_ATTENDANCE_MUTATION, CREATE_MANY_ATTENDANCE_MUTATION } from "../../Graphql/Attendance/mutation";
 import { SEE_ATTENDANCE_QUERY } from "../../Graphql/Attendance/query";
 import useMe from "../../Hooks/useMe";
@@ -41,7 +42,22 @@ interface IForm {
   contents: string | undefined;
 }
 
-const AttendRegister = () => {
+interface ISeeAttendance {
+  contents: null | string;
+  date: number;
+  month: number;
+  userEmail: string;
+  studentId: string;
+  studentName: string;
+  type: string;
+  _id: string;
+}
+
+interface IAttends {
+  seeAttendance: ISeeAttendance[];
+}
+
+const AttendRegister = ({ date }: { date: Date }) => {
   const me = useMe();
   const [msg, setMsg] = useState<string | undefined>(undefined);
   const [seletedStudent, setSeletedStudent] = useState<string[]>([]);
@@ -53,24 +69,10 @@ const AttendRegister = () => {
     mode: "onChange",
   });
 
-  const refetchCalendarAttendance = () => {
-    return monthArr.map((item) => {
-      return {
-        query: SEE_ATTENDANCE_QUERY,
-        variables: {
-          month: item,
-          userEmail: me?.email,
-        },
-      };
-    });
-  };
-
   const [createAttendance, { loading }] = useMutation(CREATE_ATTENDANCE_MUTATION, {
     onCompleted: (result) => {
-      const {
-        createAttendance: { ok, error },
-      } = result;
-      if (ok) {
+      const { createAttendance } = result;
+      if (createAttendance.length > 0) {
         setMsg("출결이 등록되었습니다.");
         setSeletedStudent([]);
         setStartDate(new window.Date());
@@ -80,16 +82,29 @@ const AttendRegister = () => {
         // setErrMsg(error);
       }
     },
-    refetchQueries: refetchCalendarAttendance(),
-    update: (
-      cache,
-      {
-        data: {
-          createAttendance: { ok },
-        },
-      },
-    ) => {
-      console.log(ok);
+    update: (cache, { data: { createAttendance } }) => {
+      if (createAttendance.length > 0) {
+        const months: number[] = [];
+        createAttendance.forEach(({ month }: { month: number }) => {
+          if (!months.includes(month)) {
+            months.push(month);
+          }
+        });
+        months.forEach((item: number) => {
+          const newAttends = createAttendance.filter(({ month }: { month: number }) => month === item);
+          const attends = cache.readQuery<any>({
+            query: SEE_ATTENDANCE_QUERY,
+            variables: { month: item },
+          });
+          cache.writeQuery({
+            query: SEE_ATTENDANCE_QUERY,
+            variables: { month: item },
+            data: {
+              seeAttendance: [...attends?.seeAttendance, ...newAttends],
+            },
+          });
+        });
+      }
     },
   });
 
