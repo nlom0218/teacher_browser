@@ -2,6 +2,8 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { QrcodeUrlContext } from "./QrcodeUrlContext";
+import { useNavigate } from "react-router-dom";
+import routes from "../../routes";
 
 const TopContents = styled.div`
   display: grid;
@@ -43,19 +45,19 @@ const SubmitInput = styled.input`
 //https 확인 절차 필요
 
 const QrcodeInput = () => {
-  const { setMode, setUrl } = useContext(QrcodeUrlContext);
+  const { url, setUrl } = useContext(QrcodeUrlContext);
 
   const { register, handleSubmit } = useForm({
     mode: "onChange",
   });
+  const navigate = useNavigate();
 
   //입력 데이터를 url값으로 지정하고 결과 화면으로 이동
   const onSubmit = (data) => {
     const { urllink } = data;
     setUrl(urllink);
-    setMode("result");
+    navigate(routes.qrcodeResult, { state: { url: urllink } });
   };
-
   return (
     <TopContents>
       <Url onSubmit={handleSubmit(onSubmit)}>

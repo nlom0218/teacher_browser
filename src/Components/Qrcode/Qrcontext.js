@@ -8,7 +8,8 @@ import { useNavigate } from "react-router-dom";
 const Storages = styled.div`
   display: grid;
   grid-template-columns: 1fr 3fr 5fr;
-  background: ${(props) => props.theme.cardBg};
+  background: ${(props) => (props.isSelect ? props.theme.skyblue : props.theme.cardBg)};
+  border: ${(props) => props.isSelect && "1px solid"};
   width: 100%;
   height: 150px;
   border-radius: 5px;
@@ -17,6 +18,7 @@ const Storages = styled.div`
   padding: 0.625rem;
   justify-items: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 const Body = styled.div`
@@ -25,7 +27,6 @@ const Body = styled.div`
   height: 130px;
   row-gap: 40px;
   row-gap: 2.5rem;
-  /* background-color: ${(props) => props.theme.cardBg}; */
   border-radius: 5px;
   border-radius: 0.3125rem;
   justify-self: center;
@@ -66,9 +67,13 @@ const Url = styled.div`
   font-size: 1rem;
   text-align: left;
   overflow: hidden;
+  :hover {
+    text-decoration: underline;
+    font-weight: 600;
+  }
   cursor: pointer;
 `;
-const Qrcontext = ({ addPickQr, setAddPickQr, title, urlOne, id }) => {
+const Qrcontext = ({ addPickQr, setAddPickQr, title, urlOne, id, index }) => {
   const navigate = useNavigate();
 
   const [pick, setPick] = useState(false);
@@ -92,12 +97,10 @@ const Qrcontext = ({ addPickQr, setAddPickQr, title, urlOne, id }) => {
     }
   };
   const onClickResult = () => {
-    localStorage.setItem("qrmode", "result");
-    localStorage.setItem("resultUrl", urlOne);
-    navigate(routes.qrcode);
+    navigate(`${routes.qrcodeResult}/${index}`, { state: { url: urlOne, index: index } });
   };
   const onClickUrl = () => {
-    window.open(urlOne, "width=500, height=600");
+    window.open(urlOne, "width=100%, height=100%");
   };
 
   const generateQrCode = async () => {
@@ -122,7 +125,7 @@ const Qrcontext = ({ addPickQr, setAddPickQr, title, urlOne, id }) => {
   }, [addPickQr]);
 
   return (
-    <Storages onClick={() => onClickPick(id)}>
+    <Storages onClick={() => onClickPick(id)} isSelect={pick}>
       {pick === true ? <GrCheckboxSelected /> : <GrCheckbox />}
       <Body onClick={onClickResult}>
         <img src={imageUrlOne} alt="img" />
