@@ -63,7 +63,7 @@ const Qroptionbtn = ({ data, me, picklist, addPickQr, setAddPickQr }) => {
   const navigate = useNavigate();
 
   const onClickBtn = () => {
-    localStorage.setItem("qrmode", "make");
+    // localStorage.setItem("qrmode", "make");
     navigate(routes.qrcode);
   };
   const onClickPrintBtn = () => {

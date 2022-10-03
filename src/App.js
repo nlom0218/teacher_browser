@@ -50,6 +50,7 @@ import ManagingRoles from "./Pages/ManagingRoles";
 import Qrcode from "./Pages/Qrcode";
 import QrcodePopup from "./Components/Qrcode/QrcodePopup";
 import QrcodeStorage from "./Pages/QrcodeStorage";
+import QrcodeResult from "./Pages/QrcodeResult";
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
   const bgTheme = useReactiveVar(bgThemeVar);
@@ -176,6 +177,8 @@ function App() {
         <Route path={routes.qrcode} element={<Qrcode />} />
         <Route path={routes.qrcodePopup} element={<QrcodePopup />} />
         <Route path={routes.qrcodeStorage} element={<QrcodeStorage />} />
+        <Route path={routes.qrcodeResult} element={<QrcodeResult />} />
+        <Route path={`${routes.qrcodeResult}/:id`} element={<QrcodeResult />} />
       </Routes>
     </ThemeProvider>
   );
