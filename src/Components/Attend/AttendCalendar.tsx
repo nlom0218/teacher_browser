@@ -44,10 +44,12 @@ const CalendarList = styled.div<ICalendarList>`
   `}
 `;
 
-const AttendCalendar = () => {
+interface IProps {
+  date: Date;
+}
+
+const AttendCalendar = ({ date }: IProps) => {
   const me = useMe();
-  // 부모에서 받아 올것
-  const date = new Date();
 
   const { data, loading, refetch } = useQuery(SEE_ATTENDANCE_QUERY, {
     variables: {

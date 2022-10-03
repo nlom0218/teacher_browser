@@ -24,11 +24,15 @@ const Layout = styled.div`
   }
 `;
 
-const MainBottom = () => {
+interface IProps {
+  date: Date;
+}
+
+const MainBottom = ({ date }: IProps) => {
   return (
     <Layout>
       <div className="main_bottom_layout">
-        <AttendCalendar />
+        <AttendCalendar date={date} />
         <AttendRegister />
       </div>
     </Layout>

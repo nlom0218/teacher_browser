@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import MainBottom from "../Components/Attend/MainBottom";
 import MainTop from "../Components/Attend/MainTop";
@@ -24,12 +25,13 @@ const Container = styled.div`
 
 const Attend = () => {
   const titleUpdataer = useTitle("티처캔 | 출석부");
+  const [date, setDate] = useState(new Date());
   return (
     <BasicContainer>
       <Container>
-        <MainTop />
+        <MainTop date={date} setDate={setDate} />
         <div className="main_bottom">
-          <MainBottom />
+          <MainBottom date={date} />
         </div>
       </Container>
     </BasicContainer>

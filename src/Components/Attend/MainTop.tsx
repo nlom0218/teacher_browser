@@ -1,3 +1,5 @@
+import { addMonths, format } from "date-fns";
+import { Dispatch, SetStateAction } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import styled from "styled-components";
 import { customMedia } from "../../styles";
@@ -83,16 +85,28 @@ const Select = styled.div`
   cursor: pointer;
 `;
 
-const MainTop = () => {
+interface IPros {
+  date: Date;
+  setDate: Dispatch<SetStateAction<Date>>;
+}
+
+const MainTop = ({ date, setDate }: IPros) => {
+  const onClickBtn = (type: string) => {
+    if (type === "cur") setDate(new Date());
+    else if (type === "before") setDate((prev) => addMonths(prev, -1));
+    else if (type === "next") setDate((prev) => addMonths(prev, 1));
+  };
   return (
     <Layout>
-      <Title>2022년 09월</Title>
+      <Title>{format(date, "yyyy년 MM월")}</Title>
       <BtnContainer>
-        <TodayBtn className="calendar_btn">TODAY</TodayBtn>
-        <MoveBtn className="calendar_btn">
+        <TodayBtn className="calendar_btn" onClick={() => onClickBtn("cur")}>
+          TODAY
+        </TodayBtn>
+        <MoveBtn className="calendar_btn" onClick={() => onClickBtn("before")}>
           <IoIosArrowBack />
         </MoveBtn>
-        <MoveBtn className="calendar_btn">
+        <MoveBtn className="calendar_btn" onClick={() => onClickBtn("next")}>
           <IoIosArrowForward />
         </MoveBtn>
         <Select className="calendar_btn">종류 별 출결</Select>
