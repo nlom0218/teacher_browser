@@ -201,6 +201,27 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg }) => {
 
   const [deleteAttendance, { loading: deleteLoading }] = useMutation(DELETE_ATTENDANCE_MUTATION, {
     onCompleted: deleteOnCompleted,
+    update(
+      cache,
+      {
+        data: {
+          deleteAttendance: { ok },
+        },
+      },
+    ) {
+      if (ok) {
+        cache.modify({
+          id: "ROOT_QUERY",
+          fields: {
+            seeAttendance(prev) {
+              const delRef = `Attendance:${attendId}`;
+              const newAttends = prev.filter((item) => item.__ref !== delRef);
+              return newAttends;
+            },
+          },
+        });
+      }
+    },
   });
 
   const onSubmit = (data) => {
