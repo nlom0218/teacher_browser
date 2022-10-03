@@ -120,6 +120,8 @@ const MainTop = ({
     if (type === "cur") setDate(new Date());
     else if (type === "before") setDate((prev) => addMonths(prev, -1));
     else if (type === "next") setDate((prev) => addMonths(prev, 1));
+    setSeletedType("전체보기");
+    setSletedName("전체보기");
   };
   const onChangeType = () => {
     const newAttendType = getValues("attendType");
