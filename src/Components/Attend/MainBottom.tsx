@@ -26,14 +26,15 @@ const Layout = styled.div`
 
 interface IProps {
   date: Date;
+  email: string | undefined;
 }
 
-const MainBottom = ({ date }: IProps) => {
+const MainBottom = ({ date, email }: IProps) => {
   return (
     <Layout>
       <div className="main_bottom_layout">
-        <AttendCalendar date={date} />
-        <AttendRegister date={date} />
+        <AttendCalendar date={date} email={email} />
+        <AttendRegister email={email} />
       </div>
     </Layout>
   );

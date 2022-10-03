@@ -7,7 +7,7 @@ import MainTop from "../Components/Attend/MainTop";
 import EditAttend from "../Components/Attend/Popup/EditAttend";
 import AlertMessage from "../Components/Shared/AlertMessage";
 import BasicContainer from "../Components/Shared/BasicContainer";
-import useMe from "../Hooks/useMe";
+import useMe, { IMe } from "../Hooks/useMe";
 import useTitle from "../Hooks/useTitle";
 import { customMedia } from "../styles";
 
@@ -40,7 +40,7 @@ const Attend = () => {
       <Container>
         <MainTop date={date} setDate={setDate} />
         <div className="main_bottom">
-          <MainBottom date={date} />
+          <MainBottom date={date} email={me?.email} />
         </div>
       </Container>
       {isPopup === "eidtAttend" && <EditAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} />}

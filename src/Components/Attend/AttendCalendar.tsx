@@ -3,7 +3,6 @@ import { addDays, addWeeks, format, getMonth, getWeeksInMonth, startOfMonth, sta
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { SEE_ATTENDANCE_QUERY } from "../../Graphql/Attendance/query";
-import useMe from "../../Hooks/useMe";
 import { customMedia } from "../../styles";
 import Loading from "../Shared/Loading";
 import AttendCalendarItem from "./AttendCalendarItem";
@@ -58,6 +57,7 @@ interface ISeeAttendance {
 
 interface IProps {
   date: Date;
+  email: string | undefined;
 }
 
 interface IDateArr {
@@ -69,8 +69,7 @@ interface IDate {
   seeAttendance: ISeeAttendance[];
 }
 
-const AttendCalendar = ({ date }: IProps) => {
-  const me = useMe();
+const AttendCalendar = ({ date, email }: IProps) => {
   const [dateArr, setDateArr] = useState<IDateArr[] | undefined>(undefined);
   const [attends, setAttends] = useState<ISeeAttendance[][]>([]);
   const [weekLength, setWeekLength] = useState<number | undefined>(undefined);
@@ -79,7 +78,7 @@ const AttendCalendar = ({ date }: IProps) => {
     variables: {
       month: parseInt(format(date, "yyMM")),
     },
-    skip: !me,
+    skip: !email,
   });
 
   useEffect(() => {

@@ -3,10 +3,8 @@ import { format, isWeekend } from "date-fns";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { client } from "../../apollo";
-import { CREATE_ATTENDANCE_MUTATION, CREATE_MANY_ATTENDANCE_MUTATION } from "../../Graphql/Attendance/mutation";
+import { CREATE_ATTENDANCE_MUTATION } from "../../Graphql/Attendance/mutation";
 import { SEE_ATTENDANCE_QUERY } from "../../Graphql/Attendance/query";
-import useMe from "../../Hooks/useMe";
 import AlertMessage from "../Shared/AlertMessage";
 import Loading from "../Shared/Loading";
 import AttendDetail from "./AttendDetail";
@@ -42,28 +40,15 @@ interface IForm {
   contents: string | undefined;
 }
 
-interface ISeeAttendance {
-  contents: null | string;
-  date: number;
-  month: number;
-  userEmail: string;
-  studentId: string;
-  studentName: string;
-  type: string;
-  _id: string;
+interface IProps {
+  email: string | undefined;
 }
 
-interface IAttends {
-  seeAttendance: ISeeAttendance[];
-}
-
-const AttendRegister = ({ date }: { date: Date }) => {
-  const me = useMe();
+const AttendRegister = ({ email }: IProps) => {
   const [msg, setMsg] = useState<string | undefined>(undefined);
   const [seletedStudent, setSeletedStudent] = useState<string[]>([]);
   const [startDate, setStartDate] = useState(new window.Date());
   const [endDate, setEndDate] = useState(new window.Date());
-  const [monthArr, setMonthArr] = useState<number[]>([]);
   const [type, setType] = useState<string>("");
   const { register, getValues } = useForm<IForm>({
     mode: "onChange",
@@ -127,10 +112,9 @@ const AttendRegister = ({ date }: { date: Date }) => {
           !newMonthArr.includes(month) && newMonthArr.push(month);
         }
       }
-      setMonthArr(newMonthArr);
       createAttendance({
         variables: {
-          userEmail: me?.email,
+          userEmail: email,
           studentId: seletedStudent,
           type,
           dateMonthArr,
