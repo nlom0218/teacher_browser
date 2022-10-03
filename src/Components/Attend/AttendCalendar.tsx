@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { SEE_ATTENDANCE_QUERY } from "../../Graphql/Attendance/query";
 import useMe from "../../Hooks/useMe";
 import { customMedia } from "../../styles";
+import Loading from "../Shared/Loading";
 import AttendCalendarItem from "./AttendCalendarItem";
 
 interface IDay {
@@ -45,16 +46,6 @@ const CalendarList = styled.div<ICalendarList>`
   `}
 `;
 
-interface IProps {
-  date: Date;
-}
-
-interface IDateArr {
-  date: Date;
-  month: string;
-  attend: ISeeAttendance[] | undefined;
-}
-
 interface ISeeAttendance {
   contents: null | string;
   date: number;
@@ -65,6 +56,15 @@ interface ISeeAttendance {
   _id: string;
 }
 
+interface IProps {
+  date: Date;
+}
+
+interface IDateArr {
+  date: Date;
+  month: string;
+}
+
 interface IDate {
   seeAttendance: ISeeAttendance[];
 }
@@ -72,9 +72,10 @@ interface IDate {
 const AttendCalendar = ({ date }: IProps) => {
   const me = useMe();
   const [dateArr, setDateArr] = useState<IDateArr[] | undefined>(undefined);
+  const [attends, setAttends] = useState<ISeeAttendance[][]>([]);
   const [weekLength, setWeekLength] = useState<number | undefined>(undefined);
 
-  const { data, loading, refetch } = useQuery<IDate>(SEE_ATTENDANCE_QUERY, {
+  const { data, loading } = useQuery<IDate>(SEE_ATTENDANCE_QUERY, {
     variables: {
       month: parseInt(format(date, "yyMM")),
     },
@@ -82,46 +83,60 @@ const AttendCalendar = ({ date }: IProps) => {
   });
 
   useEffect(() => {
+    const newDateArr = [];
+    const monthStart = startOfMonth(date);
+    const weekStart = startOfWeek(monthStart, { weekStartsOn: 0 });
+    const weekLength = getWeeksInMonth(date);
+    for (let i = 0; i < weekLength; i++) {
+      const tempWeekStart = addWeeks(weekStart, i);
+      for (let i = 0; i < 7; i++) {
+        const tempDate = addDays(tempWeekStart, i);
+        if (i === 0 || i === 6) continue;
+        if (getMonth(tempDate) === getMonth(date)) {
+          newDateArr.push({
+            date: tempDate,
+            month: "cur",
+          });
+        } else if (getMonth(tempDate) < getMonth(date)) {
+          newDateArr.push({
+            date: tempDate,
+            month: "pre",
+          });
+        } else if (getMonth(tempDate) > getMonth(date)) {
+          newDateArr.push({
+            date: tempDate,
+            month: "next",
+          });
+        }
+      }
+    }
+    setDateArr(newDateArr);
+    setWeekLength(weekLength);
+  }, []);
+
+  useEffect(() => {
     if (data) {
-      const newDateArr = [];
+      const attends = [];
       const monthStart = startOfMonth(date);
       const weekStart = startOfWeek(monthStart, { weekStartsOn: 0 });
       const weekLength = getWeeksInMonth(date);
       for (let i = 0; i < weekLength; i++) {
         const tempWeekStart = addWeeks(weekStart, i);
         for (let i = 0; i < 7; i++) {
+          if (i === 0 || i === 6) continue;
           const tempDate = addDays(tempWeekStart, i);
           const tempDateNumber = new window.Date(tempDate).setHours(0, 0, 0, 0);
           const attend = data?.seeAttendance?.filter((item) => item.date === tempDateNumber);
-          if (i === 0 || i === 6) continue;
-          if (getMonth(tempDate) === getMonth(date)) {
-            newDateArr.push({
-              date: tempDate,
-              month: "cur",
-              attend,
-            });
-          } else if (getMonth(tempDate) < getMonth(date)) {
-            newDateArr.push({
-              date: tempDate,
-              month: "pre",
-              attend,
-            });
-          } else if (getMonth(tempDate) > getMonth(date)) {
-            newDateArr.push({
-              date: tempDate,
-              month: "next",
-              attend,
-            });
-          }
+          attends.push(attend);
         }
       }
-      setDateArr(newDateArr);
-      setWeekLength(weekLength);
+      setAttends(attends);
     }
   }, [data]);
 
   return (
     <Layout>
+      {loading && <Loading page="center" />}
       {["월", "화", "수", "목", "금"].map((item, index) => {
         return (
           <Day key={index} sun={item === "일"}>
@@ -134,13 +149,9 @@ const AttendCalendar = ({ date }: IProps) => {
           dateArr?.map((item, index) => {
             return (
               <AttendCalendarItem
-                //   media={media}
                 key={index}
                 {...item}
-                //   userEmail={me?.email}
-                //   schedule={schedule?.seeSchedule}
-                //   calendarType={calendarType}
-                //   attendData={attendData}
+                attend={attends[index]}
                 //   selectedAttendOption={selectedAttendOption}
               />
             );

@@ -102,10 +102,11 @@ interface ISeeAttendance {
 interface IProps {
   date: Date;
   month: String;
-  attend: ISeeAttendance[] | undefined;
+  attend: ISeeAttendance[];
 }
 
 const AttendCalendarItem = ({ date, month, attend }: IProps) => {
+  console.log(attend);
   const onClickAttendInfo = (id: string, name: string) => {};
   return (
     <Container>
