@@ -17,7 +17,7 @@ interface ICalendarList {
 
 const Layout = styled.div`
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-template-rows: auto 1fr;
 `;
 
@@ -32,7 +32,7 @@ const Day = styled.div<IDay>`
 const CalendarList = styled.div<ICalendarList>`
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-template-rows: ${(props) => `repeat(${props.weekLength}, 1fr)`};
   background-color: ${(props) => props.theme.girdBorderColor};
   border: 1px solid ${(props) => props.theme.girdBorderColor};
@@ -93,6 +93,7 @@ const AttendCalendar = ({ date }: IProps) => {
           const tempDate = addDays(tempWeekStart, i);
           const tempDateNumber = new window.Date(tempDate).setHours(0, 0, 0, 0);
           const attend = data?.seeAttendance?.filter((item) => item.date === tempDateNumber);
+          if (i === 0 || i === 6) continue;
           if (getMonth(tempDate) === getMonth(date)) {
             newDateArr.push({
               date: tempDate,
@@ -121,7 +122,7 @@ const AttendCalendar = ({ date }: IProps) => {
 
   return (
     <Layout>
-      {["일", "월", "화", "수", "목", "금", "토"].map((item, index) => {
+      {["월", "화", "수", "목", "금"].map((item, index) => {
         return (
           <Day key={index} sun={item === "일"}>
             {item}

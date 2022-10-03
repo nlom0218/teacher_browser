@@ -114,14 +114,16 @@ const AttendCalendarItem = ({ date, month, attend }: IProps) => {
       </Day>
       <AttendInfoList>
         {attend &&
-          attend.map((item, index) => {
-            return (
-              <AttendInfoItem key={index} onClick={() => onClickAttendInfo(item._id, item.studentName)}>
-                <StudentName>{item.studentName}</StudentName>
-                <AttendType attendType={item.type}>{item.type}</AttendType>
-              </AttendInfoItem>
-            );
-          })}
+          attend
+            .sort((a, b) => (a.studentName > b.studentName ? 1 : -1))
+            .map((item, index) => {
+              return (
+                <AttendInfoItem key={index} onClick={() => onClickAttendInfo(item._id, item.studentName)}>
+                  <StudentName>{item.studentName}</StudentName>
+                  <AttendType attendType={item.type}>{item.type}</AttendType>
+                </AttendInfoItem>
+              );
+            })}
       </AttendInfoList>
     </Container>
   );
