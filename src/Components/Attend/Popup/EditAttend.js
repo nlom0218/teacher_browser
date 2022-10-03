@@ -4,7 +4,13 @@ import styled from "styled-components";
 import PopupContainer from "../../Shared/PopupContainer";
 import { outPopup } from "../../../apollo";
 import { useMutation, useQuery } from "@apollo/client";
-import { Icon, CalenderPopupTextareaLayout, CalenderPopupTitle, InputLayout, DateContainer } from "./PopupLayout";
+import {
+  Icon,
+  CalenderPopupTextareaLayout,
+  CalenderPopupTitle,
+  InputLayout,
+  DateContainer,
+} from "../../Calendar/Popup/PopupLayout";
 import { BsCalendarDate, BsFillPersonCheckFill, BsFillPersonFill } from "react-icons/bs";
 import { customMedia } from "../../../styles";
 import { ko } from "date-fns/esm/locale";
@@ -119,14 +125,14 @@ const DelBtn = styled.div`
   cursor: pointer;
 `;
 
-const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery }) => {
+const EditAttend = ({ userEmail, setErrMsg, setMsg }) => {
   const attendId = localStorage.getItem("summaryAttendId");
   const attendName = localStorage.getItem("summaryAttendName");
 
   const [type, setType] = useState(undefined);
   const [date, setDate] = useState(undefined);
   const [studentId, setStudentId] = useState(undefined);
-  const { register, handleSubmit, setValue } = useForm({
+  const { register, handleSubmit, setValue, getValues } = useForm({
     mode: "onChange",
   });
 
@@ -147,7 +153,6 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery }) => {
       localStorage.removeItem("attendStudentId");
       localStorage.removeItem("summaryAttendId");
       localStorage.removeItem("summaryAttendName");
-      setRefetchQuery((prev) => prev + 1);
     } else {
       setErrMsg(error);
     }
@@ -164,7 +169,6 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery }) => {
       localStorage.removeItem("attendStudentId");
       localStorage.removeItem("summaryAttendId");
       localStorage.removeItem("summaryAttendName");
-      setRefetchQuery((prev) => prev + 1);
     } else {
       setErrMsg(error);
     }
@@ -172,10 +176,52 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery }) => {
 
   const [editAttendance, { loading: editLoading }] = useMutation(EDIT_ATTENDANCE_MUTATION, {
     onCompleted,
+    update(
+      cache,
+      {
+        data: {
+          editAttendance: { ok },
+        },
+      },
+    ) {
+      if (ok) {
+        const month = parseInt(format(new window.Date(date), "yyMM"));
+        cache.modify({
+          id: `Attendance:${attendId}`,
+          fields: {
+            type: () => type,
+            date: () => new window.Date(date).setHours(0, 0, 0, 0),
+            month: () => month,
+            contents: () => getValues("contents"),
+          },
+        });
+      }
+    },
   });
 
   const [deleteAttendance, { loading: deleteLoading }] = useMutation(DELETE_ATTENDANCE_MUTATION, {
     onCompleted: deleteOnCompleted,
+    update(
+      cache,
+      {
+        data: {
+          deleteAttendance: { ok },
+        },
+      },
+    ) {
+      if (ok) {
+        cache.modify({
+          id: "ROOT_QUERY",
+          fields: {
+            seeAttendance(prev) {
+              const delRef = `Attendance:${attendId}`;
+              const newAttends = prev.filter((item) => item.__ref !== delRef);
+              return newAttends;
+            },
+          },
+        });
+      }
+    },
   });
 
   const onSubmit = (data) => {

@@ -1,9 +1,10 @@
 import { useQuery } from "@apollo/client";
 import { addDays, addWeeks, format, getMonth, getWeeksInMonth, startOfMonth, startOfWeek } from "date-fns";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styled from "styled-components";
 import { SEE_ATTENDANCE_QUERY } from "../../Graphql/Attendance/query";
-import useMe from "../../Hooks/useMe";
 import { customMedia } from "../../styles";
+import Loading from "../Shared/Loading";
 import AttendCalendarItem from "./AttendCalendarItem";
 
 interface IDay {
@@ -11,12 +12,12 @@ interface IDay {
 }
 
 interface ICalendarList {
-  weekLength: number;
+  weekLength: number | undefined;
 }
 
 const Layout = styled.div`
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-template-rows: auto 1fr;
 `;
 
@@ -31,7 +32,7 @@ const Day = styled.div<IDay>`
 const CalendarList = styled.div<ICalendarList>`
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-template-rows: ${(props) => `repeat(${props.weekLength}, 1fr)`};
   background-color: ${(props) => props.theme.girdBorderColor};
   border: 1px solid ${(props) => props.theme.girdBorderColor};
@@ -44,52 +45,110 @@ const CalendarList = styled.div<ICalendarList>`
   `}
 `;
 
-const AttendCalendar = () => {
-  const me = useMe();
-  // 부모에서 받아 올것
-  const date = new Date();
+interface ISeeAttendance {
+  contents: null | string;
+  date: number;
+  month: number;
+  studentId: string;
+  studentName: string;
+  type: string;
+  _id: string;
+}
 
-  const { data, loading, refetch } = useQuery(SEE_ATTENDANCE_QUERY, {
+interface IProps {
+  date: Date;
+  email: string | undefined;
+  setAttendType: Dispatch<SetStateAction<string[]>>;
+  setNameType: Dispatch<SetStateAction<string[]>>;
+  seletedType: string;
+  seletedName: string;
+}
+
+interface IDateArr {
+  date: Date;
+  month: string;
+}
+
+interface IDate {
+  seeAttendance: ISeeAttendance[];
+}
+
+const AttendCalendar = ({ date, email, setAttendType, setNameType, seletedType, seletedName }: IProps) => {
+  const [dateArr, setDateArr] = useState<IDateArr[] | undefined>(undefined);
+  const [attends, setAttends] = useState<ISeeAttendance[][]>([]);
+  const [weekLength, setWeekLength] = useState<number | undefined>(undefined);
+
+  const { data, loading } = useQuery<IDate>(SEE_ATTENDANCE_QUERY, {
     variables: {
       month: parseInt(format(date, "yyMM")),
     },
-    skip: !me,
+    skip: !email,
   });
 
-  console.log(data);
-
-  // useEffect()로 처리할 것
-  const newDateArr = [];
-  const monthStart = startOfMonth(date);
-  const weekStart = startOfWeek(monthStart, { weekStartsOn: 0 });
-  const weekLength = getWeeksInMonth(date);
-  for (let i = 0; i < weekLength; i++) {
-    const tempWeekStart = addWeeks(weekStart, i);
-    for (let i = 0; i < 7; i++) {
-      const tempDate = addDays(tempWeekStart, i);
-      if (getMonth(tempDate) === getMonth(date)) {
-        newDateArr.push({
-          date: tempDate,
-          month: "cur",
-        });
-      } else if (getMonth(tempDate) < getMonth(date)) {
-        newDateArr.push({
-          date: tempDate,
-          month: "pre",
-        });
-      } else if (getMonth(tempDate) > getMonth(date)) {
-        newDateArr.push({
-          date: tempDate,
-          month: "next",
-        });
+  useEffect(() => {
+    const newDateArr = [];
+    const monthStart = startOfMonth(date);
+    const weekStart = startOfWeek(monthStart, { weekStartsOn: 0 });
+    const weekLength = getWeeksInMonth(date);
+    for (let i = 0; i < weekLength; i++) {
+      const tempWeekStart = addWeeks(weekStart, i);
+      for (let i = 0; i < 7; i++) {
+        const tempDate = addDays(tempWeekStart, i);
+        if (i === 0 || i === 6) continue;
+        if (getMonth(tempDate) === getMonth(date)) {
+          newDateArr.push({
+            date: tempDate,
+            month: "cur",
+          });
+        } else if (getMonth(tempDate) < getMonth(date)) {
+          newDateArr.push({
+            date: tempDate,
+            month: "pre",
+          });
+        } else if (getMonth(tempDate) > getMonth(date)) {
+          newDateArr.push({
+            date: tempDate,
+            month: "next",
+          });
+        }
       }
     }
-  }
-  const dateArr = newDateArr;
+    setDateArr(newDateArr);
+    setWeekLength(weekLength);
+  }, [date]);
+
+  useEffect(() => {
+    if (data) {
+      const attends = [];
+      const monthStart = startOfMonth(date);
+      const weekStart = startOfWeek(monthStart, { weekStartsOn: 0 });
+      const weekLength = getWeeksInMonth(date);
+      for (let i = 0; i < weekLength; i++) {
+        const tempWeekStart = addWeeks(weekStart, i);
+        for (let i = 0; i < 7; i++) {
+          if (i === 0 || i === 6) continue;
+          const tempDate = addDays(tempWeekStart, i);
+          const tempDateNumber = new window.Date(tempDate).setHours(0, 0, 0, 0);
+          const attend = data?.seeAttendance?.filter((item) => item.date === tempDateNumber);
+          attends.push(attend);
+        }
+      }
+      const attendType: string[] = [];
+      const nameType: string[] = [];
+      data?.seeAttendance?.forEach((item: ISeeAttendance) => {
+        if (!attendType.includes(item.type)) attendType.push(item.type);
+        if (!nameType.includes(item.studentName)) nameType.push(item.studentName);
+      });
+      setAttendType(attendType);
+      setNameType(nameType.sort((a, b) => (a > b ? 1 : -1)));
+      setAttends(attends);
+    }
+  }, [data]);
 
   return (
     <Layout>
-      {["일", "월", "화", "수", "목", "금", "토"].map((item, index) => {
+      {loading && <Loading page="center" />}
+      {["월", "화", "수", "목", "금"].map((item, index) => {
         return (
           <Day key={index} sun={item === "일"}>
             {item}
@@ -101,14 +160,11 @@ const AttendCalendar = () => {
           dateArr?.map((item, index) => {
             return (
               <AttendCalendarItem
-                //   media={media}
                 key={index}
                 {...item}
-                //   userEmail={me?.email}
-                //   schedule={schedule?.seeSchedule}
-                //   calendarType={calendarType}
-                //   attendData={attendData}
-                //   selectedAttendOption={selectedAttendOption}
+                attend={attends[index]}
+                seletedType={seletedType}
+                seletedName={seletedName}
               />
             );
           })}

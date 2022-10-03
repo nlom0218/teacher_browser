@@ -43,7 +43,7 @@ interface IProps {
 }
 
 const StudentList = ({ setSeletedStudent, seletedStudent }: IProps) => {
-  const { data, loading } = useQuery<IData>(SEE_ALL_STUDENT_QUERY, {
+  const { data } = useQuery<IData>(SEE_ALL_STUDENT_QUERY, {
     variables: { sort: "name", trash: false },
   });
   return (

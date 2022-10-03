@@ -32,7 +32,7 @@ import SeeAllergy from "../Components/Lunchmenu/Popup/SeeAllergy";
 import MoveStudentPage from "../Components/Calendar/Popup/MoveStudentPage";
 import AddAttend from "../Components/Calendar/Popup/AddAttend";
 import AttendSelectedStudent from "../Components/Calendar/Popup/AttendSelectedStudent";
-import EditAttend from "../Components/Calendar/Popup/EditAttend";
+import EditAttend from "../Components/Attend/Popup/EditAttend";
 import TodoCreate from "../Components/TodoList/Popup/TodoCreate";
 import useTitle from "../Hooks/useTitle";
 import IcHelper from "../icons/Helper/IcHelper";
@@ -389,7 +389,7 @@ const Calendar = () => {
           <TopContainer>
             <Title>{format(date, "yyyy년 MM월")}</Title>
             <BtnContainer>
-              {media !== "Mobile" && (
+              {/* {media !== "Mobile" && (
                 <CalendarType>
                   <CalendarTypeBtn onClick={onClickCalendarTypeBtn}>일정</CalendarTypeBtn>
                   <CalendarTypeBtn onClick={onClickCalendarTypeBtn}>출결</CalendarTypeBtn>
@@ -401,7 +401,7 @@ const Calendar = () => {
                     {calendarType === "calendar" ? <div>일정</div> : <div>출결</div>}
                   </CalendarTypeBackground>
                 </CalendarType>
-              )}
+              )} */}
               <TodayBtn className="calendar_btn" onClick={onClickTodayBtn}>
                 TODAY
               </TodayBtn>
@@ -514,9 +514,7 @@ const Calendar = () => {
           urlDate={urlDate}
         />
       )}
-      {isPopup === "eidtAttend" && (
-        <EditAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} setRefetchQuery={setRefetchQuery} />
-      )}
+      {isPopup === "eidtAttend" && <EditAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} />}
       {isPopup === "selectedStudent" && <AttendSelectedStudent />}
       {isPopup === "needLogin" && <NeedLoginPopupContainer />}
       {isPopup === "CalendarHelper" && <CalendarHelper />}
