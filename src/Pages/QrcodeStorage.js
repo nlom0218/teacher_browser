@@ -88,6 +88,7 @@ const QrcodeStorage = () => {
               title={qrcode.title}
               urlOne={qrcode.url}
               id={qrcode._id}
+              index={index + 1}
             />
           ))}
         </Table>
