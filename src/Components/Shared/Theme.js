@@ -13,7 +13,7 @@ import {
 import { FaSun, FaMoon } from "react-icons/fa";
 import { BiExitFullscreen, BiFullscreen } from "react-icons/bi";
 import useMedia from "../../Hooks/useMedia";
-import { HeaderToDo, HeaderBookMark, HedaerCalender, HeaderMenu, HeaderHome } from "./HeaderLink";
+import { HeaderToDo, HedaerCalender, HeaderMenu, HeaderHome, HeaderAttend } from "./HeaderLink";
 import routes from "../../routes";
 import { useNavigate } from "react-router-dom";
 import { customMedia } from "../../styles";
@@ -116,9 +116,8 @@ const Theme = () => {
       navigate(routes.home);
     } else if (page === "todo") {
       navigate(routes.todo);
-    } else if (page === "pageLink") {
-      movePageLink();
-      navigate(routes.pageLink);
+    } else if (page === "attend") {
+      navigate(routes.attend);
     } else if (page === "calendar") {
       localStorage.setItem("calendarDate", new Date());
       navigate(routes.calendar);
@@ -154,8 +153,8 @@ const Theme = () => {
           <MenuItem className="menu_btn" onClick={() => onClickRoutes("calendar")}>
             <HedaerCalender />
           </MenuItem>
-          <MenuItem className="menu_btn" onClick={() => onClickRoutes("pageLink")}>
-            <HeaderBookMark />
+          <MenuItem className="menu_btn" onClick={() => onClickRoutes("attend")}>
+            <HeaderAttend />
           </MenuItem>
           <MenuItem className="menu_btn" onClick={() => onClickRoutes("menu")}>
             <HeaderMenu />
