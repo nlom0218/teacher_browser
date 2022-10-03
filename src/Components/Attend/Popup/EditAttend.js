@@ -132,7 +132,7 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg }) => {
   const [type, setType] = useState(undefined);
   const [date, setDate] = useState(undefined);
   const [studentId, setStudentId] = useState(undefined);
-  const { register, handleSubmit, setValue } = useForm({
+  const { register, handleSubmit, setValue, getValues } = useForm({
     mode: "onChange",
   });
 
@@ -176,6 +176,27 @@ const EditAttend = ({ userEmail, setErrMsg, setMsg }) => {
 
   const [editAttendance, { loading: editLoading }] = useMutation(EDIT_ATTENDANCE_MUTATION, {
     onCompleted,
+    update(
+      cache,
+      {
+        data: {
+          editAttendance: { ok },
+        },
+      },
+    ) {
+      if (ok) {
+        const month = parseInt(format(new window.Date(date), "yyMM"));
+        cache.modify({
+          id: `Attendance:${attendId}`,
+          fields: {
+            type: () => type,
+            date: () => new window.Date(date).setHours(0, 0, 0, 0),
+            month: () => month,
+            contents: () => getValues("contents"),
+          },
+        });
+      }
+    },
   });
 
   const [deleteAttendance, { loading: deleteLoading }] = useMutation(DELETE_ATTENDANCE_MUTATION, {

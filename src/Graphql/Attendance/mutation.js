@@ -38,8 +38,14 @@ export const CREATE_ATTENDANCE_MUTATION = gql`
       contents: $contents
       dateMonthArr: $dateMonthArr
     ) {
-      ok
-      error
+      _id
+      userEmail
+      studentId
+      type
+      date
+      month
+      contents
+      studentName
     }
   }
 `;
