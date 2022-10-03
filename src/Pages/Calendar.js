@@ -389,7 +389,7 @@ const Calendar = () => {
           <TopContainer>
             <Title>{format(date, "yyyy년 MM월")}</Title>
             <BtnContainer>
-              {media !== "Mobile" && (
+              {/* {media !== "Mobile" && (
                 <CalendarType>
                   <CalendarTypeBtn onClick={onClickCalendarTypeBtn}>일정</CalendarTypeBtn>
                   <CalendarTypeBtn onClick={onClickCalendarTypeBtn}>출결</CalendarTypeBtn>
@@ -401,7 +401,7 @@ const Calendar = () => {
                     {calendarType === "calendar" ? <div>일정</div> : <div>출결</div>}
                   </CalendarTypeBackground>
                 </CalendarType>
-              )}
+              )} */}
               <TodayBtn className="calendar_btn" onClick={onClickTodayBtn}>
                 TODAY
               </TodayBtn>
