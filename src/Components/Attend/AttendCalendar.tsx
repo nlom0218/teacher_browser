@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { addDays, addWeeks, format, getMonth, getWeeksInMonth, startOfMonth, startOfWeek } from "date-fns";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styled from "styled-components";
 import { SEE_ATTENDANCE_QUERY } from "../../Graphql/Attendance/query";
 import { customMedia } from "../../styles";
@@ -58,6 +58,10 @@ interface ISeeAttendance {
 interface IProps {
   date: Date;
   email: string | undefined;
+  setAttendType: Dispatch<SetStateAction<string[]>>;
+  setNameType: Dispatch<SetStateAction<string[]>>;
+  seletedType: string;
+  seletedName: string;
 }
 
 interface IDateArr {
@@ -69,7 +73,7 @@ interface IDate {
   seeAttendance: ISeeAttendance[];
 }
 
-const AttendCalendar = ({ date, email }: IProps) => {
+const AttendCalendar = ({ date, email, setAttendType, setNameType, seletedType, seletedName }: IProps) => {
   const [dateArr, setDateArr] = useState<IDateArr[] | undefined>(undefined);
   const [attends, setAttends] = useState<ISeeAttendance[][]>([]);
   const [weekLength, setWeekLength] = useState<number | undefined>(undefined);
@@ -129,6 +133,14 @@ const AttendCalendar = ({ date, email }: IProps) => {
           attends.push(attend);
         }
       }
+      const attendType: string[] = [];
+      const nameType: string[] = [];
+      data?.seeAttendance?.forEach((item: ISeeAttendance) => {
+        if (!attendType.includes(item.type)) attendType.push(item.type);
+        if (!nameType.includes(item.studentName)) nameType.push(item.studentName);
+      });
+      setAttendType(attendType);
+      setNameType(nameType.sort((a, b) => (a > b ? 1 : -1)));
       setAttends(attends);
     }
   }, [data]);
@@ -151,7 +163,8 @@ const AttendCalendar = ({ date, email }: IProps) => {
                 key={index}
                 {...item}
                 attend={attends[index]}
-                //   selectedAttendOption={selectedAttendOption}
+                seletedType={seletedType}
+                seletedName={seletedName}
               />
             );
           })}

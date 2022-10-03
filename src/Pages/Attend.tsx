@@ -34,13 +34,36 @@ const Attend = () => {
   const [msg, setMsg] = useState<string | undefined>(undefined);
   const [errMsg, setErrMsg] = useState<string | undefined>(undefined);
   const [date, setDate] = useState(new Date());
+
+  // 출결종류, 이름별로 볼 수 있도록 하는 것들
+  const [attendType, setAttendType] = useState<string[]>([]);
+  const [seletedType, setSeletedType] = useState("전체보기");
+  const [nameType, setNameType] = useState<string[]>([]);
+  const [seletedName, setSletedName] = useState("전체보기");
+
   const isPopup = useReactiveVar(isPopupVar);
   return (
     <BasicContainer>
       <Container>
-        <MainTop date={date} setDate={setDate} />
+        <MainTop
+          date={date}
+          setDate={setDate}
+          attendType={attendType}
+          nameType={nameType}
+          seletedType={seletedType}
+          setSeletedType={setSeletedType}
+          seletedName={seletedName}
+          setSletedName={setSletedName}
+        />
         <div className="main_bottom">
-          <MainBottom date={date} email={me?.email} />
+          <MainBottom
+            date={date}
+            email={me?.email}
+            setAttendType={setAttendType}
+            setNameType={setNameType}
+            seletedType={seletedType}
+            seletedName={seletedName}
+          />
         </div>
       </Container>
       {isPopup === "eidtAttend" && <EditAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} />}

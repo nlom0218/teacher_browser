@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import AttendCalendar from "./AttendCalendar";
 import AttendRegister from "./AttendRegister";
@@ -27,13 +28,24 @@ const Layout = styled.div`
 interface IProps {
   date: Date;
   email: string | undefined;
+  setAttendType: Dispatch<SetStateAction<string[]>>;
+  setNameType: Dispatch<SetStateAction<string[]>>;
+  seletedType: string;
+  seletedName: string;
 }
 
-const MainBottom = ({ date, email }: IProps) => {
+const MainBottom = ({ date, email, setAttendType, setNameType, seletedType, seletedName }: IProps) => {
   return (
     <Layout>
       <div className="main_bottom_layout">
-        <AttendCalendar date={date} email={email} />
+        <AttendCalendar
+          date={date}
+          email={email}
+          setAttendType={setAttendType}
+          setNameType={setNameType}
+          seletedType={seletedType}
+          seletedName={seletedName}
+        />
         <AttendRegister email={email} />
       </div>
     </Layout>

@@ -104,9 +104,11 @@ interface IProps {
   date: Date;
   month: String;
   attend: ISeeAttendance[];
+  seletedType: string;
+  seletedName: string;
 }
 
-const AttendCalendarItem = ({ date, month, attend }: IProps) => {
+const AttendCalendarItem = ({ date, month, attend, seletedType, seletedName }: IProps) => {
   const onClickAttendInfo = (id: string, name: string) => {
     inPopup("eidtAttend");
     localStorage.setItem("summaryAttendId", id);
@@ -120,6 +122,17 @@ const AttendCalendarItem = ({ date, month, attend }: IProps) => {
       <AttendInfoList>
         {attend &&
           attend
+            .filter((item) => {
+              if (seletedType === "전체보기" && seletedName === "전체보기") {
+                return item;
+              } else if (seletedName === "전체보기") {
+                return item.type === seletedType;
+              } else if (seletedType === "전체보기") {
+                return item.studentName === seletedName;
+              } else {
+                return item.type === seletedType && item.studentName === seletedName;
+              }
+            })
             .sort((a, b) => (a.studentName > b.studentName ? 1 : -1))
             .map((item, index) => {
               return (
