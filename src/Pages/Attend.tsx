@@ -7,7 +7,8 @@ import MainTop from "../Components/Attend/MainTop";
 import EditAttend from "../Components/Attend/Popup/EditAttend";
 import AlertMessage from "../Components/Shared/AlertMessage";
 import BasicContainer from "../Components/Shared/BasicContainer";
-import useMe, { IMe } from "../Hooks/useMe";
+import useMe from "../Hooks/useMe";
+import useMedia from "../Hooks/useMedia";
 import useTitle from "../Hooks/useTitle";
 import { customMedia } from "../styles";
 
@@ -28,8 +29,17 @@ const Container = styled.div`
   }
 `;
 
+const MobileMsg = styled.div`
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+`;
+
 const Attend = () => {
   const titleUpdataer = useTitle("티처캔 | 출석부");
+  const media = useMedia();
   const me = useMe();
   const [msg, setMsg] = useState<string | undefined>(undefined);
   const [errMsg, setErrMsg] = useState<string | undefined>(undefined);
@@ -44,28 +54,32 @@ const Attend = () => {
   const isPopup = useReactiveVar(isPopupVar);
   return (
     <BasicContainer>
-      <Container>
-        <MainTop
-          date={date}
-          setDate={setDate}
-          attendType={attendType}
-          nameType={nameType}
-          seletedType={seletedType}
-          setSeletedType={setSeletedType}
-          seletedName={seletedName}
-          setSletedName={setSletedName}
-        />
-        <div className="main_bottom">
-          <MainBottom
+      {media === "Mobile" ? (
+        <MobileMsg>출결 페이지는 데스크탑 환경에 최적화 되어있습니다.😀</MobileMsg>
+      ) : (
+        <Container>
+          <MainTop
             date={date}
-            email={me?.email}
-            setAttendType={setAttendType}
-            setNameType={setNameType}
+            setDate={setDate}
+            attendType={attendType}
+            nameType={nameType}
             seletedType={seletedType}
+            setSeletedType={setSeletedType}
             seletedName={seletedName}
+            setSletedName={setSletedName}
           />
-        </div>
-      </Container>
+          <div className="main_bottom">
+            <MainBottom
+              date={date}
+              email={me?.email}
+              setAttendType={setAttendType}
+              setNameType={setNameType}
+              seletedType={seletedType}
+              seletedName={seletedName}
+            />
+          </div>
+        </Container>
+      )}
       {isPopup === "eidtAttend" && <EditAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} />}
       {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
       {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
