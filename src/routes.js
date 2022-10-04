@@ -1,10 +1,11 @@
 const HOME = "/";
 const TODO = "/todo";
 const CALENDAR = "/calendar";
-const PAGELINK = "/pageLink";
 const MENU = "/menu";
+const ATTEND = "/attend";
 
 // menu link
+const PAGELINK = "/pageLink";
 const TIMER = "/timer";
 const TIMER_POPUP = "/timer_popup";
 const DRAW = "/draw";
@@ -18,6 +19,7 @@ const NEWS = "/news";
 const MANAGINGROLES = "/managingRoles";
 const FAMILYMONTH = "/family-month";
 const QRCODE = "/qrcode";
+const QRCODE_RESULT = "/qrcode_result";
 const QRCODE_POPUP = "/qrcode_popup";
 const QRCODE_STORAGE = "/qrcode_storage";
 
@@ -41,10 +43,11 @@ const routes = {
   home: HOME,
   todo: TODO,
   calendar: CALENDAR,
-  pageLink: PAGELINK,
   menu: MENU,
+  attend: ATTEND,
 
   // menu link
+  pageLink: PAGELINK,
   timer: TIMER,
   timerPopup: TIMER_POPUP,
   draw: DRAW,
@@ -58,6 +61,7 @@ const routes = {
   managingRoles: MANAGINGROLES,
   familyMonth: FAMILYMONTH,
   qrcode: QRCODE,
+  qrcodeResult: QRCODE_RESULT,
   qrcodePopup: QRCODE_POPUP,
   qrcodeStorage: QRCODE_STORAGE,
 
