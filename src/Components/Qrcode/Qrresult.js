@@ -9,6 +9,7 @@ import { QrcodeUrlContext } from "./QrcodeUrlContext";
 import GenerateQrCode from "./GenerateQrCode";
 import routes from "../../routes";
 import { useNavigate } from "react-router-dom";
+import QrcodePopup from "./QrcodePopup";
 
 const Container = styled.div`
   display: grid;
@@ -121,6 +122,8 @@ const Body = styled.div`
 const Qrresult = () => {
   const { url, urlIndex } = useContext(QrcodeUrlContext);
   const navigate = useNavigate();
+
+  localStorage.setItem("pickUrl", url);
 
   const [imageUrl, setImageUrl] = useState(""); //현재 선택된 url의 QR코드 이미지
 
