@@ -5,6 +5,7 @@ import { isPopupVar } from "../apollo";
 import MainBottom from "../Components/Attend/MainBottom";
 import MainTop from "../Components/Attend/MainTop";
 import EditAttend from "../Components/Attend/Popup/EditAttend";
+import GettingReady from "../Components/Attend/Popup/GettingReady";
 import AlertMessage from "../Components/Shared/AlertMessage";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import useMe from "../Hooks/useMe";
@@ -81,6 +82,7 @@ const Attend = () => {
         </Container>
       )}
       {isPopup === "eidtAttend" && <EditAttend setErrMsg={setErrMsg} userEmail={me?.email} setMsg={setMsg} />}
+      {isPopup === "gettingReady" && <GettingReady />}
       {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
       {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
     </BasicContainer>
