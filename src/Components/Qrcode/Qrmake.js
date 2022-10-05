@@ -91,6 +91,7 @@ const Qrcodemake = ({ me }) => {
           <div>URL 주소를 입력하면 QR코드가 생성됩니다. 바르게 입력해주세요. </div>
         </IN>
       </Main>
+      {/* 로그인 안내 */}
       {isPopup === "needLogin" && <NeedLoginPopupContainer />}
     </Container>
   );

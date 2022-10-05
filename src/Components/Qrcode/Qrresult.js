@@ -208,6 +208,7 @@ const Qrresult = () => {
       {/* 팝업에 이메일주소도 넘기기  */}
       {isPopup === "registerQR" && <Qrname />}
       {isPopup === "print" && <QrPrintMain printRef={componentRef} imageUrl={imageUrl} />}
+      {/* 로그인 안내 */}
       {isPopup === "needLogin" && <NeedLoginPopupContainer />}
     </Container>
   );
