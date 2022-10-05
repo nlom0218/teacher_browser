@@ -59,6 +59,7 @@ const TimeInput = styled.input`
 const TimeSettingLayout = ({ register, setValue }) => {
   const setPreTime = (min) => {
     setValue("minutes", min);
+    setValue("seconds", 0);
   };
   return (
     <Container>

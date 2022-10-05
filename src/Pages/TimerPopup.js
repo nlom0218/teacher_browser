@@ -241,11 +241,11 @@ const TimerSecond = ({ bgMusicMp3, setBgMusicMp3 }) => {
     <React.Fragment>
       <Container>
         <SetModeContainer>
-          <Link to={`${routes.timerPopup}/countup`}>
-            <ModeBtn selected={mode === "countup"}>COUNT UP</ModeBtn>
-          </Link>
           <Link to={`${routes.timerPopup}/countdown`}>
             <ModeBtn selected={mode === "countdown"}>COUNT DOWN</ModeBtn>
+          </Link>
+          <Link to={`${routes.timerPopup}/countup`}>
+            <ModeBtn selected={mode === "countup"}>COUNT UP</ModeBtn>
           </Link>
           {timerStatus === "pause" && (
             <SettingIcon isFullScreenMode={isFullScreenMode} onClick={onClickSettingBtn}>

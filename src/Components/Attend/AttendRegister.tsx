@@ -1,10 +1,12 @@
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { format, isWeekend } from "date-fns";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { CREATE_ATTENDANCE_MUTATION } from "../../Graphql/Attendance/mutation";
 import { SEE_ATTENDANCE_QUERY } from "../../Graphql/Attendance/query";
+import routes from "../../routes";
 import AlertMessage from "../Shared/AlertMessage";
 import Loading from "../Shared/Loading";
 import AttendDetail from "./AttendDetail";
@@ -36,6 +38,26 @@ const RegisterContainer = styled.div`
   transition: background-color 1s ease, border 1s ease;
 `;
 
+const NeedLogin = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  div:first-child {
+    margin: 20px 0px;
+    margin: 1.25rem 0rem;
+  }
+  div:nth-child(2) {
+    background-color: ${(props) => props.theme.green};
+    color: ${(props) => props.theme.originBgColor};
+    padding: 10px 20px;
+    padding: 0.625rem 1.25rem;
+    border-radius: 5px;
+    border-radius: 0.3125rem;
+    cursor: pointer;
+    transition: background-color 1s ease, color 1s ease;
+  }
+`;
+
 interface IForm {
   contents: string | undefined;
 }
@@ -45,6 +67,7 @@ interface IProps {
 }
 
 const AttendRegister = ({ email }: IProps) => {
+  const navigate = useNavigate();
   const [msg, setMsg] = useState<string | undefined>(undefined);
   const [seletedStudent, setSeletedStudent] = useState<string[]>([]);
   const [startDate, setStartDate] = useState(new window.Date());
@@ -95,6 +118,10 @@ const AttendRegister = ({ email }: IProps) => {
     },
   });
 
+  const onClickLogin = () => {
+    navigate(routes.login);
+  };
+
   useEffect(() => {
     if (type !== "") {
       const startDateObject = new window.Date(startDate);
@@ -129,10 +156,19 @@ const AttendRegister = ({ email }: IProps) => {
       {loading && <Loading page="center" />}
       <Title>출결등록</Title>
       <RegisterContainer>
-        <StudentList seletedStudent={seletedStudent} setSeletedStudent={setSeletedStudent} />
-        <SeletedDate startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} />
-        <AttendDetail register={register("contents")} />
-        <AttendType type={type} setType={setType} seletedStudent={seletedStudent} />
+        {email ? (
+          <React.Fragment>
+            <StudentList seletedStudent={seletedStudent} setSeletedStudent={setSeletedStudent} />
+            <SeletedDate startDate={startDate} setStartDate={setStartDate} endDate={endDate} setEndDate={setEndDate} />
+            <AttendDetail register={register("contents")} />
+            <AttendType type={type} setType={setType} seletedStudent={seletedStudent} />
+          </React.Fragment>
+        ) : (
+          <NeedLogin>
+            <div>출결 등록을 하기 위해선 로그인이 필요합니다.☺️</div>
+            <div onClick={onClickLogin}>로그인하기</div>
+          </NeedLogin>
+        )}
       </RegisterContainer>
       {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
     </Layout>

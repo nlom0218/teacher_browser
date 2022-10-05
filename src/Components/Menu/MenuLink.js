@@ -60,8 +60,8 @@ const Title = styled.div`
 export const TimerLink = () => {
   const timerUrl =
     process.env.NODE_ENV === "production"
-      ? `https://teachercan.com/timer_popup/countup`
-      : `http://localhost:3000/timer_popup/countup`;
+      ? `https://teachercan.com/timer_popup/countdown`
+      : `http://localhost:3000/timer_popup/countdown`;
   const windowFeatures = "left=100,top=100,width=1600,height=800, popup";
 
   const onClickNewWindow = () => {

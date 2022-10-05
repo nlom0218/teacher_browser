@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import styled from "styled-components";
+import { inPopup } from "../../apollo";
 import { customMedia } from "../../styles";
 
 const Layout = styled.div`
@@ -129,6 +130,9 @@ const MainTop = ({
     setSeletedType(newAttendType);
     setSletedName(newNameType);
   };
+  const onClickSeeListBtn = () => {
+    inPopup("gettingReady");
+  };
   return (
     <Layout>
       <Title>{format(date, "yyyy년 MM월")}</Title>
@@ -172,7 +176,9 @@ const MainTop = ({
             })}
           </select>
         </Form>
-        <div className="calendar_btn calendar_btn_option">명렬표로 보기</div>
+        <div className="calendar_btn calendar_btn_option" onClick={onClickSeeListBtn}>
+          명렬표로 보기
+        </div>
       </BtnContainer>
     </Layout>
   );
