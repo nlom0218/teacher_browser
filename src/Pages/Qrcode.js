@@ -22,7 +22,7 @@ const QrcodeMake = () => {
   return (
     <BasicContainer menuItem={true}>
       <QrcodeUrlContext.Provider value={{ me, mode, setMode, url, setUrl }}>
-        <Qrcodemake />
+        <Qrcodemake me={me} />
       </QrcodeUrlContext.Provider>
     </BasicContainer>
   );

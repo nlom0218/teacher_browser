@@ -9,7 +9,7 @@ import { QrcodeUrlContext } from "./QrcodeUrlContext";
 import GenerateQrCode from "./GenerateQrCode";
 import routes from "../../routes";
 import { useNavigate } from "react-router-dom";
-
+import NeedLoginPopupContainer from "../../Components/Shared/NeedLoginPopupContainer";
 const Container = styled.div`
   display: grid;
   width: 100%;
@@ -66,6 +66,16 @@ const Line = styled.div`
   transition: background 1s ease, opacity 1s ease;
   animation: ${inputLine} 0.6s ease forwards;
 `;
+
+const Url = styled.div`
+  text-align: center;
+  overflow: hidden;
+  :hover {
+    font-weight: 600;
+  }
+  cursor: pointer;
+`;
+
 const BtnSpace = styled.div`
   display: grid;
   grid-template-columns: auto auto auto auto;
@@ -119,8 +129,11 @@ const Body = styled.div`
 `;
 
 const Qrresult = () => {
-  const { url, urlIndex } = useContext(QrcodeUrlContext);
+  const { me, url, urlIndex } = useContext(QrcodeUrlContext);
   const navigate = useNavigate();
+  const isPopup = useReactiveVar(isPopupVar);
+
+  localStorage.setItem("pickUrl", url);
 
   const [imageUrl, setImageUrl] = useState(""); //현재 선택된 url의 QR코드 이미지
 
@@ -139,19 +152,30 @@ const Qrresult = () => {
   };
   //보관함에 저장 전 title입력창
   const onClickRegister = () => {
-    inPopup("registerQR");
+    if (me) {
+      inPopup("registerQR");
+    } else {
+      inPopup("needLogin");
+    }
   };
   //보관함으로 이동
   const onClickMyStorage = () => {
-    navigate(routes.qrcodeStorage);
-    localStorage.removeItem("url");
+    if (me) {
+      navigate(routes.qrcodeStorage);
+      localStorage.removeItem("url");
+    } else {
+      inPopup("needLogin");
+    }
   };
   //인쇄하기 화면으로 이동 - 여기서는 qr이미지만 보내서 출력하고 그 화면에서 제목 정도는 입력할 수 있도록 함.
   const onClickPrint = () => {
     inPopup("print");
   };
+
+  const onClickUrl = () => {
+    window.open(url, "width=100%, height=100%");
+  };
   //팝업창 (타이틀 입력)
-  const isPopup = useReactiveVar(isPopupVar);
   const componentRef = useRef(null);
 
   return (
@@ -164,7 +188,7 @@ const Qrresult = () => {
           <Message>이미지를 클릭하면 크게 볼 수 있습니다.</Message>
         </Body>
         <IN>
-          <div>{url}</div>
+          <Url onClick={onClickUrl}>{url}</Url>
           <LineBox>
             <Line />
           </LineBox>
@@ -177,12 +201,14 @@ const Qrresult = () => {
             </a>
           ) : null}
           {urlIndex ? null : <Btn onClick={onClickRegister}> 보관함에 저장 </Btn>}
+
           <Btn onClick={onClickMake}>새 QR코드</Btn>
         </BtnSpace>
       </Main>
       {/* 팝업에 이메일주소도 넘기기  */}
       {isPopup === "registerQR" && <Qrname />}
       {isPopup === "print" && <QrPrintMain printRef={componentRef} imageUrl={imageUrl} />}
+      {isPopup === "needLogin" && <NeedLoginPopupContainer />}
     </Container>
   );
 };
