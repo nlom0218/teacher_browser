@@ -73,7 +73,7 @@ const AttendRegister = ({ email }: IProps) => {
   const [startDate, setStartDate] = useState(new window.Date());
   const [endDate, setEndDate] = useState(new window.Date());
   const [type, setType] = useState<string>("");
-  const { register, getValues } = useForm<IForm>({
+  const { register, getValues, setValue } = useForm<IForm>({
     mode: "onChange",
   });
 
@@ -85,6 +85,7 @@ const AttendRegister = ({ email }: IProps) => {
         setSeletedStudent([]);
         setStartDate(new window.Date());
         setEndDate(new window.Date());
+        setValue("contents", "");
         setType("");
       } else {
         // setErrMsg(error);
