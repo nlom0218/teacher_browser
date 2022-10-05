@@ -133,6 +133,14 @@ const WelcomeContents = () => {
           </TitleLayout>
         </Title>
         <Layout>
+          <ContentsItem
+            onClick={() =>
+              window.open("https://sparkly-corleggy-3e4.notion.site/22-10-5-a981f9de14c0456fa20d8791cf22a5eb")
+            }
+          >
+            <FcCursor />
+            <div>22.10.5 공지사항</div>
+          </ContentsItem>
           <ContentsItem onClick={() => window.open("https://www.notion.so/22-9-17-965f0c04c3b54c56a30b8eb2e7c0ab26")}>
             <FcCursor />
             <div>22.9.17 공지사항</div>
@@ -160,14 +168,6 @@ const WelcomeContents = () => {
           >
             <FcCursor />
             <div>22.5.1 공지사항</div>
-          </ContentsItem>
-          <ContentsItem
-            onClick={() =>
-              window.open("https://sparkly-corleggy-3e4.notion.site/22-4-17-7658f4a3675d454bb6ca10c1e8087a0d")
-            }
-          >
-            <FcCursor />
-            <div>22.4.17 공지사항</div>
           </ContentsItem>
         </Layout>
       </ContentsContainer>
