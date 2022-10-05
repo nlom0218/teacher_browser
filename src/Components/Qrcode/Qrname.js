@@ -10,6 +10,7 @@ import Loading from "../Shared/Loading";
 import routes from "../../routes";
 import { useNavigate } from "react-router-dom";
 import { QRCODES_QUERY } from "../../Graphql/Qrcode/query";
+import AlertMessage from "../../Components/Shared/AlertMessage";
 
 const Frame = styled.form`
   display: grid;
@@ -56,7 +57,7 @@ const TitleSubmitBtn = styled.input`
 const Qrname = () => {
   const navigate = useNavigate();
   const [qrtitle, setQrtitle] = useState(undefined);
-
+  const [msg, setMsg] = useState(undefined);
   const { me, url, setMode } = useContext(QrcodeUrlContext);
 
   const { register, handleSubmit } = useForm({
@@ -79,8 +80,9 @@ const Qrname = () => {
       createQrcode: { ok },
     } = result;
     if (ok) {
-      navigate(routes.qrcodeStorage);
+      setMsg("QR코드가 저장되었습니다. 😀");
       outPopup();
+      navigate(routes.qrcodeStorage);
     }
   };
 
@@ -107,6 +109,7 @@ const Qrname = () => {
         />
         <TitleSubmitBtn type="submit" value="저장" />
       </Frame>
+      <AlertMessage msg={msg} time={3000} setMsg={setMsg} type="success" />
     </PopupContainer>
   );
 };

@@ -11,18 +11,10 @@ const QrcodeMake = () => {
 
   const me = useMe();
 
-  // 오류1. localStroage에 "qrmode"가 없을 경우 빈 화면이 뜸
-  // useEffect(() => {
-  //   if (!mode) {
-  //     localStorage.setItem("qrmode", "make");
-  //     setMode("make");
-  //   }
-  // }, []);
-
   return (
     <BasicContainer menuItem={true}>
       <QrcodeUrlContext.Provider value={{ me, mode, setMode, url, setUrl }}>
-        <Qrcodemake />
+        <Qrcodemake me={me} />
       </QrcodeUrlContext.Provider>
     </BasicContainer>
   );

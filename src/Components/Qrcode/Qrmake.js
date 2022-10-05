@@ -5,6 +5,9 @@ import QrcodeInput from "./QrcodeInput"; // url 주소 입력창
 import routes from "../../routes";
 import { useNavigate } from "react-router-dom";
 import QrcodeMain from "../../icons/Qrcod/QrcodeMain";
+import { inPopup, isPopupVar } from "../../apollo";
+import NeedLoginPopupContainer from "../../Components/Shared/NeedLoginPopupContainer";
+import { useReactiveVar } from "@apollo/client";
 
 const Container = styled.div`
   display: grid;
@@ -62,11 +65,16 @@ const Btn = styled.div`
   cursor: pointer;
 `;
 
-const Qrcodemake = () => {
+const Qrcodemake = ({ me }) => {
   const navigate = useNavigate();
+  const isPopup = useReactiveVar(isPopupVar);
 
   const onClickMyStorage = () => {
-    navigate(routes.qrcodeStorage);
+    if (me) {
+      navigate(routes.qrcodeStorage);
+    } else {
+      inPopup("needLogin");
+    }
   };
 
   return (
@@ -83,6 +91,8 @@ const Qrcodemake = () => {
           <div>URL 주소를 입력하면 QR코드가 생성됩니다. 바르게 입력해주세요. </div>
         </IN>
       </Main>
+      {/* 로그인 안내 */}
+      {isPopup === "needLogin" && <NeedLoginPopupContainer />}
     </Container>
   );
 };
