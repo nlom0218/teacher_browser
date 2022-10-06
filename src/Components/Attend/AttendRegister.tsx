@@ -131,13 +131,11 @@ const AttendRegister = ({ email }: IProps) => {
       const endDateMillisecond = endDateObject.setHours(0, 0, 0, 0);
       const term = (endDateMillisecond - startDateMillisecond) / 24 / 60 / 60 / 1000 + 1;
       const dateMonthArr = [];
-      const newMonthArr: number[] = [];
       for (let index = 0; index < term; index++) {
         const date = new window.Date(startDateMillisecond + 86400000 * index).setHours(0, 0, 0, 0);
         const month = parseInt(format(startDateMillisecond + 86400000 * index, "yyMM"));
         if (!isWeekend(date)) {
           dateMonthArr.push({ date, month });
-          !newMonthArr.includes(month) && newMonthArr.push(month);
         }
       }
       createAttendance({

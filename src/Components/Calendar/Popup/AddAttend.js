@@ -128,24 +128,11 @@ const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) =
   const [type, setType] = useState(undefined);
   const [startDate, setStartDate] = useState(undefined);
   const [endDate, setEndDate] = useState(undefined);
-  const [monthArr, setMonthArr] = useState([]);
   const [studentName, setStudentName] = useState(undefined);
   const [studentId, setStudentId] = useState(undefined);
   const { register, handleSubmit } = useForm({
     mode: "onChange",
   });
-
-  const refetchCalendarAttendance = () => {
-    return monthArr.map((item) => {
-      return {
-        query: SEE_ATTENDANCE_QUERY,
-        variables: {
-          month: item,
-          userEmail,
-        },
-      };
-    });
-  };
 
   const onCompleted = () => {
     setMsg("새로운 출결이 등록되었습니다. 😀");
@@ -157,30 +144,40 @@ const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) =
 
   const [createAttendance, { loading }] = useMutation(CREATE_ATTENDANCE_MUTATION, {
     onCompleted: (result) => {
-      const {
-        createAttendance: { ok, error },
-      } = result;
-      if (ok) {
+      const { createAttendance } = result;
+      if (createAttendance.length > 0) {
+        setMsg("출결이 등록되었습니다.");
         onCompleted();
       } else {
-        setErrMsg(error);
+        // setErrMsg(error);
       }
     },
-    refetchQueries: refetchCalendarAttendance(),
-  });
-
-  const [createManyAttendance, { loading: manyLoading }] = useMutation(CREATE_MANY_ATTENDANCE_MUTATION, {
-    onCompleted: (result) => {
-      const {
-        createManyAttendance: { ok, error },
-      } = result;
-      if (ok) {
-        onCompleted();
-      } else {
-        setErrMsg(error);
+    update: (cache, { data: { createAttendance } }) => {
+      if (createAttendance.length > 0) {
+        const months = [];
+        createAttendance.forEach(({ month }) => {
+          if (!months.includes(month)) {
+            months.push(month);
+          }
+        });
+        months.forEach((item) => {
+          const newAttends = createAttendance.filter(({ month }) => month === item);
+          const attends = cache.readQuery({
+            query: SEE_ATTENDANCE_QUERY,
+            variables: { month: item },
+          });
+          if (attends) {
+            cache.writeQuery({
+              query: SEE_ATTENDANCE_QUERY,
+              variables: { month: item },
+              data: {
+                seeAttendance: [...attends?.seeAttendance, ...newAttends],
+              },
+            });
+          }
+        });
       }
     },
-    refetchQueries: refetchCalendarAttendance(),
   });
 
   const onSubmit = (data) => {
@@ -202,44 +199,24 @@ const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) =
     const startDateMillisecond = startDateObject.setHours(0, 0, 0, 0);
     const endDateObject = new window.Date(endDate);
     const endDateMillisecond = endDateObject.setHours(0, 0, 0, 0);
-
-    if (startDateMillisecond === endDateMillisecond) {
-      const month = parseInt(format(startDateObject, "yyMM"));
-      setMonthArr([month]);
-      createAttendance({
-        variables: {
-          userEmail,
-          studentId,
-          type,
-          month,
-          date: startDateMillisecond,
-          ...(contents && { contents }),
-        },
-      });
-    } else {
-      // 여러 날을 중복하여 출결을 생성할 때
-      const term = (endDateMillisecond - startDateMillisecond) / 24 / 60 / 60 / 1000 + 1;
-      const dateMonthArr = [];
-      const newMonthArr = [];
-      for (let index = 0; index < term; index++) {
-        const date = new window.Date(startDateMillisecond + 86400000 * index).setHours(0, 0, 0, 0);
-        const month = parseInt(format(startDateMillisecond + 86400000 * index, "yyMM"));
-        if (!isWeekend(date)) {
-          dateMonthArr.push({ date, month });
-          newMonthArr.push(month);
-        }
+    const term = (endDateMillisecond - startDateMillisecond) / 24 / 60 / 60 / 1000 + 1;
+    const dateMonthArr = [];
+    for (let index = 0; index < term; index++) {
+      const date = new window.Date(startDateMillisecond + 86400000 * index).setHours(0, 0, 0, 0);
+      const month = parseInt(format(startDateMillisecond + 86400000 * index, "yyMM"));
+      if (!isWeekend(date)) {
+        dateMonthArr.push({ date, month });
       }
-      setMonthArr([...new Set(newMonthArr)]);
-      createManyAttendance({
-        variables: {
-          userEmail,
-          studentId,
-          type,
-          dateMonthArr,
-          ...(contents && { contents }),
-        },
-      });
     }
+    createAttendance({
+      variables: {
+        userEmail,
+        studentId: [studentId],
+        type,
+        dateMonthArr,
+        ...(contents && { contents }),
+      },
+    });
   };
 
   const onClickSelectBtn = () => {
@@ -261,7 +238,7 @@ const AddAttend = ({ userEmail, setErrMsg, setMsg, setRefetchQuery, urlDate }) =
     }
   }, []);
 
-  if (loading || manyLoading) {
+  if (loading) {
     return <Loading page="popupPage" />;
   }
 
