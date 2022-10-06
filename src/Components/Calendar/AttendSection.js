@@ -44,14 +44,8 @@ const AttendList = styled.div`
   `}
 `;
 
-const AttendSection = ({ urlDate, refetchQuery }) => {
+const AttendSection = ({ data, refetch, loading, refetchQuery }) => {
   const [attendArr, setAttendArr] = useState([]);
-
-  const { data, loading, refetch } = useQuery(SEE_ATTENDANCE_QUERY, {
-    variables: {
-      date: parseInt(urlDate),
-    },
-  });
 
   const onClickPlusBtn = () => {
     inPopup("addAttend");

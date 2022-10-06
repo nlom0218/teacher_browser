@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { customMedia } from "../../styles";
@@ -14,6 +14,8 @@ import { processSetDay } from "../../shared";
 import { BiExitFullscreen, BiFullscreen } from "react-icons/bi";
 import useMedia from "../../Hooks/useMedia";
 import { BsCalendarDate } from "react-icons/bs";
+import { useQuery } from "@apollo/client";
+import { SEE_ATTENDANCE_QUERY } from "../../Graphql/Attendance/query";
 
 const Container = styled.div`
   display: grid;
@@ -111,9 +113,15 @@ const RightSection = styled.div`
   row-gap: 1.25rem;
 `;
 
-const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery, me }) => {
+const CalendarDetail = ({ urlDate, refetchQuery, me }) => {
   const navigate = useNavigate();
   const media = useMedia();
+
+  const { data, loading, refetch } = useQuery(SEE_ATTENDANCE_QUERY, {
+    variables: {
+      date: parseInt(urlDate),
+    },
+  });
 
   const onClickTodayBtn = () => {
     const newDate = new Date().setHours(0, 0, 0, 0);
@@ -133,6 +141,10 @@ const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery, m
   const onClickCalendar = () => {
     navigate(routes.calendar);
   };
+
+  useEffect(() => {
+    refetch();
+  }, [urlDate]);
 
   return (
     <Container>
@@ -162,7 +174,7 @@ const CalendarDetail = ({ userEmail, urlDate, setScreen, screen, refetchQuery, m
         <RightSection>
           <LunchmenuSection urlDate={urlDate} me={me}></LunchmenuSection>
           <JournalSection urlDate={urlDate} refetchQuery={refetchQuery}></JournalSection>
-          <AttendSection urlDate={urlDate} refetchQuery={refetchQuery}></AttendSection>
+          <AttendSection data={data} loading={loading} refetch={refetch} refetchQuery={refetchQuery}></AttendSection>
         </RightSection>
       </BottomContainer>
     </Container>
