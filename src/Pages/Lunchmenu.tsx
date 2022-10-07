@@ -85,7 +85,6 @@ const Lunchmenu = () => {
         schoolCode: lmSchoolCode,
         areaCode: lmAreaCode,
         schoolName: lmSchoolName,
-        date: lmDate,
       } = JSON.parse(localStorage.getItem("lmSetting") || "");
       setSearchData({
         date: new Date(),
@@ -100,7 +99,6 @@ const Lunchmenu = () => {
           areaCode: me?.areaCode,
           schoolCode: me?.schoolCode,
           schoolName: me?.schoolName,
-          date: new window.Date(),
         }),
       );
       setSearchData({
@@ -116,7 +114,6 @@ const Lunchmenu = () => {
           areaCode: undefined,
           schoolCode: undefined,
           schoolName: undefined,
-          date: new window.Date(),
         }),
       );
     }
