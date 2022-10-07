@@ -7,7 +7,7 @@ import { useReactiveVar } from "@apollo/client";
 import { isPopupVar } from "../apollo";
 import { customMedia } from "../styles";
 import SeeAllergy from "../Components/Lunchmenu/Popup/SeeAllergy";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import useTitle from "../Hooks/useTitle";
 import NoSchoolData from "../Components/Lunchmenu/Popup/NoSchoolData";
 import LunchmenuInfo from "../Components/Lunchmenu/LunchmenuInfo";
@@ -54,6 +54,7 @@ export interface ISearchDate {
 const Lunchmenu = () => {
   const titleUpdataer = useTitle("티처캔 | 식단표");
   const { state } = useLocation() as ILoaction;
+  const { popup } = useParams() as { popup: string };
   const {
     schoolCode: lmSchoolCode,
     areaCode: lmAreaCode,

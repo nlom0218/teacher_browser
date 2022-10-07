@@ -160,6 +160,7 @@ function App() {
         <Route path={routes.order} element={<Order />} />
         <Route path={`${routes.order}/:id`} element={<Order />} />
         <Route path={routes.lunchmenu} element={<Lunchmenu />} />
+        <Route path={`${routes.lunchmenu}/:popup`} element={<Lunchmenu />} />
         <Route path={routes.schedule} element={<Schedule />} />
         <Route path={routes.journal} element={<Journal me={me} />} />
         <Route path={`${routes.journal}/:type/:id`} element={<Journal me={me} />} />
