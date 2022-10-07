@@ -76,31 +76,6 @@ const Menu = () => {
 
   const me = useMe();
 
-  // 런치메뉴를 눌렀을 때 me가 있으면 lmSetting 생성, 없으면 삭제
-  const onClickLunchmenu = () => {
-    if (me) {
-      localStorage.setItem(
-        "lmSetting",
-        JSON.stringify({
-          areaCode: me?.areaCode,
-          schoolCode: me?.schoolCode,
-          schoolName: me?.schoolName,
-          date: new window.Date(),
-        }),
-      );
-    } else {
-      localStorage.setItem(
-        "lmSetting",
-        JSON.stringify({
-          areaCode: undefined,
-          schoolCode: undefined,
-          schoolName: undefined,
-          date: new window.Date(),
-        }),
-      );
-    }
-  };
-
   const onClickType = (type) => {
     setInit(false);
     setMenuType(type);
@@ -130,11 +105,7 @@ const Menu = () => {
             </Background>
           </Type>
         </SeeType>
-        {menuType === "list" ? (
-          <ListType onClickLunchmenu={onClickLunchmenu} />
-        ) : (
-          <GridType onClickLunchmenu={onClickLunchmenu} />
-        )}
+        {menuType === "list" ? <ListType /> : <GridType />}
       </Container>
     </BasicContainer>
   );

@@ -73,8 +73,8 @@ const LunchmenuDetail = styled.div`
 const LunchmenuOrigin = styled.div``;
 
 interface IProps {
-  areaCode: string;
-  schoolCode: string;
+  areaCode?: string;
+  schoolCode?: string;
   date: Date;
   setSearchData: Dispatch<SetStateAction<ISearchDate>>;
 }

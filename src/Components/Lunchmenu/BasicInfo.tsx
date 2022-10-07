@@ -28,7 +28,7 @@ const SearchedDay = styled.div`
 `;
 
 interface IProps {
-  schoolName: string;
+  schoolName?: string;
   date: Date;
 }
 

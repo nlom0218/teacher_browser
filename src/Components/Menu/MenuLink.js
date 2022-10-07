@@ -115,15 +115,34 @@ export const OrderLink = () => {
   );
 };
 
-export const LunchmenuLink = ({ onClickLunchmenu }) => {
+export const LunchmenuLink = () => {
   const [isHover, setIsHover] = useState(false);
   return (
-    <Link to={routes.lunchmenu} onClick={onClickLunchmenu}>
+    <Link to={routes.lunchmenu}>
       <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <IcLunchmenuClick /> : <IcLunchmenu />}
         <Title>식단표</Title>
       </SMenu>
     </Link>
+  );
+};
+
+export const PopupLunchmenuLink = () => {
+  const lunchmenuUrl =
+    process.env.NODE_ENV === "production"
+      ? `https://teachercan.com/lunchmenu/countdown`
+      : `http://localhost:3000/lunchmenu/countdown`;
+  const windowFeatures = "left=100,top=100,width=1600,height=800, popup";
+
+  const onClickNewWindow = () => {
+    window.open(lunchmenuUrl, "timer", windowFeatures);
+  };
+  const [isHover, setIsHover] = useState(false);
+  return (
+    <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)} onClick={onClickNewWindow}>
+      {isHover ? <IcLunchmenuClick /> : <IcLunchmenu />}
+      <Title>식단표</Title>
+    </SMenu>
   );
 };
 
