@@ -19,7 +19,7 @@ const NaverLoginCallBack = () => {
     }
     if (ok) {
       logInUser(token);
-      navigate(routes.home);
+      navigate(-3);
     }
   };
 
