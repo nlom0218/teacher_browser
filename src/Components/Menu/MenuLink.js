@@ -130,8 +130,8 @@ export const LunchmenuLink = () => {
 export const PopupLunchmenuLink = () => {
   const lunchmenuUrl =
     process.env.NODE_ENV === "production"
-      ? `https://teachercan.com/lunchmenu/countdown`
-      : `http://localhost:3000/lunchmenu/countdown`;
+      ? `https://teachercan.com/lunchmenu/popup`
+      : `http://localhost:3000/lunchmenu/popup`;
   const windowFeatures = "left=100,top=100,width=1600,height=800, popup";
 
   const onClickNewWindow = () => {

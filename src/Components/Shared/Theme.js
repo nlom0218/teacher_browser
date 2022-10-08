@@ -17,6 +17,8 @@ import { HeaderToDo, HedaerCalender, HeaderMenu, HeaderHome, HeaderAttend } from
 import routes from "../../routes";
 import { useNavigate } from "react-router-dom";
 import { customMedia } from "../../styles";
+import { IoMdLogIn, IoMdLogOut } from "react-icons/io";
+import useMe from "../../Hooks/useMe";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -105,6 +107,7 @@ const DarkModeBtn = styled.div`
 `;
 
 const Theme = ({ isWindowPopup }) => {
+  const me = useMe();
   const media = useMedia();
   const navigate = useNavigate();
 
@@ -166,6 +169,7 @@ const Theme = ({ isWindowPopup }) => {
           {isFullScreen ? <BiExitFullscreen /> : <BiFullscreen />}
         </ScreenTheme>
       )}
+      {isWindowPopup && <MenuItem className="menu_btn">{me ? <IoMdLogOut /> : <IoMdLogIn />}</MenuItem>}
       <BackgroungTheme onClick={onClickBtn} className="theme_btn">
         {darkMode ? (
           <LightModeBtn>
