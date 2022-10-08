@@ -7,6 +7,7 @@ import {
   enableDarkMode,
   fullScreenMode,
   isFullScreenModeVar,
+  logOutUser,
   movePageLink,
   smallScreenMode,
 } from "../../apollo";
@@ -143,6 +144,19 @@ const Theme = ({ isWindowPopup }) => {
       fullScreenMode();
     }
   };
+
+  const onClickLoginLogoutBtnInWindowPopup = () => {
+    if (me) {
+      localStorage.removeItem("welcomeSection");
+      logOutUser(() => window.location.reload());
+    } else {
+      navigate(routes.login, {
+        state: {
+          isWindowPopup,
+        },
+      });
+    }
+  };
   return (
     <Wrapper isFullScreen={isFullScreen}>
       {!isWindowPopup && isFullScreen && (
@@ -169,7 +183,11 @@ const Theme = ({ isWindowPopup }) => {
           {isFullScreen ? <BiExitFullscreen /> : <BiFullscreen />}
         </ScreenTheme>
       )}
-      {isWindowPopup && <MenuItem className="menu_btn">{me ? <IoMdLogOut /> : <IoMdLogIn />}</MenuItem>}
+      {isWindowPopup && (
+        <MenuItem className="menu_btn" onClick={onClickLoginLogoutBtnInWindowPopup}>
+          {me ? <IoMdLogOut /> : <IoMdLogIn />}
+        </MenuItem>
+      )}
       <BackgroungTheme onClick={onClickBtn} className="theme_btn">
         {darkMode ? (
           <LightModeBtn>
