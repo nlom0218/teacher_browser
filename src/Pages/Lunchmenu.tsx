@@ -120,7 +120,7 @@ const Lunchmenu = () => {
   }, [me]);
 
   return (
-    <BasicContainer menuItem={true}>
+    <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)}>
       <LunchmenuContainer>
         <BasicInfo {...searchData} />
         <SearchContainer {...searchData} setSearchData={setSearchData} />

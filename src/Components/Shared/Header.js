@@ -41,7 +41,7 @@ const PageBtn = styled.div`
   transition: background 1s ease;
 `;
 
-const Header = ({ seeSideMenu, setSeeSideMenu, isFullScreenMode }) => {
+const Header = ({ seeSideMenu, setSeeSideMenu, isFullScreenMode, isWindowPopup }) => {
   return (
     <Container isFullScreenMode={isFullScreenMode}>
       <div></div>
@@ -56,7 +56,7 @@ const Header = ({ seeSideMenu, setSeeSideMenu, isFullScreenMode }) => {
           <HeaderMenu />
         </PageBtn>
       )}
-      <HeaderSideBtn seeSideMenu={seeSideMenu} setSeeSideMenu={setSeeSideMenu} />
+      {!isWindowPopup && <HeaderSideBtn seeSideMenu={seeSideMenu} setSeeSideMenu={setSeeSideMenu} />}
     </Container>
   );
 };

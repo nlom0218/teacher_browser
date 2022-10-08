@@ -104,7 +104,7 @@ const DarkModeBtn = styled.div`
   `}
 `;
 
-const Theme = () => {
+const Theme = ({ isWindowPopup }) => {
   const media = useMedia();
   const navigate = useNavigate();
 
@@ -142,7 +142,7 @@ const Theme = () => {
   };
   return (
     <Wrapper isFullScreen={isFullScreen}>
-      {isFullScreen && (
+      {!isWindowPopup && isFullScreen && (
         <MenuNavigation>
           <MenuItem className="menu_btn" onClick={() => onClickRoutes("home")}>
             <HeaderHome />
@@ -161,7 +161,7 @@ const Theme = () => {
           </MenuItem>
         </MenuNavigation>
       )}
-      {media === "Desktop" && (
+      {!isWindowPopup && media === "Desktop" && (
         <ScreenTheme onClick={onClickScreenBtn} className="menu_btn">
           {isFullScreen ? <BiExitFullscreen /> : <BiFullscreen />}
         </ScreenTheme>
