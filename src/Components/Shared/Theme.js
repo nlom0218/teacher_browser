@@ -147,6 +147,7 @@ const Theme = ({ isWindowPopup }) => {
 
   const onClickLoginLogoutBtnInWindowPopup = () => {
     if (me) {
+      localStorage.removeItem("lmSetting");
       localStorage.removeItem("welcomeSection");
       logOutUser(() => window.location.reload());
     } else {

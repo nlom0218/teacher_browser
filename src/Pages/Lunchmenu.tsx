@@ -92,7 +92,24 @@ const Lunchmenu = () => {
         areaCode: lmAreaCode,
         schoolName: lmSchoolName,
       });
-    } else if (me) {
+    } else {
+      localStorage.setItem(
+        "lmSetting",
+        JSON.stringify({
+          areaCode: undefined,
+          schoolCode: undefined,
+          schoolName: undefined,
+        }),
+      );
+      setSearchData({
+        date: new Date(),
+        schoolCode: undefined,
+        areaCode: undefined,
+        schoolName: undefined,
+      });
+    }
+
+    if (me) {
       localStorage.setItem(
         "lmSetting",
         JSON.stringify({
@@ -107,15 +124,6 @@ const Lunchmenu = () => {
         areaCode: me?.areaCode,
         schoolName: me?.schoolName,
       });
-    } else {
-      localStorage.setItem(
-        "lmSetting",
-        JSON.stringify({
-          areaCode: undefined,
-          schoolCode: undefined,
-          schoolName: undefined,
-        }),
-      );
     }
   }, [me]);
 
