@@ -14,6 +14,7 @@ import LunchmenuInfo from "../Components/Lunchmenu/LunchmenuInfo";
 import BasicInfo from "../Components/Lunchmenu/BasicInfo";
 import SearchContainer from "../Components/Lunchmenu/SearchContainer";
 import useMe from "../Hooks/useMe";
+import PageInfo from "../Components/Lunchmenu/Popup/PagerInfo";
 
 const LunchmenuContainer = styled.div`
   min-height: 100%;
@@ -137,6 +138,7 @@ const Lunchmenu = () => {
       {isPopup === "lmSearchSchool" && <SearchSchool setSearchData={setSearchData} />}
       {isPopup === "seeAllergy" && <SeeAllergy />}
       {isPopup === "noSchoolData" && <NoSchoolData />}
+      {isPopup === "pageInfo" && <PageInfo isWindowPopup={Boolean(popup)} />}
     </BasicContainer>
   );
 };

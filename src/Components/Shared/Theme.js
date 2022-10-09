@@ -6,6 +6,7 @@ import {
   disableDarkMode,
   enableDarkMode,
   fullScreenMode,
+  inPopup,
   isFullScreenModeVar,
   logOutUser,
   movePageLink,
@@ -20,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import { customMedia } from "../../styles";
 import { IoMdLogIn, IoMdLogOut } from "react-icons/io";
 import useMe from "../../Hooks/useMe";
+import { FcInfo } from "react-icons/fc";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -185,9 +187,16 @@ const Theme = ({ isWindowPopup }) => {
         </ScreenTheme>
       )}
       {isWindowPopup && (
-        <MenuItem className="menu_btn" onClick={onClickLoginLogoutBtnInWindowPopup}>
-          {me ? <IoMdLogOut /> : <IoMdLogIn />}
-        </MenuItem>
+        <React.Fragment>
+          {!me && (
+            <MenuItem className="menu_btn" onClick={() => inPopup("pageInfo")}>
+              <FcInfo />
+            </MenuItem>
+          )}
+          <MenuItem className="menu_btn" onClick={onClickLoginLogoutBtnInWindowPopup}>
+            {me ? <IoMdLogOut /> : <IoMdLogIn />}
+          </MenuItem>
+        </React.Fragment>
       )}
       <BackgroungTheme onClick={onClickBtn} className="theme_btn">
         {darkMode ? (
