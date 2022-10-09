@@ -13,6 +13,7 @@ import QrPrintMain from "../Components/Qrcode/QrPrint/QrPrintMain";
 import Qrcontext from "../Components/Qrcode/Qrcontext";
 import { useNavigate, useParams } from "react-router-dom";
 import routes from "../routes";
+import PageInfo from "../Components/Qrcode/Popup/PageInfo";
 
 const Container = styled.div`
   display: grid;
