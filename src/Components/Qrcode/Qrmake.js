@@ -94,7 +94,7 @@ const Qrcodemake = ({ me, isWindowPopup }) => {
         </IN>
       </Main>
       {/* 로그인 안내 */}
-      {isPopup === "needLogin" && <NeedLoginPopupContainer />}
+      {isPopup === "needLogin" && <NeedLoginPopupContainer isWindowPopup={isWindowPopup} />}
     </Container>
   );
 };
