@@ -65,15 +65,17 @@ const Btn = styled.div`
   cursor: pointer;
 `;
 
-const Qrcodemake = ({ me }) => {
+const Qrcodemake = ({ me, isWindowPopup }) => {
   const navigate = useNavigate();
   const isPopup = useReactiveVar(isPopupVar);
 
   const onClickMyStorage = () => {
-    if (me) {
-      navigate(routes.qrcodeStorage);
+    if (!me) return inPopup("needLogin");
+
+    if (isWindowPopup) {
+      navigate(`${routes.qrcodeStorage}/popup`);
     } else {
-      inPopup("needLogin");
+      navigate(routes.qrcodeStorage);
     }
   };
 

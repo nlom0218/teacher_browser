@@ -17,7 +17,7 @@ const QrcodeMake = () => {
   return (
     <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)}>
       <QrcodeUrlContext.Provider value={{ me, mode, setMode, url, setUrl }}>
-        <Qrcodemake me={me} />
+        <Qrcodemake me={me} isWindowPopup={Boolean(popup)} />
       </QrcodeUrlContext.Provider>
     </BasicContainer>
   );

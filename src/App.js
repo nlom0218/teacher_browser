@@ -180,9 +180,10 @@ function App() {
         <Route path={`${routes.qrcode}/:popup`} element={<Qrcode />} />
         <Route path={routes.qrcodePopup} element={<QrcodePopup />} />
         <Route path={routes.qrcodeStorage} element={<QrcodeStorage />} />
-        <Route path={routes.attend} element={<Attend />} />
+        <Route path={`${routes.qrcodeStorage}/:popup`} element={<QrcodeStorage />} />
         <Route path={routes.qrcodeResult} element={<QrcodeResult />} />
         <Route path={`${routes.qrcodeResult}/:id`} element={<QrcodeResult />} />
+        <Route path={routes.attend} element={<Attend />} />
       </Routes>
     </ThemeProvider>
   );

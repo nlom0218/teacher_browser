@@ -11,6 +11,7 @@ import { isPopupVar } from "../apollo";
 import { useReactiveVar } from "@apollo/client";
 import QrPrintMain from "../Components/Qrcode/QrPrint/QrPrintMain";
 import Qrcontext from "../Components/Qrcode/Qrcontext";
+import { useParams } from "react-router-dom";
 
 const Container = styled.div`
   display: grid;
@@ -45,6 +46,7 @@ const Table = styled.div`
   row-gap: 1.25rem;
 `;
 const QrcodeStorage = () => {
+  const { popup } = useParams();
   const [addPickQr, setAddPickQr] = useState([]);
   const [picklist, setpicklist] = useState([]);
 
@@ -72,7 +74,7 @@ const QrcodeStorage = () => {
     return <Loading page="mainPage" />;
   }
   return (
-    <BasicContainer menuItem={true}>
+    <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)}>
       <Container>
         <Title>내 QR코드 보관함</Title>
         <div>
