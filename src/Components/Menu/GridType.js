@@ -15,6 +15,7 @@ import {
   QrcodeLink,
   HeaderBookMark,
   PopupLunchmenuLink,
+  PopupQrcodeLink,
 } from "./MenuLink";
 
 const Container = styled.div`
@@ -51,6 +52,7 @@ const GridType = ({ onClickLunchmenu }) => {
       {/* <ManagingRolesLink /> */}
       <QrcodeLink />
       <PopupLunchmenuLink />
+      <PopupQrcodeLink />
     </Container>
   );
 };

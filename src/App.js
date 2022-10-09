@@ -177,6 +177,7 @@ function App() {
         <Route path={`${routes.familyMonth}/:page`} element={<FamilyMonth />} />
         <Route path={`${routes.familyMonth}/:page/:id`} element={<FamilyMonth />} />
         <Route path={routes.qrcode} element={<Qrcode />} />
+        <Route path={`${routes.qrcode}/:popup`} element={<Qrcode />} />
         <Route path={routes.qrcodePopup} element={<QrcodePopup />} />
         <Route path={routes.qrcodeStorage} element={<QrcodeStorage />} />
         <Route path={routes.attend} element={<Attend />} />
