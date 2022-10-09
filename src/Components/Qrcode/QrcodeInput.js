@@ -44,7 +44,7 @@ const SubmitInput = styled.input`
 
 //https 확인 절차 필요
 
-const QrcodeInput = () => {
+const QrcodeInput = ({ isWindowPopup }) => {
   const { url, setUrl } = useContext(QrcodeUrlContext);
 
   const { register, handleSubmit } = useForm({
@@ -56,7 +56,12 @@ const QrcodeInput = () => {
   const onSubmit = (data) => {
     const { urllink } = data;
     setUrl(urllink);
-    navigate(routes.qrcodeResult, { state: { url: urllink } });
+
+    if (isWindowPopup) {
+      navigate(`${routes.qrcodeResult}/popup`, { state: { url: urllink } });
+    } else {
+      navigate(routes.qrcodeResult, { state: { url: urllink } });
+    }
   };
   return (
     <TopContents>

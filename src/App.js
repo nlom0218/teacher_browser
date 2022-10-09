@@ -182,7 +182,9 @@ function App() {
         <Route path={routes.qrcodeStorage} element={<QrcodeStorage />} />
         <Route path={`${routes.qrcodeStorage}/:popup`} element={<QrcodeStorage />} />
         <Route path={routes.qrcodeResult} element={<QrcodeResult />} />
+        <Route path={`${routes.qrcodeResult}/:popup`} element={<QrcodeResult />} />
         <Route path={`${routes.qrcodeResult}/:id`} element={<QrcodeResult />} />
+        <Route path={`${routes.qrcodeResult}/:id/:popup`} element={<QrcodeResult />} />
         <Route path={routes.attend} element={<Attend />} />
       </Routes>
     </ThemeProvider>

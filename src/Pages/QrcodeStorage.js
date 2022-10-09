@@ -91,6 +91,7 @@ const QrcodeStorage = () => {
               urlOne={qrcode.url}
               id={qrcode._id}
               index={index + 1}
+              isWindowPopup={Boolean(popup)}
             />
           ))}
         </Table>
