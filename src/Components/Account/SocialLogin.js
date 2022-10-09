@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { SiNaver } from "react-icons/si";
 import { ImBubble } from "react-icons/im";
@@ -71,7 +71,7 @@ const GoogleLoginBtn = styled.div`
   color: ${(props) => color.black};
 `;
 
-const SocialLogin = () => {
+const SocialLogin = ({ redirectURL }) => {
   // 네이버 버튼 클릭 핸들
   const onClickNaverLoginBtn = () => {
     const protocol = window.location.protocol;
@@ -93,6 +93,11 @@ const SocialLogin = () => {
     const scope = "https://www.googleapis.com/auth/userinfo.email";
     window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${protocol}//${host}/googleLogin&response_type=token&scope=${scope}`;
   };
+
+  useEffect(() => {
+    if (redirectURL) localStorage.setItem("redirectURL", redirectURL);
+    else localStorage.removeItem("redirectURL");
+  }, []);
 
   return (
     <SSocialLogin>

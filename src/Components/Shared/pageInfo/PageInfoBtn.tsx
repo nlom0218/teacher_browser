@@ -32,15 +32,17 @@ const BtnContainer = styled.div`
 
 interface IPros {
   isWindowPopup: boolean;
+  redirectURL?: string;
 }
 
-const PageInfoBtn = ({ isWindowPopup }: IPros) => {
+const PageInfoBtn = ({ isWindowPopup, redirectURL }: IPros) => {
   const navigate = useNavigate();
   const onClickLoginBtn = () => {
     outPopup();
     navigate(routes.login, {
       state: {
         isWindowPopup,
+        redirectURL,
       },
     });
   };

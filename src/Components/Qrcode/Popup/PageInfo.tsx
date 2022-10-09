@@ -6,9 +6,10 @@ import PopupContainer from "../../Shared/PopupContainer";
 
 interface IProps {
   isWindowPopup: boolean;
+  redirectURL?: string;
 }
 
-const PageInfo = ({ isWindowPopup }: IProps) => {
+const PageInfo = ({ isWindowPopup, redirectURL }: IProps) => {
   return (
     <PopupContainer>
       <Container>
@@ -39,7 +40,7 @@ const PageInfo = ({ isWindowPopup }: IProps) => {
           contents="QR코드 페이지 사용하는 방법"
         />
 
-        <PageInfoBtn isWindowPopup={isWindowPopup} />
+        <PageInfoBtn isWindowPopup={isWindowPopup} redirectURL={redirectURL} />
       </Container>
     </PopupContainer>
   );

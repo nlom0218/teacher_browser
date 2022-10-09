@@ -15,6 +15,7 @@ import BasicInfo from "../Components/Lunchmenu/BasicInfo";
 import SearchContainer from "../Components/Lunchmenu/SearchContainer";
 import useMe from "../Hooks/useMe";
 import PageInfo from "../Components/Lunchmenu/Popup/PagerInfo";
+import routes from "../routes";
 
 const LunchmenuContainer = styled.div`
   min-height: 100%;
@@ -129,7 +130,7 @@ const Lunchmenu = () => {
   }, [me]);
 
   return (
-    <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)}>
+    <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)} redirectURL={`${routes.lunchmenu}/popup`}>
       <LunchmenuContainer>
         <BasicInfo {...searchData} />
         <SearchContainer {...searchData} setSearchData={setSearchData} />
@@ -138,7 +139,7 @@ const Lunchmenu = () => {
       {isPopup === "lmSearchSchool" && <SearchSchool setSearchData={setSearchData} />}
       {isPopup === "seeAllergy" && <SeeAllergy />}
       {isPopup === "noSchoolData" && <NoSchoolData />}
-      {isPopup === "pageInfo" && <PageInfo isWindowPopup={Boolean(popup)} />}
+      {isPopup === "pageInfo" && <PageInfo isWindowPopup={Boolean(popup)} redirectURL={`${routes.lunchmenu}/popup`} />}
     </BasicContainer>
   );
 };

@@ -122,7 +122,7 @@ const IcTeachercan = styled.img`
   height: 1.25rem;
 `;
 
-const Theme = ({ isWindowPopup }) => {
+const Theme = ({ isWindowPopup, redirectURL }) => {
   const me = useMe();
   const media = useMedia();
   const navigate = useNavigate();
@@ -169,6 +169,7 @@ const Theme = ({ isWindowPopup }) => {
       navigate(routes.login, {
         state: {
           isWindowPopup,
+          redirectURL,
         },
       });
     }
