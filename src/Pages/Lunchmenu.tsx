@@ -7,12 +7,14 @@ import { useReactiveVar } from "@apollo/client";
 import { isPopupVar } from "../apollo";
 import { customMedia } from "../styles";
 import SeeAllergy from "../Components/Lunchmenu/Popup/SeeAllergy";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import useTitle from "../Hooks/useTitle";
 import NoSchoolData from "../Components/Lunchmenu/Popup/NoSchoolData";
 import LunchmenuInfo from "../Components/Lunchmenu/LunchmenuInfo";
 import BasicInfo from "../Components/Lunchmenu/BasicInfo";
 import SearchContainer from "../Components/Lunchmenu/SearchContainer";
+import useMe from "../Hooks/useMe";
+import PageInfo from "../Components/Lunchmenu/Popup/PagerInfo";
 
 const LunchmenuContainer = styled.div`
   min-height: 100%;
@@ -46,28 +48,24 @@ interface ILoaction {
 
 export interface ISearchDate {
   date: Date;
-  schoolCode: string;
-  areaCode: string;
-  schoolName: string;
+  schoolCode?: string;
+  areaCode?: string;
+  schoolName?: string;
 }
 
 const Lunchmenu = () => {
   const titleUpdataer = useTitle("티처캔 | 식단표");
+  const me = useMe();
   const { state } = useLocation() as ILoaction;
-  const {
-    schoolCode: lmSchoolCode,
-    areaCode: lmAreaCode,
-    schoolName: lmSchoolName,
-    date: lmDate,
-  } = JSON.parse(localStorage.getItem("lmSetting") || "");
+  const { popup } = useParams() as { popup: string };
 
   const isPopup = useReactiveVar(isPopupVar);
 
   const [searchData, setSearchData] = useState<ISearchDate>({
-    date: lmDate ? new window.Date(lmDate) : new window.Date(),
-    schoolCode: lmSchoolCode ? lmSchoolCode : undefined,
-    areaCode: lmAreaCode ? lmAreaCode : undefined,
-    schoolName: lmSchoolName ? lmSchoolName : undefined,
+    date: new window.Date(),
+    schoolCode: undefined,
+    areaCode: undefined,
+    schoolName: undefined,
   });
 
   useEffect(() => {
@@ -82,8 +80,56 @@ const Lunchmenu = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (localStorage.getItem("lmSetting")) {
+      const {
+        schoolCode: lmSchoolCode,
+        areaCode: lmAreaCode,
+        schoolName: lmSchoolName,
+      } = JSON.parse(localStorage.getItem("lmSetting") || "");
+      setSearchData({
+        date: new Date(),
+        schoolCode: lmSchoolCode,
+        areaCode: lmAreaCode,
+        schoolName: lmSchoolName,
+      });
+    } else {
+      localStorage.setItem(
+        "lmSetting",
+        JSON.stringify({
+          areaCode: undefined,
+          schoolCode: undefined,
+          schoolName: undefined,
+        }),
+      );
+      setSearchData({
+        date: new Date(),
+        schoolCode: undefined,
+        areaCode: undefined,
+        schoolName: undefined,
+      });
+    }
+
+    if (me) {
+      localStorage.setItem(
+        "lmSetting",
+        JSON.stringify({
+          areaCode: me?.areaCode,
+          schoolCode: me?.schoolCode,
+          schoolName: me?.schoolName,
+        }),
+      );
+      setSearchData({
+        date: new window.Date(),
+        schoolCode: me?.schoolCode,
+        areaCode: me?.areaCode,
+        schoolName: me?.schoolName,
+      });
+    }
+  }, [me]);
+
   return (
-    <BasicContainer menuItem={true}>
+    <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)}>
       <LunchmenuContainer>
         <BasicInfo {...searchData} />
         <SearchContainer {...searchData} setSearchData={setSearchData} />
@@ -92,6 +138,7 @@ const Lunchmenu = () => {
       {isPopup === "lmSearchSchool" && <SearchSchool setSearchData={setSearchData} />}
       {isPopup === "seeAllergy" && <SeeAllergy />}
       {isPopup === "noSchoolData" && <NoSchoolData />}
+      {isPopup === "pageInfo" && <PageInfo isWindowPopup={Boolean(popup)} />}
     </BasicContainer>
   );
 };

@@ -10,7 +10,7 @@ const Background = styled.div`
   bottom: 0;
   right: 0;
   background-color: ${(props) => props.theme.popupBgColor};
-  z-index: 10;
+  z-index: 15;
 `;
 
 const Container = styled.div`
@@ -45,7 +45,7 @@ const CancelBtn = styled.div`
   cursor: pointer;
 `;
 
-const NeedLoginPopupContainer = ({ children, preventOutPoup }) => {
+const NeedLoginPopupContainer = ({ children, preventOutPoup, isWindowPopup }) => {
   const navigate = useNavigate();
   // 팝업창의 배경을 클릭하게 되면 팝업창에서 벗어나게 된다.
   const onClickBackground = () => {
@@ -56,7 +56,13 @@ const NeedLoginPopupContainer = ({ children, preventOutPoup }) => {
     localStorage.removeItem("summaryStudentId");
   };
   const onClickLogin = () => {
-    navigate(routes.login);
+    if (isWindowPopup) {
+      navigate(routes.login, {
+        state: {
+          isWindowPopup,
+        },
+      });
+    } else navigate(routes.login);
     outPopup();
     localStorage.removeItem("summaryStudentId");
   };

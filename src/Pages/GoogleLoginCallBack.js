@@ -16,10 +16,10 @@ const GoogleLoginCallBack = () => {
     } = result;
     if (ok) {
       logInUser(token);
-      navigate(routes.home);
+      navigate(-3);
     } else {
       setErrMsg(error);
-      navigate(routes.login);
+      navigate(-3);
     }
   };
 
