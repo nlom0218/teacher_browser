@@ -11,6 +11,9 @@ import { isPopupVar } from "../apollo";
 import { useReactiveVar } from "@apollo/client";
 import QrPrintMain from "../Components/Qrcode/QrPrint/QrPrintMain";
 import Qrcontext from "../Components/Qrcode/Qrcontext";
+import { useNavigate, useParams } from "react-router-dom";
+import routes from "../routes";
+import PageInfo from "../Components/Qrcode/Popup/PageInfo";
 
 const Container = styled.div`
   display: grid;
@@ -45,6 +48,8 @@ const Table = styled.div`
   row-gap: 1.25rem;
 `;
 const QrcodeStorage = () => {
+  const { popup } = useParams();
+  const navigate = useNavigate();
   const [addPickQr, setAddPickQr] = useState([]);
   const [picklist, setpicklist] = useState([]);
 
@@ -68,15 +73,28 @@ const QrcodeStorage = () => {
     }
   }, [addPickQr]);
 
+  useEffect(() => {
+    if (!me && Boolean(popup)) {
+      navigate(`${routes.qrcode}/popup`);
+    }
+  }, [me]);
+
   if (loading) {
     return <Loading page="mainPage" />;
   }
   return (
-    <BasicContainer menuItem={true}>
+    <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)}>
       <Container>
         <Title>내 QR코드 보관함</Title>
         <div>
-          <Qroptionbtn data={data} me={me} picklist={picklist} addPickQr={addPickQr} setAddPickQr={setAddPickQr} />
+          <Qroptionbtn
+            data={data}
+            me={me}
+            picklist={picklist}
+            addPickQr={addPickQr}
+            setAddPickQr={setAddPickQr}
+            isWindowPopup={Boolean(popup)}
+          />
         </div>
 
         <Table>
@@ -89,6 +107,7 @@ const QrcodeStorage = () => {
               urlOne={qrcode.url}
               id={qrcode._id}
               index={index + 1}
+              isWindowPopup={Boolean(popup)}
             />
           ))}
         </Table>

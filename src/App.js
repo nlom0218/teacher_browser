@@ -149,6 +149,7 @@ function App() {
         <Route path={`${routes.calendar}/:date`} element={<Calendar />} />
         <Route path={routes.pageLink} element={<PageLink />} />
         <Route path={routes.menu} element={<Menu />} />
+        <Route path={`${routes.menu}/:type`} element={<Menu />} />
         <Route
           path={`${routes.timerPopup}/:mode`}
           element={<TimerPopup bgMusicMp3={bgMusicMp3} setBgMusicMp3={setBgMusicMp3} />}
@@ -177,11 +178,13 @@ function App() {
         <Route path={`${routes.familyMonth}/:page`} element={<FamilyMonth />} />
         <Route path={`${routes.familyMonth}/:page/:id`} element={<FamilyMonth />} />
         <Route path={routes.qrcode} element={<Qrcode />} />
+        <Route path={`${routes.qrcode}/:popup`} element={<Qrcode />} />
         <Route path={routes.qrcodePopup} element={<QrcodePopup />} />
         <Route path={routes.qrcodeStorage} element={<QrcodeStorage />} />
-        <Route path={routes.attend} element={<Attend />} />
-        <Route path={routes.qrcodeResult} element={<QrcodeResult />} />
+        <Route path={`${routes.qrcodeStorage}/:popup`} element={<QrcodeStorage />} />
         <Route path={`${routes.qrcodeResult}/:id`} element={<QrcodeResult />} />
+        <Route path={`${routes.qrcodeResult}/:id/:popup`} element={<QrcodeResult />} />
+        <Route path={routes.attend} element={<Attend />} />
       </Routes>
     </ThemeProvider>
   );

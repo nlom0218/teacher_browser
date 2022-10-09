@@ -249,6 +249,27 @@ export const QrcodeLink = () => {
   );
 };
 
+export const PopupQrcodeLink = () => {
+  const media = useMedia();
+  const [isHover, setIsHover] = useState(false);
+  const lunchmenuUrl =
+    process.env.NODE_ENV === "production"
+      ? `https://teachercan.com/qrcode/popup`
+      : `http://localhost:3000/qrcode/popup`;
+  const windowFeatures = "left=100,top=100,width=1600,height=800, popup";
+
+  const onClickListLink = () => {
+    window.open(lunchmenuUrl, "timer", windowFeatures);
+  };
+
+  return (
+    <SMenu onClick={onClickListLink} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+      {isHover ? <IcQrcodeClick /> : <IcQrcode />}
+      <Title>QR코드</Title>
+    </SMenu>
+  );
+};
+
 export const HeaderBookMark = () => {
   const [isHover, setIsHover] = useState(false);
   const onClickListLink = () => {

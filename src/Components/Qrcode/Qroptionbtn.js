@@ -51,7 +51,7 @@ const Btn = styled.div`
     text-decoration: none;
   }
 `;
-const Qroptionbtn = ({ data, me, picklist, addPickQr, setAddPickQr }) => {
+const Qroptionbtn = ({ data, me, picklist, addPickQr, setAddPickQr, isWindowPopup }) => {
   const userEmail = me?.email;
   const onCompletedDel = (result) => {
     const {
@@ -64,7 +64,8 @@ const Qroptionbtn = ({ data, me, picklist, addPickQr, setAddPickQr }) => {
 
   const onClickBtn = () => {
     // localStorage.setItem("qrmode", "make");
-    navigate(routes.qrcode);
+    if (isWindowPopup) navigate(`${routes.qrcode}/popup`);
+    else navigate(routes.qrcode);
   };
   const onClickPrintBtn = () => {
     inPopup("printQR");

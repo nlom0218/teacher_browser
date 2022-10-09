@@ -18,7 +18,7 @@ const Login = () => {
 
   return (
     <AccountContainer isWindowPopup={state?.isWindowPopup}>
-      {!state?.isWindowPopup && <BackBtn />}
+      <BackBtn />
       <LogoIcon src={LogoText}></LogoIcon>
       <SocialLogin />
     </AccountContainer>
