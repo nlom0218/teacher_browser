@@ -5,6 +5,8 @@ import Qrcodemake from "../Components/Qrcode/Qrmake"; //생성화면
 
 import useMe from "../Hooks/useMe";
 import { useParams } from "react-router-dom";
+import { isPopupVar } from "../apollo";
+import PageInfo from "../Components/Qrcode/Popup/PageInfo";
 
 const QrcodeMake = () => {
   const [mode, setMode] = useState("make");
@@ -19,6 +21,7 @@ const QrcodeMake = () => {
       <QrcodeUrlContext.Provider value={{ me, mode, setMode, url, setUrl }}>
         <Qrcodemake me={me} isWindowPopup={Boolean(popup)} />
       </QrcodeUrlContext.Provider>
+      {isPopupVar === "pageInfo" && <PageInfo isWindowPopup={Boolean(popup)} />}
     </BasicContainer>
   );
 };
