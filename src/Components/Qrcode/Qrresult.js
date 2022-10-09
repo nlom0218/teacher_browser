@@ -214,7 +214,9 @@ const Qrresult = ({ isWindowPopup }) => {
       {isPopup === "registerQR" && <Qrname isWindowPopup={isWindowPopup} />}
       {isPopup === "print" && <QrPrintMain printRef={componentRef} imageUrl={imageUrl} />}
       {/* 로그인 안내 */}
-      {isPopup === "needLogin" && <NeedLoginPopupContainer isWindowPopup={isWindowPopup} />}
+      {isPopup === "needLogin" && (
+        <NeedLoginPopupContainer isWindowPopup={isWindowPopup} redirectURL={`${routes.qrcode}/popup`} />
+      )}
     </Container>
   );
 };

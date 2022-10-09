@@ -6,9 +6,10 @@ import PopupContainer from "../../Shared/PopupContainer";
 
 interface IPros {
   isWindowPopup: boolean;
+  redirectURL?: string;
 }
 
-const PageInfo = ({ isWindowPopup }: IPros) => {
+const PageInfo = ({ isWindowPopup, redirectURL }: IPros) => {
   return (
     <PopupContainer>
       <Container>
@@ -43,7 +44,7 @@ const PageInfo = ({ isWindowPopup }: IPros) => {
           url="https://sparkly-corleggy-3e4.notion.site/3562152a55784a9fa5f2b50ee50fdc71"
           contents="학생 알러지 추가 방법"
         />
-        <PageInfoBtn isWindowPopup={isWindowPopup} />
+        <PageInfoBtn isWindowPopup={isWindowPopup} redirectURL={redirectURL} />
       </Container>
     </PopupContainer>
   );

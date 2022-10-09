@@ -94,7 +94,9 @@ const Qrcodemake = ({ me, isWindowPopup }) => {
         </IN>
       </Main>
       {/* 로그인 안내 */}
-      {isPopup === "needLogin" && <NeedLoginPopupContainer isWindowPopup={isWindowPopup} />}
+      {isPopup === "needLogin" && (
+        <NeedLoginPopupContainer isWindowPopup={isWindowPopup} redirectURL={`${routes.qrcode}/popup`} />
+      )}
     </Container>
   );
 };

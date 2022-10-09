@@ -45,7 +45,7 @@ const CancelBtn = styled.div`
   cursor: pointer;
 `;
 
-const NeedLoginPopupContainer = ({ children, preventOutPoup, isWindowPopup }) => {
+const NeedLoginPopupContainer = ({ children, preventOutPoup, isWindowPopup, redirectURL }) => {
   const navigate = useNavigate();
   // 팝업창의 배경을 클릭하게 되면 팝업창에서 벗어나게 된다.
   const onClickBackground = () => {
@@ -60,6 +60,7 @@ const NeedLoginPopupContainer = ({ children, preventOutPoup, isWindowPopup }) =>
       navigate(routes.login, {
         state: {
           isWindowPopup,
+          redirectURL,
         },
       });
     } else navigate(routes.login);

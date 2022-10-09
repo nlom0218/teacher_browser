@@ -20,7 +20,7 @@ const Login = () => {
     <AccountContainer isWindowPopup={state?.isWindowPopup}>
       <BackBtn />
       <LogoIcon src={LogoText}></LogoIcon>
-      <SocialLogin />
+      <SocialLogin redirectURL={state?.redirectURL} />
     </AccountContainer>
   );
 };

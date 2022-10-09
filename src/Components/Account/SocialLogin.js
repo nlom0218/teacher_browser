@@ -71,7 +71,8 @@ const GoogleLoginBtn = styled.div`
   color: ${(props) => color.black};
 `;
 
-const SocialLogin = () => {
+const SocialLogin = ({ redirectURL }) => {
+  console.log(redirectURL);
   // 네이버 버튼 클릭 핸들
   const onClickNaverLoginBtn = () => {
     const protocol = window.location.protocol;

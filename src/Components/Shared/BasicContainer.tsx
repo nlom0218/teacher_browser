@@ -51,9 +51,10 @@ interface IProps {
   notScroll?: boolean;
   page?: string;
   isWindowPopup?: boolean;
+  redirectURL?: string;
 }
 
-const BasicContainer = ({ children, menuItem, notScroll, page, isWindowPopup }: IProps) => {
+const BasicContainer = ({ children, menuItem, notScroll, page, isWindowPopup, redirectURL }: IProps) => {
   const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
   const [seeSideMenu, setSeeSideMenu] = useState(false);
   const onClickBackground = () => {
@@ -68,7 +69,7 @@ const BasicContainer = ({ children, menuItem, notScroll, page, isWindowPopup }: 
   }, []);
   return (
     <Container onClick={onClickBackground} isFullScreenMode={isFullScreenMode}>
-      <Theme isWindowPopup={isWindowPopup} />
+      <Theme isWindowPopup={isWindowPopup} redirectURL={redirectURL} />
       <Header
         seeSideMenu={seeSideMenu}
         setSeeSideMenu={setSeeSideMenu}

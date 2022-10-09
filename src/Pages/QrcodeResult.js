@@ -8,6 +8,7 @@ import { RiContactsBook2Fill } from "react-icons/ri";
 import { useReactiveVar } from "@apollo/client";
 import { isPopupVar } from "../apollo";
 import PageInfo from "../Components/Qrcode/Popup/PageInfo";
+import routes from "../routes";
 
 const QrcodeResult = () => {
   const { popup, id } = useParams();
@@ -29,7 +30,7 @@ const QrcodeResult = () => {
       <QrcodeUrlContext.Provider value={{ me, url, setUrl, id }}>
         <Qrresult isWindowPopup={Boolean(popup)} />
       </QrcodeUrlContext.Provider>
-      {isPopup === "pageInfo" && <PageInfo isWindowPopup={Boolean(popup)} />}
+      {isPopup === "pageInfo" && <PageInfo isWindowPopup={Boolean(popup)} redirectURL={`${routes.qrcode}/popup`} />}
     </BasicContainer>
   );
 };
