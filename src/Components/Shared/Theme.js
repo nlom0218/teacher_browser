@@ -9,7 +9,6 @@ import {
   inPopup,
   isFullScreenModeVar,
   logOutUser,
-  movePageLink,
   smallScreenMode,
 } from "../../apollo";
 import { FaSun, FaMoon } from "react-icons/fa";
@@ -22,6 +21,8 @@ import { customMedia } from "../../styles";
 import { IoMdLogIn, IoMdLogOut } from "react-icons/io";
 import useMe from "../../Hooks/useMe";
 import { FcInfo } from "react-icons/fc";
+import { SiNotion } from "react-icons/si";
+import LogoImage from "../../image/LogoImage.png";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -109,6 +110,18 @@ const DarkModeBtn = styled.div`
   `}
 `;
 
+const NotionAndTeacherCan = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+`;
+
+const IcTeachercan = styled.img`
+  width: 20px;
+  width: 1.25rem;
+  height: 20px;
+  height: 1.25rem;
+`;
+
 const Theme = ({ isWindowPopup }) => {
   const me = useMe();
   const media = useMedia();
@@ -188,10 +201,22 @@ const Theme = ({ isWindowPopup }) => {
       )}
       {isWindowPopup && (
         <React.Fragment>
-          {!me && (
+          {!me ? (
             <MenuItem className="menu_btn" onClick={() => inPopup("pageInfo")}>
               <FcInfo />
             </MenuItem>
+          ) : (
+            <NotionAndTeacherCan>
+              <MenuItem
+                className="menu_btn"
+                onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/718aaed6e5e54babb7efb97384bab836")}
+              >
+                <SiNotion />
+              </MenuItem>
+              <MenuItem className="menu_btn" onClick={() => window.open("https://teachercan.com")}>
+                <IcTeachercan src={LogoImage} />
+              </MenuItem>
+            </NotionAndTeacherCan>
           )}
           <MenuItem className="menu_btn" onClick={onClickLoginLogoutBtnInWindowPopup}>
             {me ? <IoMdLogOut /> : <IoMdLogIn />}
