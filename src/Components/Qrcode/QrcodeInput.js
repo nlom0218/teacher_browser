@@ -58,9 +58,9 @@ const QrcodeInput = ({ isWindowPopup }) => {
     setUrl(urllink);
 
     if (isWindowPopup) {
-      navigate(`${routes.qrcodeResult}/popup`, { state: { url: urllink } });
+      navigate(`${routes.qrcodeResult}/any/popup`, { state: { url: urllink } });
     } else {
-      navigate(routes.qrcodeResult, { state: { url: urllink } });
+      navigate(`${routes.qrcodeResult}/any`, { state: { url: urllink } });
     }
   };
   return (

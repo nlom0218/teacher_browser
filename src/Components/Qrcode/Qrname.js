@@ -54,7 +54,7 @@ const TitleSubmitBtn = styled.input`
   cursor: pointer;
 `;
 
-const Qrname = () => {
+const Qrname = ({ isWindowPopup }) => {
   const navigate = useNavigate();
   const [qrtitle, setQrtitle] = useState(undefined);
   const [msg, setMsg] = useState(undefined);
@@ -82,7 +82,8 @@ const Qrname = () => {
     if (ok) {
       setMsg("QR코드가 저장되었습니다. 😀");
       outPopup();
-      navigate(routes.qrcodeStorage);
+      if (isWindowPopup) navigate(`${routes.qrcodeStorage}/popup`);
+      else navigate(routes.qrcodeStorage);
     }
   };
 

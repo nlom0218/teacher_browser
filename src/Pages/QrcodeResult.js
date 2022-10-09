@@ -7,12 +7,10 @@ import { useLocation, useParams } from "react-router-dom";
 import { RiContactsBook2Fill } from "react-icons/ri";
 
 const QrcodeResult = () => {
-  const { popup } = useParams();
-  console.log(popup);
+  const { popup, id } = useParams();
   const [url, setUrl] = useState(undefined); //생성화면 입력 혹은 보관함에서 클릭한 url주소
   const me = useMe();
   const location = useLocation();
-  const urlIndex = location.state.index;
 
   useEffect(() => {
     const getUrl = location.state.url;
@@ -24,8 +22,8 @@ const QrcodeResult = () => {
 
   return (
     <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)}>
-      <QrcodeUrlContext.Provider value={{ me, url, setUrl, urlIndex }}>
-        <Qrresult />
+      <QrcodeUrlContext.Provider value={{ me, url, setUrl, id }}>
+        <Qrresult isWindowPopup={Boolean(popup)} />
       </QrcodeUrlContext.Provider>
     </BasicContainer>
   );
