@@ -65,15 +65,17 @@ const Btn = styled.div`
   cursor: pointer;
 `;
 
-const Qrcodemake = ({ me }) => {
+const Qrcodemake = ({ me, isWindowPopup }) => {
   const navigate = useNavigate();
   const isPopup = useReactiveVar(isPopupVar);
 
   const onClickMyStorage = () => {
-    if (me) {
-      navigate(routes.qrcodeStorage);
+    if (!me) return inPopup("needLogin");
+
+    if (isWindowPopup) {
+      navigate(`${routes.qrcodeStorage}/popup`);
     } else {
-      inPopup("needLogin");
+      navigate(routes.qrcodeStorage);
     }
   };
 
@@ -87,12 +89,12 @@ const Qrcodemake = ({ me }) => {
             <QrcodeMain />
           </Icon>
           <Head>URL 주소 입력 </Head>
-          <QrcodeInput />
+          <QrcodeInput isWindowPopup={isWindowPopup} />
           <div>URL 주소를 입력하면 QR코드가 생성됩니다. 바르게 입력해주세요. </div>
         </IN>
       </Main>
       {/* 로그인 안내 */}
-      {isPopup === "needLogin" && <NeedLoginPopupContainer />}
+      {isPopup === "needLogin" && <NeedLoginPopupContainer isWindowPopup={isWindowPopup} />}
     </Container>
   );
 };

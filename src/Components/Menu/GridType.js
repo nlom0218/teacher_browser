@@ -1,4 +1,5 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { customMedia } from "../../styles";
 import {
@@ -14,6 +15,8 @@ import {
   ManagingRolesLink,
   QrcodeLink,
   HeaderBookMark,
+  PopupLunchmenuLink,
+  PopupQrcodeLink,
 } from "./MenuLink";
 
 const Container = styled.div`
@@ -35,20 +38,31 @@ const Container = styled.div`
 `;
 
 const GridType = ({ onClickLunchmenu }) => {
+  const { type } = useParams();
   return (
     <Container>
-      <TimerLink />
-      <DrawLink />
-      <SwapLink />
-      <OrderLink />
-      <LunchmenuLink onClickLunchmenu={onClickLunchmenu} />
-      <ScheduleLink />
-      <JournalLink />
-      <ListLink />
-      <NewsLink />
-      <HeaderBookMark />
-      {/* <ManagingRolesLink /> */}
-      <QrcodeLink />
+      {type === "newWindow" ? (
+        <React.Fragment>
+          <TimerLink />
+          <PopupLunchmenuLink />
+          <PopupQrcodeLink />
+        </React.Fragment>
+      ) : (
+        <React.Fragment>
+          <TimerLink />
+          <DrawLink />
+          <SwapLink />
+          <OrderLink />
+          <LunchmenuLink />
+          <ScheduleLink />
+          <JournalLink />
+          <ListLink />
+          <NewsLink />
+          <HeaderBookMark />
+          {/* <ManagingRolesLink /> */}
+          <QrcodeLink />
+        </React.Fragment>
+      )}
     </Container>
   );
 };

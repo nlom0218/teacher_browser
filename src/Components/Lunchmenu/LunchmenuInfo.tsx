@@ -73,8 +73,8 @@ const LunchmenuDetail = styled.div`
 const LunchmenuOrigin = styled.div``;
 
 interface IProps {
-  areaCode: string;
-  schoolCode: string;
+  areaCode?: string;
+  schoolCode?: string;
   date: Date;
   setSearchData: Dispatch<SetStateAction<ISearchDate>>;
 }
@@ -92,7 +92,7 @@ const LunchmenuInfo = ({ date, areaCode, schoolCode, setSearchData }: IProps) =>
   const me = useMe();
 
   const getMenu = () => {
-    if (!schoolCode) return;
+    if (!schoolCode) return setMenu(undefined);
     setLoading(true);
     fetch(
       `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=954dac30b088454d9a95700f044ce620&Type=json&pIndex=1&pSize=100&` +

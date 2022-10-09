@@ -73,7 +73,7 @@ const Url = styled.div`
   }
   cursor: pointer;
 `;
-const Qrcontext = ({ addPickQr, setAddPickQr, title, urlOne, id, index }) => {
+const Qrcontext = ({ addPickQr, setAddPickQr, title, urlOne, id, index, isWindowPopup }) => {
   const navigate = useNavigate();
 
   const [pick, setPick] = useState(false);
@@ -97,7 +97,21 @@ const Qrcontext = ({ addPickQr, setAddPickQr, title, urlOne, id, index }) => {
     }
   };
   const onClickResult = () => {
-    navigate(`${routes.qrcodeResult}/${index}`, { state: { url: urlOne, index: index } });
+    if (isWindowPopup) {
+      navigate(`${routes.qrcodeResult}/${index}/popup`, {
+        state: {
+          url: urlOne,
+          index: index,
+        },
+      });
+    } else {
+      navigate(`${routes.qrcodeResult}/${index}`, {
+        state: {
+          url: urlOne,
+          index: index,
+        },
+      });
+    }
   };
   const onClickUrl = () => {
     window.open(urlOne, "width=100%, height=100%");

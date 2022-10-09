@@ -115,15 +115,34 @@ export const OrderLink = () => {
   );
 };
 
-export const LunchmenuLink = ({ onClickLunchmenu }) => {
+export const LunchmenuLink = () => {
   const [isHover, setIsHover] = useState(false);
   return (
-    <Link to={routes.lunchmenu} onClick={onClickLunchmenu}>
+    <Link to={routes.lunchmenu}>
       <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <IcLunchmenuClick /> : <IcLunchmenu />}
         <Title>식단표</Title>
       </SMenu>
     </Link>
+  );
+};
+
+export const PopupLunchmenuLink = () => {
+  const lunchmenuUrl =
+    process.env.NODE_ENV === "production"
+      ? `https://teachercan.com/lunchmenu/popup`
+      : `http://localhost:3000/lunchmenu/popup`;
+  const windowFeatures = "left=100,top=100,width=1600,height=800, popup";
+
+  const onClickNewWindow = () => {
+    window.open(lunchmenuUrl, "timer", windowFeatures);
+  };
+  const [isHover, setIsHover] = useState(false);
+  return (
+    <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)} onClick={onClickNewWindow}>
+      {isHover ? <IcLunchmenuClick /> : <IcLunchmenu />}
+      <Title>식단표</Title>
+    </SMenu>
   );
 };
 
@@ -227,6 +246,27 @@ export const QrcodeLink = () => {
         <Title>QR코드</Title>
       </SMenu>
     </Link>
+  );
+};
+
+export const PopupQrcodeLink = () => {
+  const media = useMedia();
+  const [isHover, setIsHover] = useState(false);
+  const lunchmenuUrl =
+    process.env.NODE_ENV === "production"
+      ? `https://teachercan.com/qrcode/popup`
+      : `http://localhost:3000/qrcode/popup`;
+  const windowFeatures = "left=100,top=100,width=1600,height=800, popup";
+
+  const onClickListLink = () => {
+    window.open(lunchmenuUrl, "timer", windowFeatures);
+  };
+
+  return (
+    <SMenu onClick={onClickListLink} onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+      {isHover ? <IcQrcodeClick /> : <IcQrcode />}
+      <Title>QR코드</Title>
+    </SMenu>
   );
 };
 

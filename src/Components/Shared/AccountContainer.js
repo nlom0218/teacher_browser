@@ -46,10 +46,10 @@ const Layout = styled.div`
   padding: 2.5rem;
 `;
 
-const AccountContainer = ({ children, agreePage }) => {
+const AccountContainer = ({ children, agreePage, isWindowPopup }) => {
   return (
     <SAccountContainer>
-      <Theme />
+      <Theme isWindowPopup={isWindowPopup} />
       <BasicLayout agreePage={agreePage}>
         <Layout agreePage={agreePage}>{children}</Layout>
       </BasicLayout>

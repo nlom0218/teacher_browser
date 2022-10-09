@@ -16,7 +16,7 @@ const KakaoLoginCallBack = () => {
     } = result;
     if (ok && token) {
       logInUser(token);
-      navigate(routes.home);
+      navigate(-3);
     } else if (ok) {
       alert("가입이 완료되었습니다. \n 다시 로그인하여 email 정보를 제공하면 이용이 가능합니다.");
       navigate(routes.login);

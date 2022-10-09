@@ -6,8 +6,9 @@ import {
   disableDarkMode,
   enableDarkMode,
   fullScreenMode,
+  inPopup,
   isFullScreenModeVar,
-  movePageLink,
+  logOutUser,
   smallScreenMode,
 } from "../../apollo";
 import { FaSun, FaMoon } from "react-icons/fa";
@@ -17,6 +18,11 @@ import { HeaderToDo, HedaerCalender, HeaderMenu, HeaderHome, HeaderAttend } from
 import routes from "../../routes";
 import { useNavigate } from "react-router-dom";
 import { customMedia } from "../../styles";
+import { IoMdLogIn, IoMdLogOut } from "react-icons/io";
+import useMe from "../../Hooks/useMe";
+import { FcInfo } from "react-icons/fc";
+import { SiNotion } from "react-icons/si";
+import LogoImage from "../../image/LogoImage.png";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -104,7 +110,20 @@ const DarkModeBtn = styled.div`
   `}
 `;
 
-const Theme = () => {
+const NotionAndTeacherCan = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+`;
+
+const IcTeachercan = styled.img`
+  width: 20px;
+  width: 1.25rem;
+  height: 20px;
+  height: 1.25rem;
+`;
+
+const Theme = ({ isWindowPopup }) => {
+  const me = useMe();
   const media = useMedia();
   const navigate = useNavigate();
 
@@ -140,9 +159,23 @@ const Theme = () => {
       fullScreenMode();
     }
   };
+
+  const onClickLoginLogoutBtnInWindowPopup = () => {
+    if (me) {
+      localStorage.removeItem("lmSetting");
+      localStorage.removeItem("welcomeSection");
+      logOutUser(() => window.location.reload());
+    } else {
+      navigate(routes.login, {
+        state: {
+          isWindowPopup,
+        },
+      });
+    }
+  };
   return (
     <Wrapper isFullScreen={isFullScreen}>
-      {isFullScreen && (
+      {!isWindowPopup && isFullScreen && (
         <MenuNavigation>
           <MenuItem className="menu_btn" onClick={() => onClickRoutes("home")}>
             <HeaderHome />
@@ -161,10 +194,34 @@ const Theme = () => {
           </MenuItem>
         </MenuNavigation>
       )}
-      {media === "Desktop" && (
+      {!isWindowPopup && media === "Desktop" && (
         <ScreenTheme onClick={onClickScreenBtn} className="menu_btn">
           {isFullScreen ? <BiExitFullscreen /> : <BiFullscreen />}
         </ScreenTheme>
+      )}
+      {isWindowPopup && (
+        <React.Fragment>
+          {!me ? (
+            <MenuItem className="menu_btn" onClick={() => inPopup("pageInfo")}>
+              <FcInfo />
+            </MenuItem>
+          ) : (
+            <NotionAndTeacherCan>
+              <MenuItem
+                className="menu_btn"
+                onClick={() => window.open("https://sparkly-corleggy-3e4.notion.site/718aaed6e5e54babb7efb97384bab836")}
+              >
+                <SiNotion />
+              </MenuItem>
+              <MenuItem className="menu_btn" onClick={() => window.open("https://teachercan.com")}>
+                <IcTeachercan src={LogoImage} />
+              </MenuItem>
+            </NotionAndTeacherCan>
+          )}
+          <MenuItem className="menu_btn" onClick={onClickLoginLogoutBtnInWindowPopup}>
+            {me ? <IoMdLogOut /> : <IoMdLogIn />}
+          </MenuItem>
+        </React.Fragment>
       )}
       <BackgroungTheme onClick={onClickBtn} className="theme_btn">
         {darkMode ? (

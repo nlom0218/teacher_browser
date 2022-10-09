@@ -66,9 +66,6 @@ export const SearchDate = ({ date, setSearchData }: IProps) => {
   const media = useMedia();
 
   const getDate = (date: Date) => {
-    const lmSetting = JSON.parse(localStorage.getItem("lmSetting") || "");
-    const newLmSetting = { ...lmSetting, date };
-    localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
     setSearchData((prev) => {
       return {
         ...prev,

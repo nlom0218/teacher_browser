@@ -1,11 +1,11 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import styled from "styled-components";
 import Header from "./Header";
 import Theme from "./Theme";
 import { customMedia } from "../../styles";
 import PreviousPageBtn from "./PreviousPageBtn";
 import { useReactiveVar } from "@apollo/client";
-import { isFullScreenModeVar } from "../../apollo";
+import { fullScreenMode, isFullScreenModeVar } from "../../apollo";
 
 interface IStyled {
   isFullScreenMode: boolean;
@@ -50,9 +50,10 @@ interface IProps {
   menuItem?: boolean;
   notScroll?: boolean;
   page?: string;
+  isWindowPopup?: boolean;
 }
 
-const BasicContainer = ({ children, menuItem, notScroll, page }: IProps) => {
+const BasicContainer = ({ children, menuItem, notScroll, page, isWindowPopup }: IProps) => {
   const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
   const [seeSideMenu, setSeeSideMenu] = useState(false);
   const onClickBackground = () => {
@@ -60,12 +61,22 @@ const BasicContainer = ({ children, menuItem, notScroll, page }: IProps) => {
       setSeeSideMenu(false);
     }
   };
+  useEffect(() => {
+    if (isWindowPopup) {
+      fullScreenMode();
+    }
+  }, []);
   return (
     <Container onClick={onClickBackground} isFullScreenMode={isFullScreenMode}>
-      <Theme />
-      <Header seeSideMenu={seeSideMenu} setSeeSideMenu={setSeeSideMenu} isFullScreenMode={isFullScreenMode} />
+      <Theme isWindowPopup={isWindowPopup} />
+      <Header
+        seeSideMenu={seeSideMenu}
+        setSeeSideMenu={setSeeSideMenu}
+        isFullScreenMode={isFullScreenMode}
+        isWindowPopup={isWindowPopup}
+      />
       <ContentLayout notScroll={notScroll} isFullScreenMode={isFullScreenMode} page={page}>
-        {menuItem && <PreviousPageBtn />}
+        {!isWindowPopup && menuItem && <PreviousPageBtn />}
         {children}
       </ContentLayout>
     </Container>
