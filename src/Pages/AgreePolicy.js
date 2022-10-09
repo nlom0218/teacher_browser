@@ -101,8 +101,11 @@ const AgreePolicy = () => {
     const {
       updateUser: { ok },
     } = result;
+    const redirectURL = localStorage.getItem("redirectURL");
     if (ok) {
-      navigate(routes.home);
+      if (redirectURL) {
+        navigate(redirectURL);
+      } else navigate(routes.home);
     }
   };
 
@@ -145,7 +148,7 @@ const AgreePolicy = () => {
   }
 
   return (
-    <AccountContainer agreePage={true}>
+    <AccountContainer agreePage={true} isWindowPopup={Boolean(localStorage.getItem("redirectURL"))}>
       <Container>
         <MsgLayout>
           <Msg>티처캔 회원가입을 환영합니다!</Msg>
