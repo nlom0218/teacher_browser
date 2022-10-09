@@ -5,6 +5,7 @@ import useTitle from "../Hooks/useTitle";
 import styled from "styled-components";
 import LogoText from "../image/LogoText.png";
 import BackBtn from "../Components/Account/BackBtn";
+import { useLocation } from "react-router-dom";
 
 const LogoIcon = styled.img`
   width: 240px;
@@ -13,10 +14,11 @@ const LogoIcon = styled.img`
 
 const Login = () => {
   const titleUpdataer = useTitle("티처캔 | 로그인");
+  const { state } = useLocation();
 
   return (
-    <AccountContainer>
-      <BackBtn />
+    <AccountContainer isWindowPopup={state?.isWindowPopup}>
+      {!state?.isWindowPopup && <BackBtn />}
       <LogoIcon src={LogoText}></LogoIcon>
       <SocialLogin />
     </AccountContainer>

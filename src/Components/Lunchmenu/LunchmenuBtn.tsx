@@ -39,7 +39,6 @@ interface IProps extends IMe {
 
 const LunchmenuBtn = ({ date, me, setSearchData }: IProps) => {
   const onClickDateBtn = (mode: string) => {
-    const lmSetting = JSON.parse(localStorage.getItem("lmSetting") || "");
     let newDate = new window.Date();
     if (mode === "yesterday") {
       newDate = new window.Date(date.setDate(date.getDate() - 1));
@@ -47,8 +46,6 @@ const LunchmenuBtn = ({ date, me, setSearchData }: IProps) => {
     if (mode === "tomorrow") {
       newDate = new window.Date(date.setDate(date.getDate() + 1));
     }
-    const newLmSetting = { ...lmSetting, date: newDate };
-    localStorage.setItem("lmSetting", JSON.stringify(newLmSetting));
     setSearchData((prev) => ({
       ...prev,
       date: newDate,

@@ -39,7 +39,7 @@ const SchoolIcon = styled.div`
 `;
 
 interface IProps {
-  schoolName: string;
+  schoolName?: string;
   date: Date;
   setSearchData: Dispatch<SetStateAction<ISearchDate>>;
 }
