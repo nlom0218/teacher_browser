@@ -149,6 +149,7 @@ function App() {
         <Route path={`${routes.calendar}/:date`} element={<Calendar />} />
         <Route path={routes.pageLink} element={<PageLink />} />
         <Route path={routes.menu} element={<Menu />} />
+        <Route path={`${routes.menu}/:type`} element={<Menu />} />
         <Route
           path={`${routes.timerPopup}/:mode`}
           element={<TimerPopup bgMusicMp3={bgMusicMp3} setBgMusicMp3={setBgMusicMp3} />}
