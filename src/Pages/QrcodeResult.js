@@ -26,7 +26,7 @@ const QrcodeResult = () => {
   }, []);
 
   return (
-    <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)}>
+    <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)} redirectURL={`${routes.qrcode}/popup`}>
       <QrcodeUrlContext.Provider value={{ me, url, setUrl, id }}>
         <Qrresult isWindowPopup={Boolean(popup)} />
       </QrcodeUrlContext.Provider>

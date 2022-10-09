@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { logInUser } from "../apollo";
 import Loading from "../Components/Shared/Loading";
 import { NAVER_LOGIN_MUTATION } from "../Graphql/User/mutation";
+import routes from "../routes";
 
 const NaverLoginCallBack = () => {
   const navigate = useNavigate();
@@ -13,12 +14,15 @@ const NaverLoginCallBack = () => {
     const {
       naverLogin: { ok, error, token },
     } = result;
+    const redirectURL = localStorage.getItem("redirectURL");
     if (error) {
       setErrMsg(error);
     }
     if (ok) {
       logInUser(token);
-      navigate(-3);
+      if (redirectURL) {
+        navigate(redirectURL);
+      } else navigate(routes.home);
     }
   };
 

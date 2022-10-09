@@ -14,12 +14,15 @@ const GoogleLoginCallBack = () => {
     const {
       googleLogin: { ok, error, token },
     } = result;
+    const redirectURL = localStorage.getItem("redirectURL");
     if (ok) {
       logInUser(token);
-      navigate(-3);
+      if (redirectURL) {
+        navigate(redirectURL);
+      } else navigate(routes.home);
     } else {
       setErrMsg(error);
-      navigate(-3);
+      navigate(routes.home);
     }
   };
 
