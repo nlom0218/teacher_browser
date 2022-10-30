@@ -7,6 +7,7 @@ import LeftDndContainer from "./Dorp/LeftDndContainer";
 import RightDndContainer from "./Dorp/RightDndContainer";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
+import { AiFillStar } from "react-icons/ai";
 
 const DndContainer = styled.div`
   display: grid;
@@ -32,9 +33,22 @@ const Container = styled.div`
 const ListIcon = styled.div`
   font-size: 2.5em;
   font-size: 2.5rem;
+  position: relative;
   svg {
     display: flex;
   }
+`;
+
+const Represent = styled.div`
+  position: absolute;
+  font-size: 1.25em;
+  font-size: 1.25rem;
+  top: -1em;
+  top: -1rem;
+  left: -1em;
+  left: -1rem;
+  color: ${(props) => props.theme.redColor};
+  transition: color 1s ease;
 `;
 
 const ListName = styled.div`
@@ -111,9 +125,19 @@ const ListItem = ({
         <Container onMouseEnter={onMouseEnterList} onMouseLeave={onMouseLeaveList} ref={drag}>
           <Link to={`${routes.list}/detail/${listId}`}>
             {listIcon ? (
-              <ListIcon>{listIcon}</ListIcon>
+              <ListIcon>
+                {listIcon}
+                <Represent>
+                  <AiFillStar />
+                </Represent>
+              </ListIcon>
             ) : (
-              <ListIcon>{mouseEnter ? <FcOpenedFolder /> : <FcFolder />}</ListIcon>
+              <ListIcon>
+                {mouseEnter ? <FcOpenedFolder /> : <FcFolder />}{" "}
+                <Represent>
+                  <AiFillStar />
+                </Represent>
+              </ListIcon>
             )}
             <ListName>{listName}</ListName>
           </Link>
