@@ -10,10 +10,8 @@ const WishCard = () => {
 
   useEffect(() => {}, []);
   return (
-    <BasicContainer menuItem={true}>
+    <BasicContainer>
       <Container></Container>
-      {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
-      {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
     </BasicContainer>
   );
 };

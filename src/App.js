@@ -187,8 +187,8 @@ function App() {
         <Route path={`${routes.qrcodeResult}/:id`} element={<QrcodeResult />} />
         <Route path={`${routes.qrcodeResult}/:id/:popup`} element={<QrcodeResult />} />
         <Route path={routes.attend} element={<Attend />} />
-        <Route path={routes.xmastree} element={<XmasTree />} />
-        <Route path={routes.wishcar} element={<WishCard />} />
+        <Route path={routes.xmasTree} element={<XmasTree />} />
+        <Route path={routes.wishcard} element={<WishCard />} />
       </Routes>
     </ThemeProvider>
   );
