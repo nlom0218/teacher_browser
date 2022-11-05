@@ -52,6 +52,7 @@ import QrcodePopup from "./Components/Qrcode/QrcodePopup";
 import QrcodeStorage from "./Pages/QrcodeStorage";
 import Attend from "./Pages/Attend";
 import QrcodeResult from "./Pages/QrcodeResult";
+import XmasTree from "./Pages/XmasTree";
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
   const bgTheme = useReactiveVar(bgThemeVar);
@@ -185,6 +186,7 @@ function App() {
         <Route path={`${routes.qrcodeResult}/:id`} element={<QrcodeResult />} />
         <Route path={`${routes.qrcodeResult}/:id/:popup`} element={<QrcodeResult />} />
         <Route path={routes.attend} element={<Attend />} />
+        <Route path={routes.xmastree} element={<XmasTree />} />
       </Routes>
     </ThemeProvider>
   );
