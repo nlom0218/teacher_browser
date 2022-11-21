@@ -1,13 +1,12 @@
 import gql from "graphql-tag";
 
-export const QRCODES_QUERY = gql`
-  query Qrcodes($userEmail: String!) {
-    qrcodes(userEmail: $userEmail) {
+export const XMAS_MSG_QUERY = gql`
+  query XmasMsg($userEmail: String!) {
+    xmasMsg(userEmail: $userEmail) {
       _id
       userEmail
-      title
-      url
-      index
+      author
+      text
     }
   }
 `;
