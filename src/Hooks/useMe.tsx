@@ -18,6 +18,7 @@ export const ME_QUERY = gql`
       tag
       favoriteNews
       agreePolicy
+      defaultStudentListId
       link {
         siteName
         memo
@@ -51,6 +52,7 @@ export interface IMe {
     tag: string[];
     favoriteNews: string[];
     agreePolicy: boolean;
+    defaultStudentListId: string;
     link: {
       siteName: string;
       memo: string;

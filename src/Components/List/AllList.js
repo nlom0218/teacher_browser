@@ -113,6 +113,7 @@ const AllList = ({
                 setErrorMsg={setErrorMsg}
                 setSomeDragging={setSomeDragging}
                 setDragType={setDragType}
+                defaultStudentListId={me?.defaultStudentListId}
               />
             );
           } else {
