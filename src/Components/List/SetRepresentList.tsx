@@ -44,6 +44,8 @@ const SetRepresentList = ({ listId, userEmail, defaultStudentList }: IProps) => 
   const [setDefaultStudentListId, { loading }] = useMutation(SET_DEFAULT_STUDENT_LIST_ID);
 
   const onClickIcon = () => {
+    if (isRepresent) return deleteDefaultStudentList();
+
     setDefaultStudentListId({
       variables: {
         listId,
@@ -51,6 +53,16 @@ const SetRepresentList = ({ listId, userEmail, defaultStudentList }: IProps) => 
       },
     });
   };
+
+  const deleteDefaultStudentList = () => {
+    setDefaultStudentListId({
+      variables: {
+        listId: "",
+        userEmail,
+      },
+    });
+  };
+
   return (
     <Container>
       {isRepresent ? (

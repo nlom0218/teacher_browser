@@ -71,7 +71,6 @@ const ListItem = ({
   setErrorMsg,
   defaultStudentListId,
 }) => {
-  console.log(listId);
   // 리스트 아이콘위에 마우스를 올려두면 아이콘을 바꾸기 위한 값
   const [mouseEnter, setMouseEnter] = useState(false);
 
