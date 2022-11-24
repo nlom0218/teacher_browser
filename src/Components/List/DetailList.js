@@ -22,6 +22,7 @@ import PrintList from "./PrintList";
 import PrintListContents from "./Popup/PrintListContents";
 import { useSetRecoilState } from "recoil";
 import { existStudentsInListAtom } from "../../atom";
+import SetRepresentList from "./SetRepresentList";
 
 const Container = styled.div`
   padding: 20px;
@@ -208,6 +209,7 @@ const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
 
   return (
     <Container>
+      <SetRepresentList />
       <DetailNameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName}>
         <form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurName}>
           {chosenEmoji && <DetailEomjiIcon onClick={onClickEmojiBtn}>{chosenEmoji}</DetailEomjiIcon>}
@@ -224,7 +226,7 @@ const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
               autoComplete="off"
               maxLength="10"
               onClick={onClickListName}
-            />{" "}
+            />
           </InputUnderLine>
           {!isEditName && media === "Desktop" && <PrintList />}
 
