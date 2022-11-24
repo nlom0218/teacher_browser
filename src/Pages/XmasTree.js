@@ -3,6 +3,9 @@ import styled, { Keyframes } from "styled-components";
 import { inPopup, isPopupVar, outPopup } from "../apollo";
 import InputWish from "../Components/XmasTree/Popup/InputWish";
 import { useReactiveVar } from "@apollo/client";
+import useMe from "../Hooks/useMe";
+
+// 레이어 구성 너무 어렵다..... 크리스마스 트리 그림 크기때문에 겹치지 않는 위치에 소원 버튼
 
 const Container = styled.div`
   display: grid;
@@ -67,20 +70,18 @@ const InputBtn = styled.div`
 `;
 const XmasTree = () => {
   // const titleUpdataer = useTitle("티처캔 | 소원나무 이벤트");
-
+  const me = useMe();
+  const nickname = me?.nickname;
   const isPopup = useReactiveVar(isPopupVar);
 
-  const onClickTimeSetBtn = () => {
+  const onClickInputWish = () => {
     inPopup("inputWish");
   };
-
   useEffect(() => {}, []);
+
   return (
     //홈으로 가기
     <Container>
-      <Left>
-        <InputBtn onClick={onClickTimeSetBtn}> 소원쓰기 </InputBtn>
-      </Left>
       <Tree>
         <img
           src=" https://cdn.discordapp.com/attachments/1012001449854648480/1041329605681885194/4f4c0c3051ef6af2.png
@@ -98,7 +99,10 @@ const XmasTree = () => {
           <RandomWish>소원 데이터 불러와서 하나씩 보이기</RandomWish>
         </WishBox>
       </Right>
-      {isPopup === "inputWish" && <InputWish />}
+      <Left>
+        <InputBtn onClick={onClickInputWish}> 소원쓰기 </InputBtn>
+      </Left>
+      {isPopup === "inputWish" && <InputWish me={me} nickname={nickname} />}
     </Container>
   );
 };
