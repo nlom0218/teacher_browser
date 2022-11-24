@@ -1,8 +1,9 @@
 import { useMutation } from "@apollo/client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import styled from "styled-components";
 import { SET_DEFAULT_STUDENT_LIST_ID } from "../../Graphql/User/mutation";
+import { ME_QUERY } from "../../Hooks/useMe";
 
 interface IIconProps {
   isRepresent: boolean;
@@ -41,7 +42,9 @@ interface IProps {
 const SetRepresentList = ({ listId, userEmail, defaultStudentList }: IProps) => {
   const [isRepresent, setIsRepresent] = useState(listId === defaultStudentList);
 
-  const [setDefaultStudentListId, { loading }] = useMutation(SET_DEFAULT_STUDENT_LIST_ID);
+  const [setDefaultStudentListId] = useMutation(SET_DEFAULT_STUDENT_LIST_ID, {
+    refetchQueries: [{ query: ME_QUERY }],
+  });
 
   const onClickIcon = () => {
     if (isRepresent) return deleteDefaultStudentList();
@@ -62,6 +65,10 @@ const SetRepresentList = ({ listId, userEmail, defaultStudentList }: IProps) => 
       },
     });
   };
+
+  useEffect(() => {
+    setIsRepresent(listId === defaultStudentList);
+  }, [defaultStudentList]);
 
   return (
     <Container>
