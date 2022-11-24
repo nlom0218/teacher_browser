@@ -1,6 +1,8 @@
+import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import styled from "styled-components";
+import { SET_DEFAULT_STUDENT_LIST_ID } from "../../Graphql/User/mutation";
 
 interface IIconProps {
   isRepresent: boolean;
@@ -30,11 +32,24 @@ const Message = styled.div`
   font-weight: 600;
 `;
 
-const SetRepresentList = () => {
-  const [isRepresent, setIsRepresent] = useState(true);
+interface IProps {
+  listId: string;
+  userEmail: string;
+  defaultStudentList: string;
+}
+
+const SetRepresentList = ({ listId, userEmail, defaultStudentList }: IProps) => {
+  const [isRepresent, setIsRepresent] = useState(listId === defaultStudentList);
+
+  const [setDefaultStudentListId, { loading }] = useMutation(SET_DEFAULT_STUDENT_LIST_ID);
 
   const onClickIcon = () => {
-    setIsRepresent((prev) => !prev);
+    setDefaultStudentListId({
+      variables: {
+        listId,
+        userEmail,
+      },
+    });
   };
   return (
     <Container>
