@@ -209,7 +209,12 @@ const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging, userEmai
 
   return (
     <Container>
-      <SetRepresentList listId={listId} userEmail={userEmail} defaultStudentList={defaultStudentList} />
+      <SetRepresentList
+        listId={listId}
+        userEmail={userEmail}
+        defaultStudentList={defaultStudentList}
+        setSuccessMsg={setSuccessMsg}
+      />
       <DetailNameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName}>
         <form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurName}>
           {chosenEmoji && <DetailEomjiIcon onClick={onClickEmojiBtn}>{chosenEmoji}</DetailEomjiIcon>}

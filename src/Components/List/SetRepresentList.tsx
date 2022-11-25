@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import styled from "styled-components";
 import { SET_DEFAULT_STUDENT_LIST_ID } from "../../Graphql/User/mutation";
@@ -37,9 +37,10 @@ interface IProps {
   listId: string;
   userEmail: string;
   defaultStudentList: string;
+  setSuccessMsg: Dispatch<SetStateAction<string>>;
 }
 
-const SetRepresentList = ({ listId, userEmail, defaultStudentList }: IProps) => {
+const SetRepresentList = ({ listId, userEmail, defaultStudentList, setSuccessMsg }: IProps) => {
   const [isRepresent, setIsRepresent] = useState(listId === defaultStudentList);
 
   const [setDefaultStudentListId] = useMutation(SET_DEFAULT_STUDENT_LIST_ID, {
@@ -55,6 +56,8 @@ const SetRepresentList = ({ listId, userEmail, defaultStudentList }: IProps) => 
         userEmail,
       },
     });
+
+    setSuccessMsg("대표 명렬표가 설정되었습니다.");
   };
 
   const deleteDefaultStudentList = () => {
@@ -64,6 +67,8 @@ const SetRepresentList = ({ listId, userEmail, defaultStudentList }: IProps) => 
         userEmail,
       },
     });
+
+    setSuccessMsg("대표 명렬표가 해제되었습니다.");
   };
 
   useEffect(() => {
