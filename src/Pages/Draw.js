@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { inPopup, isPopupVar } from "../apollo";
 import { useQuery, useReactiveVar } from "@apollo/client";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { customMedia } from "../styles";
 import { inputLine } from "../Animations/InputLine";
 import { BtnFadeIn } from "../Animations/Fade";
@@ -147,6 +147,8 @@ const ListName = styled.div``;
 const Draw = () => {
   const titleUpdataer = useTitle("티처캔 | 랜덤뽑기");
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const isPopup = useReactiveVar(isPopupVar);
 
   const me = useMe();
@@ -211,6 +213,12 @@ const Draw = () => {
       );
     }
   }, [data]);
+
+  useEffect(() => {
+    if (me?.defaultStudentListId) {
+      navigate(`/draw/${me?.defaultStudentListId}`);
+    }
+  }, [me]);
 
   return (
     <BasicContainer menuItem={true}>
