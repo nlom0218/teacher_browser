@@ -3,7 +3,7 @@ import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { inPopup, isPopupVar } from "../apollo";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { SEE_ONE_STUDENT_LIST_QUERY } from "../Graphql/StudentList/query";
 import { customMedia } from "../styles";
 import { inputLine } from "../Animations/InputLine";
@@ -165,6 +165,8 @@ const ListName = styled.div``;
 const Order = () => {
   const titleUpdataer = useTitle("티처캔 | 순서정하기");
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const isPopup = useReactiveVar(isPopupVar);
   const media = useMedia();
 
@@ -228,6 +230,17 @@ const Order = () => {
       );
     }
   }, [data]);
+
+  useEffect(() => {
+    if (id) return;
+
+    if (me?.defaultStudentListId) {
+      navigate(`/order/${me?.defaultStudentListId}`, {
+        replace: true,
+      });
+    }
+  }, [me]);
+
   return (
     <BasicContainer menuItem={true}>
       <Container seeResultType={seeResultType}>

@@ -215,8 +215,12 @@ const Draw = () => {
   }, [data]);
 
   useEffect(() => {
+    if (id) return;
+
     if (me?.defaultStudentListId) {
-      navigate(`/draw/${me?.defaultStudentListId}`);
+      navigate(`/draw/${me?.defaultStudentListId}`, {
+        replace: true,
+      });
     }
   }, [me]);
 
