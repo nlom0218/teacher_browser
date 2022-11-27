@@ -7,8 +7,8 @@ import { XMAS_MSG_QUERY } from "../Graphql/XmasTree/query";
 //전체 데이터 보이네 쿼리 어떻게??
 
 const Container = styled.div`
-  display: grid;
-  grid-template-rows: 1fr 2fr;
+  display: flex;
+  flex-direction: row;
   row-gap: 20px;
   background: url(https://media.discordapp.net/attachments/1012001449854648480/1041329981969661982/c6f1be7663bdd36b.png?width=1410&height=793);
   background-repeat: no-repeat;
@@ -21,21 +21,17 @@ const Container = styled.div`
 `;
 
 const MyWishContainer = styled.div`
-  display: grid;
   column-gap: 20px;
-  grid-template-columns: repeat(3, 2fr);
 `;
 const AllWishContainer = styled.div`
-  display: grid;
   column-gap: 20px;
-  grid-template-columns: repeat(3, 2fr);
 `;
 
 const WishCardBox = styled.div`
   width: 200px;
   height: 200px;
   border: 1px solid black;
-  background-color: aqua;
+  background-color: white;
 `;
 const WishContext = styled.div``;
 
