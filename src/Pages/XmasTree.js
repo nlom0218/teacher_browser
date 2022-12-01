@@ -6,16 +6,12 @@ import { useReactiveVar } from "@apollo/client";
 import useMe from "../Hooks/useMe";
 import { useNavigate } from "react-router-dom";
 import routes from "../routes";
-import SnowFall from "../Components/XmasTree/SnowFall";
+import Snowfall from "react-snowfall";
 
 // 레이어 구성 너무 어렵다..... 크리스마스 트리 그림 크기때문에 겹치지 않는 위치에 소원 버튼
 
 const Container = styled.div`
-  display: flex;
-  position: relative;
-  flex-direction: column;
   height: 100vh;
-  grid-template-columns: auto auto auto;
   row-gap: 20px;
   row-gap: 1.25rem;
   padding: 20px;
@@ -28,13 +24,13 @@ const Container = styled.div`
   min-width: 100vw;
   z-index: 10;
 `;
+const XmasMain = styled.div`
+  display: grid;
+  height: 98%;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: flex-end;
+`;
 const Tree = styled.div`
-  position: absolute;
-  left: 10px;
-  right: 10px;
-  bottom: 0;
-  top: 10%;
-  z-index: 1;
   img {
     width: 100%;
     height: 100%;
@@ -42,53 +38,25 @@ const Tree = styled.div`
   }
 `;
 
-// const Snow = styled.div`
-//   .snowflake {
-//     position: absolute;
-//     width: 10px;
-//     height: 10px;
-//     background: linear-gradient(white, white);
-//     border-radius: 50%;
-//     filter: drop-shadow(0 0 10px white);
-//   }
-// `;
-
 const Cookie = styled.div`
-  position: absolute;
-  top: 40%;
-  z-index: 0;
   img {
-    width: 50%;
-    height: 50%;
+    width: 100%;
+    height: 100%;
     cursor: pointer;
   }
 `;
-const Right = styled.div`
-  float: right;
-`;
-const Left = styled.div`
-  float: left;
-`;
-const Title = styled.div`
-  font-size: 50px;
-  color: aqua;
-`;
+const Right = styled.div``;
+const Left = styled.div``;
+
 const WishBox = styled.div`
-  position: absolute;
-  left: 100px;
-  overflow: hidden;
   img {
-    width: 50%;
-    height: 50%;
+    width: 100%;
+    height: 100%;
     cursor: pointer;
   }
 `;
 const RandomWish = styled.div``;
 const InputBtn = styled.div`
-  position: absolute;
-  justify-self: right;
-  align-self: flex-end;
-  z-index: 1;
   background-color: ${(props) => props.theme.btnBgColor};
   color: ${(props) => props.theme.bgColor};
   transition: background-color 1s ease, color 1s ease;
@@ -118,35 +86,35 @@ const XmasTree = () => {
   return (
     //홈으로 가기
     <Container>
-      {/* <Snow>
-        <SnowFall />
-      </Snow> */}
-      <Tree>
-        <img
-          src=" https://cdn.discordapp.com/attachments/1012001449854648480/1041329605681885194/4f4c0c3051ef6af2.png
-"
-          alt="img"
-          onClick={onClickTree}
-        ></img>
-      </Tree>
-      <Left>
-        <InputBtn onClick={onClickInputWish}> 소원쓰기 </InputBtn>
-      </Left>
-      <Right>
-        <Cookie>
-          <img
-            src="https://media.discordapp.net/attachments/1012001449854648480/1033703744728211476/5129be1287fd0add.png?width=1410&height=980"
-            alt="img"
-          ></img>
-        </Cookie>
-        <WishBox>
-          <img
-            src="https://media.discordapp.net/attachments/1012001449854648480/1033703930699448340/bdf028c6bc9be94b.png?width=1410&height=980"
-            alt="img"
-          ></img>
-          <RandomWish></RandomWish>
-        </WishBox>
-      </Right>
+      <Snowfall color={"white"} snowflakeCount={280} />
+      <XmasMain>
+        <Left>
+          <Cookie>
+            <img
+              src="https://media.discordapp.net/attachments/1012001449854648480/1033703744728211476/5129be1287fd0add.png?width=1410&height=980"
+              alt="img"
+            ></img>
+          </Cookie>
+          <WishBox onClick={onClickInputWish}>
+            <img
+              src="https://media.discordapp.net/attachments/1012001449854648480/1033703930699448340/bdf028c6bc9be94b.png?width=1410&height=980"
+              alt="img"
+            ></img>
+            <RandomWish></RandomWish>
+          </WishBox>
+        </Left>
+        <Right>
+          <Tree>
+            <img
+              src="https://media.discordapp.net/attachments/1012001449854648480/1047871422569136198/4f4c0c3051ef6af2.png?width=1118&height=1150"
+              alt="img"
+              onClick={onClickTree}
+            ></img>
+          </Tree>
+        </Right>
+        <Right></Right>
+      </XmasMain>
+
       {isPopup === "inputWish" && <InputWish me={me} nickname={nickname} />}
     </Container>
   );
