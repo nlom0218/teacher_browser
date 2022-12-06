@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useMe from "../Hooks/useMe";
-import { useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { XMAS_MSG_QUERY } from "../Graphql/XmasTree/query";
 import Snowfall from "react-snowfall";
 import Loading from "../Components/Shared/Loading";
-import { outPopup } from "../../../apollo";
+import { outPopup } from "../apollo";
 // import { useNavigate } from "react-router-dom";
 // import routes from "../../../routes";
 // import { UPDATE_XMAS_MSG_MUTATION } from "../../../Graphql/XmasTree/mutation";
-import { DELETE_XMAS_MSG_MUTATION } from "../../../Graphql/XmasTree/mutation";
-import AlertMessage from "../../Shared/AlertMessage";
+// import { DELETE_XMAS_MSG_MUTATION } from "../../../Graphql/XmasTree/mutation";
+import AlertMessage from "../Components/Shared/AlertMessage";
+import WishCardBox from "../Components/XmasTree/WishCardBox";
 
 const Container = styled.div`
   background: url(https://media.discordapp.net/attachments/1012001449854648480/1041329981969661982/c6f1be7663bdd36b.png?width=1410&height=793);
@@ -33,7 +34,15 @@ const WishMain = styled.div`
   padding: 1.25rem;
 `;
 
-const Check = styled.div``;
+const Check = styled.div`
+  padding: 10px;
+  padding: 0.625rem;
+  background-color: white;
+  margin: 10px;
+  margin: 0.625rem;
+  align-items: flex-end;
+  text-align: right;
+`;
 const WishContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -43,12 +52,6 @@ const WishContainer = styled.div`
   row-gap: 20px;
   row-gap: 1.25rem;
 `;
-
-const WishCardBox = styled.div`
-  border: 1px solid black;
-  background-color: white;
-`;
-const WishContext = styled.div``;
 
 const WishCard = () => {
   // const titleUpdataer = useTitle("티처캔 | 소원나무 이벤트");
@@ -65,22 +68,22 @@ const WishCard = () => {
     }
   };
 
-  const [deleteXmasMsg, { loading: delloading }] = useMutation(DELETE_XMAS_MSG_MUTATION, {
-    onComplted: deleteonComplted,
-    refetchQueries: [{ query: XMAS_MSG_QUERY, variables: { userEmail: me?.email } }],
-  });
-  if (delloading) {
-    return <Loading page="popupPage" />;
-  }
+  // const [deleteXmasMsg, { loading: delloading }] = useMutation(DELETE_XMAS_MSG_MUTATION, {
+  //   onComplted: deleteonComplted,
+  //   refetchQueries: [{ query: XMAS_MSG_QUERY, variables: { userEmail: me?.email } }],
+  // });
+  // if (delloading) {
+  //   return <Loading page="popupPage" />;
+  // }
 
-  const onClickDel = () => {
-    deleteXmasMsg({
-      variables: {
-        userEmail: me?.email,
-        xmasMsgId: xmasMsgId,
-      },
-    });
-  };
+  // const onClickDel = () => {
+  //   deleteXmasMsg({
+  //     variables: {
+  //       userEmail: me?.email,
+  //       xmasMsgId: xmasMsgId,
+  //     },
+  //   });
+  // };
 
   useEffect(() => {
     if (data) {
@@ -92,18 +95,19 @@ const WishCard = () => {
   }, [data]);
 
   return (
-    // 크리스마스 배경
+    // 크리스마스 배경, 수정 삭제 아이콘 변경
     <Container>
       <Snowfall color={"white"} snowflakeCount={280} />
       <WishMain>
-        <Check></Check>
+        <Check>티처캔 홈으로, 이벤트 홈으로 나의 소원 / 전체보기 </Check>
         <WishContainer>
           {data?.xmasMsg.map((item, index) => (
-            <WishCardBox>
-              <WishContext>{item.text}</WishContext>
-              <button>수정</button>
-              <button onClick={onClickDel}>삭제</button>
-            </WishCardBox>
+            // <WishCardBox>
+            //   <WishContext>{item.text}</WishContext>
+            //   <button>수정</button>
+            //   <button onClick={onClickDel}>삭제</button>
+            // </WishCardBox>
+            <WishCardBox item={item} me={me} />
           ))}
         </WishContainer>
       </WishMain>

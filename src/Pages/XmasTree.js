@@ -1,14 +1,12 @@
 import React, { useEffect } from "react";
-import styled, { Keyframes } from "styled-components";
-import { inPopup, isPopupVar, outPopup } from "../apollo";
+import styled from "styled-components";
+import { inPopup, isPopupVar } from "../apollo";
 import InputWish from "../Components/XmasTree/Popup/InputWish";
 import { useReactiveVar } from "@apollo/client";
 import useMe from "../Hooks/useMe";
 import { useNavigate } from "react-router-dom";
 import routes from "../routes";
 import Snowfall from "react-snowfall";
-
-// 레이어 구성 너무 어렵다..... 크리스마스 트리 그림 크기때문에 겹치지 않는 위치에 소원 버튼
 
 const Container = styled.div`
   height: 100vh;
@@ -56,17 +54,17 @@ const WishBox = styled.div`
   }
 `;
 const RandomWish = styled.div``;
-const InputBtn = styled.div`
-  background-color: ${(props) => props.theme.btnBgColor};
-  color: ${(props) => props.theme.bgColor};
-  transition: background-color 1s ease, color 1s ease;
-  padding: 10px 20px;
-  padding: 0.625rem 1.25rem;
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  text-align: center;
-  cursor: pointer;
-`;
+// const InputBtn = styled.div`
+//   background-color: ${(props) => props.theme.btnBgColor};
+//   color: ${(props) => props.theme.bgColor};
+//   transition: background-color 1s ease, color 1s ease;
+//   padding: 10px 20px;
+//   padding: 0.625rem 1.25rem;
+//   border-radius: 5px;
+//   border-radius: 0.3125rem;
+//   text-align: center;
+//   cursor: pointer;
+// `;
 const XmasTree = () => {
   // const titleUpdataer = useTitle("티처캔 | 소원나무 이벤트");
   const me = useMe();
