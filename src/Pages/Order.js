@@ -24,6 +24,7 @@ import Loading from "../Components/Shared/Loading";
 import NeedLoginPopupContainer from "../Components/Shared/NeedLoginPopupContainer";
 import useMe from "../Hooks/useMe";
 import NoStudentMsg from "../Components/Shared/styled/NoStudentMsg";
+import routes from "../routes";
 
 // 전체 틀
 const Container = styled.div`
@@ -168,6 +169,8 @@ const Order = () => {
   const isPopup = useReactiveVar(isPopupVar);
   const media = useMedia();
 
+  const { popup } = useParams();
+
   const componentRef = useRef(null);
 
   const me = useMe();
@@ -229,7 +232,7 @@ const Order = () => {
     }
   }, [data]);
   return (
-    <BasicContainer menuItem={true}>
+    <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)} redirectURL={`${routes.order}/popup`}>
       <Container seeResultType={seeResultType}>
         <TopContents>
           <Title onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
