@@ -55,7 +55,6 @@ interface IProps {
 }
 
 const BasicContainer = ({ children, menuItem, notScroll, page, isWindowPopup, redirectURL }: IProps) => {
-  console.log(isWindowPopup);
   const isFullScreenMode = useReactiveVar(isFullScreenModeVar);
   const [seeSideMenu, setSeeSideMenu] = useState(false);
   const onClickBackground = () => {

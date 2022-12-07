@@ -3,7 +3,7 @@ import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { inPopup, isPopupVar } from "../apollo";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { SEE_ONE_STUDENT_LIST_QUERY } from "../Graphql/StudentList/query";
 import { customMedia } from "../styles";
 import { inputLine } from "../Animations/InputLine";
@@ -25,6 +25,7 @@ import NeedLoginPopupContainer from "../Components/Shared/NeedLoginPopupContaine
 import useMe from "../Hooks/useMe";
 import NoStudentMsg from "../Components/Shared/styled/NoStudentMsg";
 import routes from "../routes";
+import qs from "qs";
 
 // 전체 틀
 const Container = styled.div`
@@ -166,10 +167,12 @@ const ListName = styled.div``;
 const Order = () => {
   const titleUpdataer = useTitle("티처캔 | 순서정하기");
   const { id } = useParams();
+  const location = useLocation();
+  const { popup } = qs.parse(location.search, {
+    ignoreQueryPrefix: true,
+  });
   const isPopup = useReactiveVar(isPopupVar);
   const media = useMedia();
-
-  const { popup } = useParams();
 
   const componentRef = useRef(null);
 
@@ -229,10 +232,12 @@ const Order = () => {
       setSelectedStudent(
         data?.seeStudentList[0]?.students.filter((item) => !item.trash).map((item) => item.studentName),
       );
+      return;
     }
+    setStudentListName(undefined);
   }, [data]);
   return (
-    <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)} redirectURL={`${routes.order}/popup`}>
+    <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)} redirectURL={`${routes.order}?popup=popup`}>
       <Container seeResultType={seeResultType}>
         <TopContents>
           <Title onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
@@ -310,11 +315,15 @@ const Order = () => {
           ))
         )}
       </Container>
-      {isPopup === "seeStudentList" && <StudentList page="order" setIsShuffle={setIsShuffle} />}
+      {isPopup === "seeStudentList" && (
+        <StudentList page="order" setIsShuffle={setIsShuffle} isWindowPopup={Boolean(popup)} />
+      )}
       {isPopup === "print" && (
         <PrintOrderContents printRef={componentRef} title={title} selectedStudent={selectedStudent} />
       )}
-      {isPopup === "needLogin" && <NeedLoginPopupContainer />}
+      {isPopup === "needLogin" && (
+        <NeedLoginPopupContainer isWindowPopup={Boolean(popup)} redirectURL={`${routes.order}?popup=popup`} />
+      )}
       {isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
     </BasicContainer>
   );

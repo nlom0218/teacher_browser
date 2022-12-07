@@ -117,7 +117,9 @@ export const OrderLink = () => {
 
 export const PopupOrderLink = () => {
   const orderUrl =
-    process.env.NODE_ENV === "production" ? `https://teachercan.com/order/popup` : `http://localhost:3000/order/popup`;
+    process.env.NODE_ENV === "production"
+      ? `https://teachercan.com/order?popup=popup`
+      : `http://localhost:3000/order?popup=popup`;
   const windowFeatures = "left=100,top=100,width=1600,height=800, popup";
 
   const onClickNewWindow = () => {
