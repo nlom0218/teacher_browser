@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import PopupContainer from "../../Shared/PopupContainer";
-import { DetailTitle } from "../../List/styled/DetailStudent";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import TextareaAutosize from "react-textarea-autosize";
@@ -12,8 +11,7 @@ import { XMAS_MSG_QUERY } from "../../../Graphql/XmasTree/query";
 import { outPopup } from "../../../apollo";
 import { useNavigate } from "react-router-dom";
 import routes from "../../../routes";
-
-//수정뮤테이션이랑 생성뮤테이션이랑 동일하게 이 컴포넌트 사용해도 될까???
+import CardBackground from "./CardBackground";
 
 const FormContainer = styled.form`
   display: grid;
@@ -45,6 +43,8 @@ const FormContainer = styled.form`
 `;
 
 const TitleName = styled.div`
+  margin-top: 20px;
+  margin-top: 1.25rem;
   font-weight: 600;
 `;
 
@@ -58,7 +58,33 @@ const InputNick = styled.input`
   border-radius: 5px;
   border-radius: 0.3125rem;
 `;
-
+const CardBox = styled.div`
+  display: grid;
+  column-gap: 10px;
+  column-gap: 0.625rem;
+  grid-template-columns: repeat(8, 1fr);
+`;
+const SelectCard = styled.div`
+  padding: 1px;
+  padding: 0.0625rem;
+  width: 60px;
+  height: 60px;
+  background-color: white;
+  border: 1px solid;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  font-size: 1.25em;
+  font-size: 1.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  img {
+    width: 50px;
+    height: 50px;
+  }
+`;
 const Submit = styled.input`
   justify-self: center;
   background-color: ${(props) => props.theme.btnBgColor};
@@ -72,10 +98,13 @@ const Submit = styled.input`
   text-align: center;
   width: 100%;
   height: 40px;
+
   cursor: pointer;
 `;
 
-const InputWish = ({ me, nickname, pretext }) => {
+const InputWish = ({ me, pretext, viewMode }) => {
+  const nickname = me?.nickname;
+
   const [author, setAuthor] = useState(nickname);
   const [msg, setMsg] = useState(undefined);
   const [text, setText] = useState(pretext);
@@ -111,7 +140,7 @@ const InputWish = ({ me, nickname, pretext }) => {
 
   const [createXmasMsg, { loading }] = useMutation(CREATE_XMAS_MSG_MUTATION, {
     onCompleted,
-    refetchQueries: [{ query: XMAS_MSG_QUERY, variables: { userEmail: me?.email } }],
+    refetchQueries: [{ query: XMAS_MSG_QUERY, variables: { userEmail: viewMode === "my" ? me?.email : undefined } }],
   });
   if (loading) {
     return <Loading page="popupPage" />;
@@ -136,8 +165,19 @@ const InputWish = ({ me, nickname, pretext }) => {
             required: true,
           })}
           minRows={5}
+          maxRows={5}
           placeholder="(예)방학 동안 건강하게 푹 쉴 수 있도록 해 주세요."
         ></TextareaAutosize>
+        <TitleName>카드 배경 선택</TitleName>
+        <CardBox>
+          {CardBackground.map((item, index) => {
+            return (
+              <SelectCard item={item}>
+                <img src={item} alt="img" />
+              </SelectCard>
+            );
+          })}
+        </CardBox>
         <Submit type="submit" value="소원 저장" />
       </FormContainer>
       <AlertMessage msg={msg} time={3000} setMsg={setMsg} type="success" />

@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { inPopup, isPopupVar } from "../apollo";
+import { fullScreenMode, inPopup, isPopupVar } from "../apollo";
 import InputWish from "../Components/XmasTree/Popup/InputWish";
 import { useReactiveVar } from "@apollo/client";
 import useMe from "../Hooks/useMe";
 import { useNavigate } from "react-router-dom";
 import routes from "../routes";
 import Snowfall from "react-snowfall";
+import { useQuery } from "@apollo/client";
+import { XMAS_MSG_QUERY } from "../Graphql/XmasTree/query";
 
 const Container = styled.div`
   height: 100vh;
@@ -34,43 +36,46 @@ const Tree = styled.div`
     height: 100%;
     cursor: pointer;
   }
+  :hover {
+    transform: scale(1.01);
+  }
+  transform: ${(props) => props.isPage && "scale(1.3)"};
+  transition: transform 0.4s ease;
 `;
 
 const Cookie = styled.div`
   img {
-    width: 100%;
-    height: 100%;
+    width: 200%;
+    height: 200%;
     cursor: pointer;
   }
+  :hover {
+    transform: scale(1.01);
+  }
+  transform: ${(props) => props.isPage && "scale(1.3)"};
+  transition: transform 0.4s ease;
 `;
-const Right = styled.div``;
+const Right = styled.div`
+  display: flex;
+  justify-content: flex-start;
+`;
+const Center = styled.div``;
 const Left = styled.div``;
 
-const WishBox = styled.div`
-  img {
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
-  }
+const RandomWish = styled.div`
+  font-size: 1.5rem;
+  font-size: 1.5em;
+  background-color: white;
 `;
-const RandomWish = styled.div``;
-// const InputBtn = styled.div`
-//   background-color: ${(props) => props.theme.btnBgColor};
-//   color: ${(props) => props.theme.bgColor};
-//   transition: background-color 1s ease, color 1s ease;
-//   padding: 10px 20px;
-//   padding: 0.625rem 1.25rem;
-//   border-radius: 5px;
-//   border-radius: 0.3125rem;
-//   text-align: center;
-//   cursor: pointer;
-// `;
 const XmasTree = () => {
   // const titleUpdataer = useTitle("티처캔 | 소원나무 이벤트");
   const me = useMe();
   const nickname = me?.nickname;
   const isPopup = useReactiveVar(isPopupVar);
   const navigate = useNavigate();
+
+  const { data, loading } = useQuery(XMAS_MSG_QUERY);
+  const wishList = data?.xmasMsg;
 
   const onClickInputWish = () => {
     inPopup("inputWish");
@@ -79,7 +84,9 @@ const XmasTree = () => {
   const onClickTree = () => {
     navigate(routes.wishCard);
   };
-  useEffect(() => {}, []);
+  useEffect(() => {
+    fullScreenMode();
+  }, []);
 
   return (
     //홈으로 가기
@@ -87,21 +94,14 @@ const XmasTree = () => {
       <Snowfall color={"white"} snowflakeCount={280} />
       <XmasMain>
         <Left>
-          <Cookie>
+          <Cookie onClick={onClickInputWish}>
             <img
-              src="https://media.discordapp.net/attachments/1012001449854648480/1033703744728211476/5129be1287fd0add.png?width=1410&height=980"
+              src="https://media.discordapp.net/attachments/1012001449854648480/1049706680037941338/a5bdf54c28ac7180.png?width=1640&height=1140"
               alt="img"
             ></img>
           </Cookie>
-          <WishBox onClick={onClickInputWish}>
-            <img
-              src="https://media.discordapp.net/attachments/1012001449854648480/1033703930699448340/bdf028c6bc9be94b.png?width=1410&height=980"
-              alt="img"
-            ></img>
-            <RandomWish></RandomWish>
-          </WishBox>
         </Left>
-        <Right>
+        <Center>
           <Tree>
             <img
               src="https://media.discordapp.net/attachments/1012001449854648480/1047871422569136198/4f4c0c3051ef6af2.png?width=1118&height=1150"
@@ -109,8 +109,10 @@ const XmasTree = () => {
               onClick={onClickTree}
             ></img>
           </Tree>
+        </Center>
+        <Right>
+          <RandomWish>{}</RandomWish>
         </Right>
-        <Right></Right>
       </XmasMain>
 
       {isPopup === "inputWish" && <InputWish me={me} nickname={nickname} />}

@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { useMutation, useQuery } from "@apollo/client";
-import { UPDATE_XMAS_MSG_MUTATION } from "../../Graphql/XmasTree/mutation";
+import { useMutation } from "@apollo/client";
 import { DELETE_XMAS_MSG_MUTATION } from "../../Graphql/XmasTree/mutation";
 import { XMAS_MSG_QUERY } from "../../Graphql/XmasTree/query";
-import { ME_QUERY } from "../../Hooks/useMe";
 import { BsFillTrashFill } from "react-icons/bs";
-import { TiPencil } from "react-icons/ti";
+import CardBackground from "./Popup/CardBackground";
 
 const Container = styled.div`
   background-color: white;
+  opacity: 0.9;
   display: grid;
   grid-template-rows: auto 1fr auto;
   align-items: center;
+  border-radius: 20px;
+  border-radius: 1.25rem;
+  width: 30vw;
+  height: 30vh;
+  overflow: hidden;
 `;
 const Name = styled.div`
   padding: 10px;
@@ -20,19 +24,22 @@ const Name = styled.div`
   text-align: center;
   font-size: 1.25em;
   font-size: 1.25rem;
-  margin-bottom: 10px;
-  margin-bottom: 0.625rem;
+  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 `;
 const WishText = styled.div`
-  padding: 10px;
-  padding: 0.625rem;
-  margin-top: 10px;
-  margin-top: 0.625rem;
-  margin-bottom: 10px;
-  margin-bottom: 0.625rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  padding: 1.25rem;
   text-align: center;
   font-size: 1.25em;
   font-size: 1.25rem;
+  overflow: hidden;
+  width: 30vw;
+  height: 17vh;
+  line-height: 160%;
 `;
 const BtnBox = styled.div`
   display: grid;
@@ -53,82 +60,50 @@ const BtnOne = styled.div`
   font-size: 1em;
   font-size: 1rem;
   cursor: pointer;
+  :hover {
+    transform: scale(1.1);
+  }
 `;
 
-const WishCardBox = ({ item, me }) => {
-  console.log(item);
+const WishCardBox = ({ item, me, viewMode, refetch }) => {
   const [msgAuthor, setMsgAuthor] = useState(item.author);
   const [msgXmasText, setMsgXmasText] = useState(item.text);
 
-  const onClickUpdate = () => {};
+  const onClickDelBtn = () => {
+    deleteXmasMsg({
+      variables: {
+        userEmail: me?.email,
+        xmasMsgId: item._id,
+      },
+    });
+  };
 
-  // const onCompleted = (result) => {
-  //   const {
-  //     updateXmasMsg: { ok, error },
-  //   } = result;
-  //   if (!ok) {
-  //     window.alert(error);
-  //   } else {
-  //     window.alert("소원 내용이 수정되었습니다.");
-  //   }
-  // };
-  const deleteOnCompleted = (result) => {
+  const deleteonComplted = (result) => {
     const {
       deleteXmasMsg: { ok },
     } = result;
     if (ok) {
-      window.alert("지워짐");
-      // refetchQueries: [{ query: ME_QUERY }],
     }
   };
 
-  // const [updateXmasMsg, { loading: updateLoading }] = useMutation(UPDATE_XMAS_MSG_MUTATION, { onCompleted });
-  const [deleteXmasMsg, { loading: deleteLoading }] = useMutation(DELETE_XMAS_MSG_MUTATION, {
-    onCompleted: deleteOnCompleted,
-    refetchQueries: [{ query: XMAS_MSG_QUERY, variables: { userEmail: me?.email } }],
+  const [deleteXmasMsg] = useMutation(DELETE_XMAS_MSG_MUTATION, {
+    onComplted: deleteonComplted,
+    refetchQueries: [{ query: XMAS_MSG_QUERY, variables: { userEmail: viewMode === "my" ? me?.email : undefined } }],
   });
-  // const onSubmit = (data) => {
-  //   const { item } = data;
-  //   updateXmasMsg({
-  //     variables: {
-  //       userEmail,
-  //       xmasMsgId,
-  //       author,
-  //       text,
-  //     },
-  //   });
-  // };
-
-  const onClickDelBtn = () => {
-    if (window.confirm("정말 삭제하시겠습니까?")) {
-      deleteXmasMsg({
-        variables: {
-          userEmail: item.userEmail,
-          xmasMsgId: item._id,
-        },
-      });
-    } else {
-      return;
-    }
-  };
-  // useEffect(() => {
-  //   if (data) {
-  //     setMsgAuthor();
-  //     setMsgXmasText();
-  //   }
-  // }, [data]);
 
   return (
     <Container>
       <BtnBox>
-        <BtnOne>
-          <TiPencil onClick={onClickUpdate} />
-        </BtnOne>
-        <BtnOne>
-          <BsFillTrashFill onClick={onClickDelBtn} />
-        </BtnOne>
+        {me?.email === item?.userEmail ? (
+          <React.Fragment>
+            <BtnOne>
+              <BsFillTrashFill onClick={onClickDelBtn} />
+            </BtnOne>
+          </React.Fragment>
+        ) : null}
       </BtnBox>
-      <WishText>{msgXmasText}</WishText>
+
+      <WishText>{msgXmasText.length < 60 ? msgXmasText : msgXmasText.slice(0, 60) + "..."}</WishText>
       <Name>- {msgAuthor} -</Name>
     </Container>
   );

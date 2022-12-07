@@ -4,14 +4,21 @@ import useMe from "../Hooks/useMe";
 import { useMutation, useQuery } from "@apollo/client";
 import { XMAS_MSG_QUERY } from "../Graphql/XmasTree/query";
 import Snowfall from "react-snowfall";
-import Loading from "../Components/Shared/Loading";
-import { outPopup } from "../apollo";
-// import { useNavigate } from "react-router-dom";
-// import routes from "../../../routes";
 // import { UPDATE_XMAS_MSG_MUTATION } from "../../../Graphql/XmasTree/mutation";
-// import { DELETE_XMAS_MSG_MUTATION } from "../../../Graphql/XmasTree/mutation";
 import AlertMessage from "../Components/Shared/AlertMessage";
 import WishCardBox from "../Components/XmasTree/WishCardBox";
+import { TiHomeOutline } from "react-icons/ti";
+import { TiTree } from "react-icons/ti";
+import { MdGroups } from "react-icons/md";
+import { FiSmile } from "react-icons/fi";
+import { FaChevronRight } from "react-icons/fa";
+import { FaChevronLeft } from "react-icons/fa";
+import { TiPencil } from "react-icons/ti";
+import { fullScreenMode, inPopup, isPopupVar } from "../apollo";
+import routes from "../routes";
+import { useNavigate } from "react-router-dom";
+import InputWish from "../Components/XmasTree/Popup/InputWish";
+import { useReactiveVar } from "@apollo/client";
 
 const Container = styled.div`
   background: url(https://media.discordapp.net/attachments/1012001449854648480/1041329981969661982/c6f1be7663bdd36b.png?width=1410&height=793);
@@ -27,7 +34,7 @@ const Container = styled.div`
 const WishMain = styled.div`
   height: 100vh;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 1fr auto;
   row-gap: 20px;
   row-gap: 1.25rem;
   padding: 20px;
@@ -35,17 +42,53 @@ const WishMain = styled.div`
 `;
 
 const Check = styled.div`
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding: 10px;
+  padding: 0.625rem;
+  margin: 10px;
+  margin: 0.625rem;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+`;
+const Btn = styled.div`
   padding: 10px;
   padding: 0.625rem;
   background-color: white;
+  border: 1px solid;
+  border-radius: 10px;
+  border-radius: 0.625rem;
+  font-size: 1em;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  :hover {
+    transform: scale(1.1);
+  }
+  transform: ${(props) => props.isPage && "scale(1.3)"};
+  transition: transform 0.4s ease;
+`;
+const WishPage = styled.div`
+  display: grid;
+  grid-template-columns: 3fr 1fr 3fr;
+  padding: 10px 40px;
+  padding: 0.625rem 2.5rem;
   margin: 10px;
   margin: 0.625rem;
-  align-items: flex-end;
-  text-align: right;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+  font-size: 1.25em;
+  font-size: 1.25rem;
 `;
 const WishContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 1fr;
   align-items: stretch;
   column-gap: 20px;
   column-gap: 1.25rem;
@@ -54,64 +97,100 @@ const WishContainer = styled.div`
 `;
 
 const WishCard = () => {
-  // const titleUpdataer = useTitle("티처캔 | 소원나무 이벤트");
   const me = useMe();
-  const { data, loading } = useQuery(XMAS_MSG_QUERY);
+  const navigate = useNavigate();
+  const isPopup = useReactiveVar(isPopupVar);
+  const [viewMode, setViewMode] = useState("all");
+  const [viewList, setViewList] = useState(undefined);
+  const [pageNum, setPageNum] = useState(1);
 
-  const deleteonComplted = (result) => {
-    const {
-      deleteXmasMsg: { ok },
-    } = result;
-    if (ok) {
-      // setMsg("소원이 저장되었습니다. 😀");
-      outPopup();
-    }
-  };
-
-  // const [deleteXmasMsg, { loading: delloading }] = useMutation(DELETE_XMAS_MSG_MUTATION, {
-  //   onComplted: deleteonComplted,
-  //   refetchQueries: [{ query: XMAS_MSG_QUERY, variables: { userEmail: me?.email } }],
-  // });
-  // if (delloading) {
-  //   return <Loading page="popupPage" />;
-  // }
-
-  // const onClickDel = () => {
-  //   deleteXmasMsg({
-  //     variables: {
-  //       userEmail: me?.email,
-  //       xmasMsgId: xmasMsgId,
-  //     },
-  //   });
-  // };
+  const { data, loading, refetch } = useQuery(XMAS_MSG_QUERY, {
+    variables: {
+      userEmail: viewMode === "my" ? me?.email : undefined,
+      pageNumber: 1,
+    },
+  });
 
   useEffect(() => {
     if (data) {
-      const mylist = data?.xmasMsg.map((item, index) => {
-        return { author: item.author, text: item.text, id: item.id, userEmail: item.userEmail };
-      });
-      console.log(mylist);
+      setViewList(data?.xmasMsg);
     }
   }, [data]);
 
+  useEffect(() => {
+    fullScreenMode();
+  }, []);
+
+  const onClickHome = () => {
+    navigate(routes.home);
+  };
+  const onClickWishHome = () => {
+    navigate(routes.xmasTree);
+  };
+  const onClickNewWish = () => {
+    inPopup("inputWish");
+  };
+
+  const onClickMyWish = () => {
+    setViewMode("my");
+  };
+  const onClickAllWish = () => {
+    setViewMode("all");
+  };
+  const onClickPre = () => {
+    setPageNum(pageNum - 1);
+  };
+  const onClickNext = () => {
+    setPageNum(pageNum + 1);
+  };
+  console.log(viewList);
   return (
-    // 크리스마스 배경, 수정 삭제 아이콘 변경
     <Container>
       <Snowfall color={"white"} snowflakeCount={280} />
       <WishMain>
-        <Check>티처캔 홈으로, 이벤트 홈으로 나의 소원 / 전체보기 </Check>
+        <Check>
+          <Btn onClick={onClickHome}>
+            <TiHomeOutline />
+            티처캔 홈
+          </Btn>
+          <Btn onClick={onClickWishHome}>
+            <TiTree />
+            이벤트 홈
+          </Btn>
+          <Btn onClick={onClickNewWish}>
+            <TiPencil />
+            소원 쓰기
+          </Btn>
+          <Btn onClick={onClickMyWish}>
+            <FiSmile /> 나의 소원
+          </Btn>
+          <Btn onClick={onClickAllWish}>
+            <MdGroups />
+            전체 보기
+          </Btn>
+        </Check>
         <WishContainer>
-          {data?.xmasMsg.map((item, index) => (
-            // <WishCardBox>
-            //   <WishContext>{item.text}</WishContext>
-            //   <button>수정</button>
-            //   <button onClick={onClickDel}>삭제</button>
-            // </WishCardBox>
-            <WishCardBox item={item} me={me} />
-          ))}
+          {viewList &&
+            viewList.map((item, index) => (
+              <WishCardBox item={item} me={me} key={item._id} viewMode={viewMode} refetch={refetch} />
+            ))}
         </WishContainer>
+        <WishPage>
+          {pageNum > 1 ? (
+            <Btn onClick={onClickPre}>
+              <FaChevronLeft />
+            </Btn>
+          ) : (
+            <div></div>
+          )}
+          {pageNum}
+          <Btn onClick={onClickNext}>
+            <FaChevronRight />
+          </Btn>
+        </WishPage>
       </WishMain>
       <AlertMessage></AlertMessage>
+      {isPopup === "inputWish" && <InputWish me={me} viewMode={viewMode} />}
     </Container>
   );
 };
