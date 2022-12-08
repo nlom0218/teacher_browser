@@ -12,6 +12,7 @@ import { outPopup } from "../../../apollo";
 import { useNavigate } from "react-router-dom";
 import routes from "../../../routes";
 import CardBackground from "./CardBackground";
+import { bg } from "date-fns/locale";
 
 const FormContainer = styled.form`
   display: grid;
@@ -102,7 +103,7 @@ const Submit = styled.input`
   cursor: pointer;
 `;
 
-const InputWish = ({ me, pretext, viewMode }) => {
+const InputWish = ({ me, pretext, viewMode, setPageNum, refetch }) => {
   const nickname = me?.nickname;
 
   const [author, setAuthor] = useState(nickname);
@@ -123,6 +124,7 @@ const InputWish = ({ me, pretext, viewMode }) => {
         userEmail: me?.email,
         author: author,
         text: text,
+        // bg:bg,
       },
     });
   };
@@ -132,15 +134,19 @@ const InputWish = ({ me, pretext, viewMode }) => {
       createXmasMsg: { ok },
     } = result;
     if (ok) {
+      refetch({ userEmail: viewMode === "my" ? me?.email : undefined, PageNumber: 1 });
       setMsg("소원이 저장되었습니다. 😀");
       outPopup();
+      setPageNum(1);
       navigate(routes.wishCard);
     }
   };
 
   const [createXmasMsg, { loading }] = useMutation(CREATE_XMAS_MSG_MUTATION, {
     onCompleted,
-    refetchQueries: [{ query: XMAS_MSG_QUERY, variables: { userEmail: viewMode === "my" ? me?.email : undefined } }],
+    refetchQueries: [
+      { query: XMAS_MSG_QUERY, variables: { userEmail: viewMode === "my" ? me?.email : undefined, PageNumber: 1 } },
+    ],
   });
   if (loading) {
     return <Loading page="popupPage" />;

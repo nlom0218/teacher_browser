@@ -88,7 +88,12 @@ const WishCardBox = ({ item, me, viewMode, refetch }) => {
 
   const [deleteXmasMsg] = useMutation(DELETE_XMAS_MSG_MUTATION, {
     onComplted: deleteonComplted,
-    refetchQueries: [{ query: XMAS_MSG_QUERY, variables: { userEmail: viewMode === "my" ? me?.email : undefined } }],
+    refetchQueries: [
+      {
+        query: XMAS_MSG_QUERY,
+        variables: { userEmail: viewMode === "my" ? me?.email : undefined, pageNumber: 1 },
+      },
+    ],
   });
 
   return (

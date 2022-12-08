@@ -103,23 +103,33 @@ const WishCard = () => {
   const [viewMode, setViewMode] = useState("all");
   const [viewList, setViewList] = useState(undefined);
   const [pageNum, setPageNum] = useState(1);
+  const [lastPage, setLastPage] = useState(undefined);
 
   const { data, loading, refetch } = useQuery(XMAS_MSG_QUERY, {
+    fetchPolicy: "network-only",
     variables: {
       userEmail: viewMode === "my" ? me?.email : undefined,
-      pageNumber: 1,
+      pageNumber: pageNum,
     },
   });
 
   useEffect(() => {
     if (data) {
-      setViewList(data?.xmasMsg);
+      setViewList(data?.xmasMsg.msg);
+      const allPageA = parseInt(data?.xmasMsg.count / 6) + 1;
+      const plusOne = data?.xmasMsg.count % 6 > 0;
+      if (plusOne === true) {
+        setLastPage(allPageA + 1);
+      }
+      setLastPage(allPageA);
     }
   }, [data]);
 
   useEffect(() => {
     fullScreenMode();
   }, []);
+
+  console.log(lastPage);
 
   const onClickHome = () => {
     navigate(routes.home);
@@ -133,6 +143,7 @@ const WishCard = () => {
 
   const onClickMyWish = () => {
     setViewMode("my");
+    setPageNum(1);
   };
   const onClickAllWish = () => {
     setViewMode("all");
@@ -143,7 +154,6 @@ const WishCard = () => {
   const onClickNext = () => {
     setPageNum(pageNum + 1);
   };
-  console.log(viewList);
   return (
     <Container>
       <Snowfall color={"white"} snowflakeCount={280} />
@@ -184,13 +194,17 @@ const WishCard = () => {
             <div></div>
           )}
           {pageNum}
-          <Btn onClick={onClickNext}>
-            <FaChevronRight />
-          </Btn>
+          {pageNum === lastPage ? (
+            <div></div>
+          ) : (
+            <Btn onClick={onClickNext}>
+              <FaChevronRight />
+            </Btn>
+          )}
         </WishPage>
       </WishMain>
       <AlertMessage></AlertMessage>
-      {isPopup === "inputWish" && <InputWish me={me} viewMode={viewMode} />}
+      {isPopup === "inputWish" && <InputWish me={me} viewMode={viewMode} setPageNum={setPageNum} refetch={refetch} />}
     </Container>
   );
 };
