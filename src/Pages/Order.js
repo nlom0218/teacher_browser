@@ -228,7 +228,7 @@ const Order = () => {
   };
 
   useEffect(() => {
-    if (data) {
+    if (data && id !== "local") {
       setStudentListName(data?.seeStudentList[0]?.listName);
       //휴지통에 있는 학생은 filter로 거르기
       setSelectedStudent(
@@ -238,6 +238,14 @@ const Order = () => {
     }
     setStudentListName(undefined);
   }, [data]);
+
+  // console.log(selectedStudent);
+  console.log(data, id);
+
+  useEffect(() => {
+    if (id === "local") {
+    }
+  }, [id]);
   return (
     <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)} redirectURL={`${routes.order}?popup=popup`}>
       <Container seeResultType={seeResultType}>
@@ -274,7 +282,7 @@ const Order = () => {
             </div>
           </ListIcon>
         </TopContents>
-        {popup && !id && <SetStudentNumbers />}
+        {/* {popup && !me && !id && <SetStudentNumbers />} */}
         {loading ? (
           <Loading page="subPage" />
         ) : (
