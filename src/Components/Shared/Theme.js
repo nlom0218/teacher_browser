@@ -162,7 +162,6 @@ const Theme = ({ isWindowPopup, redirectURL }) => {
 
   const onClickLoginLogoutBtnInWindowPopup = () => {
     if (me) {
-      console.log(redirectURL, me);
       localStorage.removeItem("lmSetting");
       localStorage.removeItem("welcomeSection");
       navigate(redirectURL);

@@ -26,6 +26,7 @@ import useMe from "../Hooks/useMe";
 import NoStudentMsg from "../Components/Shared/styled/NoStudentMsg";
 import routes from "../routes";
 import qs from "qs";
+import SetStudentNumbers from "../Components/WindowPopup/SetStudentNumbers";
 
 // 전체 틀
 const Container = styled.div`
@@ -193,6 +194,7 @@ const Order = () => {
     mode: "onChange",
     defaultValues: { title: "순서 정하기 제목" },
   });
+
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: { listId: id },
     skip: !id,
@@ -272,6 +274,7 @@ const Order = () => {
             </div>
           </ListIcon>
         </TopContents>
+        {popup && !id && <SetStudentNumbers />}
         {loading ? (
           <Loading page="subPage" />
         ) : (
