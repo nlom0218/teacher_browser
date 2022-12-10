@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
 import { useQuery, useReactiveVar } from "@apollo/client";
-import { inPopup, isPopupVar } from "../apollo";
+import { getLocalNumbers, inPopup, isPopupVar, localNumbersVar } from "../apollo";
 import { useLocation, useParams } from "react-router-dom";
 import { SEE_ONE_STUDENT_LIST_QUERY } from "../Graphql/StudentList/query";
 import { customMedia } from "../styles";
@@ -239,13 +239,18 @@ const Order = () => {
     setStudentListName(undefined);
   }, [data]);
 
-  // console.log(selectedStudent);
-  console.log(data, id);
-
   useEffect(() => {
     if (id === "local") {
+      const localNumbers = getLocalNumbers();
+      const studentNames = [];
+      for (let i = 0; i < localNumbers; i++) {
+        studentNames.push(`${i + 1}번`);
+      }
+      setSelectedStudent(studentNames);
     }
   }, [id]);
+
+  console.log(selectedStudent);
   return (
     <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)} redirectURL={`${routes.order}?popup=popup`}>
       <Container seeResultType={seeResultType}>
@@ -282,7 +287,7 @@ const Order = () => {
             </div>
           </ListIcon>
         </TopContents>
-        {/* {popup && !me && !id && <SetStudentNumbers />} */}
+        {popup && !me && !id && <SetStudentNumbers />}
         {loading ? (
           <Loading page="subPage" />
         ) : (

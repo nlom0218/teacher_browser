@@ -127,14 +127,14 @@ export const removeLinkPickFolder = () => {
   linkPickFolderVar(undefined);
 };
 
-export const localNumbersVar = makeVar(localStorage.getItem("localNumbers"));
+export const getLocalNumbers = () => {
+  return localStorage.getItem("localNumbers");
+};
 export const setLocalNumbers = (numbers) => {
   localStorage.setItem("localNumbers", numbers);
-  localNumbersVar(numbers);
 };
 export const removeLocalNumbers = () => {
   localStorage.removeItem("localNumbers");
-  localNumbersVar(undefined);
 };
 
 const httpLink = createHttpLink({
