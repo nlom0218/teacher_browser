@@ -240,23 +240,35 @@ const Order = () => {
       );
       return;
     }
-    setStudentListName(undefined);
+
+    if (!data) {
+      setStudentListName(undefined);
+    }
   }, [data]);
 
   useEffect(() => {
+    const hasNumbers = hasLocalNumbers();
+    if (hasNumbers && popup) {
+      navigate(`${routes.order}/local?popup=popup`);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (id === "local" && popup) {
+      navigate(`/order/${me?.defaultStudentListId}?popup=popup`, {
+        replace: true,
+      });
+      return;
+    }
+
     if (id) return;
 
     if (me?.defaultStudentListId) {
-      navigate(`/order/${me?.defaultStudentListId}`, {
+      navigate(`/order/${me?.defaultStudentListId}${popup ? "?popup=popup" : ""}`, {
         replace: true,
       });
     }
   }, [me]);
-    const hasNumbers = hasLocalNumbers();
-    if (hasNumbers) {
-      navigate(`${routes.order}/local?popup=popup`);
-    }
-  }, []);
 
   useEffect(() => {
     if (id === "local") {

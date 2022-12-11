@@ -36,7 +36,7 @@ const StudentListItem = ({ item, setIsShuffle, page, isWindowPopup }) => {
     if (page === "journal") {
       navigate(`/${page}/list/${item.listId}`);
     } else {
-      navigate(`/${page}/${item.listId}${isWindowPopup && "?popup=popup"}`);
+      navigate(`/${page}/${item.listId}${isWindowPopup ? "?popup=popup" : ""}`);
     }
     outPopup();
   };

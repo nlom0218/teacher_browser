@@ -9,6 +9,7 @@ import {
   inPopup,
   isFullScreenModeVar,
   logOutUser,
+  removeLocalNumbers,
   smallScreenMode,
 } from "../../apollo";
 import { FaSun, FaMoon } from "react-icons/fa";

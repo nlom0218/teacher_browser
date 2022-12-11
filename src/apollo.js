@@ -51,11 +51,14 @@ export const isLoggedInVar = makeVar(Boolean(localStorage.getItem(TOKEN)));
 export const logInUser = (token) => {
   localStorage.setItem(TOKEN, token);
   isLoggedInVar(true);
+  removeLocalNumbers();
 };
 
 export const logOutUser = (callback) => {
   localStorage.removeItem(TOKEN);
   isLoggedInVar(false);
+
+  removeLocalNumbers();
 
   // 네이버 토근 삭제
   localStorage.removeItem("com.naver.nid.oauth.state_token");

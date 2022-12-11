@@ -2,7 +2,7 @@ import BasicContainer from "../Components/Shared/BasicContainer";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { getLocalNumbers, hasLocalNumbers, inPopup, isPopupVar } from "../apollo";
+import { getLocalNumbers, hasLocalNumbers, inPopup, isPopupVar, removeLocalNumbers } from "../apollo";
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { customMedia } from "../styles";
@@ -153,7 +153,7 @@ const Draw = () => {
   const titleUpdataer = useTitle("티처캔 | 랜덤뽑기");
 
   const navigate = useNavigate();
-  
+
   const { id } = useParams();
   const location = useLocation();
   const { popup } = qs.parse(location.search, {
@@ -223,14 +223,35 @@ const Draw = () => {
         data?.seeStudentList[0]?.students.filter((item) => !item.trash).map((item) => item.studentName),
       );
     }
+
+    if (!data) {
+      setStudentListName(undefined);
+    }
   }, [data]);
 
   useEffect(() => {
     const hasNumbers = hasLocalNumbers();
-    if (hasNumbers) {
+    if (hasNumbers && popup) {
       navigate(`${routes.draw}/local?popup=popup`);
     }
   }, []);
+
+  useEffect(() => {
+    if (id === "local" && popup) {
+      navigate(`/draw/${me?.defaultStudentListId}?popup=popup`, {
+        replace: true,
+      });
+      return;
+    }
+
+    if (id) return;
+
+    if (me?.defaultStudentListId) {
+      navigate(`/draw/${me?.defaultStudentListId}${popup ? "?popup=popup" : ""}`, {
+        replace: true,
+      });
+    }
+  }, [me]);
 
   useEffect(() => {
     if (id === "local") {
@@ -243,7 +264,6 @@ const Draw = () => {
       setIsShuffle("init");
     }
   }, [id]);
-
 
   return (
     <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)} redirectURL={`${routes.draw}?popup=popup`}>
