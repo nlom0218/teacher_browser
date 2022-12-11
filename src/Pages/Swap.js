@@ -205,6 +205,8 @@ const Swap = () => {
     skip: !id,
   });
 
+  console.log(data);
+
   const { register, handleSubmit, getValues } = useForm({
     mode: "onChange",
     defaultValues: { title: "자리바꾸기 제목" },
