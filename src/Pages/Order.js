@@ -244,6 +244,14 @@ const Order = () => {
   }, [data]);
 
   useEffect(() => {
+    if (id) return;
+
+    if (me?.defaultStudentListId) {
+      navigate(`/order/${me?.defaultStudentListId}`, {
+        replace: true,
+      });
+    }
+  }, [me]);
     const hasNumbers = hasLocalNumbers();
     if (hasNumbers) {
       navigate(`${routes.order}/local?popup=popup`);

@@ -153,6 +153,7 @@ const Draw = () => {
   const titleUpdataer = useTitle("티처캔 | 랜덤뽑기");
 
   const navigate = useNavigate();
+  
   const { id } = useParams();
   const location = useLocation();
   const { popup } = qs.parse(location.search, {
@@ -242,6 +243,7 @@ const Draw = () => {
       setIsShuffle("init");
     }
   }, [id]);
+
 
   return (
     <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)} redirectURL={`${routes.draw}?popup=popup`}>
