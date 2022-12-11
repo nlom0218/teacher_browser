@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
 import { useQuery, useReactiveVar } from "@apollo/client";
-import { getLocalNumbers, hasLocalNumbers, inPopup, isPopupVar, localNumbersVar } from "../apollo";
+import { getLocalNumbers, hasLocalNumbers, inPopup, isPopupVar } from "../apollo";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { SEE_ONE_STUDENT_LIST_QUERY } from "../Graphql/StudentList/query";
 import { customMedia } from "../styles";
@@ -28,7 +28,7 @@ import routes from "../routes";
 import qs from "qs";
 import SetStudentNumbers from "../Components/WindowPopup/SetStudentNumbers";
 import ResetStudentNumbers from "../Components/WindowPopup/ResetStudentNumbers";
-import PageInfo from "../Components/WindowPopup/pageInfo/LunchmenuPageInfo";
+import OrderPageInfo from "../Components/WindowPopup/pageInfo/OrderPageInfo";
 
 // 전체 틀
 const Container = styled.div`
@@ -353,7 +353,7 @@ const Order = () => {
       )}
       {isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
       {isPopup === "pageInfo" && (
-        <PageInfo isWindowPopup={Boolean(popup)} redirectURL={`${routes.order}/?popup=popup`} />
+        <OrderPageInfo isWindowPopup={Boolean(popup)} redirectURL={`${routes.order}/?popup=popup`} />
       )}
     </BasicContainer>
   );
