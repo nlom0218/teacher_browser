@@ -27,6 +27,7 @@ import NoStudentMsg from "../Components/Shared/styled/NoStudentMsg";
 import routes from "../routes";
 import qs from "qs";
 import SetStudentNumbers from "../Components/WindowPopup/SetStudentNumbers";
+import ResetStudentNumbers from "../Components/WindowPopup/ResetStudentNumbers";
 
 // 전체 틀
 const Container = styled.div`
@@ -296,6 +297,7 @@ const Order = () => {
           </ListIcon>
         </TopContents>
         {popup && !me && !id && <SetStudentNumbers />}
+        {popup && !me && id && <ResetStudentNumbers />}
         {loading ? (
           <Loading page="subPage" />
         ) : (
