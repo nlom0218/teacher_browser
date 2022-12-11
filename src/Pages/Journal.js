@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import TitleArea from "../Components/Journal/TitleArea";
 import MainArea from "../Components/Journal/MainArea";
@@ -36,6 +36,7 @@ const Container = styled.div`
 const Journal = ({ me }) => {
   const titleUpdataer = useTitle("티처캔 | 학급일지");
   const { type, id } = useParams();
+  const navigate = useNavigate();
 
   const isPopup = useReactiveVar(isPopupVar);
   const [studentListName, setStudentListName] = useState(undefined);
@@ -89,6 +90,16 @@ const Journal = ({ me }) => {
   useEffect(() => {
     refetch();
   }, [refetchQuery]);
+
+  useEffect(() => {
+    if (id) return;
+
+    if (me?.defaultStudentListId) {
+      navigate(`/journal/list/${me?.defaultStudentListId}`, {
+        replace: true,
+      });
+    }
+  }, [me]);
 
   return (
     <BasicContainer menuItem={true}>
