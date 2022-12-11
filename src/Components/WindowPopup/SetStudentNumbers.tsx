@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -60,7 +60,7 @@ const SetStudentNumbers = ({ page }: IProps) => {
 
   const [errorMsg, setErrorMsg] = useState<string | undefined>(undefined);
 
-  const { register, handleSubmit } = useForm<IForm>({
+  const { register, handleSubmit, setFocus } = useForm<IForm>({
     mode: "onChange",
   });
 
@@ -73,6 +73,10 @@ const SetStudentNumbers = ({ page }: IProps) => {
     navigate(`${page}/local?popup=popup`);
     setLocalNumbers(numbers);
   };
+
+  useEffect(() => {
+    setFocus("numbers");
+  }, []);
 
   return (
     <Container>
