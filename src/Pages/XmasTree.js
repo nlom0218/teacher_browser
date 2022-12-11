@@ -13,12 +13,18 @@ import NeedLoginPopupContainer from "../Components/Shared/NeedLoginPopupContaine
 import { TiHomeOutline } from "react-icons/ti";
 
 const Container = styled.div`
-  height: 100vh;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  min-height: 100%;
+  max-height: 100%;
   row-gap: 20px;
   row-gap: 1.25rem;
   padding: 20px;
   padding: 1.25rem;
-  background: url(https://media.discordapp.net/attachments/1012001449854648480/1041329981969661982/c6f1be7663bdd36b.png?width=1410&height=793);
+  background: url("https://media.discordapp.net/attachments/1012001449854648480/1041329981969661982/c6f1be7663bdd36b.png?width=1410&height=793");
   background-repeat: no-repeat;
   background-position: top center;
   background-size: cover;
@@ -28,7 +34,8 @@ const Container = styled.div`
 `;
 const XmasMain = styled.div`
   display: grid;
-  height: 98%;
+  min-height: 98%;
+  max-height: 98%;
   grid-template-columns: 1fr 2fr 1fr;
   align-items: flex-end;
 `;
