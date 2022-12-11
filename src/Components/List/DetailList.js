@@ -80,7 +80,7 @@ const ErrMsg = styled.div`
   transition: color 1s ease;
   font-weight: 600;
 `;
-const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
+const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging, userEmail, defaultStudentList }) => {
   const setExistStudentsInList = useSetRecoilState(existStudentsInListAtom);
 
   const isPopup = useReactiveVar(isPopupVar);
@@ -209,7 +209,12 @@ const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
 
   return (
     <Container>
-      <SetRepresentList />
+      <SetRepresentList
+        listId={listId}
+        userEmail={userEmail}
+        defaultStudentList={defaultStudentList}
+        setSuccessMsg={setSuccessMsg}
+      />
       <DetailNameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName}>
         <form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurName}>
           {chosenEmoji && <DetailEomjiIcon onClick={onClickEmojiBtn}>{chosenEmoji}</DetailEomjiIcon>}

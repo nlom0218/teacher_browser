@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import styled from "styled-components";
+import { SET_DEFAULT_STUDENT_LIST_ID } from "../../Graphql/User/mutation";
+import { ME_QUERY } from "../../Hooks/useMe";
 
 interface IIconProps {
   isRepresent: boolean;
@@ -30,12 +33,48 @@ const Message = styled.div`
   font-weight: 600;
 `;
 
-const SetRepresentList = () => {
-  const [isRepresent, setIsRepresent] = useState(true);
+interface IProps {
+  listId: string;
+  userEmail: string;
+  defaultStudentList: string;
+  setSuccessMsg: Dispatch<SetStateAction<string>>;
+}
+
+const SetRepresentList = ({ listId, userEmail, defaultStudentList, setSuccessMsg }: IProps) => {
+  const [isRepresent, setIsRepresent] = useState(listId === defaultStudentList);
+
+  const [setDefaultStudentListId] = useMutation(SET_DEFAULT_STUDENT_LIST_ID, {
+    refetchQueries: [{ query: ME_QUERY }],
+  });
 
   const onClickIcon = () => {
-    setIsRepresent((prev) => !prev);
+    if (isRepresent) return deleteDefaultStudentList();
+
+    setDefaultStudentListId({
+      variables: {
+        listId,
+        userEmail,
+      },
+    });
+
+    setSuccessMsg("대표 명렬표가 설정되었습니다.");
   };
+
+  const deleteDefaultStudentList = () => {
+    setDefaultStudentListId({
+      variables: {
+        listId: "",
+        userEmail,
+      },
+    });
+
+    setSuccessMsg("대표 명렬표가 해제되었습니다.");
+  };
+
+  useEffect(() => {
+    setIsRepresent(listId === defaultStudentList);
+  }, [defaultStudentList]);
+
   return (
     <Container>
       {isRepresent ? (

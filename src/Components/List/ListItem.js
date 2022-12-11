@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FcFolder, FcOpenedFolder } from "react-icons/fc";
 import styled from "styled-components";
 import { useDrag } from "react-dnd";
 import CenterDndContainer from "./Dorp/CenterDndContainer";
-import LeftDndContainer from "./Dorp/LeftDndContainer";
-import RightDndContainer from "./Dorp/RightDndContainer";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
 import { AiFillStar } from "react-icons/ai";
@@ -71,6 +69,7 @@ const ListItem = ({
   listIcon,
   setDragType,
   setErrorMsg,
+  defaultStudentListId,
 }) => {
   // 리스트 아이콘위에 마우스를 올려두면 아이콘을 바꾸기 위한 값
   const [mouseEnter, setMouseEnter] = useState(false);
@@ -127,16 +126,20 @@ const ListItem = ({
             {listIcon ? (
               <ListIcon>
                 {listIcon}
-                <Represent>
-                  <AiFillStar />
-                </Represent>
+                {listId === defaultStudentListId && (
+                  <Represent>
+                    <AiFillStar />
+                  </Represent>
+                )}
               </ListIcon>
             ) : (
               <ListIcon>
-                {mouseEnter ? <FcOpenedFolder /> : <FcFolder />}{" "}
-                <Represent>
-                  <AiFillStar />
-                </Represent>
+                {mouseEnter ? <FcOpenedFolder /> : <FcFolder />}
+                {listId === defaultStudentListId && (
+                  <Represent>
+                    <AiFillStar />
+                  </Represent>
+                )}
               </ListIcon>
             )}
             <ListName>{listName}</ListName>
