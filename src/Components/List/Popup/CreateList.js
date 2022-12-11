@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { FaRegCheckSquare, FaRegSquare } from "react-icons/fa";
 import styled from "styled-components";
 import { outPopup } from "../../../apollo";
 import { CREATE_STUDENT_LIST_MUTATION } from "../../../Graphql/StudentList/mutation";
@@ -48,6 +49,18 @@ const SubmitInput = styled.input`
   transition: opacity 0.6s ease;
 `;
 
+const RepresentMessage = styled.div`
+  grid-column: 1 / -1;
+  justify-self: flex-start;
+  display: flex;
+  cursor: pointer;
+`;
+
+const Icon = styled.div`
+  margin-left: 10px;
+  margin-left: 0.625rem;
+`;
+
 const ErrMsg = styled.div`
   grid-column: 1 / -1;
   color: ${(props) => props.theme.redColor};
@@ -56,6 +69,7 @@ const ErrMsg = styled.div`
 
 const CreateList = ({ setErrorMsg, setSuccessMsg }) => {
   const [errMsg, setErrMsg] = useState(undefined);
+  const [isRepresent, setIsRepresent] = useState(false);
   const me = useMe();
   const {
     register,
@@ -98,6 +112,8 @@ const CreateList = ({ setErrorMsg, setSuccessMsg }) => {
     });
   };
 
+  const onClickToggleRepresent = () => setIsRepresent((prev) => !prev);
+
   if (loading) {
     return <Loading page="subPage" />;
   }
@@ -117,6 +133,10 @@ const CreateList = ({ setErrorMsg, setSuccessMsg }) => {
           autoFocus
         />
         <SubmitInput type="submit" value="생성" />
+        <RepresentMessage onClick={onClickToggleRepresent}>
+          <div>대표 명렬표로 설정하시겠습니까?</div>
+          <Icon>{isRepresent ? <FaRegCheckSquare /> : <FaRegSquare />}</Icon>
+        </RepresentMessage>
         {errMsg && <ErrMsg>{errMsg}</ErrMsg>}
       </Form>
     </PopupContainer>

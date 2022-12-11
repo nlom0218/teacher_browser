@@ -44,7 +44,7 @@ const Btn = styled.div`
   cursor: pointer;
 `;
 
-const StudentList = ({ setIsShuffle, page }) => {
+const StudentList = ({ setIsShuffle, page, isWindowPopup }) => {
   const navigate = useNavigate();
 
   const { data, loading } = useQuery(SEE_ALL_STUDENT_LIST_QUERY);
@@ -69,7 +69,15 @@ const StudentList = ({ setIsShuffle, page }) => {
           </NoDataMsg>
         ) : (
           data?.seeStudentList.map((item, index) => {
-            return <StudentListItem key={index} item={item} setIsShuffle={setIsShuffle} page={page} />;
+            return (
+              <StudentListItem
+                key={index}
+                item={item}
+                setIsShuffle={setIsShuffle}
+                page={page}
+                isWindowPopup={isWindowPopup}
+              />
+            );
           })
         )}
       </Container>

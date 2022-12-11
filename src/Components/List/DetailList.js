@@ -22,6 +22,7 @@ import PrintList from "./PrintList";
 import PrintListContents from "./Popup/PrintListContents";
 import { useSetRecoilState } from "recoil";
 import { existStudentsInListAtom } from "../../atom";
+import SetRepresentList from "./SetRepresentList";
 
 const Container = styled.div`
   padding: 20px;
@@ -79,7 +80,7 @@ const ErrMsg = styled.div`
   transition: color 1s ease;
   font-weight: 600;
 `;
-const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
+const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging, userEmail, defaultStudentList }) => {
   const setExistStudentsInList = useSetRecoilState(existStudentsInListAtom);
 
   const isPopup = useReactiveVar(isPopupVar);
@@ -208,6 +209,12 @@ const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
 
   return (
     <Container>
+      <SetRepresentList
+        listId={listId}
+        userEmail={userEmail}
+        defaultStudentList={defaultStudentList}
+        setSuccessMsg={setSuccessMsg}
+      />
       <DetailNameContainer onMouseEnter={onMouseEnterName} onMouseLeave={onMouseLeaveName}>
         <form onSubmit={handleSubmit(onSubmit)} onBlur={onBlurName}>
           {chosenEmoji && <DetailEomjiIcon onClick={onClickEmojiBtn}>{chosenEmoji}</DetailEomjiIcon>}
@@ -224,7 +231,7 @@ const DetailList = ({ listId, setSuccessMsg, setErrorMsg, someDragging }) => {
               autoComplete="off"
               maxLength="10"
               onClick={onClickListName}
-            />{" "}
+            />
           </InputUnderLine>
           {!isEditName && media === "Desktop" && <PrintList />}
 

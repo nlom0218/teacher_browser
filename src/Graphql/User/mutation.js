@@ -214,3 +214,12 @@ export const MOVE_HOME_LINK_MUTATION = gql`
     }
   }
 `;
+
+export const SET_DEFAULT_STUDENT_LIST_ID = gql`
+  mutation SetDefaultStudentListId($listId: String!, $userEmail: String!) {
+    setDefaultStudentListId(listId: $listId, userEmail: $userEmail) {
+      ok
+      error
+    }
+  }
+`;

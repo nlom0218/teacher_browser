@@ -24,7 +24,7 @@ const ListIcon = styled.div`
 
 const ListName = styled.div``;
 
-const StudentListItem = ({ item, setIsShuffle, page }) => {
+const StudentListItem = ({ item, setIsShuffle, page, isWindowPopup }) => {
   const navigate = useNavigate();
   const [isEnterIcon, setIsEnterIcon] = useState(false);
   const onMouseEnterIcon = () => setIsEnterIcon(true);
@@ -36,7 +36,7 @@ const StudentListItem = ({ item, setIsShuffle, page }) => {
     if (page === "journal") {
       navigate(`/${page}/list/${item.listId}`);
     } else {
-      navigate(`/${page}/${item.listId}`);
+      navigate(`/${page}/${item.listId}${isWindowPopup && "?popup=popup"}`);
     }
     outPopup();
   };
