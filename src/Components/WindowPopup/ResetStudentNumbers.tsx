@@ -1,4 +1,7 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { removeLocalNumbers } from "../../apollo";
+import routes from "../../routes";
 
 const Container = styled.div`
   position: fixed;
@@ -20,7 +23,14 @@ const Container = styled.div`
 `;
 
 const ResetStudentNumbers = () => {
-  return <Container>학생 수 초기화</Container>;
+  const navigate = useNavigate();
+
+  const onClickReset = () => {
+    removeLocalNumbers();
+    navigate(`${routes.order}?popup=popup`);
+  };
+
+  return <Container onClick={onClickReset}>학생 수 초기화</Container>;
 };
 
 export default ResetStudentNumbers;
