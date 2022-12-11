@@ -128,8 +128,8 @@ const Body = styled.div`
   }
 `;
 
-const Qrresult = ({ isWindowPopup }) => {
-  const { me, url, id } = useContext(QrcodeUrlContext);
+const Qrresult = () => {
+  const { me, url, urlIndex } = useContext(QrcodeUrlContext);
   const navigate = useNavigate();
   const isPopup = useReactiveVar(isPopupVar);
 
@@ -147,11 +147,7 @@ const Qrresult = ({ isWindowPopup }) => {
   };
   // 생성 페이지로 이동, url값 초기화
   const onClickMake = () => {
-    if (isWindowPopup) {
-      navigate(`${routes.qrcode}/popup`);
-    } else {
-      navigate(routes.qrcode);
-    }
+    navigate(routes.qrcode);
     localStorage.removeItem("url");
   };
   //보관함에 저장 전 title입력창
@@ -164,12 +160,11 @@ const Qrresult = ({ isWindowPopup }) => {
   };
   //보관함으로 이동
   const onClickMyStorage = () => {
-    if (!me) return inPopup("needLogin");
-    localStorage.removeItem("url");
-    if (isWindowPopup) {
-      navigate(`${routes.qrcodeStorage}/popup`);
-    } else {
+    if (me) {
       navigate(routes.qrcodeStorage);
+      localStorage.removeItem("url");
+    } else {
+      inPopup("needLogin");
     }
   };
   //인쇄하기 화면으로 이동 - 여기서는 qr이미지만 보내서 출력하고 그 화면에서 제목 정도는 입력할 수 있도록 함.
@@ -205,18 +200,16 @@ const Qrresult = ({ isWindowPopup }) => {
               <Btn>내 컴퓨터에 저장</Btn>
             </a>
           ) : null}
-          {id === "any" && <Btn onClick={onClickRegister}> 보관함에 저장 </Btn>}
+          {urlIndex ? null : <Btn onClick={onClickRegister}> 보관함에 저장 </Btn>}
 
           <Btn onClick={onClickMake}>새 QR코드</Btn>
         </BtnSpace>
       </Main>
       {/* 팝업에 이메일주소도 넘기기  */}
-      {isPopup === "registerQR" && <Qrname isWindowPopup={isWindowPopup} />}
+      {isPopup === "registerQR" && <Qrname />}
       {isPopup === "print" && <QrPrintMain printRef={componentRef} imageUrl={imageUrl} />}
       {/* 로그인 안내 */}
-      {isPopup === "needLogin" && (
-        <NeedLoginPopupContainer isWindowPopup={isWindowPopup} redirectURL={`${routes.qrcode}/popup`} />
-      )}
+      {isPopup === "needLogin" && <NeedLoginPopupContainer />}
     </Container>
   );
 };

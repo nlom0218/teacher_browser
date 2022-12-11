@@ -6,6 +6,7 @@ import LogoText from "../../image/LogoText.png";
 import { customMedia } from "../../styles";
 import { ToLeft, ToRight } from "../../Animations/MenuBtn";
 import { FcAdvertising, FcHome } from "react-icons/fc";
+import { TiTree } from "react-icons/ti";
 
 const Container = styled.div`
   display: grid;
@@ -109,6 +110,32 @@ const HomeBtnBackground = styled.div`
   transform: ${(props) => (props.typeAniInit && props.welcomePage === "home" ? "translateX(0%)" : "translateX(100%)")};
 `;
 
+const Event = styled.div`
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 10px;
+  column-gap: 0.625rem;
+  align-items: center;
+  svg {
+    font-size: 2em;
+    font-size: 2rem;
+    color: ${(props) => props.theme.redColor};
+  }
+  transition: color 1s ease;
+  cursor: pointer;
+`;
+const Contents = styled.div`
+  display: grid;
+  justify-items: flex-end;
+`;
+const ThemeTitle = styled.div`
+  color: ${(props) => props.theme.redColor};
+  font-weight: 700;
+`;
+const ThemeSubject = styled.div`
+  color: ${(props) => props.theme.cardHoverBg};
+`;
+
 const TopContents = ({ me, welcomePage, setWelComPage }) => {
   const [typeAniInit, setTypeAniInit] = useState(true);
   const onClickHomeBtn = () => {
@@ -152,6 +179,17 @@ const TopContents = ({ me, welcomePage, setWelComPage }) => {
             )}
           </HomeBtnBackground>
         </HomeBtn>
+        <Link to={routes.xmasTree}>
+          <Event>
+            <Contents>
+              <ThemeTitle>크리스마스</ThemeTitle>
+              <ThemeSubject>소원 나무 이벤트</ThemeSubject>
+            </Contents>
+            <div>
+              <TiTree />
+            </div>
+          </Event>
+        </Link>
       </LeftContainer>
     </Container>
   );

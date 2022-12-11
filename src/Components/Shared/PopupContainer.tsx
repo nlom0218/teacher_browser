@@ -18,6 +18,7 @@ const Background = styled.div`
 interface IStyled {
   maxHeight?: boolean;
   emojiPopup?: boolean;
+  bg?: string;
 }
 
 const SRegisterContainer = styled.div<IStyled>`
@@ -56,6 +57,9 @@ const RegisterPage = styled.div<IStyled>`
   row-gap: 10px;
   row-gap: 1.25rem;
   background-color: ${(props) => props.theme.bgColor};
+  background: ${(props) => (props.bg ? `url(${props.bg})}` : props.theme.bgColor)};
+  background-size: cover;
+  background-repeat: no-repeat;
   transition: background-color 1s ease;
   border-radius: 5px;
   border-radius: 0.3125rem;
@@ -68,10 +72,12 @@ const RegisterPage = styled.div<IStyled>`
   .active-category-indicator-wrapper {
     display: none;
   }
-  ${({ emojiPopup }) => customMedia.greaterThan(`tablet`)`
+  ${({ emojiPopup, bg }) => customMedia.greaterThan(`tablet`)`
     padding: 10px 30px;
     padding: 0.625rem 1.875rem;
     padding: ${emojiPopup && 0};
+    padding: ${bg && "20px"};
+    padding: ${bg && "1.25rem"};
   `}
 `;
 
@@ -133,9 +139,10 @@ interface IProps {
   sound1?: HTMLAudioElement;
   sound2?: HTMLAudioElement;
   needAlert?: boolean;
+  bg?: string;
 }
 
-const PopupContainer = ({ children, emojiPopup, maxHeight, sound1, sound2, needAlert }: IProps) => {
+const PopupContainer = ({ children, emojiPopup, maxHeight, sound1, sound2, needAlert, bg }: IProps) => {
   const [alertPopup, setAlertPoup] = useState(false);
 
   const processOutPopup = () => {
@@ -197,7 +204,7 @@ const PopupContainer = ({ children, emojiPopup, maxHeight, sound1, sound2, needA
           <OutBtn onClick={onClickBackground}>
             <IoCloseOutline />
           </OutBtn>
-          <RegisterPage emojiPopup={emojiPopup} maxHeight={maxHeight}>
+          <RegisterPage bg={bg} emojiPopup={emojiPopup} maxHeight={maxHeight}>
             {children}
           </RegisterPage>
         </SRegisterContainer>
