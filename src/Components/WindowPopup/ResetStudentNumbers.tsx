@@ -22,12 +22,16 @@ const Container = styled.div`
   cursor: pointer;
 `;
 
-const ResetStudentNumbers = () => {
+interface IProps {
+  page: string;
+}
+
+const ResetStudentNumbers = ({ page }: IProps) => {
   const navigate = useNavigate();
 
   const onClickReset = () => {
     removeLocalNumbers();
-    navigate(`${routes.order}?popup=popup`);
+    navigate(`${page}?popup=popup`);
   };
 
   return <Container onClick={onClickReset}>학생 수 초기화</Container>;

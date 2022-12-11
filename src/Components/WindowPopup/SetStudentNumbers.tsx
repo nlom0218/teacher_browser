@@ -51,7 +51,11 @@ interface IForm {
   numbers: number;
 }
 
-const SetStudentNumbers = () => {
+interface IProps {
+  page: string;
+}
+
+const SetStudentNumbers = ({ page }: IProps) => {
   const navigate = useNavigate();
 
   const [errorMsg, setErrorMsg] = useState<string | undefined>(undefined);
@@ -66,7 +70,7 @@ const SetStudentNumbers = () => {
       return;
     }
 
-    navigate(`${routes.order}/local?popup=popup`);
+    navigate(`${page}/local?popup=popup`);
     setLocalNumbers(numbers);
   };
 

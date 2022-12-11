@@ -296,8 +296,8 @@ const Order = () => {
             </div>
           </ListIcon>
         </TopContents>
-        {popup && !me && !id && <SetStudentNumbers />}
-        {popup && !me && id && <ResetStudentNumbers />}
+        {popup && !me && !id && <SetStudentNumbers page={routes.order} />}
+        {popup && !me && id && <ResetStudentNumbers page={routes.order} />}
         {loading ? (
           <Loading page="subPage" />
         ) : (
