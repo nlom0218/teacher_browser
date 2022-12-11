@@ -27,6 +27,7 @@ import IcQrcode from "../../icons/Qrcod/IcQrcode";
 import IcQrcodeClick from "../../icons/Qrcod/IcQrcodeClick";
 import IcBookMark from "../../icons/Bookmark/IcBookMark";
 import IcBookMarkClick from "../../icons/Bookmark/IcBookMarkClick";
+import { TiTree } from "react-icons/ti";
 
 const SMenu = styled.div`
   display: grid;
@@ -280,6 +281,21 @@ export const HeaderBookMark = () => {
       <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <IcBookMarkClick /> : <IcBookMark />}
         <Title>링크페이지</Title>
+      </SMenu>
+    </Link>
+  );
+};
+
+export const XmasTree = () => {
+  const [isHover, setIsHover] = useState(false);
+  const onClickListLink = () => {
+    movePageLink();
+  };
+  return (
+    <Link to={routes.xmasTree} onClick={onClickListLink}>
+      <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+        {isHover ? <TiTree /> : <TiTree />}
+        <Title>소원나무</Title>
       </SMenu>
     </Link>
   );
