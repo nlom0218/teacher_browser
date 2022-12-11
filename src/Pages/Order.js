@@ -28,7 +28,7 @@ import routes from "../routes";
 import qs from "qs";
 import SetStudentNumbers from "../Components/WindowPopup/SetStudentNumbers";
 import ResetStudentNumbers from "../Components/WindowPopup/ResetStudentNumbers";
-import OrderPageInfo from "../Components/WindowPopup/pageInfo/OrderPageInfo";
+import StudentListPageInfo from "../Components/WindowPopup/pageInfo/StudentListPageInfo";
 
 // 전체 틀
 const Container = styled.div`
@@ -244,6 +244,14 @@ const Order = () => {
   }, [data]);
 
   useEffect(() => {
+    if (id) return;
+
+    if (me?.defaultStudentListId) {
+      navigate(`/order/${me?.defaultStudentListId}`, {
+        replace: true,
+      });
+    }
+  }, [me]);
     const hasNumbers = hasLocalNumbers();
     if (hasNumbers) {
       navigate(`${routes.order}/local?popup=popup`);
@@ -353,7 +361,7 @@ const Order = () => {
       )}
       {isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
       {isPopup === "pageInfo" && (
-        <OrderPageInfo isWindowPopup={Boolean(popup)} redirectURL={`${routes.order}/?popup=popup`} />
+        <StudentListPageInfo isWindowPopup={Boolean(popup)} redirectURL={`${routes.order}/?popup=popup`} />
       )}
     </BasicContainer>
   );

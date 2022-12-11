@@ -91,6 +91,25 @@ export const DrawLink = () => {
   );
 };
 
+export const PopupDrawLink = () => {
+  const drawUrl =
+    process.env.NODE_ENV === "production"
+      ? `https://teachercan.com/draw?popup=popup`
+      : `http://localhost:3000/draw?popup=popup`;
+  const windowFeatures = "left=100,top=100,width=1600,height=800, popup";
+
+  const onClickNewWindow = () => {
+    window.open(drawUrl, "draw", windowFeatures);
+  };
+  const [isHover, setIsHover] = useState(false);
+  return (
+    <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)} onClick={onClickNewWindow}>
+      {isHover ? <IcRandomClick /> : <IcRandom />}
+      <Title>랜덤뽑기</Title>
+    </SMenu>
+  );
+};
+
 export const SwapLink = () => {
   const [isHover, setIsHover] = useState(false);
   return (
@@ -123,7 +142,7 @@ export const PopupOrderLink = () => {
   const windowFeatures = "left=100,top=100,width=1600,height=800, popup";
 
   const onClickNewWindow = () => {
-    window.open(orderUrl, "timer", windowFeatures);
+    window.open(orderUrl, "order", windowFeatures);
   };
   const [isHover, setIsHover] = useState(false);
   return (
@@ -154,7 +173,7 @@ export const PopupLunchmenuLink = () => {
   const windowFeatures = "left=100,top=100,width=1600,height=800, popup";
 
   const onClickNewWindow = () => {
-    window.open(lunchmenuUrl, "timer", windowFeatures);
+    window.open(lunchmenuUrl, "lunchmenu", windowFeatures);
   };
   const [isHover, setIsHover] = useState(false);
   return (
