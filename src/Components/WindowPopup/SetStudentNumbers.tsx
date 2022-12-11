@@ -70,8 +70,6 @@ const SetStudentNumbers = () => {
     setLocalNumbers(numbers);
   };
 
-  console.log(errorMsg);
-
   return (
     <Container>
       <div>학생 수를 입력하세요.</div>

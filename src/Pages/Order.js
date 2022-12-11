@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
 import { useQuery, useReactiveVar } from "@apollo/client";
-import { getLocalNumbers, inPopup, isPopupVar, localNumbersVar } from "../apollo";
-import { useLocation, useParams } from "react-router-dom";
+import { getLocalNumbers, hasLocalNumbers, inPopup, isPopupVar, localNumbersVar } from "../apollo";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { SEE_ONE_STUDENT_LIST_QUERY } from "../Graphql/StudentList/query";
 import { customMedia } from "../styles";
 import { inputLine } from "../Animations/InputLine";
@@ -167,6 +167,8 @@ const ListName = styled.div``;
 
 const Order = () => {
   const titleUpdataer = useTitle("티처캔 | 순서정하기");
+
+  const navigate = useNavigate();
   const { id } = useParams();
   const location = useLocation();
   const { popup } = qs.parse(location.search, {
@@ -240,6 +242,13 @@ const Order = () => {
   }, [data]);
 
   useEffect(() => {
+    const hasNumbers = hasLocalNumbers();
+    if (hasNumbers) {
+      navigate(`${routes.order}/local?popup=popup`);
+    }
+  }, []);
+
+  useEffect(() => {
     if (id === "local") {
       const localNumbers = getLocalNumbers();
       const studentNames = [];
@@ -250,7 +259,6 @@ const Order = () => {
     }
   }, [id]);
 
-  console.log(selectedStudent);
   return (
     <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)} redirectURL={`${routes.order}?popup=popup`}>
       <Container seeResultType={seeResultType}>

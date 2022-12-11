@@ -136,6 +136,9 @@ export const setLocalNumbers = (numbers) => {
 export const removeLocalNumbers = () => {
   localStorage.removeItem("localNumbers");
 };
+export const hasLocalNumbers = () => {
+  return Boolean(localStorage.getItem("localNumbers"));
+};
 
 const httpLink = createHttpLink({
   uri:
