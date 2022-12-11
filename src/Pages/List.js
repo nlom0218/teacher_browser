@@ -158,6 +158,8 @@ const List = () => {
           {type === "detail" && (
             <DetailList
               listId={id}
+              userEmail={me?.email}
+              defaultStudentList={me?.defaultStudentListId}
               someDragging={someDragging}
               setSuccessMsg={setSuccessMsg}
               setErrorMsg={setErrorMsg}

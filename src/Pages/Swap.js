@@ -10,7 +10,7 @@ import IcNameTable from "../icons/NameTable/IcNameTable";
 import { inPopup, isPopupVar } from "../apollo";
 import { useQuery, useReactiveVar } from "@apollo/client";
 import { SEE_ONE_STUDENT_LIST_QUERY } from "../Graphql/StudentList/query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import StudentOrder from "../Components/Swap/StudentOrder";
 import Shuffling from "../Components/Swap/Popup/Shuffling";
 import StudentNumber from "../Components/Swap/Popup/StudentNumber";
@@ -172,6 +172,8 @@ const DetailSetting = styled.div`
 const Swap = () => {
   const titleUpdataer = useTitle("티처캔 | 자리바꾸기");
 
+  const navigate = useNavigate();
+
   const { id } = useParams();
   const media = useMedia();
 
@@ -202,6 +204,8 @@ const Swap = () => {
     },
     skip: !id,
   });
+
+  console.log(data);
 
   const { register, handleSubmit, getValues } = useForm({
     mode: "onChange",
@@ -272,6 +276,16 @@ const Swap = () => {
       setSelectedStudent(newSelectedStudent);
     }
   }, [sort]);
+
+  useEffect(() => {
+    if (id) return;
+
+    if (me?.defaultStudentListId) {
+      navigate(`/swap/${me?.defaultStudentListId}`, {
+        replace: true,
+      });
+    }
+  }, [me]);
 
   return (
     <BasicContainer menuItem={true}>

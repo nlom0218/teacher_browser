@@ -7,7 +7,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { RiContactsBook2Fill } from "react-icons/ri";
 import { useReactiveVar } from "@apollo/client";
 import { isPopupVar } from "../apollo";
-import PageInfo from "../Components/Qrcode/Popup/PageInfo";
+import PageInfo from "../Components/WindowPopup/pageInfo/QrCodePageInfo";
 import routes from "../routes";
 
 const QrcodeResult = () => {

@@ -1,7 +1,7 @@
-import Container from "../../Shared/pageInfo/Container";
-import Notion from "../../Shared/pageInfo/Notion";
-import PageInfoBtn from "../../Shared/pageInfo/PageInfoBtn";
-import Text from "../../Shared/pageInfo/Text";
+import Container from "../pageInfoStyled/Container";
+import Notion from "../pageInfoStyled/Notion";
+import PageInfoBtn from "../pageInfoStyled/PageInfoBtn";
+import Text from "../pageInfoStyled/Text";
 import PopupContainer from "../../Shared/PopupContainer";
 
 interface IProps {

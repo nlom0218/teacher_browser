@@ -51,11 +51,14 @@ export const isLoggedInVar = makeVar(Boolean(localStorage.getItem(TOKEN)));
 export const logInUser = (token) => {
   localStorage.setItem(TOKEN, token);
   isLoggedInVar(true);
+  removeLocalNumbers();
 };
 
 export const logOutUser = (callback) => {
   localStorage.removeItem(TOKEN);
   isLoggedInVar(false);
+
+  removeLocalNumbers();
 
   // 네이버 토근 삭제
   localStorage.removeItem("com.naver.nid.oauth.state_token");
@@ -127,11 +130,22 @@ export const removeLinkPickFolder = () => {
   linkPickFolderVar(undefined);
 };
 
+export const getLocalNumbers = () => {
+  return localStorage.getItem("localNumbers");
+};
+export const setLocalNumbers = (numbers) => {
+  localStorage.setItem("localNumbers", numbers);
+};
+export const removeLocalNumbers = () => {
+  localStorage.removeItem("localNumbers");
+};
+export const hasLocalNumbers = () => {
+  return Boolean(localStorage.getItem("localNumbers"));
+};
+
 const httpLink = createHttpLink({
   uri:
-    process.env.NODE_ENV === "production"
-      ? "https://teachercan.herokuapp.com/graphql"
-      : process.env.REACT_APP_AMAZON_EC2,
+    process.env.NODE_ENV === "production" ? "https://teachercan.herokuapp.com/graphql" : "https://api.teachercan.com",
 });
 
 const authLink = setContext((_, { headers }) => {

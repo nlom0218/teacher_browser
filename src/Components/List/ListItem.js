@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FcFolder, FcOpenedFolder } from "react-icons/fc";
 import styled from "styled-components";
 import { useDrag } from "react-dnd";
 import CenterDndContainer from "./Dorp/CenterDndContainer";
-import LeftDndContainer from "./Dorp/LeftDndContainer";
-import RightDndContainer from "./Dorp/RightDndContainer";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
+import { AiFillStar } from "react-icons/ai";
 
 const DndContainer = styled.div`
   display: grid;
@@ -32,9 +31,22 @@ const Container = styled.div`
 const ListIcon = styled.div`
   font-size: 2.5em;
   font-size: 2.5rem;
+  position: relative;
   svg {
     display: flex;
   }
+`;
+
+const Represent = styled.div`
+  position: absolute;
+  font-size: 1.25em;
+  font-size: 1.25rem;
+  top: -1em;
+  top: -1rem;
+  left: -1em;
+  left: -1rem;
+  color: ${(props) => props.theme.redColor};
+  transition: color 1s ease;
 `;
 
 const ListName = styled.div`
@@ -57,6 +69,7 @@ const ListItem = ({
   listIcon,
   setDragType,
   setErrorMsg,
+  defaultStudentListId,
 }) => {
   // 리스트 아이콘위에 마우스를 올려두면 아이콘을 바꾸기 위한 값
   const [mouseEnter, setMouseEnter] = useState(false);
@@ -111,9 +124,23 @@ const ListItem = ({
         <Container onMouseEnter={onMouseEnterList} onMouseLeave={onMouseLeaveList} ref={drag}>
           <Link to={`${routes.list}/detail/${listId}`}>
             {listIcon ? (
-              <ListIcon>{listIcon}</ListIcon>
+              <ListIcon>
+                {listIcon}
+                {listId === defaultStudentListId && (
+                  <Represent>
+                    <AiFillStar />
+                  </Represent>
+                )}
+              </ListIcon>
             ) : (
-              <ListIcon>{mouseEnter ? <FcOpenedFolder /> : <FcFolder />}</ListIcon>
+              <ListIcon>
+                {mouseEnter ? <FcOpenedFolder /> : <FcFolder />}
+                {listId === defaultStudentListId && (
+                  <Represent>
+                    <AiFillStar />
+                  </Represent>
+                )}
+              </ListIcon>
             )}
             <ListName>{listName}</ListName>
           </Link>

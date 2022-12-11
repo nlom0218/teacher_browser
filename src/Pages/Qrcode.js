@@ -5,7 +5,7 @@ import Qrcodemake from "../Components/Qrcode/Qrmake"; //생성화면
 import useMe from "../Hooks/useMe";
 import { useParams } from "react-router-dom";
 import { isPopupVar } from "../apollo";
-import PageInfo from "../Components/Qrcode/Popup/PageInfo";
+import PageInfo from "../Components/WindowPopup/pageInfo/QrCodePageInfo";
 import { useReactiveVar } from "@apollo/client";
 import routes from "../routes";
 

@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import styled from "styled-components";
 import { useQuery, useReactiveVar } from "@apollo/client";
-import { inPopup, isPopupVar } from "../apollo";
-import { useParams } from "react-router-dom";
+import { getLocalNumbers, hasLocalNumbers, inPopup, isPopupVar } from "../apollo";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { SEE_ONE_STUDENT_LIST_QUERY } from "../Graphql/StudentList/query";
 import { customMedia } from "../styles";
 import { inputLine } from "../Animations/InputLine";
@@ -24,6 +24,11 @@ import Loading from "../Components/Shared/Loading";
 import NeedLoginPopupContainer from "../Components/Shared/NeedLoginPopupContainer";
 import useMe from "../Hooks/useMe";
 import NoStudentMsg from "../Components/Shared/styled/NoStudentMsg";
+import routes from "../routes";
+import qs from "qs";
+import SetStudentNumbers from "../Components/WindowPopup/SetStudentNumbers";
+import ResetStudentNumbers from "../Components/WindowPopup/ResetStudentNumbers";
+import StudentListPageInfo from "../Components/WindowPopup/pageInfo/StudentListPageInfo";
 
 // 전체 틀
 const Container = styled.div`
@@ -164,7 +169,13 @@ const ListName = styled.div``;
 
 const Order = () => {
   const titleUpdataer = useTitle("티처캔 | 순서정하기");
+
+  const navigate = useNavigate();
   const { id } = useParams();
+  const location = useLocation();
+  const { popup } = qs.parse(location.search, {
+    ignoreQueryPrefix: true,
+  });
   const isPopup = useReactiveVar(isPopupVar);
   const media = useMedia();
 
@@ -187,6 +198,7 @@ const Order = () => {
     mode: "onChange",
     defaultValues: { title: "순서 정하기 제목" },
   });
+
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: { listId: id },
     skip: !id,
@@ -220,16 +232,57 @@ const Order = () => {
   };
 
   useEffect(() => {
-    if (data) {
+    if (data && id !== "local") {
       setStudentListName(data?.seeStudentList[0]?.listName);
       //휴지통에 있는 학생은 filter로 거르기
       setSelectedStudent(
         data?.seeStudentList[0]?.students.filter((item) => !item.trash).map((item) => item.studentName),
       );
+      return;
+    }
+
+    if (!data) {
+      setStudentListName(undefined);
     }
   }, [data]);
+
+  useEffect(() => {
+    const hasNumbers = hasLocalNumbers();
+    if (hasNumbers && popup) {
+      navigate(`${routes.order}/local?popup=popup`);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (id === "local" && popup) {
+      navigate(`/order/${me?.defaultStudentListId}?popup=popup`, {
+        replace: true,
+      });
+      return;
+    }
+
+    if (id) return;
+
+    if (me?.defaultStudentListId) {
+      navigate(`/order/${me?.defaultStudentListId}${popup ? "?popup=popup" : ""}`, {
+        replace: true,
+      });
+    }
+  }, [me]);
+
+  useEffect(() => {
+    if (id === "local") {
+      const localNumbers = getLocalNumbers();
+      const studentNames = [];
+      for (let i = 0; i < localNumbers; i++) {
+        studentNames.push(`${i + 1}번`);
+      }
+      setSelectedStudent(studentNames);
+    }
+  }, [id]);
+
   return (
-    <BasicContainer menuItem={true}>
+    <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)} redirectURL={`${routes.order}?popup=popup`}>
       <Container seeResultType={seeResultType}>
         <TopContents>
           <Title onSubmit={handleSubmit(onSubmit)} onBlur={onBlurForm}>
@@ -264,6 +317,8 @@ const Order = () => {
             </div>
           </ListIcon>
         </TopContents>
+        {popup && !me && !id && <SetStudentNumbers page={routes.order} />}
+        {popup && !me && id && <ResetStudentNumbers page={routes.order} />}
         {loading ? (
           <Loading page="subPage" />
         ) : (
@@ -307,12 +362,19 @@ const Order = () => {
           ))
         )}
       </Container>
-      {isPopup === "seeStudentList" && <StudentList page="order" setIsShuffle={setIsShuffle} />}
+      {isPopup === "seeStudentList" && (
+        <StudentList page="order" setIsShuffle={setIsShuffle} isWindowPopup={Boolean(popup)} />
+      )}
       {isPopup === "print" && (
         <PrintOrderContents printRef={componentRef} title={title} selectedStudent={selectedStudent} />
       )}
-      {isPopup === "needLogin" && <NeedLoginPopupContainer />}
+      {isPopup === "needLogin" && (
+        <NeedLoginPopupContainer isWindowPopup={Boolean(popup)} redirectURL={`${routes.order}?popup=popup`} />
+      )}
       {isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
+      {isPopup === "pageInfo" && (
+        <StudentListPageInfo isWindowPopup={Boolean(popup)} redirectURL={`${routes.order}/?popup=popup`} />
+      )}
     </BasicContainer>
   );
 };
