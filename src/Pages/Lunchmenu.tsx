@@ -14,7 +14,7 @@ import LunchmenuInfo from "../Components/Lunchmenu/LunchmenuInfo";
 import BasicInfo from "../Components/Lunchmenu/BasicInfo";
 import SearchContainer from "../Components/Lunchmenu/SearchContainer";
 import useMe from "../Hooks/useMe";
-import PageInfo from "../Components/Lunchmenu/Popup/PagerInfo";
+import PageInfo from "../Components/WindowPopup/pageInfo/LunchmenuPageInfo";
 import routes from "../routes";
 
 const LunchmenuContainer = styled.div`

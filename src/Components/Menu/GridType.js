@@ -13,6 +13,7 @@ import {
   TimerLink,
   NewsLink,
   ManagingRolesLink,
+  PopupOrderLink,
   QrcodeLink,
   HeaderBookMark,
   PopupLunchmenuLink,
@@ -46,6 +47,7 @@ const GridType = ({ onClickLunchmenu }) => {
           <TimerLink />
           <PopupLunchmenuLink />
           <PopupQrcodeLink />
+          <PopupOrderLink />
         </React.Fragment>
       ) : (
         <React.Fragment>

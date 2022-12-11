@@ -127,6 +127,19 @@ export const removeLinkPickFolder = () => {
   linkPickFolderVar(undefined);
 };
 
+export const getLocalNumbers = () => {
+  return localStorage.getItem("localNumbers");
+};
+export const setLocalNumbers = (numbers) => {
+  localStorage.setItem("localNumbers", numbers);
+};
+export const removeLocalNumbers = () => {
+  localStorage.removeItem("localNumbers");
+};
+export const hasLocalNumbers = () => {
+  return Boolean(localStorage.getItem("localNumbers"));
+};
+
 const httpLink = createHttpLink({
   uri:
     process.env.NODE_ENV === "production"
