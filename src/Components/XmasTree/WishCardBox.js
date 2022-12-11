@@ -5,19 +5,35 @@ import { DELETE_XMAS_MSG_MUTATION } from "../../Graphql/XmasTree/mutation";
 import { XMAS_MSG_QUERY } from "../../Graphql/XmasTree/query";
 import { BsFillTrashFill } from "react-icons/bs";
 import CardBackground from "./Popup/CardBackground";
+import { inPopup } from "../../apollo";
 
 const Container = styled.div`
+  background: url(${(props) => CardBackground[props.bg]});
+  background-repeat: no-repeat;
+  background-size: cover;
+  align-items: center;
+  border-radius: 10px;
+  border-radius: 0.625rem;
+  overflow: hidden;
+  padding: 20px;
+  padding: 1.25rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+`;
+
+const Layout = styled.div`
   background-color: white;
-  opacity: 0.9;
+  opacity: 0.8;
+  height: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  align-items: center;
-  border-radius: 20px;
-  border-radius: 1.25rem;
-  width: 30vw;
-  height: 30vh;
-  overflow: hidden;
+  border-radius: 10px;
+  border-radius: 0.625rem;
+  .wishCardBox_text {
+    opacity: 1;
+  }
+  cursor: pointer;
 `;
+
 const Name = styled.div`
   padding: 10px;
   padding: 0.625rem;
@@ -37,8 +53,6 @@ const WishText = styled.div`
   font-size: 1.25em;
   font-size: 1.25rem;
   overflow: hidden;
-  width: 30vw;
-  height: 17vh;
   line-height: 160%;
 `;
 const BtnBox = styled.div`
@@ -60,6 +74,7 @@ const BtnOne = styled.div`
   font-size: 1em;
   font-size: 1rem;
   cursor: pointer;
+  z-index: 20;
   :hover {
     transform: scale(1.1);
   }
@@ -76,6 +91,11 @@ const WishCardBox = ({ item, me, viewMode, refetch }) => {
         xmasMsgId: item._id,
       },
     });
+  };
+
+  const onClickBoxPopup = () => {
+    inPopup("xmasCardPopup");
+    localStorage.setItem("xmasCardPopup", JSON.stringify(item));
   };
 
   const deleteonComplted = (result) => {
@@ -97,19 +117,22 @@ const WishCardBox = ({ item, me, viewMode, refetch }) => {
   });
 
   return (
-    <Container>
-      <BtnBox>
-        {me?.email === item?.userEmail ? (
-          <React.Fragment>
-            <BtnOne>
-              <BsFillTrashFill onClick={onClickDelBtn} />
-            </BtnOne>
-          </React.Fragment>
-        ) : null}
-      </BtnBox>
-
-      <WishText>{msgXmasText.length < 60 ? msgXmasText : msgXmasText.slice(0, 60) + "..."}</WishText>
-      <Name>- {msgAuthor} -</Name>
+    <Container bg={item.bg}>
+      <Layout>
+        <BtnBox className="wishCardBox_text">
+          {me?.email === item?.userEmail ? (
+            <React.Fragment>
+              <BtnOne>
+                <BsFillTrashFill onClick={onClickDelBtn} />
+              </BtnOne>
+            </React.Fragment>
+          ) : null}
+        </BtnBox>
+        <WishText className="wishCardBox_text" onClick={onClickBoxPopup}>
+          {msgXmasText.length < 60 ? msgXmasText : msgXmasText.slice(0, 60) + "..."}
+        </WishText>
+        <Name className="wishCardBox_text">- {msgAuthor} -</Name>
+      </Layout>
     </Container>
   );
 };

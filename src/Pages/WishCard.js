@@ -19,6 +19,7 @@ import routes from "../routes";
 import { useNavigate } from "react-router-dom";
 import InputWish from "../Components/XmasTree/Popup/InputWish";
 import { useReactiveVar } from "@apollo/client";
+import XmasCardPopup from "../Components/XmasTree/Popup/XmasCardPopup";
 
 const Container = styled.div`
   background: url(https://media.discordapp.net/attachments/1012001449854648480/1041329981969661982/c6f1be7663bdd36b.png?width=1410&height=793);
@@ -90,14 +91,18 @@ const WishContainer = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 1fr 1fr;
   align-items: stretch;
-  column-gap: 20px;
-  column-gap: 1.25rem;
-  row-gap: 20px;
-  row-gap: 1.25rem;
+  column-gap: 40px;
+  column-gap: 2.5rem;
+  padding: 20px;
+  padding: 1.25rem;
+  row-gap: 40px;
+  row-gap: 2.5rem;
 `;
 
 const WishCard = () => {
   const me = useMe();
+  const userEmail = me?.email;
+
   const navigate = useNavigate();
   const isPopup = useReactiveVar(isPopupVar);
   const [viewMode, setViewMode] = useState("all");
@@ -112,7 +117,6 @@ const WishCard = () => {
       pageNumber: pageNum,
     },
   });
-
   useEffect(() => {
     if (data) {
       setViewList(data?.xmasMsg.msg);
@@ -128,8 +132,6 @@ const WishCard = () => {
   useEffect(() => {
     fullScreenMode();
   }, []);
-
-  console.log(lastPage);
 
   const onClickHome = () => {
     navigate(routes.home);
@@ -167,13 +169,17 @@ const WishCard = () => {
             <TiTree />
             이벤트 홈
           </Btn>
-          <Btn onClick={onClickNewWish}>
-            <TiPencil />
-            소원 쓰기
-          </Btn>
-          <Btn onClick={onClickMyWish}>
-            <FiSmile /> 나의 소원
-          </Btn>
+          {userEmail && (
+            <Btn onClick={onClickNewWish}>
+              <TiPencil />
+              소원 쓰기
+            </Btn>
+          )}
+          {userEmail && (
+            <Btn onClick={onClickMyWish}>
+              <FiSmile /> 나의 소원
+            </Btn>
+          )}
           <Btn onClick={onClickAllWish}>
             <MdGroups />
             전체 보기
@@ -205,6 +211,7 @@ const WishCard = () => {
       </WishMain>
       <AlertMessage></AlertMessage>
       {isPopup === "inputWish" && <InputWish me={me} viewMode={viewMode} setPageNum={setPageNum} refetch={refetch} />}
+      {isPopup === "xmasCardPopup" && <XmasCardPopup />}
     </Container>
   );
 };

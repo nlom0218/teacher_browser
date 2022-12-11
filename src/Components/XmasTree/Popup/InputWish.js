@@ -12,7 +12,7 @@ import { outPopup } from "../../../apollo";
 import { useNavigate } from "react-router-dom";
 import routes from "../../../routes";
 import CardBackground from "./CardBackground";
-import { bg } from "date-fns/locale";
+import SelectCard from "./SelectCard";
 
 const FormContainer = styled.form`
   display: grid;
@@ -63,29 +63,9 @@ const CardBox = styled.div`
   display: grid;
   column-gap: 10px;
   column-gap: 0.625rem;
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 `;
-const SelectCard = styled.div`
-  padding: 1px;
-  padding: 0.0625rem;
-  width: 60px;
-  height: 60px;
-  background-color: white;
-  border: 1px solid;
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  font-size: 1.25em;
-  font-size: 1.25rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  cursor: pointer;
-  img {
-    width: 50px;
-    height: 50px;
-  }
-`;
+
 const Submit = styled.input`
   justify-self: center;
   background-color: ${(props) => props.theme.btnBgColor};
@@ -109,6 +89,7 @@ const InputWish = ({ me, pretext, viewMode, setPageNum, refetch }) => {
   const [author, setAuthor] = useState(nickname);
   const [msg, setMsg] = useState(undefined);
   const [text, setText] = useState(pretext);
+  const [selectedCard, setSelectedCard] = useState(CardBackground[0]);
   const navigate = useNavigate();
 
   const { register, handleSubmit } = useForm({
@@ -124,7 +105,7 @@ const InputWish = ({ me, pretext, viewMode, setPageNum, refetch }) => {
         userEmail: me?.email,
         author: author,
         text: text,
-        // bg:bg,
+        bg: CardBackground.indexOf(selectedCard),
       },
     });
   };
@@ -134,10 +115,12 @@ const InputWish = ({ me, pretext, viewMode, setPageNum, refetch }) => {
       createXmasMsg: { ok },
     } = result;
     if (ok) {
-      refetch({ userEmail: viewMode === "my" ? me?.email : undefined, PageNumber: 1 });
+      if (refetch) {
+        refetch({ userEmail: viewMode === "my" ? me?.email : undefined, PageNumber: 1 });
+        setPageNum(1);
+      }
       setMsg("소원이 저장되었습니다. 😀");
       outPopup();
-      setPageNum(1);
       navigate(routes.wishCard);
     }
   };
@@ -177,11 +160,7 @@ const InputWish = ({ me, pretext, viewMode, setPageNum, refetch }) => {
         <TitleName>카드 배경 선택</TitleName>
         <CardBox>
           {CardBackground.map((item, index) => {
-            return (
-              <SelectCard item={item}>
-                <img src={item} alt="img" />
-              </SelectCard>
-            );
+            return <SelectCard item={item} key={index} selectedCard={selectedCard} setSelectedCard={setSelectedCard} />;
           })}
         </CardBox>
         <Submit type="submit" value="소원 저장" />

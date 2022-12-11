@@ -9,6 +9,7 @@ export const XMAS_MSG_QUERY = gql`
         userEmail
         author
         text
+        bg
       }
     }
   }

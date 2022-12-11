@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const CREATE_XMAS_MSG_MUTATION = gql`
-  mutation CreateXmasMsg($userEmail: String!, $author: String!, $text: String!) {
-    createXmasMsg(userEmail: $userEmail, author: $author, text: $text) {
+  mutation CreateXmasMsg($userEmail: String!, $author: String!, $text: String!, $bg: Int) {
+    createXmasMsg(userEmail: $userEmail, author: $author, text: $text, bg: $bg) {
       ok
       error
     }
@@ -10,8 +10,8 @@ export const CREATE_XMAS_MSG_MUTATION = gql`
 `;
 
 export const UPDATE_XMAS_MSG_MUTATION = gql`
-  mutation UpdateXmasMsg($userEmail: String!, $xmasMsgId: ID!, $author: String, $text: String) {
-    updateXmasMsg(userEmail: $userEmail, xmasMsgId: $xmasMsgId, author: $author, text: $text) {
+  mutation UpdateXmasMsg($userEmail: String!, $xmasMsgId: ID!, $author: String, $text: String, $bg: Int) {
+    updateXmasMsg(userEmail: $userEmail, xmasMsgId: $xmasMsgId, author: $author, text: $text, bg: $bg) {
       ok
       error
     }
