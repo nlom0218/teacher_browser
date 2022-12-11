@@ -18,6 +18,7 @@ import {
   HeaderBookMark,
   PopupLunchmenuLink,
   PopupQrcodeLink,
+  PopupDrawLink,
 } from "./MenuLink";
 
 const Container = styled.div`
@@ -48,6 +49,7 @@ const GridType = ({ onClickLunchmenu }) => {
           <PopupLunchmenuLink />
           <PopupQrcodeLink />
           <PopupOrderLink />
+          <PopupDrawLink />
         </React.Fragment>
       ) : (
         <React.Fragment>
