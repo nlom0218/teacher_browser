@@ -142,9 +142,7 @@ export const hasLocalNumbers = () => {
 
 const httpLink = createHttpLink({
   uri:
-    process.env.NODE_ENV === "production"
-      ? "https://teachercan.herokuapp.com/graphql"
-      : process.env.REACT_APP_AMAZON_EC2,
+    process.env.NODE_ENV === "production" ? "https://teachercan.herokuapp.com/graphql" : "https://api.teachercan.com",
 });
 
 const authLink = setContext((_, { headers }) => {
