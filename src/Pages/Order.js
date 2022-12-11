@@ -28,6 +28,7 @@ import routes from "../routes";
 import qs from "qs";
 import SetStudentNumbers from "../Components/WindowPopup/SetStudentNumbers";
 import ResetStudentNumbers from "../Components/WindowPopup/ResetStudentNumbers";
+import PageInfo from "../Components/WindowPopup/pageInfo/LunchmenuPageInfo";
 
 // 전체 틀
 const Container = styled.div`
@@ -351,6 +352,9 @@ const Order = () => {
         <NeedLoginPopupContainer isWindowPopup={Boolean(popup)} redirectURL={`${routes.order}?popup=popup`} />
       )}
       {isShuffle === "ing" && <Shuffling onClickShuffleBtn={onClickShuffleBtn} />}
+      {isPopup === "pageInfo" && (
+        <PageInfo isWindowPopup={Boolean(popup)} redirectURL={`${routes.order}/?popup=popup`} />
+      )}
     </BasicContainer>
   );
 };
