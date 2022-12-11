@@ -142,7 +142,7 @@ export const PopupOrderLink = () => {
   const windowFeatures = "left=100,top=100,width=1600,height=800, popup";
 
   const onClickNewWindow = () => {
-    window.open(orderUrl, "timer", windowFeatures);
+    window.open(orderUrl, "order", windowFeatures);
   };
   const [isHover, setIsHover] = useState(false);
   return (
@@ -173,7 +173,7 @@ export const PopupLunchmenuLink = () => {
   const windowFeatures = "left=100,top=100,width=1600,height=800, popup";
 
   const onClickNewWindow = () => {
-    window.open(lunchmenuUrl, "timer", windowFeatures);
+    window.open(lunchmenuUrl, "lunchmenu", windowFeatures);
   };
   const [isHover, setIsHover] = useState(false);
   return (

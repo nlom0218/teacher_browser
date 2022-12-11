@@ -2,9 +2,9 @@ import BasicContainer from "../Components/Shared/BasicContainer";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
-import { inPopup, isPopupVar } from "../apollo";
+import { getLocalNumbers, hasLocalNumbers, inPopup, isPopupVar } from "../apollo";
 import { useQuery, useReactiveVar } from "@apollo/client";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { customMedia } from "../styles";
 import { inputLine } from "../Animations/InputLine";
 import { BtnFadeIn } from "../Animations/Fade";
@@ -19,7 +19,12 @@ import StudentList from "../Components/Shared/popup/StudentList";
 import Loading from "../Components/Shared/Loading";
 import NeedLoginPopupContainer from "../Components/Shared/NeedLoginPopupContainer";
 import useMe from "../Hooks/useMe";
+import qs from "qs";
 import NoStudentMsg from "../Components/Shared/styled/NoStudentMsg";
+import SetStudentNumbers from "../Components/WindowPopup/SetStudentNumbers";
+import ResetStudentNumbers from "../Components/WindowPopup/ResetStudentNumbers";
+import routes from "../routes";
+import OrderPageInfo from "../Components/WindowPopup/pageInfo/OrderPageInfo";
 
 const Container = styled.div`
   min-height: ${(props) => props.isShuffle === "finish" && props.pickNum < 4 && "100%"};
@@ -146,7 +151,14 @@ const ListName = styled.div``;
 
 const Draw = () => {
   const titleUpdataer = useTitle("티처캔 | 랜덤뽑기");
+
+  const navigate = useNavigate();
   const { id } = useParams();
+  const location = useLocation();
+  const { popup } = qs.parse(location.search, {
+    ignoreQueryPrefix: true,
+  });
+
   const isPopup = useReactiveVar(isPopupVar);
 
   const me = useMe();
@@ -212,8 +224,27 @@ const Draw = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    const hasNumbers = hasLocalNumbers();
+    if (hasNumbers) {
+      navigate(`${routes.draw}/local?popup=popup`);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (id === "local") {
+      const localNumbers = getLocalNumbers();
+      const studentNames = [];
+      for (let i = 0; i < localNumbers; i++) {
+        studentNames.push(`${i + 1}번`);
+      }
+      setSelectedStudent(studentNames);
+      setIsShuffle("init");
+    }
+  }, [id]);
+
   return (
-    <BasicContainer menuItem={true}>
+    <BasicContainer menuItem={true} isWindowPopup={Boolean(popup)} redirectURL={`${routes.draw}?popup=popup`}>
       <Container isShuffle={isShuffle} pickNum={pickNum}>
         <TopContents>
           <Title onBlur={onBlurForm} onSubmit={handleSubmit(onSubmit)}>
@@ -247,6 +278,8 @@ const Draw = () => {
             </div>
           </ListIcon>
         </TopContents>
+        {popup && !me && !id && <SetStudentNumbers page={routes.draw} />}
+        {popup && !me && id && <ResetStudentNumbers page={routes.draw} />}
         {loading ? (
           <Loading page="subPage" />
         ) : (
@@ -284,8 +317,12 @@ const Draw = () => {
           ))
         )}
       </Container>
-      {isPopup === "seeStudentList" && <StudentList setIsShuffle={setIsShuffle} page="draw" />}
-      {isPopup === "needLogin" && <NeedLoginPopupContainer />}
+      {isPopup === "seeStudentList" && (
+        <StudentList setIsShuffle={setIsShuffle} page="draw" isWindowPopup={Boolean(popup)} />
+      )}
+      {isPopup === "needLogin" && (
+        <NeedLoginPopupContainer isWindowPopup={Boolean(popup)} redirectURL={`${routes.draw}?popup=popup`} />
+      )}
       {isShuffle === "ing" && (
         <Shuffling
           pickNum={pickNum}
@@ -297,6 +334,9 @@ const Draw = () => {
           studentNum={selectedStudent.length}
           setIsShuffle={setIsShuffle}
         />
+      )}
+      {isPopup === "pageInfo" && (
+        <OrderPageInfo isWindowPopup={Boolean(popup)} redirectURL={`${routes.draw}/?popup=popup`} />
       )}
     </BasicContainer>
   );
