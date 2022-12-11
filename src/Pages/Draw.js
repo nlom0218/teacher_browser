@@ -24,7 +24,7 @@ import NoStudentMsg from "../Components/Shared/styled/NoStudentMsg";
 import SetStudentNumbers from "../Components/WindowPopup/SetStudentNumbers";
 import ResetStudentNumbers from "../Components/WindowPopup/ResetStudentNumbers";
 import routes from "../routes";
-import OrderPageInfo from "../Components/WindowPopup/pageInfo/OrderPageInfo";
+import StudentListPageInfo from "../Components/WindowPopup/pageInfo/StudentListPageInfo";
 
 const Container = styled.div`
   min-height: ${(props) => props.isShuffle === "finish" && props.pickNum < 4 && "100%"};
@@ -336,7 +336,7 @@ const Draw = () => {
         />
       )}
       {isPopup === "pageInfo" && (
-        <OrderPageInfo isWindowPopup={Boolean(popup)} redirectURL={`${routes.draw}/?popup=popup`} />
+        <StudentListPageInfo isWindowPopup={Boolean(popup)} redirectURL={`${routes.draw}/?popup=popup`} />
       )}
     </BasicContainer>
   );

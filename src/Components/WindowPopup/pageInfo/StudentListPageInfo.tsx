@@ -9,7 +9,7 @@ interface IProps {
   redirectURL?: string;
 }
 
-const OrderPageInfo = ({ isWindowPopup, redirectURL }: IProps) => {
+const StudentListPageInfo = ({ isWindowPopup, redirectURL }: IProps) => {
   return (
     <PopupContainer>
       <Container>
@@ -30,10 +30,10 @@ const OrderPageInfo = ({ isWindowPopup, redirectURL }: IProps) => {
           </div>
         </Text>
         <Text>
-          <div className="page_info_icon">🥒</div>
+          <div className="page_info_icon">👧</div>
           <div>
-            <span>명렬표를 생성하여</span>학생을 등록해 보세요! 자세한 내용은 아래의
-            <span>"명렬표 및 학생 생성 방법"</span>을 참고해주세요.
+            <span>명렬표를 생성하여</span>학생을 등록할 수 있습니다. 자세한 내용은 아래의
+            <span>"명렬표 및 학생 생성 방법"</span>을 참고해 주세요.
           </div>
         </Text>
         <Notion
@@ -46,4 +46,4 @@ const OrderPageInfo = ({ isWindowPopup, redirectURL }: IProps) => {
   );
 };
 
-export default OrderPageInfo;
+export default StudentListPageInfo;
