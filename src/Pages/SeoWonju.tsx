@@ -9,6 +9,16 @@ const Container = styled.div`
   left: 0;
 `;
 
+const CoverImage = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: white;
+  opacity: 0.2;
+`;
+
 const Layout = styled.div`
   width: 100%;
   height: 100%;
@@ -35,6 +45,7 @@ const SeoWonju = () => {
   ];
   return (
     <Container>
+      <CoverImage />
       <Layout>
         {seoWonjuImage.map((image, index) => {
           return <BackgroundImage key={index} image={image} />;
