@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import BackgroundImage from "../Components/SeoWonju/BackgroundImage";
+import Contents from "../Components/SeoWonju/Contents";
 
 const Container = styled.div`
   position: absolute;
@@ -15,14 +16,12 @@ const CoverImage = styled.div`
   bottom: 0;
   right: 0;
   left: 0;
-  background-color: white;
-  opacity: 0.2;
 `;
 
 const Layout = styled.div`
   width: 100%;
   height: 100%;
-  background-color: red;
+  background-color: white;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(3, 1fr);
@@ -51,6 +50,7 @@ const SeoWonju = () => {
           return <BackgroundImage key={index} image={image} />;
         })}
       </Layout>
+      <Contents />
     </Container>
   );
 };
