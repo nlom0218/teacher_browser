@@ -16,7 +16,11 @@ const Container = styled.div`
   border-radius: 0.625rem;
 `;
 
-const Box = styled.div``;
+const Box = styled.div`
+  display: grid;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+`;
 
 const Text = styled.div`
   font-family: "Song Myung";
@@ -26,7 +30,20 @@ const Text = styled.div`
   line-height: 120%;
 `;
 
+const Divide = styled.div`
+  justify-self: stretch;
+  height: 3px;
+  background-color: gray;
+`;
+
 const CountDown = styled.div``;
+
+const DDay = styled.div`
+  font-family: "Black Han San";
+  font-size: 3em;
+  font-size: 3rem;
+  text-align: center;
+`;
 
 const Contents = () => {
   const meetDay = Number(new Date("2032-12-30"));
@@ -52,7 +69,12 @@ const Contents = () => {
           <div className="emphasis">2022학년도 서원주 6학년 2반 </div>
           <div>우리가 다시 만날 그 날</div>
         </Text>
-        <CountDown>{`${diffDay}일 ${diffHour}시간 ${diffMin}분 ${diffSec}초`}</CountDown>
+        <Divide></Divide>
+        <CountDown>
+          <DDay>{`${diffDay}일 ${diffHour < 10 ? `0${diffHour}` : diffHour}시간 ${
+            diffMin < 10 ? `0${diffMin}` : diffMin
+          }분 ${diffSec < 10 ? `0${diffSec}` : diffSec}초`}</DDay>
+        </CountDown>
       </Box>
     </Container>
   );
