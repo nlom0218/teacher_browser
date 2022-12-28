@@ -5,6 +5,7 @@ import { AiOutlinePicture } from "react-icons/ai";
 import { BsFillCollectionPlayFill } from "react-icons/bs";
 import { GiGraduateCap } from "react-icons/gi";
 import { BiMemoryCard } from "react-icons/bi";
+import { customMedia } from "../../styles";
 
 const Container = styled.div`
   z-index: 10;
@@ -29,34 +30,48 @@ const Box = styled.div`
 
 const Text = styled.div`
   font-family: "Song Myung";
-  font-size: 4em;
-  font-size: 4rem;
+  font-size: 1.5em;
+  font-size: 1.5rem;
   text-align: center;
   line-height: 120%;
+  ${customMedia.greaterThan("desktop")`
+    font-size: 4em;
+    font-size: 4rem;
+  `}
 `;
 
 const Divide = styled.div`
-  justify-self: stretch;
-  height: 3px;
-  background-color: gray;
+  ${customMedia.greaterThan("desktop")`
+    justify-self: stretch;
+    height: 3px;
+    background-color: gray;
+  `}
 `;
 
 const CountDown = styled.div``;
 
 const DDay = styled.div`
   font-family: "Black Han San";
-  font-size: 3em;
-  font-size: 3rem;
   text-align: center;
+  font-size: 1.25em;
+  font-size: 1.25rem;
+  ${customMedia.greaterThan("desktop")`
+    font-size: 3em;
+    font-size: 3rem;
+  `}
 `;
 
 const BtnContainer = styled.div`
   margin-top: 40px;
   margin-top: 2.5rem;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  column-gap: 20px;
-  column-gap: 1.25rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  ${customMedia.greaterThan("desktop")`
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 20px;
+    column-gap: 1.25rem;
+  `}
 `;
 
 const Btn = styled.div`
