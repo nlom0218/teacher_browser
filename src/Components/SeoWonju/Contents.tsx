@@ -22,7 +22,36 @@ const Container = styled.div`
   border-radius: 0.625rem;
 `;
 
+const TopMenu = styled.div`
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  display: grid;
+  row-gap: 10px;
+  row-gap: 0.625rem;
+  font-size: 0.875em;
+  font-size: 0.875rem;
+  div {
+    background-color: ${(props) => props.theme.green};
+    color: ${(props) => props.theme.bgColor};
+    padding: 10px 20px;
+    padding: 0.625rem 1.25rem;
+    border-radius: 10px;
+    border-radius: 0.625rem;
+    text-align: center;
+    cursor: pointer;
+  }
+  ${customMedia.greaterThan("desktop")`
+    grid-template-columns: auto auto;
+    column-gap: 20px;
+    column-gap: 1.25rem;
+    font-size: 1em;
+    font-size: 1rem;
+  `}
+`;
+
 const Box = styled.div`
+  /* position: relative; */
   display: grid;
   row-gap: 20px;
   row-gap: 1.25rem;
@@ -109,6 +138,10 @@ const Contents = () => {
   }, []);
   return (
     <Container>
+      <TopMenu>
+        <div>방명록 남기기</div>
+        <div>2032년 OPEN PAGE</div>
+      </TopMenu>
       <Box>
         <Text>
           <div className="emphasis">2022학년도 서원주 6학년 2반 </div>
