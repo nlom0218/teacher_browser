@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { IoBaseballOutline } from "react-icons/io5";
+import { AiOutlinePicture } from "react-icons/ai";
+import { BsFillCollectionPlayFill } from "react-icons/bs";
+import { GiGraduateCap } from "react-icons/gi";
+import { BiMemoryCard } from "react-icons/bi";
 
 const Container = styled.div`
   z-index: 10;
@@ -45,6 +50,31 @@ const DDay = styled.div`
   text-align: center;
 `;
 
+const BtnContainer = styled.div`
+  margin-top: 40px;
+  margin-top: 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  column-gap: 20px;
+  column-gap: 1.25rem;
+`;
+
+const Btn = styled.div`
+  background-color: ${(props) => props.theme.btnBgColor};
+  color: ${(props) => props.theme.bgColor};
+  display: flex;
+  justify-content: center;
+  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
+  border-radius: 10px;
+  border-radius: 0.625rem;
+  cursor: pointer;
+  svg {
+    margin-left: 10px;
+    margin-left: 0.625rem;
+  }
+`;
+
 const Contents = () => {
   const meetDay = Number(new Date("2032-12-30"));
   const [today, setToday] = useState(Number(new Date()));
@@ -75,6 +105,28 @@ const Contents = () => {
             diffMin < 10 ? `0${diffMin}` : diffMin
           }분 ${diffSec < 10 ? `0${diffSec}` : diffSec}초`}</DDay>
         </CountDown>
+        <BtnContainer>
+          <Btn>
+            <div>숫자야구</div>
+            <IoBaseballOutline />
+          </Btn>
+          <Btn>
+            <div>2022 추억</div>
+            <BiMemoryCard />
+          </Btn>
+          <Btn>
+            <div>사진첩</div>
+            <AiOutlinePicture />
+          </Btn>
+          <Btn>
+            <div>학예회</div>
+            <BsFillCollectionPlayFill />
+          </Btn>
+          <Btn>
+            <div>졸업영상 및 소감문</div>
+            <GiGraduateCap />
+          </Btn>
+        </BtnContainer>
       </Box>
     </Container>
   );
