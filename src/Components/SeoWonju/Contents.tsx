@@ -130,6 +130,34 @@ const Contents = () => {
   const diffMin = Math.floor((diff / (1000 * 60)) % 60);
   const diffSec = Math.floor((diff / 1000) % 60);
 
+  const onClickBaseBall = () => {
+    window.open("https://nlom0218.github.io/Bulls-and-Cows/");
+  };
+
+  const onClickMemory = () => {
+    window.open("https://padlet.com/nlom0218/l6ca4qwzdrz2q2i4");
+  };
+
+  const onClickPicture = () => {
+    window.open("https://drive.google.com/drive/u/1/folders/1p9afF7tgWajixw_WRWUrVPlR8-uQ_K0b");
+  };
+
+  const onClickGuestBook = () => {
+    window.open("https://padlet.com/nlom0218/fk8g2vyvh22kok6d");
+  };
+
+  const onClickComingSoon = () => {
+    window.alert("2032년에 오픈되는 페이지 입니다.");
+  };
+
+  const onClickConcert = () => {
+    window.open("https://drive.google.com/drive/folders/1A3YJp2tHDrHaoAv_Gl9xWNnPpzejGOEz?usp=sharing");
+  };
+
+  const onClickGraduated = () => {
+    window.open("https://drive.google.com/drive/folders/1Vws_O2LnxnmKjdDg5BEib5tI_DREiiL4?usp=sharing");
+  };
+
   useEffect(() => {
     const countDown = setInterval(() => {
       setToday(Number(new Date()));
@@ -139,8 +167,8 @@ const Contents = () => {
   return (
     <Container>
       <TopMenu>
-        <div>방명록 남기기</div>
-        <div>2032년 OPEN PAGE</div>
+        <div onClick={onClickGuestBook}>방명록 남기기</div>
+        <div onClick={onClickComingSoon}>2032년 OPEN PAGE</div>
       </TopMenu>
       <Box>
         <Text>
@@ -154,23 +182,23 @@ const Contents = () => {
           }분 ${diffSec < 10 ? `0${diffSec}` : diffSec}초`}</DDay>
         </CountDown>
         <BtnContainer>
-          <Btn>
+          <Btn onClick={onClickBaseBall}>
             <div>숫자야구</div>
             <IoBaseballOutline />
           </Btn>
-          <Btn>
+          <Btn onClick={onClickMemory}>
             <div>2022 추억</div>
             <BiMemoryCard />
           </Btn>
-          <Btn>
+          <Btn onClick={onClickPicture}>
             <div>사진첩</div>
             <AiOutlinePicture />
           </Btn>
-          <Btn>
+          <Btn onClick={onClickConcert}>
             <div>학예회</div>
             <BsFillCollectionPlayFill />
           </Btn>
-          <Btn>
+          <Btn onClick={onClickGraduated}>
             <div>졸업영상 및 소감문</div>
             <GiGraduateCap />
           </Btn>
