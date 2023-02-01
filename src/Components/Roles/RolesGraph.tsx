@@ -37,7 +37,7 @@ const Head = styled.div`
   column-gap: 2px;
   column-gap: 0.126rem;
   font-weight: 700;
-  div {
+  input {
     background-color: ${(props) => props.theme.skyblue};
     transition: background-color 1s ease;
     padding: 14px;
@@ -62,8 +62,8 @@ const RolesGraph = ({ lineNums }: IProps) => {
     <Container>
       <Form>
         <Head>
-          <div>역할</div>
-          <div>하는 일</div>
+          <input value={"역할"} />
+          <input value={"하는 일"} />
         </Head>
         {randerRolesExample.map((role, idx) => {
           return <RolesGraphContents key={idx} {...role} />;
