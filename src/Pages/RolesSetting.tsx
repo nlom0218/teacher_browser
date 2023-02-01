@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import RolesGraph from "../Components/Roles/RolesGraph";
@@ -46,7 +46,11 @@ const BtnConatiner = styled.div`
   }
 `;
 
-const RolesSetting = () => {
+interface IProps {
+  setErrMsg: React.Dispatch<React.SetStateAction<null | string>>;
+}
+
+const RolesSetting = ({ setErrMsg }: IProps) => {
   const [lineNums, setLineNums] = useState(0);
 
   const { register, handleSubmit } = useForm({
@@ -61,6 +65,10 @@ const RolesSetting = () => {
 
   const onSubmit = (data: any) => {
     console.log(data);
+  };
+
+  const onError = (error: any) => {
+    if (error) setErrMsg("빈 칸이 존재합니다. 😓");
   };
 
   const preventClose = (event: BeforeUnloadEvent) => {
@@ -80,7 +88,7 @@ const RolesSetting = () => {
 
   return (
     <BasicContainer menuItem={true}>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+      <Form onSubmit={handleSubmit(onSubmit, onError)}>
         <Title>1인 1역 - 역할, 하는 일 입력하기</Title>
         <BtnConatiner>
           <div className="line-btn btn" onClick={() => onClickLineBtn("add")}>
