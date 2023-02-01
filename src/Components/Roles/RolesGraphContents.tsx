@@ -17,15 +17,15 @@ const Container = styled.div`
 `;
 
 interface IProps {
-  role: string;
-  work: string;
+  role?: string;
+  work?: string;
 }
 
 const RolesGraphContents = ({ role, work }: IProps) => {
   return (
     <Container>
-      <input placeholder={role} />
-      <input placeholder={work} />
+      <input placeholder={role || "역할을 입력하세요."} />
+      <input placeholder={work || "하는 일을 입력하세요."} />
     </Container>
   );
 };

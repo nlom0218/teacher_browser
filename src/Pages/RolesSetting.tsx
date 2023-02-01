@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import RolesGraph from "../Components/Roles/RolesGraph";
 import BasicContainer from "../Components/Shared/BasicContainer";
@@ -44,17 +45,29 @@ const BtnConatiner = styled.div`
 `;
 
 const RolesSetting = () => {
+  const [lineNums, setLineNums] = useState(0);
+
+  const onClickLineBtn = (type: string) => {
+    if (type === "add") return setLineNums((prev) => (prev += 1));
+    if (lineNums === -10) return console.log(lineNums, "안댕!!");
+    return setLineNums((prev) => (prev -= 1));
+  };
+
   return (
     <BasicContainer menuItem={true}>
       <Container>
         <Title>1인 1역 - 역할, 하는 일 입력하기</Title>
         <BtnConatiner>
-          <div className="line-btn">줄 추가</div>
-          <div className="line-btn">줄 삭제</div>
+          <div className="line-btn" onClick={() => onClickLineBtn("add")}>
+            줄 추가
+          </div>
+          <div className="line-btn" onClick={() => onClickLineBtn("remove")}>
+            줄 삭제
+          </div>
           <span>1인 1역 역할을 작성후 저장해 주세요.</span>
           <div className="save-btn">저장</div>
         </BtnConatiner>
-        <RolesGraph />
+        <RolesGraph lineNums={lineNums} />
       </Container>
     </BasicContainer>
   );

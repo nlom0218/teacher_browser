@@ -1,7 +1,8 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import RolesGraphContents from "./RolesGraphContents";
 
-const rolesExample = [
+let rolesExample = [
   { role: "에너지 지킴이", work: "교실을 이동할 때 불과 에어컨을 끄고 킵니다." },
   { role: "칠판청소", work: "칠판을 닦고 칠판지우개를 관리합니다." },
   { role: "앞, 뒤 청소", work: "교실의 앞, 뒤를 깨끗하게 청소합니다." },
@@ -14,6 +15,8 @@ const rolesExample = [
   { role: "물걸레질", work: "교실을 물걸레로 청결하게 정리합니다." },
 ];
 
+let randerRolesExample = rolesExample;
+
 const Container = styled.div`
   text-align: center;
 `;
@@ -24,8 +27,6 @@ const Form = styled.form`
   display: grid;
   row-gap: 2px;
   row-gap: 0.126rem;
-  padding: 2px;
-  padding: 0.126rem;
 `;
 
 const Head = styled.div`
@@ -42,7 +43,19 @@ const Head = styled.div`
   }
 `;
 
-const RolesGraph = () => {
+interface IProps {
+  lineNums: number;
+}
+
+const RolesGraph = ({ lineNums }: IProps) => {
+  const [randerRolesExample, setRanderRolesExample] = useState(rolesExample);
+
+  useEffect(() => {
+    if (lineNums < 1) {
+      const lastIdx = 10 + lineNums;
+      setRanderRolesExample(rolesExample.slice(0, lastIdx));
+    }
+  }, [lineNums]);
   return (
     <Container>
       <Form>
@@ -50,9 +63,13 @@ const RolesGraph = () => {
           <div>역할</div>
           <div>하는 일</div>
         </Head>
-        {rolesExample.map((role, idx) => {
+        {randerRolesExample.map((role, idx) => {
           return <RolesGraphContents key={idx} {...role} />;
         })}
+        {lineNums > 0 &&
+          new Array(lineNums).fill(null).map((_, idx) => {
+            return <RolesGraphContents key={idx + 10} />;
+          })}
       </Form>
     </Container>
   );
