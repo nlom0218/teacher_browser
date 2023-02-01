@@ -50,6 +50,12 @@ interface IProps {
   setErrMsg: React.Dispatch<React.SetStateAction<null | string>>;
 }
 
+type RoleObj = {
+  role: string;
+  work: string;
+  students: [] | [string];
+};
+
 const RolesSetting = ({ setErrMsg }: IProps) => {
   const [lineNums, setLineNums] = useState(0);
 
@@ -64,7 +70,18 @@ const RolesSetting = ({ setErrMsg }: IProps) => {
   };
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    const roles: [string, string][] = Object.entries(data);
+    const rolesDetails: RoleObj[] = [];
+    let roleObj: RoleObj = { role: "", work: "", students: [] };
+    roles.forEach(([type, contents]) => {
+      if (contents === "") return;
+      if (/role/.test(type)) return (roleObj.role = contents);
+      roleObj.work = contents;
+      rolesDetails.push(roleObj);
+      roleObj = { role: "", work: "", students: [] };
+    });
+
+    localStorage.setItem("roleDetails", JSON.stringify(rolesDetails));
   };
 
   const onError = (error: any) => {
