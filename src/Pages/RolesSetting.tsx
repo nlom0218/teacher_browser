@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import RolesGraph from "../Components/Roles/RolesGraph";
@@ -62,6 +62,21 @@ const RolesSetting = () => {
   const onSubmit = (data: any) => {
     console.log(data);
   };
+
+  const preventClose = (event: BeforeUnloadEvent) => {
+    event.preventDefault();
+    event.returnValue = "";
+  };
+
+  useEffect(() => {
+    (() => {
+      window.addEventListener("beforeunload", preventClose);
+    })();
+
+    return () => {
+      window.removeEventListener("beforeunload", preventClose);
+    };
+  }, []);
 
   return (
     <BasicContainer menuItem={true}>
