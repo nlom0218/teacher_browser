@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import RolesSetting from "./RolesSetting";
 
 const Roles = () => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const Roles = () => {
   return (
     <Routes>
       <Route path=":id" element={<div>디테일</div>} />
-      <Route path="setting" element={<div>setting</div>} />
+      <Route path="setting" element={<RolesSetting />} />
     </Routes>
   );
 };
