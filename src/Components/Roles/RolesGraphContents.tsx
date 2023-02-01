@@ -1,3 +1,4 @@
+import { FieldValues, UseFormRegister } from "react-hook-form";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -19,13 +20,25 @@ const Container = styled.div`
 interface IProps {
   role?: string;
   work?: string;
+  idx: number;
+  register: UseFormRegister<FieldValues>;
 }
 
-const RolesGraphContents = ({ role, work }: IProps) => {
+const RolesGraphContents = ({ role, work, idx, register }: IProps) => {
   return (
     <Container>
-      <input placeholder={role || "역할을 입력하세요."} />
-      <input placeholder={work || "하는 일을 입력하세요."} />
+      <input
+        type="text"
+        {...register(`role${idx}`, { required: true })}
+        placeholder={role || "역할을 입력하세요."}
+        autoComplete="off"
+      />
+      <input
+        type="text"
+        {...register(`work${idx}`, { required: true })}
+        placeholder={work || "하는 일을 입력하세요."}
+        autoComplete="off"
+      />
     </Container>
   );
 };

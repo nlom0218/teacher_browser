@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import RolesGraph from "../Components/Roles/RolesGraph";
 import BasicContainer from "../Components/Shared/BasicContainer";
 
-const Container = styled.div`
+const Form = styled.form`
   min-height: 100%;
   max-height: 100%;
   padding: 40px;
@@ -35,7 +36,7 @@ const BtnConatiner = styled.div`
     color: ${(props) => props.theme.bgColor};
   }
 
-  div {
+  .btn {
     transition: background-color 1s ease, color 1s ease;
     padding: 5px 20px;
     padding: 0.3125rem 1.25em;
@@ -48,28 +49,36 @@ const BtnConatiner = styled.div`
 const RolesSetting = () => {
   const [lineNums, setLineNums] = useState(0);
 
+  const { register, handleSubmit } = useForm({
+    mode: "onChange",
+  });
+
   const onClickLineBtn = (type: string) => {
     if (type === "add") return setLineNums((prev) => (prev += 1));
     if (lineNums === -10) return console.log(lineNums, "안댕!!");
     return setLineNums((prev) => (prev -= 1));
   };
 
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
+
   return (
     <BasicContainer menuItem={true}>
-      <Container>
+      <Form onSubmit={handleSubmit(onSubmit)}>
         <Title>1인 1역 - 역할, 하는 일 입력하기</Title>
         <BtnConatiner>
-          <div className="line-btn" onClick={() => onClickLineBtn("add")}>
+          <div className="line-btn btn" onClick={() => onClickLineBtn("add")}>
             줄 추가
           </div>
-          <div className="line-btn" onClick={() => onClickLineBtn("remove")}>
+          <div className="line-btn btn" onClick={() => onClickLineBtn("remove")}>
             줄 삭제
           </div>
           <span>1인 1역 역할을 작성후 저장해 주세요.</span>
-          <div className="save-btn">저장</div>
+          <input type="submit" value="저장" className="save-btn btn" />
         </BtnConatiner>
-        <RolesGraph lineNums={lineNums} />
-      </Container>
+        <RolesGraph lineNums={lineNums} register={register} />
+      </Form>
     </BasicContainer>
   );
 };

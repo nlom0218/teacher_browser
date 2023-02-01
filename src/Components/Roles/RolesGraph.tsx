@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FieldValues, UseFormRegister } from "react-hook-form";
 import styled from "styled-components";
 import RolesGraphContents from "./RolesGraphContents";
 
@@ -21,7 +22,7 @@ const Container = styled.div`
   text-align: center;
 `;
 
-const Form = styled.form`
+const Layout = styled.div`
   max-height: 100%;
   background-color: ${(props) => props.theme.contentBgColor};
   transition: background-color 1s ease;
@@ -47,9 +48,10 @@ const Head = styled.div`
 
 interface IProps {
   lineNums: number;
+  register: UseFormRegister<FieldValues>;
 }
 
-const RolesGraph = ({ lineNums }: IProps) => {
+const RolesGraph = ({ lineNums, register }: IProps) => {
   const [randerRolesExample, setRanderRolesExample] = useState(rolesExample);
 
   useEffect(() => {
@@ -60,19 +62,19 @@ const RolesGraph = ({ lineNums }: IProps) => {
   }, [lineNums]);
   return (
     <Container>
-      <Form>
+      <Layout>
         <Head>
-          <input value={"역할"} />
-          <input value={"하는 일"} />
+          <input defaultValue={"역할"} />
+          <input defaultValue={"하는 일"} />
         </Head>
         {randerRolesExample.map((role, idx) => {
-          return <RolesGraphContents key={idx} {...role} />;
+          return <RolesGraphContents key={idx} {...role} idx={idx} register={register} />;
         })}
         {lineNums > 0 &&
           new Array(lineNums).fill(null).map((_, idx) => {
-            return <RolesGraphContents key={idx + 10} />;
+            return <RolesGraphContents key={idx + 10} idx={idx + 10} register={register} />;
           })}
-      </Form>
+      </Layout>
     </Container>
   );
 };
