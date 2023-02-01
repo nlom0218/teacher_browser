@@ -28,6 +28,7 @@ import IcQrcodeClick from "../../icons/Qrcod/IcQrcodeClick";
 import IcBookMark from "../../icons/Bookmark/IcBookMark";
 import IcBookMarkClick from "../../icons/Bookmark/IcBookMarkClick";
 import { TiTree } from "react-icons/ti";
+import { MdCleaningServices, MdOutlineCleaningServices } from "react-icons/md";
 
 const SMenu = styled.div`
   display: grid;
@@ -334,6 +335,19 @@ export const XmasTree = () => {
       <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <TiTree /> : <TiTree />}
         <Title>소원나무</Title>
+      </SMenu>
+    </Link>
+  );
+};
+
+export const RolesLink = () => {
+  const [isHover, setIsHover] = useState(false);
+  const onClickListLink = () => {};
+  return (
+    <Link to={routes.roles} onClick={onClickListLink}>
+      <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+        {isHover ? <MdCleaningServices /> : <MdOutlineCleaningServices />}
+        <Title>1인1역</Title>
       </SMenu>
     </Link>
   );

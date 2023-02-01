@@ -14,6 +14,7 @@ import {
   ManagingRolesLink,
   QrcodeLink,
   XmasTree,
+  RolesLink,
 } from "./MenuLink";
 
 const Container = styled.div`
@@ -87,6 +88,7 @@ const ListType = ({ onClickLunchmenu }) => {
           <SwapLink />
           <OrderLink />
           <QrcodeLink />
+          <RolesLink />
           {/* <ManagingRolesLink /> */}
         </PageLink>
       </Theme>
