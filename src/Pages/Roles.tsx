@@ -11,7 +11,7 @@ const Roles = () => {
   // 저장된 1인 1역이 없으면 초기 설정 부터 해야 함 - 1번째 창
 
   useEffect(() => {
-    navigate("/roles/setting");
+    navigate("/roles/setting", { replace: true });
   }, []);
   return (
     <Routes>
