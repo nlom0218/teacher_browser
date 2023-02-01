@@ -55,6 +55,7 @@ import QrcodeResult from "./Pages/QrcodeResult";
 import XmasTree from "./Pages/XmasTree";
 import WishCard from "./Pages/WishCard";
 import SeoWonju from "./Pages/SeoWonju";
+import Roles from "./Pages/Roles";
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
   const bgTheme = useReactiveVar(bgThemeVar);
@@ -190,6 +191,7 @@ function App() {
         <Route path={routes.attend} element={<Attend />} />
         <Route path={routes.xmasTree} element={<XmasTree />} />
         <Route path={routes.wishCard} element={<WishCard />} />
+        <Route path={`${routes.roles}/*`} element={<Roles />} />
         <Route path="/2022seoWonju" element={<SeoWonju />} />
       </Routes>
     </ThemeProvider>

@@ -24,6 +24,7 @@ const QRCODE_POPUP = "/qrcode_popup";
 const QRCODE_STORAGE = "/qrcode_storage";
 const XMAS_TREE = "/XmasTree";
 const WISH_CARD = "/WishCard";
+const ROLES = "/roles";
 
 // account link
 const LOGIN = "/login";
@@ -68,6 +69,7 @@ const routes = {
   qrcodeStorage: QRCODE_STORAGE,
   xmasTree: XMAS_TREE,
   wishCard: WISH_CARD,
+  roles: ROLES,
 
   // account link
   login: LOGIN,
