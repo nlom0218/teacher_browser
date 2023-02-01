@@ -5,6 +5,7 @@ import BasicContainer from "../Components/Shared/BasicContainer";
 
 const Container = styled.div`
   min-height: 100%;
+  max-height: 100%;
   padding: 40px;
   padding: 2.5rem;
   display: grid;

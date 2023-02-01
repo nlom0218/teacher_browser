@@ -15,18 +15,20 @@ let rolesExample = [
   { role: "물걸레질", work: "교실을 물걸레로 청결하게 정리합니다." },
 ];
 
-let randerRolesExample = rolesExample;
-
 const Container = styled.div`
+  max-height: 100%;
+  min-height: 100%;
   text-align: center;
 `;
 
 const Form = styled.form`
+  max-height: 100%;
   background-color: ${(props) => props.theme.contentBgColor};
   transition: background-color 1s ease;
   display: grid;
   row-gap: 2px;
   row-gap: 0.126rem;
+  overflow: scroll;
 `;
 
 const Head = styled.div`
