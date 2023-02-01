@@ -12,7 +12,6 @@ import {
   SwapLink,
   TimerLink,
   NewsLink,
-  ManagingRolesLink,
   PopupOrderLink,
   QrcodeLink,
   HeaderBookMark,
@@ -65,7 +64,6 @@ const GridType = ({ onClickLunchmenu }) => {
           <ListLink />
           <NewsLink />
           <HeaderBookMark />
-          {/* <ManagingRolesLink /> */}
           <QrcodeLink />
           <XmasTree />
           <RolesLink />

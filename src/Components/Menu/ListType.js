@@ -11,7 +11,6 @@ import {
   ScheduleLink,
   SwapLink,
   TimerLink,
-  ManagingRolesLink,
   QrcodeLink,
   XmasTree,
   RolesLink,
@@ -89,7 +88,6 @@ const ListType = ({ onClickLunchmenu }) => {
           <OrderLink />
           <QrcodeLink />
           <RolesLink />
-          {/* <ManagingRolesLink /> */}
         </PageLink>
       </Theme>
       <Theme>

@@ -290,7 +290,6 @@ export const QrcodeLink = () => {
 };
 
 export const PopupQrcodeLink = () => {
-  const media = useMedia();
   const [isHover, setIsHover] = useState(false);
   const lunchmenuUrl =
     process.env.NODE_ENV === "production"
