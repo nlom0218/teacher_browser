@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import BtnContainer from "../Components/Roles/Register/BtnContainer";
@@ -12,7 +13,7 @@ interface IProps {
 
 const RolesAddStudents = ({ setErrMsg }: IProps) => {
   const navigate = useNavigate();
-  const { roles } = JSON.parse(localStorage.getItem("roleDetails") || "{}");
+  const { roles, startDate, endDate } = JSON.parse(localStorage.getItem("roleDetails") || "{}");
 
   const { register } = useForm({
     mode: "onChange",
@@ -29,6 +30,7 @@ const RolesAddStudents = ({ setErrMsg }: IProps) => {
         <div className="line-btn btn" onClick={onClickEditBtn}>
           역할 수정
         </div>
+        <div>{`${format(new Date(startDate), "yy.MM.dd")} ~ ${format(new Date(endDate), "yy.MM.dd")}`}</div>
         <input type="submit" value="저장" className="save-btn btn" />
       </BtnContainer>
       <RolesGraph register={register} isAddStudent={true} roles={roles} />
