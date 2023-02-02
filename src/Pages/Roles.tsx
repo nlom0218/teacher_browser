@@ -1,10 +1,14 @@
+import { useReactiveVar } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
+import { isPopupVar } from "../apollo";
+import SetPeriod from "../Components/Roles/Popup/SetPeriod";
 import AlertMessage from "../Components/Shared/AlertMessage";
 import RolesSetting from "./RolesSetting";
 
 const Roles = () => {
   const navigate = useNavigate();
+  const isPopup = useReactiveVar(isPopupVar);
   const [errMsg, setErrMsg] = useState<string | null>(null);
 
   // 데이터 베이스에서 현재 기간의 1인 1역을 가져와야 함
@@ -22,6 +26,7 @@ const Roles = () => {
         <Route path="setting" element={<RolesSetting setErrMsg={setErrMsg} />} />
       </Routes>
       {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
+      {isPopup === "rolesPeriod" && <SetPeriod setErrMsg={setErrMsg} />}
     </React.Fragment>
   );
 };

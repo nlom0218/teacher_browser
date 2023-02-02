@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { inPopup } from "../apollo";
 import RolesGraph from "../Components/Roles/RolesGraph";
 import BasicContainer from "../Components/Shared/BasicContainer";
 
@@ -83,7 +84,8 @@ const RolesSetting = ({ setErrMsg }: IProps) => {
       roleObj = { role: "", work: "", students: [] };
     });
 
-    localStorage.setItem("roleDetails", JSON.stringify(rolesDetails));
+    localStorage.setItem("roleDetails", JSON.stringify({ roles: rolesDetails }));
+    inPopup("rolesPeriod");
   };
 
   const onError = (error: any) => {
