@@ -57,13 +57,12 @@ interface IProps {
   register: UseFormRegister<FieldValues>;
 }
 
-const RolesGraph = ({ lineNums = 0, register, isAddStudent = false, roles }: IProps) => {
+const RolesGraph = ({ lineNums = 9, register, isAddStudent = false, roles }: IProps) => {
   const [randerRolesExample, setRanderRolesExample] = useState(rolesExample);
 
   useEffect(() => {
-    if (lineNums < 1) {
-      const lastIdx = 10 + lineNums;
-      setRanderRolesExample(rolesExample.slice(0, lastIdx));
+    if (lineNums < 10) {
+      return setRanderRolesExample(rolesExample.slice(0, lineNums + 1));
     }
   }, [lineNums]);
   return (
@@ -79,13 +78,13 @@ const RolesGraph = ({ lineNums = 0, register, isAddStudent = false, roles }: IPr
             return <RolesGraphContents key={idx} {...role} idx={idx} register={register} />;
           })}
         {!isAddStudent &&
-          lineNums > 0 &&
-          new Array(lineNums).fill(null).map((_, idx) => {
-            return <RolesGraphContents key={idx + 10} idx={idx + 10} register={register} />;
+          lineNums > 9 &&
+          new Array(lineNums - 9).fill(null).map((_, idx) => {
+            return <RolesGraphContents key={idx} idx={idx + 10} register={register} />;
           })}
         {isAddStudent &&
           roles?.map((role, idx) => {
-            return <RolesGraphContents register={register} idx={1} key={idx} {...role} isAddStudent={isAddStudent} />;
+            return <RolesGraphContents register={register} idx={idx} key={idx} {...role} isAddStudent={isAddStudent} />;
           })}
       </Layout>
     </Container>

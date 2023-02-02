@@ -17,7 +17,7 @@ type RoleObj = {
 };
 
 const RolesSetting = ({ setErrMsg }: IProps) => {
-  const [lineNums, setLineNums] = useState(0);
+  const [lineNums, setLineNums] = useState(9);
 
   const { register, handleSubmit, setValue } = useForm({
     mode: "onChange",
@@ -25,9 +25,9 @@ const RolesSetting = ({ setErrMsg }: IProps) => {
 
   const onClickLineBtn = (type: string) => {
     if (type === "add") return setLineNums((prev) => (prev += 1));
-    if (lineNums === -9) return;
-    setValue(`role${lineNums > 0 ? lineNums + 9 : lineNums + 9}`, "");
-    setValue(`work${lineNums > 0 ? lineNums + 9 : lineNums + 9}`, "");
+    if (lineNums === 0) return;
+    setValue(`role${lineNums}`, "");
+    setValue(`work${lineNums}`, "");
     return setLineNums((prev) => (prev -= 1));
   };
 
