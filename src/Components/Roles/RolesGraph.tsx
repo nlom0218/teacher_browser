@@ -53,10 +53,11 @@ const Head = styled.div<IHead>`
 interface IProps {
   lineNums?: number;
   isAddStudent?: boolean;
+  roles?: { work: string; role: string }[];
   register: UseFormRegister<FieldValues>;
 }
 
-const RolesGraph = ({ lineNums = 0, register, isAddStudent = false }: IProps) => {
+const RolesGraph = ({ lineNums = 0, register, isAddStudent = false, roles }: IProps) => {
   const [randerRolesExample, setRanderRolesExample] = useState(rolesExample);
 
   useEffect(() => {
@@ -82,7 +83,10 @@ const RolesGraph = ({ lineNums = 0, register, isAddStudent = false }: IProps) =>
           new Array(lineNums).fill(null).map((_, idx) => {
             return <RolesGraphContents key={idx + 10} idx={idx + 10} register={register} />;
           })}
-        {isAddStudent && <RolesGraphContents register={register} idx={1} isAddStudent={isAddStudent} />}
+        {isAddStudent &&
+          roles?.map((role, idx) => {
+            return <RolesGraphContents register={register} idx={1} key={idx} {...role} isAddStudent={isAddStudent} />;
+          })}
       </Layout>
     </Container>
   );

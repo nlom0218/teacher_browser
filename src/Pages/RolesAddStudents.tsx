@@ -9,6 +9,8 @@ interface IProps {
 }
 
 const RolesAddStudents = ({ setErrMsg }: IProps) => {
+  const { roles } = JSON.parse(localStorage.getItem("roleDetails") || "{}");
+
   const { register } = useForm({
     mode: "onChange",
   });
@@ -19,7 +21,7 @@ const RolesAddStudents = ({ setErrMsg }: IProps) => {
         <div className="line-btn btn">역할 수정</div>
         <input type="submit" value="저장" className="save-btn btn" />
       </BtnContainer>
-      <RolesGraph register={register} isAddStudent={true} />
+      <RolesGraph register={register} isAddStudent={true} roles={roles} />
     </Form>
   );
 };

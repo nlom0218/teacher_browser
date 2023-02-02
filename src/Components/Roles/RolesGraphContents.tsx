@@ -1,3 +1,4 @@
+import React from "react";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 import styled from "styled-components";
 
@@ -32,24 +33,34 @@ interface IProps {
 const RolesGraphContents = ({ role, work, idx, register, isAddStudent = false }: IProps) => {
   return (
     <Container isAddStudent={isAddStudent}>
-      <input
-        type="text"
-        {...register(`role${idx}`, { required: true })}
-        placeholder={role || "역할을 입력하세요."}
-        autoComplete="off"
-      />
-      <input
-        type="text"
-        {...register(`work${idx}`, { required: true })}
-        placeholder={work || "하는 일을 입력하세요."}
-        autoComplete="off"
-      />
-      <input
-        type="text"
-        {...register(`student${idx}`, { required: true })}
-        placeholder="클릭하여 학생을 선택하세요."
-        autoComplete="off"
-      />
+      {!isAddStudent && (
+        <React.Fragment>
+          <input
+            type="text"
+            {...register(`role${idx}`, { required: true })}
+            placeholder={role || "역할을 입력하세요."}
+            autoComplete="off"
+          />
+          <input
+            type="text"
+            {...register(`work${idx}`, { required: true })}
+            placeholder={work || "하는 일을 입력하세요."}
+            autoComplete="off"
+          />
+        </React.Fragment>
+      )}
+      {isAddStudent && (
+        <React.Fragment>
+          <input value={role} readOnly />
+          <input value={work} readOnly />
+          <input
+            type="text"
+            {...register(`student${idx}`, { required: true })}
+            placeholder="클릭하여 학생을 선택하세요."
+            autoComplete="off"
+          />
+        </React.Fragment>
+      )}
     </Container>
   );
 };
