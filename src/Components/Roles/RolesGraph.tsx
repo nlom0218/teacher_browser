@@ -32,9 +32,13 @@ const Layout = styled.div`
   overflow: scroll;
 `;
 
-const Head = styled.div`
+interface IHead {
+  isAddStudent: boolean;
+}
+
+const Head = styled.div<IHead>`
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: ${(props) => (props.isAddStudent ? "1fr 3fr 1fr" : "1fr 3fr")};
   column-gap: 2px;
   column-gap: 0.126rem;
   font-weight: 700;
@@ -47,11 +51,12 @@ const Head = styled.div`
 `;
 
 interface IProps {
-  lineNums: number;
+  lineNums?: number;
+  isAddStudent?: boolean;
   register: UseFormRegister<FieldValues>;
 }
 
-const RolesGraph = ({ lineNums, register }: IProps) => {
+const RolesGraph = ({ lineNums = 0, register, isAddStudent = false }: IProps) => {
   const [randerRolesExample, setRanderRolesExample] = useState(rolesExample);
 
   useEffect(() => {
@@ -63,17 +68,21 @@ const RolesGraph = ({ lineNums, register }: IProps) => {
   return (
     <Container>
       <Layout>
-        <Head>
+        <Head isAddStudent={isAddStudent}>
           <input defaultValue={"역할"} />
           <input defaultValue={"하는 일"} />
+          {isAddStudent && <input defaultValue={"이름"} />}
         </Head>
-        {randerRolesExample.map((role, idx) => {
-          return <RolesGraphContents key={idx} {...role} idx={idx} register={register} />;
-        })}
-        {lineNums > 0 &&
+        {!isAddStudent &&
+          randerRolesExample.map((role, idx) => {
+            return <RolesGraphContents key={idx} {...role} idx={idx} register={register} />;
+          })}
+        {!isAddStudent &&
+          lineNums > 0 &&
           new Array(lineNums).fill(null).map((_, idx) => {
             return <RolesGraphContents key={idx + 10} idx={idx + 10} register={register} />;
           })}
+        {isAddStudent && <RolesGraphContents register={register} idx={1} isAddStudent={isAddStudent} />}
       </Layout>
     </Container>
   );

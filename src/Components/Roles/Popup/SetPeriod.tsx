@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { outPopup } from "../../../apollo";
+import routes from "../../../routes";
 import PopupContainer from "../../Shared/PopupContainer";
 import { PopupDate } from "../../TodoList/Popup/PopupLayout";
 
@@ -28,6 +30,8 @@ interface IProps {
 }
 
 const SetPeriod = ({ setErrMsg }: IProps) => {
+  const navigate = useNavigate();
+
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
@@ -36,6 +40,7 @@ const SetPeriod = ({ setErrMsg }: IProps) => {
     const roleDetails = JSON.parse(localStorage.getItem("roleDetails") || "{}");
     localStorage.setItem("roleDetails", JSON.stringify({ startDate, endDate, ...roleDetails }));
     outPopup();
+    navigate(`${routes.roles}/add-students`);
   };
   return (
     <PopupContainer>

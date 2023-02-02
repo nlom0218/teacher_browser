@@ -4,6 +4,8 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { isPopupVar } from "../apollo";
 import SetPeriod from "../Components/Roles/Popup/SetPeriod";
 import AlertMessage from "../Components/Shared/AlertMessage";
+import BasicContainer from "../Components/Shared/BasicContainer";
+import RolesAddStudents from "./RolesAddStudents";
 import RolesSetting from "./RolesSetting";
 
 const Roles = () => {
@@ -20,14 +22,15 @@ const Roles = () => {
     navigate("/roles/setting", { replace: true });
   }, []);
   return (
-    <React.Fragment>
+    <BasicContainer menuItem={true}>
       <Routes>
         <Route path=":id" element={<div>디테일</div>} />
         <Route path="setting" element={<RolesSetting setErrMsg={setErrMsg} />} />
+        <Route path="add-students" element={<RolesAddStudents setErrMsg={setErrMsg} />} />
       </Routes>
       {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
       {isPopup === "rolesPeriod" && <SetPeriod setErrMsg={setErrMsg} />}
-    </React.Fragment>
+    </BasicContainer>
   );
 };
 

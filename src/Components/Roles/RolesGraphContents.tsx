@@ -1,9 +1,13 @@
 import { FieldValues, UseFormRegister } from "react-hook-form";
 import styled from "styled-components";
 
-const Container = styled.div`
+interface IContainer {
+  isAddStudent?: boolean;
+}
+
+const Container = styled.div<IContainer>`
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: ${(props) => (props.isAddStudent ? "1fr 3fr 1fr" : "1fr 3fr")};
   column-gap: 2px;
   column-gap: 0.126rem;
   input {
@@ -21,12 +25,13 @@ interface IProps {
   role?: string;
   work?: string;
   idx: number;
+  isAddStudent?: boolean;
   register: UseFormRegister<FieldValues>;
 }
 
-const RolesGraphContents = ({ role, work, idx, register }: IProps) => {
+const RolesGraphContents = ({ role, work, idx, register, isAddStudent = false }: IProps) => {
   return (
-    <Container>
+    <Container isAddStudent={isAddStudent}>
       <input
         type="text"
         {...register(`role${idx}`, { required: true })}
@@ -37,6 +42,12 @@ const RolesGraphContents = ({ role, work, idx, register }: IProps) => {
         type="text"
         {...register(`work${idx}`, { required: true })}
         placeholder={work || "하는 일을 입력하세요."}
+        autoComplete="off"
+      />
+      <input
+        type="text"
+        {...register(`student${idx}`, { required: true })}
+        placeholder="클릭하여 학생을 선택하세요."
         autoComplete="off"
       />
     </Container>
