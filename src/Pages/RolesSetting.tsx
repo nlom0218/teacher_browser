@@ -66,7 +66,7 @@ const RolesSetting = ({ setErrMsg }: IProps) => {
 
   const onClickLineBtn = (type: string) => {
     if (type === "add") return setLineNums((prev) => (prev += 1));
-    if (lineNums === -10) return;
+    if (lineNums === -9) return;
     setValue(`role${lineNums > 0 ? lineNums + 9 : lineNums + 9}`, "");
     setValue(`work${lineNums > 0 ? lineNums + 9 : lineNums + 9}`, "");
     return setLineNums((prev) => (prev -= 1));
