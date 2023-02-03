@@ -1,6 +1,7 @@
 import React from "react";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 import styled from "styled-components";
+import { inPopup } from "../../apollo";
 
 interface IContainer {
   isAddStudent?: boolean;
@@ -37,6 +38,10 @@ interface IProps {
 }
 
 const RolesGraphContents = ({ role, work, idx, register, isAddStudent = false }: IProps) => {
+  const onClickSeleteStudent = () => {
+    inPopup("rolesSeleteStudent");
+  };
+
   return (
     <Container isAddStudent={isAddStudent}>
       {!isAddStudent && (
@@ -60,6 +65,9 @@ const RolesGraphContents = ({ role, work, idx, register, isAddStudent = false }:
           <input value={role} readOnly />
           <input value={work} readOnly />
           <div
+            onClick={() => {
+              onClickSeleteStudent();
+            }}
             className="selected-box"
             {...register(`student${idx}`, { required: true })}
             placeholder="클릭하여 학생을 선택하세요."

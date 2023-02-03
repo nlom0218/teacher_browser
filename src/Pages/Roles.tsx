@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { isPopupVar } from "../apollo";
 import SetPeriod from "../Components/Roles/Popup/SetPeriod";
+import SetStudent from "../Components/Roles/Popup/SetStudent";
 import AlertMessage from "../Components/Shared/AlertMessage";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import RolesAddStudents from "./RolesAddStudents";
@@ -30,6 +31,7 @@ const Roles = () => {
       </Routes>
       {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
       {isPopup === "rolesPeriod" && <SetPeriod setErrMsg={setErrMsg} />}
+      {isPopup === "rolesSeleteStudent" && <SetStudent />}
     </BasicContainer>
   );
 };
