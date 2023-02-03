@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import BtnContainer from "../Components/Roles/Register/BtnContainer";
@@ -32,6 +33,21 @@ const RolesAddStudents = ({ setErrMsg, setMsg }: IProps) => {
     // DB에 저장이후 로컬스토리지 삭제
     // 메인 페이지로 이동 후 DB에 있는 정보 가져오기(현재 날짜에 따른 1인 1역)
   };
+
+  const preventClose = (event: BeforeUnloadEvent) => {
+    event.preventDefault();
+    event.returnValue = "";
+  };
+
+  useEffect(() => {
+    (() => {
+      window.addEventListener("beforeunload", preventClose);
+    })();
+
+    return () => {
+      window.removeEventListener("beforeunload", preventClose);
+    };
+  }, []);
 
   return (
     <Form>
