@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { outPopup } from "../../../apollo";
+import { inPopup, outPopup } from "../../../apollo";
 import routes from "../../../routes";
 
 const Layout = styled.div`
@@ -25,7 +25,7 @@ const Button = styled.div`
   cursor: pointer;
 `;
 
-const GuideDefaultList = () => {
+const GuideStudents = () => {
   const navigate = useNavigate();
 
   const onClickButton = () => {
@@ -36,11 +36,11 @@ const GuideDefaultList = () => {
   return (
     <Layout>
       <div>1인 1역의 학생 등록은 대표 명렬표의 학생들을 기준으로 합니다.</div>
-      <div>현재 대표 명렬표가 없습니다. 아래의 버튼을 클릭하여 대표 명렬표를 설정해주세요.</div>
+      <div>현재 대표 명렬표에 등록된 학생이 없습니다. 아래의 버튼을 클릭하여 대표 명렬표에 학생을 등록하세요.</div>
       <div>노션 참고 사항</div>
-      <Button onClick={onClickButton}>대표 명렬표 설정하기</Button>
+      <Button onClick={onClickButton}>학생 등록하기</Button>
     </Layout>
   );
 };
 
-export default GuideDefaultList;
+export default GuideStudents;

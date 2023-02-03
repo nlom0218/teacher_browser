@@ -4,6 +4,7 @@ import PopupContainer from "../../Shared/PopupContainer";
 import { SEE_ONE_STUDENT_LIST_QUERY } from "../../../Graphql/StudentList/query";
 import Loading from "../../Shared/Loading";
 import GuideDefaultList from "./GuideDefaultList";
+import GuideStudents from "./GuideStudents";
 
 const SetStudent = () => {
   const me = useMe();
@@ -19,7 +20,12 @@ const SetStudent = () => {
   }
 
   return (
-    <PopupContainer maxHeight={true}>{me?.defaultStudentListId ? <div></div> : <GuideDefaultList />}</PopupContainer>
+    <PopupContainer maxHeight={true}>
+      {!me?.defaultStudentListId && <GuideDefaultList />}
+      {data?.seeStudentList[0].students.filter((item: { trash: boolean }) => !item.trash).length !== 0 && (
+        <GuideStudents />
+      )}
+    </PopupContainer>
   );
 };
 
