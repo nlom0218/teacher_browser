@@ -38,7 +38,7 @@ interface IHead {
 
 const Head = styled.div<IHead>`
   display: grid;
-  grid-template-columns: ${(props) => (props.isAddStudent ? "1fr 3fr 1fr" : "1fr 3fr")};
+  grid-template-columns: ${(props) => (props.isAddStudent ? "1fr 3fr 1.5fr" : "1fr 3fr")};
   column-gap: 2px;
   column-gap: 0.126rem;
   font-weight: 700;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FieldValues, UseFormRegister } from "react-hook-form";
-import { GrPowerReset } from "react-icons/gr";
+import { MdOutlineRefresh } from "react-icons/md";
 import styled from "styled-components";
 import { inPopup } from "../../apollo";
 
@@ -10,7 +10,7 @@ interface IContainer {
 
 const Container = styled.div<IContainer>`
   display: grid;
-  grid-template-columns: ${(props) => (props.isAddStudent ? "1fr 3fr 1fr" : "1fr 3fr")};
+  grid-template-columns: ${(props) => (props.isAddStudent ? "1fr 3fr 1.5fr" : "1fr 3fr")};
   column-gap: 2px;
   column-gap: 0.126rem;
   input,
@@ -31,8 +31,6 @@ interface ISelecteBox {
 
 const SelecteBox = styled.div<ISelecteBox>`
   cursor: ${(props) => !props.hasStudents && "pointer"};
-  color: ${(props) => !props.hasStudents && props.theme.blurFontColor};
-  transition: background-color 1s ease, color 1s ease;
 `;
 
 const SelecteStudentList = styled.div`
@@ -46,8 +44,16 @@ const SelecteStudentList = styled.div`
 const ResetIcon = styled.div`
   cursor: pointer;
   svg {
+    color: ${(props) => props.theme.fontColor};
+    transition: color 1s ease;
     display: flex;
   }
+`;
+
+const ClickMsg = styled.div`
+  color: ${(props) => props.theme.blurFontColor};
+  transition: background-color 1s ease, color 1s ease;
+  line-height: 140%;
 `;
 
 type IRoles = {
@@ -132,11 +138,11 @@ const RolesGraphContents = ({ role, work, idx, register, isAddStudent = false, s
                     .join(", ")}
                 </div>
                 <ResetIcon onClick={onClickReset}>
-                  <GrPowerReset />
+                  <MdOutlineRefresh />
                 </ResetIcon>
               </SelecteStudentList>
             ) : (
-              "클릭하여 학생을 선택하세요."
+              <ClickMsg>클릭하여 학생을 선택하세요.</ClickMsg>
             )}
           </SelecteBox>
         </React.Fragment>
