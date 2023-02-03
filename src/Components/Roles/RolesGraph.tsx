@@ -55,9 +55,10 @@ interface IProps {
   isAddStudent?: boolean;
   roles?: { work: string; role: string }[];
   register: UseFormRegister<FieldValues>;
+  setMsg?: React.Dispatch<React.SetStateAction<null | string>>;
 }
 
-const RolesGraph = ({ lineNums = 9, register, isAddStudent = false, roles }: IProps) => {
+const RolesGraph = ({ lineNums = 9, register, isAddStudent = false, roles, setMsg }: IProps) => {
   const [randerRolesExample, setRanderRolesExample] = useState(rolesExample);
 
   useEffect(() => {
@@ -84,7 +85,16 @@ const RolesGraph = ({ lineNums = 9, register, isAddStudent = false, roles }: IPr
           })}
         {isAddStudent &&
           roles?.map((role, idx) => {
-            return <RolesGraphContents register={register} idx={idx} key={idx} {...role} isAddStudent={isAddStudent} />;
+            return (
+              <RolesGraphContents
+                register={register}
+                idx={idx}
+                key={idx}
+                {...role}
+                isAddStudent={isAddStudent}
+                setMsg={setMsg}
+              />
+            );
           })}
       </Layout>
     </Container>

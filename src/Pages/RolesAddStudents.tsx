@@ -9,9 +9,10 @@ import routes from "../routes";
 
 interface IProps {
   setErrMsg: React.Dispatch<React.SetStateAction<null | string>>;
+  setMsg: React.Dispatch<React.SetStateAction<null | string>>;
 }
 
-const RolesAddStudents = ({ setErrMsg }: IProps) => {
+const RolesAddStudents = ({ setErrMsg, setMsg }: IProps) => {
   const navigate = useNavigate();
   const { roles, startDate, endDate } = JSON.parse(localStorage.getItem("roleDetails") || "{}");
 
@@ -33,7 +34,7 @@ const RolesAddStudents = ({ setErrMsg }: IProps) => {
         <div>{`${format(new Date(startDate), "yy.MM.dd")} ~ ${format(new Date(endDate), "yy.MM.dd")}`}</div>
         <input type="submit" value="저장" className="save-btn btn" />
       </BtnContainer>
-      <RolesGraph register={register} isAddStudent={true} roles={roles} />
+      <RolesGraph register={register} isAddStudent={true} roles={roles} setMsg={setMsg} />
     </Form>
   );
 };

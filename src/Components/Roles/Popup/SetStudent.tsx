@@ -8,6 +8,7 @@ import GuideStudents from "./GuideStudents";
 import styled from "styled-components";
 import StudentItem from "./StudentItem";
 import { useState } from "react";
+import { outPopup } from "../../../apollo";
 
 const Layout = styled.div`
   min-height: 100%;
@@ -54,16 +55,49 @@ type IStudent = {
   _id: string;
 };
 
-const SetStudent = () => {
-  const me = useMe();
-  //   console.log(me?.defaultStudentListId);
-  //   console.log(me?.email);
+type IRoles = {
+  role: string;
+  work: string;
+  students: string[];
+};
 
+interface IProps {
+  setErrMsg: React.Dispatch<React.SetStateAction<null | string>>;
+  setMsg: React.Dispatch<React.SetStateAction<null | string>>;
+}
+
+const SetStudent = ({ setErrMsg, setMsg }: IProps) => {
+  const me = useMe();
   const [selectedStudent, setSelectedStudent] = useState<string[]>([]);
+
+  const completedStudent = JSON.parse(localStorage.getItem("roleDetails") || "{}")
+    .roles.flatMap(({ students }: { students: string[] }) => {
+      return students;
+    })
+    .map((item: string) => {
+      return item.split(" ")[0];
+    });
 
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: { listId: me?.defaultStudentListId },
   });
+
+  const onClickCompleteBtn = () => {
+    if (selectedStudent.length === 0) return setErrMsg("선택된 학생이 없습니다.😓");
+    const roleDetails = JSON.parse(localStorage.getItem("roleDetails") || "{}");
+    const role = localStorage.getItem("selectedRole");
+    const newRoleDetails = {
+      ...roleDetails,
+      roles: roleDetails.roles.map((item: IRoles) => {
+        if (item.role !== role) return item;
+        return { ...item, students: selectedStudent };
+      }),
+    };
+    localStorage.setItem("roleDetails", JSON.stringify(newRoleDetails));
+    localStorage.removeItem("selectedRole");
+    setMsg(`${role} 역할에 ${selectedStudent.length}명의 학생이 추가되었습니다.😁`);
+    outPopup();
+  };
 
   if (loading) {
     return <Loading page="popupPage" />;
@@ -80,6 +114,7 @@ const SetStudent = () => {
           <StudentList>
             {data?.seeStudentList[0].students
               .filter((item: { trash: boolean }) => !item.trash)
+              .filter(({ _id }: { _id: string }) => !completedStudent.includes(_id))
               .map((student: IStudent, idx: number) => {
                 return (
                   <StudentItem
@@ -91,7 +126,7 @@ const SetStudent = () => {
                 );
               })}
           </StudentList>
-          <CompletedBtn>선택완료</CompletedBtn>
+          <CompletedBtn onClick={onClickCompleteBtn}>선택완료</CompletedBtn>
         </Layout>
       )}
     </PopupContainer>

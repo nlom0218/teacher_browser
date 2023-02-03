@@ -28,15 +28,16 @@ interface IProps {
 }
 
 const StudentItem = ({ studentName, _id, selectedStudent, setSelectedStudent }: IProps) => {
-  const [isInclude, setIsInclude] = useState(selectedStudent.includes(_id));
+  const [isInclude, setIsInclude] = useState(selectedStudent.includes(`${_id} ${studentName}`));
 
   const onClickStudent = () => {
-    if (isInclude) return setSelectedStudent((prev) => prev.filter((id) => id !== _id));
-    return setSelectedStudent((prev) => [...prev, _id]);
+    const temp = `${_id} ${studentName}`;
+    if (isInclude) return setSelectedStudent((prev) => prev.filter((item) => item !== temp));
+    return setSelectedStudent((prev) => [...prev, temp]);
   };
 
   useEffect(() => {
-    setIsInclude(selectedStudent.includes(_id));
+    setIsInclude(selectedStudent.includes(`${_id} ${studentName}`));
   }, [selectedStudent]);
 
   return (

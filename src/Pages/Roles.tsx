@@ -13,6 +13,7 @@ const Roles = () => {
   const navigate = useNavigate();
   const isPopup = useReactiveVar(isPopupVar);
   const [errMsg, setErrMsg] = useState<string | null>(null);
+  const [msg, setMsg] = useState<string | null>(null);
 
   // 데이터 베이스에서 현재 기간의 1인 1역을 가져와야 함
   // 이를 바탕으로 1인 1역 디테일로 이동 - 3번째 창
@@ -27,11 +28,12 @@ const Roles = () => {
       <Routes>
         <Route path=":id" element={<div>디테일</div>} />
         <Route path="setting" element={<RolesSetting setErrMsg={setErrMsg} />} />
-        <Route path="add-students" element={<RolesAddStudents setErrMsg={setErrMsg} />} />
+        <Route path="add-students" element={<RolesAddStudents setErrMsg={setErrMsg} setMsg={setMsg} />} />
       </Routes>
       {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
+      {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
       {isPopup === "rolesPeriod" && <SetPeriod setErrMsg={setErrMsg} />}
-      {isPopup === "rolesSeleteStudent" && <SetStudent />}
+      {isPopup === "rolesSeleteStudent" && <SetStudent setErrMsg={setErrMsg} setMsg={setMsg} />}
     </BasicContainer>
   );
 };

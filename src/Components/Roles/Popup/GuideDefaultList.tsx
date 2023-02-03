@@ -31,6 +31,7 @@ const GuideDefaultList = () => {
   const onClickButton = () => {
     outPopup();
     navigate(routes.list);
+    localStorage.removeItem("selectedRole");
   };
 
   return (

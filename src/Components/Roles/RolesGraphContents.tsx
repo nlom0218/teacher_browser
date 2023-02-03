@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FieldValues, UseFormRegister } from "react-hook-form";
+import { GrPowerReset } from "react-icons/gr";
 import styled from "styled-components";
 import { inPopup } from "../../apollo";
 
@@ -22,25 +23,75 @@ const Container = styled.div<IContainer>`
       opacity: 0.8;
     }
   }
-  .selected-box {
-    cursor: pointer;
-    color: ${(props) => props.theme.blurFontColor};
-    transition: background-color 1s ease, color 1s ease;
+`;
+
+interface ISelecteBox {
+  hasStudents: boolean;
+}
+
+const SelecteBox = styled.div<ISelecteBox>`
+  cursor: ${(props) => !props.hasStudents && "pointer"};
+  color: ${(props) => !props.hasStudents && props.theme.blurFontColor};
+  transition: background-color 1s ease, color 1s ease;
+`;
+
+const SelecteStudentList = styled.div`
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 10px;
+  align-items: center;
+  line-height: 140%;
+`;
+
+const ResetIcon = styled.div`
+  cursor: pointer;
+  svg {
+    display: flex;
   }
 `;
+
+type IRoles = {
+  role: string;
+  work: string;
+  students: string[];
+};
 
 interface IProps {
   role?: string;
   work?: string;
   idx: number;
+  students?: string[];
   isAddStudent?: boolean;
   register: UseFormRegister<FieldValues>;
+  setMsg?: React.Dispatch<React.SetStateAction<null | string>>;
 }
 
-const RolesGraphContents = ({ role, work, idx, register, isAddStudent = false }: IProps) => {
+const RolesGraphContents = ({ role, work, idx, register, isAddStudent = false, students = [], setMsg }: IProps) => {
+  const [thisStudents, setThisStudents] = useState(students);
   const onClickSeleteStudent = () => {
+    if (thisStudents?.length !== 0) return;
     inPopup("rolesSeleteStudent");
+    if (role) localStorage.setItem("selectedRole", role);
   };
+
+  const onClickReset = () => {
+    if (!students) return;
+    const roleDetails = JSON.parse(localStorage.getItem("roleDetails") || "{}");
+    const newRoleDetails = {
+      ...roleDetails,
+      roles: roleDetails.roles.map((item: IRoles) => {
+        if (item.role !== role) return item;
+        return { ...item, students: [] };
+      }),
+    };
+    setThisStudents([]);
+    if (setMsg) setMsg("학생이 제거되었습니다.😁");
+    localStorage.setItem("roleDetails", JSON.stringify(newRoleDetails));
+  };
+
+  useEffect(() => {
+    setThisStudents(students);
+  }, [students]);
 
   return (
     <Container isAddStudent={isAddStudent}>
@@ -64,16 +115,30 @@ const RolesGraphContents = ({ role, work, idx, register, isAddStudent = false }:
         <React.Fragment>
           <input value={role} readOnly />
           <input value={work} readOnly />
-          <div
-            onClick={() => {
-              onClickSeleteStudent();
-            }}
+          <SelecteBox
+            hasStudents={thisStudents?.length !== 0}
+            onClick={onClickSeleteStudent}
             className="selected-box"
             {...register(`student${idx}`, { required: true })}
             placeholder="클릭하여 학생을 선택하세요."
           >
-            클릭하여 학생을 선택하세요.
-          </div>
+            {thisStudents?.length !== 0 ? (
+              <SelecteStudentList>
+                <div>
+                  {thisStudents
+                    ?.map((item) => {
+                      return item.split(" ")[1];
+                    })
+                    .join(", ")}
+                </div>
+                <ResetIcon onClick={onClickReset}>
+                  <GrPowerReset />
+                </ResetIcon>
+              </SelecteStudentList>
+            ) : (
+              "클릭하여 학생을 선택하세요."
+            )}
+          </SelecteBox>
         </React.Fragment>
       )}
     </Container>
