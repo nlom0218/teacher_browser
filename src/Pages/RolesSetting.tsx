@@ -19,6 +19,10 @@ type RoleObj = {
 const RolesSetting = ({ setErrMsg }: IProps) => {
   const [lineNums, setLineNums] = useState(9);
 
+  const [savedRoles, setSavedRoles] = useState<null | { work: string; role: string }[]>(
+    JSON.parse(localStorage.getItem("roleDetails") || "{}").roles,
+  );
+
   const { register, handleSubmit, setValue } = useForm({
     mode: "onChange",
   });
@@ -57,6 +61,10 @@ const RolesSetting = ({ setErrMsg }: IProps) => {
   };
 
   useEffect(() => {
+    if (savedRoles) {
+      setLineNums(savedRoles.length - 1);
+    }
+
     (() => {
       window.addEventListener("beforeunload", preventClose);
     })();
@@ -65,6 +73,17 @@ const RolesSetting = ({ setErrMsg }: IProps) => {
       window.removeEventListener("beforeunload", preventClose);
     };
   }, []);
+
+  useEffect(() => {
+    if (!savedRoles) return;
+    if (savedRoles.length - 1 > lineNums) {
+      console.log("제거해야 해!");
+      const { startDate, endDate, roles } = JSON.parse(localStorage.getItem("roleDetails") || "{}");
+      roles.pop();
+      localStorage.setItem("roleDetails", JSON.stringify({ startDate, endDate, roles }));
+      setSavedRoles(roles);
+    }
+  }, [lineNums]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit, onError)}>
@@ -79,7 +98,7 @@ const RolesSetting = ({ setErrMsg }: IProps) => {
         <span>1인 1역 역할을 작성후 저장해 주세요.</span>
         <input type="submit" value="저장" className="save-btn btn" />
       </BtnContainer>
-      <RolesGraph lineNums={lineNums} register={register} />
+      <RolesGraph lineNums={lineNums} register={register} savedRoles={savedRoles} />
     </Form>
   );
 };

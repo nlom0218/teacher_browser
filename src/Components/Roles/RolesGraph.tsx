@@ -54,11 +54,12 @@ interface IProps {
   lineNums?: number;
   isAddStudent?: boolean;
   roles?: { work: string; role: string }[];
+  savedRoles?: null | { work: string; role: string }[];
   register: UseFormRegister<FieldValues>;
   setMsg?: React.Dispatch<React.SetStateAction<null | string>>;
 }
 
-const RolesGraph = ({ lineNums = 9, register, isAddStudent = false, roles, setMsg }: IProps) => {
+const RolesGraph = ({ lineNums = 9, register, isAddStudent = false, roles, setMsg, savedRoles }: IProps) => {
   const [randerRolesExample, setRanderRolesExample] = useState(rolesExample);
 
   useEffect(() => {
@@ -74,14 +75,31 @@ const RolesGraph = ({ lineNums = 9, register, isAddStudent = false, roles, setMs
           <input defaultValue={"하는 일"} />
           {isAddStudent && <input defaultValue={"이름"} />}
         </Head>
-        {!isAddStudent &&
+        {!savedRoles &&
+          !isAddStudent &&
           randerRolesExample.map((role, idx) => {
             return <RolesGraphContents key={idx} {...role} idx={idx} register={register} />;
           })}
-        {!isAddStudent &&
+        {!savedRoles &&
+          !isAddStudent &&
           lineNums > 9 &&
           new Array(lineNums - 9).fill(null).map((_, idx) => {
             return <RolesGraphContents key={idx} idx={idx + 10} register={register} />;
+          })}
+        {savedRoles &&
+          !isAddStudent &&
+          savedRoles.map((role, idx) => {
+            return (
+              <RolesGraphContents key={idx} idx={idx} register={register} savedRole={role.role} savedWork={role.work} />
+            );
+          })}
+        {savedRoles &&
+          !isAddStudent &&
+          lineNums > savedRoles.length - 1 &&
+          new Array(lineNums - (savedRoles.length - 1)).fill(null).map((_, idx) => {
+            return (
+              <RolesGraphContents key={idx + savedRoles.length} idx={idx + savedRoles.length} register={register} />
+            );
           })}
         {isAddStudent &&
           roles?.map((role, idx) => {

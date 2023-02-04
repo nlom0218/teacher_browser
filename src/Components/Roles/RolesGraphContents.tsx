@@ -68,11 +68,23 @@ interface IProps {
   idx: number;
   students?: string[];
   isAddStudent?: boolean;
+  savedRole?: string;
+  savedWork?: string;
   register: UseFormRegister<FieldValues>;
   setMsg?: React.Dispatch<React.SetStateAction<null | string>>;
 }
 
-const RolesGraphContents = ({ role, work, idx, register, isAddStudent = false, students = [], setMsg }: IProps) => {
+const RolesGraphContents = ({
+  role,
+  work,
+  idx,
+  register,
+  isAddStudent = false,
+  students = [],
+  setMsg,
+  savedRole,
+  savedWork,
+}: IProps) => {
   const [thisStudents, setThisStudents] = useState(students);
   const onClickSeleteStudent = () => {
     if (thisStudents?.length !== 0) return;
@@ -108,12 +120,14 @@ const RolesGraphContents = ({ role, work, idx, register, isAddStudent = false, s
             {...register(`role${idx}`, { required: true })}
             placeholder={role || "역할을 입력하세요."}
             autoComplete="off"
+            defaultValue={savedRole && savedRole}
           />
           <input
             type="text"
             {...register(`work${idx}`, { required: true })}
             placeholder={work || "하는 일을 입력하세요."}
             autoComplete="off"
+            defaultValue={savedWork && savedWork}
           />
         </React.Fragment>
       )}
