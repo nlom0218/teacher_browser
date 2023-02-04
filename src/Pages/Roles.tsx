@@ -28,7 +28,10 @@ const Roles = () => {
       <Routes>
         <Route path=":id" element={<div>디테일</div>} />
         <Route path="setting" element={<RolesSetting setErrMsg={setErrMsg} />} />
-        <Route path="add-students" element={<RolesAddStudents setErrMsg={setErrMsg} setMsg={setMsg} />} />
+        <Route
+          path="add-students"
+          element={<RolesAddStudents setErrMsg={setErrMsg} setMsg={setMsg} isPopup={isPopup} />}
+        />
       </Routes>
       {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
       {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
