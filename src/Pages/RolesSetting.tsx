@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import styled from "styled-components";
 import { inPopup } from "../apollo";
 import BtnContainer from "../Components/Roles/Register/BtnContainer";
 import Form from "../Components/Roles/Register/Form";
@@ -18,6 +19,17 @@ let rolesExample = [
   { role: "학급문고 관리", work: "학급 문고를 청결하게 정리합니다.", id: 9 },
   { role: "물걸레질", work: "교실을 물걸레로 청결하게 정리합니다.", id: 10 },
 ];
+
+const ResetBtn = styled.div`
+  background-color: ${(props) => props.theme.redColor};
+  color: ${(props) => props.theme.bgColor};
+  transition: background-color 1s ease, color 1s ease;
+  padding: 5px 20px;
+  padding: 0.3125rem 1.25em;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+`;
 
 interface IProps {
   setErrMsg: React.Dispatch<React.SetStateAction<null | string>>;
@@ -55,6 +67,8 @@ const RolesSetting = ({ setErrMsg }: IProps) => {
     if (error) setErrMsg("빈 칸이 존재합니다. 😓");
   };
 
+  const onClickResetBtn = () => setRanderRolesExample(rolesExample);
+
   useEffect(() => {
     const savedRoles = JSON.parse(localStorage.getItem("roleDetails") || "{}");
     if (savedRoles.roles) {
@@ -67,6 +81,7 @@ const RolesSetting = ({ setErrMsg }: IProps) => {
       <Title>1인 1역 - 역할, 하는 일 입력하기</Title>
       <BtnContainer>
         <span>1인 1역 역할 작성 후 저장해 주세요.</span>
+        <ResetBtn onClick={onClickResetBtn}>초기화</ResetBtn>
         <input type="submit" value="저장" className="save-btn btn" />
       </BtnContainer>
       <RolesGraph
