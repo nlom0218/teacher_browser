@@ -9,3 +9,14 @@ export const CREATE_ROLES = gql`
     }
   }
 `;
+
+export const ADD_ROLE = gql`
+  mutation Mutation($userEmail: String!, $data: [RoleInput!]) {
+    addRole(userEmail: $userEmail, data: $data) {
+      role {
+        _id
+        students
+      }
+    }
+  }
+`;
