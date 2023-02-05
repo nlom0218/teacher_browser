@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { format } from "date-fns";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { inPopup } from "../apollo";
@@ -26,9 +26,8 @@ const RolesAddStudents = ({ setErrMsg, setMsg, isPopup }: IProps) => {
   const [studentVaild, setStudentVaild] = useState(true);
   const [rolesVaild, setRolesVaild] = useState(true);
 
-  const { handleSubmit } = useForm({ mode: "onChange" });
-
   const { roles, startDate, endDate } = JSON.parse(localStorage.getItem("roleDetails") || "{}");
+  const { handleSubmit } = useForm({ mode: "onChange" });
 
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
     variables: { listId: me?.defaultStudentListId },
@@ -65,9 +64,7 @@ const RolesAddStudents = ({ setErrMsg, setMsg, isPopup }: IProps) => {
       setRolesVaild(true);
     }
 
-    if (existStudentLength !== registerStudentLength || !isAllRolesRegister) {
-      inPopup("comfirmRolesSave");
-    }
+    inPopup("comfirmRolesSave");
   };
 
   return (

@@ -45,7 +45,7 @@ type RoleObj = {
 const RolesSetting = ({ setErrMsg }: IProps) => {
   const [randerRolesExample, setRanderRolesExample] = useState(rolesExample);
 
-  const { register, handleSubmit, setValue } = useForm({
+  const { register, handleSubmit } = useForm({
     mode: "onChange",
   });
 
@@ -60,7 +60,6 @@ const RolesSetting = ({ setErrMsg }: IProps) => {
       });
     });
     const roles = new Set(rolesDetails.map((item) => item.role));
-    console.log(roles);
     if (roles.size !== rolesDetails.length) return setErrMsg("중복된 역할이 존재합니다. 😓");
     localStorage.setItem("roleDetails", JSON.stringify({ roles: rolesDetails }));
     inPopup("rolesPeriod");
