@@ -70,21 +70,6 @@ const RolesAddStudents = ({ setErrMsg, setMsg, isPopup }: IProps) => {
     }
   };
 
-  const preventClose = (event: BeforeUnloadEvent) => {
-    event.preventDefault();
-    event.returnValue = "";
-  };
-
-  useEffect(() => {
-    (() => {
-      window.addEventListener("beforeunload", preventClose);
-    })();
-
-    return () => {
-      window.removeEventListener("beforeunload", preventClose);
-    };
-  }, []);
-
   return (
     <Form onSubmit={handleSubmit(onClickSaveBtn)}>
       <Title>1인 1역 - 학생 입력하기</Title>

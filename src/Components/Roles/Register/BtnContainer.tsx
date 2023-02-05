@@ -8,7 +8,7 @@ export default styled.div<IProps>`
   display: grid;
   align-items: center;
   column-gap: 20px;
-  grid-template-columns: ${(props) => (props.isAddStudent ? "auto auto 1fr" : "repeat(3, auto) 1fr")};
+  grid-template-columns: ${(props) => (props.isAddStudent ? "auto auto 1fr" : "auto 1fr")};
   .line-btn {
     background-color: ${(props) => props.theme.btnBgColor};
     color: ${(props) => props.theme.bgColor};

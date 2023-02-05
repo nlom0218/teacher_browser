@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FieldValues, UseFormRegister } from "react-hook-form";
+import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai";
 import { MdOutlineRefresh } from "react-icons/md";
 import styled from "styled-components";
 import { inPopup } from "../../apollo";
@@ -22,6 +23,26 @@ const Container = styled.div<IContainer>`
     ::placeholder {
       opacity: 0.8;
     }
+  }
+
+  .left-contents {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    background-color: ${(props) => props.theme.originBgColor};
+    transition: background-color 1s ease;
+  }
+`;
+
+const BtnLayout = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+  justify-items: center;
+  align-items: center;
+  padding: 14px;
+  padding: 0.875rem;
+  svg {
+    cursor: pointer;
   }
 `;
 
@@ -65,6 +86,7 @@ type IRoles = {
 interface IProps {
   role?: string;
   work?: string;
+  id?: number;
   idx: number;
   students?: string[];
   isAddStudent?: boolean;
@@ -72,11 +94,13 @@ interface IProps {
   savedWork?: string;
   register: UseFormRegister<FieldValues>;
   setMsg?: React.Dispatch<React.SetStateAction<null | string>>;
+  setUpdateWork?: React.Dispatch<React.SetStateAction<null | { type: string; id?: number }>>;
 }
 
 const RolesGraphContents = ({
   role,
   work,
+  id,
   idx,
   register,
   isAddStudent = false,
@@ -84,32 +108,38 @@ const RolesGraphContents = ({
   setMsg,
   savedRole,
   savedWork,
+  setUpdateWork,
 }: IProps) => {
-  const [thisStudents, setThisStudents] = useState(students);
-  const onClickSeleteStudent = () => {
-    if (thisStudents?.length !== 0) return;
-    inPopup("rolesSeleteStudent");
-    if (role) localStorage.setItem("selectedRole", role);
+  const onClickUpdateBtn = (type: string) => {
+    if (!setUpdateWork) return;
+    setUpdateWork({ type, id });
   };
 
-  const onClickReset = () => {
-    if (!students) return;
-    const roleDetails = JSON.parse(localStorage.getItem("roleDetails") || "{}");
-    const newRoleDetails = {
-      ...roleDetails,
-      roles: roleDetails.roles.map((item: IRoles) => {
-        if (item.role !== role) return item;
-        return { ...item, students: [] };
-      }),
-    };
-    setThisStudents([]);
-    if (setMsg) setMsg("학생이 제거되었습니다.😁");
-    localStorage.setItem("roleDetails", JSON.stringify(newRoleDetails));
-  };
+  // const [thisStudents, setThisStudents] = useState(students);
+  // const onClickSeleteStudent = () => {
+  //   if (thisStudents?.length !== 0) return;
+  //   inPopup("rolesSeleteStudent");
+  //   if (role) localStorage.setItem("selectedRole", role);
+  // };
 
-  useEffect(() => {
-    setThisStudents(students);
-  }, [students]);
+  // const onClickReset = () => {
+  //   if (!students) return;
+  //   const roleDetails = JSON.parse(localStorage.getItem("roleDetails") || "{}");
+  //   const newRoleDetails = {
+  //     ...roleDetails,
+  //     roles: roleDetails.roles.map((item: IRoles) => {
+  //       if (item.role !== role) return item;
+  //       return { ...item, students: [] };
+  //     }),
+  //   };
+  //   setThisStudents([]);
+  //   if (setMsg) setMsg("학생이 제거되었습니다.😁");
+  //   localStorage.setItem("roleDetails", JSON.stringify(newRoleDetails));
+  // };
+
+  // useEffect(() => {
+  //   setThisStudents(students);
+  // }, [students]);
 
   return (
     <Container isAddStudent={isAddStudent}>
@@ -117,21 +147,27 @@ const RolesGraphContents = ({
         <React.Fragment>
           <input
             type="text"
-            {...register(`role${idx}`, { required: true })}
+            {...register(`role${id}`, { required: true })}
             placeholder={role || "역할을 입력하세요."}
             autoComplete="off"
-            defaultValue={savedRole && savedRole}
+            defaultValue={role && role}
           />
-          <input
-            type="text"
-            {...register(`work${idx}`, { required: true })}
-            placeholder={work || "하는 일을 입력하세요."}
-            autoComplete="off"
-            defaultValue={savedWork && savedWork}
-          />
+          <div className="left-contents">
+            <input
+              type="text"
+              {...register(`work${id}`, { required: true })}
+              placeholder={work || "하는 일을 입력하세요."}
+              autoComplete="off"
+              defaultValue={work && work}
+            />
+            <BtnLayout>
+              <AiOutlinePlusCircle onClick={() => onClickUpdateBtn("add")} />
+              <AiOutlineMinusCircle onClick={() => onClickUpdateBtn("remove")} />
+            </BtnLayout>
+          </div>
         </React.Fragment>
       )}
-      {isAddStudent && (
+      {/* {isAddStudent && (
         <React.Fragment>
           <input value={role} readOnly />
           <input value={work} readOnly />
@@ -160,7 +196,7 @@ const RolesGraphContents = ({
             )}
           </SelecteBox>
         </React.Fragment>
-      )}
+      )} */}
     </Container>
   );
 };
