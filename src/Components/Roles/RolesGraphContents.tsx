@@ -7,6 +7,7 @@ import { inPopup } from "../../apollo";
 
 interface IContainer {
   isAddStudent?: boolean;
+  isHover?: boolean;
 }
 
 const Container = styled.div<IContainer>`
@@ -16,8 +17,8 @@ const Container = styled.div<IContainer>`
   column-gap: 0.126rem;
   input,
   .selected-box {
-    background-color: ${(props) => props.theme.originBgColor};
-    transition: background-color 1s ease;
+    background-color: ${(props) => (props.isHover ? props.theme.blurColor : props.theme.originBgColor)};
+    transition: ${(props) => (props.isHover ? "background-color 0.1s ease" : "background-color 1s ease")};
     padding: 14px;
     padding: 0.875rem;
     ::placeholder {
@@ -28,8 +29,8 @@ const Container = styled.div<IContainer>`
   .left-contents {
     display: grid;
     grid-template-columns: 1fr auto;
-    background-color: ${(props) => props.theme.originBgColor};
-    transition: background-color 1s ease;
+    background-color: ${(props) => (props.isHover ? props.theme.blurColor : props.theme.originBgColor)};
+    transition: ${(props) => (props.isHover ? "background-color 0.1s ease" : "background-color 1s ease")};
   }
 `;
 
@@ -110,6 +111,7 @@ const RolesGraphContents = ({
   savedWork,
   setUpdateWork,
 }: IProps) => {
+  const [isHover, setIsHover] = useState(false);
   const onClickUpdateBtn = (type: string) => {
     if (!setUpdateWork) return;
     setUpdateWork({ type, id });
@@ -142,7 +144,7 @@ const RolesGraphContents = ({
   // }, [students]);
 
   return (
-    <Container isAddStudent={isAddStudent}>
+    <Container isAddStudent={isAddStudent} isHover={isHover}>
       {!isAddStudent && (
         <React.Fragment>
           <input
@@ -160,7 +162,7 @@ const RolesGraphContents = ({
               autoComplete="off"
               defaultValue={work && work}
             />
-            <BtnLayout>
+            <BtnLayout onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
               <AiOutlinePlusCircle onClick={() => onClickUpdateBtn("add")} />
               <AiOutlineMinusCircle onClick={() => onClickUpdateBtn("remove")} />
             </BtnLayout>
