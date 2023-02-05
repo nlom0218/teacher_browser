@@ -39,7 +39,7 @@ const Head = styled.div<IHead>`
 
 interface IProps {
   isAddStudent?: boolean;
-  roles?: { work: string; role: string }[];
+  roles?: { work: string; role: string; id: number }[];
   randerRolesExample?: { work: string; role: string; id: number }[];
   savedRoles?: null | { work: string; role: string }[];
   register: UseFormRegister<FieldValues>;
@@ -89,20 +89,19 @@ const RolesGraph = ({
             return (
               <RolesGraphContents key={idx} idx={idx} register={register} savedRole={role.role} savedWork={role.work} />
             );
-          })}
+          })} */}
         {isAddStudent &&
-          roles?.map((role, idx) => {
+          roles?.map((role) => {
             return (
               <RolesGraphContents
                 register={register}
-                idx={idx}
-                key={idx}
+                key={role.id}
                 {...role}
                 isAddStudent={isAddStudent}
                 setMsg={setMsg}
               />
             );
-          })} */}
+          })}
       </Layout>
     </Container>
   );

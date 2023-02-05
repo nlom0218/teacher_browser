@@ -115,31 +115,31 @@ const RolesGraphContents = ({
     setUpdateWork({ type, id });
   };
 
-  // const [thisStudents, setThisStudents] = useState(students);
-  // const onClickSeleteStudent = () => {
-  //   if (thisStudents?.length !== 0) return;
-  //   inPopup("rolesSeleteStudent");
-  //   if (role) localStorage.setItem("selectedRole", role);
-  // };
+  const [thisStudents, setThisStudents] = useState(students);
+  const onClickSeleteStudent = () => {
+    if (thisStudents?.length !== 0) return;
+    inPopup("rolesSeleteStudent");
+    if (role) localStorage.setItem("selectedRole", role);
+  };
 
-  // const onClickReset = () => {
-  //   if (!students) return;
-  //   const roleDetails = JSON.parse(localStorage.getItem("roleDetails") || "{}");
-  //   const newRoleDetails = {
-  //     ...roleDetails,
-  //     roles: roleDetails.roles.map((item: IRoles) => {
-  //       if (item.role !== role) return item;
-  //       return { ...item, students: [] };
-  //     }),
-  //   };
-  //   setThisStudents([]);
-  //   if (setMsg) setMsg("학생이 제거되었습니다.😁");
-  //   localStorage.setItem("roleDetails", JSON.stringify(newRoleDetails));
-  // };
+  const onClickReset = () => {
+    if (!students) return;
+    const roleDetails = JSON.parse(localStorage.getItem("roleDetails") || "{}");
+    const newRoleDetails = {
+      ...roleDetails,
+      roles: roleDetails.roles.map((item: IRoles) => {
+        if (item.role !== role) return item;
+        return { ...item, students: [] };
+      }),
+    };
+    setThisStudents([]);
+    if (setMsg) setMsg("학생이 제거되었습니다.😁");
+    localStorage.setItem("roleDetails", JSON.stringify(newRoleDetails));
+  };
 
-  // useEffect(() => {
-  //   setThisStudents(students);
-  // }, [students]);
+  useEffect(() => {
+    setThisStudents(students);
+  }, [students]);
 
   return (
     <Container isAddStudent={isAddStudent} isHover={isHover}>
@@ -167,7 +167,7 @@ const RolesGraphContents = ({
           </div>
         </React.Fragment>
       )}
-      {/* {isAddStudent && (
+      {isAddStudent && (
         <React.Fragment>
           <input value={role} readOnly />
           <input value={work} readOnly />
@@ -175,7 +175,7 @@ const RolesGraphContents = ({
             hasStudents={thisStudents?.length !== 0}
             onClick={onClickSeleteStudent}
             className="selected-box"
-            {...register(`student${idx}`, { required: true })}
+            {...register(`student${id}`, { required: true })}
             placeholder="클릭하여 학생을 선택하세요."
           >
             {thisStudents?.length !== 0 ? (
@@ -196,7 +196,7 @@ const RolesGraphContents = ({
             )}
           </SelecteBox>
         </React.Fragment>
-      )} */}
+      )}
     </Container>
   );
 };
