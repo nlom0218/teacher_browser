@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { inPopup } from "../apollo";
 import BtnContainer from "../Components/Roles/Register/BtnContainer";
@@ -32,9 +32,6 @@ type RoleObj = {
 
 const RolesSetting = ({ setErrMsg }: IProps) => {
   const [randerRolesExample, setRanderRolesExample] = useState(rolesExample);
-  const [savedRoles, setSavedRoles] = useState<null | { work: string; role: string }[]>(
-    JSON.parse(localStorage.getItem("roleDetails") || "{}").roles,
-  );
 
   const { register, handleSubmit, setValue } = useForm({
     mode: "onChange",
@@ -58,6 +55,13 @@ const RolesSetting = ({ setErrMsg }: IProps) => {
     if (error) setErrMsg("빈 칸이 존재합니다. 😓");
   };
 
+  useEffect(() => {
+    const savedRoles = JSON.parse(localStorage.getItem("roleDetails") || "{}");
+    if (savedRoles.roles) {
+      setRanderRolesExample(savedRoles.roles);
+    }
+  }, []);
+
   return (
     <Form onSubmit={handleSubmit(onSubmit, onError)}>
       <Title>1인 1역 - 역할, 하는 일 입력하기</Title>
@@ -67,7 +71,6 @@ const RolesSetting = ({ setErrMsg }: IProps) => {
       </BtnContainer>
       <RolesGraph
         register={register}
-        savedRoles={savedRoles}
         randerRolesExample={randerRolesExample}
         setRanderRolesExample={setRanderRolesExample}
       />

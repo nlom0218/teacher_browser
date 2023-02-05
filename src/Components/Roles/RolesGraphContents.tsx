@@ -90,8 +90,6 @@ interface IProps {
   id?: number;
   students?: string[];
   isAddStudent?: boolean;
-  savedRole?: string;
-  savedWork?: string;
   register: UseFormRegister<FieldValues>;
   setMsg?: React.Dispatch<React.SetStateAction<null | string>>;
   setUpdateWork?: React.Dispatch<React.SetStateAction<null | { type: string; id?: number }>>;
@@ -105,8 +103,6 @@ const RolesGraphContents = ({
   isAddStudent = false,
   students = [],
   setMsg,
-  savedRole,
-  savedWork,
   setUpdateWork,
 }: IProps) => {
   const [isHover, setIsHover] = useState(false);

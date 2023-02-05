@@ -41,7 +41,6 @@ interface IProps {
   isAddStudent?: boolean;
   roles?: { work: string; role: string; id: number }[];
   randerRolesExample?: { work: string; role: string; id: number }[];
-  savedRoles?: null | { work: string; role: string }[];
   register: UseFormRegister<FieldValues>;
   setMsg?: React.Dispatch<React.SetStateAction<null | string>>;
   setRanderRolesExample?: React.Dispatch<React.SetStateAction<{ work: string; role: string; id: number }[]>>;
@@ -52,7 +51,6 @@ const RolesGraph = ({
   isAddStudent = false,
   roles,
   setMsg,
-  savedRoles,
   randerRolesExample,
   setRanderRolesExample,
 }: IProps) => {
@@ -78,18 +76,10 @@ const RolesGraph = ({
           <input defaultValue={"하는 일"} readOnly />
           {isAddStudent && <input defaultValue={"이름"} readOnly />}
         </Head>
-        {!savedRoles &&
-          !isAddStudent &&
+        {!isAddStudent &&
           randerRolesExample?.map((role) => {
             return <RolesGraphContents key={role.id} {...role} register={register} setUpdateWork={setUpdateWork} />;
           })}
-        {/* {savedRoles &&
-          !isAddStudent &&
-          savedRoles.map((role, idx) => {
-            return (
-              <RolesGraphContents key={idx} idx={idx} register={register} savedRole={role.role} savedWork={role.work} />
-            );
-          })} */}
         {isAddStudent &&
           roles?.map((role) => {
             return (
