@@ -88,7 +88,6 @@ interface IProps {
   role?: string;
   work?: string;
   id?: number;
-  idx: number;
   students?: string[];
   isAddStudent?: boolean;
   savedRole?: string;
@@ -102,7 +101,6 @@ const RolesGraphContents = ({
   role,
   work,
   id,
-  idx,
   register,
   isAddStudent = false,
   students = [],
@@ -150,17 +148,17 @@ const RolesGraphContents = ({
           <input
             type="text"
             {...register(`role${id}`, { required: true })}
-            placeholder={role || "역할을 입력하세요."}
+            placeholder={"역할을 입력하세요."}
             autoComplete="off"
-            defaultValue={role && role}
+            defaultValue={role}
           />
           <div className="left-contents">
             <input
               type="text"
               {...register(`work${id}`, { required: true })}
-              placeholder={work || "하는 일을 입력하세요."}
+              placeholder={"하는 일을 입력하세요."}
               autoComplete="off"
-              defaultValue={work && work}
+              defaultValue={work}
             />
             <BtnLayout onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
               <AiOutlinePlusCircle onClick={() => onClickUpdateBtn("add")} />
