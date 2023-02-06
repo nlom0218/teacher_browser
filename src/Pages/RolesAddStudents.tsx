@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { format } from "date-fns";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { inPopup } from "../apollo";
@@ -27,6 +27,7 @@ const RolesAddStudents = ({ setErrMsg, setMsg, isPopup }: IProps) => {
   const [rolesVaild, setRolesVaild] = useState(true);
 
   const { roles, startDate, endDate } = JSON.parse(localStorage.getItem("roleDetails") || "{}");
+
   const { handleSubmit } = useForm({ mode: "onChange" });
 
   const { data, loading } = useQuery(SEE_ONE_STUDENT_LIST_QUERY, {
@@ -66,6 +67,9 @@ const RolesAddStudents = ({ setErrMsg, setMsg, isPopup }: IProps) => {
 
     inPopup("comfirmRolesSave");
   };
+
+  // 1인 1역을 생성할 때 설정해 둔 역할들이 사라졌기 때문에 아래의 내용에서 다른 페이지로 이동해야 한다는 메시지 작성하기
+  if (!localStorage.getItem("roleDetails")) return <div></div>;
 
   return (
     <Form onSubmit={handleSubmit(onClickSaveBtn)}>

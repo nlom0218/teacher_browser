@@ -4,8 +4,10 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { isPopupVar } from "../apollo";
 import SetPeriod from "../Components/Roles/Popup/SetPeriod";
 import SetStudent from "../Components/Roles/Popup/SetStudent";
+import RolesMain from "../Components/Roles/RolesMain";
 import AlertMessage from "../Components/Shared/AlertMessage";
 import BasicContainer from "../Components/Shared/BasicContainer";
+import Loading from "../Components/Shared/Loading";
 import { SEE_ROLES } from "../Graphql/Roles/query";
 import useMe from "../Hooks/useMe";
 import RolesAddStudents from "./RolesAddStudents";
@@ -18,22 +20,25 @@ const Roles = () => {
   const [errMsg, setErrMsg] = useState<string | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
 
-  const { data } = useQuery(SEE_ROLES, {
+  const { data, loading } = useQuery(SEE_ROLES, {
     variables: {
       userEmail: me?.email,
     },
     skip: !me,
   });
 
-  console.log(data);
-
   useEffect(() => {
-    navigate("/roles/setting", { replace: true });
-  }, []);
+    if (data?.roles.length === 0) return navigate("/roles/setting", { replace: true });
+    console.log(data?.roles[0]);
+  }, [data]);
+
+  if (loading) {
+    return <Loading page="mainPage" />;
+  }
   return (
     <BasicContainer menuItem={true}>
       <Routes>
-        <Route path=":id" element={<div>디테일</div>} />
+        <Route path="" element={<RolesMain {...data?.roles[0]} />} />
         <Route path="setting" element={<RolesSetting setErrMsg={setErrMsg} />} />
         <Route
           path="add-students"

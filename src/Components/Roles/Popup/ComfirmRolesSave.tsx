@@ -71,7 +71,9 @@ const ComfirmRolesSave = ({ studentVaild, rolesVaild }: IProps) => {
         },
       });
     });
-    navigate(`${routes.roles}/${createRoles._id}`);
+    navigate(`${routes.roles}`);
+    localStorage.removeItem("roleDetails");
+    outPopup();
   };
 
   const [createRoles, { loading: createLoading }] = useMutation(CREATE_ROLES, {
