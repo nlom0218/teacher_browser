@@ -12,7 +12,6 @@ interface IProps {
 }
 
 const RolesMain = ({ startDate, endDate, roles }: IProps) => {
-  console.log(startDate, endDate);
   return (
     <Form>
       <Title isMain={true}>

@@ -38,8 +38,8 @@ export const EDIT_STUDENT_MUTATION = gql`
 `;
 
 export const CREATE_STUDENT_MUTATION = gql`
-  mutation CreateStudent($teacherEmail: String!, $studentString: String!) {
-    createStudent(teacherEmail: $teacherEmail, studentString: $studentString) {
+  mutation CreateStudent($teacherEmail: String!, $studentString: [StudentInfo]) {
+    createStudent(teacherEmail: $teacherEmail, students: $studentString) {
       ok
       error
     }

@@ -59,10 +59,11 @@ const CreateManyStudentFrom = ({
     const newStudentString = studentString.map((item, index) => {
       return { name: studentNameArr[index], gender: item.gender };
     });
+
     createStudent({
       variables: {
         teacherEmail: email,
-        studentString: JSON.stringify(newStudentString),
+        studentString: newStudentString,
       },
     });
   };
