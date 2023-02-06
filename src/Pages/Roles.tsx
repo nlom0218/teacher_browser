@@ -1,4 +1,4 @@
-import { useReactiveVar } from "@apollo/client";
+import { useQuery, useReactiveVar } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { isPopupVar } from "../apollo";
@@ -6,19 +6,26 @@ import SetPeriod from "../Components/Roles/Popup/SetPeriod";
 import SetStudent from "../Components/Roles/Popup/SetStudent";
 import AlertMessage from "../Components/Shared/AlertMessage";
 import BasicContainer from "../Components/Shared/BasicContainer";
+import { SEE_ROLES } from "../Graphql/Roles/query";
+import useMe from "../Hooks/useMe";
 import RolesAddStudents from "./RolesAddStudents";
 import RolesSetting from "./RolesSetting";
 
 const Roles = () => {
+  const me = useMe();
   const navigate = useNavigate();
   const isPopup = useReactiveVar(isPopupVar);
   const [errMsg, setErrMsg] = useState<string | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
 
-  // 데이터 베이스에서 현재 기간의 1인 1역을 가져와야 함
-  // 이를 바탕으로 1인 1역 디테일로 이동 - 3번째 창
+  const { data } = useQuery(SEE_ROLES, {
+    variables: {
+      userEmail: me?.email,
+    },
+    skip: !me,
+  });
 
-  // 저장된 1인 1역이 없으면 초기 설정 부터 해야 함 - 1번째 창
+  console.log(data);
 
   useEffect(() => {
     navigate("/roles/setting", { replace: true });
