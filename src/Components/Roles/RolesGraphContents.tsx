@@ -55,9 +55,13 @@ const SelecteBox = styled.div<ISelecteBox>`
   cursor: ${(props) => !props.hasStudents && "pointer"};
 `;
 
-const SelecteStudentList = styled.div`
+interface ISelecteStudentList {
+  savedStudents?: boolean;
+}
+
+const SelecteStudentList = styled.div<ISelecteStudentList>`
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: ${(props) => !props.savedStudents && "1fr auto"};
   column-gap: 10px;
   align-items: center;
   line-height: 140%;
@@ -87,10 +91,11 @@ type IRoles = {
 interface IProps {
   role?: string;
   work?: string;
-  id?: number;
+  id?: number | string;
   students?: string[];
   isAddStudent?: boolean;
-  register: UseFormRegister<FieldValues>;
+  savedStudents?: { studentName: string; _id: string }[];
+  register?: UseFormRegister<FieldValues> | null;
   setMsg?: React.Dispatch<React.SetStateAction<null | string>>;
   setUpdateWork?: React.Dispatch<React.SetStateAction<null | { type: string; id?: number }>>;
 }
@@ -99,14 +104,16 @@ const RolesGraphContents = ({
   role,
   work,
   id,
-  register,
+  register = null,
   isAddStudent = false,
   students = [],
   setMsg,
   setUpdateWork,
+  savedStudents,
 }: IProps) => {
   const [isHover, setIsHover] = useState(false);
   const onClickUpdateBtn = (type: string) => {
+    if (typeof id === "string") return;
     if (!setUpdateWork) return;
     setUpdateWork({ type, id });
   };
@@ -139,7 +146,7 @@ const RolesGraphContents = ({
 
   return (
     <Container isAddStudent={isAddStudent} isHover={isHover}>
-      {!isAddStudent && (
+      {register && !isAddStudent && (
         <React.Fragment>
           <input
             type="text"
@@ -163,7 +170,7 @@ const RolesGraphContents = ({
           </div>
         </React.Fragment>
       )}
-      {isAddStudent && (
+      {register && isAddStudent && !savedStudents && (
         <React.Fragment>
           <input value={role} readOnly />
           <input value={work} readOnly />
@@ -190,6 +197,23 @@ const RolesGraphContents = ({
             ) : (
               <ClickMsg>클릭하여 학생을 선택하세요.</ClickMsg>
             )}
+          </SelecteBox>
+        </React.Fragment>
+      )}
+      {savedStudents && (
+        <React.Fragment>
+          <input value={role} readOnly />
+          <input value={work} readOnly />
+          <SelecteBox className="selected-box" hasStudents={true}>
+            <SelecteStudentList savedStudents={true}>
+              <div>
+                {savedStudents
+                  ?.map(({ studentName }) => {
+                    return studentName;
+                  })
+                  .join(", ")}
+              </div>
+            </SelecteStudentList>
           </SelecteBox>
         </React.Fragment>
       )}

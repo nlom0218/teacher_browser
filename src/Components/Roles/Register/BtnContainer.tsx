@@ -26,4 +26,9 @@ export default styled.div<IProps>`
     border-radius: 0.3125rem;
     cursor: pointer;
   }
+  .today-date {
+    font-size: 1.25em;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
 `;
