@@ -38,6 +38,7 @@ const Roles = () => {
     <BasicContainer menuItem={true}>
       <Routes>
         {data && <Route path="" element={<RolesMain {...data?.roles[0]} />} />}
+        {data && <Route path="/edit" element={<RolesMain {...data?.roles[0]} />} />}
         <Route path="setting" element={<RolesSetting setErrMsg={setErrMsg} />} />
         <Route
           path="add-students"
