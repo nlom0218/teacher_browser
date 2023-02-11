@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import routes from "../../routes";
 import EditRoles from "./EditRoles";
@@ -16,10 +17,27 @@ interface IProps {
 }
 
 const RolesMain = ({ startDate, endDate, roles }: IProps) => {
+  console.log(roles);
   const location = useLocation();
   const navigate = useNavigate();
 
+  const createDefaultValues = () => {
+    const defaulValues: any = {};
+    roles.forEach(({ detail, title, _id }) => {
+      defaulValues[`role${_id}`] = title;
+      defaulValues[`work${_id}`] = detail;
+    });
+
+    return defaulValues;
+  };
+
+  const { register, handleSubmit } = useForm<any>({
+    mode: "onChange",
+    defaultValues: createDefaultValues(),
+  });
+
   const [pathname, setPathname] = useState(location.pathname);
+  const [students, setStudents] = useState(roles.map((role) => role.students));
 
   const onClickEditBtn = () => {
     if (pathname === "/roles") return navigate(`${routes.roles}/edit`);
@@ -27,15 +45,21 @@ const RolesMain = ({ startDate, endDate, roles }: IProps) => {
   };
 
   const saveRoles = () => {
-    console.log("촤라락 저장");
-    navigate(routes.roles);
+    if (pathname !== "/roles") return;
+    // console.log("촤라락 저장");
+    // navigate(routes.roles);
+  };
+
+  const onSubmit = (data: any) => {
+    console.log(data);
   };
 
   useEffect(() => {
     setPathname(location.pathname);
   }, [location]);
+
   return (
-    <Form>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <Title isMain={true}>
         <div>{pathname === "/roles" ? "1인 1역" : "1인 1역 수정"}</div>
         <div className="main-date">{`${format(new Date(startDate), "yy.MM.dd")} ~ ${format(
@@ -53,14 +77,18 @@ const RolesMain = ({ startDate, endDate, roles }: IProps) => {
             : "역할, 하는 일, 학생, 기간을 수정한 후 저장버튼을 눌러주세요."}
         </div>
         {pathname !== "/roles" && <div></div>}
-        <div onClick={onClickEditBtn} className="btn save-btn">
-          {pathname === "/roles" ? "수정" : "저장"}
-        </div>
+        {pathname === "/roles" ? (
+          <div onClick={onClickEditBtn} className="btn save-btn">
+            수정
+          </div>
+        ) : (
+          <input type="submit" value="저장" className="btn save-btn" />
+        )}
       </BtnContainer>
       {pathname === "/roles" ? (
         <RolesGraph savedRoles={roles} isAddStudent={true} />
       ) : (
-        <EditRoles savedRoles={roles} isAddStudent={true} />
+        <EditRoles savedRoles={roles} isAddStudent={true} register={register} />
       )}
     </Form>
   );

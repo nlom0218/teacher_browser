@@ -45,7 +45,7 @@ const RolesGraph = ({
 
   return (
     <Container>
-      <GraphLayout>
+      <GraphLayout isAddStudent={isAddStudent}>
         {register &&
           !isAddStudent &&
           randerRolesExample?.map((role) => {

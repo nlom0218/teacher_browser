@@ -200,7 +200,7 @@ const RolesGraphContents = ({
           </SelecteBox>
         </React.Fragment>
       )}
-      {savedStudents && (
+      {!register && savedStudents && (
         <React.Fragment>
           <input value={role} readOnly />
           <input value={work} readOnly />
@@ -214,6 +214,32 @@ const RolesGraphContents = ({
                   .join(", ")}
               </div>
             </SelecteStudentList>
+          </SelecteBox>
+        </React.Fragment>
+      )}
+      {register && savedStudents && (
+        <React.Fragment>
+          <input {...register(`role${id}`, { required: true })} />
+          <input {...register(`work${id}`, { required: true })} />
+          <SelecteBox className="selected-box" hasStudents={true}>
+            <div className="left-contents">
+              <SelecteStudentList>
+                <div>
+                  {savedStudents
+                    ?.map(({ studentName }) => {
+                      return studentName;
+                    })
+                    .join(", ")}
+                </div>
+                <ResetIcon onClick={onClickReset}>
+                  <MdOutlineRefresh />
+                </ResetIcon>
+              </SelecteStudentList>
+              <BtnLayout onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+                <AiOutlinePlusCircle onClick={() => onClickUpdateBtn("add")} />
+                <AiOutlineMinusCircle onClick={() => onClickUpdateBtn("remove")} />
+              </BtnLayout>
+            </div>
           </SelecteBox>
         </React.Fragment>
       )}
