@@ -51,7 +51,21 @@ const RolesMain = ({ startDate, endDate, roles }: IProps) => {
   };
 
   const onSubmit = (data: any) => {
-    console.log(data);
+    const rolesObj = createRolesObj(data);
+    console.log(rolesObj);
+  };
+
+  const createRolesObj = (data: any) => {
+    const roles = Object.entries(data);
+    const rolesObj: any = {};
+    roles.forEach(([typeId, contents]) => {
+      const type = typeId.slice(0, 4);
+      const id = typeId.slice(5);
+      if (!rolesObj[id]) rolesObj[id] = { role: null, work: null };
+      rolesObj[id][type] = contents;
+    });
+
+    return rolesObj;
   };
 
   useEffect(() => {

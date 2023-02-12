@@ -235,10 +235,6 @@ const RolesGraphContents = ({
                   <MdOutlineRefresh />
                 </ResetIcon>
               </SelecteStudentList>
-              <BtnLayout onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
-                <AiOutlinePlusCircle onClick={() => onClickUpdateBtn("add")} />
-                <AiOutlineMinusCircle onClick={() => onClickUpdateBtn("remove")} />
-              </BtnLayout>
             </div>
           </SelecteBox>
         </React.Fragment>

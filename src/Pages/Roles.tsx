@@ -28,7 +28,8 @@ const Roles = () => {
   });
 
   useEffect(() => {
-    if (data?.roles.length === 0) return navigate("/roles/setting", { replace: true });
+    console.log(data);
+    if (!data) return navigate("/roles/setting", { replace: true });
   }, [data]);
 
   if (loading) {

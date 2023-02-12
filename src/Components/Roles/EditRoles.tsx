@@ -16,7 +16,6 @@ interface IProps {
 }
 
 const EditRoles = ({ isAddStudent, savedRoles, register }: IProps) => {
-  console.log(savedRoles);
   return (
     <Container>
       <GraphLayout isAddStudent={isAddStudent}>
