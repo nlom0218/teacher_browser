@@ -15,3 +15,11 @@ export const ADD_ROLE = gql`
     }
   }
 `;
+
+export const UPDATE_ROLE = gql`
+  mutation UpdateRole($userEmail: String!, $id: ID!, $title: String, $detail: String) {
+    updateRole(userEmail: $userEmail, _id: $id, title: $title, detail: $detail) {
+      _id
+    }
+  }
+`;
