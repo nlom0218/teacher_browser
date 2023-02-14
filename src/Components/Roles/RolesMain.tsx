@@ -1,8 +1,10 @@
+import { useMutation } from "@apollo/client";
 import { format } from "date-fns";
 import { ko, ro } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
+import { UPDATE_ROLE } from "../../Graphql/Roles/mutation";
 import routes from "../../routes";
 import EditRoles from "./EditRoles";
 import BtnContainer from "./Register/BtnContainer";
@@ -13,12 +15,15 @@ import RolesGraph from "./RolesGraph";
 interface IProps {
   startDate: number;
   endDate: number;
+  userEmail: string;
   roles: { detail: string; title: string; _id: string; students: { studentName: string; _id: string }[] }[];
 }
 
-const RolesMain = ({ startDate, endDate, roles }: IProps) => {
+const RolesMain = ({ startDate, endDate, roles, userEmail }: IProps) => {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const [updateRole, { loading }] = useMutation(UPDATE_ROLE);
 
   const createDefaultValues = () => {
     const defaulValues: any = {};
@@ -51,22 +56,35 @@ const RolesMain = ({ startDate, endDate, roles }: IProps) => {
 
   const onSubmit = (data: any) => {
     const rolesArray = createRolesArray(data);
-    const { updateRoles, createRoles } = needUpdateOrCreateRoles(rolesArray);
-    console.log(updateRoles, createRoles);
+    const { needUpdateRoles, needCreateRoles } = needUpdateOrCreateRoles(rolesArray);
+    if (needUpdateRoles) {
+      needUpdateRoles.forEach((role) => {
+        updateRole({
+          variables: {
+            userEmail,
+            id: role.id,
+            title: role.role,
+            detail: role.work,
+          },
+        });
+      });
+    }
   };
 
   const needUpdateOrCreateRoles = (rolesArray: { id: string; role: string; work: string }[]) => {
-    const updateRoles: string[] = [];
-    const createRoles: { id: string; role: string; work: string }[] = [];
+    const needUpdateRoles: { id: string; role: string; work: string }[] = [];
+    const needCreateRoles: { id: string; role: string; work: string }[] = [];
     rolesArray.forEach((inputRole) => {
       const role = roles.filter((role) => {
         return role._id === inputRole.id;
       })[0];
-      if (!role) return createRoles.push(inputRole);
-      if (role.title !== inputRole.role || role.detail !== inputRole.work) return updateRoles.push(inputRole.id);
+      if (!role) return needCreateRoles.push(inputRole);
+      if (role.title !== inputRole.role || role.detail !== inputRole.work) {
+        return needUpdateRoles.push(inputRole);
+      }
     });
 
-    return { updateRoles, createRoles };
+    return { needUpdateRoles, needCreateRoles };
   };
 
   const createRolesArray = (data: any) => {
