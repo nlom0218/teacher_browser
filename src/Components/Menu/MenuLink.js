@@ -29,6 +29,9 @@ import IcBookMark from "../../icons/Bookmark/IcBookMark";
 import IcBookMarkClick from "../../icons/Bookmark/IcBookMarkClick";
 import { TiTree } from "react-icons/ti";
 import { MdCleaningServices, MdOutlineCleaningServices } from "react-icons/md";
+import { useQuery } from "@apollo/client";
+import { SEE_ROLES } from "../../Graphql/Roles/query";
+import useMe from "../../Hooks/useMe";
 
 const SMenu = styled.div`
   display: grid;
@@ -340,10 +343,19 @@ export const XmasTree = () => {
 };
 
 export const RolesLink = () => {
+  const me = useMe();
   const [isHover, setIsHover] = useState(false);
   const onClickListLink = () => {};
+
+  const { data, loading } = useQuery(SEE_ROLES, {
+    variables: {
+      userEmail: me?.email,
+    },
+    skip: !me,
+  });
+
   return (
-    <Link to={routes.roles} onClick={onClickListLink}>
+    <Link to={data?.roles.length === 0 ? `${routes.roles}/setting` : routes.roles} onClick={onClickListLink}>
       <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <MdCleaningServices /> : <MdOutlineCleaningServices />}
         <Title>1인1역</Title>

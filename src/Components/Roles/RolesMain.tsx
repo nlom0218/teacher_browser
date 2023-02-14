@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { ko } from "date-fns/locale";
+import { ko, ro } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -17,7 +17,6 @@ interface IProps {
 }
 
 const RolesMain = ({ startDate, endDate, roles }: IProps) => {
-  console.log(roles);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -51,21 +50,42 @@ const RolesMain = ({ startDate, endDate, roles }: IProps) => {
   };
 
   const onSubmit = (data: any) => {
-    const rolesObj = createRolesObj(data);
-    console.log(rolesObj);
+    const rolesArray = createRolesArray(data);
+    const { updateRoles, createRoles } = needUpdateOrCreateRoles(rolesArray);
+    console.log(updateRoles, createRoles);
   };
 
-  const createRolesObj = (data: any) => {
+  const needUpdateOrCreateRoles = (rolesArray: { id: string; role: string; work: string }[]) => {
+    const updateRoles: string[] = [];
+    const createRoles: { id: string; role: string; work: string }[] = [];
+    rolesArray.forEach((inputRole) => {
+      const role = roles.filter((role) => {
+        return role._id === inputRole.id;
+      })[0];
+      if (!role) return createRoles.push(inputRole);
+      if (role.title !== inputRole.role || role.detail !== inputRole.work) return updateRoles.push(inputRole.id);
+    });
+
+    return { updateRoles, createRoles };
+  };
+
+  const createRolesArray = (data: any) => {
     const roles = Object.entries(data);
+
     const rolesObj: any = {};
     roles.forEach(([typeId, contents]) => {
       const type = typeId.slice(0, 4);
-      const id = typeId.slice(5);
+      const id = typeId.slice(4);
       if (!rolesObj[id]) rolesObj[id] = { role: null, work: null };
       rolesObj[id][type] = contents;
     });
 
-    return rolesObj;
+    const rolesArray: { id: string; role: string; work: string }[] = [];
+    for (let key in rolesObj) {
+      rolesArray.push({ id: key, role: rolesObj[key].role, work: rolesObj[key].work });
+    }
+
+    return rolesArray;
   };
 
   useEffect(() => {

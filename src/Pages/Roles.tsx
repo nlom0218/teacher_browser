@@ -15,7 +15,6 @@ import RolesSetting from "./RolesSetting";
 
 const Roles = () => {
   const me = useMe();
-  const navigate = useNavigate();
   const isPopup = useReactiveVar(isPopupVar);
   const [errMsg, setErrMsg] = useState<string | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
@@ -26,11 +25,6 @@ const Roles = () => {
     },
     skip: !me,
   });
-
-  useEffect(() => {
-    console.log(data);
-    if (!data) return navigate("/roles/setting", { replace: true });
-  }, [data]);
 
   if (loading) {
     return <Loading page="mainPage" />;
