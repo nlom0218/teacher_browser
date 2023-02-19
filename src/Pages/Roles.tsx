@@ -33,7 +33,19 @@ const Roles = () => {
     <BasicContainer menuItem={true}>
       <Routes>
         {data && <Route path="" element={<RolesMain {...data?.roles[0]} />} />}
-        {data && <Route path="/edit" element={<RolesMain {...data?.roles[0]} userEmail={me?.email} />} />}
+        {data && (
+          <Route
+            path="/edit"
+            element={
+              <RolesMain
+                {...data?.roles[0]}
+                rolesId={data?.roles[0]?._id}
+                userEmail={me?.email}
+                setErrMsg={setErrMsg}
+              />
+            }
+          />
+        )}
         <Route path="setting" element={<RolesSetting setErrMsg={setErrMsg} />} />
         <Route
           path="add-students"

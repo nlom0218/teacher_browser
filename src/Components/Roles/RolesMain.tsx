@@ -1,31 +1,61 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useReactiveVar } from "@apollo/client";
 import { format } from "date-fns";
-import { ko, ro } from "date-fns/locale";
+import { ko } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
-import { UPDATE_ROLE } from "../../Graphql/Roles/mutation";
+import styled from "styled-components";
+import { inPopup, isPopupVar } from "../../apollo";
+import { UPDATE_ROLE, UPDATE_ROLES } from "../../Graphql/Roles/mutation";
 import routes from "../../routes";
 import EditRoles from "./EditRoles";
+import EditPeriod from "./Popup/EditPeriod";
 import BtnContainer from "./Register/BtnContainer";
 import Form from "./Register/Form";
 import Title from "./Register/Title";
 import RolesGraph from "./RolesGraph";
 
+const RolesDate = styled.div`
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  align-items: flex-end;
+`;
+
+const EditPeriodBtn = styled.div`
+  justify-self: flex-start;
+  cursor: pointer;
+  background-color: ${(props) => props.theme.btnBgColor};
+  color: ${(props) => props.theme.bgColor};
+  padding: 5px 10px;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+`;
+
 interface IProps {
   startDate: number;
   endDate: number;
   userEmail: string;
+  rolesId: string;
   roles: { detail: string; title: string; _id: string; students: { studentName: string; _id: string }[] }[];
+  setErrMsg: React.Dispatch<React.SetStateAction<null | string>>;
 }
 
-const RolesMain = ({ startDate, endDate, roles, userEmail }: IProps) => {
+const RolesMain = ({ startDate, endDate, roles, userEmail, rolesId, setErrMsg }: IProps) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const isPopup = useReactiveVar(isPopupVar);
+
+  const [editStartDate, setEditStartDate] = useState(startDate);
+  const [editEndDate, setEditEndDate] = useState(endDate);
 
   const [updateRole, { loading }] = useMutation(UPDATE_ROLE);
+  const [updateRoles, { loading: updateRolesLoading }] = useMutation(UPDATE_ROLES);
 
   const createDefaultValues = () => {
+    if (!roles) return;
     const defaulValues: any = {};
     roles.forEach(({ detail, title, _id }) => {
       defaulValues[`role${_id}`] = title;
@@ -69,6 +99,21 @@ const RolesMain = ({ startDate, endDate, roles, userEmail }: IProps) => {
         });
       });
     }
+
+    if (isUpdateDate()) {
+      updateRoles({
+        variables: {
+          userEmail,
+          id: rolesId,
+          startDate: new Date(editStartDate).valueOf(),
+          endDate: new Date(editEndDate).valueOf(),
+        },
+      });
+    }
+  };
+
+  const isUpdateDate = () => {
+    return new Date(editStartDate).valueOf() !== startDate || new Date(editEndDate).valueOf() !== endDate;
   };
 
   const needUpdateOrCreateRoles = (rolesArray: { id: string; role: string; work: string }[]) => {
@@ -106,6 +151,10 @@ const RolesMain = ({ startDate, endDate, roles, userEmail }: IProps) => {
     return rolesArray;
   };
 
+  const onClickEditPeriodBtn = () => {
+    inPopup("editPeriod");
+  };
+
   useEffect(() => {
     setPathname(location.pathname);
   }, [location]);
@@ -114,10 +163,10 @@ const RolesMain = ({ startDate, endDate, roles, userEmail }: IProps) => {
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Title isMain={true}>
         <div>{pathname === "/roles" ? "1인 1역" : "1인 1역 수정"}</div>
-        <div className="main-date">{`${format(new Date(startDate), "yy.MM.dd")} ~ ${format(
-          new Date(endDate),
-          "yy.MM.dd",
-        )}`}</div>
+        <RolesDate className="main-date">
+          {`${format(new Date(editStartDate), "yy.MM.dd")} ~ ${format(new Date(editEndDate), "yy.MM.dd")}`}
+          {pathname !== "/roles" && <EditPeriodBtn onClick={onClickEditPeriodBtn}>기간 수정하기</EditPeriodBtn>}
+        </RolesDate>
       </Title>
       <BtnContainer isAddStudent={true}>
         {pathname === "/roles" && (
@@ -141,6 +190,15 @@ const RolesMain = ({ startDate, endDate, roles, userEmail }: IProps) => {
         <RolesGraph savedRoles={roles} isAddStudent={true} />
       ) : (
         <EditRoles savedRoles={roles} isAddStudent={true} register={register} />
+      )}
+      {isPopup === "editPeriod" && (
+        <EditPeriod
+          setErrMsg={setErrMsg}
+          editStartDate={editStartDate}
+          editEndDate={editEndDate}
+          setEditStartDate={setEditStartDate}
+          setEditEndDate={setEditEndDate}
+        />
       )}
     </Form>
   );

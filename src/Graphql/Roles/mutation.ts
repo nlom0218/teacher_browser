@@ -23,3 +23,11 @@ export const UPDATE_ROLE = gql`
     }
   }
 `;
+
+export const UPDATE_ROLES = gql`
+  mutation UpdateRoles($userEmail: String!, $id: ID!, $startDate: Float, $endDate: Float) {
+    updateRoles(userEmail: $userEmail, _id: $id, startDate: $startDate, endDate: $endDate) {
+      _id
+    }
+  }
+`;
