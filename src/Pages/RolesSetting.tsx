@@ -1,97 +1,37 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import styled from "styled-components";
-import { inPopup } from "../apollo";
-import BtnContainer from "../Components/Roles/Register/BtnContainer";
-import Form from "../Components/Roles/Register/Form";
-import Title from "../Components/Roles/Register/Title";
-import RolesGraph from "../Components/Roles/RolesGraph";
+import { useReactiveVar } from "@apollo/client";
+import { useState } from "react";
+import { Route, useParams } from "react-router-dom";
+import { isPopupVar } from "../apollo";
+import AddRoles from "../Components/Roles/AddRoles";
+import SetPeriod from "../Components/Roles/Popup/SetPeriod";
+import SetStudent from "../Components/Roles/Popup/SetStudent";
+import AlertMessage from "../Components/Shared/AlertMessage";
+import BasicContainer from "../Components/Shared/BasicContainer";
+import useMe from "../Hooks/useMe";
+import RolesAddStudents from "./RolesAddStudents";
 
-let rolesExample = [
-  { role: "에너지 지킴이", work: "교실을 이동할 때 불과 에어컨을 끄고 킵니다.", id: 1 },
-  { role: "칠판청소", work: "칠판을 닦고 칠판지우개를 관리합니다.", id: 2 },
-  { role: "앞, 뒤 청소", work: "교실의 앞, 뒤를 깨끗하게 청소합니다.", id: 3 },
-  { role: "책상 줄 맞추기", work: "책상 줄을 맞춥니다.", id: 4 },
-  { role: "안내장 번호 정리", work: "안내장을 번호순으로 정리합니다.", id: 5 },
-  { role: "자료 나눔이", work: "안내장을 나누어 줍니다.", id: 6 },
-  { role: "줄당번", work: "친구들이 줄을 잘 맞추어서 서게 돕습니다.", id: 7 },
-  { role: "쓰레기통 관리", work: "쓰레기통 주변을 정리하고 쓰레기통을 비웁니다.", id: 8 },
-  { role: "학급문고 관리", work: "학급 문고를 청결하게 정리합니다.", id: 9 },
-  { role: "물걸레질", work: "교실을 물걸레로 청결하게 정리합니다.", id: 10 },
-];
-
-const ResetBtn = styled.div`
-  background-color: ${(props) => props.theme.redColor};
-  color: ${(props) => props.theme.bgColor};
-  transition: background-color 1s ease, color 1s ease;
-  padding: 5px 20px;
-  padding: 0.3125rem 1.25em;
-  border-radius: 5px;
-  border-radius: 0.3125rem;
-  cursor: pointer;
-`;
-
-interface IProps {
-  setErrMsg: React.Dispatch<React.SetStateAction<null | string>>;
-}
-
-type RoleObj = {
-  role: string;
-  work: string;
-  id: number;
-  students: [] | [string];
-};
-
-const RolesSetting = ({ setErrMsg }: IProps) => {
-  const [randerRolesExample, setRanderRolesExample] = useState(rolesExample);
-
-  const { register, handleSubmit } = useForm({
-    mode: "onChange",
-  });
-
-  const onSubmit = (data: any) => {
-    const rolesDetails: RoleObj[] = [];
-    randerRolesExample.forEach((item) => {
-      rolesDetails.push({
-        role: data[`role${item.id}`],
-        work: data[`work${item.id}`],
-        id: item.id,
-        students: [],
-      });
-    });
-    const roles = new Set(rolesDetails.map((item) => item.role));
-    if (roles.size !== rolesDetails.length) return setErrMsg("중복된 역할이 존재합니다. 😓");
-    localStorage.setItem("roleDetails", JSON.stringify({ roles: rolesDetails }));
-    inPopup("rolesPeriod");
-  };
-
-  const onError = (error: any) => {
-    if (error) setErrMsg("빈 칸이 존재합니다. 😓");
-  };
-
-  const onClickResetBtn = () => setRanderRolesExample(rolesExample);
-
-  useEffect(() => {
-    const savedRoles = JSON.parse(localStorage.getItem("roleDetails") || "{}");
-    if (savedRoles.roles) {
-      setRanderRolesExample(savedRoles.roles);
-    }
-  }, []);
+const RolesSetting = () => {
+  const me = useMe();
+  const isPopup = useReactiveVar(isPopupVar);
+  const { mode } = useParams();
+  const [errMsg, setErrMsg] = useState<string | null>(null);
+  const [msg, setMsg] = useState<string | null>(null);
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
-      <Title>1인 1역 - 역할, 하는 일 입력하기</Title>
-      <BtnContainer>
-        <span>1인 1역 역할 작성 후 저장해 주세요.</span>
-        <ResetBtn onClick={onClickResetBtn}>초기화</ResetBtn>
-        <input type="submit" value="저장" className="save-btn btn" />
-      </BtnContainer>
-      <RolesGraph
-        register={register}
-        randerRolesExample={randerRolesExample}
-        setRanderRolesExample={setRanderRolesExample}
-      />
-    </Form>
+    <BasicContainer menuItem={true}>
+      {mode === "add-roles" ? <AddRoles setErrMsg={setErrMsg} /> : <div></div>}
+
+      {/* <Route path="setting" element={<RolesSetting setErrMsg={setErrMsg} />} />
+      <Route
+        path="add-students"
+        element={<RolesAddStudents setErrMsg={setErrMsg} setMsg={setMsg} isPopup={isPopup} />}
+      /> */}
+
+      {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
+      {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
+      {isPopup === "rolesPeriod" && <SetPeriod setErrMsg={setErrMsg} />}
+      {isPopup === "rolesSeleteStudent" && <SetStudent setErrMsg={setErrMsg} setMsg={setMsg} />}
+    </BasicContainer>
   );
 };
 

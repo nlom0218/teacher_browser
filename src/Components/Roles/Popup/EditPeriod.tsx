@@ -1,8 +1,6 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { outPopup } from "../../../apollo";
-import routes from "../../../routes";
+
 import PopupContainer from "../../Shared/PopupContainer";
 import { PopupDate } from "../../TodoList/Popup/PopupLayout";
 
