@@ -3,15 +3,15 @@ import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { inPopup } from "../apollo";
-import ComfirmRolesSave from "../Components/Roles/Popup/ComfirmRolesSave";
-import BtnContainer from "../Components/Roles/Register/BtnContainer";
-import Form from "../Components/Roles/Register/Form";
-import Title from "../Components/Roles/Register/Title";
-import RolesGraph from "../Components/Roles/RolesGraph";
-import { SEE_ONE_STUDENT_LIST_QUERY } from "../Graphql/StudentList/query";
-import useMe from "../Hooks/useMe";
-import routes from "../routes";
+import { inPopup } from "../../apollo";
+import ComfirmRolesSave from "./Popup/ComfirmRolesSave";
+import BtnContainer from "./Register/BtnContainer";
+import Form from "./Register/Form";
+import Title from "./Register/Title";
+import RolesGraph from "./RolesGraph";
+import { SEE_ONE_STUDENT_LIST_QUERY } from "../../Graphql/StudentList/query";
+import useMe from "../../Hooks/useMe";
+import routes from "../../routes";
 
 interface IProps {
   setErrMsg: React.Dispatch<React.SetStateAction<null | string>>;
@@ -19,7 +19,7 @@ interface IProps {
   isPopup: string | null;
 }
 
-const RolesAddStudents = ({ setErrMsg, setMsg, isPopup }: IProps) => {
+const AddStudents = ({ setErrMsg, setMsg, isPopup }: IProps) => {
   const me = useMe();
   const navigate = useNavigate();
 
@@ -87,4 +87,4 @@ const RolesAddStudents = ({ setErrMsg, setMsg, isPopup }: IProps) => {
   );
 };
 
-export default RolesAddStudents;
+export default AddStudents;

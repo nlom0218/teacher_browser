@@ -2,12 +2,12 @@ import { useMutation } from "@apollo/client";
 import styled from "styled-components";
 import { outPopup } from "../../../apollo";
 import BtnPopupContainer from "../../Shared/BtnPopupContainer";
-import { CREATE_ROLES, ADD_ROLE } from "../../../Graphql/Roles/mutation";
 import useMe from "../../../Hooks/useMe";
 import Loading from "../../Shared/Loading";
 import { useNavigate } from "react-router-dom";
 import routes from "../../../routes";
 import { SEE_ROLES } from "../../../Graphql/Roles/query";
+import { CREATE_ROLES_MUTATION } from "../../../Graphql/Roles/mutation";
 
 const Layout = styled.div`
   display: grid;
@@ -50,45 +50,38 @@ const ComfirmRolesSave = ({ studentVaild, rolesVaild }: IProps) => {
   const me = useMe();
   const navigate = useNavigate();
   const { roles, startDate, endDate } = JSON.parse(localStorage.getItem("roleDetails") || "{}");
-  const [addRole, { loading: addLoading }] = useMutation(ADD_ROLE);
 
-  const onCompletedCreateRoles = ({ createRoles }: { createRoles: { _id: string } }) => {
+  const onCompleted = ({ createRoles }: { createRoles: { _id: string } }) => {
     if (!createRoles._id) return;
-    const needAddRoles = roles.map((role: { role: string; work: string; students: string[] }) => {
-      return {
-        roles: createRoles._id,
-        title: role.role,
-        detail: role.work,
-        students: role.students.map((student: string) => {
-          return student.split(" ")[0];
-        }),
-      };
-    });
-    needAddRoles.forEach((needAddRole: { role: string; work: string; students: string[]; roles: string }) => {
-      addRole({
-        variables: {
-          userEmail: me?.email,
-          data: [needAddRole],
-        },
-      });
-    });
-    navigate(`${routes.roles}`);
+
+    navigate(`${routes.roles}/${createRoles._id}`);
     localStorage.removeItem("roleDetails");
     outPopup();
   };
 
-  const [createRoles, { loading: createLoading }] = useMutation(CREATE_ROLES, {
-    onCompleted: onCompletedCreateRoles,
-    refetchQueries: [{ query: SEE_ROLES, variables: { userEmail: me?.email } }],
+  const [createRoles, { loading: createLoading }] = useMutation(CREATE_ROLES_MUTATION, {
+    onCompleted,
   });
 
   const onClickCreateBtn = () => {
+    const submitRoles = makeSubmitRoles();
     createRoles({
       variables: {
         userEmail: me?.email,
         startDate: new Date(startDate).valueOf(),
         endDate: new Date(endDate).valueOf(),
+        data: submitRoles,
       },
+    });
+  };
+
+  const makeSubmitRoles = () => {
+    return roles.map((role: { role: string; students: string[]; work: string }) => {
+      return {
+        detail: role.work,
+        title: role.role,
+        students: role.students.map((item) => item.split(" ")[0]),
+      };
     });
   };
 
@@ -96,7 +89,7 @@ const ComfirmRolesSave = ({ studentVaild, rolesVaild }: IProps) => {
     outPopup();
   };
 
-  if (createLoading || addLoading) {
+  if (createLoading) {
     return <Loading page="btnPopupPage" />;
   }
   return (

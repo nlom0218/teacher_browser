@@ -10,7 +10,7 @@ import BasicContainer from "../Components/Shared/BasicContainer";
 import Loading from "../Components/Shared/Loading";
 import { SEE_ROLES } from "../Graphql/Roles/query";
 import useMe from "../Hooks/useMe";
-import RolesAddStudents from "./RolesAddStudents";
+import RolesAddStudents from "../Components/Roles/AddStudents";
 import RolesSetting from "../Components/Roles/AddRoles";
 
 const Roles = () => {

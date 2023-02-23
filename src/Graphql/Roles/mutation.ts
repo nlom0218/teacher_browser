@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
-export const CREATE_ROLES = gql`
-  mutation Mutation($userEmail: String!, $startDate: Float!, $endDate: Float!) {
-    createRoles(userEmail: $userEmail, startDate: $startDate, endDate: $endDate) {
+export const CREATE_ROLES_MUTATION = gql`
+  mutation CreateRoles($userEmail: String!, $startDate: Float!, $endDate: Float!, $data: [RoleInput!]) {
+    createRoles(userEmail: $userEmail, startDate: $startDate, endDate: $endDate, data: $data) {
       _id
     }
   }

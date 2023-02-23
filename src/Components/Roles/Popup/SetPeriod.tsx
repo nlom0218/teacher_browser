@@ -40,7 +40,7 @@ const SetPeriod = ({ setErrMsg }: IProps) => {
     const roleDetails = JSON.parse(localStorage.getItem("roleDetails") || "{}");
     localStorage.setItem("roleDetails", JSON.stringify({ startDate, endDate, ...roleDetails }));
     outPopup();
-    navigate(`${routes.roles}/add-students`);
+    navigate(`${routes.rolesSetting}/add-students`);
   };
   return (
     <PopupContainer>
