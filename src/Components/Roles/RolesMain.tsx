@@ -1,5 +1,5 @@
 import { useMutation, useReactiveVar } from "@apollo/client";
-import { format } from "date-fns";
+import { compareDesc, format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -34,22 +34,44 @@ const EditPeriodBtn = styled.div`
   border-radius: 0.3125rem;
 `;
 
-interface IProps {
+export type TRolesDate = {
   startDate: number;
   endDate: number;
+  order: number;
+};
+
+type TRole = {
+  detail: string;
+  title: string;
+  _id: string;
+  students: { order: number; students: TRoleStudent[]; _id: string }[];
+};
+
+type TRecentRole = {
+  detail: string;
+  title: string;
+  _id: string;
+  students: TRoleStudent[];
+};
+
+type TRoleStudent = { studentName: string; _id: string };
+
+interface IProps {
+  dates: TRolesDate[];
+  roles: TRole[];
   userEmail: string;
-  rolesId: string;
-  roles: { detail: string; title: string; _id: string; students: { studentName: string; _id: string }[] }[];
+  id: string;
+  mode: string;
   setErrMsg: React.Dispatch<React.SetStateAction<null | string>>;
 }
 
-const RolesMain = ({ startDate, endDate, roles, userEmail, rolesId, setErrMsg }: IProps) => {
+const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode }: IProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   const isPopup = useReactiveVar(isPopupVar);
 
-  const [editStartDate, setEditStartDate] = useState(startDate);
-  const [editEndDate, setEditEndDate] = useState(endDate);
+  const [recentDate, setRecentDate] = useState<undefined | TRolesDate>();
+  const [recentRole, setRecentRole] = useState<undefined | TRecentRole[]>();
 
   const [updateRole, { loading }] = useMutation(UPDATE_ROLE);
   const [updateRoles, { loading: updateRolesLoading }] = useMutation(UPDATE_ROLES);
@@ -70,16 +92,11 @@ const RolesMain = ({ startDate, endDate, roles, userEmail, rolesId, setErrMsg }:
     defaultValues: createDefaultValues(),
   });
 
-  const [pathname, setPathname] = useState(location.pathname);
-  const [students, setStudents] = useState(roles.map((role) => role.students));
-
   const onClickEditBtn = () => {
-    if (pathname === "/roles") return navigate(`${routes.roles}/edit`);
-    saveRoles();
+    navigate(`${routes.roles}/${id}/edit`);
   };
 
   const saveRoles = () => {
-    if (pathname !== "/roles") return;
     // console.log("촤라락 저장");
     // navigate(routes.roles);
   };
@@ -100,20 +117,20 @@ const RolesMain = ({ startDate, endDate, roles, userEmail, rolesId, setErrMsg }:
       });
     }
 
-    if (isUpdateDate()) {
-      updateRoles({
-        variables: {
-          userEmail,
-          id: rolesId,
-          startDate: new Date(editStartDate).valueOf(),
-          endDate: new Date(editEndDate).valueOf(),
-        },
-      });
-    }
+    // if (isUpdateDate()) {
+    //   updateRoles({
+    //     variables: {
+    //       userEmail,
+    //       id,
+    //       // startDate: new Date(editStartDate).valueOf(),
+    //       // endDate: new Date(editEndDate).valueOf(),
+    //     },
+    //   });
+    // }
   };
 
   const isUpdateDate = () => {
-    return new Date(editStartDate).valueOf() !== startDate || new Date(editEndDate).valueOf() !== endDate;
+    // return new Date(editStartDate).valueOf() !== startDate || new Date(editEndDate).valueOf() !== endDate;
   };
 
   const needUpdateOrCreateRoles = (rolesArray: { id: string; role: string; work: string }[]) => {
@@ -156,29 +173,46 @@ const RolesMain = ({ startDate, endDate, roles, userEmail, rolesId, setErrMsg }:
   };
 
   useEffect(() => {
-    setPathname(location.pathname);
-  }, [location]);
+    if (!dates || !roles) return;
+    setRecentDate(() => {
+      return dates.sort((a, b) => (a["order"] < b["order"] ? 1 : a["order"] > b["order"] ? -1 : 0))[0];
+    });
+    setRecentRole(() => {
+      return roles.map((item) => {
+        return {
+          detail: item.detail,
+          title: item.title,
+          _id: item._id,
+          students: item.students.sort((a, b) => (a["order"] < b["order"] ? 1 : a["order"] > b["order"] ? -1 : 0))[0]
+            .students,
+        };
+      });
+    });
+  }, [dates]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Title isMain={true}>
-        <div>{pathname === "/roles" ? "1인 1역" : "1인 1역 수정"}</div>
-        <RolesDate className="main-date">
-          {`${format(new Date(editStartDate), "yy.MM.dd")} ~ ${format(new Date(editEndDate), "yy.MM.dd")}`}
-          {pathname !== "/roles" && <EditPeriodBtn onClick={onClickEditPeriodBtn}>기간 수정하기</EditPeriodBtn>}
-        </RolesDate>
+        <div>{mode === "detail" ? "1인 1역" : "1인 1역 수정"}</div>
+        {recentDate && (
+          <RolesDate className="main-date">
+            {`${format(new Date(recentDate?.startDate), "yy.MM.dd")} ~ ${format(
+              new Date(recentDate?.endDate),
+              "yy.MM.dd",
+            )}`}
+            {mode === "edit" && <EditPeriodBtn onClick={onClickEditPeriodBtn}>기간 수정하기</EditPeriodBtn>}
+          </RolesDate>
+        )}
       </Title>
       <BtnContainer isAddStudent={true}>
-        {pathname === "/roles" && (
-          <div className="today-date">{format(new Date(), "MM월 dd일 (eee)", { locale: ko })}</div>
-        )}
+        {mode !== "edit" && <div className="today-date">{format(new Date(), "MM월 dd일 (eee)", { locale: ko })}</div>}
         <div>
-          {pathname === "/roles"
+          {mode === "edit"
             ? "1인 1역 역할을 완료한 학생이름을 클릭하면 완료표시가 됩니다."
-            : "역할, 하는 일, 학생, 기간을 수정한 후 저장버튼을 눌러주세요."}
+            : "학생, 기간을 수정한 후 저장버튼을 눌러주세요."}
         </div>
-        {pathname !== "/roles" && <div></div>}
-        {pathname === "/roles" ? (
+        {mode === "edit" && <div></div>}
+        {mode !== "edit" ? (
           <div onClick={onClickEditBtn} className="btn save-btn">
             수정
           </div>
@@ -186,19 +220,13 @@ const RolesMain = ({ startDate, endDate, roles, userEmail, rolesId, setErrMsg }:
           <input type="submit" value="저장" className="btn save-btn" />
         )}
       </BtnContainer>
-      {pathname === "/roles" ? (
-        <RolesGraph savedRoles={roles} isAddStudent={true} />
+      {mode !== "edit" ? (
+        <RolesGraph savedRoles={recentRole} isAddStudent={true} />
       ) : (
-        <EditRoles savedRoles={roles} isAddStudent={true} register={register} />
+        <EditRoles savedRoles={recentRole} isAddStudent={true} register={register} />
       )}
-      {isPopup === "editPeriod" && (
-        <EditPeriod
-          setErrMsg={setErrMsg}
-          editStartDate={editStartDate}
-          editEndDate={editEndDate}
-          setEditStartDate={setEditStartDate}
-          setEditEndDate={setEditEndDate}
-        />
+      {recentDate && isPopup === "editPeriod" && (
+        <EditPeriod setErrMsg={setErrMsg} recentDate={recentDate} setRecentDate={setRecentDate} />
       )}
     </Form>
   );

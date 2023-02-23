@@ -6,7 +6,6 @@ import useMe from "../../../Hooks/useMe";
 import Loading from "../../Shared/Loading";
 import { useNavigate } from "react-router-dom";
 import routes from "../../../routes";
-import { SEE_ROLES } from "../../../Graphql/Roles/query";
 import { CREATE_ROLES_MUTATION } from "../../../Graphql/Roles/mutation";
 
 const Layout = styled.div`
@@ -54,7 +53,7 @@ const ComfirmRolesSave = ({ studentVaild, rolesVaild }: IProps) => {
   const onCompleted = ({ createRoles }: { createRoles: { _id: string } }) => {
     if (!createRoles._id) return;
 
-    navigate(`${routes.roles}/${createRoles._id}`);
+    navigate(`${routes.roles}/${createRoles._id}/detail`);
     localStorage.removeItem("roleDetails");
     outPopup();
   };

@@ -219,8 +219,8 @@ const RolesGraphContents = ({
       )}
       {register && savedStudents && (
         <React.Fragment>
-          <input {...register(`role${id}`, { required: true })} />
-          <input {...register(`work${id}`, { required: true })} />
+          <input value={role} readOnly />
+          <input value={work} readOnly />
           <SelecteBox className="selected-box" hasStudents={true}>
             <div className="left-contents">
               <SelecteStudentList>

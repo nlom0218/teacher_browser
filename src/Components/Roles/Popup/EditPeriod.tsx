@@ -1,8 +1,10 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { outPopup } from "../../../apollo";
 
 import PopupContainer from "../../Shared/PopupContainer";
 import { PopupDate } from "../../TodoList/Popup/PopupLayout";
+import { TRolesDate } from "../RolesMain";
 
 const Layout = styled.div`
   padding: 30px 10px;
@@ -24,27 +26,38 @@ const SaveBtn = styled.div`
 `;
 
 interface IProps {
-  editStartDate: number;
-  editEndDate: number;
+  recentDate: TRolesDate;
   setErrMsg: React.Dispatch<React.SetStateAction<null | string>>;
-  setEditStartDate: React.Dispatch<React.SetStateAction<number>>;
-  setEditEndDate: React.Dispatch<React.SetStateAction<number>>;
+  setRecentDate: React.Dispatch<React.SetStateAction<undefined | TRolesDate>>;
 }
 
-const EditPeriod = ({ setErrMsg, editEndDate, editStartDate, setEditStartDate, setEditEndDate }: IProps) => {
+const EditPeriod = ({ setErrMsg, recentDate, setRecentDate }: IProps) => {
+  const [startDate, setStartDate] = useState(recentDate.startDate);
+  const [endDate, setEndDate] = useState(recentDate.endDate);
   const onClickSaveBtn = () => {
-    if (!editStartDate || !editEndDate) return setErrMsg("기간을 입력해주세요.📆");
+    if (!startDate || !endDate) return setErrMsg("기간을 입력해주세요.📆");
     outPopup();
   };
+
+  useEffect(() => {
+    setRecentDate(() => {
+      return {
+        order: recentDate.order,
+        startDate,
+        endDate,
+      };
+    });
+  }, [startDate, endDate]);
+
   return (
     <PopupContainer>
       <Layout>
         <div>1인 1역을 수행할 기간을 입력해주세요.</div>
         <PopupDate
-          startDate={new Date(editStartDate)}
-          setStartDate={setEditStartDate}
-          endDate={new Date(editEndDate)}
-          setEndDate={setEditEndDate}
+          startDate={new Date(startDate)}
+          setStartDate={setStartDate}
+          endDate={new Date(endDate)}
+          setEndDate={setEndDate}
         />
         <SaveBtn onClick={onClickSaveBtn}>확인</SaveBtn>
       </Layout>

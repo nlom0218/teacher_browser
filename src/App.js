@@ -193,7 +193,7 @@ function App() {
         <Route path={routes.xmasTree} element={<XmasTree />} />
         <Route path={routes.wishCard} element={<WishCard />} />
         <Route path={`${routes.rolesSetting}/:mode`} element={<RolesSetting />} />
-        <Route path={`${routes.roles}/:mode`} element={<Roles />} />
+        <Route path={`${routes.roles}/:id/:mode`} element={<Roles />} />
         <Route path="/2022seoWonju" element={<SeoWonju />} />
       </Routes>
     </ThemeProvider>
