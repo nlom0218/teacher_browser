@@ -34,33 +34,11 @@ const Roles = () => {
       {data && mode === "detail" ? (
         <RolesMain {...data?.roles} userEmail={me?.email} id={id} mode={mode}></RolesMain>
       ) : (
-        <RolesMain {...data?.roles} userEmail={me?.email} id={id} mode={mode} setErrMsg={setErrMsg} />
+        <RolesMain {...data?.roles} userEmail={me?.email} id={id} mode={mode} setErrMsg={setErrMsg} setMsg={setMsg} />
       )}
-      {/* <Routes>
-        {data && <Route path="" element={<RolesMain {...data?.roles[0]} />} />}
-        {data && (
-          <Route
-            path="/edit"
-            element={
-              <RolesMain
-                {...data?.roles[0]}
-                rolesId={data?.roles[0]?._id}
-                userEmail={me?.email}
-                setErrMsg={setErrMsg}
-              />
-            }
-          />
-        )}
-        <Route path="setting" element={<RolesSetting setErrMsg={setErrMsg} />} />
-        <Route
-          path="add-students"
-          element={<RolesAddStudents setErrMsg={setErrMsg} setMsg={setMsg} isPopup={isPopup} />}
-        />
-      </Routes> */}
       {errMsg && <AlertMessage msg={errMsg} setMsg={setErrMsg} type="error" time={3000} />}
       {msg && <AlertMessage msg={msg} setMsg={setMsg} type="success" time={3000} />}
       {isPopup === "rolesPeriod" && <SetPeriod setErrMsg={setErrMsg} />}
-      {isPopup === "rolesSeleteStudent" && <SetStudent setErrMsg={setErrMsg} setMsg={setMsg} />}
     </BasicContainer>
   );
 };

@@ -7,6 +7,7 @@ import Loading from "../../Shared/Loading";
 import { useNavigate } from "react-router-dom";
 import routes from "../../../routes";
 import { CREATE_ROLES_MUTATION } from "../../../Graphql/Roles/mutation";
+import { HAS_ROLES } from "../../../Graphql/Roles/query";
 
 const Layout = styled.div`
   display: grid;
@@ -60,6 +61,7 @@ const ComfirmRolesSave = ({ studentVaild, rolesVaild }: IProps) => {
 
   const [createRoles, { loading: createLoading }] = useMutation(CREATE_ROLES_MUTATION, {
     onCompleted,
+    refetchQueries: [{ query: HAS_ROLES, variables: { userEmail: me?.email } }],
   });
 
   const onClickCreateBtn = () => {

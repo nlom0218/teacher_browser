@@ -4,10 +4,10 @@ import { useParams } from "react-router-dom";
 import { isPopupVar } from "../apollo";
 import AddRoles from "../Components/Roles/AddRoles";
 import SetPeriod from "../Components/Roles/Popup/SetPeriod";
-import SetStudent from "../Components/Roles/Popup/SetStudent";
 import AlertMessage from "../Components/Shared/AlertMessage";
 import BasicContainer from "../Components/Shared/BasicContainer";
 import AddStudents from "../Components/Roles/AddStudents";
+import SetStudent from "../Components/Roles/Popup/SetStudent";
 
 const RolesSetting = () => {
   const isPopup = useReactiveVar(isPopupVar);

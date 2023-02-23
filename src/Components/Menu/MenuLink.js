@@ -360,14 +360,15 @@ export const RolesLink = () => {
     skip: !me,
   });
 
-  console.log(hasRoles);
-
   useEffect(() => {
     if (data?.roles) setHasRoles(true);
   }, [data]);
 
   return (
-    <Link to={hasRoles ? `${routes.roles}/${"id"}` : `${routes.rolesSetting}/add-roles`} onClick={onClickListLink}>
+    <Link
+      to={hasRoles ? `${routes.roles}/${data?.roles._id}/detail` : `${routes.rolesSetting}/add-roles`}
+      onClick={onClickListLink}
+    >
       <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <MdCleaningServices /> : <MdOutlineCleaningServices />}
         <Title>1인1역</Title>

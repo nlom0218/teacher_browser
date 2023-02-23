@@ -10,6 +10,7 @@ import { UPDATE_ROLE, UPDATE_ROLES } from "../../Graphql/Roles/mutation";
 import routes from "../../routes";
 import EditRoles from "./EditRoles";
 import EditPeriod from "./Popup/EditPeriod";
+import EditStudentsPopup from "./Popup/EditStudentsPopup";
 import BtnContainer from "./Register/BtnContainer";
 import Form from "./Register/Form";
 import Title from "./Register/Title";
@@ -47,11 +48,11 @@ type TRole = {
   students: { order: number; students: TRoleStudent[]; _id: string }[];
 };
 
-type TRecentRole = {
+export type TRecentRole = {
   detail: string;
   title: string;
   _id: string;
-  students: TRoleStudent[];
+  students: TRoleStudent[] | [];
 };
 
 type TRoleStudent = { studentName: string; _id: string };
@@ -63,9 +64,10 @@ interface IProps {
   id: string;
   mode: string;
   setErrMsg: React.Dispatch<React.SetStateAction<null | string>>;
+  setMsg: React.Dispatch<React.SetStateAction<null | string>>;
 }
 
-const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode }: IProps) => {
+const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IProps) => {
   const location = useLocation();
   const navigate = useNavigate();
   const isPopup = useReactiveVar(isPopupVar);
@@ -223,10 +225,18 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode }: IProps) => 
       {mode !== "edit" ? (
         <RolesGraph savedRoles={recentRole} isAddStudent={true} />
       ) : (
-        <EditRoles savedRoles={recentRole} isAddStudent={true} register={register} />
+        <EditRoles savedRoles={recentRole} setRecentRole={setRecentRole} register={register} setMsg={setMsg} />
       )}
       {recentDate && isPopup === "editPeriod" && (
         <EditPeriod setErrMsg={setErrMsg} recentDate={recentDate} setRecentDate={setRecentDate} />
+      )}
+      {recentRole && isPopup === "editRoleStudent" && (
+        <EditStudentsPopup
+          setErrMsg={setErrMsg}
+          setMsg={setMsg}
+          recentRole={recentRole}
+          setRecentRole={setRecentRole}
+        />
       )}
     </Form>
   );

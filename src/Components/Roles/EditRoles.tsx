@@ -1,7 +1,8 @@
 import { FieldValues, UseFormRegister } from "react-hook-form";
 import styled from "styled-components";
+import EditStudents from "./EditStudents";
 import GraphLayout from "./Register/GraphLayout";
-import RolesGraphContents from "./RolesGraphContents";
+import { TRecentRole } from "./RolesMain";
 
 const Container = styled.div`
   max-height: 100%;
@@ -10,26 +11,28 @@ const Container = styled.div`
 `;
 
 interface IProps {
-  isAddStudent: boolean;
   savedRoles?: { detail: string; title: string; _id: string; students: { studentName: string; _id: string }[] }[];
-  register: UseFormRegister<FieldValues> | null;
+  setRecentRole: React.Dispatch<React.SetStateAction<undefined | TRecentRole[]>>;
+  register?: UseFormRegister<FieldValues>;
+  setMsg: React.Dispatch<React.SetStateAction<null | string>>;
 }
 
-const EditRoles = ({ isAddStudent, savedRoles, register }: IProps) => {
+const EditRoles = ({ savedRoles, register, setRecentRole, setMsg }: IProps) => {
   return (
     <Container>
-      <GraphLayout isAddStudent={isAddStudent}>
+      <GraphLayout>
         {savedRoles &&
           savedRoles.map((role) => {
             return (
-              <RolesGraphContents
+              <EditStudents
                 key={role._id}
                 role={role.title}
                 work={role.detail}
                 id={role._id}
-                isAddStudent={true}
-                savedStudents={role.students}
+                students={role.students.map((item) => `${item._id} ${item.studentName}`)}
                 register={register}
+                setRecentRole={setRecentRole}
+                setMsg={setMsg}
               />
             );
           })}

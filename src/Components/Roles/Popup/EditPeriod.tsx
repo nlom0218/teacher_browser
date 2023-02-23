@@ -58,6 +58,7 @@ const EditPeriod = ({ setErrMsg, recentDate, setRecentDate }: IProps) => {
           setStartDate={setStartDate}
           endDate={new Date(endDate)}
           setEndDate={setEndDate}
+          reset={false}
         />
         <SaveBtn onClick={onClickSaveBtn}>확인</SaveBtn>
       </Layout>
