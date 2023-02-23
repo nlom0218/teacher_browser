@@ -114,7 +114,6 @@ const ListType = ({ onClickLunchmenu }) => {
         </Title>
         <PageLink>
           <NewsLink />
-          <XmasTree />
         </PageLink>
       </Theme>
     </Container>

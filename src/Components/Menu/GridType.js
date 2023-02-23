@@ -62,7 +62,6 @@ const GridType = ({ onClickLunchmenu }) => {
           <HeaderBookMark />
           {/* <ManagingRolesLink /> */}
           <QrcodeLink />
-          <XmasTree />
         </React.Fragment>
       )}
     </Container>
