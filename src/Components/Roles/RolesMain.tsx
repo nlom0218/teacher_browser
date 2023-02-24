@@ -17,6 +17,39 @@ import Form from "./Register/Form";
 import Title from "./Register/Title";
 import RolesGraph from "./RolesGraph";
 
+const RolesBtnLayout = styled.div`
+  font-size: 1em;
+  font-size: 1rem;
+  justify-self: flex-end;
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+`;
+
+const CreateBtn = styled.div`
+  background-color: ${(props) => props.theme.btnBgColor};
+  color: ${(props) => props.theme.bgColor};
+  padding: 5px 10px;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  transition: background-color 1s ease, color 1s ease;
+`;
+
+const EditBtnLayout = styled.div`
+  justify-self: flex-end;
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  .cancel-btn {
+    background-color: ${(props) => props.theme.redColor};
+    color: ${(props) => props.theme.bgColor};
+  }
+`;
+
 const RolesDate = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
@@ -126,6 +159,10 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
 
   const onClickEditBtn = () => {
     navigate(`${routes.roles}/${id}/edit`);
+  };
+
+  const onClickCancelBtn = () => {
+    navigate(`${routes.roles}/${id}/detail`);
   };
 
   const saveRoles = () => {
@@ -303,7 +340,7 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <Title isMain={true}>
+      <Title isMain={true} isDetail={mode === "detail"}>
         <div>{mode === "detail" ? "1인 1역" : "1인 1역 수정"}</div>
         {recentDate && (
           <RolesDate className="main-date">
@@ -313,6 +350,12 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
             )}`}
             {mode === "edit" && <EditPeriodBtn onClick={onClickEditPeriodBtn}>기간 수정하기</EditPeriodBtn>}
           </RolesDate>
+        )}
+        {mode === "detail" && (
+          <RolesBtnLayout>
+            <div>인쇄</div>
+            <CreateBtn>새로 만들기</CreateBtn>
+          </RolesBtnLayout>
         )}
       </Title>
       <BtnContainer isAddStudent={true}>
@@ -328,7 +371,12 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
             수정
           </div>
         ) : (
-          <input type="submit" value="저장" className="btn save-btn" onClick={onSubmit} />
+          <EditBtnLayout>
+            <input type="submit" value="저장" className="btn save-btn" onClick={onSubmit} />
+            <div onClick={onClickCancelBtn} className="btn cancel-btn">
+              취소
+            </div>
+          </EditBtnLayout>
         )}
       </BtnContainer>
       {mode !== "edit" ? (
