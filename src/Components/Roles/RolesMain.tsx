@@ -1,15 +1,16 @@
 import { useMutation, useReactiveVar } from "@apollo/client";
-import { compareDesc, format } from "date-fns";
+import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { inPopup, isPopupVar } from "../../apollo";
 import { UPDATE_ROLE, UPDATE_ROLES } from "../../Graphql/Roles/mutation";
 import routes from "../../routes";
 import Loading from "../Shared/Loading";
 import EditRoles from "./EditRoles";
+import CreateNewRoles from "./Popup/CreateNewRoles";
 import EditPeriod from "./Popup/EditPeriod";
 import EditStudentsPopup from "./Popup/EditStudentsPopup";
 import BtnContainer from "./Register/BtnContainer";
@@ -163,6 +164,10 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
 
   const onClickCancelBtn = () => {
     navigate(`${routes.roles}/${id}/detail`);
+  };
+
+  const onClickCreateNewRoles = () => {
+    inPopup("createNewRoles");
   };
 
   const saveRoles = () => {
@@ -348,25 +353,25 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
               new Date(recentDate?.endDate),
               "yy.MM.dd",
             )}`}
-            {mode === "edit" && <EditPeriodBtn onClick={onClickEditPeriodBtn}>기간 수정하기</EditPeriodBtn>}
+            {mode !== "detail" && <EditPeriodBtn onClick={onClickEditPeriodBtn}>기간 수정하기</EditPeriodBtn>}
           </RolesDate>
         )}
         {mode === "detail" && (
           <RolesBtnLayout>
             <div>인쇄</div>
-            <CreateBtn>새로 만들기</CreateBtn>
+            <CreateBtn onClick={onClickCreateNewRoles}>새로 만들기</CreateBtn>
           </RolesBtnLayout>
         )}
       </Title>
       <BtnContainer isAddStudent={true}>
-        {mode !== "edit" && <div className="today-date">{format(new Date(), "MM월 dd일 (eee)", { locale: ko })}</div>}
+        {mode === "detail" && <div className="today-date">{format(new Date(), "MM월 dd일 (eee)", { locale: ko })}</div>}
         <div>
-          {mode !== "edit"
+          {mode === "detail"
             ? "1인 1역 역할을 완료한 학생이름을 클릭하면 완료표시가 됩니다."
             : "학생, 기간을 수정한 후 저장버튼을 눌러주세요."}
         </div>
-        {mode === "edit" && <div></div>}
-        {mode !== "edit" ? (
+        {mode !== "detail" && <div></div>}
+        {mode === "detail" ? (
           <div onClick={onClickEditBtn} className="btn save-btn">
             수정
           </div>
@@ -379,7 +384,7 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
           </EditBtnLayout>
         )}
       </BtnContainer>
-      {mode !== "edit" ? (
+      {mode === "detail" ? (
         <RolesGraph
           savedRoles={recentRole}
           isAddStudent={true}
@@ -405,6 +410,7 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
         />
       )}
       {mode === "detail" && isIncludeDate !== "" && <Alert>{isIncludeDate}</Alert>}
+      {isPopup === "createNewRoles" && <CreateNewRoles />}
     </Form>
   );
 };

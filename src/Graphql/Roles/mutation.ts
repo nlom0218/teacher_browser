@@ -32,3 +32,12 @@ export const UPDATE_ROLES = gql`
     }
   }
 `;
+
+export const DELETE_ROLES_MUTATION = gql`
+  mutation DeleteRoles($userEmail: String!, $id: ID!) {
+    deleteRoles(userEmail: $userEmail, _id: $id) {
+      ok
+      error
+    }
+  }
+`;
