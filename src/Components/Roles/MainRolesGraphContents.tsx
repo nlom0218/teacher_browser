@@ -1,9 +1,13 @@
 import React from "react";
-import { FieldValues, UseFormRegister } from "react-hook-form";
 import styled from "styled-components";
 import MainRolesGraphContentStudents from "./MainRolesGraphContentStudents";
 import { IRoleHistory, TRolesDate } from "./RolesMain";
 
+const NoStudent = styled.div`
+  font-size: 0.875em;
+  font-size: 0.875rem;
+  opacity: 0.4;
+`;
 interface IContainer {
   isAddStudent?: boolean;
   isHover?: boolean;
@@ -85,20 +89,24 @@ const MainRolesGraphContents = ({
           <div className="left-contents">
             <SelecteStudentList>
               <div>
-                {savedStudents?.map(({ studentName, _id }) => {
-                  return (
-                    <MainRolesGraphContentStudents
-                      key={_id}
-                      studentName={studentName}
-                      studentId={_id}
-                      roleHistories={roleHistories}
-                      setRoleHistories={setRoleHistories}
-                      doneRoleStudents={doneRoleStudents}
-                      setDoneRoleStudents={setDoneRoleStudents}
-                      recentDate={recentDate}
-                    />
-                  );
-                })}
+                {savedStudents.length === 0 ? (
+                  <NoStudent>해당 1인 1역에 포함된 학생이 없습니다.</NoStudent>
+                ) : (
+                  savedStudents?.map(({ studentName, _id }) => {
+                    return (
+                      <MainRolesGraphContentStudents
+                        key={_id}
+                        studentName={studentName}
+                        studentId={_id}
+                        roleHistories={roleHistories}
+                        setRoleHistories={setRoleHistories}
+                        doneRoleStudents={doneRoleStudents}
+                        setDoneRoleStudents={setDoneRoleStudents}
+                        recentDate={recentDate}
+                      />
+                    );
+                  })
+                )}
               </div>
             </SelecteStudentList>
           </div>
