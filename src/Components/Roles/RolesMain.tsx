@@ -36,6 +36,18 @@ const EditPeriodBtn = styled.div`
   border-radius: 0.3125rem;
 `;
 
+const Alert = styled.div`
+  position: absolute;
+  bottom: 10px;
+  bottom: 0.625rem;
+  left: 10px;
+  left: 0.625rem;
+  color: ${(props) => props.theme.redColor};
+  font-weight: 700;
+  transition: color 1s ease;
+  letter-spacing: 0.5px;
+`;
+
 export type TRolesDate = {
   startDate: number;
   endDate: number;
@@ -78,6 +90,7 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
   const navigate = useNavigate();
   const isPopup = useReactiveVar(isPopupVar);
 
+  const [isIncludeDate, setIsInCludeDate] = useState("");
   const [recentDate, setRecentDate] = useState<undefined | TRolesDate>();
   const [recentRole, setRecentRole] = useState<undefined | TRecentRole[]>();
   const [roleHistories, setRoleHistories] = useState<undefined | IRoleHistory[]>();
@@ -269,6 +282,21 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
     });
   }, [roleHistories]);
 
+  useEffect(() => {
+    if (!recentDate) return;
+    const startDate = Number(format(new Date(recentDate.startDate), "yyMMdd"));
+    const endDate = Number(format(new Date(recentDate.endDate), "yyMMdd"));
+    const today = Number(format(new Date(), "yyMMdd"));
+
+    setIsInCludeDate(
+      startDate > today
+        ? "1인 1역 시작일이 오늘 보다 앞에 있습니다."
+        : endDate < today
+        ? "1인 1역 기간이 지났습니다. 새로운 1인 1역을 생성해주세요."
+        : "",
+    );
+  }, [recentDate]);
+
   if (updateRolesLoading) {
     return <Loading page="center" />;
   }
@@ -312,6 +340,7 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
           doneRoleStudents={doneRoleStudents}
           setDoneRoleStudents={setDoneRoleStudents}
           setMsg={setMsg}
+          recentDate={recentDate}
         />
       ) : (
         <EditRoles savedRoles={recentRole} setRecentRole={setRecentRole} register={register} setMsg={setMsg} />
@@ -327,6 +356,7 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
           setRecentRole={setRecentRole}
         />
       )}
+      {mode === "detail" && isIncludeDate !== "" && <Alert>{isIncludeDate}</Alert>}
     </Form>
   );
 };

@@ -2,7 +2,7 @@ import React from "react";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 import styled from "styled-components";
 import MainRolesGraphContentStudents from "./MainRolesGraphContentStudents";
-import { IRoleHistory } from "./RolesMain";
+import { IRoleHistory, TRolesDate } from "./RolesMain";
 
 interface IContainer {
   isAddStudent?: boolean;
@@ -62,6 +62,7 @@ interface IProps {
   setRoleHistories?: React.Dispatch<React.SetStateAction<IRoleHistory[] | undefined>>;
   doneRoleStudents?: undefined | string[];
   setDoneRoleStudents?: React.Dispatch<React.SetStateAction<undefined | string[]>>;
+  recentDate?: undefined | TRolesDate;
 }
 
 const MainRolesGraphContents = ({
@@ -73,6 +74,7 @@ const MainRolesGraphContents = ({
   setRoleHistories,
   doneRoleStudents,
   setDoneRoleStudents,
+  recentDate,
 }: IProps) => {
   return savedStudents ? (
     <Container isAddStudent={true}>
@@ -93,6 +95,7 @@ const MainRolesGraphContents = ({
                       setRoleHistories={setRoleHistories}
                       doneRoleStudents={doneRoleStudents}
                       setDoneRoleStudents={setDoneRoleStudents}
+                      recentDate={recentDate}
                     />
                   );
                 })}

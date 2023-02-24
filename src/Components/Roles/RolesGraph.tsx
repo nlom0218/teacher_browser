@@ -4,7 +4,7 @@ import styled from "styled-components";
 import MainRolesGraphContents from "./MainRolesGraphContents";
 import GraphLayout from "./Register/GraphLayout";
 import RolesGraphContents from "./RolesGraphContents";
-import { IRoleHistory } from "./RolesMain";
+import { IRoleHistory, TRolesDate } from "./RolesMain";
 
 const Container = styled.div`
   max-height: 100%;
@@ -20,6 +20,8 @@ interface IProps {
   setMsg?: React.Dispatch<React.SetStateAction<null | string>>;
   setRanderRolesExample?: React.Dispatch<React.SetStateAction<{ work: string; role: string; id: number }[]>>;
   savedRoles?: { detail: string; title: string; _id: string; students: { studentName: string; _id: string }[] }[];
+
+  recentDate?: undefined | TRolesDate;
 
   roleHistories?: IRoleHistory[];
   setRoleHistories?: React.Dispatch<React.SetStateAction<IRoleHistory[] | undefined>>;
@@ -39,6 +41,7 @@ const RolesGraph = ({
   setRoleHistories,
   doneRoleStudents,
   setDoneRoleStudents,
+  recentDate,
 }: IProps) => {
   const [updateWork, setUpdateWork] = useState<null | { type: string; id?: number }>(null);
 
@@ -88,6 +91,7 @@ const RolesGraph = ({
                 setRoleHistories={setRoleHistories}
                 doneRoleStudents={doneRoleStudents}
                 setDoneRoleStudents={setDoneRoleStudents}
+                recentDate={recentDate}
               />
             );
           })}
