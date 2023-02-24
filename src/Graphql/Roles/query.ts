@@ -26,6 +26,7 @@ export const SEE_ROLES_QUERY = gql`
           students {
             _id
             studentName
+            roleHistory
           }
         }
         title

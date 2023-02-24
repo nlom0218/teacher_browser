@@ -4,6 +4,7 @@ import { AiOutlineMinusCircle, AiOutlinePlusCircle } from "react-icons/ai";
 import { MdOutlineRefresh } from "react-icons/md";
 import styled from "styled-components";
 import { inPopup } from "../../apollo";
+import { IRoleHistory } from "./RolesMain";
 
 interface IContainer {
   isAddStudent?: boolean;
@@ -98,6 +99,11 @@ interface IProps {
   register?: UseFormRegister<FieldValues> | null;
   setMsg?: React.Dispatch<React.SetStateAction<null | string>>;
   setUpdateWork?: React.Dispatch<React.SetStateAction<null | { type: string; id?: number }>>;
+
+  roleHistories?: IRoleHistory[];
+  setRoleHistories?: React.Dispatch<React.SetStateAction<IRoleHistory[] | undefined>>;
+  doneRoleStudents?: undefined | string[];
+  setDoneRoleStudents?: React.Dispatch<React.SetStateAction<undefined | string[]>>;
 }
 
 const RolesGraphContents = ({
@@ -110,6 +116,10 @@ const RolesGraphContents = ({
   setMsg,
   setUpdateWork,
   savedStudents,
+  roleHistories,
+  setRoleHistories,
+  doneRoleStudents,
+  setDoneRoleStudents,
 }: IProps) => {
   const [isHover, setIsHover] = useState(false);
   const onClickUpdateBtn = (type: string) => {

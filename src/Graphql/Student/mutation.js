@@ -77,3 +77,21 @@ export const DELETE_STUDENT_ALL_IN_TRASH = gql`
     }
   }
 `;
+
+export const CHECK_ROLE_DONE_MUTATION = gql`
+  mutation CheckRoleDone($teacherEmail: String!, $data: [RoleDoneInput]) {
+    checkRoleDone(teacherEmail: $teacherEmail, data: $data) {
+      error
+      ok
+    }
+  }
+`;
+
+export const UN_CHECK_ROLE_DONE_MUTATION = gql`
+  mutation CheckRoleDone($teacherEmail: String!, $data: [RoleDoneInput]) {
+    uncheckRoleDone(teacherEmail: $teacherEmail, data: $data) {
+      error
+      ok
+    }
+  }
+`;

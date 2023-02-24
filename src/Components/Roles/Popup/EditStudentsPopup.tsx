@@ -96,6 +96,7 @@ const EditStudentsPopup = ({ setErrMsg, setMsg, recentRole, setRecentRole }: IPr
     if (selectedStudent.length === 0) return setErrMsg("선택된 학생이 없습니다.😓");
 
     setRecentRole((prev) => {
+      console.log(prev);
       return prev?.map((role) => {
         if (role._id === roleObj._id) {
           return {

@@ -56,7 +56,13 @@ export type TRecentRole = {
   students: TRoleStudent[] | [];
 };
 
-type TRoleStudent = { studentName: string; _id: string };
+type TRoleStudent = { studentName: string; _id: string; roleHistory?: number[] | [] };
+
+export type IRoleHistory = {
+  id: string;
+  studentName: string;
+  dates?: number[];
+};
 
 interface IProps {
   dates: TRolesDate[];
@@ -69,12 +75,13 @@ interface IProps {
 }
 
 const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IProps) => {
-  const location = useLocation();
   const navigate = useNavigate();
   const isPopup = useReactiveVar(isPopupVar);
 
   const [recentDate, setRecentDate] = useState<undefined | TRolesDate>();
   const [recentRole, setRecentRole] = useState<undefined | TRecentRole[]>();
+  const [roleHistories, setRoleHistories] = useState<undefined | IRoleHistory[]>();
+  const [doneRoleStudents, setDoneRoleStudents] = useState<undefined | string[]>();
 
   const onCompleted = (result: { updateRoles: { ok: boolean } }) => {
     if (result.updateRoles.ok) {
@@ -238,7 +245,29 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
         };
       });
     });
-  }, [dates]);
+    setRoleHistories(() => {
+      return roles.flatMap(({ students }) => {
+        return students[0].students.map((student) => {
+          return {
+            id: student._id,
+            studentName: student.studentName,
+            dates: student.roleHistory,
+          };
+        });
+      });
+    });
+  }, [dates, roles]);
+
+  useEffect(() => {
+    if (!roleHistories) return;
+    const today = Number(format(new Date(), "yyMMdd"));
+
+    setDoneRoleStudents(() => {
+      return roleHistories
+        .filter((roleHistory) => roleHistory.dates?.includes(today))
+        .map((roleHistory) => roleHistory.id);
+    });
+  }, [roleHistories]);
 
   if (updateRolesLoading) {
     return <Loading page="center" />;
@@ -261,7 +290,7 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
       <BtnContainer isAddStudent={true}>
         {mode !== "edit" && <div className="today-date">{format(new Date(), "MM월 dd일 (eee)", { locale: ko })}</div>}
         <div>
-          {mode === "edit"
+          {mode !== "edit"
             ? "1인 1역 역할을 완료한 학생이름을 클릭하면 완료표시가 됩니다."
             : "학생, 기간을 수정한 후 저장버튼을 눌러주세요."}
         </div>
@@ -275,7 +304,15 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
         )}
       </BtnContainer>
       {mode !== "edit" ? (
-        <RolesGraph savedRoles={recentRole} isAddStudent={true} />
+        <RolesGraph
+          savedRoles={recentRole}
+          isAddStudent={true}
+          roleHistories={roleHistories}
+          setRoleHistories={setRoleHistories}
+          doneRoleStudents={doneRoleStudents}
+          setDoneRoleStudents={setDoneRoleStudents}
+          setMsg={setMsg}
+        />
       ) : (
         <EditRoles savedRoles={recentRole} setRecentRole={setRecentRole} register={register} setMsg={setMsg} />
       )}

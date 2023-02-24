@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 import styled from "styled-components";
+import MainRolesGraphContents from "./MainRolesGraphContents";
 import GraphLayout from "./Register/GraphLayout";
 import RolesGraphContents from "./RolesGraphContents";
+import { IRoleHistory } from "./RolesMain";
 
 const Container = styled.div`
   max-height: 100%;
@@ -18,6 +20,11 @@ interface IProps {
   setMsg?: React.Dispatch<React.SetStateAction<null | string>>;
   setRanderRolesExample?: React.Dispatch<React.SetStateAction<{ work: string; role: string; id: number }[]>>;
   savedRoles?: { detail: string; title: string; _id: string; students: { studentName: string; _id: string }[] }[];
+
+  roleHistories?: IRoleHistory[];
+  setRoleHistories?: React.Dispatch<React.SetStateAction<IRoleHistory[] | undefined>>;
+  doneRoleStudents?: undefined | string[];
+  setDoneRoleStudents?: React.Dispatch<React.SetStateAction<undefined | string[]>>;
 }
 
 const RolesGraph = ({
@@ -28,6 +35,10 @@ const RolesGraph = ({
   randerRolesExample,
   setRanderRolesExample,
   savedRoles,
+  roleHistories,
+  setRoleHistories,
+  doneRoleStudents,
+  setDoneRoleStudents,
 }: IProps) => {
   const [updateWork, setUpdateWork] = useState<null | { type: string; id?: number }>(null);
 
@@ -67,13 +78,16 @@ const RolesGraph = ({
         {savedRoles &&
           savedRoles.map((role) => {
             return (
-              <RolesGraphContents
+              <MainRolesGraphContents
                 key={role._id}
                 role={role.title}
                 work={role.detail}
                 id={role._id}
-                isAddStudent={true}
                 savedStudents={role.students}
+                roleHistories={roleHistories}
+                setRoleHistories={setRoleHistories}
+                doneRoleStudents={doneRoleStudents}
+                setDoneRoleStudents={setDoneRoleStudents}
               />
             );
           })}
