@@ -25,8 +25,24 @@ export const UPDATE_ROLE = gql`
 `;
 
 export const UPDATE_ROLES = gql`
-  mutation UpdateRoles($userEmail: String!, $order: Int!, $startDate: Float, $endDate: Float, $data: [RoleIdInput]) {
-    updateRoles(userEmail: $userEmail, order: $order, startDate: $startDate, endDate: $endDate, data: $data) {
+  mutation UpdateRoles(
+    $userEmail: String!
+    $order: Int!
+    $startDate: Float
+    $endDate: Float
+    $data: [RoleIdInput]
+    $addRole: [RoleInput]
+    $deleteRole: [ID]
+  ) {
+    updateRoles(
+      userEmail: $userEmail
+      order: $order
+      startDate: $startDate
+      endDate: $endDate
+      data: $data
+      addRole: $addRole
+      deleteRole: $deleteRole
+    ) {
       ok
       error
     }

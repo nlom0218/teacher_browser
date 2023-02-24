@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { inPopup, isPopupVar } from "../../apollo";
-import { ADD_NEW_ROLES, UPDATE_ROLE, UPDATE_ROLES } from "../../Graphql/Roles/mutation";
+import { ADD_NEW_ROLES, UPDATE_ROLES } from "../../Graphql/Roles/mutation";
 import { SEE_ROLES_QUERY } from "../../Graphql/Roles/query";
 import routes from "../../routes";
 import Loading from "../Shared/Loading";
@@ -185,6 +185,8 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
 
     if (mode === "edit") {
       const needUpdateStudents = getNeedUpdateStudents();
+      const needCreateRole = getNeedCreateRole();
+      const needDeleteRole = getNeedDeleteRole();
       updateRoles({
         variables: {
           userEmail,
@@ -192,6 +194,8 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
           startDate: new Date(recentDate?.startDate).valueOf(),
           endDate: new Date(recentDate?.endDate).valueOf(),
           data: needUpdateStudents?.length !== 0 ? needUpdateStudents : undefined,
+          addRole: needCreateRole?.length !== 0 ? needCreateRole : undefined,
+          deleteRole: needDeleteRole?.length !== 0 ? needDeleteRole : undefined,
         },
       });
     }
@@ -211,86 +215,58 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
         },
       });
     }
-    // const { needUpdateRoles, needCreateRoles } = needUpdateOrCreateRoles(rolesArray);
-    // if (needUpdateRoles) {
-    //   needUpdateRoles.forEach((role) => {
-    //     updateRole({
-    //       variables: {
-    //         userEmail,
-    //         id: role.id,
-    //         title: role.role,
-    //         detail: role.work,
-    //       },
-    //     });
-    //   });
-    // }
-    // if (isUpdateDate()) {
-    //   updateRoles({
-    //     variables: {
-    //       userEmail,
-    //       id,
-    //       // startDate: new Date(editStartDate).valueOf(),
-    //       // endDate: new Date(editEndDate).valueOf(),
-    //     },
-    //   });
-    // }
+  };
+
+  const getNeedDeleteRole = () => {
+    if (!recentRole) return;
+    const deleteRole: string[] = [];
+    const tempRoles = [...recentRole?.filter((role) => !role._id.match(/new/)).map((item) => item._id)];
+
+    roles
+      .map((item) => item._id)
+      .forEach((id) => {
+        if (tempRoles.includes(id)) return;
+        deleteRole.push(id);
+      });
+
+    return deleteRole;
+  };
+
+  const getNeedCreateRole = () => {
+    if (!recentRole) return;
+    const roles: { detail: string; students: string[]; title: string }[] = [];
+    recentRole
+      .filter((role) => role._id.match(/new/))
+      .forEach((role) => {
+        roles.push({
+          title: role.title,
+          detail: role.detail,
+          students: role.students.map((student) => student._id),
+        });
+      });
+
+    return roles;
   };
 
   const getNeedUpdateStudents = () => {
     if (!recentRole) return;
-    // recentRole, roles
     const students: { id: string; students: string[] }[] = [];
-    recentRole?.forEach((role) => {
-      const roleId = role._id;
-      const thisRole = roles.filter((role) => role._id === roleId)[0];
-      const changedStudents = role.students;
-      const prevStudents = thisRole.students[thisRole.students.length - 1].students;
+    recentRole
+      ?.filter((role) => !role._id.match(/new/))
+      .forEach((role) => {
+        const roleId = role._id;
+        const thisRole = roles.filter((role) => role._id === roleId)[0];
+        const changedStudents = role.students;
+        const prevStudents = thisRole.students[thisRole.students.length - 1].students;
 
-      if (changedStudents.length !== prevStudents.length) {
-        students.push({ id: roleId, students: changedStudents.map((item) => item._id) });
-      }
-
-      if (new Set([...changedStudents, ...prevStudents]).size !== changedStudents.length) {
-        students.push({ id: roleId, students: changedStudents.map((item) => item._id) });
-      }
-    });
+        if (changedStudents.length !== prevStudents.length) {
+          students.push({ id: roleId, students: changedStudents.map((item) => item._id) });
+        } else if (new Set([...changedStudents, ...prevStudents]).size !== changedStudents.length) {
+          students.push({ id: roleId, students: changedStudents.map((item) => item._id) });
+        }
+      });
 
     return students;
-  };
-
-  const needUpdateOrCreateRoles = (rolesArray: { id: string; role: string; work: string }[]) => {
-    const needUpdateRoles: { id: string; role: string; work: string }[] = [];
-    const needCreateRoles: { id: string; role: string; work: string }[] = [];
-    rolesArray.forEach((inputRole) => {
-      const role = roles.filter((role) => {
-        return role._id === inputRole.id;
-      })[0];
-      if (!role) return needCreateRoles.push(inputRole);
-      if (role.title !== inputRole.role || role.detail !== inputRole.work) {
-        return needUpdateRoles.push(inputRole);
-      }
-    });
-
-    return { needUpdateRoles, needCreateRoles };
-  };
-
-  const createRolesArray = (data: any) => {
-    const roles = Object.entries(data);
-
-    const rolesObj: any = {};
-    roles.forEach(([typeId, contents]) => {
-      const type = typeId.slice(0, 4);
-      const id = typeId.slice(4);
-      if (!rolesObj[id]) rolesObj[id] = { role: null, work: null };
-      rolesObj[id][type] = contents;
-    });
-
-    const rolesArray: { id: string; role: string; work: string }[] = [];
-    for (let key in rolesObj) {
-      rolesArray.push({ id: key, role: rolesObj[key].role, work: rolesObj[key].work });
-    }
-
-    return rolesArray;
   };
 
   const onClickEditPeriodBtn = () => {
