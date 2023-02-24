@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { inPopup, isPopupVar } from "../../apollo";
 import { UPDATE_ROLE, UPDATE_ROLES } from "../../Graphql/Roles/mutation";
 import routes from "../../routes";
+import Loading from "../Shared/Loading";
 import EditRoles from "./EditRoles";
 import EditPeriod from "./Popup/EditPeriod";
 import EditStudentsPopup from "./Popup/EditStudentsPopup";
@@ -75,8 +76,17 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
   const [recentDate, setRecentDate] = useState<undefined | TRolesDate>();
   const [recentRole, setRecentRole] = useState<undefined | TRecentRole[]>();
 
+  const onCompleted = (result: { updateRoles: { ok: boolean } }) => {
+    if (result.updateRoles.ok) {
+      setMsg("1인 1역이 수정되었습니다.😁");
+      navigate(`${routes.roles}/${id}/detail`);
+    }
+  };
+
   const [updateRole, { loading }] = useMutation(UPDATE_ROLE);
-  const [updateRoles, { loading: updateRolesLoading }] = useMutation(UPDATE_ROLES);
+  const [updateRoles, { loading: updateRolesLoading }] = useMutation(UPDATE_ROLES, {
+    onCompleted,
+  });
 
   const createDefaultValues = () => {
     if (!roles) return;
@@ -89,7 +99,7 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
     return defaulValues;
   };
 
-  const { register, handleSubmit } = useForm<any>({
+  const { register, handleSubmit } = useForm({
     mode: "onChange",
     defaultValues: createDefaultValues(),
   });
@@ -103,22 +113,31 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
     // navigate(routes.roles);
   };
 
-  const onSubmit = (data: any) => {
-    const rolesArray = createRolesArray(data);
-    const { needUpdateRoles, needCreateRoles } = needUpdateOrCreateRoles(rolesArray);
-    if (needUpdateRoles) {
-      needUpdateRoles.forEach((role) => {
-        updateRole({
-          variables: {
-            userEmail,
-            id: role.id,
-            title: role.role,
-            detail: role.work,
-          },
-        });
-      });
-    }
-
+  const onSubmit = () => {
+    if (!recentDate) return;
+    const needUpdateStudents = getNeedUpdateStudents();
+    updateRoles({
+      variables: {
+        userEmail,
+        order: recentDate?.order,
+        startDate: isUpdateDate() ? new Date(recentDate?.startDate).valueOf() : undefined,
+        endDate: isUpdateDate() ? new Date(recentDate?.endDate).valueOf() : undefined,
+        data: needUpdateStudents?.length !== 0 ? needUpdateStudents : undefined,
+      },
+    });
+    // const { needUpdateRoles, needCreateRoles } = needUpdateOrCreateRoles(rolesArray);
+    // if (needUpdateRoles) {
+    //   needUpdateRoles.forEach((role) => {
+    //     updateRole({
+    //       variables: {
+    //         userEmail,
+    //         id: role.id,
+    //         title: role.role,
+    //         detail: role.work,
+    //       },
+    //     });
+    //   });
+    // }
     // if (isUpdateDate()) {
     //   updateRoles({
     //     variables: {
@@ -132,7 +151,33 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
   };
 
   const isUpdateDate = () => {
-    // return new Date(editStartDate).valueOf() !== startDate || new Date(editEndDate).valueOf() !== endDate;
+    if (!recentDate) return;
+    return (
+      new Date(recentDate?.startDate).valueOf() !== biggestOrder(dates).startDate ||
+      new Date(recentDate?.endDate).valueOf() !== biggestOrder(dates).endDate
+    );
+  };
+
+  const getNeedUpdateStudents = () => {
+    if (!recentRole) return;
+    // recentRole, roles
+    const students: { id: string; students: string[] }[] = [];
+    recentRole?.forEach((role) => {
+      const roleId = role._id;
+      const thisRole = roles.filter((role) => role._id === roleId)[0];
+      const changedStudents = role.students;
+      const prevStudents = biggestOrder(thisRole.students).students;
+
+      if (changedStudents.length !== prevStudents.length) {
+        students.push({ id: roleId, students: changedStudents.map((item) => item._id) });
+      }
+
+      if (new Set([...changedStudents, ...prevStudents]).size !== changedStudents.length) {
+        students.push({ id: roleId, students: changedStudents.map((item) => item._id) });
+      }
+    });
+
+    return students;
   };
 
   const needUpdateOrCreateRoles = (rolesArray: { id: string; role: string; work: string }[]) => {
@@ -174,10 +219,14 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
     inPopup("editPeriod");
   };
 
+  const biggestOrder = (array: any[]) => {
+    return array.sort((a, b) => (a["order"] < b["order"] ? 1 : a["order"] > b["order"] ? -1 : 0))[0];
+  };
+
   useEffect(() => {
     if (!dates || !roles) return;
     setRecentDate(() => {
-      return dates.sort((a, b) => (a["order"] < b["order"] ? 1 : a["order"] > b["order"] ? -1 : 0))[0];
+      return biggestOrder(dates);
     });
     setRecentRole(() => {
       return roles.map((item) => {
@@ -185,12 +234,15 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
           detail: item.detail,
           title: item.title,
           _id: item._id,
-          students: item.students.sort((a, b) => (a["order"] < b["order"] ? 1 : a["order"] > b["order"] ? -1 : 0))[0]
-            .students,
+          students: biggestOrder(item.students).students,
         };
       });
     });
   }, [dates]);
+
+  if (updateRolesLoading) {
+    return <Loading page="center" />;
+  }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -219,7 +271,7 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
             수정
           </div>
         ) : (
-          <input type="submit" value="저장" className="btn save-btn" />
+          <input type="submit" value="저장" className="btn save-btn" onClick={onSubmit} />
         )}
       </BtnContainer>
       {mode !== "edit" ? (

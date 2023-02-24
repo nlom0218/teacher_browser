@@ -20,7 +20,7 @@ interface IProps {
 const EditRoles = ({ savedRoles, register, setRecentRole, setMsg }: IProps) => {
   return (
     <Container>
-      <GraphLayout>
+      <GraphLayout isAddStudent={true}>
         {savedRoles &&
           savedRoles.map((role) => {
             return (
