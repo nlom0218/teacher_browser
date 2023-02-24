@@ -6,7 +6,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { inPopup, isPopupVar } from "../../apollo";
-import { UPDATE_ROLE, UPDATE_ROLES } from "../../Graphql/Roles/mutation";
+import { ADD_NEW_ROLES, UPDATE_ROLE, UPDATE_ROLES } from "../../Graphql/Roles/mutation";
+import { SEE_ROLES_QUERY } from "../../Graphql/Roles/query";
 import routes from "../../routes";
 import Loading from "../Shared/Loading";
 import EditRoles from "./EditRoles";
@@ -88,7 +89,7 @@ export type TRolesDate = {
   order: number;
 };
 
-type TRole = {
+export type TRole = {
   detail: string;
   title: string;
   _id: string;
@@ -137,9 +138,18 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
     }
   };
 
-  const [updateRole, { loading }] = useMutation(UPDATE_ROLE);
   const [updateRoles, { loading: updateRolesLoading }] = useMutation(UPDATE_ROLES, {
     onCompleted,
+    refetchQueries: [{ query: SEE_ROLES_QUERY, variables: { userEmail, id } }],
+  });
+  const [addNewRoles, { loading: addNewRolesLoading }] = useMutation(ADD_NEW_ROLES, {
+    onCompleted: (result: any) => {
+      if (result.addNewDateRoles.ok) {
+        setMsg("1인 1역이 생성되었습니다.😁");
+        navigate(`${routes.roles}/${id}/detail`);
+      }
+    },
+    refetchQueries: [{ query: SEE_ROLES_QUERY, variables: { userEmail, id } }],
   });
 
   const createDefaultValues = () => {
@@ -170,23 +180,37 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
     inPopup("createNewRoles");
   };
 
-  const saveRoles = () => {
-    // console.log("촤라락 저장");
-    // navigate(routes.roles);
-  };
-
   const onSubmit = () => {
-    if (!recentDate) return;
-    const needUpdateStudents = getNeedUpdateStudents();
-    updateRoles({
-      variables: {
-        userEmail,
-        order: recentDate?.order,
-        startDate: isUpdateDate() ? new Date(recentDate?.startDate).valueOf() : undefined,
-        endDate: isUpdateDate() ? new Date(recentDate?.endDate).valueOf() : undefined,
-        data: needUpdateStudents?.length !== 0 ? needUpdateStudents : undefined,
-      },
-    });
+    if (!recentDate || !recentRole) return;
+
+    if (mode === "edit") {
+      const needUpdateStudents = getNeedUpdateStudents();
+      updateRoles({
+        variables: {
+          userEmail,
+          order: recentDate?.order,
+          startDate: new Date(recentDate?.startDate).valueOf(),
+          endDate: new Date(recentDate?.endDate).valueOf(),
+          data: needUpdateStudents?.length !== 0 ? needUpdateStudents : undefined,
+        },
+      });
+    }
+
+    if (mode === "create") {
+      addNewRoles({
+        variables: {
+          userEmail,
+          startDate: new Date(recentDate?.startDate).valueOf(),
+          endDate: new Date(recentDate?.endDate).valueOf(),
+          data: recentRole.map((role) => {
+            return {
+              id: role._id,
+              students: role.students.map((student) => student._id),
+            };
+          }),
+        },
+      });
+    }
     // const { needUpdateRoles, needCreateRoles } = needUpdateOrCreateRoles(rolesArray);
     // if (needUpdateRoles) {
     //   needUpdateRoles.forEach((role) => {
@@ -212,14 +236,6 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
     // }
   };
 
-  const isUpdateDate = () => {
-    if (!recentDate) return;
-    return (
-      new Date(recentDate?.startDate).valueOf() !== biggestOrder(dates).startDate ||
-      new Date(recentDate?.endDate).valueOf() !== biggestOrder(dates).endDate
-    );
-  };
-
   const getNeedUpdateStudents = () => {
     if (!recentRole) return;
     // recentRole, roles
@@ -228,7 +244,7 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
       const roleId = role._id;
       const thisRole = roles.filter((role) => role._id === roleId)[0];
       const changedStudents = role.students;
-      const prevStudents = biggestOrder(thisRole.students).students;
+      const prevStudents = thisRole.students[thisRole.students.length - 1].students;
 
       if (changedStudents.length !== prevStudents.length) {
         students.push({ id: roleId, students: changedStudents.map((item) => item._id) });
@@ -281,14 +297,10 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
     inPopup("editPeriod");
   };
 
-  const biggestOrder = (array: any[]) => {
-    return array.sort((a, b) => (a["order"] < b["order"] ? 1 : a["order"] > b["order"] ? -1 : 0))[0];
-  };
-
   useEffect(() => {
     if (!dates || !roles) return;
     setRecentDate(() => {
-      return biggestOrder(dates);
+      return dates[dates.length - 1];
     });
     setRecentRole(() => {
       return roles.map((item) => {
@@ -296,7 +308,7 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
           detail: item.detail,
           title: item.title,
           _id: item._id,
-          students: biggestOrder(item.students).students,
+          students: mode !== "create" ? item.students[item.students.length - 1].students : [],
         };
       });
     });
@@ -311,7 +323,7 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
         });
       });
     });
-  }, [dates, roles]);
+  }, [dates, roles, mode]);
 
   useEffect(() => {
     if (!roleHistories) return;
@@ -339,7 +351,7 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
     );
   }, [recentDate]);
 
-  if (updateRolesLoading) {
+  if (updateRolesLoading || addNewRolesLoading) {
     return <Loading page="center" />;
   }
 
@@ -353,7 +365,11 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
               new Date(recentDate?.endDate),
               "yy.MM.dd",
             )}`}
-            {mode !== "detail" && <EditPeriodBtn onClick={onClickEditPeriodBtn}>기간 수정하기</EditPeriodBtn>}
+            {mode !== "detail" && (
+              <EditPeriodBtn onClick={onClickEditPeriodBtn}>
+                {mode === "edit" ? "기간 수정하기" : "기간 설정하기"}
+              </EditPeriodBtn>
+            )}
           </RolesDate>
         )}
         {mode === "detail" && (
@@ -368,7 +384,9 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
         <div>
           {mode === "detail"
             ? "1인 1역 역할을 완료한 학생이름을 클릭하면 완료표시가 됩니다."
-            : "학생, 기간을 수정한 후 저장버튼을 눌러주세요."}
+            : mode === "edit"
+            ? "학생, 기간을 수정한 후 저장버튼을 눌러주세요."
+            : "새로운 기간을 설정하고 학생을 추가한 후 저장버튼을 눌러주세요."}
         </div>
         {mode !== "detail" && <div></div>}
         {mode === "detail" ? (
@@ -377,9 +395,14 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
           </div>
         ) : (
           <EditBtnLayout>
-            <input type="submit" value="저장" className="btn save-btn" onClick={onSubmit} />
+            <input
+              type="submit"
+              value={`${mode === "edit" ? "수정" : "생성"}`}
+              className="btn save-btn"
+              onClick={onSubmit}
+            />
             <div onClick={onClickCancelBtn} className="btn cancel-btn">
-              취소
+              {mode === "edit" ? "취소" : "생성 취소하기"}
             </div>
           </EditBtnLayout>
         )}
@@ -407,6 +430,8 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
           setMsg={setMsg}
           recentRole={recentRole}
           setRecentRole={setRecentRole}
+          prevDate={dates}
+          prevStudents={roles}
         />
       )}
       {mode === "detail" && isIncludeDate !== "" && <Alert>{isIncludeDate}</Alert>}

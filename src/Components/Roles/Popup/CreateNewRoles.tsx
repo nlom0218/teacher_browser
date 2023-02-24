@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { outPopup } from "../../../apollo";
 import { DELETE_ROLES_MUTATION } from "../../../Graphql/Roles/mutation";
-import { HAS_ROLES } from "../../../Graphql/Roles/query";
+import { HAS_ROLES, SEE_ROLES_QUERY } from "../../../Graphql/Roles/query";
 import useMe from "../../../Hooks/useMe";
 import routes from "../../../routes";
 import BtnPopupContainer from "../../Shared/BtnPopupContainer";
@@ -60,7 +60,10 @@ const CreateNewRoles = () => {
         outPopup();
       }
     },
-    refetchQueries: [{ query: HAS_ROLES, variables: { userEmail: me?.email } }],
+    refetchQueries: [
+      { query: HAS_ROLES, variables: { userEmail: me?.email } },
+      { query: SEE_ROLES_QUERY, variables: { userEmail: me?.email, id } },
+    ],
   });
 
   const onClickDeleteAndCreateRoles = () => {

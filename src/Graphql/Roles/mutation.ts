@@ -41,3 +41,12 @@ export const DELETE_ROLES_MUTATION = gql`
     }
   }
 `;
+
+export const ADD_NEW_ROLES = gql`
+  mutation AddNewDateRoles($userEmail: String!, $startDate: Float!, $endDate: Float!, $data: [RoleIdInput!]) {
+    addNewDateRoles(userEmail: $userEmail, startDate: $startDate, endDate: $endDate, data: $data) {
+      ok
+      error
+    }
+  }
+`;
