@@ -88,10 +88,12 @@ const PrintContainer = styled.div<IPrintContainer>`
   background-image: ${(props) => `url(${props.bgUrl})`};
   background-position: center;
   background-size: contain;
-  padding: ${(props) => (props.isLong ? "7.5cm 2cm 2cm" : "9cm 2cm 2cm")};
+  padding: ${(props) => (props.isLong ? "7.5cm 1.5cm 2cm" : "8.5cm 1.5cm 2cm")};
   break-after: page;
+
   @media print {
-    margin-top: 0;
+    display: grid;
+    column-gap: 10px;
   }
   @page {
     size: A4;
@@ -101,8 +103,45 @@ const PrintContainer = styled.div<IPrintContainer>`
 const PrintLayout = styled.div`
   min-height: 100%;
   max-height: 100%;
-  border: 1px solid black;
+  border: 2px solid #fd1b1bcf;
   display: grid;
+  .main-table {
+    border-bottom: 2px solid #fd1b1b9f;
+    background-color: #ff9191;
+  }
+`;
+
+const TableLayout = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 3fr 1.5fr;
+  text-align: center;
+  font-size: 0.825rem;
+  font-size: 0.825em;
+  line-height: 160%;
+  :nth-child(2n + 3) {
+    background-color: #ff919198;
+  }
+  :nth-child(2n) {
+    background-color: #f9f9f996;
+  }
+  .hidden {
+    opacity: 0;
+  }
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 0px;
+    :nth-child(2) {
+      border-right: 2px solid #fd1b1b9f;
+      border-left: 2px solid #fd1b1b9f;
+    }
+  }
+  .main {
+    font-size: 1em;
+    font-size: 1rem;
+    font-weight: 700;
+  }
 `;
 
 interface IProps {
@@ -129,7 +168,7 @@ const PrintRoles = ({ roles, date }: IProps) => {
       <PrintSetting>
         <div className="title">1인 1역 프린트</div>
         <SelectedBackground>
-          <div className="sub-title">🖼️ 배경화면 선택 후 인쇄하기</div>
+          <div className="sub-title">🖼️ 배경화면 선택</div>
           <Backgrounds isFullScreen={Boolean(isFullScreen)}>
             <RolesBackground
               isSelected={bgUrl === BG_ONE}
@@ -181,32 +220,37 @@ const PrintRoles = ({ roles, date }: IProps) => {
         </Message>
       </PrintSetting>
       <PrintContainer ref={componentRef} bgUrl={bgUrl} isLong={bgUrl !== BG_ONE}>
-        <PrintLayout>
-          {roles?.map((item, key) => (
-            <div key={key}>{item.title}</div>
-          ))}
-          {roles?.map((item, key) => (
-            <div key={key}>{item.title}</div>
-          ))}
-          {roles?.map((item, key) => (
-            <div key={key}>{item.title}</div>
-          ))}
-          {roles?.map((item, key) => (
-            <div key={key}>{item.title}</div>
-          ))}
-          {roles?.map((item, key) => (
-            <div key={key}>{item.title}</div>
-          ))}
-          {roles?.map((item, key) => (
-            <div key={key}>{item.title}</div>
-          ))}
-          {roles?.map((item, key) => (
-            <div key={key}>{item.title}</div>
-          ))}
-          {roles?.map((item, key) => (
-            <div key={key}>{item.title}</div>
-          ))}
-        </PrintLayout>
+        {roles && (
+          <PrintLayout>
+            <TableLayout className="main-table">
+              <div className="main">역할</div>
+              <div className="main">하는 일</div>
+              <div className="main">이름</div>
+            </TableLayout>
+            {roles?.map((item, key) => (
+              <TableLayout key={key}>
+                <div>{item.title}</div>
+                <div>{item.detail}</div>
+                <div>{item.students.map((item) => item.studentName).join(", ")}</div>
+              </TableLayout>
+            ))}
+            {new Array(25 - roles?.length - 1).fill(null).map((item, key) => {
+              return (
+                <TableLayout key={key}>
+                  <div>
+                    <div className="hidden">sss</div>
+                  </div>
+                  <div>
+                    <div className="hidden">sss</div>
+                  </div>
+                  <div>
+                    <div className="hidden">sss</div>
+                  </div>
+                </TableLayout>
+              );
+            })}
+          </PrintLayout>
+        )}
       </PrintContainer>
     </Container>
   );
