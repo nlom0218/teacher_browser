@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import styled from "styled-components";
 import { TRecentRole, TRolesDate } from "./RolesMain";
@@ -16,6 +16,19 @@ const colorTable = [
   ["#1b1bfdd5", "#1b23fd7e", "#1b2afd35", "#f9f9f996"],
   ["#841bfdd5", "#b21bfd7e", "#c11bfd35", "#f9f9f996"],
   ["#fd1bb9d5", "#fd1bd07e", "#fd1bee35", "#f9f9f996"],
+];
+
+const fontTable = [
+  { name: "땅스부대찌개", style: "TTTtangsbudaejjigaeB" },
+  { name: "김정철명조", style: "KimjungchulMyungjo-Bold" },
+  { name: "Rix할매의꽃담", style: "RixMomsBlanketR" },
+  { name: "KCC무럭무럭체", style: "KCCMurukmuruk" },
+  { name: "거친둘기마요", style: "Dovemayo_wild" },
+  { name: "안성탕면체", style: "Ansungtangmyun-Bold" },
+  { name: "웰컴체", style: "OTWelcomeRA" },
+  { name: "코트라 희망체", style: "KOTRAHOPE" },
+  { name: "함렛", style: "Hahmlet-Regular" },
+  { name: "Gmarket Sans", style: "GmarketSansMedium" },
 ];
 
 const BG_ONE = "https://media.discordapp.net/attachments/1012001449854648480/1078821175309897829/rolesBackground1.png";
@@ -38,7 +51,7 @@ const Container = styled.div`
 const PrintSetting = styled.div`
   min-height: 100%;
   display: grid;
-  grid-template-rows: auto auto auto 1fr;
+  grid-template-rows: auto auto auto auto 1fr;
   row-gap: 40px;
   row-gap: 2.5rem;
   align-items: flex-start;
@@ -46,13 +59,28 @@ const PrintSetting = styled.div`
     font-size: 1.5em;
     font-size: 1.5rem;
     font-weight: 700;
+    display: grid;
+    grid-template-columns: 1fr auto;
   }
+`;
+
+const Message = styled.div`
+  align-self: flex-end;
+  justify-self: flex-end;
+  left: 0.625rem;
+  opacity: 0.8;
+  font-weight: 400;
+  font-size: 1em;
+  font-size: 1rem;
 `;
 
 const SelectedContainer = styled.div`
   display: grid;
   row-gap: 20px;
   row-gap: 1.25rem;
+  .sub-title {
+    font-weight: 700;
+  }
 `;
 
 interface IBackgrounds {
@@ -115,17 +143,37 @@ const Color = styled.div<IColor>`
   height: 40px;
 `;
 
-const Message = styled.div`
-  align-self: flex-end;
-  justify-self: flex-end;
-  left: 0.625rem;
-  opacity: 0.8;
-  font-size: 700;
+const FontLayout = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  column-gap: 20px;
+  column-gap: 1.25rem;
+`;
+
+interface IFont {
+  font: string;
+  isSelected: boolean;
+}
+
+const Font = styled.div<IFont>`
+  justify-self: flex-start;
+  font-family: ${(props) => props.font};
+  padding: 5px 20px;
+  padding: 0.3125em 1.25rem;
+  background-color: ${(props) => props.isSelected && props.theme.originBgColor};
+  font-size: 1.25rem;
+  font-size: 1.25em;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  cursor: pointer;
 `;
 
 interface IPrintContainer {
   bgUrl?: string;
   isLong: boolean;
+  font: string;
 }
 
 const PrintContainer = styled.div<IPrintContainer>`
@@ -135,7 +183,7 @@ const PrintContainer = styled.div<IPrintContainer>`
   background-image: ${(props) => `url(${props.bgUrl})`};
   background-position: center;
   background-size: contain;
-  padding: ${(props) => (props.isLong ? "7.5cm 1.5cm 2cm" : "8.5cm 1.5cm 2cm")};
+  padding: ${(props) => (props.isLong ? "7.5cm 1cm 2cm" : "8.5cm 1.5cm 2cm")};
   break-after: page;
 
   @media print {
@@ -146,6 +194,7 @@ const PrintContainer = styled.div<IPrintContainer>`
   @page {
     size: A4;
   }
+  font-family: ${(props) => props.font};
 `;
 
 interface IPrintLayout {
@@ -172,7 +221,7 @@ interface ITableLayout {
 
 const TableLayout = styled.div<ITableLayout>`
   display: grid;
-  grid-template-columns: 1fr 3fr 1.5fr;
+  grid-template-columns: 1fr 3fr 1fr;
   text-align: center;
   font-size: 0.825rem;
   font-size: 0.825em;
@@ -212,7 +261,8 @@ const PrintRoles = ({ roles, date }: IProps) => {
   const componentRef = useRef(null);
   const isFullScreen = localStorage.getItem("fullScreen");
   const [bgUrl, setBgUrl] = useState<string | undefined>();
-  const [color, setColor] = useState<string[]>(colorTable[1]);
+  const [color, setColor] = useState<string[]>(colorTable[0]);
+  const [font, setFont] = useState(fontTable[0]);
 
   const onClickBackground = (bg: string) => {
     setBgUrl(bg);
@@ -225,7 +275,12 @@ const PrintRoles = ({ roles, date }: IProps) => {
   return (
     <Container>
       <PrintSetting>
-        <div className="title">1인 1역 프린트</div>
+        <div className="title">
+          <div>1인 1역 프린트</div>
+          <Message>
+            <div>1인 1역 인쇄는 A4용지에 최적화 되어있습니다.</div>
+          </Message>
+        </div>
         <SelectedContainer>
           <div className="sub-title">🖼️ 배경화면 선택</div>
           <Backgrounds isFullScreen={Boolean(isFullScreen)}>
@@ -288,50 +343,71 @@ const PrintRoles = ({ roles, date }: IProps) => {
             })}
           </ColorBoxLayout>
         </SelectedContainer>
-        <Message>
-          <div onClick={onClickPrint}>인쇄하기</div>
-          <div>1인 1역 인쇄는 A4용지에 최적화 되어있습니다.</div>
-        </Message>
+        <SelectedContainer>
+          <div className="sub-title">✍️ 폰트 선택</div>
+          <FontLayout>
+            {fontTable.map(({ name, style }, index) => {
+              return (
+                <Font
+                  key={index}
+                  isSelected={font.name === name}
+                  font={style}
+                  onClick={() => setFont(fontTable[index])}
+                >
+                  가나다라마
+                </Font>
+              );
+            })}
+          </FontLayout>
+        </SelectedContainer>
       </PrintSetting>
       {bgUrl && (
-        <PrintContainer ref={componentRef} bgUrl={bgUrl} isLong={bgUrl !== BG_ONE}>
-          {roles && (
-            <PrintLayout borderColor={color[0]} backgroundColor={color[1]}>
-              <TableLayout
-                className="main-table"
-                borderColor={color[0]}
-                backgroundColor1={color[2]}
-                backgroundColor2={color[3]}
-              >
-                <div className="main">역할</div>
-                <div className="main">하는 일</div>
-                <div className="main">이름</div>
-              </TableLayout>
-              {roles?.map((item, key) => (
-                <TableLayout key={key} borderColor={color[0]} backgroundColor1={color[2]} backgroundColor2={color[3]}>
-                  <div>{item.title}</div>
-                  <div>{item.detail}</div>
-                  <div>{item.students.map((item) => item.studentName).join(", ")}</div>
+        <React.Fragment>
+          <PrintContainer ref={componentRef} bgUrl={bgUrl} isLong={bgUrl !== BG_ONE} font={font.style}>
+            {roles && (
+              <PrintLayout borderColor={color[0]} backgroundColor={color[1]}>
+                <TableLayout
+                  className="main-table"
+                  borderColor={color[0]}
+                  backgroundColor1={color[2]}
+                  backgroundColor2={color[3]}
+                >
+                  <div className="main">역할</div>
+                  <div className="main">하는 일</div>
+                  <div className="main">이름</div>
                 </TableLayout>
-              ))}
-              {new Array(25 - roles?.length).fill(null).map((item, key) => {
-                return (
+                {roles?.map((item, key) => (
                   <TableLayout key={key} borderColor={color[0]} backgroundColor1={color[2]} backgroundColor2={color[3]}>
-                    <div>
-                      <div className="hidden">sss</div>
-                    </div>
-                    <div>
-                      <div className="hidden">sss</div>
-                    </div>
-                    <div>
-                      <div className="hidden">sss</div>
-                    </div>
+                    <div>{item.title}</div>
+                    <div>{item.detail}</div>
+                    <div>{item.students.map((item) => item.studentName).join(", ")}</div>
                   </TableLayout>
-                );
-              })}
-            </PrintLayout>
-          )}
-        </PrintContainer>
+                ))}
+                {new Array(25 - roles?.length).fill(null).map((item, key) => {
+                  return (
+                    <TableLayout
+                      key={key}
+                      borderColor={color[0]}
+                      backgroundColor1={color[2]}
+                      backgroundColor2={color[3]}
+                    >
+                      <div>
+                        <div className="hidden">sss</div>
+                      </div>
+                      <div>
+                        <div className="hidden">sss</div>
+                      </div>
+                      <div>
+                        <div className="hidden">sss</div>
+                      </div>
+                    </TableLayout>
+                  );
+                })}
+              </PrintLayout>
+            )}
+          </PrintContainer>
+          <div onClick={onClickPrint}>인쇄하기</div>
+        </React.Fragment>
       )}
     </Container>
   );
