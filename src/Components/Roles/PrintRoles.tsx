@@ -1,9 +1,22 @@
 import { useRef, useState } from "react";
-import { IoChevronDownCircleOutline } from "react-icons/io5";
 import { useReactToPrint } from "react-to-print";
 import styled from "styled-components";
-import media from "styled-media-query";
 import { TRecentRole, TRolesDate } from "./RolesMain";
+
+const colorTable = [
+  ["#7272729f", "#5b5b5b97", "#7171718e", "#f9f9f996"],
+  ["#fd1b1bd6", "#fd1b1b7f", "#fd1b1b35", "#f9f9f996"],
+  ["#fd841bd5", "#fd9b1b7d", "#fd9b1b35", "#f9f9f996"],
+  ["#fdea1bd5", "#f5fd1b7e", "#fddb1b35", "#f9f9f996"],
+  ["#e6fd1bd5", "#c8fd1b7e", "#e3fd1b35", "#f9f9f996"],
+  ["#6efd1bd5", "#75fd1b7e", "#84fd1b35", "#f9f9f996"],
+  ["#1ffd1bd5", "#44fd1b7e", "#50fd1b35", "#f9f9f996"],
+  ["#1bfdb2d4", "#1bfd887e", "#1bfda635", "#f9f9f996"],
+  ["#1bb5fdd5", "#1beefd7e", "#1bfddf35", "#f9f9f996"],
+  ["#1b1bfdd5", "#1b23fd7e", "#1b2afd35", "#f9f9f996"],
+  ["#841bfdd5", "#b21bfd7e", "#c11bfd35", "#f9f9f996"],
+  ["#fd1bb9d5", "#fd1bd07e", "#fd1bee35", "#f9f9f996"],
+];
 
 const BG_ONE = "https://media.discordapp.net/attachments/1012001449854648480/1078821175309897829/rolesBackground1.png";
 const BG_TWO = "https://media.discordapp.net/attachments/1012001449854648480/1078821175599317083/rolesBackground2.png";
@@ -16,15 +29,18 @@ const BG_SIX = "https://media.discordapp.net/attachments/1012001449854648480/107
 const Container = styled.div`
   display: grid;
   row-gap: 40px;
+  row-gap: 2.5rem;
   padding: 40px;
+  padding: 2.5rem;
   min-height: 100%;
 `;
 
 const PrintSetting = styled.div`
   min-height: 100%;
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto auto auto 1fr;
   row-gap: 40px;
+  row-gap: 2.5rem;
   align-items: flex-start;
   .title {
     font-size: 1.5em;
@@ -33,9 +49,10 @@ const PrintSetting = styled.div`
   }
 `;
 
-const SelectedBackground = styled.div`
+const SelectedContainer = styled.div`
   display: grid;
   row-gap: 20px;
+  row-gap: 1.25rem;
 `;
 
 interface IBackgrounds {
@@ -45,6 +62,7 @@ interface IBackgrounds {
 const Backgrounds = styled.div<IBackgrounds>`
   display: grid;
   row-gap: 20px;
+  row-gap: 1.25rem;
   justify-items: flex-start;
   grid-template-columns: ${(props) => (props.isFullScreen ? "repeat(6, 1fr)" : "repeat(4, 1fr)")};
 `;
@@ -69,7 +87,36 @@ const RolesBackground = styled.div<IRolesBackground>`
   cursor: pointer;
 `;
 
+const ColorBoxLayout = styled.div`
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  column-gap: 20px;
+  column-gap: 1.25rem;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+`;
+
+const ColorBox = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  cursor: pointer;
+  input {
+    background-color: ${(props) => props.color};
+    height: 40px;
+  }
+`;
+
+interface IColor {
+  color: string;
+}
+
+const Color = styled.div<IColor>`
+  background-color: ${(props) => props.color};
+  height: 40px;
+`;
+
 const Message = styled.div`
+  align-self: flex-end;
   justify-self: flex-end;
   left: 0.625rem;
   opacity: 0.8;
@@ -94,24 +141,36 @@ const PrintContainer = styled.div<IPrintContainer>`
   @media print {
     display: grid;
     column-gap: 10px;
+    column-gap: 0.625rem;
   }
   @page {
     size: A4;
   }
 `;
 
-const PrintLayout = styled.div`
+interface IPrintLayout {
+  borderColor: string;
+  backgroundColor: string;
+}
+
+const PrintLayout = styled.div<IPrintLayout>`
   min-height: 100%;
   max-height: 100%;
-  border: 2px solid #fd1b1bcf;
+  border: ${(props) => `2px solid ${props.borderColor}`};
   display: grid;
   .main-table {
-    border-bottom: 2px solid #fd1b1b9f;
-    background-color: #ff9191;
+    border-bottom: ${(props) => `2px solid ${props.borderColor}`};
+    background-color: ${(props) => props.backgroundColor};
   }
 `;
 
-const TableLayout = styled.div`
+interface ITableLayout {
+  borderColor: string;
+  backgroundColor1: string;
+  backgroundColor2: string;
+}
+
+const TableLayout = styled.div<ITableLayout>`
   display: grid;
   grid-template-columns: 1fr 3fr 1.5fr;
   text-align: center;
@@ -119,10 +178,10 @@ const TableLayout = styled.div`
   font-size: 0.825em;
   line-height: 160%;
   :nth-child(2n + 3) {
-    background-color: #ff919198;
+    background-color: ${(props) => props.backgroundColor1};
   }
   :nth-child(2n) {
-    background-color: #f9f9f996;
+    background-color: ${(props) => props.backgroundColor2};
   }
   .hidden {
     opacity: 0;
@@ -133,8 +192,8 @@ const TableLayout = styled.div`
     justify-content: center;
     padding: 2px 0px;
     :nth-child(2) {
-      border-right: 2px solid #fd1b1b9f;
-      border-left: 2px solid #fd1b1b9f;
+      border-right: ${(props) => `2px solid ${props.borderColor}`};
+      border-left: ${(props) => `2px solid ${props.borderColor}`};
     }
   }
   .main {
@@ -153,6 +212,7 @@ const PrintRoles = ({ roles, date }: IProps) => {
   const componentRef = useRef(null);
   const isFullScreen = localStorage.getItem("fullScreen");
   const [bgUrl, setBgUrl] = useState<string | undefined>();
+  const [color, setColor] = useState<string[]>(colorTable[1]);
 
   const onClickBackground = (bg: string) => {
     setBgUrl(bg);
@@ -162,12 +222,11 @@ const PrintRoles = ({ roles, date }: IProps) => {
     content: () => componentRef.current,
   });
 
-  console.log(roles, date);
   return (
     <Container>
       <PrintSetting>
         <div className="title">1인 1역 프린트</div>
-        <SelectedBackground>
+        <SelectedContainer>
           <div className="sub-title">🖼️ 배경화면 선택</div>
           <Backgrounds isFullScreen={Boolean(isFullScreen)}>
             <RolesBackground
@@ -213,45 +272,67 @@ const PrintRoles = ({ roles, date }: IProps) => {
               url={BG_SIX}
             ></RolesBackground>
           </Backgrounds>
-        </SelectedBackground>
+        </SelectedContainer>
+        <SelectedContainer>
+          <div className="sub-title">🎨 칼라 선택</div>
+          <ColorBoxLayout>
+            {colorTable.map(([color1, color2, color3, color4], index) => {
+              return (
+                <ColorBox key={index} onClick={() => setColor(colorTable[index])}>
+                  <Color color={color1}></Color>
+                  <Color color={color2}></Color>
+                  <Color color={color3}></Color>
+                  <Color color={color4}></Color>
+                </ColorBox>
+              );
+            })}
+          </ColorBoxLayout>
+        </SelectedContainer>
         <Message>
           <div onClick={onClickPrint}>인쇄하기</div>
           <div>1인 1역 인쇄는 A4용지에 최적화 되어있습니다.</div>
         </Message>
       </PrintSetting>
-      <PrintContainer ref={componentRef} bgUrl={bgUrl} isLong={bgUrl !== BG_ONE}>
-        {roles && (
-          <PrintLayout>
-            <TableLayout className="main-table">
-              <div className="main">역할</div>
-              <div className="main">하는 일</div>
-              <div className="main">이름</div>
-            </TableLayout>
-            {roles?.map((item, key) => (
-              <TableLayout key={key}>
-                <div>{item.title}</div>
-                <div>{item.detail}</div>
-                <div>{item.students.map((item) => item.studentName).join(", ")}</div>
+      {bgUrl && (
+        <PrintContainer ref={componentRef} bgUrl={bgUrl} isLong={bgUrl !== BG_ONE}>
+          {roles && (
+            <PrintLayout borderColor={color[0]} backgroundColor={color[1]}>
+              <TableLayout
+                className="main-table"
+                borderColor={color[0]}
+                backgroundColor1={color[2]}
+                backgroundColor2={color[3]}
+              >
+                <div className="main">역할</div>
+                <div className="main">하는 일</div>
+                <div className="main">이름</div>
               </TableLayout>
-            ))}
-            {new Array(25 - roles?.length - 1).fill(null).map((item, key) => {
-              return (
-                <TableLayout key={key}>
-                  <div>
-                    <div className="hidden">sss</div>
-                  </div>
-                  <div>
-                    <div className="hidden">sss</div>
-                  </div>
-                  <div>
-                    <div className="hidden">sss</div>
-                  </div>
+              {roles?.map((item, key) => (
+                <TableLayout key={key} borderColor={color[0]} backgroundColor1={color[2]} backgroundColor2={color[3]}>
+                  <div>{item.title}</div>
+                  <div>{item.detail}</div>
+                  <div>{item.students.map((item) => item.studentName).join(", ")}</div>
                 </TableLayout>
-              );
-            })}
-          </PrintLayout>
-        )}
-      </PrintContainer>
+              ))}
+              {new Array(25 - roles?.length).fill(null).map((item, key) => {
+                return (
+                  <TableLayout key={key} borderColor={color[0]} backgroundColor1={color[2]} backgroundColor2={color[3]}>
+                    <div>
+                      <div className="hidden">sss</div>
+                    </div>
+                    <div>
+                      <div className="hidden">sss</div>
+                    </div>
+                    <div>
+                      <div className="hidden">sss</div>
+                    </div>
+                  </TableLayout>
+                );
+              })}
+            </PrintLayout>
+          )}
+        </PrintContainer>
+      )}
     </Container>
   );
 };
