@@ -170,6 +170,35 @@ const Font = styled.div<IFont>`
   cursor: pointer;
 `;
 
+interface IPrevViewRoles {
+  font: string;
+}
+
+const PrevViewRoles = styled.div<IPrevViewRoles>`
+  justify-self: center;
+  display: grid;
+  row-gap: 20px;
+  row-gap: 1.25rem;
+  .text {
+    text-align: center;
+    font-size: 1.25em;
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-family: ${(props) => props.font};
+  }
+  .btn {
+    font-family: ${(props) => props.font};
+    text-align: center;
+    background-color: ${(props) => props.theme.green};
+    color: ${(props) => props.theme.bgColor};
+    padding: 10px;
+    padding: 0.625rem;
+    border-radius: 5px;
+    border-radius: 0.3125rem;
+    cursor: pointer;
+  }
+`;
+
 interface IPrintContainer {
   bgUrl?: string;
   isLong: boolean;
@@ -362,7 +391,8 @@ const PrintRoles = ({ roles, date }: IProps) => {
         </SelectedContainer>
       </PrintSetting>
       {bgUrl && (
-        <React.Fragment>
+        <PrevViewRoles font={font.style}>
+          <div className="text">⭐️ 미리보기 ⭐️</div>
           <PrintContainer ref={componentRef} bgUrl={bgUrl} isLong={bgUrl !== BG_ONE} font={font.style}>
             {roles && (
               <PrintLayout borderColor={color[0]} backgroundColor={color[1]}>
@@ -406,8 +436,10 @@ const PrintRoles = ({ roles, date }: IProps) => {
               </PrintLayout>
             )}
           </PrintContainer>
-          <div onClick={onClickPrint}>인쇄하기</div>
-        </React.Fragment>
+          <div className="btn" onClick={onClickPrint}>
+            인쇄하기
+          </div>
+        </PrevViewRoles>
       )}
     </Container>
   );
