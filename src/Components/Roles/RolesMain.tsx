@@ -142,7 +142,7 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
 
   const onCompleted = (result: { updateRoles: { ok: boolean } }) => {
     if (result.updateRoles.ok) {
-      setMsg("1인 1역이 수정되었습니다.😁");
+      if (mode === "edit") setMsg("1인 1역이 수정되었습니다.😁");
       navigate(`${routes.roles}/${id}/detail`);
     }
   };
@@ -214,6 +214,16 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
     }
 
     if (mode === "create") {
+      const needCreateRole = getNeedCreateRole();
+      const needDeleteRole = getNeedDeleteRole();
+      updateRoles({
+        variables: {
+          userEmail,
+          order: recentDate?.order,
+          addRole: needCreateRole?.length !== 0 ? needCreateRole : undefined,
+          deleteRole: needDeleteRole?.length !== 0 ? needDeleteRole : undefined,
+        },
+      });
       addNewRoles({
         variables: {
           userEmail,
