@@ -8,12 +8,14 @@ import styled from "styled-components";
 import { inPopup, isPopupVar } from "../../apollo";
 import { ADD_NEW_ROLES, UPDATE_ROLES } from "../../Graphql/Roles/mutation";
 import { SEE_ROLES_QUERY } from "../../Graphql/Roles/query";
+import IcPrint from "../../icons/Print/IcPrint";
 import routes from "../../routes";
 import Loading from "../Shared/Loading";
 import EditRoles from "./EditRoles";
 import CreateNewRoles from "./Popup/CreateNewRoles";
 import EditPeriod from "./Popup/EditPeriod";
 import EditStudentsPopup from "./Popup/EditStudentsPopup";
+import PrintRoles from "./PrintRoles";
 import BtnContainer from "./Register/BtnContainer";
 import Form from "./Register/Form";
 import Title from "./Register/Title";
@@ -27,6 +29,13 @@ const RolesBtnLayout = styled.div`
   grid-template-columns: auto auto;
   column-gap: 20px;
   column-gap: 1.25rem;
+  align-items: flex-end;
+  svg {
+    display: flex;
+    font-size: 2em;
+    font-size: 2rem;
+    cursor: pointer;
+  }
 `;
 
 const CreateBtn = styled.div`
@@ -167,6 +176,10 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
     mode: "onChange",
     defaultValues: createDefaultValues(),
   });
+
+  const onClickPrint = () => {
+    navigate(`${routes.roles}/${id}/print`);
+  };
 
   const onClickEditBtn = () => {
     navigate(`${routes.roles}/${id}/edit`);
@@ -331,7 +344,9 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
     return <Loading page="center" />;
   }
 
-  return (
+  return mode === "print" ? (
+    <PrintRoles roles={recentRole} date={recentDate}></PrintRoles>
+  ) : (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Title isMain={true} isDetail={mode === "detail"}>
         <div>{mode === "detail" ? "1인 1역" : "1인 1역 수정"}</div>
@@ -350,7 +365,9 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
         )}
         {mode === "detail" && (
           <RolesBtnLayout>
-            <div>인쇄</div>
+            <div onClick={onClickPrint}>
+              <IcPrint />
+            </div>
             <CreateBtn onClick={onClickCreateNewRoles}>새로 만들기</CreateBtn>
           </RolesBtnLayout>
         )}
