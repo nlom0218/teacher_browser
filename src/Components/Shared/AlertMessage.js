@@ -20,7 +20,7 @@ const Container = styled.div`
   grid-template-columns: 1fr auto;
   column-gap: 10px;
   column-gap: 0.625rem;
-  z-index: 20;
+  z-index: 50;
   text-align: center;
   line-height: 120%;
 `;

@@ -162,6 +162,7 @@ const PopupContainer = ({ children, emojiPopup, maxHeight, sound1, sound2, needA
     localStorage.removeItem("JournalStudentName");
     localStorage.removeItem("dDayID");
     localStorage.removeItem("homeLinkID");
+    localStorage.removeItem("selectedRole");
     if (sound1) {
       stopMusicFn(sound1);
     }
