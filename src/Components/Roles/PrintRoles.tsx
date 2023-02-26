@@ -124,7 +124,16 @@ const ColorBoxLayout = styled.div`
   row-gap: 1.25rem;
 `;
 
-const ColorBox = styled.div`
+interface IColorBox {
+  selected: boolean;
+}
+
+const ColorBox = styled.div<IColorBox>`
+  padding: 10px;
+  padding: 0.625rem;
+  border-radius: 5px;
+  border-radius: 0.3125rem;
+  background-color: ${(props) => props.selected && props.theme.originBgColor};
   display: grid;
   grid-template-columns: repeat(4, auto);
   cursor: pointer;
@@ -206,6 +215,7 @@ interface IPrintContainer {
 }
 
 const PrintContainer = styled.div<IPrintContainer>`
+  color: black;
   justify-self: flex-end;
   width: 21cm;
   min-height: 29.7cm;
@@ -362,7 +372,7 @@ const PrintRoles = ({ roles, date }: IProps) => {
           <ColorBoxLayout>
             {colorTable.map(([color1, color2, color3, color4], index) => {
               return (
-                <ColorBox key={index} onClick={() => setColor(colorTable[index])}>
+                <ColorBox key={index} onClick={() => setColor(colorTable[index])} selected={color1 === color[0]}>
                   <Color color={color1}></Color>
                   <Color color={color2}></Color>
                   <Color color={color3}></Color>
