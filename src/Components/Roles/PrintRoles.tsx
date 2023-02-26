@@ -134,6 +134,7 @@ const ColorBox = styled.div<IColorBox>`
   border-radius: 5px;
   border-radius: 0.3125rem;
   background-color: ${(props) => props.selected && props.theme.originBgColor};
+  transition: background-color 1s ease;
   display: grid;
   grid-template-columns: repeat(4, auto);
   cursor: pointer;
@@ -172,6 +173,7 @@ const Font = styled.div<IFont>`
   padding: 5px 20px;
   padding: 0.3125em 1.25rem;
   background-color: ${(props) => props.isSelected && props.theme.originBgColor};
+  transition: background-color 1s ease;
   font-size: 1.25rem;
   font-size: 1.25em;
   border-radius: 5px;

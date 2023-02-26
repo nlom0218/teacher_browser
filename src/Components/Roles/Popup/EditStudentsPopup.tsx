@@ -121,8 +121,6 @@ const EditStudentsPopup = ({ setErrMsg, setMsg, recentRole, setRecentRole, prevD
     recentRole.filter((role) => role._id === localStorage.getItem("editRoleId"))[0],
   );
 
-  console.log(roleObj._id);
-
   const completedStudent = recentRole?.flatMap((role) => {
     return role.students.map((student) => student._id);
   });

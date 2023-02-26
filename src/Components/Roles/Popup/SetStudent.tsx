@@ -111,9 +111,15 @@ const SetStudent = ({ setErrMsg, setMsg }: IProps) => {
   }
 
   return (
-    <PopupContainer maxHeight={true}>
-      {!me?.defaultStudentListId && <GuideDefaultList />}
-      {data?.seeStudentList[0].students.filter((item: { trash: boolean }) => !item.trash).length === 0 ? (
+    <PopupContainer
+      maxHeight={
+        Boolean(me?.defaultStudentListId) &&
+        Boolean(data?.seeStudentList[0].students.filter((item: { trash: boolean }) => !item.trash).length !== 0)
+      }
+    >
+      {!me?.defaultStudentListId ? (
+        <GuideDefaultList />
+      ) : data?.seeStudentList[0].students.filter((item: { trash: boolean }) => !item.trash).length === 0 ? (
         <GuideStudents />
       ) : (
         <Layout>

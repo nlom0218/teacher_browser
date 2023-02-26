@@ -39,7 +39,7 @@ const AddStudents = ({ setErrMsg, setMsg, isPopup }: IProps) => {
   });
 
   const onClickEditBtn = () => {
-    navigate(`${routes.roles}/setting`);
+    navigate(`${routes.rolesSetting}/add-roles`);
   };
 
   const onClickSaveBtn = () => {
