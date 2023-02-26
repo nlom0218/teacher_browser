@@ -179,17 +179,6 @@ const TopContents = ({ me, welcomePage, setWelComPage }) => {
             )}
           </HomeBtnBackground>
         </HomeBtn>
-        <Link to={routes.xmasTree}>
-          <Event>
-            <Contents>
-              <ThemeTitle>크리스마스</ThemeTitle>
-              <ThemeSubject>소원 나무 이벤트</ThemeSubject>
-            </Contents>
-            <div>
-              <TiTree />
-            </div>
-          </Event>
-        </Link>
       </LeftContainer>
     </Container>
   );
