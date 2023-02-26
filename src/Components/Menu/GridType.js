@@ -51,6 +51,7 @@ const GridType = ({ onClickLunchmenu }) => {
           <PopupQrcodeLink />
           <PopupOrderLink />
           <PopupDrawLink />
+          <RolesLink />
         </React.Fragment>
       ) : (
         <React.Fragment>
@@ -65,8 +66,7 @@ const GridType = ({ onClickLunchmenu }) => {
           <NewsLink />
           <HeaderBookMark />
           <QrcodeLink />
-          <XmasTree />
-          <RolesLink />
+          {/* <RolesLink /> */}
         </React.Fragment>
       )}
     </Container>

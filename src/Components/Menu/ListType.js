@@ -87,7 +87,6 @@ const ListType = ({ onClickLunchmenu }) => {
           <SwapLink />
           <OrderLink />
           <QrcodeLink />
-          <RolesLink />
         </PageLink>
       </Theme>
       <Theme>
@@ -106,6 +105,7 @@ const ListType = ({ onClickLunchmenu }) => {
         <PageLink>
           <JournalLink />
           <ListLink />
+          {/* <RolesLink /> */}
         </PageLink>
       </Theme>
       <Theme>
@@ -114,7 +114,6 @@ const ListType = ({ onClickLunchmenu }) => {
         </Title>
         <PageLink>
           <NewsLink />
-          <XmasTree />
         </PageLink>
       </Theme>
     </Container>
