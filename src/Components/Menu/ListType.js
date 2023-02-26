@@ -11,9 +11,9 @@ import {
   ScheduleLink,
   SwapLink,
   TimerLink,
-  ManagingRolesLink,
   QrcodeLink,
   XmasTree,
+  RolesLink,
 } from "./MenuLink";
 
 const Container = styled.div`
@@ -87,7 +87,6 @@ const ListType = ({ onClickLunchmenu }) => {
           <SwapLink />
           <OrderLink />
           <QrcodeLink />
-          {/* <ManagingRolesLink /> */}
         </PageLink>
       </Theme>
       <Theme>
@@ -106,6 +105,7 @@ const ListType = ({ onClickLunchmenu }) => {
         <PageLink>
           <JournalLink />
           <ListLink />
+          {/* <RolesLink /> */}
         </PageLink>
       </Theme>
       <Theme>
@@ -114,7 +114,6 @@ const ListType = ({ onClickLunchmenu }) => {
         </Title>
         <PageLink>
           <NewsLink />
-          <XmasTree />
         </PageLink>
       </Theme>
     </Container>

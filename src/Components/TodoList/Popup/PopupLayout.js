@@ -123,7 +123,7 @@ export const PopupTextarea = ({ children }) => {
   );
 };
 
-export const PopupDate = ({ startDate, endDate, setStartDate, setEndDate }) => {
+export const PopupDate = ({ reset = true, startDate, endDate, setStartDate, setEndDate }) => {
   const onClickResetDateBtn = () => {
     setStartDate(null);
     setEndDate(null);
@@ -167,9 +167,11 @@ export const PopupDate = ({ startDate, endDate, setStartDate, setEndDate }) => {
             placeholderText="종료일 설정"
           />
         </EndDate>
-        <ResetBtn onClick={onClickResetDateBtn}>
-          <BsArrowCounterclockwise />
-        </ResetBtn>
+        {reset && (
+          <ResetBtn onClick={onClickResetDateBtn}>
+            <BsArrowCounterclockwise />
+          </ResetBtn>
+        )}
       </SetDate>
     </Layout>
   );

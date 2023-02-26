@@ -12,7 +12,6 @@ import {
   SwapLink,
   TimerLink,
   NewsLink,
-  ManagingRolesLink,
   PopupOrderLink,
   QrcodeLink,
   HeaderBookMark,
@@ -20,6 +19,7 @@ import {
   PopupQrcodeLink,
   XmasTree,
   PopupDrawLink,
+  RolesLink,
 } from "./MenuLink";
 
 const Container = styled.div`
@@ -51,6 +51,7 @@ const GridType = ({ onClickLunchmenu }) => {
           <PopupQrcodeLink />
           <PopupOrderLink />
           <PopupDrawLink />
+          <RolesLink />
         </React.Fragment>
       ) : (
         <React.Fragment>
@@ -64,9 +65,8 @@ const GridType = ({ onClickLunchmenu }) => {
           <ListLink />
           <NewsLink />
           <HeaderBookMark />
-          {/* <ManagingRolesLink /> */}
           <QrcodeLink />
-          <XmasTree />
+          {/* <RolesLink /> */}
         </React.Fragment>
       )}
     </Container>
