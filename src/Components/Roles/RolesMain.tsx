@@ -261,7 +261,7 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
     recentRole
       .filter((role) => role._id.match(/new/))
       .forEach((role) => {
-        if (role.title === "" || role.detail === "") setErrMsg("빈 칸이 존재합니다.");
+        if (role.title === "" || role.detail === "") setErrMsg("빈 칸이 존재합니다. 😓");
         roles.push({
           title: role.title,
           detail: role.detail,
