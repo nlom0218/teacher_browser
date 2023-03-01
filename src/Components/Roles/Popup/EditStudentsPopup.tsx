@@ -164,7 +164,11 @@ const EditStudentsPopup = ({ setErrMsg, setMsg, recentRole, setRecentRole, prevD
   }
 
   return (
-    <PopupContainer maxHeight={true}>
+    <PopupContainer
+      maxHeight={Boolean(
+        data?.seeStudentList[0].students.filter((item: { trash: boolean }) => !item.trash).length !== 0,
+      )}
+    >
       {!me?.defaultStudentListId && <GuideDefaultList />}
       {data?.seeStudentList[0].students.filter((item: { trash: boolean }) => !item.trash).length === 0 ? (
         <GuideStudents />

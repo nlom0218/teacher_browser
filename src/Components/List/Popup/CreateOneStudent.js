@@ -67,7 +67,7 @@ const CreateOneStudent = ({ createStudent, loading, email, existStudentArray, se
     createStudent({
       variables: {
         teacherEmail: email,
-        studentString: JSON.stringify([{ name, gender }]),
+        studentString: [{ name, gender }],
       },
     });
   };

@@ -18,6 +18,7 @@ interface IProps {
   randerRolesExample?: { work: string; role: string; id: number }[];
   register?: UseFormRegister<FieldValues> | null;
   setMsg?: React.Dispatch<React.SetStateAction<null | string>>;
+  setErrMsg?: React.Dispatch<React.SetStateAction<null | string>>;
   setRanderRolesExample?: React.Dispatch<React.SetStateAction<{ work: string; role: string; id: number }[]>>;
   savedRoles?: { detail: string; title: string; _id: string; students: { studentName: string; _id: string }[] }[];
 
@@ -34,6 +35,7 @@ const RolesGraph = ({
   isAddStudent = false,
   roles,
   setMsg,
+  setErrMsg,
   randerRolesExample,
   setRanderRolesExample,
   savedRoles,
@@ -46,10 +48,11 @@ const RolesGraph = ({
   const [updateWork, setUpdateWork] = useState<null | { type: string; id?: number }>(null);
 
   useEffect(() => {
-    if (!updateWork || !setRanderRolesExample || !randerRolesExample) return;
+    if (!updateWork || !setRanderRolesExample || !randerRolesExample || !setErrMsg) return;
     const { type, id } = updateWork;
     if (type === "remove") setRanderRolesExample((prev) => prev.filter((role) => role.id !== id));
     if (type === "add") {
+      if (randerRolesExample.length === 25) return setErrMsg("생성 가능한 역할은 최대 25개입니다.");
       const idx = randerRolesExample.findIndex((role) => role.id === id);
       const copyRoles = [...randerRolesExample];
       copyRoles.splice(idx + 1, 0, { role: "", work: "", id: Date.now() });

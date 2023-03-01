@@ -17,7 +17,6 @@ import {
   HeaderBookMark,
   PopupLunchmenuLink,
   PopupQrcodeLink,
-  XmasTree,
   PopupDrawLink,
   RolesLink,
 } from "./MenuLink";
@@ -63,10 +62,10 @@ const GridType = ({ onClickLunchmenu }) => {
           <ScheduleLink />
           <JournalLink />
           <ListLink />
+          <RolesLink />
           <NewsLink />
           <HeaderBookMark />
           <QrcodeLink />
-          {/* <RolesLink /> */}
         </React.Fragment>
       )}
     </Container>

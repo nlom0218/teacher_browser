@@ -120,8 +120,8 @@ const BottomContents = () => {
           <MainText>About 티처캔</MainText>
         </Textarea>
         <SubText>
-          <div>티처캔 © 2022-2022</div>
-          <div>version 1.11.0</div>
+          <div>티처캔 © 2022-2023</div>
+          <div>version 1.12.0</div>
           <div>만든이 팀 초코</div>
         </SubText>
       </LayoutThree>

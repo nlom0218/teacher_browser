@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import routes from "../../routes";
 import styled from "styled-components";
@@ -29,9 +29,6 @@ import IcBookMark from "../../icons/Bookmark/IcBookMark";
 import IcBookMarkClick from "../../icons/Bookmark/IcBookMarkClick";
 import { TiTree } from "react-icons/ti";
 import { MdCleaningServices, MdOutlineCleaningServices } from "react-icons/md";
-import useMe from "../../Hooks/useMe";
-import { useQuery } from "@apollo/client";
-import { HAS_ROLES } from "../../Graphql/Roles/query";
 
 const SMenu = styled.div`
   display: grid;
@@ -343,32 +340,10 @@ export const XmasTree = () => {
 };
 
 export const RolesLink = () => {
-  const me = useMe();
   const [isHover, setIsHover] = useState(false);
-  const [hasRoles, setHasRoles] = useState(false);
-  const onClickListLink = () => {};
-
-  // 1인 1역 있는지 확인하는 쿼리 실행
-  // 실행 후 1인 1역 아이디를 반환하면 해당 아이디로 이동하기
-  // 실행 후 1인 1역 아이디가 없다면 1인 1역 생성하기 페이지로 이동하기
-
-  const { data, loading } = useQuery(HAS_ROLES, {
-    variables: {
-      userEmail: me?.email,
-    },
-
-    skip: !me,
-  });
-
-  useEffect(() => {
-    if (data?.roles) setHasRoles(true);
-  }, [data]);
 
   return (
-    <Link
-      to={hasRoles ? `${routes.roles}/${data?.roles._id}/detail` : `${routes.rolesSetting}/add-roles`}
-      onClick={onClickListLink}
-    >
+    <Link to="/rolesCallback">
       <SMenu onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
         {isHover ? <MdCleaningServices /> : <MdOutlineCleaningServices />}
         <Title>1인1역</Title>

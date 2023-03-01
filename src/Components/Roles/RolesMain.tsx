@@ -422,7 +422,13 @@ const RolesMain = ({ dates, roles, setErrMsg, userEmail, id, mode, setMsg }: IPr
           recentDate={recentDate}
         />
       ) : (
-        <EditRoles savedRoles={recentRole} setRecentRole={setRecentRole} register={register} setMsg={setMsg} />
+        <EditRoles
+          savedRoles={recentRole}
+          setRecentRole={setRecentRole}
+          register={register}
+          setMsg={setMsg}
+          setErrMsg={setErrMsg}
+        />
       )}
       {recentDate && isPopup === "editPeriod" && (
         <EditPeriod setErrMsg={setErrMsg} recentDate={recentDate} setRecentDate={setRecentDate} />

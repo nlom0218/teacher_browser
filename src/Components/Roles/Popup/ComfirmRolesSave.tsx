@@ -1,4 +1,4 @@
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import styled from "styled-components";
 import { outPopup } from "../../../apollo";
 import BtnPopupContainer from "../../Shared/BtnPopupContainer";
@@ -44,12 +44,21 @@ const BtnLayout = styled.div`
 interface IProps {
   studentVaild: boolean;
   rolesVaild: boolean;
+  setErrMsg: React.Dispatch<React.SetStateAction<null | string>>;
 }
 
-const ComfirmRolesSave = ({ studentVaild, rolesVaild }: IProps) => {
+const ComfirmRolesSave = ({ studentVaild, rolesVaild, setErrMsg }: IProps) => {
   const me = useMe();
   const navigate = useNavigate();
   const { roles, startDate, endDate } = JSON.parse(localStorage.getItem("roleDetails") || "{}");
+
+  const { data, loading } = useQuery(HAS_ROLES, {
+    variables: {
+      userEmail: me?.email,
+    },
+
+    skip: !me,
+  });
 
   const onCompleted = ({ createRoles }: { createRoles: { _id: string } }) => {
     if (!createRoles._id) return;
@@ -65,15 +74,22 @@ const ComfirmRolesSave = ({ studentVaild, rolesVaild }: IProps) => {
   });
 
   const onClickCreateBtn = () => {
+    if (!data) return;
     const submitRoles = makeSubmitRoles();
-    createRoles({
-      variables: {
-        userEmail: me?.email,
-        startDate: new Date(startDate).valueOf(),
-        endDate: new Date(endDate).valueOf(),
-        data: submitRoles,
-      },
-    });
+    if (data.roles) {
+      window.alert("이미 1인 1역이 존재하여 해당 1인 1역 페이지로 이동합니다.");
+      outPopup();
+      navigate(`${routes.roles}/${data.roles._id}/detail`);
+    } else {
+      createRoles({
+        variables: {
+          userEmail: me?.email,
+          startDate: new Date(startDate).valueOf(),
+          endDate: new Date(endDate).valueOf(),
+          data: submitRoles,
+        },
+      });
+    }
   };
 
   const makeSubmitRoles = () => {

@@ -11,9 +11,19 @@ interface IIconProps {
 
 const Container = styled.div``;
 
-const Layout = styled.div`
+const Layout = styled.div<IIconProps>`
   display: flex;
   align-items: center;
+  display: grid;
+  grid-template-columns: ${(props) => (props.isRepresent ? "auto 1fr" : "auto")};
+  row-gap: 10px;
+  row-gap: 0.625rem;
+  .text {
+    grid-column: 1 / -1;
+    font-size: 0.825rem;
+    font-size: 0.825em;
+    opacity: 0.6;
+  }
 `;
 
 const Icon = styled.div<IIconProps>`
@@ -78,17 +88,19 @@ const SetRepresentList = ({ listId, userEmail, defaultStudentList, setSuccessMsg
   return (
     <Container>
       {isRepresent ? (
-        <Layout>
+        <Layout isRepresent={isRepresent}>
           <Icon isRepresent={isRepresent} onClick={onClickIcon}>
             <AiFillStar />
           </Icon>
           <Message>대표 명렬표</Message>
+          <div className="text">별표를 클릭하면 대표 명렬표가 해제됩니다.</div>
         </Layout>
       ) : (
-        <Layout>
+        <Layout isRepresent={isRepresent}>
           <Icon isRepresent={isRepresent} onClick={onClickIcon}>
             <AiOutlineStar />
           </Icon>
+          <div className="text">별표를 클릭하면 대표 명렬표로 설정됩니다.</div>
         </Layout>
       )}
     </Container>
