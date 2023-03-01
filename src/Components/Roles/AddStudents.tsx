@@ -82,7 +82,9 @@ const AddStudents = ({ setErrMsg, setMsg, isPopup }: IProps) => {
         <input type="submit" value="저장" className="save-btn btn" onClick={onClickSaveBtn} />
       </BtnContainer>
       <RolesGraph register={register} isAddStudent={true} roles={roles} setMsg={setMsg} />
-      {isPopup === "comfirmRolesSave" && <ComfirmRolesSave studentVaild={studentVaild} rolesVaild={rolesVaild} />}
+      {isPopup === "comfirmRolesSave" && (
+        <ComfirmRolesSave studentVaild={studentVaild} rolesVaild={rolesVaild} setErrMsg={setErrMsg} />
+      )}
     </Form>
   );
 };
