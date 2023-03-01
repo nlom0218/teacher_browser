@@ -12,7 +12,6 @@ import {
   SwapLink,
   TimerLink,
   QrcodeLink,
-  XmasTree,
   RolesLink,
 } from "./MenuLink";
 
@@ -105,7 +104,7 @@ const ListType = ({ onClickLunchmenu }) => {
         <PageLink>
           <JournalLink />
           <ListLink />
-          {/* <RolesLink /> */}
+          <RolesLink />
         </PageLink>
       </Theme>
       <Theme>
