@@ -275,6 +275,22 @@ interface ITableLayout {
   backgroundColor2: string;
 }
 
+const TableLayOutTitle = styled.div<ITableLayout>`
+  display: grid;
+  grid-template-columns: 0.8fr 2fr 1fr;
+  text-align: center;
+  font-size: 0.825rem;
+  font-size: 0.825em;
+  line-height: 160%;
+  background-color: ${(props) => props.backgroundColor1};
+  div {
+    :nth-child(2) {
+      border-right: ${(props) => `2px solid ${props.borderColor}`};
+      border-left: ${(props) => `2px solid ${props.borderColor}`};
+    }
+  }
+`;
+
 const TableLayout = styled.div<ITableLayout>`
   display: grid;
   grid-template-columns: 0.8fr 2fr 1fr;
@@ -282,7 +298,7 @@ const TableLayout = styled.div<ITableLayout>`
   font-size: 0.825rem;
   font-size: 0.825em;
   line-height: 160%;
-  :nth-child(2n + 3) {
+  :nth-child(2n - 3) {
     background-color: ${(props) => props.backgroundColor1};
   }
   :nth-child(2n) {
@@ -424,7 +440,7 @@ const PrintRoles = ({ roles, date }: IProps) => {
           <PrintContainer ref={componentRef} bgUrl={bgUrl} font={font.style}>
             {roles && (
               <PrintLayout borderColor={color[0]} backgroundColor={color[1]}>
-                <TableLayout
+                <TableLayOutTitle
                   className="main-table"
                   borderColor={color[0]}
                   backgroundColor1={color[2]}
@@ -433,7 +449,7 @@ const PrintRoles = ({ roles, date }: IProps) => {
                   <div className="main">역할</div>
                   <div className="main">하는 일</div>
                   <div className="main">이름</div>
-                </TableLayout>
+                </TableLayOutTitle>
                 <Tables length={roles?.length}>
                   {roles?.map((item, key) => (
                     <TableLayout
