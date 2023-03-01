@@ -71,7 +71,7 @@ const RolesCallback = () => {
     else navigate(`${routes.roles}/${data.roles._id}/detail`);
   }, [data]);
 
-  if (!me || loading) {
+  if (loading) {
     return <Loading page="mainPage" />;
   }
 
