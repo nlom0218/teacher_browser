@@ -36,19 +36,24 @@ const AddIcon = styled.div`
   align-self: center;
   justify-self: center;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
   svg {
     font-size: 2.5em;
     font-size: 2.5rem;
   }
-`;
-
-const HelpIcon = styled.div`
-  align-self: center;
-  justify-self: center;
-  cursor: pointer;
-  svg {
-    font-size: 3em;
-    font-size: 3rem;
+  .text {
+    position: absolute;
+    width: 200px;
+    text-align: center;
+    top: 40px;
+    top: 2.5rem;
+    margin-top: 5px;
+    margin-top: 0.3125rem;
+    opacity: 0.6;
   }
 `;
 
@@ -80,7 +85,7 @@ const AllList = ({
   useEffect(() => {
     if (data) {
       const initStudentList = [];
-      for (let order = 1; order < 14; order++) {
+      for (let order = 1; order < 15; order++) {
         const existStudentList = data?.seeStudentList.filter((item) => item.listOrder === order)[0];
         if (existStudentList) {
           initStudentList.push(existStudentList);
@@ -128,11 +133,9 @@ const AllList = ({
             );
           }
         })}
-      <HelpIcon>
-        <IcHelper />
-      </HelpIcon>
       <AddIcon onClick={onClickAddIcon}>
         <FcPlus />
+        <div className="text">명렬표 생성하기</div>
       </AddIcon>
       <Trash
         someDragging={someDragging}

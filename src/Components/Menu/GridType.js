@@ -62,10 +62,10 @@ const GridType = ({ onClickLunchmenu }) => {
           <ScheduleLink />
           <JournalLink />
           <ListLink />
+          <RolesLink />
           <NewsLink />
           <HeaderBookMark />
           <QrcodeLink />
-          <RolesLink />
         </React.Fragment>
       )}
     </Container>
