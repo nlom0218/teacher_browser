@@ -34,13 +34,12 @@ const fontTable = [
   { name: "Gmarket Sans", style: "GmarketSansMedium" },
 ];
 
-const BG_ONE = "https://media.discordapp.net/attachments/1012001449854648480/1078821175309897829/rolesBackground1.png";
-const BG_TWO = "https://media.discordapp.net/attachments/1012001449854648480/1078821175599317083/rolesBackground2.png";
-const BG_THREE =
-  "https://media.discordapp.net/attachments/1012001449854648480/1078821175796437042/rolesBackground3.png";
-const BG_FOUR = "https://media.discordapp.net/attachments/1012001449854648480/1078821176048103544/rolesBackground4.png";
-const BG_FIVE = "https://media.discordapp.net/attachments/1012001449854648480/1078821176266211451/rolesBackground5.png";
-const BG_SIX = "https://media.discordapp.net/attachments/1012001449854648480/1078821176522051704/rolesBackground6.png";
+const BG_ONE = "https://cdn.discordapp.com/attachments/1012001449854648480/1080398236994514984/06.png";
+const BG_TWO = "https://cdn.discordapp.com/attachments/1012001449854648480/1080398236017250456/02.png";
+const BG_THREE = "https://cdn.discordapp.com/attachments/1012001449854648480/1080398236252123206/03.png";
+const BG_FOUR = "https://cdn.discordapp.com/attachments/1012001449854648480/1080398236474413136/04.png";
+const BG_FIVE = "https://cdn.discordapp.com/attachments/1012001449854648480/1080398236730282074/05.png";
+const BG_SIX = "https://cdn.discordapp.com/attachments/1012001449854648480/1080398235690086400/01.png";
 
 const Container = styled.div`
   display: grid;
@@ -83,6 +82,9 @@ const SelectedContainer = styled.div`
   row-gap: 1.25rem;
   .sub-title {
     font-weight: 700;
+  }
+  .info {
+    opacity: 0.8;
   }
 `;
 
@@ -215,7 +217,6 @@ const PrevViewRoles = styled.div<IPrevViewRoles>`
 
 interface IPrintContainer {
   bgUrl?: string;
-  isLong: boolean;
   font: string;
 }
 
@@ -227,7 +228,7 @@ const PrintContainer = styled.div<IPrintContainer>`
   background-image: ${(props) => `url(${props.bgUrl})`};
   background-position: center;
   background-size: contain;
-  padding: ${(props) => (props.isLong ? "7.5cm 1cm 2cm" : "8.5cm 1.5cm 2cm")};
+  padding: 5.6cm 1cm 2cm;
   break-after: page;
 
   @media print {
@@ -265,7 +266,7 @@ interface ITableLayout {
 
 const TableLayout = styled.div<ITableLayout>`
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 0.8fr 2fr 1fr;
   text-align: center;
   font-size: 0.825rem;
   font-size: 0.825em;
@@ -327,6 +328,7 @@ const PrintRoles = ({ roles, date }: IProps) => {
         </div>
         <SelectedContainer>
           <div className="sub-title">🖼️ 배경화면 선택</div>
+          <div className="info">배경화면을 선택하면 아래에 미리보기가 생성됩니다.</div>
           <Backgrounds isFullScreen={Boolean(isFullScreen)}>
             <RolesBackground
               isSelected={bgUrl === BG_ONE}
@@ -408,7 +410,7 @@ const PrintRoles = ({ roles, date }: IProps) => {
       {bgUrl && (
         <PrevViewRoles font={font.style}>
           <div className="text">⭐️ 미리보기 ⭐️</div>
-          <PrintContainer ref={componentRef} bgUrl={bgUrl} isLong={bgUrl !== BG_ONE} font={font.style}>
+          <PrintContainer ref={componentRef} bgUrl={bgUrl} font={font.style}>
             {roles && (
               <PrintLayout borderColor={color[0]} backgroundColor={color[1]}>
                 <TableLayout
