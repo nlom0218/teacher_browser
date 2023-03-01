@@ -77,7 +77,6 @@ const ComfirmRolesSave = ({ studentVaild, rolesVaild, setErrMsg }: IProps) => {
     if (!data) return;
     const submitRoles = makeSubmitRoles();
     if (data.roles) {
-      console.log("???");
       window.alert("이미 1인 1역이 존재하여 해당 1인 1역 페이지로 이동합니다.");
       outPopup();
       navigate(`${routes.roles}/${data.roles._id}/detail`);
