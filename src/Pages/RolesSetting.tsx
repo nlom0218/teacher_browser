@@ -16,7 +16,7 @@ const RolesSetting = () => {
   const [msg, setMsg] = useState<string | null>(null);
 
   return (
-    <BasicContainer menuItem={true}>
+    <BasicContainer>
       {mode === "add-roles" ? (
         <AddRoles setErrMsg={setErrMsg} />
       ) : (
