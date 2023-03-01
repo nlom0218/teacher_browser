@@ -245,6 +245,7 @@ const PrintContainer = styled.div<IPrintContainer>`
 interface IPrintLayout {
   borderColor: string;
   backgroundColor: string;
+  length: number;
 }
 
 const PrintLayout = styled.div<IPrintLayout>`
@@ -252,6 +253,7 @@ const PrintLayout = styled.div<IPrintLayout>`
   max-height: 100%;
   border: ${(props) => `2px solid ${props.borderColor}`};
   display: grid;
+  grid-template-rows: ${(props) => `auto repeat(${props.length}, 1fr)`};
   .main-table {
     border-bottom: ${(props) => `2px solid ${props.borderColor}`};
     background-color: ${(props) => props.backgroundColor};
@@ -412,7 +414,7 @@ const PrintRoles = ({ roles, date }: IProps) => {
           <div className="text">⭐️ 미리보기 ⭐️</div>
           <PrintContainer ref={componentRef} bgUrl={bgUrl} font={font.style}>
             {roles && (
-              <PrintLayout borderColor={color[0]} backgroundColor={color[1]}>
+              <PrintLayout borderColor={color[0]} backgroundColor={color[1]} length={roles?.length}>
                 <TableLayout
                   className="main-table"
                   borderColor={color[0]}
@@ -430,7 +432,7 @@ const PrintRoles = ({ roles, date }: IProps) => {
                     <div>{item.students.map((item) => item.studentName).join(", ")}</div>
                   </TableLayout>
                 ))}
-                {new Array(25 - roles?.length).fill(null).map((item, key) => {
+                {/* {new Array(25 - roles?.length).fill(null).map((item, key) => {
                   return (
                     <TableLayout
                       key={key}
@@ -449,7 +451,7 @@ const PrintRoles = ({ roles, date }: IProps) => {
                       </div>
                     </TableLayout>
                   );
-                })}
+                })} */}
               </PrintLayout>
             )}
           </PrintContainer>
