@@ -245,7 +245,6 @@ const PrintContainer = styled.div<IPrintContainer>`
 interface IPrintLayout {
   borderColor: string;
   backgroundColor: string;
-  length: number;
 }
 
 const PrintLayout = styled.div<IPrintLayout>`
@@ -253,11 +252,21 @@ const PrintLayout = styled.div<IPrintLayout>`
   max-height: 100%;
   border: ${(props) => `2px solid ${props.borderColor}`};
   display: grid;
-  grid-template-rows: ${(props) => `auto repeat(${props.length}, 1fr)`};
+  grid-template-rows: auto 1fr;
   .main-table {
     border-bottom: ${(props) => `2px solid ${props.borderColor}`};
     background-color: ${(props) => props.backgroundColor};
   }
+`;
+
+interface ITbles {
+  length: number;
+}
+
+const Tables = styled.div<ITbles>`
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: ${(props) => `repeat(${props.length}, auto)`};
 `;
 
 interface ITableLayout {
@@ -414,7 +423,7 @@ const PrintRoles = ({ roles, date }: IProps) => {
           <div className="text">⭐️ 미리보기 ⭐️</div>
           <PrintContainer ref={componentRef} bgUrl={bgUrl} font={font.style}>
             {roles && (
-              <PrintLayout borderColor={color[0]} backgroundColor={color[1]} length={roles?.length}>
+              <PrintLayout borderColor={color[0]} backgroundColor={color[1]}>
                 <TableLayout
                   className="main-table"
                   borderColor={color[0]}
@@ -425,13 +434,20 @@ const PrintRoles = ({ roles, date }: IProps) => {
                   <div className="main">하는 일</div>
                   <div className="main">이름</div>
                 </TableLayout>
-                {roles?.map((item, key) => (
-                  <TableLayout key={key} borderColor={color[0]} backgroundColor1={color[2]} backgroundColor2={color[3]}>
-                    <div>{item.title}</div>
-                    <div>{item.detail}</div>
-                    <div>{item.students.map((item) => item.studentName).join(", ")}</div>
-                  </TableLayout>
-                ))}
+                <Tables length={roles?.length}>
+                  {roles?.map((item, key) => (
+                    <TableLayout
+                      key={key}
+                      borderColor={color[0]}
+                      backgroundColor1={color[2]}
+                      backgroundColor2={color[3]}
+                    >
+                      <div>{item.title}</div>
+                      <div>{item.detail}</div>
+                      <div>{item.students.map((item) => item.studentName).join(", ")}</div>
+                    </TableLayout>
+                  ))}
+                </Tables>
                 {/* {new Array(25 - roles?.length).fill(null).map((item, key) => {
                   return (
                     <TableLayout
