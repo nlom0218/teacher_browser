@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { outPopup } from "../../../apollo";
 import { CREATE_STUDENT_LIST_MUTATION } from "../../../Graphql/StudentList/mutation";
 import { SEE_ALL_STUDENT_LIST_QUERY } from "../../../Graphql/StudentList/query";
-import useMe from "../../../Hooks/useMe";
+import useMe, { ME_QUERY } from "../../../Hooks/useMe";
 import { customMedia } from "../../../styles";
 import Loading from "../../Shared/Loading";
 import PopupContainer from "../../Shared/PopupContainer";
@@ -94,7 +94,7 @@ const CreateList = ({ setErrorMsg, setSuccessMsg }) => {
   };
   const [createStudentList, { loading }] = useMutation(CREATE_STUDENT_LIST_MUTATION, {
     onCompleted,
-    refetchQueries: [{ query: SEE_ALL_STUDENT_LIST_QUERY }],
+    refetchQueries: [{ query: SEE_ALL_STUDENT_LIST_QUERY }, { query: ME_QUERY }],
   });
   const onSubmit = (data) => {
     if (loading) {
@@ -109,6 +109,7 @@ const CreateList = ({ setErrorMsg, setSuccessMsg }) => {
       variables: {
         teacherEmail: me?.email,
         listName,
+        isDefault: isRepresent,
       },
     });
   };

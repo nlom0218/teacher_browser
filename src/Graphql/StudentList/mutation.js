@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const CREATE_STUDENT_LIST_MUTATION = gql`
-  mutation CreateStudentList($teacherEmail: String!, $listName: String!) {
-    createStudentList(teacherEmail: $teacherEmail, listName: $listName) {
+  mutation CreateStudentList($teacherEmail: String!, $listName: String!, $isDefault: Boolean) {
+    createStudentList(teacherEmail: $teacherEmail, listName: $listName, isDefault: $isDefault) {
       ok
       error
     }
