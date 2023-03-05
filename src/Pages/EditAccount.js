@@ -135,18 +135,10 @@ const EditAccount = () => {
             <EditBgTheme setMsg={setMsg} userEmail={me?.email} bgTheme={me?.bgTheme} userId={me?._id} />
           </Item>
         </Changes>
-        {data?.checkPw.ok && (
-          <Changes>
-            <List>회원 탈퇴</List>
-            <Withdrawal userEmail={me?.email} isOwn={true} />
-          </Changes>
-        )}
-        {data?.checkPw.ok || (
-          <Changes>
-            <List>계정 초기화</List>
-            <Withdrawal userEmail={me?.email} isOwn={false} />
-          </Changes>
-        )}
+        <Changes>
+          <List>회원 탈퇴</List>
+          <Withdrawal userEmail={me?.email} isOwn={true} setMsg={setMsg} />
+        </Changes>
       </Container>
       {isPopup === "registerSchool" && <RegisterSchool setMsg={setMsg} />}
       {isPopup === "changePw" && <Pop_ChangePw userEmail={me?.email} />}
