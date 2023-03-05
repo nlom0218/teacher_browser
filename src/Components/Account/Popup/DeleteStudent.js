@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { logOutUser, outPopup } from "../../../apollo";
-import { DELETE_USER_MUTATION } from "../../../Graphql/User/mutation";
+import { DELETE_STUDENT_INFO_MUTATION, DELETE_USER_MUTATION } from "../../../Graphql/User/mutation";
 import routes from "../../../routes";
 import { customMedia } from "../../../styles";
 import BtnPopupContainer from "../../Shared/BtnPopupContainer";
@@ -51,39 +51,37 @@ const Msg = styled.div`
   line-height: 120%;
 `;
 
-const DeleteUser = ({ teacherEmail, setMsg }) => {
+const DeleteStudent = ({ teacherEmail, setMsg }) => {
   const onCompleted = (result) => {
     const {
-      deleteUser: { ok },
+      deleteStudentInfo: { ok },
     } = result;
     if (ok) {
+      setMsg("학생 관련 데이터가 삭제되었습니다.");
       outPopup();
-      navigate(routes.home);
-      logOutUser(() => window.location.reload());
     }
   };
-  const [deleteUser, { loading }] = useMutation(DELETE_USER_MUTATION, { onCompleted });
-  const navigate = useNavigate();
+  const [deleteStudentInfo, { loading }] = useMutation(DELETE_STUDENT_INFO_MUTATION, { onCompleted });
   const onClickDelBtn = () => {
     if (loading) return;
     if (!teacherEmail) {
       window.alert("오류가 발생하였습니다. 취소 후 다시 시도하세요. 계속 될 경우 관리자에게 문의 부탁드립니다.");
       return;
     }
-    deleteUser({ variables: { teacherEmail } });
+    deleteStudentInfo({ variables: { userEmail: teacherEmail } });
   };
   return (
     <BtnPopupContainer>
       <Container>
         <Btn>
-          <DelBtn onClick={onClickDelBtn}>탈퇴하기</DelBtn>
+          <DelBtn onClick={onClickDelBtn}>삭제하기</DelBtn>
           <CancleBtn onClick={() => outPopup()}>취소하기</CancleBtn>
         </Btn>
-        <Msg>모든 정보를 삭제하고 탈퇴하시겠습니까?</Msg>
-        <Msg>정보가 삭제되면 다시 복구할 수 없습니다.</Msg>
+        <Msg>학생 관련 데이터를 삭제하시겠습니까?</Msg>
+        <Msg>데이터가 삭제되면 다시 복구할 수 없습니다.</Msg>
       </Container>
     </BtnPopupContainer>
   );
 };
 
-export default DeleteUser;
+export default DeleteStudent;
