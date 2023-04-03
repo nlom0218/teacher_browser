@@ -65,6 +65,7 @@ const DeleteUser = ({ teacherEmail, setMsg }) => {
   const [deleteUser, { loading }] = useMutation(DELETE_USER_MUTATION, { onCompleted });
   const navigate = useNavigate();
   const onClickDelBtn = () => {
+    return;
     if (loading) return;
     if (!teacherEmail) {
       window.alert("오류가 발생하였습니다. 취소 후 다시 시도하세요. 계속 될 경우 관리자에게 문의 부탁드립니다.");
