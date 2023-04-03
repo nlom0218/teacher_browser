@@ -58,8 +58,8 @@ const HomeSection = ({ dDay, userEmail, isMoveDDay, setMsg, setErrMsg, links, se
         />
       )}
       <Error>
-        현재 학생 데이터 삭제 과정에 오류가 있어, 학생 관련 데이터가 삭제되는 문제가 발생되었습니다.
-        <span onClick={onClickErrorMsg}>더 자세한 내용은 이곳에서 확인할 수 있습니다.</span>
+        학생 관련 데이터 오류에 대한 공지사항입니다.
+        <span onClick={onClickErrorMsg}>공지 확인하기</span>
         불편을 드려 죄송합니다.
       </Error>
     </Container>

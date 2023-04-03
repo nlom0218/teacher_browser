@@ -67,8 +67,6 @@ const FindAttend = () => {
     skip: !me,
   });
 
-  console.log(data);
-
   return (
     <Container>
       <Title>출결 확인하기 - {me ? me.email : "로그인이 필요합니다."}</Title>

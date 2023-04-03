@@ -47,6 +47,19 @@ const Type = styled.div`
   }
 `;
 
+const Error = styled.div`
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  color: ${(props) => props.theme.redColor};
+  font-weight: 700;
+  span {
+    margin: 0px 10px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+`;
+
 const Background = styled.div`
   position: absolute;
   left: 0;
@@ -81,6 +94,10 @@ const Menu = () => {
     setMenuType(type);
   };
 
+  const onClickErrorMsg = () => {
+    window.open("https://sparkly-corleggy-3e4.notion.site/23-4-3-8e84540280514b2b89c269872acb7049");
+  };
+
   return (
     <BasicContainer>
       <Container>
@@ -107,6 +124,11 @@ const Menu = () => {
         </SeeType>
         {menuType === "list" ? <ListType /> : <GridType />}
       </Container>
+      <Error>
+        학생 관련 데이터 오류에 대한 공지사항입니다.
+        <span onClick={onClickErrorMsg}>공지 확인하기</span>
+        불편을 드려 죄송합니다.
+      </Error>
     </BasicContainer>
   );
 };
