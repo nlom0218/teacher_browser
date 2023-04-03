@@ -58,6 +58,7 @@ import SeoWonju from "./Pages/SeoWonju";
 import Roles from "./Pages/Roles";
 import RolesSetting from "./Pages/RolesSetting";
 import RolesCallback from "./Pages/RolesCallback";
+import FindAttend from "./Pages/FindAttend";
 function App() {
   const darkMode = useReactiveVar(darkModeVar);
   const bgTheme = useReactiveVar(bgThemeVar);
@@ -197,6 +198,7 @@ function App() {
         <Route path={`${routes.rolesSetting}/:mode`} element={<RolesSetting />} />
         <Route path={`${routes.roles}/:id/:mode`} element={<Roles />} />
         <Route path="/2022seoWonju" element={<SeoWonju />} />
+        <Route path="/find-attend" element={<FindAttend />} />
       </Routes>
     </ThemeProvider>
   );
