@@ -3,13 +3,6 @@ import { useReactToPrint } from "react-to-print";
 import styled from "styled-components";
 import { TRecentRole, TRolesDate } from "./RolesMain";
 
-import roles1 from "../../image/Roles/roles-01.png";
-import roles2 from "../../image/Roles/roles-02.png";
-import roles3 from "../../image/Roles/roles-03.png";
-import roles4 from "../../image/Roles/roles-04.png";
-import roles5 from "../../image/Roles/roles-05.png";
-import roles6 from "../../image/Roles/roles-06.png";
-
 const colorTable = [
   ["#fd1b1bd6", "#fd1b1b7f", "#fd1b1b35", "#f9f9f996"],
   ["rgb(126, 40, 26)", "rgb(227, 107, 88, 0.8)", "rgb(249, 179, 168, 0.8)", "rgb(253, 228, 224, 0.7)"],
@@ -41,12 +34,12 @@ const fontTable = [
   { name: "Gmarket Sans", style: "GmarketSansMedium" },
 ];
 
-const BG_ONE = roles1;
-const BG_TWO = roles2;
-const BG_THREE = roles3;
-const BG_FOUR = roles4;
-const BG_FIVE = roles5;
-const BG_SIX = roles6;
+const BG_ONE = "/image/roles1";
+const BG_TWO = "/image/roles2";
+const BG_THREE = "/image/roles3";
+const BG_FOUR = "/image/roles4";
+const BG_FIVE = "/image/roles5";
+const BG_SIX = "/image/roles6";
 
 const Container = styled.div`
   display: grid;
