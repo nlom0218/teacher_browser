@@ -3,6 +3,13 @@ import { useReactToPrint } from "react-to-print";
 import styled from "styled-components";
 import { TRecentRole, TRolesDate } from "./RolesMain";
 
+import roles1 from "../../image/Roles/roles-01.png";
+import roles2 from "../../image/Roles/roles-02.png";
+import roles3 from "../../image/Roles/roles-03.png";
+import roles4 from "../../image/Roles/roles-04.png";
+import roles5 from "../../image/Roles/roles-05.png";
+import roles6 from "../../image/Roles/roles-06.png";
+
 const colorTable = [
   ["#fd1b1bd6", "#fd1b1b7f", "#fd1b1b35", "#f9f9f996"],
   ["rgb(126, 40, 26)", "rgb(227, 107, 88, 0.8)", "rgb(249, 179, 168, 0.8)", "rgb(253, 228, 224, 0.7)"],
@@ -34,18 +41,12 @@ const fontTable = [
   { name: "Gmarket Sans", style: "GmarketSansMedium" },
 ];
 
-const BG_ONE =
-  "https://media.discordapp.net/attachments/1012001449854648480/1080398235690086400/01.png?ex=6603d144&is=65f15c44&hm=fc13de58254564718fc5782a8721b226740944c39fc4b4cc5ce477ff660bfc14&=&format=webp&quality=lossless&width=992&height=1402";
-const BG_TWO =
-  "https://media.discordapp.net/attachments/1012001449854648480/1080398236017250456/02.png?ex=6603d144&is=65f15c44&hm=944274b1a39f8eab9ffcff324811bf4f0a8bebb2cb680a5f5eb7b45c7cbb9738&=&format=webp&quality=lossless&width=960&height=1376";
-const BG_THREE =
-  "https://media.discordapp.net/attachments/1012001449854648480/1080398236252123206/03.png?ex=6603d144&is=65f15c44&hm=fab67ade0426e9d3711502fb8ab29f9d6717c57bb8c7d7b4cf2abab4d77b8c99&=&format=webp&quality=lossless&width=960&height=1376";
-const BG_FOUR =
-  "https://media.discordapp.net/attachments/1012001449854648480/1080398236474413136/04.png?ex=6603d144&is=65f15c44&hm=e1f45ef1b4ea86a2b9b8e349b990a582b65e6f384b1ddcf720f531d17f2c0cbc&=&format=webp&quality=lossless&width=992&height=1402";
-const BG_FIVE =
-  "https://media.discordapp.net/attachments/1012001449854648480/1080398236730282074/05.png?ex=6603d144&is=65f15c44&hm=3dfa181426390920dda7d673902b0a9be5826ac3cd2675dccfa368c963e553c3&=&format=webp&quality=lossless&width=992&height=1402";
-const BG_SIX =
-  "https://media.discordapp.net/attachments/1012001449854648480/1080398236994514984/06.png?ex=6603d144&is=65f15c44&hm=19204e1459305208b32eff48354631da558d37c63cc482fb05c2f3b0bf575f82&=&format=webp&quality=lossless&width=992&height=1402";
+const BG_ONE = roles1;
+const BG_TWO = roles2;
+const BG_THREE = roles3;
+const BG_FOUR = roles4;
+const BG_FIVE = roles5;
+const BG_SIX = roles6;
 
 const Container = styled.div`
   display: grid;
