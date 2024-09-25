@@ -113,6 +113,11 @@ const SocialLogin = ({ redirectURL }) => {
         <FcGoogle />
         구글 로그인
       </GoogleLoginBtn>
+      <div style={{ lineHeight: "140%" }}>
+        현재 네이버 로그인으로만 로그인이 가능합니다. <br />
+        빠른시일 안으로 복구하도록 하겠습니다. <br />
+        불편을 끼쳐 드려 죄송합니다.
+      </div>
     </SSocialLogin>
   );
 };

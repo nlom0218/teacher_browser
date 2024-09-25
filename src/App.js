@@ -98,7 +98,7 @@ function App() {
   useEffect(() => {
     disableBgThemeAni();
     if (!bgTheme) {
-      editBgTheme("nature");
+      editBgTheme("#607D8A");
     }
   }, []);
 
@@ -133,7 +133,7 @@ function App() {
       smallScreenMode();
     }
   }, [media]);
-
+  console.log(userBgTheme);
   return (
     <ThemeProvider theme={darkMode ? darkTheme : ligthTheme}>
       <GlobalStyle bgTheme={userBgTheme ? userBgTheme : me?.bgTheme} isLoggedIn={isLoggedIn} />
